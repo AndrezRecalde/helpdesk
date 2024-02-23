@@ -1,0 +1,33 @@
+.icon {
+    width: rem(22px);
+    height: rem(22px);
+    @media (max-width: $mantine-breakpoint-sm) {
+        display: none;
+    }
+  }
+
+  .dark {
+    @mixin dark {
+      display: none;
+    }
+
+    @mixin light {
+      display: block;
+    }
+  }
+
+  .light {
+    @mixin light {
+      display: none;
+    }
+
+    @mixin dark {
+      display: block;
+    }
+  }
+
+  .BtnSearch {
+    @media (max-width: $mantine-breakpoint-sm) {
+        display: none;
+    }
+  }

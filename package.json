@@ -11,18 +11,26 @@
         "axios": "^1.6.4",
         "bootstrap": "^5.2.3",
         "laravel-vite-plugin": "^1.0.0",
+        "postcss": "^8.4.35",
+        "postcss-preset-mantine": "^1.13.0",
+        "postcss-simple-vars": "^7.0.1",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
         "sass": "^1.56.1",
         "vite": "^5.0.0"
     },
     "dependencies": {
-        "@mantine/core": "^7.5.2",
-        "@mantine/dates": "^7.5.2",
-        "@mantine/hooks": "^7.5.2",
+        "@mantine/core": "^7.5.3",
+        "@mantine/dates": "^7.5.3",
+        "@mantine/form": "^7.5.3",
+        "@mantine/hooks": "^7.5.3",
+        "@reduxjs/toolkit": "^2.2.1",
         "@tabler/icons-react": "^2.47.0",
         "clsx": "^2.1.0",
         "dayjs": "^1.11.10",
-        "mantine-react-table": "^2.0.0-alpha.17"
+        "mantine-react-table": "^2.0.0-beta.0",
+        "react-redux": "^9.1.0",
+        "react-router-dom": "^6.22.0",
+        "redux": "^5.0.1"
     }
 }

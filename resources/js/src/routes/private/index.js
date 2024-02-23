@@ -1,7 +1,7 @@
 import { PrivatePages } from "./PrivatePages";
-import { PrivateRoute } from "./PrivateRoute";
+import { PrivateRoutes } from "./PrivateRoutes";
 
 export {
     PrivatePages,
-    PrivateRoute
+    PrivateRoutes
 }
