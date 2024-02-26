@@ -36,9 +36,9 @@ class UserAdminController extends Controller
         }
     }
 
-    function update(UserRequest $request, int $id): JsonResponse
+    function update(UserRequest $request, int $cdgo_usrio): JsonResponse
     {
-        $usuario = User::find($id);
+        $usuario = User::find($cdgo_usrio);
         try {
             if ($usuario) {
                 $usuario->update($request->validated());
@@ -51,9 +51,9 @@ class UserAdminController extends Controller
         }
     }
 
-    function updateTecnico(TecnicoRequest $request, int $id): JsonResponse
+    function updateTecnico(TecnicoRequest $request, int $cdgo_usrio): JsonResponse
     {
-        $usuario = User::find($id);
+        $usuario = User::find($cdgo_usrio);
         try {
             if ($usuario) {
                 $usuario->update($request->validated());
@@ -68,7 +68,7 @@ class UserAdminController extends Controller
         }
     }
 
-    function getTecnicos(): JsonResponse
+    function getTecnicosAdmin(): JsonResponse
     {
         $tecnicos = User::from('usrios_sstma as u')
             ->selectRaw('u.cdgo_usrio, u.nmbre_usrio,
@@ -78,6 +78,22 @@ class UserAdminController extends Controller
             ->join('model_has_roles as mh', 'mh.model_id', 'u.cdgo_usrio')
             ->join('roles as r', 'r.id', 'mh.role_id')
             ->whereIn('mh.role_id', [1, 2])
+            ->get();
+
+        return response()->json(['status' => 'success', 'tecnicos' => $tecnicos], 200);
+    }
+
+    function getTecnicos(): JsonResponse
+    {
+        $tecnicos = User::from('usrios_sstma as us')
+            ->selectRaw('us.cdgo_usrio, us.nmbre_usrio,
+                            d.nmbre_dprtmnto as departamento,
+                            r.id, r.name as role')
+            ->join('dprtmntos as d', 'd.cdgo_dprtmnto', 'us.cdgo_dprtmnto')
+            ->join('model_has_roles as mh', 'mh.model_id', 'us.cdgo_usrio')
+            ->join('roles as r', 'r.id', 'mh.role_id')
+            ->whereIn('mh.role_id', [1, 2])
+            ->where('us.actvo', 1)
             ->get();
 
         return response()->json(['status' => 'success', 'tecnicos' => $tecnicos], 200);

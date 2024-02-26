@@ -1,9 +1,17 @@
+import { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import { PublicRoutes } from "./public/PublicRoutes";
 import { PrivateRoutes, PrivatePages } from "./private";
 import { AuthPage } from "../pages";
+import { useAuthStore } from "../hooks";
 
 export const AppRouter = () => {
+    const { checkAuthToken } = useAuthStore();
+
+    useEffect(() => {
+        checkAuthToken();
+    }, []);
+
     return (
         <Routes>
             <Route

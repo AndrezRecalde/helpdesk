@@ -1,7 +1,7 @@
 import { Button, rem } from "@mantine/core";
 
 export const BtnSubmit = ({
-    text,
+    children,
     fullwidth = true,
     heigh = 45,
     fontSize = 18,
@@ -9,6 +9,7 @@ export const BtnSubmit = ({
 }) => {
     return (
         <Button
+            color="indigo.7"
             type="submit"
             fullWidth={fullwidth}
             mt="md"
@@ -23,7 +24,34 @@ export const BtnSubmit = ({
                 },
             }}
         >
-            {text}
+            {children}
+        </Button>
+    );
+};
+
+export const BtnSection = ({
+    heigh = 35,
+    fontSize = 14,
+    mb = 0,
+    mt = 0,
+    children,
+}) => {
+    return (
+        <Button
+            mt={mt}
+            mb={mb}
+            color="indigo.7"
+            variant="light"
+            styles={{
+                root: {
+                    "--button-height": rem(heigh),
+                },
+                inner: {
+                    fontSize: fontSize,
+                },
+            }}
+        >
+            {children}
         </Button>
     );
 };

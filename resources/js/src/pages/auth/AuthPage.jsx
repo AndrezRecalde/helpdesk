@@ -9,7 +9,7 @@ export const AuthPage = () => {
     return (
         <div className={classes.wrapper}>
             <TitlePage ta="center" className={classes.title}>
-                Sistema de Planificación
+                Sistema de Helpdesk
             </TitlePage>
             <Logo height={70} width={200} />
             <Paper

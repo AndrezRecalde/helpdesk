@@ -1,14 +1,27 @@
-import { Card, Avatar, Text, Group, Button, Container, ThemeIcon, rem } from "@mantine/core";
-import classes from "../../assets/styles/modules/user/ProfileCard.module.css";
-import { IconSwimming } from "@tabler/icons-react";
+import { useEffect } from "react";
+import { Badge, Card, Container, Group, Skeleton, Text } from "@mantine/core";
+import { useDocumentTitle } from "@mantine/hooks";
+import {
+    TextSection,
+    TitlePage,
+    ProfileForm,
+    BtnSubmit,
+} from "../../components";
+import { IconSend } from "@tabler/icons-react";
+import { useAuthStore } from "../../hooks";
 
 const stats = [
-    { value: "34K", label: "Followers" },
-    { value: "187", label: "Follows" },
-    { value: "1.6K", label: "Posts" },
+    { value: "34K", label: "Total Soportes" },
+    { value: "187", label: "Pendientes" },
+    { value: "1.6K", label: "Cerrados" },
 ];
 
 export const ProfilePage = () => {
+    useDocumentTitle("Profile");
+    const { isLoading, startProfile, profile, clearProfile } = useAuthStore();
+
+    const year = new Date();
+
     const items = stats.map((stat) => (
         <div key={stat.label}>
             <Text ta="center" fz="lg" fw={500}>
@@ -20,48 +33,64 @@ export const ProfilePage = () => {
         </div>
     ));
 
+    useEffect(() => {
+        startProfile();
+
+        return () => {
+            clearProfile();
+        };
+    }, []);
+
     return (
         <Container size="sm">
-            <Card withBorder padding="xl" radius="md" className={classes.card}>
-                <Card.Section
-                    h={140}
-                    style={{
-                        backgroundImage:
-                            "url(https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=80)",
-                    }}
-                />
-                <Avatar
-                    src="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-9.png"
-                    size={80}
-                    radius={80}
-                    mx="auto"
-                    mt={-30}
-                    className={classes.avatar}
-                />
-                {/* <ThemeIcon className={classes.avatar} size={80} radius={80} mx="auto" mt={-30}>
-                    <IconSwimming
-                        style={{ width: rem(32), height: rem(32) }}
-                        stroke={1.5}
-                    />
-                </ThemeIcon> */}
-                <Text ta="center" fz="lg" fw={500} mt="sm">
-                    Cristhian Recalde
-                </Text>
-                <Text ta="center" fz="sm" c="dimmed">
-                    Sistemas y Aplicaciones
-                </Text>
-                <Group mt="md" justify="center" gap={30}>
-                    {items}
-                </Group>
-                <Button
-                    fullWidth
-                    radius="md"
-                    mt="xl"
-                    size="md"
-                    variant="default"
-                >
-                    Follow
-                </Button>
+            <TitlePage order={2} size="h2">
+                Perfil
+            </TitlePage>
+            <Card withBorder shadow="sm" radius="md" p="lg" mt={20} mb={20}>
+                <Card.Section withBorder inheritPadding py="xs">
+                    <Group justify="space-between">
+                        <TextSection fw={700} tt="" fz={16}>
+                            Bienvenido al Helpdesk
+                        </TextSection>
+                        {isLoading ? (
+                            <Skeleton
+                                height={8}
+                                mt={6}
+                                width="70%"
+                                radius="xl"
+                            />
+                        ) : (
+                            <Badge
+                                variant="light"
+                                color="orange.7"
+                                size="lg"
+                                radius="sm"
+                            >
+                                {profile.role}
+                            </Badge>
+                        )}
+                    </Group>
+                </Card.Section>
+                <Card.Section withBorder inheritPadding py="xs">
+                    <ProfileForm />
+                </Card.Section>
+                <Card.Section withBorder inheritPadding py="xs">
+                    <Group justify="space-between">
+                        <TextSection fw={700} tt="" fz={16}>
+                            Soportes
+                        </TextSection>
+                        <TextSection fw={700} tt="" fz={16}>
+                            {year.getFullYear()}
+                        </TextSection>
+                    </Group>
+                    <Group mt="md" justify="center" gap={70}>
+                        {items}
+                    </Group>
+
+                    <BtnSubmit fontSize={16} IconSection={IconSend}>
+                        Agregar soporte
+                    </BtnSubmit>
+                </Card.Section>
             </Card>
         </Container>
     );

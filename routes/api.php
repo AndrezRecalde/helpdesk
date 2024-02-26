@@ -25,12 +25,15 @@ Route::get('/refresh', [AuthController::class, 'refresh'])->middleware('auth:san
 Route::get('/profile', [AuthController::class, 'profile'])->middleware('auth:sanctum');
 Route::post('/auth/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 
-Route::group(['prefix' => 'gerente', 'middleware' => ['auth:sanctum']], function () {
+Route::group(['prefix' => 'gerencia', 'middleware' => ['auth:sanctum']], function () {
 
     /* USUARIOS */
-    Route::get('/usuarios', [UserAdminController::class, 'getUsuariosAdmin']);
+    Route::post('/usuarios', [UserAdminController::class, 'getUsuariosAdmin']);
+    Route::post('/tecnicos', [UserAdminController::class, 'getTecnicos']);
     Route::post('/store/usuario', [UserAdminController::class, 'store']);
-    Route::put('/update/usuario', [UserAdminController::class, 'update']);
+    Route::put('/update/usuario/{cdgo_usrio}', [UserAdminController::class, 'update']);
+    Route::put('/update/tecnico/{cdgo_usrio}', [UserAdminController::class, 'updateTecnico']);
+
 
     /* DEPARTAMENTOS Y DIRECCION */
     Route::post('/direcciones', [DepartamentoController::class, 'getDirecciones']);

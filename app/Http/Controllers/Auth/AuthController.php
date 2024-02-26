@@ -15,13 +15,17 @@ class AuthController extends Controller
         try {
             $user = User::from('usrios_sstma as u')
                 ->selectRaw('u.cdgo_usrio, u.lgin, u.nmbre_usrio, u.usu_alias, u.email, u.crgo_id,
-                            d.cdgo_dprtmnto, d.nmbre_dprtmnto as direccion, d.id_empresa')
+                            d.cdgo_dprtmnto, d.nmbre_dprtmnto as direccion, d.id_empresa,
+                            CAST((IFNULL(r.id, 3)) AS UNSIGNED) as role_id,
+                            CAST((IFNULL(r.name, "Usuario")) AS NCHAR) as role')
                 ->join('dprtmntos as d', 'd.cdgo_dprtmnto', 'u.cdgo_direccion')
+                ->leftJoin('model_has_roles as mh', 'mh.model_id', 'u.cdgo_usrio')
+                ->leftJoin('roles as r', 'r.id', 'mh.role_id')
                 ->where('u.lgin', $request->lgin)
                 ->where('u.paswrd', md5($request->paswrd))
                 ->where('u.actvo', 1)
                 ->first();
-            if (!$user) {
+            if ($user) {
                 $token = $user->createToken(name: 'auth_token')->plainTextToken;
                 return response()->json([
                     'status'        =>  'success',
@@ -41,9 +45,14 @@ class AuthController extends Controller
     {
         $user = User::from('usrios_sstma as u')
             ->selectRaw('u.cdgo_usrio, u.lgin, u.nmbre_usrio, u.usu_alias, u.email, u.crgo_id,
-                        d.cdgo_dprtmnto, d.nmbre_dprtmnto as direccion, d.id_empresa')
+                        d.cdgo_dprtmnto, d.nmbre_dprtmnto as direccion, d.id_empresa,
+                        CAST((IFNULL(r.id, 3)) AS UNSIGNED) as role_id,
+                        CAST((IFNULL(r.name, "Usuario")) AS NCHAR) as role')
             ->join('dprtmntos as d', 'd.cdgo_dprtmnto', 'u.cdgo_direccion')
+            ->leftJoin('model_has_roles as mh', 'mh.model_id', 'u.cdgo_usrio')
+            ->leftJoin('roles as r', 'r.id', 'mh.role_id')
             ->where('u.cdgo_usrio', Auth::user()->cdgo_usrio)
+            ->where('u.actvo', 1)
             ->first();
 
         if ($user) {
@@ -64,8 +73,15 @@ class AuthController extends Controller
     {
         $profile = User::from('usrios_sstma as u')
             ->selectRaw('u.cdgo_usrio, u.lgin, u.nmbre_usrio, u.usu_alias, u.email,
-                    d.cdgo_dprtmnto, d.nmbre_dprtmnto as direccion')
+                    d.cdgo_dprtmnto, d.nmbre_dprtmnto as direccion,
+                    ne.nom_empresa as empresa, nc.nom_cargo as cargo,
+                    CAST((IFNULL(r.id, 3)) AS UNSIGNED) as role_id,
+                    CAST((IFNULL(r.name, "Usuario")) AS NCHAR) as role')
             ->join('dprtmntos as d', 'd.cdgo_dprtmnto', 'u.cdgo_direccion')
+            ->join('nom_empresa as ne', 'ne.idnom_empresa', 'd.id_empresa')
+            ->join('nom_cargo as nc', 'nc.idnom_cargo', 'u.crgo_id')
+            ->leftJoin('model_has_roles as mh', 'mh.model_id', 'u.cdgo_usrio')
+            ->leftJoin('roles as r', 'r.id', 'mh.role_id')
             ->where('u.cdgo_usrio', Auth::user()->cdgo_usrio)
             ->first();
 

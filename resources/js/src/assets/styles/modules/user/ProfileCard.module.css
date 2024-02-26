@@ -1,8 +1,0 @@
-.card {
-    background-color: var(--mantine-color-body);
-    margin-top: 20px;
-  }
-
-  .avatar {
-    border: rem(2px) solid var(--mantine-color-body);
-  }

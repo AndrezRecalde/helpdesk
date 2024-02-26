@@ -1,0 +1,28 @@
+import { Container, SimpleGrid } from "@mantine/core";
+import {
+    ChartAreaSoportes,
+    ChartBarSoportes,
+    ChartPieSoportes,
+    DashInfoStats,
+    DashSoporteStats,
+    TitlePage,
+} from "../../../components";
+
+export const DashGerenciaPage = () => {
+    return (
+        <Container size="xxl">
+            <TitlePage order={2} size="h2">
+                Panel de Soporte Técnico
+            </TitlePage>
+            <DashSoporteStats />
+            <SimpleGrid cols={{ base: 1, sm: 2, md: 2, lg: 2 }}>
+                <DashInfoStats />
+                <ChartPieSoportes />
+            </SimpleGrid>
+            <SimpleGrid cols={{ base: 1, sm: 2, md: 2, lg: 2 }}>
+                <ChartAreaSoportes />
+                <ChartBarSoportes />
+            </SimpleGrid>
+        </Container>
+    );
+};

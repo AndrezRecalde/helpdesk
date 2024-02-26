@@ -11,24 +11,24 @@ export const lGerente = [
         label: "Administración",
         icon: IconCategory,
         links: [
-            { label: "Gestionar Usuarios", link: "/gerente/usuarios" },
-            { label: "Gestionar Direcciones", link: "/gerente/direcciones" }
+            { label: "Gestionar Usuarios", link: "/gerencia/usuarios" },
+            { label: "Gestionar Direcciones", link: "/gerencia/direcciones" }
         ],
     },
     {
         label: "Solicitudes",
         icon: IconTransferIn,
         links: [
-            { label: "Solicitudes actuales", link: "/g/gerente/solicitudes/actuales" },
-            { label: "Buscar Solicitudes", link: "/g/gerente/busqueda/solicitudes" }, //Por rango de fechas o tecnico o por departamento
-            { label: "Solicitudes Anuladas", link: "/g/gerente/solicitudes/anuladas" }
+            { label: "Solicitudes actuales", link: "/g/gerencia/solicitudes-actuales" },
+            { label: "Buscar Solicitudes", link: "/g/gerencia/busqueda-solicitudes" }, //Por rango de fechas o tecnico o por departamento
+            { label: "Solicitudes Anuladas", link: "/g/gerencia/solicitudes-anuladas" }
         ],
     },
     {
         label: "Soportes",
         icon: IconDeviceImac,
         links: [
-            { label: "Gestionar Soportes", link: "/gerente/soportes" },
+            { label: "Gestionar Soportes", link: "/gerencia/soportes" },
         ],
     },
 ];
@@ -45,7 +45,7 @@ export const lTecnico = [
         icon: IconDeviceImac,
         links: [
             { label: "Soportes asignados", link: "/tecnico/soportes" },
-            { label: "Administrar soportes", link: "/tecnico/soportes/todos" }, //Busqueda por departamento o fechas
+            { label: "Administrar soportes", link: "/tecnico/administrar-soportes" }, //Busqueda por departamento o fechas
         ],
     },
 ];

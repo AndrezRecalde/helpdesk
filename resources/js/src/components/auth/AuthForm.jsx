@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+import { useForm } from "@mantine/form";
 import {
     Anchor,
     Box,
@@ -9,23 +11,35 @@ import {
     TextInput,
 } from "@mantine/core";
 import { AlertSection, BtnSubmit } from "../../components";
+import { useAuthStore } from "../../hooks";
 import { IconChevronsRight, IconInfoCircle } from "@tabler/icons-react";
-import { useForm } from "@mantine/form";
 
 export const AuthForm = () => {
+    const { isLoading, startLogin, validate, errores } = useAuthStore();
 
     const form = useForm({
         initialValues: {
             lgin: "",
             paswrd: "",
-            remember: true
-        }
+            remember: true,
+        },
     });
+
+    useEffect(() => {
+        if (validate !== undefined) {
+            form.setErrors(validate);
+            return;
+        }
+
+        return () => {
+            form.clearErrors();
+        };
+    }, [validate]);
 
     const handleLogin = (e) => {
         e.preventDefault();
         //startLogin(form.values);
-        console.log('clic');
+        startLogin(form.values);
     };
 
     return (
@@ -41,14 +55,14 @@ export const AuthForm = () => {
             />
             <Stack>
                 <TextInput
-                    label="Cédula"
-                    placeholder="Digite su cédula"
-                    {...form.getInputProps("dni")}
+                    label="Usuario"
+                    placeholder="Digite su usuario"
+                    {...form.getInputProps("lgin")}
                 />
                 <PasswordInput
                     label="Contraseña"
                     placeholder="Tu contraseña"
-                    {...form.getInputProps("password")}
+                    {...form.getInputProps("paswrd")}
                 />
                 {errores ? (
                     <AlertSection
@@ -70,7 +84,7 @@ export const AuthForm = () => {
                         ¿Olvidó su contraseña?
                     </Anchor>
                 </Group>
-                <BtnSubmit text="Acceder" IconSection={IconChevronsRight} />
+                <BtnSubmit IconSection={IconChevronsRight}>Acceder</BtnSubmit>
             </Stack>
         </Box>
     );

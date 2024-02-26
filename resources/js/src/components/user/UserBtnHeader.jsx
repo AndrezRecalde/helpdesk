@@ -25,27 +25,19 @@ export const UserBtnHeader = () => {
     const theme = useMantineTheme();
     const { startLogout } = useAuthStore();
     const navigate = useNavigate();
-    /* const usuario = useMemo(
+    const usuario = useMemo(
         () => JSON.parse(localStorage.getItem("service_user")),
         []
-    ); */
+    );
     const [userMenuOpened, setUserMenuOpened] = useState(false);
 
-    /* const nombres = useCallback(() => {
-        const nombre_index = usuario.nombres.indexOf(" ");
-        const apellido_index = usuario.apellidos.indexOf(" ");
+    const iniciales = useCallback(() => {
+        let inicial_nombre = usuario.usu_alias.split(" ");
+        let nombre = inicial_nombre[0].slice(0,1);
+        let apellido = inicial_nombre[1].slice(0,1);
 
-        let _nombre = usuario.nombres.substring(0, nombre_index);
-        let _apellido = usuario.apellidos.substring(0, apellido_index);
-
-        return _nombre + " " + _apellido;
-    }, [usuario]); */
-
-    /* const iniciales = useCallback(() => {
-        let inicial_nombre = usuario.nombres.slice(0, 1);
-        let inicial_apellido = usuario.apellidos.slice(0, 1);
-        return inicial_nombre + inicial_apellido;
-    }, [usuario]); */
+        return nombre + apellido;
+    }, [usuario]);
 
     return (
         <Menu
@@ -69,14 +61,14 @@ export const UserBtnHeader = () => {
                             radius="xl"
                             color="indigo.7"
                         >
-                            CR
+                            {iniciales()}
                         </Avatar>
                         <div style={{ flex: 1 }}>
                             <Text fw={500} size="sm">
-                                Cristhian Recalde
+                                {usuario.usu_alias}
                             </Text>
                             <Text size="xs" c="dimmed">
-                                crecalde@gadpe.gob.ec
+                                {usuario.email}
                             </Text>
                         </div>
                         <IconChevronRight
@@ -112,7 +104,7 @@ export const UserBtnHeader = () => {
                 </Menu.Item>
                 <Menu.Label>Settings</Menu.Label>
                 <Menu.Item
-                    onClick={() => console.log('clic')}
+                    onClick={startLogout}
                     color="red"
                     leftSection={
                         <IconLogout
