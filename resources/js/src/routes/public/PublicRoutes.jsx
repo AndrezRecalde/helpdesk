@@ -1,9 +1,12 @@
-import { Navigate } from "react-router-dom";
+import { Navigate, Outlet, useLocation } from "react-router-dom";
 
 
 
 export const PublicRoutes = ({ children }) => {
     const token = localStorage.getItem("auth_token");
+    const { state } = useLocation();
 
-  return !token ? children : <Navigate to="/profile" />
+    const pathname = state?.location?.pathname ?? '/u/profile';
+
+  return !token ? children : <Navigate to={pathname} />
 }

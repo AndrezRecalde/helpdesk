@@ -31,13 +31,13 @@ export const UserBtnHeader = () => {
     );
     const [userMenuOpened, setUserMenuOpened] = useState(false);
 
-    const iniciales = useCallback(() => {
-        let inicial_nombre = usuario.usu_alias.split(" ");
-        let nombre = inicial_nombre[0].slice(0,1);
-        let apellido = inicial_nombre[1].slice(0,1);
+   /*  const iniciales = useCallback(() => {
+        let inicial_nombre = usuario?.usu_alias?.split(" ");
+        let nombre = inicial_nombre[0]?.slice(0,1);
+        let apellido = inicial_nombre[1]?.slice(0,1);
 
         return nombre + apellido;
-    }, [usuario]);
+    }, [usuario]); */
 
     return (
         <Menu
@@ -61,14 +61,14 @@ export const UserBtnHeader = () => {
                             radius="xl"
                             color="indigo.7"
                         >
-                            {iniciales()}
+                            CR
                         </Avatar>
                         <div style={{ flex: 1 }}>
                             <Text fw={500} size="sm">
-                                {usuario.usu_alias}
+                                Cristhian Recalde
                             </Text>
                             <Text size="xs" c="dimmed">
-                                {usuario.email}
+                                crecalde@gadpe.gob.ec
                             </Text>
                         </div>
                         <IconChevronRight

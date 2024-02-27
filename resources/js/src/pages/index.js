@@ -21,6 +21,10 @@ import { SoportesPage } from "./soporte/SoportesPage";
 /* Dashboard */
 import { DashGerenciaPage } from "./dashboard/gerencia/DashGerenciaPage";
 
+
+/* Error */
+import { ErrorNotFound } from "./error/ErrorNotFound";
+
 export {
     AuthPage,
     ProfilePage,
@@ -36,5 +40,7 @@ export {
 
     SoportesPage,
 
-    DashGerenciaPage
+    DashGerenciaPage,
+
+    ErrorNotFound
 }

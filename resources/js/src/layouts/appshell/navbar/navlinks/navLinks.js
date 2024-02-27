@@ -1,11 +1,16 @@
 import { IconCategory, IconChartPieFilled, IconDeviceImac, IconTransferIn } from "@tabler/icons-react";
 
+export const Roles = {
+    GERENTE: 'GERENTE',
+    TECNICO: 'TECNICO',
+    USUARIO: 'USUARIO'
+  }
 
 export const lGerente = [
     {
         label: "Dashboard",
         icon: IconChartPieFilled,
-        links: [{ label: "Inicio", link: "/" }],
+        links: [{ label: "Inicio", link: "/gerencia/dashboard" }],
     },
     {
         label: "Administración",
@@ -19,9 +24,9 @@ export const lGerente = [
         label: "Solicitudes",
         icon: IconTransferIn,
         links: [
-            { label: "Solicitudes actuales", link: "/g/gerencia/solicitudes-actuales" },
-            { label: "Buscar Solicitudes", link: "/g/gerencia/busqueda-solicitudes" }, //Por rango de fechas o tecnico o por departamento
-            { label: "Solicitudes Anuladas", link: "/g/gerencia/solicitudes-anuladas" }
+            { label: "Solicitudes actuales", link: "/gerencia/solicitudes-actuales" },
+            { label: "Buscar Solicitudes", link: "/gerencia/busqueda-solicitudes" }, //Por rango de fechas o tecnico o por departamento
+            { label: "Solicitudes Anuladas", link: "/gerencia/solicitudes-anuladas" }
         ],
     },
     {
@@ -49,3 +54,11 @@ export const lTecnico = [
         ],
     },
 ];
+
+export const lUsuario = [
+    {
+        label: "Dashboard",
+        icon: IconChartPieFilled,
+        links: [{ label: "Inicio", link: "/" }],
+    },
+]

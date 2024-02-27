@@ -13,8 +13,10 @@ import {
 import { AlertSection, BtnSubmit } from "../../components";
 import { useAuthStore } from "../../hooks";
 import { IconChevronsRight, IconInfoCircle } from "@tabler/icons-react";
+import { useNavigate } from "react-router-dom";
 
 export const AuthForm = () => {
+    const navigate = useNavigate();
     const { isLoading, startLogin, validate, errores } = useAuthStore();
 
     const form = useForm({
@@ -40,6 +42,7 @@ export const AuthForm = () => {
         e.preventDefault();
         //startLogin(form.values);
         startLogin(form.values);
+        navigate("/u/profile", { replace: true })
     };
 
     return (
