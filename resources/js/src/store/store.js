@@ -1,6 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { authSlice, usersSlice } from "../store";
-import { messageSlice } from "./message/messageSlice";
 
 
 

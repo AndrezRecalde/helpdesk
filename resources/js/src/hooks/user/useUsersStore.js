@@ -42,7 +42,7 @@ export const useUsersStore = () => {
                 return;
             }
 
-            const { data } = await helpdeskApi.post("/gerencia//store/usuario", user);
+            const { data } = await helpdeskApi.post("/gerencia/store/usuario", user);
             dispatch(onSetMessage(data.msg));
             setTimeout(() => {
                 dispatch(onSetMessage(undefined));

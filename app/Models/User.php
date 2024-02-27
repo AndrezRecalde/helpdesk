@@ -86,4 +86,18 @@ class User extends Authenticatable
             return $query->where('us.cdgo_direccion', $cdgo_direccion);
         }
     }
+
+    function scopeNombres($query, $nmbre_usrio)
+    {
+        if ($nmbre_usrio) {
+            return $query->where('us.nmbre_usrio', 'like', '%' . $nmbre_usrio . '%');
+        }
+    }
+
+    function scopeUsuario($query, $lgin)
+    {
+        if ($lgin) {
+            return $query->where('us.lgin', $lgin);
+        }
+    }
 }
