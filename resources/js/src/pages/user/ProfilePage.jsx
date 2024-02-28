@@ -18,9 +18,18 @@ const stats = [
 
 export const ProfilePage = () => {
     useDocumentTitle("Profile");
+    //const user = JSON.parse(localStorage.getItem("service_user"));
     const { isLoading, startProfile, profile, clearProfile } = useAuthStore();
 
     const year = new Date();
+
+    useEffect(() => {
+        startProfile();
+
+        /* return () => {
+            clearProfile();
+        }; */
+    }, []);
 
     const items = stats.map((stat) => (
         <div key={stat.label}>
@@ -33,13 +42,7 @@ export const ProfilePage = () => {
         </div>
     ));
 
-    useEffect(() => {
-        startProfile();
 
-        return () => {
-            clearProfile();
-        };
-    }, []);
 
     return (
         <Container size="sm">

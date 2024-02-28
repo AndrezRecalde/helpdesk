@@ -5,8 +5,9 @@ import { useState } from "react";
 import { TextSection } from "../../components";
 
 import classes from "../../assets/styles/modules/layout/Layout.module.css";
+import { Outlet } from "react-router-dom";
 
-export const AppLayout = ({ children }) => {
+export const AppLayout = () => {
     const [mobileOpened, { toggle: toggleMobile }] = useDisclosure();
     const [desktopOpened, { toggle: toggleDesktop }] = useDisclosure(true);
 
@@ -59,7 +60,7 @@ export const AppLayout = ({ children }) => {
                     <AppNavfooter />
                 </AppShell.Section>
             </AppShell.Navbar>
-            <AppShell.Main>{children}</AppShell.Main>
+            <AppShell.Main><Outlet /></AppShell.Main>
         </AppShell>
     );
 };

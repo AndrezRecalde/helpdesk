@@ -25,7 +25,7 @@ use Illuminate\Support\Facades\Route;
 Route::post('/auth/login', [AuthController::class, 'login']);
 
 Route::get('/refresh', [AuthController::class, 'refresh'])->middleware('auth:sanctum');
-Route::get('/profile', [AuthController::class, 'profile'])->middleware('auth:sanctum');
+Route::post('/profile', [AuthController::class, 'profile'])->middleware('auth:sanctum');
 Route::post('/auth/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 
 Route::group(['prefix' => 'gerencia', 'middleware' => ['auth:sanctum']], function () {

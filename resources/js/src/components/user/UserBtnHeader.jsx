@@ -80,7 +80,7 @@ export const UserBtnHeader = () => {
             </Menu.Target>
             <Menu.Dropdown>
                 <Menu.Item
-                onClick={() => navigate("/profile")}
+                onClick={() => navigate("/u/profile")}
                     leftSection={
                         <IconUserHexagon
                             style={{ width: rem(16), height: rem(16) }}

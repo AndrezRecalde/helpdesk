@@ -5,37 +5,9 @@ import { AdminDireccionesPage, AdminUsersPage, BusquedaSolicitudPage, DashGerenc
 
 export const PrivatePages = () => {
     return (
-        <AppLayout>
             <RoutesNotFound>
-                <Route
-                    path="/"
-                    element={<Navigate to="profile" />}
-                />
                 <Route path="profile" element={<ProfilePage />} />
                 <Route path="solicitud" element={<SolicitudPage />} />
-
-
-                <Route path="usuarios" element={<AdminUsersPage />} />
-                <Route
-                    path="direcciones"
-                    element={<AdminDireccionesPage />}
-                />
-                <Route
-                    path="solicitudes-actuales"
-                    element={<SolicitudesActualesPage />}
-                />
-                <Route
-                    path="busqueda-solicitudes"
-                    element={<BusquedaSolicitudPage />}
-                />
-                <Route
-                    path="solicitudes-anuladas"
-                    element={<SolicitudesAnuladasPage />}
-                />
-                <Route path="soportes" element={<SoportesPage />} />
-
-                <Route path="dashboard" element={<DashGerenciaPage />} />
             </RoutesNotFound>
-        </AppLayout>
     );
 };

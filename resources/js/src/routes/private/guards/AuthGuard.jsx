@@ -1,17 +1,12 @@
-import { Navigate, Outlet } from "react-router-dom";
+import { Navigate, useLocation } from "react-router-dom";
 
-const AuthRouteFragment = <Outlet />;
-const PublicRouteFragment = <Navigate to="u" replace />
-
-export const AuthGuard = ({ redirectPath = "/auth/login", privateValidation = true }) => {
+export const AuthGuard = ({ redirectPath = "/auth/login", children }) => {
     const token = localStorage.getItem("auth_token");
+    let location = useLocation();
 
     return token ? (
-        privateValidation ? (
-            AuthRouteFragment
-        ) : PublicRouteFragment
+        children
     ) : (
-        <Navigate replace to={redirectPath} />
+        <Navigate replace to={redirectPath} state={{ location }} />
     );
 };
-

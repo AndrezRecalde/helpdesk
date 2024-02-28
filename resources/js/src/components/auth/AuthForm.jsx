@@ -42,7 +42,7 @@ export const AuthForm = () => {
         e.preventDefault();
         //startLogin(form.values);
         startLogin(form.values);
-        navigate("/u/profile", { replace: true })
+        //navigate("/u/profile", { replace: true })
     };
 
     return (

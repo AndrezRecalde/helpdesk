@@ -65,7 +65,8 @@ export const useAuthStore = () => {
     const startProfile = async () => {
         try {
             dispatch(onLoading());
-            const { data } = await helpdeskApi.get("/profile");
+            const user = await JSON.parse(localStorage.getItem("service_user"));
+            const { data } = await helpdeskApi.post("/profile", { cdgo_usrio: user?.cdgo_usrio });
             const { profile } = data;
             dispatch(onLoadProfile(profile));
         } catch (error) {

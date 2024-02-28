@@ -24,6 +24,7 @@ import { DashGerenciaPage } from "./dashboard/gerencia/DashGerenciaPage";
 
 /* Error */
 import { ErrorNotFound } from "./error/ErrorNotFound";
+import { ErrorAccessDenied } from "./error/ErrorAccessDenied";
 
 export {
     AuthPage,
@@ -42,5 +43,6 @@ export {
 
     DashGerenciaPage,
 
-    ErrorNotFound
+    ErrorNotFound,
+    ErrorAccessDenied
 }

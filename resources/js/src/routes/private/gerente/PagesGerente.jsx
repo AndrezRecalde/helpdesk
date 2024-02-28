@@ -14,7 +14,6 @@ import {
 export const PagesGerente = () => {
     console.log('pagesGerente')
     return (
-        <AppLayout>
             <RoutesNotFound>
                 <Route path="usuarios" element={<AdminUsersPage />} />
                 <Route
@@ -38,6 +37,5 @@ export const PagesGerente = () => {
                 <Route path="dashboard" element={<DashGerenciaPage />} />
 
             </RoutesNotFound>
-        </AppLayout>
     );
 };
