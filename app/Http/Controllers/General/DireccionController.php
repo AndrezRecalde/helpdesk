@@ -12,9 +12,8 @@ class DireccionController extends Controller
     function getDirecciones(): JsonResponse
     {
         $direcciones = Departamento::from('dprtmntos as d')
-            ->selectRaw('d.cdgo_dprtmnto, d.nmbre_dprtmnto, d.cdgo_lrgo,
-                        us.cdgo_usrio, us.nmbre_usrio as usuario')
-            ->join('usrios_sstma as us', 'us.cdgo_usrio', 'd.id_jefe')
+            ->selectRaw('d.cdgo_dprtmnto, d.nmbre_dprtmnto, d.cdgo_lrgo')
+            //->join('usrios_sstma as us', 'us.cdgo_usrio', 'd.id_jefe')
             //->where('d.id_empresa', $request->id_empresa)
             ->where('d.es_direccion', 1)
             ->where('d.interna', 1)

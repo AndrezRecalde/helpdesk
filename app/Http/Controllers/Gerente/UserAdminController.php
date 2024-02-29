@@ -15,14 +15,15 @@ class UserAdminController extends Controller
     {
         $usuarios = User::from('usrios_sstma as us')
             ->selectRaw('us.cdgo_usrio, us.nmbre_usrio, nc.nom_cargo,
-                        d.nmbre_dprtmnto as departamento, de.nmbre_dprtmnto as direccion,
+                        d.nmbre_dprtmnto as direccion,
+                        de.nmbre_dprtmnto as departamento,
                         us.lgin, us.actvo, us.email')
             ->join('nom_cargo as nc', 'nc.idnom_cargo', 'us.crgo_id')
             ->join('dprtmntos as d', 'd.cdgo_dprtmnto', 'us.cdgo_direccion')
-            ->join('dprtmntos as de', 'd.cdgo_dprtmnto', 'us.cdgo_dprtmnto')
+            ->join('dprtmntos as de', 'de.cdgo_dprtmnto', 'us.cdgo_dprtmnto')
             ->direccion($request->cdgo_direccion)
             ->nombres($request->nmbre_usrio)
-            ->usuario($request->nmbre_usuario)
+            ->usuario($request->lgin)
             ->get();
 
         return response()->json(['status' => 'success', 'usuarios' => $usuarios]);

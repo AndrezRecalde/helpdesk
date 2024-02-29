@@ -63,5 +63,5 @@ Route::group(['prefix' => 'general', 'middleware' => ['auth:sanctum']], function
 
     /* DIRECCIONES */
     Route::get('/direcciones', [DireccionController::class, 'getDirecciones']);
-
 });
+

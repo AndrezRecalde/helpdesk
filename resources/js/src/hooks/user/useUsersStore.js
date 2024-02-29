@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useErrorException } from "../error/useErrorException";
+import { useErrorException } from "../../hooks";
 import {
     onLoadErrores,
     onLoadUsers,
@@ -15,11 +15,18 @@ export const useUsersStore = () => {
 
     const { ExceptionMessageError } = useErrorException(onLoadErrores);
 
-    const startLoadUsers = async ({ cdgo_direccion }) => {
+    /* GERENCIA */
+
+    const startLoadUsers = async ({ cdgo_direccion, nmbre_usrio, lgin }) => {
         try {
-            const { data } = await helpdeskApi.post("/gerencia/usuarios", {
-                cdgo_direccion,
-            });
+            const { data } = await helpdeskApi.post(
+                "/gerencia/admin/usuarios",
+                {
+                    cdgo_direccion,
+                    nmbre_usrio,
+                    lgin,
+                }
+            );
             const { usuarios } = data;
             dispatch(onLoadUsers(usuarios));
         } catch (error) {
@@ -42,7 +49,10 @@ export const useUsersStore = () => {
                 return;
             }
 
-            const { data } = await helpdeskApi.post("/gerencia/store/usuario", user);
+            const { data } = await helpdeskApi.post(
+                "/gerencia/store/usuario",
+                user
+            );
             dispatch(onSetMessage(data.msg));
             setTimeout(() => {
                 dispatch(onSetMessage(undefined));
@@ -71,16 +81,6 @@ export const useUsersStore = () => {
             ExceptionMessageError(error);
         }
     };
-
-    const startLoadTecnicos = async() => {
-        try {
-            const { data } = await helpdeskApi.get("/gerencia/tecnicos/admin");
-
-        } catch (error) {
-            console.log(error);
-            ExceptionMessageError(error);
-        }
-    }
 
     return {
         isLoading,
