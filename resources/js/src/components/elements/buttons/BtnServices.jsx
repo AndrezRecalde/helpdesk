@@ -34,6 +34,7 @@ export const BtnSection = ({
     fontSize = 14,
     mb = 0,
     mt = 0,
+    handleAction,
     children,
 }) => {
     return (
@@ -50,6 +51,7 @@ export const BtnSection = ({
                     fontSize: fontSize,
                 },
             }}
+            onClick={(e) => handleAction(e)}
         >
             {children}
         </Button>

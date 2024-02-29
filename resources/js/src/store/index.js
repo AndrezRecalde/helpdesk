@@ -3,6 +3,7 @@ import { authSlice } from "./auth/authSlice";
 
 /* Usuarios */
 import { usersSlice } from "./user/usersSlice";
+import { uiUserSlice } from "./user/uiUserSlice";
 
 /* Direcciones */
 import { direccionSlice } from "./direccion/direccionSlice";
@@ -20,6 +21,7 @@ export {
 
     /*User */
     usersSlice,
+    uiUserSlice,
 
     /* Direccion */
     direccionSlice,

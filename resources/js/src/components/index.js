@@ -39,6 +39,9 @@ import { ChartPieSoportes } from "./gerencia/charts/ChartPieSoportes";
 import { ChartAreaSoportes } from "./gerencia/charts/ChartAreaSoportes";
 import { ChartBarSoportes } from "./gerencia/charts/ChartBarSoportes";
 
+import { ModalUser } from "./gerencia/modals/ModalUser";
+import { FormUser } from "./gerencia/forms/FormUser";
+
 export {
     TitlePage,
     TextSection,
@@ -75,5 +78,8 @@ export {
 
     ChartPieSoportes,
     ChartAreaSoportes,
-    ChartBarSoportes
+    ChartBarSoportes,
+
+    ModalUser,
+    FormUser
 }
