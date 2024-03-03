@@ -11,7 +11,7 @@ class EmpresaController extends Controller
 {
     function getEmpresas(): JsonResponse
     {
-        $empresas = Empresa::whereIn("id", [2,6,8,10])->get();
+        $empresas = Empresa::whereIn("idnom_empresa", [2,6,8,10])->get();
         return response()->json(['status' => 'success', 'empresas' => $empresas], 200);
     }
 }

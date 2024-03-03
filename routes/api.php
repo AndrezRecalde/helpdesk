@@ -44,7 +44,7 @@ Route::group(['prefix' => 'gerencia', 'middleware' => ['auth:sanctum']], functio
 
 
     /* DEPARTAMENTOS Y DIRECCION */
-    Route::get('/direcciones', [DireccionAdminController::class, 'getDirecciones']);
+    Route::post('/direcciones', [DireccionAdminController::class, 'getDirecciones']);
     Route::post('/departamentos', [DireccionAdminController::class, 'getDepartamentos']);
     Route::put('/update/director/departamento/{id}', [DireccionAdminController::class, 'updateDirectores']);
 

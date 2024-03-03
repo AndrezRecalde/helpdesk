@@ -5,6 +5,9 @@ import { authSlice } from "./auth/authSlice";
 import { usersSlice } from "./user/usersSlice";
 import { uiUserSlice } from "./user/uiUserSlice";
 
+/* Empresas */
+import { empresaSlice } from "./empresa/empresaSlice";
+
 /* Direcciones */
 import { direccionSlice } from "./direccion/direccionSlice";
 
@@ -22,6 +25,9 @@ export {
     /*User */
     usersSlice,
     uiUserSlice,
+
+    /* Empresas */
+    empresaSlice,
 
     /* Direccion */
     direccionSlice,

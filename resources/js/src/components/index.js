@@ -40,7 +40,11 @@ import { ChartAreaSoportes } from "./gerencia/charts/ChartAreaSoportes";
 import { ChartBarSoportes } from "./gerencia/charts/ChartBarSoportes";
 
 import { ModalUser } from "./gerencia/modals/ModalUser";
-import { FormUser } from "./gerencia/forms/FormUser";
+import { FormInfoUser } from "./gerencia/forms/FormInfoUser";
+import { FormTrabajoUser } from "./gerencia/forms/FormTrabajoUser";
+import { FormTipoUser } from "./gerencia/forms/FormTipoUser";
+
+import { StepperUser } from "./gerencia/Stepper/StepperUser";
 
 export {
     TitlePage,
@@ -81,5 +85,9 @@ export {
     ChartBarSoportes,
 
     ModalUser,
-    FormUser
+    FormInfoUser,
+    FormTrabajoUser,
+    FormTipoUser,
+
+    StepperUser
 }
