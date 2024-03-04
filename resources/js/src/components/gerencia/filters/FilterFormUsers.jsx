@@ -9,21 +9,22 @@ import {
 } from "@mantine/core";
 import { BtnSubmit } from "../../../components";
 import { IconSearch } from "@tabler/icons-react";
-import { useDireccionStore } from "../../../hooks";
+import { useDireccionStore, useUsersStore } from "../../../hooks";
 import { useForm } from "@mantine/form";
 
 export const FilterFormUsers = () => {
+    const { startLoadUsers, clearUsers } = useUsersStore();
     const { startLoadDirecciones, direcciones, clearDirecciones } =
         useDireccionStore();
 
     const form = useForm({
         initialValues: {
-            cdgo_dprtmnto: null,
+            cdgo_direccion: null,
             nmbre_usrio: "",
             lgin: "",
         },
         transformValues: (values) => ({
-            cdgo_dprtmnto: Number(values.cdgo_dprtmnto) || null,
+            cdgo_direccion: Number(values.cdgo_direccion),
         }),
     });
 
@@ -32,12 +33,14 @@ export const FilterFormUsers = () => {
 
         return () => {
             clearDirecciones();
+            clearUsers();
         };
     }, []);
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(form.values);
+        startLoadUsers(form.values);
+        //console.log(form.values);
     };
 
     return (
@@ -52,7 +55,7 @@ export const FilterFormUsers = () => {
                         clearable
                         label="Dirección"
                         placeholder="Elige la dirección"
-                        {...form.getInputProps("cdgo_dprtmnto")}
+                        {...form.getInputProps("cdgo_direccion")}
                         data={direcciones.map((direccion) => {
                             return {
                                 value: direccion.cdgo_dprtmnto.toString(),

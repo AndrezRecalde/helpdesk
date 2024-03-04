@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class SoporteRequest extends FormRequest
 {
@@ -22,12 +24,18 @@ class SoporteRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'tecnico_id',
-            'area_id',
-            'retrospectiva',
-            'estado_id',
-            'tipo_soporte_id',
-            'solicitud_id'
+            'id_usu_tecnico' => '',
+            'id_tipo_soporte' => 'required',
+            'id_area_tic'  => 'required',
+            //'id_estado'  => 'required',
+            'id_usu_tecnico_asig'  => 'required',
+            //'fecha_asig'  => 'required'
         ];
+    }
+
+    protected function failedValidation(Validator $validator): HttpResponseException
+    {
+        /* $errors = (new ValidationException($validator))->errors(); */
+        throw new HttpResponseException(response()->json(['errores' => $validator->errors()], 422));
     }
 }

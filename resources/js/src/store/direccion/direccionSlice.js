@@ -3,9 +3,6 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
     isLoading: false,
     direcciones: [],
-    activeDireccion: null,
-    validate: undefined,
-    message: undefined,
     errores: undefined,
 };
 
@@ -20,17 +17,9 @@ export const direccionSlice = createSlice({
             state.direcciones = payload;
             state.isLoading = false;
         },
-        onSetActiveDireccion: (state, { payload }) => {
-            state.activeDireccion = payload;
-            state.errores = undefined;
-            state.isLoading = false;
-        },
         onClearDirecciones: (state) => {
             state.isLoading = false;
             state.direcciones = [];
-            state.activeDireccion = null;
-            state.validate = undefined;
-            state.message = undefined;
             state.errores = undefined;
         },
         onLoadErrores: (state, { payload }) => {
@@ -45,7 +34,6 @@ export const direccionSlice = createSlice({
 export const {
     onLoading,
     onLoadDirecciones,
-    onSetActiveDireccion,
     onClearDirecciones,
     onLoadErrores,
     onClearErrores,

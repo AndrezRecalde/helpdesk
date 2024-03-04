@@ -1,29 +1,11 @@
 import { useMantineReactTable } from "mantine-react-table";
-import { useMemo } from "react";
-import { MenuUsersTable, TableContent } from "../../../components";
-
-
-const data = [
-    {
-        direccion: "GESTIÓN DE TECNOLOGIAS DE LA INFORMACIÓN",
-        nombres: "Cristhian Recalde Solano",
-        cargo: "ANALISTA",
-        login: "crecalde",
-        email: "crecalde@gadpe.gob.ec",
-        activo: "Activo"
-    },
-    {
-        direccion: "GESTIÓN ADMINISTRATIVA DEL GADPE",
-        nombres: "JAEN ANGULO JUAN CARLOS",
-        cargo: "MECANICO",
-        login: "jjaen",
-        email: "jjaen@gadpe.gob.ec",
-        activo: "Inactivo"
-    },
-];
+import { useCallback, useMemo } from "react";
+import { ActivateUserBtn, MenuUsersTable, TableContent } from "../../../components";
+import { useUiUser, useUsersStore } from "../../../hooks";
 
 export const UsersTable = () => {
-
+    const { isLoading, users, setActivateUser } = useUsersStore();
+    const { modalActionActiveUser } = useUiUser();
     const columns = useMemo(
         () => [
             {
@@ -31,37 +13,55 @@ export const UsersTable = () => {
                 header: "Dirección",
             },
             {
-                accessorKey: "nombres", //access nested data with dot notation
+                accessorKey: "nmbre_usrio", //access nested data with dot notation
                 header: "Nombres",
-                filterVariant: 'autocomplete',
+                filterVariant: "autocomplete",
             },
             {
-                accessorKey: "cargo", //normal accessorKey
+                accessorKey: "nom_cargo", //normal accessorKey
                 header: "Cargo",
             },
             {
-                accessorKey: "login",
+                accessorKey: "lgin",
                 header: "Usuario",
             },
             {
-                accessorKey: "activo",
+                accessorKey: "actvo",
                 header: "Activo",
+                Cell: ({ cell }) => (
+                    <ActivateUserBtn cell={cell} handleActive={handleActive} />
+                ),
             },
         ],
         []
     );
 
+    const handleEdit = useCallback(
+        (selected) => {
+            setActivateUser(selected);
+        },
+        [users]
+    );
+
+    const handleActive = useCallback(
+      (selected) => {
+        setActivateUser(selected);
+        modalActionActiveUser(1);
+      },
+      [users],
+    )
+
+
     const table = useMantineReactTable({
         columns,
-        data, //must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
+        data: users, //must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
         enableFacetedValues: true,
         enableRowActions: true,
+        state: { showProgressBars: isLoading },
         renderRowActionMenuItems: ({ row }) => (
-            <MenuUsersTable />
+            <MenuUsersTable row={row} handleEdit={handleEdit} />
         ),
     });
 
-  return (
-    <TableContent table={table} />
-  )
-}
+    return <TableContent table={table} />;
+};

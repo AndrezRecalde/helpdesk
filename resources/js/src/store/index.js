@@ -11,6 +11,29 @@ import { empresaSlice } from "./empresa/empresaSlice";
 /* Direcciones */
 import { direccionSlice } from "./direccion/direccionSlice";
 
+/* Directores */
+import { directorSlice } from "./directores/directorSlice";
+import { uiDirectorSlice } from "./directores/uiDirectorSlice";
+
+/* Tipo Sexo */
+import { sexoSlice } from "./sexo/sexoSlice";
+
+/* Departamentos */
+import { departamentoSlice } from "./departamento/departamentoSlice";
+
+/* Cargos */
+import { cargoSlice } from "./cargo/cargoSlice";
+
+/* Tipos Usuarios */
+import { tiposUsuariosSlice } from "./tiposUsuarios/tiposUsuariosSlice";
+
+/* Tipos Contratos */
+import { tipoContratoSlice } from "./tiposContratos/tipoContratoSlice";
+
+/* Soportes */
+import { soporteSlice } from "./soporte/soporteSlice";
+import { uiSoporteSlice } from "./soporte/uiSoporteSlice";
+
 import { store } from "./store";
 
 
@@ -31,4 +54,27 @@ export {
 
     /* Direccion */
     direccionSlice,
+
+    /* Directores */
+    directorSlice,
+    uiDirectorSlice,
+
+    /* Tipo de sexo */
+    sexoSlice,
+
+    /* Departamentos */
+    departamentoSlice,
+
+    /* Cargo */
+    cargoSlice,
+
+    /* Tipos Usuarios */
+    tiposUsuariosSlice,
+
+    /* Tipos Contratos */
+    tipoContratoSlice,
+
+    /* Soportes */
+    soporteSlice,
+    uiSoporteSlice
  };

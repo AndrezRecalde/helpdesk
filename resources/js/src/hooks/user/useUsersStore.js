@@ -1,8 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useErrorException } from "../../hooks";
 import {
+    onClearUsers,
     onLoadErrores,
     onLoadUsers,
+    onLoading,
+    onSetActivateUser,
     onSetMessage,
 } from "../../store/user/usersSlice";
 import helpdeskApi from "../../api/helpdeskApi";
@@ -15,10 +18,28 @@ export const useUsersStore = () => {
 
     const { ExceptionMessageError } = useErrorException(onLoadErrores);
 
-    /* GERENCIA */
+    /* GENERAL */
+    const startLoadUsersGeneral = async ({ cdgo_direccion }) => {
+        try {
+            dispatch(onLoading());
+            const { data } = await helpdeskApi.post(
+                "/general/usuarios",
+                {
+                    cdgo_direccion,
+                }
+            );
+            const { usuarios } = data;
+            dispatch(onLoadUsers(usuarios));
+        } catch (error) {
+            console.log(error);
+            ExceptionMessageError(error);
+        }
+    };
 
+    /* GERENCIA */
     const startLoadUsers = async ({ cdgo_direccion, nmbre_usrio, lgin }) => {
         try {
+            dispatch(onLoading());
             const { data } = await helpdeskApi.post(
                 "/gerencia/admin/usuarios",
                 {
@@ -82,6 +103,14 @@ export const useUsersStore = () => {
         }
     };
 
+    const clearUsers = () => {
+        dispatch(onClearUsers());
+    }
+
+    const setActivateUser = (user) => {
+        dispatch(onSetActivateUser(user));
+    }
+
     return {
         isLoading,
         users,
@@ -90,6 +119,9 @@ export const useUsersStore = () => {
         errores,
         message,
 
+        startLoadUsersGeneral,
         startLoadUsers,
+        clearUsers,
+        setActivateUser
     };
 };

@@ -19,10 +19,10 @@ export const useDireccionStore = () => {
     const { ExceptionMessageError } = useErrorException(onLoadErrores);
     const dispatch = useDispatch();
 
-    /* ENDPOINTS GERENCIA */
-    const startLoadDirecciones = async (id_empresa = null) => {
+    /* ENDPOINTS GENERAL */
+    const startLoadDirecciones = async () => {
         try {
-            const { data } = await helpdeskApi.post("/gerencia/direcciones", { id_empresa });
+            const { data } = await helpdeskApi.get("/general/direcciones");
             const { direcciones } = data;
             dispatch(onLoadDirecciones(direcciones));
         } catch (error) {
@@ -31,17 +31,6 @@ export const useDireccionStore = () => {
         }
     };
 
-    const startLoadDireccionesAdmin = async ({ id_empresa }) => {
-        try {
-            const { data } = await helpdeskApi.post("/gerencia/direcciones", {
-                id_empresa,
-            });
-            const { direcciones } = data;
-        } catch (error) {
-            console.log(error);
-            ExceptionMessageError(error);
-        }
-    };
 
     /* LIMPIEZA */
     const clearDirecciones = () => {
@@ -57,7 +46,6 @@ export const useDireccionStore = () => {
         errores,
 
         startLoadDirecciones,
-        startLoadDireccionesAdmin,
         clearDirecciones,
     };
 };

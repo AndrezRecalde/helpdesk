@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Gerente;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ResetPwdRequest;
 use App\Http\Requests\TecnicoRequest;
 use App\Http\Requests\UserRequest;
 use App\Models\User;
@@ -42,6 +43,22 @@ class UserAdminController extends Controller
     function update(UserRequest $request, int $cdgo_usrio): JsonResponse
     {
         $usuario = User::find($cdgo_usrio);
+        try {
+            if ($usuario) {
+                $usuario->update($request->validated());
+                return response()->json(['status' => 'success', 'msg' => 'Actualizado con éxito'], 201);
+            } else {
+                return response()->json(['status' => 'error', 'msg' => 'Usuario no encontrado'], 404);
+            }
+        } catch (\Throwable $th) {
+            return response()->json(['status' => 'error', 'msg' => $th->getMessage()], 500);
+        }
+    }
+
+    function resetPasword(ResetPwdRequest $request, int $cdgo_usrio): JsonResponse
+    {
+        $usuario = User::find($cdgo_usrio);
+
         try {
             if ($usuario) {
                 $usuario->update($request->validated());

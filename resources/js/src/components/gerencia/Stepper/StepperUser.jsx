@@ -77,8 +77,6 @@ export const StepperUser = () => {
         },
     });
 
-    const nextStep = () => setActive((current) => (current < 3 ? current + 1 : current));
-
     const prevStep = () =>
         setActive((current) => (current > 0 ? current - 1 : current));
 
@@ -116,7 +114,7 @@ export const StepperUser = () => {
                 ) {
                     setActive((current) => current * 1);
                 } else {
-                    setActive((current) => current < 2 ? current + 1 : current);
+                    setActive((current) => current < 3 ? current + 1 : current);
                     form.clearErrors();
                 }
                 break;
@@ -133,7 +131,7 @@ export const StepperUser = () => {
                 ) {
                     setActive((current) => current * 1);
                 } else {
-                    setActive((current) => current < 2 ? current + 1 : current);
+                    setActive((current) => current < 3 ? current + 1 : current);
                     form.clearErrors();
                 }
                 break;
@@ -144,6 +142,11 @@ export const StepperUser = () => {
         /* } */
 
     };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log(form.values);
+    }
 
     const { nmbre_usrio } = form.values;
 
@@ -174,14 +177,14 @@ export const StepperUser = () => {
                     allowStepSelect={active > 2}
                     allowStepClick={false}
                 >
-                    <FormTipoUser />
+                    <FormTipoUser form={form} />
                 </Stepper.Step>
 
                 <Stepper.Completed>
                     <Title order={5}>
-                        ¿Confirma en crear el
+                        ¿Confirma en crear el{" "}
                         <Text span c="blue" inherit>
-                            usuario
+                            usuario:{" "}
                         </Text>
                         {nmbre_usrio} ?
                     </Title>
@@ -189,7 +192,7 @@ export const StepperUser = () => {
             </Stepper>
 
             <Group justify="center" mt="xl">
-                {active === 2 ? (
+                {active === 3 ? (
                     <Group justify="center" mt="xl">
                         <Button
                             variant="default"
@@ -202,8 +205,8 @@ export const StepperUser = () => {
                             gradient={{ from: "indigo", to: "blue", deg: 105 }}
                             color="green"
                             radius="md"
-                            leftIcon={<IconSend />}
-                            onClick={() => console.log("clic")}
+                            leftSection={<IconSend />}
+                            onClick={(e) => handleSubmit(e)}
                         >
                             Agregar usuario
                         </Button>

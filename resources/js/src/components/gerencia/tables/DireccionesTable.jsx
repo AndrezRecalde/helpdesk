@@ -1,32 +1,32 @@
-import { useMemo } from 'react'
+import { useCallback, useMemo } from 'react'
 import { useMantineReactTable } from 'mantine-react-table';
 import { MenuTable_E, TableContent } from '../../../components';
+import { useDirectorStore, useUiDirector } from '../../../hooks';
 
-const data = [
-    {
-        direccion: "GESTIÓN DE TECNOLOGIAS DE LA INFORMACIÓN",
-        jefe: "Franklin Francis Quinde",
-        encargado: "Venus Estupiñan",
-    },
-    {
-        direccion: "GESTIÓN ADMINISTRATIVA DEL GADPE",
-        jefe: "Eduardo Gutierrez",
-        encargado: "Maria Ceibon",
-    },
-];
 
 export const DireccionesTable = () => {
+    const { directores, setActivateDirectores } = useDirectorStore();
+    const { modalActionDirector } = useUiDirector();
+
+    const handleEdit = useCallback(
+      (selected) => {
+        setActivateDirectores(selected);
+        modalActionDirector(1);
+      },
+      [directores],
+    )
+
 
     const columns = useMemo(
         () => [
             {
-                accessorKey: "direccion", //access nested data with dot notation
+                accessorKey: "nmbre_dprtmnto", //access nested data with dot notation
                 header: "Dirección",
             },
             {
                 accessorKey: "jefe", //access nested data with dot notation
                 header: "Director del área",
-                filterVariant: 'autocomplete',
+                //filterVariant: 'autocomplete',
             },
             {
                 accessorKey: "encargado", //normal accessorKey
@@ -38,11 +38,14 @@ export const DireccionesTable = () => {
 
     const table = useMantineReactTable({
         columns,
-        data, //must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
+        data: directores, //must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
         enableFacetedValues: true,
         enableRowActions: true,
         renderRowActionMenuItems: ({ row }) => (
-            <MenuTable_E />
+            <MenuTable_E
+            row={row}
+            handleEdit={handleEdit}
+            />
         ),
     });
 

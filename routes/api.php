@@ -2,11 +2,16 @@
 
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\General\DireccionController;
+use App\Http\Controllers\General\SoporteController;
 use App\Http\Controllers\General\UserController;
 use App\Http\Controllers\Gerente\CargoController;
 use App\Http\Controllers\Gerente\DireccionAdminController;
 use App\Http\Controllers\Gerente\EmpresaController;
+use App\Http\Controllers\Gerente\SexoController;
+use App\Http\Controllers\Gerente\SoporteAdminController;
 use App\Http\Controllers\Gerente\TecnicoController;
+use App\Http\Controllers\Gerente\TipoContratoController;
+use App\Http\Controllers\Gerente\TipoUsuarioController;
 use App\Http\Controllers\Gerente\UserAdminController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -28,6 +33,8 @@ Route::get('/refresh', [AuthController::class, 'refresh'])->middleware('auth:san
 Route::post('/profile', [AuthController::class, 'profile'])->middleware('auth:sanctum');
 Route::post('/auth/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 
+/* RUTAS: GERENTE */
+
 Route::group(['prefix' => 'gerencia', 'middleware' => ['auth:sanctum']], function () {
 
     /* USUARIOS */
@@ -44,18 +51,33 @@ Route::group(['prefix' => 'gerencia', 'middleware' => ['auth:sanctum']], functio
 
 
     /* DEPARTAMENTOS Y DIRECCION */
-    Route::post('/direcciones', [DireccionAdminController::class, 'getDirecciones']);
+    Route::post('/directores', [DireccionAdminController::class, 'getDirectores']);
     Route::post('/departamentos', [DireccionAdminController::class, 'getDepartamentos']);
-    Route::put('/update/director/departamento/{id}', [DireccionAdminController::class, 'updateDirectores']);
+    Route::put('/update/director/departamento/{cdgo_dprtmnto}', [DireccionAdminController::class, 'updateDirectores']);
 
     /*EMPRESAS */
     Route::get('/empresas', [EmpresaController::class, 'getEmpresas']);
 
-    /*Cargos */
+    /* CARGOS */
     Route::get('/cargos', [CargoController::class, 'getCargos']);
+
+    /* TIPO DE SEXO */
+    Route::get('/sexo', [SexoController::class, 'getTipoSexo']);
+
+    /* TIPOS USUARIOS */
+    Route::get('/tipos-usuarios', [TipoUsuarioController::class, 'getTipoUsuarios']);
+
+    /* TIPOS CONTRATO */
+    Route::get('/tipos-contratos', [TipoContratoController::class, 'getTiposContratos']);
+
+    /* SOPORTES */
+    Route::put('/asignar-soporte/{id_sop}', [SoporteAdminController::class, 'asignarSoporte']);
+    Route::put('/anular-soporte/{id_sop}', [SoporteAdminController::class, 'anularSoportes']);
+
+
 });
 
-
+/* RUTAS: GERENTE O TECNICO */
 Route::group(['prefix' => 'general', 'middleware' => ['auth:sanctum']], function () {
 
     /* USUARIOS */
@@ -63,5 +85,10 @@ Route::group(['prefix' => 'general', 'middleware' => ['auth:sanctum']], function
 
     /* DIRECCIONES */
     Route::get('/direcciones', [DireccionController::class, 'getDirecciones']);
+
+    /* SOPORTES */
+    Route::post('/soportes-actuales', [SoporteController::class, 'getSoportesActuales']);
 });
 
+
+/* RUTAS TECNICO */

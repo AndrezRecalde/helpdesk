@@ -5,6 +5,7 @@ export const uiUserSlice = createSlice({
     initialState: {
         isOpenModalAddUser: false,
         isOpenModalResetPwd: false,
+        isOpenModalActiveUser: false,
     },
     reducers: {
         onOpenModalAddUser: (state) => {
@@ -19,6 +20,12 @@ export const uiUserSlice = createSlice({
         onCloseModalResetPwd: (state) => {
             state.isOpenModalResetPwd = false;
         },
+        onOpenModalActiveUser: (state) => {
+            state.isOpenModalActiveUser = true;
+        },
+        onCloseModalActiveUser: (state) => {
+            state.isOpenModalActiveUser = false;
+        }
     },
 });
 
@@ -27,4 +34,6 @@ export const {
     onCloseModalAddUser,
     onOpenModalResetPwd,
     onCloseModalResetPwd,
+    onOpenModalActiveUser,
+    onCloseModalActiveUser
 } = uiUserSlice.actions;

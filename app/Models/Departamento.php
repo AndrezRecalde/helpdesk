@@ -19,4 +19,11 @@ class Departamento extends Model
             return $query->where("d.id_empresa", $id_empresa);
         }
     }
+
+    function scopeDireccion($query, $cdgo_dprtmnto)
+    {
+        if ($cdgo_dprtmnto != null) {
+            return $query->where("d.cdgo_dprtmnto", $cdgo_dprtmnto);
+        }
+    }
 }

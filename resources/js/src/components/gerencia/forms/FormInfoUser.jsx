@@ -1,39 +1,9 @@
-import { Autocomplete, Grid, Loader, Select, TextInput } from "@mantine/core";
-import { useUiUser } from "../../../hooks";
-import { useRef, useState } from "react";
+import { Autocomplete, Grid, Select, TextInput } from "@mantine/core";
+import { useSexoStore } from "../../../hooks";
 
 export const FormInfoUser = ({ form }) => {
-    const { modalActionUser } = useUiUser();
+    const { sexo } = useSexoStore();
 
-    /* const timeoutRef = useRef(-1); */
-    /* const [value, setValue] = useState(""); */
-    /* const [loading, setLoading] = useState(false); */
-    /* const [data, setData] = useState([]); */
-
-    /* const handleChange = (val) => {
-        window.clearTimeout(timeoutRef.current);
-        setValue(val);
-        setData([]);
-
-        if (val.trim().length === 0 || val.includes("@")) {
-            setLoading(false);
-            form.setFieldError("email");
-        } else {
-            setLoading(true);
-            timeoutRef.current = window.setTimeout(() => {
-                setLoading(false);
-                setData(
-                    ["gadpe.gob.ec"].map((provider) => `${val}@${provider}`)
-                );
-                form.setFieldValue("email", data);
-            }, 1000);
-        }
-    }; */
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        modalActionUser(0);
-    };
     return (
         <Grid>
             <Grid.Col span={{ base: 12, sm: 12, md: 12, lg: 12 }}>
@@ -78,10 +48,12 @@ export const FormInfoUser = ({ form }) => {
                     label="Sexo"
                     placeholder="Seleccione el sexo"
                     {...form.getInputProps("sexo")}
-                    data={[
-                        { value: "1", label: "Masculino" },
-                        { value: "2", label: "Femenino" },
-                    ]}
+                    data={sexo.map((s) => {
+                        return {
+                            value: s.idnom_sexo.toString(),
+                            label: s.nom_sexo,
+                        };
+                    })}
                 />
             </Grid.Col>
             <Grid.Col span={{ base: 12, sm: 4, md: 4, lg: 4 }}>
@@ -96,7 +68,7 @@ export const FormInfoUser = ({ form }) => {
                     searchable
                     clearable
                     label="Usuario activo"
-                    placeholder="Elige el status"
+                    placeholder="¿Activo para acceder?"
                     {...form.getInputProps("actvo")}
                     data={[
                         { value: "1", label: "Si" },

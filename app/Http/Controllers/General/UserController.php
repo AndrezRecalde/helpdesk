@@ -17,11 +17,12 @@ class UserController extends Controller
                         us.lgin, us.actvo, us.email')
             ->join('nom_cargo as nc', 'nc.idnom_cargo', 'us.crgo_id')
             ->join('dprtmntos as d', 'd.cdgo_dprtmnto', 'us.cdgo_direccion')
-            ->join('dprtmntos as de', 'd.cdgo_dprtmnto', 'us.cdgo_dprtmnto')
+            ->join('dprtmntos as de', 'de.cdgo_dprtmnto', 'us.cdgo_dprtmnto')
             ->direccion($request->cdgo_direccion)
+            ->where('us.actvo', 1)
             ->get();
 
-        return response()->json(['status' => 'success', 'usuarios' => $usuarios]);
+        return response()->json(['status' => 'success', 'usuarios' => $usuarios], 200);
     }
 
 }

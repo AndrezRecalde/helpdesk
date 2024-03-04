@@ -10,17 +10,20 @@ use Illuminate\Http\Request;
 
 class DireccionAdminController extends Controller
 {
-    function getDirecciones(Request $request): JsonResponse
+    function getDirectores(Request $request): JsonResponse
     {
-        $direcciones = Departamento::from('dprtmntos as d')
+        $directores = Departamento::from('dprtmntos as d')
             ->selectRaw('d.cdgo_dprtmnto, d.nmbre_dprtmnto, d.cdgo_lrgo,
-                        us.cdgo_usrio, us.nmbre_usrio as usuario')
-            ->join('usrios_sstma as us', 'us.cdgo_usrio', 'd.id_jefe')
-            ->empresa($request->id_empresa)
+                        us.cdgo_usrio as jefe_id, us.nmbre_usrio as jefe,
+                        usu.cdgo_usrio as encargado_id, usu.nmbre_usrio as encargado')
+            ->leftJoin('usrios_sstma as us', 'us.cdgo_usrio', 'd.id_jefe')
+            ->leftJoin('usrios_sstma as usu', 'usu.cdgo_usrio', 'd.id_encargado')
+            //->empresa($request->id_empresa)
+            ->direccion($request->cdgo_dprtmnto)
             ->where('d.es_direccion', 1)
             ->where('d.interna', 1)
             ->get();
-        return response()->json(['status' => 'success', 'direcciones' => $direcciones], 200);
+        return response()->json(['status' => 'success', 'directores' => $directores], 200);
     }
 
     function getDepartamentos(Request $request): JsonResponse
@@ -28,14 +31,14 @@ class DireccionAdminController extends Controller
         $departamentos = Departamento::from('dprtmntos as d')
             ->selectRaw('d.cdgo_dprtmnto, d.nmbre_dprtmnto, d.cdgo_lrgo')
             ->where('d.interna', 1)
-            ->where('d.id_direccion', $request->id_direccion)
+            ->where('d.cdgo_dprtmnto', $request->cdgo_dprtmnto)
             ->get();
         return response()->json(['status' => 'success', 'departamentos' => $departamentos], 200);
     }
 
-    function updateDirectores(DirectorRequest $request, int $id): JsonResponse
+    function updateDirectores(DirectorRequest $request, int $cdgo_dprtmnto): JsonResponse
     {
-        $direccion = Departamento::find($id);
+        $direccion = Departamento::find($cdgo_dprtmnto);
 
         try {
             if ($direccion) {

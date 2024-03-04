@@ -2,13 +2,15 @@ import { Card, Container, Group } from "@mantine/core";
 import {
     BtnSection,
     FilterFormUsers,
+    ModalActivateUser,
     ModalUser,
     TitlePage,
     UsersTable,
 } from "../../components";
-import { useUiUser } from "../../hooks";
+import { useUiUser, useUsersStore } from "../../hooks";
 
 export const AdminUsersPage = () => {
+    const { users } = useUsersStore();
     const { modalActionUser } = useUiUser();
 
     const handleOpenModal = (e) => {
@@ -27,12 +29,15 @@ export const AdminUsersPage = () => {
                 </BtnSection>
             </Group>
             <FilterFormUsers />
-            <Card withBorder shadow="sm" radius="md" mt={20} mb={20}>
-                <Card.Section>
-                    <UsersTable />
-                </Card.Section>
-            </Card>
+            {users.length !== 0 ? (
+                <Card withBorder shadow="sm" radius="md" mt={20} mb={20}>
+                    <Card.Section>
+                        <UsersTable />
+                    </Card.Section>
+                </Card>
+            ) : null}
             <ModalUser title="Agregar usuario" />
+            <ModalActivateUser />
         </Container>
     );
 };

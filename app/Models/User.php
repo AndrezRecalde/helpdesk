@@ -60,7 +60,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $hidden = [
-        'password',
+        'paswrd',
         'remember_token',
     ];
 
@@ -71,21 +71,26 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
-        'password' => 'hashed',
+        'paswrd' => 'hashed',
     ];
 
     static function create(array $attributes = []): object
     {
-        $attributes['password'] = Hash::make(md5($attributes['dni']));
+        $attributes['paswrd'] = Hash::make(md5("1234"));
 
         $usuario = static::query()->create($attributes);
 
         return $usuario;
     }
 
+    public function setPasswordAttribute($paswrd)
+    {
+    return $this->attributes['paswrd'] = Hash::needsRehash(md5($paswrd)) ? Hash::make(md5($paswrd)) : $paswrd;
+    }
+
     function scopeDireccion($query, $cdgo_direccion)
     {
-        if ($cdgo_direccion) {
+        if ($cdgo_direccion !== null) {
             return $query->where('us.cdgo_direccion', $cdgo_direccion);
         }
     }

@@ -46,6 +46,15 @@ import { FormTipoUser } from "./gerencia/forms/FormTipoUser";
 
 import { StepperUser } from "./gerencia/Stepper/StepperUser";
 
+import { ModalDireccion } from "./gerencia/modals/ModalDireccion";
+import { FormDirector } from "./gerencia/forms/FormDirector";
+
+import { ModalAsignarSoporte } from "./soportes/modal/ModalAsignarSoporte";
+import { FormAsignarSoporte } from "./soportes/form/FormAsignarSoporte";
+import { ModalActivateUser } from "./gerencia/modals/ModalActivateUser";
+import { FormActiveUser } from "./gerencia/forms/FormActiveUser";
+import { ActivateUserBtn } from "./gerencia/btns/ActivateUserBtn";
+
 export {
     TitlePage,
     TextSection,
@@ -89,5 +98,14 @@ export {
     FormTrabajoUser,
     FormTipoUser,
 
-    StepperUser
+    StepperUser,
+
+    ModalDireccion,
+    FormDirector,
+
+    ModalAsignarSoporte,
+    FormAsignarSoporte,
+    ModalActivateUser,
+    FormActiveUser,
+    ActivateUserBtn
 }

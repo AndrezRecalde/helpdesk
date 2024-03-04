@@ -1,7 +1,7 @@
 import { Menu, rem } from "@mantine/core";
 import { IconEditCircle, IconTrash } from "@tabler/icons-react";
 
-export const MenuUsersTable = () => {
+export const MenuUsersTable = ({ row, handleEdit }) => {
     return (
         <>
             <Menu.Item
@@ -10,7 +10,7 @@ export const MenuUsersTable = () => {
                         style={{ width: rem(15), height: rem(15) }}
                     />
                 }
-                onClick={() => console.info("editar")}
+                onClick={() => handleEdit(row.original)}
             >
                 Editar
             </Menu.Item>
@@ -26,7 +26,7 @@ export const MenuUsersTable = () => {
     );
 };
 
-export const MenuTable_E = () => {
+export const MenuTable_E = ({ row, handleEdit }) => {
     return (
         <>
             <Menu.Item
@@ -35,7 +35,7 @@ export const MenuTable_E = () => {
                         style={{ width: rem(15), height: rem(15) }}
                     />
                 }
-                onClick={() => console.info("editar")}
+                onClick={() => handleEdit(row.original)}
             >
                 Editar
             </Menu.Item>
@@ -43,7 +43,7 @@ export const MenuTable_E = () => {
     );
 };
 
-export const MenuSolicitudTable = () => {
+export const MenuSolicitudTable = ({ row, handleAsignar, handleAnular }) => {
     return (
         <>
             <Menu.Item
@@ -52,7 +52,7 @@ export const MenuSolicitudTable = () => {
                         style={{ width: rem(15), height: rem(15) }}
                     />
                 }
-                onClick={() => console.info("editar")}
+                onClick={() => handleAsignar(row.original)}
             >
                 Asignar técnico
             </Menu.Item>
@@ -60,7 +60,7 @@ export const MenuSolicitudTable = () => {
                 leftSection={
                     <IconTrash style={{ width: rem(15), height: rem(15) }} />
                 }
-                onClick={() => console.info("resetear")}
+                onClick={() => handleAnular(row.original)}
             >
                 Anular solicitud
             </Menu.Item>

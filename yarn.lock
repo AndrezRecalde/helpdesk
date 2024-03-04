@@ -1350,6 +1350,11 @@ supports-color@^5.3.0:
   dependencies:
     has-flag "^3.0.0"
 
+sweetalert2@^11.10.5:
+  version "11.10.5"
+  resolved "https://registry.yarnpkg.com/sweetalert2/-/sweetalert2-11.10.5.tgz#ff01f45b40ad678ca1f0c2e6c98800d79a74c49f"
+  integrity sha512-q9eE3EKhMcpIDU/Xcz7z5lk8axCGkgxwK47gXGrrfncnBJWxHPPHnBVAjfsVXcTt8Yi8U6HNEcBRSu+qGeyFdA==
+
 tabbable@^6.0.1:
   version "6.2.0"
   resolved "https://registry.yarnpkg.com/tabbable/-/tabbable-6.2.0.tgz#732fb62bc0175cfcec257330be187dcfba1f3b97"

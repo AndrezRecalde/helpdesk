@@ -1,13 +1,16 @@
 import { useDispatch, useSelector } from "react-redux";
 import {
+    onCloseModalActiveUser,
     onCloseModalAddUser,
     onCloseModalResetPwd,
+    onOpenModalActiveUser,
     onOpenModalAddUser,
     onOpenModalResetPwd,
 } from "../../store/user/uiUserSlice";
 
 export const useUiUser = () => {
-    const { isOpenModalAddUser } = useSelector((state) => state.uiUser);
+    const { isOpenModalAddUser, isOpenModalResetPwd, isOpenModalActiveUser } =
+        useSelector((state) => state.uiUser);
     const dispatch = useDispatch();
 
     const modalActionUser = (behavior) => {
@@ -22,10 +25,19 @@ export const useUiUser = () => {
             : dispatch(onCloseModalResetPwd());
     };
 
+    const modalActionActiveUser = (behavior) => {
+        behavior === 1
+            ? dispatch(onOpenModalActiveUser())
+            : dispatch(onCloseModalActiveUser());
+    }
+
     return {
         isOpenModalAddUser,
+        isOpenModalResetPwd,
+        isOpenModalActiveUser,
 
         modalActionUser,
-        modalActionResetPwd
+        modalActionResetPwd,
+        modalActionActiveUser
     };
 };
