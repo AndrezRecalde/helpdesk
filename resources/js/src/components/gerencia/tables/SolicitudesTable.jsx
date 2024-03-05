@@ -21,7 +21,7 @@ export const SolicitudesTable = ({ menu }) => {
             },
             {
                 accessorFn: (row) =>
-                    dayjs(row.fecha_ini).format("YYYY-MM-DD h:m"), //access nested data with dot notation
+                    dayjs(row.fecha_ini).format("YYYY-MM-DD HH:mm"), //access nested data with dot notation
                 header: "Fecha - Hora",
             },
             {

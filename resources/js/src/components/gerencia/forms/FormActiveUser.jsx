@@ -1,5 +1,6 @@
+import { useEffect } from "react";
 import {
-    Button,
+    Box,
     Divider,
     Flex,
     Grid,
@@ -9,11 +10,11 @@ import {
 } from "@mantine/core";
 import { IconChecks, IconUserScan } from "@tabler/icons-react";
 import { useUiUser, useUsersStore } from "../../../hooks";
-import { useEffect } from "react";
+import { BtnSubmit } from "../../../components";
 
 export const FormActiveUser = ({ form }) => {
     const { modalActionActiveUser } = useUiUser();
-    const { activateUser } = useUsersStore();
+    const { activateUser, startUpdateActivoUser } = useUsersStore();
 
     useEffect(() => {
         if (activateUser !== null) {
@@ -27,11 +28,16 @@ export const FormActiveUser = ({ form }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log("clic");
+        console.log(form.values);
+        startUpdateActivoUser(form.values);
+        modalActionActiveUser(0);
     };
 
     return (
-        <>
+        <Box
+            component="form"
+            onSubmit={form.onSubmit((_, e) => handleSubmit(e))}
+        >
             <Grid>
                 <Grid.Col sm={12} md={12} lg={12} xl={12}>
                     <Flex
@@ -42,7 +48,7 @@ export const FormActiveUser = ({ form }) => {
                         direction="column"
                         wrap="wrap"
                     >
-                        <IconUserScan size={30} />
+                        <IconUserScan size={50} stroke={1.2} />
                         <Text>{activateUser?.nmbre_usrio}</Text>
                     </Flex>
                 </Grid.Col>
@@ -63,14 +69,10 @@ export const FormActiveUser = ({ form }) => {
                 </Grid.Col>
             </Grid>
             <Group position="center" mt="xl">
-                <Button
-                    fullWidth
-                    leftIcon={<IconChecks />}
-                    onClick={(e) => handleSubmit(e)}
-                >
+                <BtnSubmit IconSection={IconChecks} fontSize={16}>
                     Guardar
-                </Button>
+                </BtnSubmit>
             </Group>
-        </>
+        </Box>
     );
 };

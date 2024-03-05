@@ -33,7 +33,7 @@ export const DireccionesTable = () => {
                 header: "Jefe encargado",
             },
         ],
-        []
+        [directores]
     );
 
     const table = useMantineReactTable({

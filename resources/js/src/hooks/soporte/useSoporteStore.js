@@ -18,6 +18,7 @@ export const useSoporteStore = () => {
 
     const dispatch = useDispatch();
 
+    /* GERENTE O TECNICO */
     const startLoadSoportesActuales = async (id_usu_tecnico_asig = null) => {
         try {
             dispatch(onLoading());
@@ -33,6 +34,7 @@ export const useSoporteStore = () => {
         }
     };
 
+    /* GERENTE */
     const startAsignarSoporte = async (soporte) => {
         try {
             //dispatch(onLoading());
@@ -51,13 +53,59 @@ export const useSoporteStore = () => {
         }
     };
 
+    /* GERENTE  */
+    const startLoadSoportesAnulados = async (fecha_inicio, fecha_fin) => {
+        try {
+            dispatch(onLoading());
+            const { data } = await helpdeskApi.post(
+                "/gerencia/soportes-anulados",
+                { fecha_inicio, fecha_fin }
+            );
+            const { soportes } = data;
+            dispatch(onLoadSoportes(soportes));
+        } catch (error) {
+            console.log(error);
+            ExceptionMessageError(error);
+        }
+    };
+
+    /* GERENTE O TECNICO */
+    const startSearchSoporte = async (
+        fecha_inicio,
+        fecha_fin,
+        anio,
+        id_direccion,
+        numero_sop,
+        id_usu_tecnico_asig
+    ) => {
+        try {
+            dispatch(onLoading());
+            const { data } = await helpdeskApi.post(
+                "/general/buscar-soportes",
+                {
+                    fecha_inicio,
+                    fecha_fin,
+                    anio,
+                    id_direccion,
+                    numero_sop,
+                    id_usu_tecnico_asig,
+                }
+            );
+            const { soportes } = data;
+            dispatch(onLoadSoportes(soportes));
+        } catch (error) {
+            console.log(error);
+            ExceptionMessageError(error);
+        }
+    };
+
     const clearSoportes = () => {
         dispatch(onClearSoportes());
     };
 
     const setActivateSoporte = (soporte) => {
-       dispatch(onSetActivateSoporte(soporte));
-    }
+        dispatch(onSetActivateSoporte(soporte));
+    };
 
     return {
         isLoading,
@@ -68,7 +116,8 @@ export const useSoporteStore = () => {
 
         startLoadSoportesActuales,
         startAsignarSoporte,
+        startLoadSoportesAnulados,
         clearSoportes,
-        setActivateSoporte
+        setActivateSoporte,
     };
 };

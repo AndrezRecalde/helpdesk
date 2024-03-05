@@ -16,9 +16,9 @@ export const ActivateUserBtn = ({ cell, handleActive }) => {
                 variant="light"
                 radius="xl"
                 onClick={(e) => handleActivate(e)}
-                color={cell.row.original.actvo === 1 ? "teal" : "orange.5"}
+                color={cell.row.original.actvo == 1 ? "teal" : "orange.5"} //Cambiar a un igual mas
             >
-                {cell.row.original.actvo === 1 ? (
+                {cell.row.original.actvo == 1 ? (
                     <IconDiscountCheckFilled />
                 ) : (
                     <IconAlertCircleFilled />

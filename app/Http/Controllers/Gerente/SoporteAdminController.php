@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Gerente;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use App\Http\Requests\AnularSoporteRequest;
 use App\Http\Requests\SoporteRequest;
 use App\Mail\SoporteMail;
@@ -68,5 +69,30 @@ class SoporteAdminController extends Controller
         } catch (\Throwable $th) {
             return response()->json(['status' => 'error', 'message' => $th->getMessage()], 500);
         }
+    }
+
+    function getSoporteAnulados(Request $request): JsonResponse
+    {
+        $soportes = Soporte::from('sop_soporte as ss')
+            ->selectRaw('ss.id_sop, ss.anio, ss.numero_sop,
+                        ss.id_direccion, d.nmbre_dprtmnto as direccion,
+                        ss.id_usu_recibe, u.nmbre_usrio as usuario_recibe,
+                        ss.fecha_ini, ss.incidente, ss.obs_anulado,
+                        ss.id_area_tic, sat.nombre as area_tic,
+                        ss.id_estado, se.nombre as estado')
+            ->join('dprtmntos as d', 'd.cdgo_dprtmnto', 'ss.id_direccion')
+            ->join('usrios_sstma as u', 'u.cdgo_usrio', 'ss.id_usu_recibe')
+            ->join('sop_estado as se', 'se.id_estado_caso', 'ss.id_estado')
+            ->leftJoin('sop_areas_tic as sat', 'sat.id_areas_tic', 'ss.id_area_tic')
+            ->where('ss.id_estado', 2)
+            ->fechas($request->fecha_inicio, $request->fecha_fin)
+            ->orderBy('ss.numero_sop', 'DESC')
+            ->get();
+
+            if (sizeof($soportes) >= 1) {
+                return response()->json(['status' => 'success', 'soportes' => $soportes], 200);
+            } else {
+                return response()->json(['status' => 'error', 'msg' => 'No existen soportes anulados en ese rango de fechas'], 404);
+            }
     }
 }

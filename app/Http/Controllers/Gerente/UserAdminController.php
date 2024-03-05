@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ResetPwdRequest;
 use App\Http\Requests\TecnicoRequest;
 use App\Http\Requests\UserRequest;
+use App\Http\Requests\UserUpdateActivo;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -27,7 +28,11 @@ class UserAdminController extends Controller
             ->usuario($request->lgin)
             ->get();
 
-        return response()->json(['status' => 'success', 'usuarios' => $usuarios]);
+        if (sizeof($usuarios) >= 1) {
+            return response()->json(['status' => 'success', 'usuarios' => $usuarios], 200);
+        } else {
+            return response()->json(['status' => 'error', 'msg' => "No existen usuarios con esos filtros de búsqueda"], 404);
+        }
     }
 
     function store(UserRequest $request): JsonResponse
@@ -68,6 +73,34 @@ class UserAdminController extends Controller
             }
         } catch (\Throwable $th) {
             return response()->json(['status' => 'error', 'msg' => $th->getMessage()], 500);
+        }
+    }
+
+    function updateActivoUser(UserUpdateActivo $request, int $cdgo_usrio): JsonResponse
+    {
+        $usuario = User::find($cdgo_usrio);
+        if ($usuario) {
+            $usuario->update($request->validated());
+            return response()->json(['status' => 'success', 'msg' => 'Actualizado con éxito'], 201);
+        } else {
+            return response()->json(['status' => 'error', 'msg' => 'Usuario no encontrado'], 404);
+        }
+    }
+
+    function verifiedUser(Request $request): JsonResponse
+    {
+        $usuario = User::from('usrios_sstma as us')
+            ->selectRaw('us.cdgo_usrio')
+            ->usuario($request->lgin)
+            ->cedula($request->usu_ci)
+            ->email($request->email)
+            ->first();
+
+        if ($usuario) {
+            return response()->json(['status' => 'success', 'usuario' => $usuario], 200);
+        } else {
+            return response()->json(['status' => 'error', 'msg' => 'No existe usuario'], 200);
+
         }
     }
 }

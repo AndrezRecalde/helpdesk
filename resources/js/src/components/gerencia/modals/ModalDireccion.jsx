@@ -1,21 +1,27 @@
 import { Modal } from "@mantine/core";
-import { useUiDirector } from "../../../hooks";
+import { useDirectorStore, useUiDirector } from "../../../hooks";
 import { FormDirector } from "../../../components";
-import { useForm } from "@mantine/form";
+import { isNotEmpty, useForm } from "@mantine/form";
 
 export const ModalDireccion = () => {
+    const { setClearActivateDirectores } = useDirectorStore();
     const { isOpenModalActionDirector, modalActionDirector } = useUiDirector();
 
     const form = useForm({
         initialValues: {
             id_jefe: null,
-            id_encargado: null
-        }
-    })
+            id_encargado: null,
+        },
+        validate: {
+            id_jefe: isNotEmpty("Por favor seleccione un usuario"),
+            id_encargado: isNotEmpty("Por favor seleccione un usuario"),
+        },
+    });
 
     const handleCloseModal = () => {
         modalActionDirector(0);
-    }
+        setClearActivateDirectores();
+    };
 
     return (
         <Modal

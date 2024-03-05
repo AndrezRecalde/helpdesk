@@ -11,12 +11,11 @@ import { AdminDireccionesPage } from "./gerencia/AdminDireccionesPage";
 /* Solicitudes */
 import { SolicitudPage } from "./solicitud/SolicitudPage";
 import { SolicitudesActualesPage } from "./solicitud/SolicitudesActualesPage";
-import { BusquedaSolicitudPage } from "./solicitud/BusquedaSolicitudPage";
 import { SolicitudesAnuladasPage } from "./solicitud/SolicitudesAnuladasPage";
 
 /* Soportes */
 import { SoportesPage } from "./soporte/SoportesPage";
-
+import { BusquedaSoportePage } from "./soporte/BusquedaSoportePage";
 
 /* Dashboard */
 import { DashGerenciaPage } from "./dashboard/gerencia/DashGerenciaPage";
@@ -35,11 +34,11 @@ export {
 
     SolicitudPage,
     SolicitudesActualesPage,
-    BusquedaSolicitudPage,
     SolicitudesAnuladasPage,
 
 
     SoportesPage,
+    BusquedaSoportePage,
 
     DashGerenciaPage,
 

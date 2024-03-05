@@ -2,41 +2,42 @@ import { useEffect } from "react";
 import { ActionIcon, Box, Group, Select, Stack } from "@mantine/core";
 import { IconArrowsUpDown, IconRotate } from "@tabler/icons-react";
 import { BtnSubmit } from "../../../components";
-import { useDirectorStore, useUsersStore } from "../../../hooks";
-
+import { useDirectorStore, useUiDirector, useUsersStore } from "../../../hooks";
 
 export const FormDirector = ({ form }) => {
-    const { startLoadUsers, users } = useUsersStore();
-    const { activateDirector } = useDirectorStore();
+    const { startLoadUsersGeneral, users } = useUsersStore();
+    const { isLoading, activateDirector, startUpdateDirector } = useDirectorStore();
+    const { modalActionDirector } = useUiDirector();
 
     useEffect(() => {
         if (activateDirector !== null) {
-            console.log(activateDirector.cdgo_dprtmnto);
-            startLoadUsers({ cdgo_direccion: null });
+            startLoadUsersGeneral({ cdgo_direccion: null });
             form.setValues({
+                ...activateDirector,
                 id_jefe:
-                    activateDirector.jefe_id.toString() !== null
-                        ? activateDirector.jefe_id.toString()
+                    activateDirector.id_jefe.toString() !== null
+                        ? activateDirector.id_jefe.toString()
                         : null,
                 id_encargado:
-                    activateDirector.encargado_id.toString !== null
-                        ? activateDirector.encargado_id.toString()
+                    activateDirector.id_encargado.toString !== null
+                        ? activateDirector.id_encargado.toString()
                         : null,
             });
             return;
         }
     }, [activateDirector]);
 
-    const handleChangePosition = (e) => {
+    const handleChangePositionDownUp = (e) => {
         e.preventDefault();
         form.setValues({
+            ...activateDirector,
             id_encargado:
-                activateDirector.jefe_id.toString() !== null
-                    ? activateDirector.jefe_id.toString()
+                activateDirector.id_jefe.toString() !== null
+                    ? activateDirector.id_jefe.toString()
                     : null,
             id_jefe:
-                activateDirector.encargado_id.toString !== null
-                    ? activateDirector.encargado_id.toString()
+                activateDirector.id_encargado.toString !== null
+                    ? activateDirector.id_encargado.toString()
                     : null,
         });
     };
@@ -44,7 +45,9 @@ export const FormDirector = ({ form }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log(form.values);
-    }
+        startUpdateDirector(form.values);
+        modalActionDirector(0);
+    };
 
     return (
         <Box
@@ -54,10 +57,10 @@ export const FormDirector = ({ form }) => {
             <Stack>
                 <Group justify="center">
                     <ActionIcon
-                        variant="light"
-                        radius="xl"
+                        size={42}
+                        variant="default"
                         aria-label="Cambio de roles"
-                        onClick={(e) => handleChangePosition(e)}
+                        onClick={(e) => handleChangePositionDownUp(e)}
                     >
                         <IconArrowsUpDown
                             style={{ width: "70%", height: "70%" }}
@@ -66,6 +69,7 @@ export const FormDirector = ({ form }) => {
                     </ActionIcon>
                 </Group>
                 <Select
+                    searchable
                     label="Director/Jefe Inmediato"
                     placeholder="Seleccione director"
                     {...form.getInputProps("id_jefe")}
@@ -77,6 +81,7 @@ export const FormDirector = ({ form }) => {
                     })}
                 />
                 <Select
+                    searchable
                     label="Director Encargado"
                     placeholder="Seleccione director encargado"
                     {...form.getInputProps("id_encargado")}
@@ -87,7 +92,9 @@ export const FormDirector = ({ form }) => {
                         };
                     })}
                 />
-                <BtnSubmit fontSize={16} IconSection={IconRotate}>Realizar Cambio</BtnSubmit>
+                <BtnSubmit fontSize={16} IconSection={IconRotate} loading={isLoading}>
+                    Realizar Cambio
+                </BtnSubmit>
             </Stack>
         </Box>
     );

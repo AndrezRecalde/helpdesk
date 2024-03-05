@@ -25,7 +25,6 @@ export const lGerente = [
         icon: IconTransferIn,
         links: [
             { label: "Solicitudes actuales", link: "/gerencia/solicitudes-actuales" },
-            { label: "Buscar Solicitudes", link: "/gerencia/busqueda-solicitudes" }, //Por rango de fechas o tecnico o por departamento
             { label: "Solicitudes Anuladas", link: "/gerencia/solicitudes-anuladas" }
         ],
     },
@@ -34,6 +33,7 @@ export const lGerente = [
         icon: IconDeviceImac,
         links: [
             { label: "Gestionar Soportes", link: "/gerencia/soportes" },
+            //{ label: "Buscar Soportes", link: "/gerencia/busqueda-soportes" }, //Por rango de fechas o tecnico o por departamento
         ],
     },
 ];

@@ -12,6 +12,12 @@ class Departamento extends Model
     protected $table = "dprtmntos";
     protected $primaryKey = "cdgo_dprtmnto";
 
+    public $timestamps = false;
+
+    protected $fillable = [
+        "id_jefe",
+        "id_encargado"
+    ];
 
     function scopeEmpresa($query, $id_empresa)
     {

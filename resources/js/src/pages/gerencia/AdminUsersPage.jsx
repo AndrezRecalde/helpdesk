@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Card, Container, Group } from "@mantine/core";
 import {
     BtnSection,
@@ -8,10 +9,24 @@ import {
     UsersTable,
 } from "../../components";
 import { useUiUser, useUsersStore } from "../../hooks";
+import Swal from "sweetalert2";
 
 export const AdminUsersPage = () => {
-    const { users } = useUsersStore();
+    const { users, errores } = useUsersStore();
     const { modalActionUser } = useUiUser();
+
+    useEffect(() => {
+        if (errores !== undefined) {
+            Swal.fire({
+                icon: "error",
+                title: "Opps...",
+                text: errores,
+                confirmButtonColor: '#094293',
+                footer: 'Intenta con otros filtros de búsqueda'
+            });
+            return;
+        }
+    }, [errores]);
 
     const handleOpenModal = (e) => {
         e.preventDefault();

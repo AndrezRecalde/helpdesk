@@ -16,7 +16,7 @@ export const uiSoporteSlice = createSlice({
             state.isOpenModalAsignarSoporte = false;
         },
         onOpenModalAnularSoporte: (state) => {
-            state.isOpenModalAsignarSoporte = true;
+            state.isOpenModalAnularSoporte = true;
         },
         onCloseModalAnularSoporte: (state) => {
             state.isOpenModalAnularSoporte = false;

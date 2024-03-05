@@ -41,6 +41,9 @@ Route::group(['prefix' => 'gerencia', 'middleware' => ['auth:sanctum']], functio
     Route::post('/admin/usuarios', [UserAdminController::class, 'getUsuariosAdmin']);
     Route::post('/store/usuario', [UserAdminController::class, 'store']);
     Route::put('/update/usuario/{cdgo_usrio}', [UserAdminController::class, 'update']);
+    Route::put('/update/usuario/activo/{cdgo_usrio}', [UserAdminController::class, 'updateActivoUser']);
+    Route::post('/verified/usuario', [UserAdminController::class, 'verifiedUser']);
+
 
 
     /* TECNICOS */
@@ -73,7 +76,7 @@ Route::group(['prefix' => 'gerencia', 'middleware' => ['auth:sanctum']], functio
     /* SOPORTES */
     Route::put('/asignar-soporte/{id_sop}', [SoporteAdminController::class, 'asignarSoporte']);
     Route::put('/anular-soporte/{id_sop}', [SoporteAdminController::class, 'anularSoportes']);
-
+    Route::post('/soportes-anulados', [SoporteAdminController::class, 'getSoporteAnulados']);
 
 });
 
@@ -88,6 +91,8 @@ Route::group(['prefix' => 'general', 'middleware' => ['auth:sanctum']], function
 
     /* SOPORTES */
     Route::post('/soportes-actuales', [SoporteController::class, 'getSoportesActuales']);
+    Route::post('/buscar-soportes', [SoporteController::class, 'searchSoportes']);
+
 });
 
 

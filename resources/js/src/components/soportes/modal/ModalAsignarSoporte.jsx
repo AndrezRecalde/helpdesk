@@ -1,6 +1,6 @@
 import { Modal } from "@mantine/core";
 import { FormAsignarSoporte } from "../../../components";
-import { useUiSoporte, useUsersStore } from "../../../hooks";
+import { useSoporteStore, useUiSoporte, useUsersStore } from "../../../hooks";
 import { isNotEmpty, useForm } from "@mantine/form";
 import dayjs from "dayjs";
 import { useEffect } from "react";
@@ -8,6 +8,7 @@ import { useEffect } from "react";
 export const ModalAsignarSoporte = () => {
     const current_user = JSON.parse(localStorage.getItem("service_user"));
     const { startLoadUsersGeneral, clearUsers } = useUsersStore();
+    const { setActivateSoporte } = useSoporteStore();
     const { isOpenModalAsignarSoporte, modalActionAsignarSoporte } = useUiSoporte();
 
     const form = useForm({
@@ -37,6 +38,7 @@ export const ModalAsignarSoporte = () => {
 
     const handleCloseModal = () => {
         modalActionAsignarSoporte(0);
+        setActivateSoporte(null);
     }
 
     return (

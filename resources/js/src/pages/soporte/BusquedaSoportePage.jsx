@@ -1,11 +1,11 @@
 import { Card, Container } from "@mantine/core";
 import { FilterFormSearchSoli, SolicitudesTable, TitlePage } from "../../components";
 
-export const BusquedaSolicitudPage = () => {
+export const BusquedaSoportePage = () => {
     return (
         <Container size="xxl">
             <TitlePage order={2} size="h2">
-                Busqueda de Solicitudes
+                Busqueda de Soportes
             </TitlePage>
             <FilterFormSearchSoli />
             <Card withBorder shadow="sm" radius="md" mt={20} mb={20}>

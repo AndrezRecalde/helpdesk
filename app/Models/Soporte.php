@@ -49,4 +49,25 @@ class Soporte extends Model
             return $query->where("ss.id_usu_tecnico_asig", $id_usu_tecnico_asig);
         }
     }
+
+    function scopeFechas($query, $fecha_inicio, $fecha_fin)
+    {
+        if ($fecha_inicio) {
+            return $query->whereBetween('ss.fecha_ini', [$fecha_inicio, $fecha_fin]);
+        }
+    }
+
+    function scopeDireccion($query, $id_direccion)
+    {
+        if ($id_direccion) {
+            return $query->where("ss.id_direccion", $id_direccion);
+        }
+    }
+
+    function scopeNumero($query, $numero)
+    {
+        if ($numero) {
+            return $query->where("ss.numero_sop", $numero);
+        }
+    }
 }

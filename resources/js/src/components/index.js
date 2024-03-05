@@ -3,7 +3,7 @@ import { TitlePage } from "./elements/titles/TitlePage";
 import { TextSection } from "./elements/titles/TextSection";
 import { Logo } from "./elements/application/Logo";
 import { AlertSection } from "./elements/alert/AlertSection";
-import { BtnSubmit, BtnSection } from "./elements/buttons/BtnServices";
+import { BtnSubmit, BtnSection, BtnAddActions } from "./elements/buttons/BtnServices";
 import { BtnDarkMode } from "./elements/buttons/BtnDarkMode";
 import { TableContent } from "./elements/tables/TableContent";
 import { MenuUsersTable, MenuTable_E, MenuSolicitudTable } from "./elements/tables/MenuTable";
@@ -55,6 +55,11 @@ import { ModalActivateUser } from "./gerencia/modals/ModalActivateUser";
 import { FormActiveUser } from "./gerencia/forms/FormActiveUser";
 import { ActivateUserBtn } from "./gerencia/btns/ActivateUserBtn";
 
+import { SolicitudesAnuladasTable } from "./gerencia/tables/SolicitudesAnuladasTable";
+
+import { ModalAnularSoporte } from "./soportes/modal/ModalAnularSoporte";
+import { FormAnularSoporte } from "./soportes/form/FormAnularSoporte";
+
 export {
     TitlePage,
     TextSection,
@@ -62,6 +67,7 @@ export {
     AlertSection,
     BtnSubmit,
     BtnSection,
+    BtnAddActions,
     BtnDarkMode,
     TableContent,
     MenuUsersTable,
@@ -107,5 +113,10 @@ export {
     FormAsignarSoporte,
     ModalActivateUser,
     FormActiveUser,
-    ActivateUserBtn
+    ActivateUserBtn,
+
+    SolicitudesAnuladasTable,
+
+    ModalAnularSoporte,
+    FormAnularSoporte
 }

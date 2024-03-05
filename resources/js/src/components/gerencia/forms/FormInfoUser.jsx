@@ -1,8 +1,29 @@
 import { Autocomplete, Grid, Select, TextInput } from "@mantine/core";
-import { useSexoStore } from "../../../hooks";
+import { useSexoStore, useUsersStore } from "../../../hooks";
+import { useEffect } from "react";
 
 export const FormInfoUser = ({ form }) => {
+    const { usu_ci } = form.values;
+    const { verifiedUser, userVerified } = useUsersStore();
     const { sexo } = useSexoStore();
+
+    useEffect(() => {
+        if (usu_ci !== "") {
+            setTimeout(() => {
+                console.log("verified");
+                verifiedUser(usu_ci);
+            }, 2000);
+            return;
+        }
+    }, [usu_ci]);
+
+    useEffect(() => {
+        if (userVerified !== null) {
+            form.setFieldError("usu_ci", "Usuario ya existe");
+        } else {
+            form.clearFieldError("usu_ci");
+        }
+    }, [userVerified]);
 
     return (
         <Grid>

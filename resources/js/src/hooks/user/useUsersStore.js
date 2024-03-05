@@ -3,16 +3,25 @@ import { useErrorException } from "../../hooks";
 import {
     onClearUsers,
     onLoadErrores,
+    onLoadMessage,
     onLoadUsers,
     onLoading,
     onSetActivateUser,
-    onSetMessage,
+    onSetUserVerified,
+    onUpdateUsers,
 } from "../../store/user/usersSlice";
 import helpdeskApi from "../../api/helpdeskApi";
 
 export const useUsersStore = () => {
-    const { isLoading, users, activateUser, validate, message, errores } =
-        useSelector((state) => state.users);
+    const {
+        isLoading,
+        users,
+        activateUser,
+        validate,
+        userVerified,
+        message,
+        errores,
+    } = useSelector((state) => state.users);
 
     const dispatch = useDispatch();
 
@@ -22,12 +31,9 @@ export const useUsersStore = () => {
     const startLoadUsersGeneral = async ({ cdgo_direccion }) => {
         try {
             dispatch(onLoading());
-            const { data } = await helpdeskApi.post(
-                "/general/usuarios",
-                {
-                    cdgo_direccion,
-                }
-            );
+            const { data } = await helpdeskApi.post("/general/usuarios", {
+                cdgo_direccion,
+            });
             const { usuarios } = data;
             dispatch(onLoadUsers(usuarios));
         } catch (error) {
@@ -56,6 +62,42 @@ export const useUsersStore = () => {
         }
     };
 
+    const startUpdateActivoUser = async (usuario) => {
+        try {
+            const { data } = await helpdeskApi.put(
+                `/gerencia/update/usuario/activo/${usuario.cdgo_usrio}`,
+                usuario
+            );
+            dispatch(onUpdateUsers(usuario));
+            dispatch(onLoadMessage(data));
+            dispatch(onSetActivateUser(null));
+            setTimeout(() => {
+                dispatch(onLoadMessage(undefined));
+            }, 40);
+        } catch (error) {
+            console.log(error);
+            ExceptionMessageError(error);
+        }
+    };
+
+    const verifiedUser = async (usu_ci) => {
+        try {
+            const { data } = await helpdeskApi.post(
+                "/gerencia/verified/usuario",
+                { usu_ci }
+            );
+            if (data.status === "success") {
+                const { usuario } = data;
+                dispatch(onSetUserVerified(usuario));
+            } else {
+                dispatch(onSetUserVerified(null));
+            }
+        } catch (error) {
+            console.log(error);
+            ExceptionMessageError(error);
+        }
+    };
+
     const startAddUser = async (user) => {
         try {
             if (user.cdgo_usrio) {
@@ -63,9 +105,9 @@ export const useUsersStore = () => {
                     `/update/usuario/${user.cdgo_usrio}`,
                     user
                 );
-                dispatch(onSetMessage(data.msg));
+                dispatch(onLoadMessage(data));
                 setTimeout(() => {
-                    dispatch(onSetMessage(undefined));
+                    dispatch(onLoadMessage(undefined));
                 }, 40);
                 return;
             }
@@ -74,9 +116,9 @@ export const useUsersStore = () => {
                 "/gerencia/store/usuario",
                 user
             );
-            dispatch(onSetMessage(data.msg));
+            dispatch(onLoadMessage(data));
             setTimeout(() => {
-                dispatch(onSetMessage(undefined));
+                dispatch(onLoadMessage(undefined));
             }, 40);
         } catch (error) {
             console.log(error);
@@ -93,9 +135,9 @@ export const useUsersStore = () => {
                     actvo,
                 }
             );
-            dispatch(onSetMessage(data.msg));
+            dispatch(onLoadMessage(data));
             setTimeout(() => {
-                dispatch(onSetMessage(undefined));
+                dispatch(onLoadMessage(undefined));
             }, 40);
         } catch (error) {
             console.log(error);
@@ -105,23 +147,32 @@ export const useUsersStore = () => {
 
     const clearUsers = () => {
         dispatch(onClearUsers());
-    }
+    };
 
     const setActivateUser = (user) => {
         dispatch(onSetActivateUser(user));
-    }
+    };
+
+    const setClearActivateUser = () => {
+        dispatch(onSetActivateUser(null));
+        dispatch(onSetUserVerified(null));
+    };
 
     return {
         isLoading,
         users,
         activateUser,
+        userVerified, //aqui
         validate,
         errores,
         message,
 
         startLoadUsersGeneral,
         startLoadUsers,
+        startUpdateActivoUser,
+        verifiedUser,
         clearUsers,
-        setActivateUser
+        setActivateUser,
+        setClearActivateUser,
     };
 };

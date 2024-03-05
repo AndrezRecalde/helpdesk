@@ -1,5 +1,5 @@
 import { Card, Container, Group } from "@mantine/core";
-import { ModalAsignarSoporte, SolicitudesTable, TextSection, TitlePage } from "../../components";
+import { ModalAnularSoporte, ModalAsignarSoporte, SolicitudesTable, TextSection, TitlePage } from "../../components";
 import { useSoporteStore } from "../../hooks";
 import { useEffect } from "react";
 import Swal from "sweetalert2";
@@ -67,6 +67,7 @@ export const SolicitudesActualesPage = () => {
                 </Card>
             {/* ) : null} */}
             <ModalAsignarSoporte />
+            <ModalAnularSoporte />
         </Container>
     );
 };

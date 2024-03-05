@@ -5,18 +5,46 @@ import {
     ModalDireccion,
     TitlePage,
 } from "../../components";
-import { useDirectorStore } from "../../hooks";
+import { useDirectorStore, useUsersStore } from "../../hooks";
 import { useEffect } from "react";
+import Swal from "sweetalert2";
 
 export const AdminDireccionesPage = () => {
-    const { directores, clearDirectores } = useDirectorStore();
+    const { clearUsers } = useUsersStore();
+    const { directores, clearDirectores, message, errores } =
+        useDirectorStore();
 
     useEffect(() => {
-      return () => {
-        clearDirectores()
-      }
+        return () => {
+            clearDirectores();
+            clearUsers();
+        };
     }, []);
 
+    useEffect(() => {
+        if (message !== undefined) {
+            Swal.fire({
+                icon: message.status,
+                text: message.msg,
+                showConfirmButton: false,
+                timer: 1500,
+            });
+            return;
+        }
+    }, [message]);
+
+    useEffect(() => {
+        if (errores !== undefined) {
+            Swal.fire({
+                icon: "error",
+                title: "Opps...",
+                text: errores,
+                showConfirmButton: false,
+                timer: 1500,
+            });
+            return;
+        }
+    }, [errores]);
 
     return (
         <Container size="xl">

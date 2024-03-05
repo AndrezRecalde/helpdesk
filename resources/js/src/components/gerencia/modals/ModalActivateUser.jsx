@@ -1,10 +1,11 @@
 import { Modal } from "@mantine/core";
 import { FormActiveUser } from "../../../components";
-import { useUiUser } from "../../../hooks";
+import { useUiUser, useUsersStore } from "../../../hooks";
 import { isNotEmpty, useForm } from "@mantine/form";
 
 
 export const ModalActivateUser = () => {
+    const { setClearActivateUser } = useUsersStore();
     const { isOpenModalActiveUser, modalActionActiveUser } = useUiUser();
 
     const form = useForm({
@@ -19,6 +20,7 @@ export const ModalActivateUser = () => {
 
     const handleCloseModal = () => {
         modalActionActiveUser(0);
+        setClearActivateUser();
     }
 
     return (

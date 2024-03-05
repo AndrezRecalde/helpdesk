@@ -16,7 +16,7 @@ class User extends Authenticatable
 
     protected $table = "usrios_sstma";
     protected $primaryKey = 'cdgo_usrio';
-
+    public $timestamps = false;
 
     /**
      * The attributes that are mass assignable.
@@ -85,7 +85,7 @@ class User extends Authenticatable
 
     public function setPasswordAttribute($paswrd)
     {
-    return $this->attributes['paswrd'] = Hash::needsRehash(md5($paswrd)) ? Hash::make(md5($paswrd)) : $paswrd;
+        return $this->attributes['paswrd'] = Hash::needsRehash(md5($paswrd)) ? Hash::make(md5($paswrd)) : $paswrd;
     }
 
     function scopeDireccion($query, $cdgo_direccion)
@@ -106,6 +106,20 @@ class User extends Authenticatable
     {
         if ($lgin) {
             return $query->where('us.lgin', $lgin);
+        }
+    }
+
+    function scopeCedula($query, $usu_ci)
+    {
+        if ($usu_ci) {
+            return $query->where('us.usu_ci', $usu_ci);
+        }
+    }
+
+    function scopeEmail($query, $email)
+    {
+        if ($email) {
+            return $query->where('us.email', $email);
         }
     }
 }

@@ -1,7 +1,7 @@
 import { Navigate, Route } from "react-router-dom";
 import { AppLayout } from "../../../layouts";
 import { RoutesNotFound } from "../../not-found/RoutesNotFound";
-import { AdminDireccionesPage, AdminUsersPage, BusquedaSolicitudPage, DashGerenciaPage, ProfilePage, SolicitudPage, SolicitudesActualesPage, SolicitudesAnuladasPage, SoportesPage } from "../../../pages";
+import {  ProfilePage, SolicitudPage } from "../../../pages";
 
 export const PrivatePages = () => {
     return (

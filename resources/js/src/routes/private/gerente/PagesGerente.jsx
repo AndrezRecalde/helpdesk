@@ -5,7 +5,7 @@ import {
     AdminUsersPage,
     AdminDireccionesPage,
     SolicitudesActualesPage,
-    BusquedaSolicitudPage,
+    BusquedaSoportePage,
     SolicitudesAnuladasPage,
     SoportesPage,
     DashGerenciaPage,
@@ -25,8 +25,8 @@ export const PagesGerente = () => {
                     element={<SolicitudesActualesPage />}
                 />
                 <Route
-                    path="busqueda-solicitudes"
-                    element={<BusquedaSolicitudPage />}
+                    path="busqueda-soportes"
+                    element={<BusquedaSoportePage />}
                 />
                 <Route
                     path="solicitudes-anuladas"

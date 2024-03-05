@@ -1,8 +1,8 @@
+import { useEffect } from "react";
 import { Box, Divider, Grid, Select, Text } from "@mantine/core";
 import { useSoporteStore, useUsersStore } from "../../../hooks";
 import { BtnSubmit } from "../../../components";
 import { IconSend } from "@tabler/icons-react";
-import { useEffect } from "react";
 
 export const FormAsignarSoporte = ({ form }) => {
     const { users } = useUsersStore();
@@ -15,7 +15,7 @@ export const FormAsignarSoporte = ({ form }) => {
             });
             return;
         }
-    }, []);
+    }, [activateSoporte]);
 
     const handleSubmit = (e) => {
         //e.preventDefault();
@@ -32,7 +32,7 @@ export const FormAsignarSoporte = ({ form }) => {
             <Grid>
                 <Grid.Col span={6}>
                     <Text fz="md" fw={500}>
-                        {activateSoporte.usuario_recibe}
+                        {activateSoporte?.usuario_recibe}
                     </Text>
                     <Text fz="xs" tt="uppercase" fw={700} c="dimmed">
                         Usuario Solicitante
@@ -40,7 +40,7 @@ export const FormAsignarSoporte = ({ form }) => {
                 </Grid.Col>
                 <Grid.Col span={6}>
                     <Text fz="md" fw={500}>
-                        {activateSoporte.incidente}
+                        {activateSoporte?.incidente}
                     </Text>
                     <Text fz="xs" tt="uppercase" fw={700} c="dimmed">
                         Incidente
