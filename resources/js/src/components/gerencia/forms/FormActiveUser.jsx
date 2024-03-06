@@ -1,13 +1,5 @@
 import { useEffect } from "react";
-import {
-    Box,
-    Divider,
-    Flex,
-    Grid,
-    Group,
-    Select,
-    Text,
-} from "@mantine/core";
+import { Box, Divider, Flex, Grid, Group, Select, Text } from "@mantine/core";
 import { IconChecks, IconUserScan } from "@tabler/icons-react";
 import { useUiUser, useUsersStore } from "../../../hooks";
 import { BtnSubmit } from "../../../components";
@@ -54,6 +46,7 @@ export const FormActiveUser = ({ form }) => {
                 </Grid.Col>
                 <Grid.Col sm={12} md={12} lg={12} xl={12}>
                     <Select
+                        required
                         data={[
                             { label: "Si", value: "1" },
                             { label: "No", value: "0" },

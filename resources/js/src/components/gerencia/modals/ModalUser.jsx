@@ -79,7 +79,7 @@ export const ModalUser = ({ title }) => {
                 "Por favor seleccione una opción"
             ),
             finaliza_contrato: isNotEmpty("Por favor seleccione una opción"),
-            usu_f_f_contrato: isNotEmpty("Por favor ingrese la fecha"),
+            //usu_f_f_contrato: isNotEmpty("Por favor ingrese la fecha"),
 
             tecnico: isNotEmpty("Por favor seleccione una opción"),
             secretaria_tic: isNotEmpty("Por favor selecciona una opción"),

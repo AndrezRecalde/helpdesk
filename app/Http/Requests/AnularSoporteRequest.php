@@ -24,7 +24,7 @@ class AnularSoporteRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'id_estado' => 'required',
+            //'id_estado' => 'required',
             'obs_anulado' => 'required'
         ];
     }

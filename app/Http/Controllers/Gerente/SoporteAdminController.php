@@ -61,7 +61,9 @@ class SoporteAdminController extends Controller
         $soporte = Soporte::find($id_sop);
         try {
             if ($soporte) {
-                $soporte->update($request->validated());
+                $soporte->fill($request->validated());
+                $soporte->id_estado = 2;
+                $soporte->save();
                 return response()->json(['status' => 'success', 'msg' => 'Soporte anulado'], 200);
             } else {
                 return response()->json(['status' => 'error', 'msg' => 'Soporte no encontrado'], 404);

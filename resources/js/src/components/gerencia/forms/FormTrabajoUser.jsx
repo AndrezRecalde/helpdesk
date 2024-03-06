@@ -20,6 +20,7 @@ export const FormTrabajoUser = ({ form }) => {
         <Grid>
             <Grid.Col span={{ base: 6, sm: 6, md: 6, lg: 6 }}>
                 <Select
+                    required
                     searchable
                     clearable
                     label="Empresa"
@@ -35,6 +36,7 @@ export const FormTrabajoUser = ({ form }) => {
             </Grid.Col>
             <Grid.Col span={{ base: 6, sm: 6, md: 6, lg: 6 }}>
                 <Select
+                    required
                     searchable
                     clearable
                     label="Dirección"
@@ -50,6 +52,7 @@ export const FormTrabajoUser = ({ form }) => {
             </Grid.Col>
             <Grid.Col span={{ base: 6, sm: 6, md: 6, lg: 6 }}>
                 <Select
+                    required
                     searchable
                     clearable
                     label="Cargo"
@@ -65,6 +68,7 @@ export const FormTrabajoUser = ({ form }) => {
             </Grid.Col>
             <Grid.Col span={{ base: 6, sm: 6, md: 6, lg: 6 }}>
                 <Select
+                    required
                     searchable
                     clearable
                     label="Tipo de usuario"
@@ -80,6 +84,7 @@ export const FormTrabajoUser = ({ form }) => {
             </Grid.Col>
             <Grid.Col span={{ base: 6, sm: 6, md: 6, lg: 6 }}>
                 <Select
+                    required
                     searchable
                     clearable
                     label="Tipo de contrato"
@@ -95,6 +100,7 @@ export const FormTrabajoUser = ({ form }) => {
             </Grid.Col>
             <Grid.Col span={{ base: 6, sm: 6, md: 6, lg: 6 }}>
                 <Select
+                    required
                     searchable
                     clearable
                     label="Contrato fecha vencimiento"
@@ -107,7 +113,7 @@ export const FormTrabajoUser = ({ form }) => {
                 />
             </Grid.Col>
 
-            {finaliza_contrato === '1' ? (
+            {finaliza_contrato === "1" ? (
                 <Grid.Col span={{ base: 12, sm: 12, md: 12, lg: 12 }}>
                     <DateInput
                         label="Fecha de finalización"

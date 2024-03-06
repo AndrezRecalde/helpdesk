@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Box, Select, Stack, Textarea } from "@mantine/core";
+import { Box, Stack, Textarea } from "@mantine/core";
 import { BtnSubmit } from "../../../components";
 import { useSoporteStore } from "../../../hooks";
 import { IconProgressX } from "@tabler/icons-react";
@@ -11,6 +11,7 @@ export const FormAnularSoporte = ({ form }) => {
         if (activateSoporte !== null) {
             form.setValues({
                 ...activateSoporte,
+                id_estado: "2"
             });
             return;
         }
@@ -26,10 +27,9 @@ export const FormAnularSoporte = ({ form }) => {
             onSubmit={form.onSubmit((_, e) => handleSubmit(e))}
         >
             <Stack>
-                <Select
+                {/* <Select
                     label="Estado del soporte"
                     placeholder="Seleccione Estado del Soporte"
-                    {...form.getInputProps("id_estado")}
                     data={[
                         { value: "1", label: "Pendiente" },
                         {
@@ -39,8 +39,9 @@ export const FormAnularSoporte = ({ form }) => {
                         { value: "3", label: "Atendido" },
                         { value: "4", label: "Finalizado" },
                     ]}
-                    required
-                />
+                    {...form.getInputProps("id_estado")}
+                    disabled
+                /> */}
                 <Textarea
                     label="Motivo"
                     placeholder="Describa el motivo de la anulación"

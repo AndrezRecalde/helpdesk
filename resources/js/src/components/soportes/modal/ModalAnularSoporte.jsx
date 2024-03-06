@@ -10,7 +10,6 @@ export const ModalAnularSoporte = () => {
 
     const form = useForm({
         initialValues: {
-            id_estado: 2,
             obs_anulado: ""
         },
         validate: {

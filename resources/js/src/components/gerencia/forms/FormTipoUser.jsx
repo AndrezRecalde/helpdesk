@@ -5,6 +5,7 @@ export const FormTipoUser = ({ form }) => {
         <Grid>
             <Grid.Col span={{ base: 12, sm: 4, md: 4, lg: 4 }}>
                 <Select
+                    required
                     searchable
                     clearable
                     label="Tecnico"
@@ -18,6 +19,7 @@ export const FormTipoUser = ({ form }) => {
             </Grid.Col>
             <Grid.Col span={{ base: 12, sm: 4, md: 4, lg: 4 }}>
                 <Select
+                    required
                     searchable
                     clearable
                     label="Secretaria"
@@ -31,6 +33,7 @@ export const FormTipoUser = ({ form }) => {
             </Grid.Col>
             <Grid.Col span={{ base: 12, sm: 4, md: 4, lg: 4 }}>
                 <Select
+                    required
                     searchable
                     clearable
                     label="Super-usuario"
@@ -44,6 +47,7 @@ export const FormTipoUser = ({ form }) => {
             </Grid.Col>
             <Grid.Col span={{ base: 12, sm: 6, md: 6, lg: 6 }}>
                 <Select
+                    required
                     searchable
                     clearable
                     label="Interno"
@@ -57,6 +61,7 @@ export const FormTipoUser = ({ form }) => {
             </Grid.Col>
             <Grid.Col span={{ base: 12, sm: 6, md: 6, lg: 6 }}>
                 <Select
+                    required
                     searchable
                     clearable
                     label="Estado"
@@ -78,6 +83,7 @@ export const FormTipoUser = ({ form }) => {
             </Grid.Col>
             <Grid.Col span={{ base: 12, sm: 6, md: 6, lg: 6 }}>
                 <TextInput
+                    required
                     label="Alias"
                     placeholder="Digite el alias del usuario"
                     {...form.getInputProps("usu_alias")}

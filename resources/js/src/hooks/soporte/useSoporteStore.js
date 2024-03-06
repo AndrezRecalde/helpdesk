@@ -69,6 +69,26 @@ export const useSoporteStore = () => {
         }
     };
 
+    /* GERENTE */
+    const startAnularSoporte = async (soporte) => {
+        try {
+            const { data } = await helpdeskApi.put(
+                `/gerencia/anular-soporte/${soporte.id_sop}`,
+                {
+                    obs_anulado: soporte.obs_anulado,
+                }
+            );
+            dispatch(onLoadMessage(data));
+            setTimeout(() => {
+                dispatch(onLoadMessage(undefined));
+            }, 40);
+            //dipatch(onAnularSoporte(soporte)) TODO:: EN EL SLICE DE SOPORTE
+        } catch (error) {
+            console.log(error);
+            ExceptionMessageError(error);
+        }
+    };
+
     /* GERENTE O TECNICO */
     const startSearchSoporte = async (
         fecha_inicio,
@@ -117,6 +137,7 @@ export const useSoporteStore = () => {
         startLoadSoportesActuales,
         startAsignarSoporte,
         startLoadSoportesAnulados,
+        startAnularSoporte,
         clearSoportes,
         setActivateSoporte,
     };

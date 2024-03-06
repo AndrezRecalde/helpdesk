@@ -29,6 +29,7 @@ export const FormInfoUser = ({ form }) => {
         <Grid>
             <Grid.Col span={{ base: 12, sm: 12, md: 12, lg: 12 }}>
                 <TextInput
+                    required
                     label="Numero de cedula"
                     placeholder="Digite la cédula del usuario"
                     {...form.getInputProps("usu_ci")}
@@ -36,6 +37,7 @@ export const FormInfoUser = ({ form }) => {
             </Grid.Col>
             <Grid.Col span={{ base: 3, sm: 3, md: 3, lg: 3 }}>
                 <TextInput
+                    required
                     label="Titulo"
                     placeholder="Sr, Ing, Lic"
                     {...form.getInputProps("titulo")}
@@ -43,6 +45,7 @@ export const FormInfoUser = ({ form }) => {
             </Grid.Col>
             <Grid.Col span={{ base: 9, sm: 9, md: 9, lg: 9 }}>
                 <TextInput
+                    required
                     label="Nombres completos"
                     placeholder="Digite el nombre"
                     {...form.getInputProps("nmbre_usrio")}
@@ -50,6 +53,7 @@ export const FormInfoUser = ({ form }) => {
             </Grid.Col>
             <Grid.Col span={{ base: 12, sm: 6, md: 6, lg: 6 }}>
                 <TextInput
+                    required
                     label="Nombre formateado"
                     placeholder="Digite el nombre formateado"
                     {...form.getInputProps("nombre_formateado")}
@@ -57,6 +61,7 @@ export const FormInfoUser = ({ form }) => {
             </Grid.Col>
             <Grid.Col span={{ base: 12, sm: 6, md: 6, lg: 6 }}>
                 <Autocomplete
+                    required
                     label="Correo institucional"
                     placeholder="Digite el correo"
                     {...form.getInputProps("email")}
@@ -64,6 +69,7 @@ export const FormInfoUser = ({ form }) => {
             </Grid.Col>
             <Grid.Col span={{ base: 12, sm: 4, md: 4, lg: 4 }}>
                 <Select
+                    required
                     searchable
                     clearable
                     label="Sexo"
@@ -79,6 +85,7 @@ export const FormInfoUser = ({ form }) => {
             </Grid.Col>
             <Grid.Col span={{ base: 12, sm: 4, md: 4, lg: 4 }}>
                 <TextInput
+                    required
                     label="Usuario login"
                     placeholder="Digite el usuario"
                     {...form.getInputProps("lgin")}
@@ -86,6 +93,7 @@ export const FormInfoUser = ({ form }) => {
             </Grid.Col>
             <Grid.Col span={{ base: 12, sm: 4, md: 4, lg: 4 }}>
                 <Select
+                    required
                     searchable
                     clearable
                     label="Usuario activo"
