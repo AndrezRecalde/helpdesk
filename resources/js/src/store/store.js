@@ -9,6 +9,7 @@ import {
     sexoSlice,
     soporteSlice,
     tipoContratoSlice,
+    tipoSolicitudSlice,
     tiposUsuariosSlice,
     uiDirectorSlice,
     uiSoporteSlice,
@@ -30,6 +31,7 @@ export const store = configureStore({
         cargo: cargoSlice.reducer,
         tipoUsuario: tiposUsuariosSlice.reducer,
         tipoContrato: tipoContratoSlice.reducer,
+        tipoSolicitud: tipoSolicitudSlice.reducer,
         soporte: soporteSlice.reducer,
         uiSoporte: uiSoporteSlice.reducer
     },

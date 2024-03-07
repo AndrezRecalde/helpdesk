@@ -66,6 +66,9 @@ import { FormSolicitudAdminSoporte } from "./soportes/form/FormSolicitudAdminSop
 import { ModalCreateSoporte } from "./soportes/modal/ModalCreateSoporte.jsx";
 import { FormCreateSoporte } from "./soportes/form/FormCreateSoporte";
 
+import { ModalResetPwdUser } from "./gerencia/modals/ModalResetPwdUser";
+import { FormResetPwdUser } from "./gerencia/forms/FormResetPwdUser";
+
 export {
     TitlePage,
     TextSection,
@@ -130,5 +133,8 @@ export {
     FormSolicitudAdminSoporte,
 
     ModalCreateSoporte,
-    FormCreateSoporte
+    FormCreateSoporte,
+
+    ModalResetPwdUser,
+    FormResetPwdUser
 }

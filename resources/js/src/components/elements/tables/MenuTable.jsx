@@ -1,7 +1,7 @@
 import { Menu, rem } from "@mantine/core";
 import { IconEditCircle, IconTrash } from "@tabler/icons-react";
 
-export const MenuUsersTable = ({ row, handleEdit }) => {
+export const MenuUsersTable = ({ row, handleEdit, handleResetPassword }) => {
     return (
         <>
             <Menu.Item
@@ -18,7 +18,7 @@ export const MenuUsersTable = ({ row, handleEdit }) => {
                 leftSection={
                     <IconTrash style={{ width: rem(15), height: rem(15) }} />
                 }
-                onClick={() => console.info("resetear")}
+                onClick={() => handleResetPassword(row.original)}
             >
                 Resetear contraseña
             </Menu.Item>

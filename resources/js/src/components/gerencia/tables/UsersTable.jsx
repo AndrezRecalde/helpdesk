@@ -1,11 +1,15 @@
 import { useMantineReactTable } from "mantine-react-table";
 import { useCallback, useMemo } from "react";
-import { ActivateUserBtn, MenuUsersTable, TableContent } from "../../../components";
+import {
+    ActivateUserBtn,
+    MenuUsersTable,
+    TableContent,
+} from "../../../components";
 import { useUiUser, useUsersStore } from "../../../hooks";
 
 export const UsersTable = () => {
     const { isLoading, users, setActivateUser } = useUsersStore();
-    const { modalActionActiveUser } = useUiUser();
+    const { modalActionActiveUser, modalActionResetPwd } = useUiUser();
     const columns = useMemo(
         () => [
             {
@@ -44,13 +48,20 @@ export const UsersTable = () => {
     );
 
     const handleActive = useCallback(
-      (selected) => {
-        setActivateUser(selected);
-        modalActionActiveUser(1);
-      },
-      [users],
-    )
+        (selected) => {
+            setActivateUser(selected);
+            modalActionActiveUser(1);
+        },
+        [users]
+    );
 
+    const handleResetPassword = useCallback(
+        (selected) => {
+            setActivateUser(selected);
+            modalActionResetPwd(1);
+        },
+        [users]
+    );
 
     const table = useMantineReactTable({
         columns,
@@ -59,7 +70,11 @@ export const UsersTable = () => {
         enableRowActions: true,
         state: { showProgressBars: isLoading },
         renderRowActionMenuItems: ({ row }) => (
-            <MenuUsersTable row={row} handleEdit={handleEdit} />
+            <MenuUsersTable
+                row={row}
+                handleEdit={handleEdit}
+                handleResetPassword={handleResetPassword}
+            />
         ),
     });
 

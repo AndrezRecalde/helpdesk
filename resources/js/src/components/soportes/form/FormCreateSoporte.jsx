@@ -1,12 +1,34 @@
-import { Box, Checkbox, Grid, Select, TextInput, Textarea } from "@mantine/core";
+import { useEffect } from "react";
+import {
+    Box,
+    Checkbox,
+    Grid,
+    Select,
+    Stack,
+    TextInput,
+    Textarea,
+} from "@mantine/core";
 import { DateTimePicker } from "@mantine/dates";
 import { BtnSubmit } from "../../../components";
-import { useDireccionStore, useUsersStore } from "../../../hooks";
+import {
+    useDireccionStore,
+    useTipoSolicitudStore,
+    useUsersStore,
+} from "../../../hooks";
 import { IconSend } from "@tabler/icons-react";
 
 export const FormCreateSoporte = ({ form }) => {
+    const { id_tipo_solicitud, terminado } = form.values;
     const { users } = useUsersStore();
     const { direcciones } = useDireccionStore();
+    const { tiposSolicitudes } = useTipoSolicitudStore();
+
+    useEffect(() => {
+        if (id_tipo_solicitud == 7) {
+            form.setFieldValue("terminado", false);
+        }
+    }, [id_tipo_solicitud]);
+
     return (
         <Box
             component="form"
@@ -19,14 +41,12 @@ export const FormCreateSoporte = ({ form }) => {
                         label="Tipo de solicitud"
                         placeholder="Seleccione tipo de solicitud"
                         {...form.getInputProps("id_tipo_solicitud")}
-                        data={[
-                            { value: "1", label: "SISTEMAS Y APLICACIONES" },
-                            {
-                                value: "2",
-                                label: "INFRAESTRUCTURA TECNOLÓGICA",
-                            },
-                            { value: "5", label: "SOPORTE TÉCNICO" },
-                        ]}
+                        data={tiposSolicitudes.map((tipoSolicitud) => {
+                            return {
+                                value: tipoSolicitud.id_tipo_solic.toString(),
+                                label: tipoSolicitud.nombre,
+                            };
+                        })}
                     />
                 </Grid.Col>
                 <Grid.Col span={6}>
@@ -47,7 +67,7 @@ export const FormCreateSoporte = ({ form }) => {
                 </Grid.Col>
                 <Grid.Col span={{ base: 6, sm: 6, md: 6, lg: 6 }}>
                     <Select
-                        required
+                        withAsterisk
                         searchable
                         clearable
                         label="Dirección"
@@ -63,6 +83,7 @@ export const FormCreateSoporte = ({ form }) => {
                 </Grid.Col>
                 <Grid.Col span={{ base: 6, md: 6, lg: 6 }}>
                     <Select
+                        withAsterisk
                         searchable
                         label="Usuario solicitante"
                         placeholder="Seleccione el solicitante"
@@ -77,6 +98,7 @@ export const FormCreateSoporte = ({ form }) => {
                 </Grid.Col>
                 <Grid.Col span={{ base: 12, md: 6, lg: 6 }}>
                     <Select
+                        withAsterisk
                         label="Tipo Soporte"
                         placeholder="Seleccione Tipo Soporte"
                         {...form.getInputProps("id_tipo_soporte")}
@@ -95,6 +117,7 @@ export const FormCreateSoporte = ({ form }) => {
                 </Grid.Col>
                 <Grid.Col span={{ base: 12, md: 6, lg: 6 }}>
                     <Select
+                        withAsterisk
                         label="Área del soporte"
                         placeholder="Seleccione el área"
                         {...form.getInputProps("id_area_tic")}
@@ -114,9 +137,20 @@ export const FormCreateSoporte = ({ form }) => {
                         label="Incidente"
                         description="Digite la incidencia del usuario"
                         autosize
-                        minRows={5}
-                        maxRows={5}
+                        minRows={3}
+                        maxRows={3}
                         {...form.getInputProps("incidente")}
+                    />
+                </Grid.Col>
+                <Grid.Col span={{ base: 12, md: 12, lg: 12 }}>
+                    <Textarea
+                        withAsterisk
+                        label="Solución"
+                        description="Digite como solucionó el incidente"
+                        autosize
+                        minRows={3}
+                        maxRows={3}
+                        {...form.getInputProps("solucion")}
                     />
                 </Grid.Col>
                 <Grid.Col span={{ base: 12, md: 12, lg: 12 }}>
@@ -126,11 +160,40 @@ export const FormCreateSoporte = ({ form }) => {
                         iconColor="dark.8"
                         size="md"
                         label="¿Soporte terminado?"
+                        disabled={id_tipo_solicitud == 7 ? true : false}
+                        {...form.getInputProps("terminado", {
+                            type: "checkbox",
+                        })}
                     />
                 </Grid.Col>
             </Grid>
+            {terminado ? (
+                <Stack mt={20}>
+                    <Select
+                        label="Diagnostivo"
+                        placeholder="Seleccione diagnostivo"
+                        //{...form.getInputProps("id_tipo_soporte")}
+                        data={[]}
+                    />
+
+                    <Select
+                        label="Activo Informatico"
+                        placeholder="Seleccione el activo informatico"
+                        //{...form.getInputProps("id_tipo_soporte")}
+                        data={[]}
+                    />
+
+                    <DateTimePicker
+                        withAsterisk
+                        valueFormat="YYYY-MM-DD HH:m"
+                        label="Fecha de finalización"
+                        placeholder="Seleccione fecha de finalización"
+                        //{...form.getInputProps("fecha_ini")}
+                    />
+                </Stack>
+            ) : null}
             <BtnSubmit fontSize={16} IconSection={IconSend}>
-                Asignar Técnico
+                Crear el soporte
             </BtnSubmit>
         </Box>
     );

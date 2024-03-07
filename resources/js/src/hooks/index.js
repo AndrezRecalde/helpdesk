@@ -32,6 +32,9 @@ import { useTipoUsuarioStore } from "./tipoUsuario/useTipoUsuarioStore";
 /* Tipos Contratos */
 import { useTipoContratoStore } from "./tipoContrato/useTipoContratoStore";
 
+/* Tipos Solicitudes */
+import { useTipoSolicitudStore } from "./tipoSolicitud/useTipoSolicitudStore";
+
 /* Soportes */
 import { useSoporteStore } from "./soporte/useSoporteStore";
 import { useUiSoporte } from "./soporte/useUiSoporte";
@@ -60,6 +63,8 @@ export {
     useTipoUsuarioStore,
 
     useTipoContratoStore,
+
+    useTipoSolicitudStore,
 
     useSoporteStore,
     useUiSoporte

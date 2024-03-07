@@ -113,6 +113,21 @@ export const useUsersStore = () => {
         }
     };
 
+    /* GERENTE */
+    const startUpdatePassword = async (user) => {
+        try {
+            const { data } = await helpdeskApi.put(`/usuario/reset-password/${user.cdgo_usrio}`, user);
+            dispatch(onLoadMessage(data));
+            dispatch(onSetActivateUser(null));
+            setTimeout(() => {
+                dispatch(onLoadMessage(undefined));
+            }, 40);
+        } catch (error) {
+            console.log(error);
+            ExceptionMessageError(error);
+        }
+    }
+
     const startAddUser = async (user) => {
         try {
             if (user.cdgo_usrio) {
@@ -187,6 +202,7 @@ export const useUsersStore = () => {
         startLoadUsers,
         startUpdateActivoUser,
         verifiedUser,
+        startUpdatePassword,
         clearUsers,
         setActivateUser,
         setClearActivateUser,

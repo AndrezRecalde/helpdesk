@@ -1,14 +1,18 @@
 import { useEffect } from "react";
 import { Drawer, Modal } from "@mantine/core";
 import { FormCreateSoporte } from "../../../components";
-import { useDireccionStore, useUiSoporte, useUsersStore } from "../../../hooks";
+import {
+    useTipoSolicitudStore,
+    useUiSoporte,
+    useUsersStore,
+} from "../../../hooks";
 import { useForm } from "@mantine/form";
 
 export const ModalCreateSoporte = () => {
     const { isOpenModalCreateSoporte, modalActionCreateSoporte } =
         useUiSoporte();
     const { startLoadUsersExtrict, clearUsers } = useUsersStore();
-    const { startLoadDirecciones } = useDireccionStore();
+    const { startLoadTiposSolicitudes } = useTipoSolicitudStore();
 
     const form = useForm({
         initialValues: {
@@ -23,16 +27,17 @@ export const ModalCreateSoporte = () => {
             id_estado: null, //cambiarlo a asignado o finalizado o ATENDIDO
             id_usu_tecnico_asig: null,
             id_equipo: null,
+
+            terminado: false,
         },
     });
 
     const { id_direccion } = form.values;
 
     useEffect(() => {
-        startLoadDirecciones();
+        startLoadTiposSolicitudes();
 
-    }, [])
-
+    }, []);
 
     useEffect(() => {
         startLoadUsersExtrict(id_direccion);
@@ -43,7 +48,6 @@ export const ModalCreateSoporte = () => {
         };
     }, [id_direccion]);
 
-
     const handleCloseModal = () => {
         modalActionCreateSoporte(0);
     };
@@ -53,7 +57,11 @@ export const ModalCreateSoporte = () => {
             offset={8}
             radius="md"
             overlayProps={{ backgroundOpacity: 0.5, blur: 4 }}
-            transitionProps={{ transition: 'slide-right', duration: 150, timingFunction: 'linear' }}
+            transitionProps={{
+                transition: "slide-right",
+                duration: 150,
+                timingFunction: "linear",
+            }}
             opened={isOpenModalCreateSoporte}
             onClose={handleCloseModal}
             position="right"

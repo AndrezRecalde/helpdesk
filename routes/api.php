@@ -11,6 +11,7 @@ use App\Http\Controllers\Gerente\SexoController;
 use App\Http\Controllers\Gerente\SoporteAdminController;
 use App\Http\Controllers\Gerente\TecnicoController;
 use App\Http\Controllers\Gerente\TipoContratoController;
+use App\Http\Controllers\Gerente\TipoSolicitudController;
 use App\Http\Controllers\Gerente\TipoUsuarioController;
 use App\Http\Controllers\Gerente\UserAdminController;
 use Illuminate\Http\Request;
@@ -43,6 +44,8 @@ Route::group(['prefix' => 'gerencia', 'middleware' => ['auth:sanctum']], functio
     Route::put('/update/usuario/{cdgo_usrio}', [UserAdminController::class, 'update']);
     Route::put('/update/usuario/activo/{cdgo_usrio}', [UserAdminController::class, 'updateActivoUser']);
     Route::post('/verified/usuario', [UserAdminController::class, 'verifiedUser']);
+    Route::post('/usuario/reset-password/{cdgo_usrio}', [UserAdminController::class, 'resetPasword']);
+
 
 
 
@@ -94,6 +97,10 @@ Route::group(['prefix' => 'general', 'middleware' => ['auth:sanctum']], function
     /* SOPORTES */
     Route::post('/soportes-actuales', [SoporteController::class, 'getSoportesActuales']);
     Route::post('/buscar-soportes', [SoporteController::class, 'searchSoportes']);
+
+    /* TIPOS DE SOLICITUDES DE SOPORTE */
+    Route::get('/tipos-solicitudes', [TipoSolicitudController::class, 'getTiposSolicitudesSoporte']);
+
 });
 
 

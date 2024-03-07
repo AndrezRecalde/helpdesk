@@ -2,14 +2,12 @@ import { useEffect } from "react";
 import { Modal } from "@mantine/core";
 import { isNotEmpty, useForm } from "@mantine/form";
 import {
-    useDireccionStore,
     useUiSoporte,
     useUsersStore,
 } from "../../../hooks";
 import { FormSolicitudAdminSoporte } from "../../../components";
 
 export const ModalSolicitudAdminSoporte = () => {
-    const { startLoadDirecciones, clearDirecciones } = useDireccionStore();
     const { startLoadUsersExtrict, clearUsers } = useUsersStore();
     const { isOpenModalAddSolicitud, modalActionAddSolicitud } = useUiSoporte();
 
@@ -30,13 +28,7 @@ export const ModalSolicitudAdminSoporte = () => {
     });
     const { id_direccion } = form.values;
 
-    useEffect(() => {
-        startLoadDirecciones();
 
-        return () => {
-            clearDirecciones();
-        };
-    }, []);
 
     useEffect(() => {
         startLoadUsersExtrict(id_direccion);

@@ -4,6 +4,7 @@ import {
     BtnSection,
     FilterFormUsers,
     ModalActivateUser,
+    ModalResetPwdUser,
     ModalUser,
     TitlePage,
     UsersTable,
@@ -53,6 +54,7 @@ export const AdminUsersPage = () => {
             ) : null}
             <ModalUser title="Agregar usuario" />
             <ModalActivateUser />
+            <ModalResetPwdUser />
         </Container>
     );
 };

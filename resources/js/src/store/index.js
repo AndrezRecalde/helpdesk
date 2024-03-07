@@ -30,6 +30,9 @@ import { tiposUsuariosSlice } from "./tiposUsuarios/tiposUsuariosSlice";
 /* Tipos Contratos */
 import { tipoContratoSlice } from "./tiposContratos/tipoContratoSlice";
 
+/* Tipos Solicitudes */
+import { tipoSolicitudSlice } from "./tiposSolicitudes/tipoSolicitudSlice";
+
 /* Soportes */
 import { soporteSlice } from "./soporte/soporteSlice";
 import { uiSoporteSlice } from "./soporte/uiSoporteSlice";
@@ -73,6 +76,9 @@ export {
 
     /* Tipos Contratos */
     tipoContratoSlice,
+
+    /* Tipos Solicitudes */
+    tipoSolicitudSlice,
 
     /* Soportes */
     soporteSlice,

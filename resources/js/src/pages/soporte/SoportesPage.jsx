@@ -10,10 +10,11 @@ import {
     ModalSolicitudAdminSoporte,
     ModalCreateSoporte,
 } from "../../components";
-import { useSoporteStore, useUiSoporte } from "../../hooks";
+import { useDireccionStore, useSoporteStore, useUiSoporte } from "../../hooks";
 import Swal from "sweetalert2";
 
 export const SoportesPage = () => {
+    const { startLoadDirecciones, clearDirecciones } = useDireccionStore();
     const { message, errores } = useSoporteStore();
     const { modalActionAddSolicitud, modalActionCreateSoporte } = useUiSoporte();
 
@@ -25,6 +26,15 @@ export const SoportesPage = () => {
         console.log("clic");
         modalActionCreateSoporte(1);
     };
+
+    useEffect(() => {
+        startLoadDirecciones();
+
+        return () => {
+            clearDirecciones();
+        };
+    }, []);
+
 
     useEffect(() => {
         if (message !== undefined) {
