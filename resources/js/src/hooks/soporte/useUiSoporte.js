@@ -1,21 +1,21 @@
 import { useDispatch, useSelector } from "react-redux";
 import {
-    onCloseModalAddSoporte_G,
-    onCloseModalAddSoporte_T,
+    onCloseModalAddSolicitud,
     onCloseModalAnularSoporte,
     onCloseModalAsignarSoporte,
-    onOpenModalAddSoporte_G,
-    onOpenModalAddSoporte_T,
+    onCloseModalCreateSoporte,
+    onOpenModalAddSolicitud,
     onOpenModalAnularSoporte,
     onOpenModalAsignarSoporte,
+    onOpenModalCreateSoporte,
 } from "../../store/soporte/uiSoporteSlice";
 
 export const useUiSoporte = () => {
     const {
         isOpenModalAsignarSoporte,
         isOpenModalAnularSoporte,
-        isOpenModalAddSoporte_T,
-        isOpenModalAddSoporte_G,
+        isOpenModalAddSolicitud,
+        isOpenModalCreateSoporte
     } = useSelector((state) => state.uiSoporte);
 
     const dispatch = useDispatch();
@@ -32,27 +32,27 @@ export const useUiSoporte = () => {
             : dispatch(onCloseModalAnularSoporte());
     };
 
-    const modalActionAddSoporte_T = (behavior) => {
+    const modalActionAddSolicitud = (behavior) => {
         behavior === 1
-            ? dispatch(onOpenModalAddSoporte_T())
-            : dispatch(onCloseModalAddSoporte_T());
+            ? dispatch(onOpenModalAddSolicitud())
+            : dispatch(onCloseModalAddSolicitud());
     };
 
-    const modalActionAddSoporte_G = (behavior) => {
+    const modalActionCreateSoporte = (behavior) => {
         behavior === 1
-            ? dispatch(onOpenModalAddSoporte_G())
-            : dispatch(onCloseModalAddSoporte_G());
+            ? dispatch(onOpenModalCreateSoporte())
+            : dispatch(onCloseModalCreateSoporte());
     };
 
     return {
         isOpenModalAsignarSoporte,
         isOpenModalAnularSoporte,
-        isOpenModalAddSoporte_T,
-        isOpenModalAddSoporte_G,
+        isOpenModalAddSolicitud,
+        isOpenModalCreateSoporte,
 
         modalActionAsignarSoporte,
         modalActionAnularSoporte,
-        modalActionAddSoporte_T,
-        modalActionAddSoporte_G,
+        modalActionAddSolicitud,
+        modalActionCreateSoporte
     };
 };

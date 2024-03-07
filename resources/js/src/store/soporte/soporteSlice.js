@@ -17,6 +17,15 @@ export const soporteSlice = createSlice({
             state.soportes = payload;
             state.isLoading = false;
         },
+        onAnularSoporte: (state) => {
+            if (state.activateSoporte) {
+                state.soportes = state.soportes.filter(
+                    (soporte) => soporte.id_sop !== state.activateSoporte.id_sop
+                );
+                state.activateSoporte = null;
+                state.errores = undefined;
+            }
+        },
         onSetActivateSoporte: (state, { payload }) => {
             state.activateSoporte = payload;
             state.errores = undefined;
@@ -45,6 +54,7 @@ export const soporteSlice = createSlice({
 export const {
     onLoading,
     onLoadSoportes,
+    onAnularSoporte,
     onSetActivateSoporte,
     onClearSoportes,
     onLoadMessage,

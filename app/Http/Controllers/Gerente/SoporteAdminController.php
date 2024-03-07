@@ -5,7 +5,8 @@ namespace App\Http\Controllers\Gerente;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\AnularSoporteRequest;
-use App\Http\Requests\SoporteRequest;
+use App\Http\Requests\SolicitudAdminRequest;
+use App\Http\Requests\SoporteAsignarcionRequest;
 use App\Mail\SoporteMail;
 use App\Models\Soporte;
 use App\Models\User;
@@ -19,7 +20,7 @@ class SoporteAdminController extends Controller
     //SE ENVÍA AL CORREO AL TECNICO
     //Mail::to($tecnico->email)->queue(new SoporteMail($request));
 
-    function asignarSoporte(SoporteRequest $request, int $id_sop): JsonResponse
+    function asignarSoporte(SoporteAsignarcionRequest $request, int $id_sop): JsonResponse
     {
         $soporte = Soporte::find($id_sop);
         try {
@@ -91,10 +92,26 @@ class SoporteAdminController extends Controller
             ->orderBy('ss.numero_sop', 'DESC')
             ->get();
 
-            if (sizeof($soportes) >= 1) {
-                return response()->json(['status' => 'success', 'soportes' => $soportes], 200);
-            } else {
-                return response()->json(['status' => 'error', 'msg' => 'No existen soportes anulados en ese rango de fechas'], 404);
-            }
+        if (sizeof($soportes) >= 1) {
+            return response()->json(['status' => 'success', 'soportes' => $soportes], 200);
+        } else {
+            return response()->json(['status' => 'error', 'msg' => 'No existen soportes anulados en ese rango de fechas'], 404);
+        }
+    }
+
+    function crearSolicitudAdmin(SolicitudAdminRequest $request): JsonResponse
+    {
+        try {
+            $soporte = Soporte::create($request->validated());
+            return response()->json(
+                [
+                    'status' => 'success',
+                    'msg' => 'Solicitud creada con éxito'
+                ],
+                200
+            );
+        } catch (\Throwable $th) {
+            return response()->json(['status' => 'error', 'message' => $th->getMessage()], 500);
+        }
     }
 }

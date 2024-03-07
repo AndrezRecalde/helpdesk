@@ -1,11 +1,12 @@
 import { useEffect } from "react";
 import { Box, Stack, Textarea } from "@mantine/core";
 import { BtnSubmit } from "../../../components";
-import { useSoporteStore } from "../../../hooks";
+import { useSoporteStore, useUiSoporte } from "../../../hooks";
 import { IconProgressX } from "@tabler/icons-react";
 
 export const FormAnularSoporte = ({ form }) => {
-    const { activateSoporte } = useSoporteStore();
+    const { startAnularSoporte, activateSoporte } = useSoporteStore();
+    const { modalActionAnularSoporte } = useUiSoporte();
 
     useEffect(() => {
         if (activateSoporte !== null) {
@@ -18,7 +19,9 @@ export const FormAnularSoporte = ({ form }) => {
     }, [activateSoporte]);
 
     const handleSubmit = () => {
-        console.log(form.values)
+        console.log(form.values);
+        startAnularSoporte(form.values);
+        modalActionAnularSoporte(0);
     };
 
     return (

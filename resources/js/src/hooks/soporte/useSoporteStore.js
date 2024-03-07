@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useErrorException } from "../../hooks";
 import {
+    onAnularSoporte,
     onClearSoportes,
     onLoadErrores,
     onLoadMessage,
@@ -82,12 +83,26 @@ export const useSoporteStore = () => {
             setTimeout(() => {
                 dispatch(onLoadMessage(undefined));
             }, 40);
-            //dipatch(onAnularSoporte(soporte)) TODO:: EN EL SLICE DE SOPORTE
+            dispatch(onAnularSoporte(soporte));
         } catch (error) {
             console.log(error);
             ExceptionMessageError(error);
         }
     };
+
+    /* GERENTE */
+    const startCreateSolicitudAdmin = async (solicitud) => {
+        try {
+            const { data } = await helpdeskApi.post("/gerencia/crear-solicitud", solicitud);
+            dispatch(onLoadMessage(data));
+            setTimeout(() => {
+                dispatch(onLoadMessage(undefined));
+            }, 40);
+        } catch (error) {
+            console.log(error);
+            ExceptionMessageError(error);
+        }
+    }
 
     /* GERENTE O TECNICO */
     const startSearchSoporte = async (
@@ -138,6 +153,7 @@ export const useSoporteStore = () => {
         startAsignarSoporte,
         startLoadSoportesAnulados,
         startAnularSoporte,
+        startCreateSolicitudAdmin,
         clearSoportes,
         setActivateSoporte,
     };

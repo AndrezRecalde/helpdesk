@@ -42,6 +42,21 @@ export const useUsersStore = () => {
         }
     };
 
+    /* GENERAL */
+    const startLoadUsersExtrict = async (cdgo_direccion) => {
+        try {
+            dispatch(onLoading());
+            const { data } = await helpdeskApi.post("/general/usuarios-extrict", {
+                cdgo_direccion,
+            });
+            const { usuarios } = data;
+            dispatch(onLoadUsers(usuarios));
+        } catch (error) {
+            console.log(error);
+            ExceptionMessageError(error);
+        }
+    };
+
     /* GERENCIA */
     const startLoadUsers = async ({ cdgo_direccion, nmbre_usrio, lgin }) => {
         try {
@@ -168,6 +183,7 @@ export const useUsersStore = () => {
         message,
 
         startLoadUsersGeneral,
+        startLoadUsersExtrict,
         startLoadUsers,
         startUpdateActivoUser,
         verifiedUser,

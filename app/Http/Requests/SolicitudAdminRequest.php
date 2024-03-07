@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class SolicitudStatus extends FormRequest
+class SolicitudAdminRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,7 +22,11 @@ class SolicitudStatus extends FormRequest
     public function rules(): array
     {
         return [
-            'leido' => 'required',
+            'numero_escrito'    =>  '',
+            'id_direccion'      =>  'required',
+            'id_usu_recibe'     =>  'required',
+            'id_tipo_soporte'   =>  'required',
+            'incidente'         =>  'required',
         ];
     }
 }

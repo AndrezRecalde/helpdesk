@@ -77,7 +77,7 @@ Route::group(['prefix' => 'gerencia', 'middleware' => ['auth:sanctum']], functio
     Route::put('/asignar-soporte/{id_sop}', [SoporteAdminController::class, 'asignarSoporte']);
     Route::put('/anular-soporte/{id_sop}', [SoporteAdminController::class, 'anularSoportes']);
     Route::post('/soportes-anulados', [SoporteAdminController::class, 'getSoporteAnulados']);
-
+    Route::post('/crear-solicitud', [SoporteAdminController::class, 'crearSolicitudAdmin']);
 });
 
 /* RUTAS: GERENTE O TECNICO */
@@ -85,6 +85,8 @@ Route::group(['prefix' => 'general', 'middleware' => ['auth:sanctum']], function
 
     /* USUARIOS */
     Route::post('/usuarios', [UserController::class, 'getUsuarios']);
+    Route::post('/usuarios-extrict', [UserController::class, 'getUsuariosExtrict']);
+
 
     /* DIRECCIONES */
     Route::get('/direcciones', [DireccionController::class, 'getDirecciones']);
@@ -92,7 +94,6 @@ Route::group(['prefix' => 'general', 'middleware' => ['auth:sanctum']], function
     /* SOPORTES */
     Route::post('/soportes-actuales', [SoporteController::class, 'getSoportesActuales']);
     Route::post('/buscar-soportes', [SoporteController::class, 'searchSoportes']);
-
 });
 
 

@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class SoporteRequest extends FormRequest
+class SoporteAsignarcionRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +24,12 @@ class SoporteRequest extends FormRequest
     public function rules(): array
     {
         return [
-
+            'id_usu_tecnico' => '',
+            'id_tipo_soporte' => 'required',
+            'id_area_tic'  => 'required',
+            //'id_estado'  => 'required',
+            'id_usu_tecnico_asig'  => 'required',
+            //'fecha_asig'  => 'required'
         ];
     }
 

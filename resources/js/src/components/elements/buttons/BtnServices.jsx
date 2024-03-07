@@ -71,7 +71,8 @@ export const BtnAddActions = ({
     fontSize = 14,
     mb = 0,
     mt = 0,
-    handleAction,
+    handleOpenModalSolicitud,
+    handleOpenModalSoporte,
     children,
 }) => {
     const theme = useMantineTheme();
@@ -109,6 +110,7 @@ export const BtnAddActions = ({
             </Menu.Target>
             <Menu.Dropdown>
                 <Menu.Item
+                    onClick={handleOpenModalSolicitud}
                     leftSection={
                         <IconMessageUp
                             style={{ width: rem(16), height: rem(16) }}
@@ -120,6 +122,7 @@ export const BtnAddActions = ({
                     Nueva solicitud
                 </Menu.Item>
                 <Menu.Item
+                    onClick={handleOpenModalSoporte}
                     leftSection={
                         <IconDeviceImacUp
                             style={{ width: rem(16), height: rem(16) }}

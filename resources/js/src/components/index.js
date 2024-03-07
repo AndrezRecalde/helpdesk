@@ -60,6 +60,12 @@ import { SolicitudesAnuladasTable } from "./gerencia/tables/SolicitudesAnuladasT
 import { ModalAnularSoporte } from "./soportes/modal/ModalAnularSoporte";
 import { FormAnularSoporte } from "./soportes/form/FormAnularSoporte";
 
+import { ModalSolicitudAdminSoporte } from "./soportes/modal/ModalSolicitudAdminSoporte.jsx";
+import { FormSolicitudAdminSoporte } from "./soportes/form/FormSolicitudAdminSoporte.jsx";
+
+import { ModalCreateSoporte } from "./soportes/modal/ModalCreateSoporte.jsx";
+import { FormCreateSoporte } from "./soportes/form/FormCreateSoporte";
+
 export {
     TitlePage,
     TextSection,
@@ -118,5 +124,11 @@ export {
     SolicitudesAnuladasTable,
 
     ModalAnularSoporte,
-    FormAnularSoporte
+    FormAnularSoporte,
+
+    ModalSolicitudAdminSoporte,
+    FormSolicitudAdminSoporte,
+
+    ModalCreateSoporte,
+    FormCreateSoporte
 }

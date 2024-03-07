@@ -26,6 +26,7 @@ class SoporteController extends Controller
             ->join('sop_estado as se', 'se.id_estado_caso', 'ss.id_estado')
             ->leftJoin('usrios_sstma as us', 'us.cdgo_usrio', 'ss.id_usu_tecnico_asig')
             ->where('ss.fecha_ini', "LIKE", "%" . Carbon::now()->format('Y-m-d') . "%")
+            ->where('ss.id_estado', '<>', 2)
             ->tecnico($request->id_usu_tecnico_asig)
             ->orderBy('ss.numero_sop', 'DESC')
             ->get();
