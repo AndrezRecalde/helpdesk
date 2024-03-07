@@ -25,7 +25,7 @@ class TecnicoController extends Controller
         return response()->json(['status' => 'success', 'tecnicos' => $tecnicos], 200);
     }
 
-    function getTecnicos(): JsonResponse
+    function getTecnicos(Request $request): JsonResponse
     {
         $tecnicos = User::from('usrios_sstma as us')
             ->selectRaw('us.cdgo_usrio, us.nmbre_usrio,
@@ -34,6 +34,7 @@ class TecnicoController extends Controller
             ->join('dprtmntos as d', 'd.cdgo_dprtmnto', 'us.cdgo_dprtmnto')
             ->join('model_has_roles as mh', 'mh.model_id', 'us.cdgo_usrio')
             ->join('roles as r', 'r.id', 'mh.role_id')
+            ->tecnico($request->cdgo_usrio)
             ->whereIn('mh.role_id', [1, 2])
             ->where('us.actvo', 1)
             ->get();

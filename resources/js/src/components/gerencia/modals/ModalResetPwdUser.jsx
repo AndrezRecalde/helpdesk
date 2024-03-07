@@ -8,23 +8,26 @@ export const ModalResetPwdUser = () => {
 
     const form = useForm({
         initialValues: {
-            paswrd: ""
+            paswrd: "",
         },
         validate: {
-            paswrd: isNotEmpty("Por favor seleccione la contraseña por defecto")
-        }
-    })
+            paswrd: isNotEmpty(
+                "Por favor seleccione la contraseña por defecto"
+            ),
+        },
+    });
 
     const handleCloseModal = () => {
         modalActionResetPwd(0);
-    }
+    };
 
     return (
         <Modal
+            centered
             opened={isOpenModalResetPwd}
             onClose={handleCloseModal}
             title="Resetear contraseña"
-            size="xl"
+            size="md"
             overlayProps={{
                 backgroundOpacity: 0.55,
                 blur: 3,

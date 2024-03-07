@@ -13,8 +13,20 @@ import { useUiUser, useUsersStore } from "../../hooks";
 import Swal from "sweetalert2";
 
 export const AdminUsersPage = () => {
-    const { users, errores } = useUsersStore();
+    const { users, errores, message } = useUsersStore();
     const { modalActionUser } = useUiUser();
+
+    useEffect(() => {
+        if (message !== undefined) {
+            Swal.fire({
+                icon: message.status,
+                text: message.msg,
+                showConfirmButton: false,
+                timer: 1500,
+            });
+            return;
+        }
+    }, [message]);
 
     useEffect(() => {
         if (errores !== undefined) {

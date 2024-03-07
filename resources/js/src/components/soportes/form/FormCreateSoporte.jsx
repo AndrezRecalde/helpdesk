@@ -3,6 +3,7 @@ import {
     Box,
     Checkbox,
     Grid,
+    MultiSelect,
     Select,
     Stack,
     TextInput,
@@ -11,17 +12,24 @@ import {
 import { DateTimePicker } from "@mantine/dates";
 import { BtnSubmit } from "../../../components";
 import {
+    useDiagnosticoStore,
     useDireccionStore,
+    useEquipoStore,
+    useTecnicoStore,
     useTipoSolicitudStore,
     useUsersStore,
 } from "../../../hooks";
 import { IconSend } from "@tabler/icons-react";
 
-export const FormCreateSoporte = ({ form }) => {
+export const FormCreateSoporte = ({ form, role }) => {
+    console.log(role);
     const { id_tipo_solicitud, terminado } = form.values;
     const { users } = useUsersStore();
+    const { tecnicos } = useTecnicoStore();
     const { direcciones } = useDireccionStore();
     const { tiposSolicitudes } = useTipoSolicitudStore();
+    const { diagnosticos } = useDiagnosticoStore();
+    const { equipos } = useEquipoStore();
 
     useEffect(() => {
         if (id_tipo_solicitud == 7) {
@@ -63,6 +71,23 @@ export const FormCreateSoporte = ({ form }) => {
                         label="Fecha de solicitud"
                         placeholder="Seleccione fecha de solicitud"
                         {...form.getInputProps("fecha_ini")}
+                    />
+                </Grid.Col>
+                <Grid.Col span={12}>
+                    <Select
+                        disabled={role}
+                        withAsterisk
+                        searchable
+                        clearable
+                        label="Técnico"
+                        placeholder="Seleccione tecnico"
+                        {...form.getInputProps("id_usu_tecnico_asig")}
+                        data={tecnicos.map((tecnico) => {
+                            return {
+                                value: tecnico.cdgo_usrio.toString(),
+                                label: tecnico.nmbre_usrio,
+                            };
+                        })}
                     />
                 </Grid.Col>
                 <Grid.Col span={{ base: 6, sm: 6, md: 6, lg: 6 }}>
@@ -155,7 +180,6 @@ export const FormCreateSoporte = ({ form }) => {
                 </Grid.Col>
                 <Grid.Col span={{ base: 12, md: 12, lg: 12 }}>
                     <Checkbox
-                        defaultChecked
                         color="blue.4"
                         iconColor="dark.8"
                         size="md"
@@ -169,19 +193,33 @@ export const FormCreateSoporte = ({ form }) => {
             </Grid>
             {terminado ? (
                 <Stack mt={20}>
-                    <Select
-                        label="Diagnostivo"
-                        placeholder="Seleccione diagnostivo"
-                        //{...form.getInputProps("id_tipo_soporte")}
-                        data={[]}
+                    <MultiSelect
+                        searchable
+                        label="Diagnostico"
+                        placeholder="Seleccione el/los diagnosticos"
+                        maxValues={4}
+                        //{...form.getInputProps("")}
+                        data={diagnosticos.map((diagnostico) => {
+                            return {
+                                value: diagnostico.id_diagnostico.toString(),
+                                label: diagnostico.diagnostico,
+                            };
+                        })}
                     />
 
-                    <Select
+                    {/* <Select
+                        searchable
+                        clearable
                         label="Activo Informatico"
                         placeholder="Seleccione el activo informatico"
                         //{...form.getInputProps("id_tipo_soporte")}
-                        data={[]}
-                    />
+                        data={equipos.map(equipo => {
+                            return{
+                                group: equipo.sop_tipo_equipo_nombre,
+                                items: equipo
+                            }
+                        })}
+                    /> */}
 
                     <DateTimePicker
                         withAsterisk

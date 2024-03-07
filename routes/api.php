@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\General\DiagnosticoController;
 use App\Http\Controllers\General\DireccionController;
+use App\Http\Controllers\General\EquipoController;
 use App\Http\Controllers\General\SoporteController;
 use App\Http\Controllers\General\UserController;
 use App\Http\Controllers\Gerente\CargoController;
@@ -44,14 +46,13 @@ Route::group(['prefix' => 'gerencia', 'middleware' => ['auth:sanctum']], functio
     Route::put('/update/usuario/{cdgo_usrio}', [UserAdminController::class, 'update']);
     Route::put('/update/usuario/activo/{cdgo_usrio}', [UserAdminController::class, 'updateActivoUser']);
     Route::post('/verified/usuario', [UserAdminController::class, 'verifiedUser']);
-    Route::post('/usuario/reset-password/{cdgo_usrio}', [UserAdminController::class, 'resetPasword']);
+    Route::put('/usuario/reset-password/{cdgo_usrio}', [UserAdminController::class, 'resetPasword']);
 
 
 
 
     /* TECNICOS */
     Route::post('/admin/tecnicos', [TecnicoController::class, 'getTecnicosAdmin']);
-    Route::post('/tecnicos', [TecnicoController::class, 'getTecnicos']);
     Route::put('/update/tecnico/{cdgo_usrio}', [TecnicoController::class, 'updateTecnico']);
 
 
@@ -90,6 +91,9 @@ Route::group(['prefix' => 'general', 'middleware' => ['auth:sanctum']], function
     Route::post('/usuarios', [UserController::class, 'getUsuarios']);
     Route::post('/usuarios-extrict', [UserController::class, 'getUsuariosExtrict']);
 
+    /* TECNICOS */
+    Route::post('/tecnicos', [TecnicoController::class, 'getTecnicos']);
+
 
     /* DIRECCIONES */
     Route::get('/direcciones', [DireccionController::class, 'getDirecciones']);
@@ -100,6 +104,13 @@ Route::group(['prefix' => 'general', 'middleware' => ['auth:sanctum']], function
 
     /* TIPOS DE SOLICITUDES DE SOPORTE */
     Route::get('/tipos-solicitudes', [TipoSolicitudController::class, 'getTiposSolicitudesSoporte']);
+
+    /* TIPOS DE DIAGNOSTICOS */
+    Route::get("/diagnosticos", [DiagnosticoController::class, 'getDiagnosticos']);
+
+    /* EQUIPOS */
+    Route::get("/equipos", [EquipoController::class, 'getEquiposInformaticos']);
+
 
 });
 

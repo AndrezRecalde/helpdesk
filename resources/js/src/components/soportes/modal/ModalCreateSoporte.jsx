@@ -2,17 +2,26 @@ import { useEffect } from "react";
 import { Drawer, Modal } from "@mantine/core";
 import { FormCreateSoporte } from "../../../components";
 import {
+    useDiagnosticoStore,
+    useEquipoStore,
+    useTecnicoStore,
     useTipoSolicitudStore,
     useUiSoporte,
     useUsersStore,
 } from "../../../hooks";
 import { useForm } from "@mantine/form";
 
-export const ModalCreateSoporte = () => {
+export const ModalCreateSoporte = ({ role }) => {
+    const user = JSON.parse(localStorage.getItem("service_user"));
     const { isOpenModalCreateSoporte, modalActionCreateSoporte } =
         useUiSoporte();
     const { startLoadUsersExtrict, clearUsers } = useUsersStore();
-    const { startLoadTiposSolicitudes } = useTipoSolicitudStore();
+    const { tecnicos, startLoadTecnicos, clearTecnicos } = useTecnicoStore();
+    const { startLoadTiposSolicitudes, clearTiposSolicitudes } =
+        useTipoSolicitudStore();
+
+    const { startLoadDiagnosticos, clearDiagnosticos } = useDiagnosticoStore();
+    const { startLoadEquiposInformaticos, clearEquiposInformaticos } = useEquipoStore();
 
     const form = useForm({
         initialValues: {
@@ -36,8 +45,31 @@ export const ModalCreateSoporte = () => {
 
     useEffect(() => {
         startLoadTiposSolicitudes();
+        startLoadDiagnosticos();
+        startLoadEquiposInformaticos();
 
+        return () => {
+            clearTiposSolicitudes();
+            clearDiagnosticos();
+            clearEquiposInformaticos();
+        };
     }, []);
+
+    useEffect(() => {
+        if (role) {
+            startLoadTecnicos(user.cdgo_usrio);
+            form.setFieldValue(
+                "id_usu_tecnico_asig",
+                user?.cdgo_usrio.toString()
+            );
+        } else {
+            startLoadTecnicos();
+        }
+
+        return () => {
+            clearTecnicos();
+        };
+    }, [role]);
 
     useEffect(() => {
         startLoadUsersExtrict(id_direccion);
@@ -50,6 +82,7 @@ export const ModalCreateSoporte = () => {
 
     const handleCloseModal = () => {
         modalActionCreateSoporte(0);
+        form.reset();
     };
 
     return (
@@ -68,7 +101,7 @@ export const ModalCreateSoporte = () => {
             size="lg"
             title="Crear soporte"
         >
-            <FormCreateSoporte form={form} />
+            <FormCreateSoporte form={form} role={role} />
         </Drawer>
     );
 };

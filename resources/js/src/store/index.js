@@ -5,6 +5,10 @@ import { authSlice } from "./auth/authSlice";
 import { usersSlice } from "./user/usersSlice";
 import { uiUserSlice } from "./user/uiUserSlice";
 
+/* Tecnicos */
+import { tecnicoSlice } from "./tecnico/tecnicoSlice";
+import { uiTecnicoSlice } from "./tecnico/uiTecnicoSlice";
+
 /* Empresas */
 import { empresaSlice } from "./empresa/empresaSlice";
 
@@ -33,6 +37,12 @@ import { tipoContratoSlice } from "./tiposContratos/tipoContratoSlice";
 /* Tipos Solicitudes */
 import { tipoSolicitudSlice } from "./tiposSolicitudes/tipoSolicitudSlice";
 
+/* Tipos Diagnosticos */
+import { diagnosticoSlice } from "./diagnostico/diagnosticoSlice";
+
+/* Equipos */
+import { equipoSlice } from "./equipo/equipoSlice";
+
 /* Soportes */
 import { soporteSlice } from "./soporte/soporteSlice";
 import { uiSoporteSlice } from "./soporte/uiSoporteSlice";
@@ -51,6 +61,10 @@ export {
     /*User */
     usersSlice,
     uiUserSlice,
+
+    /* Tecnico */
+    tecnicoSlice,
+    uiTecnicoSlice,
 
     /* Empresas */
     empresaSlice,
@@ -79,6 +93,12 @@ export {
 
     /* Tipos Solicitudes */
     tipoSolicitudSlice,
+
+    /* Tipos Diagnosticos */
+    diagnosticoSlice,
+
+    /*Equipos */
+    equipoSlice,
 
     /* Soportes */
     soporteSlice,

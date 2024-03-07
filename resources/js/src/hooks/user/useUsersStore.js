@@ -116,7 +116,7 @@ export const useUsersStore = () => {
     /* GERENTE */
     const startUpdatePassword = async (user) => {
         try {
-            const { data } = await helpdeskApi.put(`/usuario/reset-password/${user.cdgo_usrio}`, user);
+            const { data } = await helpdeskApi.put(`/gerencia/usuario/reset-password/${user.cdgo_usrio}`, user);
             dispatch(onLoadMessage(data));
             dispatch(onSetActivateUser(null));
             setTimeout(() => {

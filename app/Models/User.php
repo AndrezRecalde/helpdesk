@@ -71,21 +71,21 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
-        'paswrd' => 'hashed',
+        //'paswrd' => 'string',
     ];
 
     static function create(array $attributes = []): object
     {
-        $attributes['paswrd'] = Hash::make(md5("1234"));
+        $attributes['paswrd'] = md5("1234");
 
         $usuario = static::query()->create($attributes);
 
         return $usuario;
     }
 
-    public function setPasswordAttribute($paswrd)
+    public function setPaswrdAttribute($paswrd)
     {
-        return $this->attributes['paswrd'] = Hash::needsRehash(md5($paswrd)) ? Hash::make(md5($paswrd)) : $paswrd;
+        return $this->attributes['paswrd'] = md5($paswrd) ? md5($paswrd) : $paswrd;
     }
 
     function scopeDireccion($query, $cdgo_direccion)
@@ -120,6 +120,13 @@ class User extends Authenticatable
     {
         if ($email) {
             return $query->where('us.email', $email);
+        }
+    }
+
+    function scopeTecnico($query, $cdgo_usrio)
+    {
+        if ($cdgo_usrio) {
+            return $query->where('us.cdgo_usrio', $cdgo_usrio);
         }
     }
 }

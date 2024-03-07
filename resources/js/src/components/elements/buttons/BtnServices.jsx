@@ -12,6 +12,7 @@ export const BtnSubmit = ({
     fontSize = 18,
     IconSection,
     loading = false,
+    disabled = false
 }) => {
     return (
         <Button
@@ -21,6 +22,7 @@ export const BtnSubmit = ({
             mt="md"
             mb="md"
             rightSection={<IconSection />}
+            disabled={disabled}
             loading={loading}
             loaderProps={{ type: "dots" }}
             styles={{

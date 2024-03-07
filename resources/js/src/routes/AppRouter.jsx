@@ -9,11 +9,14 @@ import { AuthGuard } from "./private/guards";
 import { AppLayout } from "../layouts";
 
 export const AppRouter = () => {
+    const token = localStorage.getItem("service_user");
     const { checkAuthToken } = useAuthStore();
 
     useEffect(() => {
-        checkAuthToken();
-    }, []);
+        if (token === undefined) {
+            checkAuthToken();
+        }
+    }, [token]);
 
     return (
         <RoutesNotFound>
