@@ -11,11 +11,14 @@ import {
 import { BtnSubmit } from "../../../components";
 import { DateInput, YearPickerInput } from "@mantine/dates";
 import { IconSearch } from "@tabler/icons-react";
-import { useForm } from "@mantine/form";
+import { isNotEmpty, useForm } from "@mantine/form";
 import dayjs from "dayjs";
+import { useDireccionStore, useSoporteStore } from "../../../hooks";
 
 export const FilterFormSoportes = ({ role }) => {
-    console.log(role);
+    const user = JSON.parse(localStorage.getItem("service_user"));
+    const { startSearchSoporte } = useSoporteStore();
+    const { direcciones } = useDireccionStore();
     const form = useForm({
         initialValues: {
             fecha_inicio: "",
@@ -24,7 +27,15 @@ export const FilterFormSoportes = ({ role }) => {
             id_direccion: null,
             numero_sop: "",
             switch_role: role,
+            id_usu_tecnico_asig: user.cdgo_usrio,
         },
+        validate: {
+            anio: isNotEmpty("Por favor ingresar el año"),
+        },
+        transformValues: (values) => ({
+            ...values,
+            id_direccion: Number(values.id_direccion) || null,
+        }),
     });
 
     const { switch_role } = form.values;
@@ -32,9 +43,12 @@ export const FilterFormSoportes = ({ role }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (switch_role) {
-            console.log("funcion sin tecnico");
+            const { id_usu_tecnico_asig, ...values } =
+                form.getTransformedValues();
+            console.log(values);
+            startSearchSoporte(values);
         } else {
-            console.log("funcion con tecnico");
+            startSearchSoporte(form.getTransformedValues());
         }
         //console.log(form.values);
     };
@@ -76,10 +90,16 @@ export const FilterFormSoportes = ({ role }) => {
                         {...form.getInputProps("anio")}
                     />
                     <Select
+                        searchable
                         label="Dirección"
                         placeholder="Elige la dirección"
                         {...form.getInputProps("id_direccion")}
-                        data={["React", "Angular", "Vue", "Svelte"]}
+                        data={direcciones.map((direccion) => {
+                            return {
+                                value: direccion.cdgo_dprtmnto.toString(),
+                                label: direccion.nmbre_dprtmnto,
+                            };
+                        })}
                     />
                     <TextInput
                         label="Número de soporte"

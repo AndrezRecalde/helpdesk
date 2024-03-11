@@ -29,36 +29,49 @@ export const FormCreateSoporte = ({ form, role }) => {
     const { direcciones } = useDireccionStore();
     const { tiposSolicitudes } = useTipoSolicitudStore();
     const { equipos } = useEquipoStore();
-    const { startCreateSoporte } = useSoporteStore();
+    const { startCreateSoporte, activateSoporte } = useSoporteStore();
 
     useEffect(() => {
         if (terminado) {
             form.setFieldValue("id_estado", "4");
             form.setFieldValue("solucion", "");
             form.setFieldValue("id_equipo", null);
-            form.setFieldValue("fecha_fi", null);
+            form.setFieldValue("fecha_fin", null);
             return;
         }
-        form.setFieldValue("id_estado", "3");
+        form.setFieldValue(
+            "id_estado",
+            activateSoporte?.id_estado
+                ? activateSoporte?.id_estado.toString()
+                : "3"
+        );
     }, [terminado]);
 
     useEffect(() => {
         if (id_tipo_solicitud == 7) {
-            form.setFieldValue("terminado", false);
+            form.setFieldValue(
+                "terminado",
+                activateSoporte?.fecha_fin ? true : false
+            );
             form.setFieldValue("id_estado", "4");
             form.setFieldValue("solucion", "");
             form.setFieldValue("id_equipo", null);
-            form.setFieldValue("fecha_fi", null);
+            form.setFieldValue("fecha_fin", null);
             return;
         }
-        form.setFieldValue("id_estado", "3");
+        form.setFieldValue(
+            "id_estado",
+            activateSoporte?.id_estado
+                ? activateSoporte?.id_estado.toString()
+                : "3"
+        );
     }, [id_tipo_solicitud]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log(form.values);
-        startCreateSoporte(form.getTransformedValues())
-    }
+        startCreateSoporte(form.getTransformedValues());
+    };
 
     return (
         <Box
@@ -84,7 +97,7 @@ export const FormCreateSoporte = ({ form, role }) => {
                 <Grid.Col span={6}>
                     <DateTimePicker
                         withAsterisk
-                        valueFormat="YYYY-MM-DD HH:m"
+                        valueFormat="YYYY-MM-DD HH:mm"
                         label="Fecha de solicitud"
                         placeholder="Seleccione fecha de solicitud"
                         {...form.getInputProps("fecha_ini")}
@@ -269,7 +282,7 @@ export const FormCreateSoporte = ({ form, role }) => {
 
                     <DateTimePicker
                         withAsterisk
-                        valueFormat="YYYY-MM-DD HH:m"
+                        valueFormat="YYYY-MM-DD HH:mm"
                         label="Fecha de finalización"
                         placeholder="Seleccione fecha de finalización"
                         {...form.getInputProps("fecha_fi")}

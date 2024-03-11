@@ -1,5 +1,5 @@
 import { Menu, rem } from "@mantine/core";
-import { IconEditCircle, IconTrash } from "@tabler/icons-react";
+import { IconEditCircle, IconTrash, IconUserShare } from "@tabler/icons-react";
 
 export const MenuUsersTable = ({ row, handleEdit, handleResetPassword }) => {
     return (
@@ -43,12 +43,19 @@ export const MenuTable_E = ({ row, handleEdit }) => {
     );
 };
 
-export const MenuSolicitudTable = ({ row, handleAsignar, handleAnular }) => {
+export const MenuSolicitudTable = ({
+    row,
+    handleEditar = null,
+    handleAsignar,
+    handleAnular,
+    isEdit,
+}) => {
+    console.log(isEdit)
     return (
         <>
             <Menu.Item
                 leftSection={
-                    <IconEditCircle
+                    <IconUserShare
                         style={{ width: rem(15), height: rem(15) }}
                     />
                 }
@@ -56,13 +63,25 @@ export const MenuSolicitudTable = ({ row, handleAsignar, handleAnular }) => {
             >
                 Asignar técnico
             </Menu.Item>
+            {isEdit ? (
+                <Menu.Item
+                    leftSection={
+                        <IconEditCircle
+                            style={{ width: rem(15), height: rem(15) }}
+                        />
+                    }
+                    onClick={() => handleEditar(row.original)}
+                >
+                    Editar soporte
+                </Menu.Item>
+            ) : null}
             <Menu.Item
                 leftSection={
                     <IconTrash style={{ width: rem(15), height: rem(15) }} />
                 }
                 onClick={() => handleAnular(row.original)}
             >
-                Anular solicitud
+                Anular soporte
             </Menu.Item>
         </>
     );

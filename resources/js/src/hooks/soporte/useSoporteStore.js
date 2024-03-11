@@ -94,7 +94,10 @@ export const useSoporteStore = () => {
     const startCreateSolicitudAdmin = async (solicitud) => {
         try {
             dispatch(onLoading());
-            const { data } = await helpdeskApi.post("/gerencia/crear-solicitud", solicitud);
+            const { data } = await helpdeskApi.post(
+                "/gerencia/crear-solicitud",
+                solicitud
+            );
             dispatch(onLoadMessage(data));
             setTimeout(() => {
                 dispatch(onLoadMessage(undefined));
@@ -103,12 +106,15 @@ export const useSoporteStore = () => {
             console.log(error);
             ExceptionMessageError(error);
         }
-    }
+    };
 
     /* GERENTE O TECNICO */
     const startCreateSoporte = async (soporte) => {
         try {
-            const { data } = await helpdeskApi.post("/general/crear-soporte", soporte);
+            const { data } = await helpdeskApi.post(
+                "/general/crear-soporte",
+                soporte
+            );
             dispatch(onLoadMessage(data));
             setTimeout(() => {
                 dispatch(onLoadMessage(undefined));
@@ -117,17 +123,17 @@ export const useSoporteStore = () => {
             console.log(error);
             ExceptionMessageError(error);
         }
-    }
+    };
 
     /* GERENTE O TECNICO */
-    const startSearchSoporte = async (
+    const startSearchSoporte = async ({
         fecha_inicio,
         fecha_fin,
         anio,
         id_direccion,
         numero_sop,
-        id_usu_tecnico_asig
-    ) => {
+        id_usu_tecnico_asig,
+    }) => {
         try {
             dispatch(onLoading());
             const { data } = await helpdeskApi.post(
@@ -170,6 +176,7 @@ export const useSoporteStore = () => {
         startAnularSoporte,
         startCreateSolicitudAdmin,
         startCreateSoporte,
+        startSearchSoporte,
         clearSoportes,
         setActivateSoporte,
     };

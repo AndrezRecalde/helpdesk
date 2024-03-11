@@ -4,6 +4,7 @@ import { FormCreateSoporte } from "../../../components";
 import {
     useEquipoStore,
     useEstadoStore,
+    useSoporteStore,
     useTecnicoStore,
     useTipoSolicitudStore,
     useUiSoporte,
@@ -14,6 +15,7 @@ import dayjs from "dayjs";
 
 export const ModalCreateSoporte = ({ role }) => {
     const user = JSON.parse(localStorage.getItem("service_user"));
+    const { activateSoporte, setActivateSoporte } = useSoporteStore();
     const { isOpenModalCreateSoporte, modalActionCreateSoporte } =
         useUiSoporte();
     const { startLoadUsersExtrict, clearUsers } = useUsersStore();
@@ -27,9 +29,13 @@ export const ModalCreateSoporte = ({ role }) => {
 
     const form = useForm({
         initialValues: {
-            id_estado: "3",
+            id_estado: activateSoporte?.id_estado.toString()
+                ? activateSoporte?.id_estado.toString()
+                : "3",
             fecha_ini: new Date(),
-            id_tipo_solicitud: "1",
+            id_tipo_solicitud: activateSoporte?.id_tipo_solicitud
+                ? activateSoporte?.id_tipo_solicitud.toString()
+                : "1",
             numero_escrito: "",
             id_usu_tecnico_asig: null,
             id_direccion: null,
@@ -39,7 +45,7 @@ export const ModalCreateSoporte = ({ role }) => {
             incidente: "",
             solucion: "",
             id_equipo: null,
-            fecha_fi: new Date(),
+            fecha_fin: new Date(),
 
             terminado: false,
         },
@@ -115,15 +121,71 @@ export const ModalCreateSoporte = ({ role }) => {
 
     useEffect(() => {
         startLoadUsersExtrict(id_direccion);
-        form.setFieldValue("id_usu_recibe", null);
+        form.setFieldValue(
+            "id_usu_recibe",
+            activateSoporte?.id_usu_recibe.toString()
+                ? activateSoporte?.id_usu_recibe.toString()
+                : null
+        );
 
         return () => {
             clearUsers();
         };
-    }, [id_direccion]);
+    }, [id_direccion, isOpenModalCreateSoporte]);
+
+    useEffect(() => {
+        if (activateSoporte !== null) {
+            form.setValues({
+                ...activateSoporte,
+                id_estado: activateSoporte?.id_estado?.toString()
+                    ? activateSoporte?.id_estado?.toString()
+                    : null,
+                id_tipo_solicitud:
+                    activateSoporte?.id_tipo_solicitud?.toString()
+                        ? activateSoporte?.id_tipo_solicitud?.toString()
+                        : null,
+                numero_escrito: activateSoporte?.numero_escrito
+                    ? activateSoporte?.numero_escrito
+                    : "",
+                id_usu_tecnico_asig:
+                    activateSoporte?.id_usu_tecnico_asig?.toString()
+                        ? activateSoporte?.id_usu_tecnico_asig?.toString()
+                        : null,
+                id_direccion: activateSoporte?.id_direccion?.toString()
+                    ? activateSoporte?.id_direccion?.toString()
+                    : null,
+                id_usu_recibe: activateSoporte?.id_usu_recibe?.toString()
+                    ? activateSoporte?.id_usu_recibe?.toString()
+                    : null
+                    ? activateSoporte?.id_usu_recibe?.toString()
+                    : null,
+                id_tipo_soporte: activateSoporte?.id_tipo_soporte?.toString()
+                    ? activateSoporte?.id_tipo_soporte?.toString()
+                    : null,
+                id_area_tic: activateSoporte?.id_area_tic?.toString()
+                    ? activateSoporte?.id_area_tic?.toString()
+                    : null,
+                incidente: activateSoporte?.incidente
+                    ? activateSoporte?.incidente
+                    : "",
+                solucion: activateSoporte?.solucion
+                    ? activateSoporte?.solucion
+                    : "",
+                id_equipo: activateSoporte?.id_equipo?.toString()
+                    ? activateSoporte?.id_equipo?.toString()
+                    : null,
+                fecha_ini: new Date(activateSoporte?.fecha_ini),
+                fecha_fin: new Date(activateSoporte?.fecha_fin),
+
+                terminado: activateSoporte?.fecha_fin ? true : false,
+            });
+            return;
+        }
+    }, [activateSoporte]);
 
     const handleCloseModal = () => {
         modalActionCreateSoporte(0);
+        setActivateSoporte(null);
         form.reset();
     };
 

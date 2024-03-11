@@ -9,13 +9,15 @@ import {
     BtnAddActions,
     ModalSolicitudAdminSoporte,
     ModalCreateSoporte,
+    ModalAsignarSoporte,
+    ModalAnularSoporte,
 } from "../../components";
 import { useDireccionStore, useSoporteStore, useUiSoporte } from "../../hooks";
 import Swal from "sweetalert2";
 
 export const SoportesPage = () => {
     const { startLoadDirecciones, clearDirecciones } = useDireccionStore();
-    const { message, errores } = useSoporteStore();
+    const { message, errores, clearSoportes } = useSoporteStore();
     const { modalActionAddSolicitud, modalActionCreateSoporte } = useUiSoporte();
 
     const handleOpenModalSolicitud = () => {
@@ -32,6 +34,7 @@ export const SoportesPage = () => {
 
         return () => {
             clearDirecciones();
+            clearSoportes();
         };
     }, []);
 
@@ -86,6 +89,8 @@ export const SoportesPage = () => {
             </Card>
             <ModalSolicitudAdminSoporte />
             <ModalCreateSoporte role={true} /> {/* false: tecnico true: gerente */}
+            <ModalAsignarSoporte />
+            <ModalAnularSoporte />
         </Container>
     );
 };

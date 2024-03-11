@@ -1,73 +1,50 @@
-import { useMemo } from "react";
-import { Badge, Card, Group, Table, Text } from "@mantine/core";
+import { useCallback, useMemo } from "react";
+import { Badge, Table, Text } from "@mantine/core";
 import { useMantineReactTable } from "mantine-react-table";
 import { MenuSolicitudTable, MenuTable_E, TableContent } from "../..";
-
-const data = [
-    {
-        num_soporte: "38976",
-        fecha: "24/02/2024",
-        usuario_id: "Paz Santos Jenniffer Juliana",
-        direccion_id: "GESTIÓN DE TALENTO HUMANO",
-        id_usu_tecnico_asig: "Christian Aldredo Apraez Torres",
-        id_estado: 3,
-        estado: "Asignado",
-        color: "#0CA678",
-    },
-    {
-        num_soporte: "39876",
-        fecha: "24/02/2024",
-        usuario_id: "Gónzalez Covaleda Oscar Fernando",
-        direccion_id: "GESTIÓN DE COMUNICACIÓN SOCIAL DEL GADPE",
-        id_usu_tecnico_asig: "Mauricio Vasco",
-        id_estado: 5,
-        estado: "Finalizado",
-        color: "#1D72FE",
-    },
-    {
-        num_soporte: "39876",
-        fecha: "24/02/2024",
-        usuario_id: "Gónzalez Covaleda Oscar Fernando",
-        direccion_id: "GESTIÓN DE COMUNICACIÓN SOCIAL DEL GADPE",
-        id_usu_tecnico_asig: "",
-        id_estado: 1,
-        estado: "Pendiente",
-        color: "#F59F00",
-    },
-];
+import { useSoporteStore, useUiSoporte } from "../../../hooks";
+import dayjs from "dayjs";
 
 export const SoportesTable = ({ menu, role }) => {
+    const { isLoading, soportes, setActivateSoporte } = useSoporteStore();
+    const { modalActionAsignarSoporte, modalActionAnularSoporte, modalActionCreateSoporte } =
+        useUiSoporte();
     const columns = useMemo(
         () => [
             {
                 accessorKey: "id_estado", //access nested data with dot notation
                 header: "Estado",
                 Cell: ({ cell }) => (
-                    <Badge variant="light" radius="sm" color={cell.row.original.color}>
+                    <Badge
+                        variant="light"
+                        radius="sm"
+                        color={cell.row.original.color}
+                    >
                         {cell.row.original.estado}
                     </Badge>
                 ),
             },
             {
-                accessorKey: "num_soporte", //access nested data with dot notation
+                accessorKey: "numero_sop", //access nested data with dot notation
                 header: "Número de soporte",
             },
             {
-                accessorKey: "fecha", //access nested data with dot notation
+                accessorFn: (row) =>
+                    dayjs(row.fecha_ini).format("YYYY-MM-DD HH:mm"),
                 header: "Fecha - Hora",
             },
             {
-                accessorKey: "usuario_id", //normal accessorKey
+                accessorKey: "usuario_recibe", //normal accessorKey
                 header: "Usuario solicitante",
                 filterVariant: "autocomplete",
             },
             {
-                accessorKey: "direccion_id", //normal accessorKey
+                accessorKey: "direccion", //normal accessorKey
                 header: "Dirección del usuario",
                 filterVariant: "autocomplete",
             },
             {
-                accessorKey: "id_usu_tecnico_asig", //normal accessorKey
+                accessorFn: (row) => row.tecnico_asignado ?? "No asignado", //normal accessorKey
                 header: "Técnico asignado",
                 filterVariant: "autocomplete",
             },
@@ -75,13 +52,39 @@ export const SoportesTable = ({ menu, role }) => {
         []
     );
 
+    const handleEditar = useCallback((selected) => {
+        setActivateSoporte(selected);
+        modalActionCreateSoporte(1);
+    }, []);
+
+    const handleAsignar = useCallback((selected) => {
+        setActivateSoporte(selected);
+        modalActionAsignarSoporte(1);
+    }, []);
+
+    const handleAnular = useCallback((selected) => {
+        setActivateSoporte(selected);
+        modalActionAnularSoporte(1);
+    }, []);
+
     const table = useMantineReactTable({
         columns,
-        data, //must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
+        data: soportes, //must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
+        state: { showProgressBars: isLoading },
         enableFacetedValues: true,
         enableRowActions: true,
         renderRowActionMenuItems: ({ row }) =>
-            menu === 1 ? <MenuSolicitudTable /> : <MenuTable_E />,
+            menu === 1 ? (
+                <MenuSolicitudTable
+                    row={row}
+                    isEdit={true}
+                    handleEditar={handleEditar}
+                    handleAsignar={handleAsignar}
+                    handleAnular={handleAnular}
+                />
+            ) : (
+                <MenuTable_E />
+            ),
         /* mantineTableBodyCellProps: ({ cell }) => ({
             style: {
                 backgroundColor:
@@ -99,25 +102,23 @@ export const SoportesTable = ({ menu, role }) => {
                     <Table.Tbody>
                         <Table.Tr>
                             <Table.Td>
-                                <Text fz="sm">
-                                    PROBLEMA CON LA IMPRESORA, AL SCANEAR POR EL
-                                    ADF SALE CON UNA RAYA
-                                </Text>
+                                <Text fz="sm">{row.original.incidente}</Text>
                                 <Text fz="xs" c="dimmed">
                                     Incidencia
                                 </Text>
                             </Table.Td>
                             <Table.Td>
                                 <Text fz="sm">
-                                    SE SOLUCIONA CAMBIANDOLE EL TONER A LA
-                                    IMPRESORA
+                                    {row.original.solucion ?? "Sin solución"}
                                 </Text>
                                 <Text fz="xs" c="dimmed">
                                     Retrospectiva del técnico
                                 </Text>
                             </Table.Td>
                             <Table.Td>
-                                <Badge radius="sm">SOPORTE EN SOFTWARE</Badge>
+                                <Badge radius="sm">
+                                    {row.original.tipo_soporte}
+                                </Badge>
                                 <Text fz="xs" c="dimmed">
                                     Tipo soporte
                                 </Text>

@@ -42,7 +42,7 @@ class Soporte extends Model
 
     protected $casts = [
         "fecha_ini" => "datetime",
-        "fecha_fi"  => 'datetime'
+        "fecha_fin"  => 'datetime'
     ];
 
     function scopeTecnico($query, $id_usu_tecnico_asig)

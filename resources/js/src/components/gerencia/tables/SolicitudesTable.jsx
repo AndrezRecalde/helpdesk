@@ -5,9 +5,13 @@ import {
     MenuTable_E,
     TableContent,
 } from "../../../components";
-import { Badge, Card, Group, Text } from "@mantine/core";
+import { Badge, Table, Text } from "@mantine/core";
 import { useSoporteStore, useUiSoporte } from "../../../hooks";
 import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+import es from "dayjs/locale/es";
+
+dayjs.extend(relativeTime).locale(es);
 
 export const SolicitudesTable = ({ menu }) => {
     const { isLoading, soportes, setActivateSoporte } = useSoporteStore();
@@ -20,8 +24,7 @@ export const SolicitudesTable = ({ menu }) => {
                 header: "Número de soporte",
             },
             {
-                accessorFn: (row) =>
-                    dayjs(row.fecha_ini).format("YYYY-MM-DD HH:mm"), //access nested data with dot notation
+                accessorFn: (row) => dayjs(row.fecha_ini).fromNow(), //access nested data with dot notation
                 header: "Fecha - Hora",
             },
             {
@@ -35,7 +38,7 @@ export const SolicitudesTable = ({ menu }) => {
                 filterVariant: "autocomplete",
             },
             {
-                accessorKey: "tecnico_asignado", //normal accessorKey
+                accessorFn: (row) => row.tecnico_asignado ?? "No asignado", //normal accessorKey
                 header: "Técnico asignado",
                 filterVariant: "autocomplete",
             },
@@ -49,7 +52,7 @@ export const SolicitudesTable = ({ menu }) => {
     }, []);
 
     const handleAnular = useCallback((selected) => {
-        setActivateSoporte(selected)
+        setActivateSoporte(selected);
         modalActionAnularSoporte(1);
     }, []);
 
@@ -63,6 +66,7 @@ export const SolicitudesTable = ({ menu }) => {
             menu === 1 ? (
                 <MenuSolicitudTable
                     row={row}
+                    isEdit={false}
                     handleAsignar={handleAsignar}
                     handleAnular={handleAnular}
                 />
@@ -80,19 +84,32 @@ export const SolicitudesTable = ({ menu }) => {
             },
         }),
         renderDetailPanel: ({ row }) => (
-            <Group grow>
-                <Card withBorder shadow="sm" radius="sm">
-                    <Group justify="space-between">
-                        <Text fz="sm" mb={5} fw={700}>
-                            Incidencia
-                        </Text>
-                        <Badge radius="sm">{row.original.estado}</Badge>
-                    </Group>
-                    <Card.Section withBorder inheritPadding p="md" mt="md">
-                        {row.original.incidente}
-                    </Card.Section>
-                </Card>
-            </Group>
+            <Table.ScrollContainer minWidth={800}>
+                <Table
+                    verticalSpacing="md"
+                    withColumnBorders
+                    withRowBorders={false}
+                >
+                    <Table.Tbody>
+                        <Table.Tr>
+                            <Table.Td>
+                                <Text fz="sm">{row.original.incidente}</Text>
+                                <Text fz="xs" c="dimmed">
+                                    Incidencia
+                                </Text>
+                            </Table.Td>
+                            <Table.Td>
+                                <Badge radius="sm" color={row.original.color}>
+                                    {row.original.estado}
+                                </Badge>
+                                <Text fz="xs" c="dimmed">
+                                    Estado del soporte
+                                </Text>
+                            </Table.Td>
+                        </Table.Tr>
+                    </Table.Tbody>
+                </Table>
+            </Table.ScrollContainer>
         ),
     });
 
