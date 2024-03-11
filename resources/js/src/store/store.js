@@ -8,6 +8,7 @@ import {
     directorSlice,
     empresaSlice,
     equipoSlice,
+    estadoSlice,
     sexoSlice,
     soporteSlice,
     tecnicoSlice,
@@ -42,5 +43,6 @@ export const store = configureStore({
         equipo: equipoSlice.reducer,
         soporte: soporteSlice.reducer,
         uiSoporte: uiSoporteSlice.reducer,
+        estado: estadoSlice.reducer,
     },
 });

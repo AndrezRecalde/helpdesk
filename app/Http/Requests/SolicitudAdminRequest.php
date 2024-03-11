@@ -26,6 +26,7 @@ class SolicitudAdminRequest extends FormRequest
             'id_direccion'      =>  'required',
             'id_usu_recibe'     =>  'required',
             'id_tipo_soporte'   =>  'required',
+            'id_usu_tecnico_asig' => '',
             'incidente'         =>  'required',
         ];
     }

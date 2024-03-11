@@ -1,11 +1,11 @@
 import { useEffect } from "react";
 import { Box, Divider, Grid, Select, Text } from "@mantine/core";
-import { useSoporteStore, useUsersStore } from "../../../hooks";
+import { useSoporteStore, useTecnicoStore } from "../../../hooks";
 import { BtnSubmit } from "../../../components";
 import { IconSend } from "@tabler/icons-react";
 
 export const FormAsignarSoporte = ({ form }) => {
-    const { users } = useUsersStore();
+    const { tecnicos } = useTecnicoStore();
     const { activateSoporte, startAsignarSoporte } = useSoporteStore();
 
     useEffect(() => {
@@ -88,10 +88,10 @@ export const FormAsignarSoporte = ({ form }) => {
                         label="Seleccione Técnico"
                         placeholder="Seleccione el técnico"
                         {...form.getInputProps("id_usu_tecnico_asig")}
-                        data={users.map((user) => {
+                        data={tecnicos.map((tecnico) => {
                             return {
-                                value: user.cdgo_usrio.toString(),
-                                label: user.nmbre_usrio,
+                                value: tecnico.cdgo_usrio.toString(),
+                                label: tecnico.nmbre_usrio,
                             };
                         })}
                     />

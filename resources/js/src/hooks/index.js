@@ -45,6 +45,9 @@ import { useDiagnosticoStore } from "./diagnostico/useDiagnosticoStore";
 /* Equipos */
 import { useEquipoStore } from "./equipo/useEquipoStore";
 
+/* Estados Soportes */
+import { useEstadoStore } from "./estado/useEstadoStore";
+
 /* Soportes */
 import { useSoporteStore } from "./soporte/useSoporteStore";
 import { useUiSoporte } from "./soporte/useUiSoporte";
@@ -82,6 +85,8 @@ export {
     useDiagnosticoStore,
 
     useEquipoStore,
+
+    useEstadoStore,
 
     useSoporteStore,
     useUiSoporte

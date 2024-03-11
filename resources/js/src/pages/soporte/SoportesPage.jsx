@@ -85,7 +85,7 @@ export const SoportesPage = () => {
                 </Card.Section>
             </Card>
             <ModalSolicitudAdminSoporte />
-            <ModalCreateSoporte role={false} /> {/* false: tecnico true: gerente */}
+            <ModalCreateSoporte role={true} /> {/* false: tecnico true: gerente */}
         </Container>
     );
 };

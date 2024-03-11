@@ -1,11 +1,27 @@
-import { Alert, Box, Grid, Select, TextInput, Textarea } from "@mantine/core";
+import {
+    Alert,
+    Box,
+    Checkbox,
+    Grid,
+    Select,
+    TextInput,
+    Textarea,
+} from "@mantine/core";
 import { BtnSubmit } from "../../../components";
 import { IconInfoCircle, IconSend } from "@tabler/icons-react";
-import { useDireccionStore, useSoporteStore, useUiSoporte, useUsersStore } from "../../../hooks";
+import {
+    useDireccionStore,
+    useSoporteStore,
+    useTecnicoStore,
+    useUiSoporte,
+    useUsersStore,
+} from "../../../hooks";
 
 export const FormSolicitudAdminSoporte = ({ form }) => {
+    const { can_tecnico } = form.values;
     const { direcciones } = useDireccionStore();
     const { users } = useUsersStore();
+    const { tecnicos } = useTecnicoStore();
     const { startCreateSolicitudAdmin } = useSoporteStore();
     const { modalActionAddSolicitud } = useUiSoporte();
 
@@ -13,7 +29,7 @@ export const FormSolicitudAdminSoporte = ({ form }) => {
 
     const handleSubmit = () => {
         console.log(form.values);
-        startCreateSolicitudAdmin(form.values);
+        startCreateSolicitudAdmin(form.getTransformedValues());
         modalActionAddSolicitud(0);
         form.reset();
     };
@@ -82,6 +98,36 @@ export const FormSolicitudAdminSoporte = ({ form }) => {
                         })}
                     />
                 </Grid.Col>
+                <Grid.Col span={{ base: 12, md: 6, lg: 6 }}>
+                    <Checkbox
+                        description="Es opcional agregar un técnico en este momento"
+                        color="blue.4"
+                        iconColor="dark.8"
+                        size="md"
+                        label="¿Desea agregar técnico en este momento?"
+                        {...form.getInputProps("can_tecnico", {
+                            type: "checkbox",
+                        })}
+                    />
+                </Grid.Col>
+                {can_tecnico ? (
+                    <Grid.Col span={{ base: 12, md: 6, lg: 6 }}>
+                        <Select
+                            withAsterisk
+                            searchable
+                            clearable
+                            label="Técnico"
+                            placeholder="Seleccione técnico"
+                            {...form.getInputProps("id_usu_tecnico_asig")}
+                            data={tecnicos.map((tecnico) => {
+                                return {
+                                    value: tecnico.cdgo_usrio.toString(),
+                                    label: tecnico.nmbre_usrio,
+                                };
+                            })}
+                        />
+                    </Grid.Col>
+                ) : null}
                 <Grid.Col span={{ base: 12, md: 12, lg: 12 }}>
                     <Textarea
                         withAsterisk
@@ -97,16 +143,18 @@ export const FormSolicitudAdminSoporte = ({ form }) => {
             <BtnSubmit fontSize={16} IconSection={IconSend}>
                 Crear solicitud
             </BtnSubmit>
-            <Alert
-                variant="light"
-                color="yellow"
-                radius="md"
-                title="Información"
-                icon={icon}
-            >
-                Después de crear la solicitud, posteriormente se debe asignar al
-                técnico.
-            </Alert>
+            {!can_tecnico ? (
+                <Alert
+                    variant="light"
+                    color="yellow"
+                    radius="md"
+                    title="Información"
+                    icon={icon}
+                >
+                    Después de crear la solicitud, posteriormente se debe
+                    asignar al técnico.
+                </Alert>
+            ) : null}
         </Box>
     );
 };

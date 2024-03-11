@@ -36,11 +36,13 @@ class Soporte extends Model
         "obs_anulado",
         "fecha_fi",
         "fecha_asig",
-        "id_equipo"
+        "id_equipo",
+        "solucion"
     ];
 
     protected $casts = [
-        "fecha_ini" => "datetime"
+        "fecha_ini" => "datetime",
+        "fecha_fi"  => 'datetime'
     ];
 
     function scopeTecnico($query, $id_usu_tecnico_asig)

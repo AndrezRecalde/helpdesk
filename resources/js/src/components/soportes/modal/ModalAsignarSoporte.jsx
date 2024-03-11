@@ -1,13 +1,12 @@
 import { Modal } from "@mantine/core";
 import { FormAsignarSoporte } from "../../../components";
-import { useSoporteStore, useUiSoporte, useUsersStore } from "../../../hooks";
+import { useSoporteStore, useTecnicoStore, useUiSoporte } from "../../../hooks";
 import { isNotEmpty, useForm } from "@mantine/form";
 import dayjs from "dayjs";
 import { useEffect } from "react";
 
 export const ModalAsignarSoporte = () => {
-    const current_user = JSON.parse(localStorage.getItem("service_user"));
-    const { startLoadUsersGeneral, clearUsers } = useUsersStore();
+    const { startLoadTecnicos, clearTecnicos } = useTecnicoStore();
     const { setActivateSoporte } = useSoporteStore();
     const { isOpenModalAsignarSoporte, modalActionAsignarSoporte } = useUiSoporte();
 
@@ -28,10 +27,10 @@ export const ModalAsignarSoporte = () => {
     })
 
     useEffect(() => {
-        startLoadUsersGeneral({ cdgo_direccion: current_user.cdgo_dprtmnto });
+        startLoadTecnicos();
 
       return () => {
-        clearUsers();
+        clearTecnicos();
       }
     }, [])
 

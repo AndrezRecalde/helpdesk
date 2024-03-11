@@ -93,7 +93,22 @@ export const useSoporteStore = () => {
     /* GERENTE */
     const startCreateSolicitudAdmin = async (solicitud) => {
         try {
+            dispatch(onLoading());
             const { data } = await helpdeskApi.post("/gerencia/crear-solicitud", solicitud);
+            dispatch(onLoadMessage(data));
+            setTimeout(() => {
+                dispatch(onLoadMessage(undefined));
+            }, 40);
+        } catch (error) {
+            console.log(error);
+            ExceptionMessageError(error);
+        }
+    }
+
+    /* GERENTE O TECNICO */
+    const startCreateSoporte = async (soporte) => {
+        try {
+            const { data } = await helpdeskApi.post("/general/crear-soporte", soporte);
             dispatch(onLoadMessage(data));
             setTimeout(() => {
                 dispatch(onLoadMessage(undefined));
@@ -154,6 +169,7 @@ export const useSoporteStore = () => {
         startLoadSoportesAnulados,
         startAnularSoporte,
         startCreateSolicitudAdmin,
+        startCreateSoporte,
         clearSoportes,
         setActivateSoporte,
     };

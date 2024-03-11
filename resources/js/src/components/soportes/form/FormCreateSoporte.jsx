@@ -3,7 +3,6 @@ import {
     Box,
     Checkbox,
     Grid,
-    MultiSelect,
     Select,
     Stack,
     TextInput,
@@ -12,9 +11,10 @@ import {
 import { DateTimePicker } from "@mantine/dates";
 import { BtnSubmit } from "../../../components";
 import {
-    useDiagnosticoStore,
     useDireccionStore,
     useEquipoStore,
+    useEstadoStore,
+    useSoporteStore,
     useTecnicoStore,
     useTipoSolicitudStore,
     useUsersStore,
@@ -22,20 +22,43 @@ import {
 import { IconSend } from "@tabler/icons-react";
 
 export const FormCreateSoporte = ({ form, role }) => {
-    console.log(role);
     const { id_tipo_solicitud, terminado } = form.values;
+    const { estados } = useEstadoStore();
     const { users } = useUsersStore();
     const { tecnicos } = useTecnicoStore();
     const { direcciones } = useDireccionStore();
     const { tiposSolicitudes } = useTipoSolicitudStore();
-    const { diagnosticos } = useDiagnosticoStore();
     const { equipos } = useEquipoStore();
+    const { startCreateSoporte } = useSoporteStore();
+
+    useEffect(() => {
+        if (terminado) {
+            form.setFieldValue("id_estado", "4");
+            form.setFieldValue("solucion", "");
+            form.setFieldValue("id_equipo", null);
+            form.setFieldValue("fecha_fi", null);
+            return;
+        }
+        form.setFieldValue("id_estado", "3");
+    }, [terminado]);
 
     useEffect(() => {
         if (id_tipo_solicitud == 7) {
             form.setFieldValue("terminado", false);
+            form.setFieldValue("id_estado", "4");
+            form.setFieldValue("solucion", "");
+            form.setFieldValue("id_equipo", null);
+            form.setFieldValue("fecha_fi", null);
+            return;
         }
+        form.setFieldValue("id_estado", "3");
     }, [id_tipo_solicitud]);
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log(form.values);
+        startCreateSoporte(form.getTransformedValues())
+    }
 
     return (
         <Box
@@ -43,6 +66,30 @@ export const FormCreateSoporte = ({ form, role }) => {
             onSubmit={form.onSubmit((_, e) => handleSubmit(e))}
         >
             <Grid>
+                <Grid.Col span={6}>
+                    <Select
+                        withAsterisk
+                        disabled
+                        label="Estado de la solicitud"
+                        placeholder="Seleccione el estado de la solicitud"
+                        {...form.getInputProps("id_estado")}
+                        data={estados.map((estado) => {
+                            return {
+                                value: estado.id_estado_caso.toString(),
+                                label: estado.nombre,
+                            };
+                        })}
+                    />
+                </Grid.Col>
+                <Grid.Col span={6}>
+                    <DateTimePicker
+                        withAsterisk
+                        valueFormat="YYYY-MM-DD HH:m"
+                        label="Fecha de solicitud"
+                        placeholder="Seleccione fecha de solicitud"
+                        {...form.getInputProps("fecha_ini")}
+                    />
+                </Grid.Col>
                 <Grid.Col span={6}>
                     <Select
                         withAsterisk
@@ -64,15 +111,7 @@ export const FormCreateSoporte = ({ form, role }) => {
                         {...form.getInputProps("numero_escrito")}
                     />
                 </Grid.Col>
-                <Grid.Col span={12}>
-                    <DateTimePicker
-                        withAsterisk
-                        valueFormat="YYYY-MM-DD HH:m"
-                        label="Fecha de solicitud"
-                        placeholder="Seleccione fecha de solicitud"
-                        {...form.getInputProps("fecha_ini")}
-                    />
-                </Grid.Col>
+
                 <Grid.Col span={12}>
                     <Select
                         disabled={role}
@@ -80,7 +119,7 @@ export const FormCreateSoporte = ({ form, role }) => {
                         searchable
                         clearable
                         label="Técnico"
-                        placeholder="Seleccione tecnico"
+                        placeholder="Seleccione técnico"
                         {...form.getInputProps("id_usu_tecnico_asig")}
                         data={tecnicos.map((tecnico) => {
                             return {
@@ -168,17 +207,6 @@ export const FormCreateSoporte = ({ form, role }) => {
                     />
                 </Grid.Col>
                 <Grid.Col span={{ base: 12, md: 12, lg: 12 }}>
-                    <Textarea
-                        withAsterisk
-                        label="Solución"
-                        description="Digite como solucionó el incidente"
-                        autosize
-                        minRows={3}
-                        maxRows={3}
-                        {...form.getInputProps("solucion")}
-                    />
-                </Grid.Col>
-                <Grid.Col span={{ base: 12, md: 12, lg: 12 }}>
                     <Checkbox
                         color="blue.4"
                         iconColor="dark.8"
@@ -193,7 +221,7 @@ export const FormCreateSoporte = ({ form, role }) => {
             </Grid>
             {terminado ? (
                 <Stack mt={20}>
-                    <MultiSelect
+                    {/* <MultiSelect
                         searchable
                         label="Diagnostico"
                         placeholder="Seleccione el/los diagnosticos"
@@ -205,28 +233,46 @@ export const FormCreateSoporte = ({ form, role }) => {
                                 label: diagnostico.diagnostico,
                             };
                         })}
+                    /> */}
+
+                    <Textarea
+                        withAsterisk
+                        label="Solución"
+                        description="Digite como solucionó el incidente"
+                        autosize
+                        minRows={3}
+                        maxRows={3}
+                        {...form.getInputProps("solucion")}
                     />
 
-                    {/* <Select
+                    <Select
                         searchable
                         clearable
+                        limit={5}
                         label="Activo Informatico"
                         placeholder="Seleccione el activo informatico"
-                        //{...form.getInputProps("id_tipo_soporte")}
-                        data={equipos.map(equipo => {
-                            return{
+                        {...form.getInputProps("id_equipo")}
+                        data={equipos.map((equipo) => {
+                            return {
                                 group: equipo.sop_tipo_equipo_nombre,
-                                items: equipo
-                            }
+                                items: equipo.equipos.map((eq) => {
+                                    return {
+                                        value: eq.idsop_equipo.toString(),
+                                        label: `${eq.sop_equipo_codigo} ${
+                                            eq.sop_equipo_serie ?? ""
+                                        }`,
+                                    };
+                                }),
+                            };
                         })}
-                    /> */}
+                    />
 
                     <DateTimePicker
                         withAsterisk
                         valueFormat="YYYY-MM-DD HH:m"
                         label="Fecha de finalización"
                         placeholder="Seleccione fecha de finalización"
-                        //{...form.getInputProps("fecha_ini")}
+                        {...form.getInputProps("fecha_fi")}
                     />
                 </Stack>
             ) : null}

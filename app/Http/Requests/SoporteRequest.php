@@ -24,6 +24,19 @@ class SoporteRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'id_estado'         => 'required',
+            'fecha_ini'         => 'required',
+            'id_tipo_solicitud' => 'required',
+            'numero_escrito'    => '',
+            'id_usu_tecnico_asig' => 'required',
+            'id_direccion'      =>  'required',
+            'id_usu_recibe'     =>  'required',
+            'id_tipo_soporte'   =>  'required',
+            'id_area_tic'       =>  'required',
+            'incidente'         =>  'required',
+            'solucion'          =>  '',
+            'id_equipo'         =>  '',
+            'fecha_fi'          =>  '',
 
         ];
     }

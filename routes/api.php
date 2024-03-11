@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\General\DiagnosticoController;
 use App\Http\Controllers\General\DireccionController;
 use App\Http\Controllers\General\EquipoController;
+use App\Http\Controllers\General\EstadoSoporteController;
 use App\Http\Controllers\General\SoporteController;
 use App\Http\Controllers\General\UserController;
 use App\Http\Controllers\Gerente\CargoController;
@@ -101,12 +102,17 @@ Route::group(['prefix' => 'general', 'middleware' => ['auth:sanctum']], function
     /* SOPORTES */
     Route::post('/soportes-actuales', [SoporteController::class, 'getSoportesActuales']);
     Route::post('/buscar-soportes', [SoporteController::class, 'searchSoportes']);
+    Route::post('/crear-soporte', [SoporteController::class, 'createSoporte']);
 
     /* TIPOS DE SOLICITUDES DE SOPORTE */
     Route::get('/tipos-solicitudes', [TipoSolicitudController::class, 'getTiposSolicitudesSoporte']);
 
     /* TIPOS DE DIAGNOSTICOS */
     Route::get("/diagnosticos", [DiagnosticoController::class, 'getDiagnosticos']);
+
+    /* ESTADOS DE SOPORTES */
+    Route::get("/estados-soportes", [EstadoSoporteController::class, 'getEstadosSoportes']);
+
 
     /* EQUIPOS */
     Route::get("/equipos", [EquipoController::class, 'getEquiposInformaticos']);

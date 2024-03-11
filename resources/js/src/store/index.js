@@ -43,6 +43,9 @@ import { diagnosticoSlice } from "./diagnostico/diagnosticoSlice";
 /* Equipos */
 import { equipoSlice } from "./equipo/equipoSlice";
 
+/* Estados */
+import { estadoSlice } from "./estado/estadoSlice";
+
 /* Soportes */
 import { soporteSlice } from "./soporte/soporteSlice";
 import { uiSoporteSlice } from "./soporte/uiSoporteSlice";
@@ -99,6 +102,9 @@ export {
 
     /*Equipos */
     equipoSlice,
+
+    /* Estados */
+    estadoSlice,
 
     /* Soportes */
     soporteSlice,

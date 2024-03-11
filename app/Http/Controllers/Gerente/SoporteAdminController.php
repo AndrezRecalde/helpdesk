@@ -103,6 +103,13 @@ class SoporteAdminController extends Controller
     {
         try {
             $soporte = Soporte::create($request->validated());
+
+            if ($request->id_usu_tecnico_asig) {
+                $tecnico = User::where("cdgo_usrio", $request->id_usu_tecnico_asig)
+                    ->first(['cdgo_usrio', 'email']);
+                Mail::to($tecnico->email)->send(new SoporteMail($soporte));
+            }
+
             return response()->json(
                 [
                     'status' => 'success',

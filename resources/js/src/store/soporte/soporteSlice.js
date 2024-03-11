@@ -38,6 +38,7 @@ export const soporteSlice = createSlice({
         },
         onLoadMessage: (state, { payload }) => {
             state.message = payload;
+            state.isLoading = false;
         },
         onClearMessage: (state) => {
             state.message = undefined;

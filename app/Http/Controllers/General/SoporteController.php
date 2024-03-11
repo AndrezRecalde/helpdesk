@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\General;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\SoporteRequest;
 use App\Models\Soporte;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
@@ -61,6 +62,20 @@ class SoporteController extends Controller
             return response()->json(['status' => 'success', 'soportes' => $soportes], 200);
         } else {
             return response()->json(['status' => 'error', 'msg' => 'No hay soportes con esos filtros de búsqueda'], 404);
+        }
+    }
+
+    function createSoporte(SoporteRequest $request): JsonResponse
+    {
+        try {
+            $soporte = Soporte::create($request->validated());
+            return response()->json([
+                'status' => 'success',
+                'msg' => 'Soporte creado con éxito',
+                'numero_sop' => $soporte->numero_sop
+            ], 200);
+        } catch (\Throwable $th) {
+            return response()->json(['status' => 'error', 'message' => $th->getMessage()], 500);
         }
     }
 }
