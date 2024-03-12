@@ -17,6 +17,16 @@ export const soporteSlice = createSlice({
             state.soportes = payload;
             state.isLoading = false;
         },
+        onUpdateSoporte: (state, { payload }) => {
+            state.soportes = state.soportes.map((soporte) => {
+                if (soporte.id_sop === payload.id_sop) {
+                    return payload;
+                }
+                return soporte;
+            });
+            state.activateSoporte = null;
+            state.isLoading = false;
+        },
         onAnularSoporte: (state) => {
             if (state.activateSoporte) {
                 state.soportes = state.soportes.filter(
@@ -55,6 +65,7 @@ export const soporteSlice = createSlice({
 export const {
     onLoading,
     onLoadSoportes,
+    onUpdateSoporte,
     onAnularSoporte,
     onSetActivateSoporte,
     onClearSoportes,

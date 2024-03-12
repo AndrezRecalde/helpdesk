@@ -7,6 +7,7 @@ import { ProfilePage } from "./user/ProfilePage";
 /*Gerente */
 import { AdminUsersPage } from "./gerencia/AdminUsersPage";
 import { AdminDireccionesPage } from "./gerencia/AdminDireccionesPage";
+import { AdminTecnicosPage } from "./gerencia/AdminTecnicosPage";
 
 /* Solicitudes */
 import { SolicitudPage } from "./solicitud/SolicitudPage";
@@ -31,6 +32,7 @@ export {
 
     AdminUsersPage,
     AdminDireccionesPage,
+    AdminTecnicosPage,
 
     SolicitudPage,
     SolicitudesActualesPage,

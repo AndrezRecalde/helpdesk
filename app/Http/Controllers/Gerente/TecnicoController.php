@@ -12,14 +12,16 @@ class TecnicoController extends Controller
 {
     function getTecnicosAdmin(): JsonResponse
     {
-        $tecnicos = User::from('usrios_sstma as u')
-            ->selectRaw('u.cdgo_usrio, u.nmbre_usrio,
+        $tecnicos = User::from('usrios_sstma as us')
+            ->selectRaw('us.cdgo_usrio, us.nmbre_usrio,
                             d.nmbre_dprtmnto as departamento,
                             r.id, r.name as role')
-            ->join('dprtmntos as d', 'd.cdgo_dprtmnto', 'u.cdgo_dprtmnto')
-            ->join('model_has_roles as mh', 'mh.model_id', 'u.cdgo_usrio')
+            ->join('dprtmntos as d', 'd.cdgo_dprtmnto', 'us.cdgo_dprtmnto')
+            ->join('model_has_roles as mh', 'mh.model_id', 'us.cdgo_usrio')
             ->join('roles as r', 'r.id', 'mh.role_id')
+            ->leftJoin('sop_soporte as ss', 'ss.id_usu_tecnico_asig', 'us.cdgo_usrio')
             ->whereIn('mh.role_id', [1, 2])
+            ->orderBy('')
             ->get();
 
         return response()->json(['status' => 'success', 'tecnicos' => $tecnicos], 200);

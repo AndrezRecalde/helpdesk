@@ -8,6 +8,7 @@ import {
     onLoadSoportes,
     onLoading,
     onSetActivateSoporte,
+    onUpdateSoporte,
 } from "../../store/soporte/soporteSlice";
 import helpdeskApi from "../../api/helpdeskApi";
 
@@ -111,6 +112,21 @@ export const useSoporteStore = () => {
     /* GERENTE O TECNICO */
     const startCreateSoporte = async (soporte) => {
         try {
+            /* GERENCIA */
+            if (soporte.id_sop) {
+                const { data } = await helpdeskApi.put(
+                    `/gerencia/actualizar-soporte/${soporte.id_sop}`,
+                    soporte
+                );
+                dispatch(onLoadMessage(data));
+                dispatch(onUpdateSoporte(soporte));
+                setTimeout(() => {
+                    dispatch(onLoadMessage(undefined));
+                }, 40);
+                return;
+            }
+
+            /* GENERAL */
             const { data } = await helpdeskApi.post(
                 "/general/crear-soporte",
                 soporte
@@ -155,6 +171,21 @@ export const useSoporteStore = () => {
         }
     };
 
+    /* USUARIO SOLICITANTE */
+    const startSendSolicitud = async(solicitud) => {
+        try {
+            dispatch(onLoading());
+            const { data } = await helpdeskApi.post("/usuario/enviar-solicitud", solicitud);
+            dispatch(onLoadMessage(data));
+            setTimeout(() => {
+                dispatch(onLoadMessage(undefined));
+            }, 40);
+        } catch (error) {
+            console.log(error);
+            ExceptionMessageError(error);
+        }
+    }
+
     const clearSoportes = () => {
         dispatch(onClearSoportes());
     };
@@ -177,6 +208,7 @@ export const useSoporteStore = () => {
         startCreateSolicitudAdmin,
         startCreateSoporte,
         startSearchSoporte,
+        startSendSolicitud,
         clearSoportes,
         setActivateSoporte,
     };

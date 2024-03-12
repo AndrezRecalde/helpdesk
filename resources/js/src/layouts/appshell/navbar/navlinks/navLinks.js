@@ -17,7 +17,9 @@ export const lGerente = [
         icon: IconCategory,
         links: [
             { label: "Gestionar Usuarios", link: "/gerencia/usuarios" },
-            { label: "Gestionar Direcciones", link: "/gerencia/direcciones" }
+            { label: "Gestionar Direcciones", link: "/gerencia/direcciones" },
+            { label: "Gestionar Técnicos", link: "/gerencia/tecnicos" }
+
         ],
     },
     {

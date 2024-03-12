@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\AnularSoporteRequest;
 use App\Http\Requests\SolicitudAdminRequest;
 use App\Http\Requests\SoporteAsignarcionRequest;
+use App\Http\Requests\SoporteRequest;
 use App\Mail\SoporteMail;
 use App\Models\Soporte;
 use App\Models\User;
@@ -117,6 +118,21 @@ class SoporteAdminController extends Controller
                 ],
                 200
             );
+        } catch (\Throwable $th) {
+            return response()->json(['status' => 'error', 'message' => $th->getMessage()], 500);
+        }
+    }
+
+    function updateSoporte(SoporteRequest $request, int $id_sop): JsonResponse
+    {
+        $soporte = Soporte::find($id_sop);
+        try {
+            if ($soporte) {
+                $soporte->update($request->validated());
+                return response()->json(['status' => 'success', 'msg' => 'Actualizado con éxito'], 200);
+            } else {
+                return response()->json(['status' => 'error', 'msg' => 'Soporte no encontrado'], 404);
+            }
         } catch (\Throwable $th) {
             return response()->json(['status' => 'error', 'message' => $th->getMessage()], 500);
         }

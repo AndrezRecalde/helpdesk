@@ -17,6 +17,7 @@ import {
     useSoporteStore,
     useTecnicoStore,
     useTipoSolicitudStore,
+    useUiSoporte,
     useUsersStore,
 } from "../../../hooks";
 import { IconSend } from "@tabler/icons-react";
@@ -30,6 +31,7 @@ export const FormCreateSoporte = ({ form, role }) => {
     const { tiposSolicitudes } = useTipoSolicitudStore();
     const { equipos } = useEquipoStore();
     const { startCreateSoporte, activateSoporte } = useSoporteStore();
+    const { modalActionCreateSoporte } = useUiSoporte();
 
     useEffect(() => {
         if (terminado) {
@@ -71,6 +73,7 @@ export const FormCreateSoporte = ({ form, role }) => {
         e.preventDefault();
         console.log(form.values);
         startCreateSoporte(form.getTransformedValues());
+        modalActionCreateSoporte(0);
     };
 
     return (
@@ -211,6 +214,7 @@ export const FormCreateSoporte = ({ form, role }) => {
                 <Grid.Col span={{ base: 12, md: 12, lg: 12 }}>
                     <Textarea
                         withAsterisk
+                        disabled={activateSoporte ? true : false}
                         label="Incidente"
                         description="Digite la incidencia del usuario"
                         autosize

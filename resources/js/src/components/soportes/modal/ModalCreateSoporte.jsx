@@ -11,7 +11,6 @@ import {
     useUsersStore,
 } from "../../../hooks";
 import { isNotEmpty, useForm } from "@mantine/form";
-import dayjs from "dayjs";
 
 export const ModalCreateSoporte = ({ role }) => {
     const user = JSON.parse(localStorage.getItem("service_user"));
@@ -128,6 +127,11 @@ export const ModalCreateSoporte = ({ role }) => {
                 : null
         );
 
+        if (id_direccion === null) {
+            form.setFieldValue("id_usu_recibe", null);
+            return;
+        }
+
         return () => {
             clearUsers();
         };
@@ -184,8 +188,8 @@ export const ModalCreateSoporte = ({ role }) => {
     }, [activateSoporte]);
 
     const handleCloseModal = () => {
-        modalActionCreateSoporte(0);
         setActivateSoporte(null);
+        modalActionCreateSoporte(0);
         form.reset();
     };
 

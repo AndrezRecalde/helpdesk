@@ -9,6 +9,7 @@ import {
     SolicitudesAnuladasPage,
     SoportesPage,
     DashGerenciaPage,
+    AdminTecnicosPage,
 } from "../../../pages";
 
 export const PagesGerente = () => {
@@ -20,6 +21,8 @@ export const PagesGerente = () => {
                     path="direcciones"
                     element={<AdminDireccionesPage />}
                 />
+                <Route path="tecnicos" element={<AdminTecnicosPage />} />
+
                 <Route
                     path="solicitudes-actuales"
                     element={<SolicitudesActualesPage />}

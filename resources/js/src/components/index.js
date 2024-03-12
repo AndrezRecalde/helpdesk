@@ -25,6 +25,7 @@ import { FilterFormSoportes } from "./gerencia/filters/FilterFormSoportes";
 import { UsersTable } from "./gerencia/tables/UsersTable";
 import { DireccionesTable } from "./gerencia/tables/DireccionesTable";
 import { SolicitudesTable } from "./gerencia/tables/SolicitudesTable";
+import { TecnicosTable } from "./gerencia/tables/TecnicosTable";
 
 import { ContactIconsList } from "./solicitudes/ContactIcons";
 
@@ -60,10 +61,10 @@ import { SolicitudesAnuladasTable } from "./gerencia/tables/SolicitudesAnuladasT
 import { ModalAnularSoporte } from "./soportes/modal/ModalAnularSoporte";
 import { FormAnularSoporte } from "./soportes/form/FormAnularSoporte";
 
-import { ModalSolicitudAdminSoporte } from "./soportes/modal/ModalSolicitudAdminSoporte.jsx";
-import { FormSolicitudAdminSoporte } from "./soportes/form/FormSolicitudAdminSoporte.jsx";
+import { ModalSolicitudAdminSoporte } from "./soportes/modal/ModalSolicitudAdminSoporte";
+import { FormSolicitudAdminSoporte } from "./soportes/form/FormSolicitudAdminSoporte";
 
-import { ModalCreateSoporte } from "./soportes/modal/ModalCreateSoporte.jsx";
+import { ModalCreateSoporte } from "./soportes/modal/ModalCreateSoporte";
 import { FormCreateSoporte } from "./soportes/form/FormCreateSoporte";
 
 import { ModalResetPwdUser } from "./gerencia/modals/ModalResetPwdUser";
@@ -95,6 +96,7 @@ export {
 
     UsersTable,
     DireccionesTable,
+    TecnicosTable,
     SolicitudesTable,
 
     ContactIconsList,

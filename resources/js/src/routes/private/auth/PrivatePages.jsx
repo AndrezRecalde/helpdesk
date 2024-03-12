@@ -1,5 +1,4 @@
-import { Navigate, Route } from "react-router-dom";
-import { AppLayout } from "../../../layouts";
+import { Route } from "react-router-dom";
 import { RoutesNotFound } from "../../not-found/RoutesNotFound";
 import {  ProfilePage, SolicitudPage } from "../../../pages";
 

@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\General;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\SolicitudRequest;
 use App\Http\Requests\SoporteRequest;
 use App\Models\Soporte;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class SoporteController extends Controller
 {
@@ -80,6 +82,19 @@ class SoporteController extends Controller
                 'msg' => 'Soporte creado con éxito',
                 'numero_sop' => $soporte->numero_sop
             ], 200);
+        } catch (\Throwable $th) {
+            return response()->json(['status' => 'error', 'message' => $th->getMessage()], 500);
+        }
+    }
+
+    function enviarSolicitud(SolicitudRequest $request): JsonResponse
+    {
+        try {
+            $soporte = Soporte::create($request->validated());
+            $soporte->id_direccion = Auth::user()->cdgo_direccion;
+            $soporte->id_usu_recibe = Auth::user()->cdgo_usrio;
+            $soporte->save();
+            return response()->json(['status' => 'success', 'msg' => 'Solicitud enviada con éxito'], 200);
         } catch (\Throwable $th) {
             return response()->json(['status' => 'error', 'message' => $th->getMessage()], 500);
         }

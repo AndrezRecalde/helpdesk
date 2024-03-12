@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class SolicitudRequest extends FormRequest
 {
@@ -22,9 +24,15 @@ class SolicitudRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'solicitud'         => 'required',
-            'usuario_id'        => 'required',
-            'departamento_id'   => 'required',
+            'incidente'         => 'required',
+            'id_direccion'      => '',
+            'id_usu_recibe'     => ''
         ];
+    }
+
+    protected function failedValidation(Validator $validator): HttpResponseException
+    {
+        /* $errors = (new ValidationException($validator))->errors(); */
+        throw new HttpResponseException(response()->json(['errores' => $validator->errors()], 422));
     }
 }
