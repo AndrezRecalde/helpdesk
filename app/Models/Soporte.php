@@ -45,6 +45,15 @@ class Soporte extends Model
         "fecha_fin"  => 'datetime'
     ];
 
+    public static function create(array $attributes = [])
+    {
+        $attributes['id_usuario_crea'] = auth()->id();
+
+        $soporte = static::query()->create($attributes);
+
+        return $soporte;
+    }
+
     function scopeTecnico($query, $id_usu_tecnico_asig)
     {
         if ($id_usu_tecnico_asig) {

@@ -1,9 +1,9 @@
+import { useEffect } from "react";
 import { Modal } from "@mantine/core";
 import { FormAsignarSoporte } from "../../../components";
 import { useSoporteStore, useTecnicoStore, useUiSoporte } from "../../../hooks";
 import { isNotEmpty, useForm } from "@mantine/form";
 import dayjs from "dayjs";
-import { useEffect } from "react";
 
 export const ModalAsignarSoporte = () => {
     const { startLoadTecnicos, clearTecnicos } = useTecnicoStore();

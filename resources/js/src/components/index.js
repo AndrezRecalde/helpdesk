@@ -6,7 +6,7 @@ import { AlertSection } from "./elements/alert/AlertSection";
 import { BtnSubmit, BtnSection, BtnAddActions } from "./elements/buttons/BtnServices";
 import { BtnDarkMode } from "./elements/buttons/BtnDarkMode";
 import { TableContent } from "./elements/tables/TableContent";
-import { MenuUsersTable, MenuTable_E, MenuSolicitudTable } from "./elements/tables/MenuTable";
+import { MenuUsersTable, MenuTable_E, MenuTable_T, MenuSolicitudTable } from "./elements/tables/MenuTable";
 
 /* Authentication */
 import { AuthForm } from "./auth/AuthForm";
@@ -70,6 +70,14 @@ import { FormCreateSoporte } from "./soportes/form/FormCreateSoporte";
 import { ModalResetPwdUser } from "./gerencia/modals/ModalResetPwdUser";
 import { FormResetPwdUser } from "./gerencia/forms/FormResetPwdUser";
 
+import { ModalAddTecnico } from "./gerencia/modals/ModalAddTecnico";
+import { ModalActivateTecnico } from "./gerencia/modals/ModalActivateTecnico";
+import { FormActivateTecnico } from "./gerencia/forms/FormActivateTecnico";
+import { FormAddTecnico } from "./gerencia/forms/FormAddTecnico";
+
+import { ModalDiagnostico } from "./soportes/modal/ModalDiagnostico";
+import { FormDiagnosticar } from "./soportes/form/FormDiagnosticar";
+
 export {
     TitlePage,
     TextSection,
@@ -82,6 +90,8 @@ export {
     TableContent,
     MenuUsersTable,
     MenuTable_E,
+    MenuTable_T,
+
     MenuSolicitudTable,
 
     AuthForm,
@@ -138,5 +148,14 @@ export {
     FormCreateSoporte,
 
     ModalResetPwdUser,
-    FormResetPwdUser
+    FormResetPwdUser,
+
+    ModalAddTecnico,
+    ModalActivateTecnico,
+
+    FormActivateTecnico,
+    FormAddTecnico,
+
+    ModalDiagnostico,
+    FormDiagnosticar
 }

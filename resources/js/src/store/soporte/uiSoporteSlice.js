@@ -7,6 +7,7 @@ export const uiSoporteSlice = createSlice({
         isOpenModalAnularSoporte: false,
         isOpenModalAddSolicitud: false,
         isOpenModalCreateSoporte: false,
+        isOpenModalDiagnosticar: false
     },
     reducers: {
         onOpenModalAsignarSoporte: (state) => {
@@ -33,6 +34,12 @@ export const uiSoporteSlice = createSlice({
         onCloseModalCreateSoporte: (state) => {
             state.isOpenModalCreateSoporte = false;
         },
+        onOpenModalDiagnosticar: (state) => {
+            state.isOpenModalDiagnosticar = true;
+        },
+        onCloseModalDiagnosticar: (state) => {
+            state.isOpenModalDiagnosticar = false;
+        }
     },
 });
 
@@ -45,4 +52,6 @@ export const {
     onCloseModalAddSolicitud,
     onOpenModalCreateSoporte,
     onCloseModalCreateSoporte,
+    onOpenModalDiagnosticar,
+    onCloseModalDiagnosticar
 } = uiSoporteSlice.actions;

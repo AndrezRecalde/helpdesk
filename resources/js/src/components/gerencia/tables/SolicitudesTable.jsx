@@ -2,7 +2,7 @@ import { useCallback, useMemo } from "react";
 import { useMantineReactTable } from "mantine-react-table";
 import {
     MenuSolicitudTable,
-    MenuTable_E,
+    MenuTable_T,
     TableContent,
 } from "../../../components";
 import { Badge, Table, Text } from "@mantine/core";
@@ -15,8 +15,11 @@ dayjs.extend(relativeTime).locale(es);
 
 export const SolicitudesTable = ({ menu }) => {
     const { isLoading, soportes, setActivateSoporte } = useSoporteStore();
-    const { modalActionAsignarSoporte, modalActionAnularSoporte } =
-        useUiSoporte();
+    const {
+        modalActionAsignarSoporte,
+        modalActionAnularSoporte,
+        modalActionDiagnosticar,
+    } = useUiSoporte();
     const columns = useMemo(
         () => [
             {
@@ -56,6 +59,11 @@ export const SolicitudesTable = ({ menu }) => {
         modalActionAnularSoporte(1);
     }, []);
 
+    const handleDiagnosticar = useCallback((selected) => {
+        setActivateSoporte(selected);
+        modalActionDiagnosticar(1);
+    }, []);
+
     const table = useMantineReactTable({
         columns,
         data: soportes, //must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
@@ -67,11 +75,15 @@ export const SolicitudesTable = ({ menu }) => {
                 <MenuSolicitudTable
                     row={row}
                     isEdit={false}
+                    handleDiagnosticar={handleDiagnosticar}
                     handleAsignar={handleAsignar}
                     handleAnular={handleAnular}
                 />
             ) : (
-                <MenuTable_E />
+                <MenuTable_T
+                    row={row}
+                    handleDiagnosticar={handleDiagnosticar}
+                />
             ),
         mantineTableBodyCellProps: ({ cell }) => ({
             style: {

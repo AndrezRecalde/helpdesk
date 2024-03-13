@@ -2,6 +2,7 @@ import { Card, Container, Group } from "@mantine/core";
 import {
     ModalAnularSoporte,
     ModalAsignarSoporte,
+    ModalDiagnostico,
     SolicitudesTable,
     TextSection,
     TitlePage,
@@ -76,6 +77,7 @@ export const SolicitudesActualesPage = () => {
             {/* ) : null} */}
             <ModalAsignarSoporte />
             <ModalAnularSoporte />
+            <ModalDiagnostico />
         </Container>
     );
 };

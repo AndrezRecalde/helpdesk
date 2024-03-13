@@ -1,5 +1,11 @@
 import { Menu, rem } from "@mantine/core";
-import { IconEditCircle, IconTrash, IconUserShare } from "@tabler/icons-react";
+import {
+    IconEditCircle,
+    IconPrinter,
+    IconSortAscending,
+    IconTrash,
+    IconUserShare,
+} from "@tabler/icons-react";
 
 export const MenuUsersTable = ({ row, handleEdit, handleResetPassword }) => {
     return (
@@ -43,17 +49,78 @@ export const MenuTable_E = ({ row, handleEdit }) => {
     );
 };
 
+export const MenuTable_T = ({ row, handleDiagnosticar }) => {
+    return (
+        <>
+            <Menu.Item
+                disabled={
+                    row.original.tecnico_asignado === null ||
+                    row.original.id_estado === 2 ||
+                    row.original.id_estado === 3 ||
+                    row.original.id_estado === 4
+                        ? true
+                        : false
+                }
+                leftSection={
+                    <IconSortAscending
+                        style={{ width: rem(15), height: rem(15) }}
+                    />
+                }
+                onClick={() => handleDiagnosticar(row.original)}
+            >
+                Diagnosticar
+            </Menu.Item>
+            <Menu.Item
+                disabled={
+                    row.original.tecnico_asignado === null ||
+                    row.original.id_estado === 2 ||
+                    row.original.id_estado === 3 ||
+                    row.original.id_estado === 4
+                        ? true
+                        : false
+                }
+                leftSection={
+                    <IconPrinter style={{ width: rem(15), height: rem(15) }} />
+                }
+                onClick={() => console.log("imprimir")}
+            >
+                Imprimir
+            </Menu.Item>
+        </>
+    );
+};
+
 export const MenuSolicitudTable = ({
     row,
     handleEditar = null,
+    handleDiagnosticar,
     handleAsignar,
     handleAnular,
     isEdit,
 }) => {
-    console.log(isEdit)
+    console.log(isEdit);
     return (
         <>
             <Menu.Item
+                disabled={
+                    row.original.tecnico_asignado === null ||
+                    row.original.id_estado === 2 ||
+                    row.original.id_estado === 3 ||
+                    row.original.id_estado === 4
+                        ? true
+                        : false
+                }
+                leftSection={
+                    <IconSortAscending
+                        style={{ width: rem(15), height: rem(15) }}
+                    />
+                }
+                onClick={() => handleDiagnosticar(row.original)}
+            >
+                Diagnosticar
+            </Menu.Item>
+            <Menu.Item
+                disabled={row.original.tecnico_asignado !== null ? true : false}
                 leftSection={
                     <IconUserShare
                         style={{ width: rem(15), height: rem(15) }}

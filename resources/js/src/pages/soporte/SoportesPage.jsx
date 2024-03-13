@@ -11,6 +11,7 @@ import {
     ModalCreateSoporte,
     ModalAsignarSoporte,
     ModalAnularSoporte,
+    ModalDiagnostico,
 } from "../../components";
 import { useDireccionStore, useSoporteStore, useUiSoporte } from "../../hooks";
 import Swal from "sweetalert2";
@@ -91,6 +92,7 @@ export const SoportesPage = () => {
             <ModalCreateSoporte role={true} /> {/* false: tecnico true: gerente */}
             <ModalAsignarSoporte />
             <ModalAnularSoporte />
+            <ModalDiagnostico />
         </Container>
     );
 };

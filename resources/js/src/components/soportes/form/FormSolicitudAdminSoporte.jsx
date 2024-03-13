@@ -40,11 +40,27 @@ export const FormSolicitudAdminSoporte = ({ form }) => {
             onSubmit={form.onSubmit((_, e) => handleSubmit(e))}
         >
             <Grid>
-                <Grid.Col span={{ base: 12, md: 6, lg: 6 }}>
+                <Grid.Col span={{ base: 12, md: 12, lg: 12 }}>
                     <TextInput
                         label="Escrito: "
                         placeholder="Digite el escrito del documento (Opcional)"
                         {...form.getInputProps("numero_escrito")}
+                    />
+                </Grid.Col>
+
+                <Grid.Col span={{ base: 12, md: 6, lg: 6 }}>
+                    <Select
+                        label="Área del soporte"
+                        placeholder="Seleccione el área"
+                        {...form.getInputProps("id_area_tic")}
+                        data={[
+                            { value: "1", label: "SISTEMAS Y APLICACIONES" },
+                            {
+                                value: "2",
+                                label: "INFRAESTRUCTURA TECNOLÓGICA",
+                            },
+                            { value: "5", label: "SOPORTE TÉCNICO" },
+                        ]}
                     />
                 </Grid.Col>
 
@@ -134,8 +150,8 @@ export const FormSolicitudAdminSoporte = ({ form }) => {
                         label="Incidente"
                         description="Digite la incidencia del usuario"
                         autosize
-                        minRows={7}
-                        maxRows={7}
+                        minRows={5}
+                        maxRows={5}
                         {...form.getInputProps("incidente")}
                     />
                 </Grid.Col>

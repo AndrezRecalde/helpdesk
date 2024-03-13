@@ -7,23 +7,13 @@ use App\Http\Requests\TecnicoRequest;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class TecnicoController extends Controller
 {
-    function getTecnicosAdmin(): JsonResponse
+    function getTecnicosAdmin(Request $request): JsonResponse
     {
-        $tecnicos = User::from('usrios_sstma as us')
-            ->selectRaw('us.cdgo_usrio, us.nmbre_usrio,
-                            d.nmbre_dprtmnto as departamento,
-                            r.id, r.name as role')
-            ->join('dprtmntos as d', 'd.cdgo_dprtmnto', 'us.cdgo_dprtmnto')
-            ->join('model_has_roles as mh', 'mh.model_id', 'us.cdgo_usrio')
-            ->join('roles as r', 'r.id', 'mh.role_id')
-            ->leftJoin('sop_soporte as ss', 'ss.id_usu_tecnico_asig', 'us.cdgo_usrio')
-            ->whereIn('mh.role_id', [1, 2])
-            ->orderBy('')
-            ->get();
-
+        $tecnicos = DB::select('CALL getTecnicosAdmin(?)', [($request->current_year)]);
         return response()->json(['status' => 'success', 'tecnicos' => $tecnicos], 200);
     }
 
@@ -50,8 +40,13 @@ class TecnicoController extends Controller
         try {
             if ($usuario) {
                 $usuario->update($request->validated());
-                $usuario->assignRole($request->roles);
-                $usuario->save();
+                if (!$request->filled('roles')) {
+                    $usuario->roles()->detach();
+                } else {
+                    $usuario->roles()->detach();
+                    $usuario->assignRole($request->roles);
+                }
+                //$usuario->save();
                 return response()->json(['status' => 'success', 'msg' => 'Actualizado con éxito'], 201);
             } else {
                 return response()->json(['status' => 'error', 'msg' => 'Técnico no encontrado'], 404);

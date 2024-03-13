@@ -4,10 +4,12 @@ import {
     onCloseModalAnularSoporte,
     onCloseModalAsignarSoporte,
     onCloseModalCreateSoporte,
+    onCloseModalDiagnosticar,
     onOpenModalAddSolicitud,
     onOpenModalAnularSoporte,
     onOpenModalAsignarSoporte,
     onOpenModalCreateSoporte,
+    onOpenModalDiagnosticar,
 } from "../../store/soporte/uiSoporteSlice";
 
 export const useUiSoporte = () => {
@@ -15,7 +17,8 @@ export const useUiSoporte = () => {
         isOpenModalAsignarSoporte,
         isOpenModalAnularSoporte,
         isOpenModalAddSolicitud,
-        isOpenModalCreateSoporte
+        isOpenModalCreateSoporte,
+        isOpenModalDiagnosticar
     } = useSelector((state) => state.uiSoporte);
 
     const dispatch = useDispatch();
@@ -44,15 +47,23 @@ export const useUiSoporte = () => {
             : dispatch(onCloseModalCreateSoporte());
     };
 
+    const modalActionDiagnosticar = (behavior) => {
+        behavior === 1
+            ? dispatch(onOpenModalDiagnosticar())
+            : dispatch(onCloseModalDiagnosticar());
+    };
+
     return {
         isOpenModalAsignarSoporte,
         isOpenModalAnularSoporte,
         isOpenModalAddSolicitud,
         isOpenModalCreateSoporte,
+        isOpenModalDiagnosticar,
 
         modalActionAsignarSoporte,
         modalActionAnularSoporte,
         modalActionAddSolicitud,
-        modalActionCreateSoporte
+        modalActionCreateSoporte,
+        modalActionDiagnosticar
     };
 };

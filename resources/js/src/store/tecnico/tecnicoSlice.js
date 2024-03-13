@@ -17,6 +17,16 @@ export const tecnicoSlice = createSlice({
             state.tecnicos = payload;
             state.isLoading = false;
         },
+        onDeleteTecnico: (state) => {
+            if (state.activateTecnico) {
+                state.tecnicos = state.tecnicos.filter(
+                    (tecnico) =>
+                        tecnico.cdgo_usrio !== state.activateTecnico.cdgo_usrio
+                );
+            }
+            state.activateTecnico = null;
+            state.isLoading = false;
+        },
         onSetActivateTecnico: (state, { payload }) => {
             state.activateTecnico = payload;
             state.isLoading = false;
@@ -42,6 +52,7 @@ export const tecnicoSlice = createSlice({
 export const {
     onLoading,
     onLoadTecnicos,
+    onDeleteTecnico,
     onSetActivateTecnico,
     onClearTecnicos,
     onLoadMessage,

@@ -172,10 +172,13 @@ export const useSoporteStore = () => {
     };
 
     /* USUARIO SOLICITANTE */
-    const startSendSolicitud = async(solicitud) => {
+    const startSendSolicitud = async (solicitud) => {
         try {
             dispatch(onLoading());
-            const { data } = await helpdeskApi.post("/usuario/enviar-solicitud", solicitud);
+            const { data } = await helpdeskApi.post(
+                "/usuario/enviar-solicitud",
+                solicitud
+            );
             dispatch(onLoadMessage(data));
             setTimeout(() => {
                 dispatch(onLoadMessage(undefined));
@@ -184,7 +187,25 @@ export const useSoporteStore = () => {
             console.log(error);
             ExceptionMessageError(error);
         }
-    }
+    };
+
+    /* GENERAL */
+    const startDiagnosticarSoporte = async (soporte) => {
+        try {
+            const { data } = await helpdeskApi.put(
+                `/general/diagnosticar-soporte/${soporte.id_sop}`,
+                soporte
+            );
+            dispatch(onLoadMessage(data));
+            setTimeout(() => {
+                dispatch(onLoadMessage(undefined));
+            }, 40);
+            dispatch(onSetActivateSoporte(null));
+        } catch (error) {
+            console.log(error);
+            ExceptionMessageError(error);
+        }
+    };
 
     const clearSoportes = () => {
         dispatch(onClearSoportes());
@@ -209,6 +230,7 @@ export const useSoporteStore = () => {
         startCreateSoporte,
         startSearchSoporte,
         startSendSolicitud,
+        startDiagnosticarSoporte,
         clearSoportes,
         setActivateSoporte,
     };

@@ -1,14 +1,23 @@
 import { useCallback, useMemo } from "react";
 import { Badge, Table, Text } from "@mantine/core";
 import { useMantineReactTable } from "mantine-react-table";
-import { MenuSolicitudTable, MenuTable_E, TableContent } from "../..";
+import {
+    MenuSolicitudTable,
+    MenuTable_E,
+    MenuTable_T,
+    TableContent,
+} from "../..";
 import { useSoporteStore, useUiSoporte } from "../../../hooks";
 import dayjs from "dayjs";
 
 export const SoportesTable = ({ menu, role }) => {
     const { isLoading, soportes, setActivateSoporte } = useSoporteStore();
-    const { modalActionAsignarSoporte, modalActionAnularSoporte, modalActionCreateSoporte } =
-        useUiSoporte();
+    const {
+        modalActionAsignarSoporte,
+        modalActionAnularSoporte,
+        modalActionCreateSoporte,
+        modalActionDiagnosticar,
+    } = useUiSoporte();
     const columns = useMemo(
         () => [
             {
@@ -52,6 +61,11 @@ export const SoportesTable = ({ menu, role }) => {
         []
     );
 
+    const handleDiagnosticar = useCallback((selected) => {
+        setActivateSoporte(selected);
+        modalActionDiagnosticar(1);
+    }, []);
+
     const handleEditar = useCallback((selected) => {
         setActivateSoporte(selected);
         modalActionCreateSoporte(1);
@@ -78,12 +92,13 @@ export const SoportesTable = ({ menu, role }) => {
                 <MenuSolicitudTable
                     row={row}
                     isEdit={true}
+                    handleDiagnosticar={handleDiagnosticar}
                     handleEditar={handleEditar}
                     handleAsignar={handleAsignar}
                     handleAnular={handleAnular}
                 />
             ) : (
-                <MenuTable_E />
+                <MenuTable_T row={row} handleDiagnosticar={handleDiagnosticar} />
             ),
         /* mantineTableBodyCellProps: ({ cell }) => ({
             style: {

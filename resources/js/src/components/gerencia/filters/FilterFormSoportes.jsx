@@ -70,12 +70,14 @@ export const FilterFormSoportes = ({ role }) => {
                 </Group>
                 <SimpleGrid cols={{ base: 2, sm: 2, md: 2, lg: 2 }} mt={10}>
                     <DateInput
+                        clearable
                         valueFormat="DD/MM/YYYY"
                         label="Desde"
                         placeholder="Seleccione fecha inicio"
                         {...form.getInputProps("fecha_inicio")}
                     />
                     <DateInput
+                        clearable
                         valueFormat="DD/MM/YYYY"
                         label="Hasta"
                         placeholder="Seleccione fecha final"

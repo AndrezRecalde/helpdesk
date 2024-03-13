@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\General;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\DiagnosticoRequest;
 use App\Http\Requests\SolicitudRequest;
 use App\Http\Requests\SoporteRequest;
 use App\Models\Soporte;
@@ -95,6 +96,26 @@ class SoporteController extends Controller
             $soporte->id_usu_recibe = Auth::user()->cdgo_usrio;
             $soporte->save();
             return response()->json(['status' => 'success', 'msg' => 'Solicitud enviada con éxito'], 200);
+        } catch (\Throwable $th) {
+            return response()->json(['status' => 'error', 'message' => $th->getMessage()], 500);
+        }
+    }
+
+    function diagnosticarSoporte(DiagnosticoRequest $request, int $id_sop): JsonResponse
+    {
+        $soporte = Soporte::find($id_sop);
+        try {
+            if ($soporte) {
+                $soporte->fill($request->validated());
+                $soporte->id_estado = 3; // Estado: Atendido
+                $soporte->save();
+                return response()->json([
+                    'status' => 'success',
+                    'msg' => 'Soporte Diagnosticado'
+                ], 200);
+            } else {
+                return response()->json(['status' => 'error', 'msg' => 'Soporte no encontrado'], 404);
+            }
         } catch (\Throwable $th) {
             return response()->json(['status' => 'error', 'message' => $th->getMessage()], 500);
         }

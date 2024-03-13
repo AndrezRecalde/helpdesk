@@ -104,6 +104,8 @@ Route::group(['prefix' => 'general', 'middleware' => ['auth:sanctum']], function
     Route::post('/soportes-actuales', [SoporteController::class, 'getSoportesActuales']);
     Route::post('/buscar-soportes', [SoporteController::class, 'searchSoportes']);
     Route::post('/crear-soporte', [SoporteController::class, 'createSoporte']);
+    Route::put('/diagnosticar-soporte/{id_sop}', [SoporteController::class, 'diagnosticarSoporte']);
+
 
     /* TIPOS DE SOLICITUDES DE SOPORTE */
     Route::get('/tipos-solicitudes', [TipoSolicitudController::class, 'getTiposSolicitudesSoporte']);
