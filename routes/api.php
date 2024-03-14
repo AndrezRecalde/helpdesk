@@ -84,6 +84,7 @@ Route::group(['prefix' => 'gerencia', 'middleware' => ['auth:sanctum']], functio
     Route::post('/soportes-anulados', [SoporteAdminController::class, 'getSoporteAnulados']);
     Route::post('/crear-solicitud', [SoporteAdminController::class, 'crearSolicitudAdmin']);
     Route::put('/actualizar-soporte/{id_sop}', [SoporteAdminController::class, 'updateSoporte']);
+    Route::post('/reporte-soporte', [SoporteAdminController::class, 'exportPDFCardSoporte']);
 });
 
 /* RUTAS: GERENTE O TECNICO */
