@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { Card, Container } from "@mantine/core";
 import {
-    FilterFormSearchSoli,
+    FilterFormSearchDates,
     SolicitudesAnuladasTable,
     TitlePage,
 } from "../../components";
@@ -35,7 +35,7 @@ export const SolicitudesAnuladasPage = () => {
             <TitlePage order={2} size="h2">
                 Solicitudes Anuladas
             </TitlePage>
-            <FilterFormSearchSoli />
+            <FilterFormSearchDates />
             {soportes.length !== 0 ? (
                 <Card withBorder shadow="sm" radius="md" mt={20} mb={20}>
                     <Card.Section>

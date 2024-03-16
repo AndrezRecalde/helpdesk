@@ -17,6 +17,7 @@ import { SolicitudesAnuladasPage } from "./solicitud/SolicitudesAnuladasPage";
 /* Soportes */
 import { SoportesPage } from "./soporte/SoportesPage";
 import { BusquedaSoportePage } from "./soporte/BusquedaSoportePage";
+import { IndicadorReportPage } from "./soporte/reporte/IndicadorReportPage";
 
 /* Dashboard */
 import { DashGerenciaPage } from "./dashboard/gerencia/DashGerenciaPage";
@@ -41,6 +42,7 @@ export {
 
     SoportesPage,
     BusquedaSoportePage,
+    IndicadorReportPage,
 
     DashGerenciaPage,
 

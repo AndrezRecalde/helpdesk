@@ -19,7 +19,7 @@ import { ProfileForm } from "./user/ProfileForm";
 /*Geremcia */
 import { FilterFormUsers } from "./gerencia/filters/FilterFormUsers";
 import { FilterFormDirecciones } from "./gerencia/filters/FilterFormDirecciones";
-import { FilterFormSearchSoli } from "./gerencia/filters/FilterFormSearchSoli";
+import { FilterFormSearchDates } from "./gerencia/filters/FilterFormSearchDates";
 import { FilterFormSoportes } from "./gerencia/filters/FilterFormSoportes";
 
 import { UsersTable } from "./gerencia/tables/UsersTable";
@@ -78,6 +78,10 @@ import { FormAddTecnico } from "./gerencia/forms/FormAddTecnico";
 import { ModalDiagnostico } from "./soportes/modal/ModalDiagnostico";
 import { FormDiagnosticar } from "./soportes/form/FormDiagnosticar";
 
+import { TableDesempenoEstados } from "./soportes/table/indicadores/TableDesempenoEstados";
+import { TableDesempenoAreas } from "./soportes/table/indicadores/TableDesempenoAreas";
+import { TableDesempenoTecnicos } from "./soportes/table/indicadores/TableDesempenoTecnicos";
+
 export {
     TitlePage,
     TextSection,
@@ -101,7 +105,7 @@ export {
 
     FilterFormUsers,
     FilterFormDirecciones,
-    FilterFormSearchSoli,
+    FilterFormSearchDates,
     FilterFormSoportes,
 
     UsersTable,
@@ -157,5 +161,9 @@ export {
     FormAddTecnico,
 
     ModalDiagnostico,
-    FormDiagnosticar
+    FormDiagnosticar,
+
+    TableDesempenoEstados,
+    TableDesempenoAreas,
+    TableDesempenoTecnicos
 }

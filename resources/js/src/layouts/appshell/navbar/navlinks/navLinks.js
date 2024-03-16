@@ -35,7 +35,7 @@ export const lGerente = [
         icon: IconDeviceImac,
         links: [
             { label: "Gestionar Soportes", link: "/gerencia/soportes" },
-            //{ label: "Buscar Soportes", link: "/gerencia/busqueda-soportes" }, //Por rango de fechas o tecnico o por departamento
+            { label: "Indicadores de Soporte", link: "/gerencia/indicadores-soportes" }, //Por rango de fechas o tecnico o por departamento
         ],
     },
 ];

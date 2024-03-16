@@ -14,6 +14,7 @@ use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 
 class SoporteAdminController extends Controller
@@ -176,9 +177,44 @@ class SoporteAdminController extends Controller
                 'soporte'     => $soporte
             ];
             $pdf = Pdf::loadView('pdf.soporte.soporte', $data);
-            return $pdf->setPaper('A4', 'portrait')->download('soporte.pdf');
+            return $pdf->setPaper('a4', 'portrait')->download('soporte.pdf');
         } else {
             return response()->json(['status' => 'error', 'msg' => 'No existe el soporte registrado'], 500);
         }
+    }
+
+    function exportPDFIndicadores(Request $request)
+    {
+        $desempenoForEstados = DB::select('CALL sop_get_desempeno_for_estados(?,?)', [$request->fecha_inicio, $request->fecha_fin]);
+        $desempenoForAreas =   DB::select('CALL sop_get_desempeno_for_areas(?,?)', [$request->fecha_inicio, $request->fecha_fin]);
+        $desempenoForTecnicos = DB::select('CALL sop_get_desempeno_for_tecnicos(?,?)', [$request->fecha_inicio, $request->fecha_fin]);
+
+        $efectividadForAreas = DB::select('CALL sop_get_efectividad_for_areas(?,?)', [$request->fecha_inicio, $request->fecha_fin]);
+        $efectividadForTecnicos = DB::select('CALL sop_get_efectividad_for_tecnicos(?,?)', [$request->fecha_inicio, $request->fecha_fin]);
+
+        /* SUMATORIA DE TOTAL DE CASOS EN DESEMPEÑO */
+        $sumaDesempenoForEstados = 0;
+        if (sizeof($desempenoForEstados) > 0) {
+            foreach ($desempenoForEstados as $total_estados) {
+                $sumaDesempenoForEstados += $total_estados->total_estados;
+            }
+        }
+
+        $data = [
+            'direccion'     =>  'Dirección de Técnologias de Informacion y Comunicación',
+            'titulo'        =>  'Reporte General de Indicadores',
+            'fecha_inicio'  =>  '01/01/2023',
+            'fecha_fin'     =>  '31/12/2023',
+            'desempenoForEstados'     => $desempenoForEstados,
+            'sumaDesempenoForEstados' => $sumaDesempenoForEstados,
+            'desempenoForAreas' => $desempenoForAreas,
+            'desempenoForTecnicos' => $desempenoForTecnicos,
+            'efectividadForAreas'  => $efectividadForAreas,
+            'efectividadForTecnicos' => $efectividadForTecnicos
+
+        ];
+        $pdf = Pdf::loadView('pdf.soporte.indicador', $data);
+        return $pdf->setPaper('a4', 'portrait')->download('indicador.pdf');
+        /* return response()->json(['status' => 'success', 'data' => $data]); */
     }
 }

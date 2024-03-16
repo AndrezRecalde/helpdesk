@@ -1,5 +1,5 @@
 import { Card, Container } from "@mantine/core";
-import { FilterFormSearchSoli, SolicitudesTable, TitlePage } from "../../components";
+import { FilterFormSearchDates, SolicitudesTable, TitlePage } from "../../components";
 
 export const BusquedaSoportePage = () => {
     return (
@@ -7,7 +7,7 @@ export const BusquedaSoportePage = () => {
             <TitlePage order={2} size="h2">
                 Busqueda de Soportes
             </TitlePage>
-            <FilterFormSearchSoli />
+            <FilterFormSearchDates />
             <Card withBorder shadow="sm" radius="md" mt={20} mb={20}>
                 <Card.Section>
                     <SolicitudesTable menu={2} />

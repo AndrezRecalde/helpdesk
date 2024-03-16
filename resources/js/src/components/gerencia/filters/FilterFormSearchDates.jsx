@@ -1,12 +1,12 @@
 import { Box, Fieldset, SimpleGrid, Text } from "@mantine/core";
-import { BtnSubmit } from "../../../components";
+import { BtnSubmit } from "../..";
 import { DateInput } from "@mantine/dates";
 import { IconSearch } from "@tabler/icons-react";
 import { isNotEmpty, useForm } from "@mantine/form";
 import { useSoporteStore } from "../../../hooks";
 import dayjs from "dayjs";
 
-export const FilterFormSearchSoli = () => {
+export const FilterFormSearchDates = () => {
     const { startLoadSoportesAnulados } = useSoporteStore();
     const form = useForm({
         initialValues: {

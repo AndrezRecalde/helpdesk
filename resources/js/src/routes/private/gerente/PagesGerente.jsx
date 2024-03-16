@@ -10,6 +10,7 @@ import {
     SoportesPage,
     DashGerenciaPage,
     AdminTecnicosPage,
+    IndicadorReportPage,
 } from "../../../pages";
 
 export const PagesGerente = () => {
@@ -36,6 +37,8 @@ export const PagesGerente = () => {
                     element={<SolicitudesAnuladasPage />}
                 />
                 <Route path="soportes" element={<SoportesPage />} />
+
+                <Route path="indicadores-soportes" element={<IndicadorReportPage />} />
 
                 <Route path="dashboard" element={<DashGerenciaPage />} />
 
