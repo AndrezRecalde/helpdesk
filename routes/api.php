@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\General\ActividadController;
 use App\Http\Controllers\General\DiagnosticoController;
 use App\Http\Controllers\General\DireccionController;
 use App\Http\Controllers\General\EquipoController;
@@ -8,6 +9,7 @@ use App\Http\Controllers\General\EstadoSoporteController;
 use App\Http\Controllers\General\SoporteController;
 use App\Http\Controllers\General\UserController;
 use App\Http\Controllers\Gerente\CargoController;
+use App\Http\Controllers\Gerente\DashGerenteController;
 use App\Http\Controllers\Gerente\DireccionAdminController;
 use App\Http\Controllers\Gerente\EmpresaController;
 use App\Http\Controllers\Gerente\SexoController;
@@ -84,8 +86,12 @@ Route::group(['prefix' => 'gerencia', 'middleware' => ['auth:sanctum']], functio
     Route::post('/soportes-anulados', [SoporteAdminController::class, 'getSoporteAnulados']);
     Route::post('/crear-solicitud', [SoporteAdminController::class, 'crearSolicitudAdmin']);
     Route::put('/actualizar-soporte/{id_sop}', [SoporteAdminController::class, 'updateSoporte']);
-    Route::post('/reporte-soporte', [SoporteAdminController::class, 'exportPDFCardSoporte']);
-    Route::post('/indicador-soporte', [SoporteAdminController::class, 'exportPDFIndicadores']);
+    Route::post('/indicador-soporte', [SoporteAdminController::class, 'getIndicadoresSoportes']);
+    Route::post('/reporte-indicador', [SoporteAdminController::class, 'exportPDFIndicadores']);
+
+    /*DASHBOARD */
+    Route::get('/dashboard', [DashGerenteController::class, 'getDashboardGerencia']);
+
 
 });
 
@@ -108,6 +114,7 @@ Route::group(['prefix' => 'general', 'middleware' => ['auth:sanctum']], function
     Route::post('/buscar-soportes', [SoporteController::class, 'searchSoportes']);
     Route::post('/crear-soporte', [SoporteController::class, 'createSoporte']);
     Route::put('/diagnosticar-soporte/{id_sop}', [SoporteController::class, 'diagnosticarSoporte']);
+    Route::post('/reporte-soporte', [SoporteController::class, 'exportPDFCardSoporte']);
 
 
     /* TIPOS DE SOLICITUDES DE SOPORTE */
@@ -127,5 +134,12 @@ Route::group(['prefix' => 'general', 'middleware' => ['auth:sanctum']], function
 
 /* RUTAS USUARIO */
 Route::group(['prefix' => 'usuario', 'middleware' => ['auth:sanctum']], function () {
+    /* SOLICIUTD DE SOPORTE */
     Route::post('/enviar-solicitud', [SoporteController::class, 'enviarSolicitud']);
+
+    /* ACTIVIDADES */
+    Route::post('/listar-actividades', [ActividadController::class, 'getActivForUserForDates']);
+    Route::post('/create/actividad', [ActividadController::class, 'store']);
+    Route::put('/update/actividad/{id}', [ActividadController::class, 'update']);
+    Route::post('/export/pdf/actividades', [ActividadController::class, 'exportPDFActividadesForUser']);
 });

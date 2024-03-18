@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { Card, Container } from "@mantine/core";
+import { isNotEmpty, useForm } from "@mantine/form";
 import {
     FilterFormSearchDates,
     SolicitudesAnuladasTable,
@@ -7,9 +8,31 @@ import {
 } from "../../components";
 import { useSoporteStore } from "../../hooks";
 import Swal from "sweetalert2";
+import dayjs from "dayjs";
 
 export const SolicitudesAnuladasPage = () => {
-    const { soportes, clearSoportes, errores } = useSoporteStore();
+    const {
+        isLoading,
+        soportes,
+        startLoadSoportesAnulados,
+        clearSoportes,
+        errores,
+    } = useSoporteStore();
+
+    const form = useForm({
+        initialValues: {
+            fecha_inicio: "",
+            fecha_fin: "",
+        },
+        validate: {
+            fecha_inicio: isNotEmpty(
+                "Por favor seleccione una fecha de inicio"
+            ),
+            fecha_fin: isNotEmpty("Por favor seleccione una fecha de fin"),
+        },
+    });
+
+    const { fecha_inicio, fecha_fin } = form.values;
 
     useEffect(() => {
         return () => {
@@ -30,12 +53,24 @@ export const SolicitudesAnuladasPage = () => {
         }
     }, [errores]);
 
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        const fecha_i = dayjs(fecha_inicio).toDate();
+        const fecha_f = dayjs(fecha_fin).add(1, "days").toDate();
+        console.log(fecha_i, fecha_f);
+        startLoadSoportesAnulados(fecha_i, fecha_f);
+    };
+
     return (
         <Container size="xxl">
             <TitlePage order={2} size="h2">
                 Solicitudes Anuladas
             </TitlePage>
-            <FilterFormSearchDates />
+            <FilterFormSearchDates
+                form={form}
+                handleSubmit={handleSubmit}
+                isLoading={isLoading}
+            />
             {soportes.length !== 0 ? (
                 <Card withBorder shadow="sm" radius="md" mt={20} mb={20}>
                     <Card.Section>

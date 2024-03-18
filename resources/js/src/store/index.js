@@ -50,6 +50,16 @@ import { estadoSlice } from "./estado/estadoSlice";
 import { soporteSlice } from "./soporte/soporteSlice";
 import { uiSoporteSlice } from "./soporte/uiSoporteSlice";
 
+/* Indicadores */
+import { indicadorSlice } from "./indicador/indicadorSlice";
+
+/* Dashboards */
+import { dashGerenciaSlice } from "./dashboard/dashGerenciaSlice";
+
+/* Actividades */
+import { actividadSlice } from "./actividad/actividadSlice";
+import { uiActividadSlice } from "./actividad/uiActividadSlice";
+
 import { store } from "./store";
 
 
@@ -108,5 +118,15 @@ export {
 
     /* Soportes */
     soporteSlice,
-    uiSoporteSlice
+    uiSoporteSlice,
+
+    /* Indicadores */
+    indicadorSlice,
+
+    /* Dashboard */
+    dashGerenciaSlice,
+
+    /* Actividades */
+    actividadSlice,
+    uiActividadSlice
  };

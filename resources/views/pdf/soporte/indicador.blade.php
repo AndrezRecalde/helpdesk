@@ -22,11 +22,12 @@
             margin-bottom: 0%;
         }
 
-        p {
+
+        /* p {
             font-size: 14px;
             margin-bottom: 0%;
 
-        }
+        } */
 
         tr {
             font-size: 12px;
@@ -38,7 +39,13 @@
             padding: 5px;
 
         }
-
+        .marginFooter {
+            position: static;
+            bottom: -80px;
+            left: 0px;
+            right: 0px;
+            height: 400px;
+        }
         .marginTop {
             margin-top: 20px;
         }
@@ -48,7 +55,10 @@
         }
 
         .firma {
-            margin-top: 40px;
+            width: 50px;
+        }
+        .marginLineaFirma {
+            margin-top: 80px;
         }
     </style>
 </head>
@@ -85,6 +95,7 @@
                     <td>A.1 Casos {{ $desempenoForEstados[3]->estado }}/Casos Totales</td>
                     <td>{{ $desempenoForEstados[3]->total_estados }}/{{ $sumaDesempenoForEstados }}</td>
                     <td>{{ round(($desempenoForEstados[3]->total_estados / $sumaDesempenoForEstados) * 100, 2) }}%</td>
+
                     <td>A.2 Casos {{ $desempenoForEstados[1]->estado }}/Casos Totales</td>
                     <td>{{ $desempenoForEstados[1]->total_estados }}/{{ $sumaDesempenoForEstados }}</td>
                     <td>{{ round(($desempenoForEstados[1]->total_estados / $sumaDesempenoForEstados) * 100, 2) }}%</td>
@@ -93,6 +104,7 @@
                     <td>A.3 Casos {{ $desempenoForEstados[0]->estado }}/Casos Totales</td>
                     <td>{{ $desempenoForEstados[0]->total_estados }}/{{ $sumaDesempenoForEstados }}</td>
                     <td>{{ round(($desempenoForEstados[0]->total_estados / $sumaDesempenoForEstados) * 100, 2) }}%</td>
+
                     <td>A.4 Casos {{ $desempenoForEstados[2]->estado }}/Casos Totales</td>
                     <td>{{ $desempenoForEstados[2]->total_estados }}/{{ $sumaDesempenoForEstados }}</td>
                     <td>{{ round(($desempenoForEstados[2]->total_estados / $sumaDesempenoForEstados) * 100, 2) }}%</td>
@@ -191,11 +203,11 @@
                 </thead>
                 <tbody>
                     @foreach ($efectividadForTecnicos as $efectividadtenico)
-                    <tr>
-                        <td>{{ $efectividadtenico->tecnico }}</td>
-                        <td>{{ $efectividadtenico->total_asistencia }}</td>
-                        <td>{{ $efectividadtenico->total_promedio }}</td>
-                    </tr>
+                        <tr>
+                            <td>{{ $efectividadtenico->tecnico }}</td>
+                            <td>{{ $efectividadtenico->total_asistencia }}</td>
+                            <td>{{ $efectividadtenico->total_promedio }}</td>
+                        </tr>
                     @endforeach
 
 
@@ -207,7 +219,10 @@
         <!-- C. EFICACIA -->
         <div>
             <p class="text-left marginTop marginBottom">C. EFICACIA</p>
-            <p class="text-left marginTop marginBottom">C1. CASOS FINALIZADOS/META(30 X DIA, EN 261 DIAS): 39.27%</p>
+            <p class="text-left marginTop marginBottom">
+                C1. CASOS FINALIZADOS/META(30 X DIA, EN 261 DIAS):
+                {{ round(($desempenoForEstados[3]->total_estados / 30 / $sumaDiasHabiles[0]->dias_habiles) * 100, 2) }}%
+            </p>
             <table class="table table-bordered">
                 <thead>
                     <tr>
@@ -222,18 +237,43 @@
                     </tr>
                     <tr>
                         <td>CASOS FINALIZADOS</td>
-                        <td>3075</td>
+                        <td>{{ $desempenoForEstados[3]->total_estados }}</td>
                     </tr>
                     <tr>
                         <td>PERIODO(NUMERO DE DIAS)</td>
-                        <td>261</td>
+                        <td>{{ $sumaDiasHabiles[0]->dias_habiles }}</td>
                     </tr>
                 </tbody>
             </table>
         </div>
         <!-- C. FIN EFICACIA -->
 
-        <hr class="firma">
+
+        <div>
+            <table class="table table-bordered">
+                <tr>
+                    <td class="firma">
+                        Generado por:
+                    </td>
+                    <td class="firma">
+                        Aprobado por:
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <hr class="marginLineaFirma">
+                        <p style="font-size: 14px">{{ $usuarioGenerador->generador }}</p>
+                        <p style="font-size: 14px; margin-top: 5px">{{ $usuarioGenerador->cargo_generador }}</p>
+                    </td>
+                    <td>
+                        <hr class="marginLineaFirma">
+                        <p style="font-size: 14px">{{ $usuarioGenerador->director }}</p>
+                        <p style="font-size: 14px; margin-top: 5px">{{ $usuarioGenerador->cargo_director }}</p>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
 
 
     </main>

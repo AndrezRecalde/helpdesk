@@ -1,6 +1,6 @@
 import { Alert } from "@mantine/core";
 
-export const AlertSection = ({ variant, color, icon:Icon, title, text }) => {
+export const AlertSection = ({ variant, color, icon:Icon, title, children }) => {
     return (
         <Alert
             variant={variant}
@@ -10,7 +10,7 @@ export const AlertSection = ({ variant, color, icon:Icon, title, text }) => {
             mt={10}
             mb={20}
         >
-            {text}
+            {children}
         </Alert>
     );
 };

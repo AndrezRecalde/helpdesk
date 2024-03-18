@@ -6,22 +6,32 @@ import {
     IconBellRinging2,
 } from "@tabler/icons-react";
 import classes from "../../../assets/styles/modules/stats/StatsGrid.module.css";
+import { useDashGerenciaStore } from "../../../hooks";
 
-const icons = {
-    user: IconBellRinging2,
-    discount: IconDeviceImacOff,
-    receipt: IconDeviceImacPause,
-    coin: IconDeviceImacShare,
-};
 
-const data = [
-    { title: "Soportes Nuevos", icon: "user", value: "13,456", diff: 34 },
-    { title: "Soportes Abiertos", icon: "coin", value: "4,145", diff: -13 },
-    { title: "Soportes Cerrados", icon: "discount", value: "745", diff: 18 },
-    { title: "Soportes Pendientes", icon: "receipt", value: "188", diff: -30 },
-];
 
 export const DashSoporteStats = () => {
+    const {
+        soportesActuales,
+        soportesNoAsignados,
+        soportesPendientes,
+        soportesCerrados,
+    } = useDashGerenciaStore();
+
+    const icons = {
+        user: IconBellRinging2,
+        discount: IconDeviceImacOff,
+        receipt: IconDeviceImacPause,
+        coin: IconDeviceImacShare,
+    };
+
+    const data = [
+        { title: "Soportes Nuevos", icon: "user", value: soportesActuales },
+        { title: "Soportes No Asignados", icon: "coin", value: soportesNoAsignados },
+        { title: "Soportes Pendientes", icon: "receipt", value: soportesPendientes },
+        { title: "Soportes Cerrados", icon: "discount", value: soportesCerrados },
+    ];
+
     const stats = data.map((stat) => {
         const Icon = icons[stat.icon];
 

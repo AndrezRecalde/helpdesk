@@ -35,6 +35,7 @@ export const FilterFormSoportes = ({ role }) => {
         transformValues: (values) => ({
             ...values,
             id_direccion: Number(values.id_direccion) || null,
+            id_usu_tecnico_asig: Number(values.id_usu_tecnico_asig) || null,
         }),
     });
 
@@ -43,12 +44,13 @@ export const FilterFormSoportes = ({ role }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (switch_role) {
+            console.log(form.getTransformedValues())
+            startSearchSoporte(form.getTransformedValues());
+        } else {
             const { id_usu_tecnico_asig, ...values } =
                 form.getTransformedValues();
             console.log(values);
             startSearchSoporte(values);
-        } else {
-            startSearchSoporte(form.getTransformedValues());
         }
         //console.log(form.values);
     };

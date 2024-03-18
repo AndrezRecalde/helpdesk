@@ -22,12 +22,12 @@ class SolicitudAdminRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'numero_escrito'    =>  '',
-            'id_direccion'      =>  'required',
-            'id_usu_recibe'     =>  'required',
-            'id_tipo_soporte'   =>  'required',
+            'numero_escrito'      =>  '',
+            'id_direccion'        =>  'required',
+            'id_usu_recibe'       =>  'required',
+            'id_tipo_soporte'     =>  'required',
             'id_usu_tecnico_asig' => '',
-            'incidente'         =>  'required',
+            'incidente'           =>  'required',
         ];
     }
 }

@@ -12,6 +12,7 @@ import { useEffect } from "react";
 import Swal from "sweetalert2";
 
 export const SolicitudesActualesPage = () => {
+    const usuario = JSON.parse(localStorage.getItem("service_user"));
     const {
         startLoadSoportesActuales,
         soportes,
@@ -23,7 +24,12 @@ export const SolicitudesActualesPage = () => {
     const fecha_actual = new Date();
 
     useEffect(() => {
+        if (usuario?.role_id === 2) {
+            startLoadSoportesActuales(usuario?.cdgo_usrio);
+            return;
+        }
         startLoadSoportesActuales();
+
 
         return () => {
             clearSoportes();

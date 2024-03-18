@@ -1,10 +1,16 @@
 import { useEffect } from "react";
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import { PublicRoutes } from "./public/PublicRoutes";
 import { AuthPage } from "../pages";
 import { useAuthStore } from "../hooks";
 import { RoutesNotFound } from "./not-found/RoutesNotFound";
-import { PagesGerente, PrivatePages, PrivateRoutes } from "./private";
+import {
+    PagesGerente,
+    PagesTecnico,
+    PagesUsuario,
+    PrivatePages,
+    PrivateRoutes,
+} from "./private";
 import { AuthGuard } from "./private/guards";
 import { AppLayout } from "../layouts";
 
@@ -38,6 +44,24 @@ export const AppRouter = () => {
                     element={
                         <PrivateRoutes role="GERENTE">
                             <PagesGerente />
+                        </PrivateRoutes>
+                    }
+                />
+
+                <Route
+                    path="/tecnico/*"
+                    element={
+                        <PrivateRoutes role="TECNICO">
+                            <PagesTecnico />
+                        </PrivateRoutes>
+                    }
+                />
+
+                <Route
+                    path="/gad/d/*"
+                    element={
+                        <PrivateRoutes role="USUARIO">
+                            <PagesUsuario />
                         </PrivateRoutes>
                     }
                 />

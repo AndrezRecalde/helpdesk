@@ -49,7 +49,7 @@ export const MenuTable_E = ({ row, handleEdit }) => {
     );
 };
 
-export const MenuTable_T = ({ row, handleDiagnosticar }) => {
+export const MenuTable_T = ({ row, handleDiagnosticar, handleExport }) => {
     return (
         <>
             <Menu.Item
@@ -73,16 +73,14 @@ export const MenuTable_T = ({ row, handleDiagnosticar }) => {
             <Menu.Item
                 disabled={
                     row.original.tecnico_asignado === null ||
-                    row.original.id_estado === 2 ||
-                    row.original.id_estado === 3 ||
-                    row.original.id_estado === 4
+                    row.original.id_estado === 2
                         ? true
                         : false
                 }
                 leftSection={
                     <IconPrinter style={{ width: rem(15), height: rem(15) }} />
                 }
-                onClick={() => console.log("imprimir")}
+                onClick={() => handleExport(row.original.id_sop)}
             >
                 Imprimir
             </Menu.Item>
@@ -96,6 +94,7 @@ export const MenuSolicitudTable = ({
     handleDiagnosticar,
     handleAsignar,
     handleAnular,
+    handleExport,
     isEdit,
 }) => {
     console.log(isEdit);
@@ -120,7 +119,7 @@ export const MenuSolicitudTable = ({
                 Diagnosticar
             </Menu.Item>
             <Menu.Item
-                disabled={row.original.tecnico_asignado !== null ? true : false}
+                disabled={row.original.tecnico_asignado !== null || row.original.id_estado === 2 ? true : false}
                 leftSection={
                     <IconUserShare
                         style={{ width: rem(15), height: rem(15) }}
@@ -129,6 +128,20 @@ export const MenuSolicitudTable = ({
                 onClick={() => handleAsignar(row.original)}
             >
                 Asignar técnico
+            </Menu.Item>
+            <Menu.Item
+                disabled={
+                    row.original.tecnico_asignado === null ||
+                    row.original.id_estado === 2
+                        ? true
+                        : false
+                }
+                leftSection={
+                    <IconPrinter style={{ width: rem(15), height: rem(15) }} />
+                }
+                onClick={() => handleExport(row.original.id_sop)}
+            >
+                Imprimir
             </Menu.Item>
             {isEdit ? (
                 <Menu.Item
@@ -143,6 +156,7 @@ export const MenuSolicitudTable = ({
                 </Menu.Item>
             ) : null}
             <Menu.Item
+                disabled={ row.original.id_estado === 2 ? true : false }
                 leftSection={
                     <IconTrash style={{ width: rem(15), height: rem(15) }} />
                 }

@@ -18,10 +18,14 @@ import { SolicitudesAnuladasPage } from "./solicitud/SolicitudesAnuladasPage";
 import { SoportesPage } from "./soporte/SoportesPage";
 import { BusquedaSoportePage } from "./soporte/BusquedaSoportePage";
 import { IndicadorReportPage } from "./soporte/reporte/IndicadorReportPage";
+import { ReporteSoportes } from "./soporte/reporte/ReporteSoportes";
 
 /* Dashboard */
 import { DashGerenciaPage } from "./dashboard/gerencia/DashGerenciaPage";
 
+/* Actividades */
+import { ActividadPage } from "./actividad/ActividadPage";
+import { ListActividadesPage } from "./actividad/ListActividadesPage";
 
 /* Error */
 import { ErrorNotFound } from "./error/ErrorNotFound";
@@ -43,8 +47,12 @@ export {
     SoportesPage,
     BusquedaSoportePage,
     IndicadorReportPage,
+    ReporteSoportes,
 
     DashGerenciaPage,
+
+    ActividadPage,
+    ListActividadesPage,
 
     ErrorNotFound,
     ErrorAccessDenied

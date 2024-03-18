@@ -1,4 +1,3 @@
-import { AppLayout } from "../../../layouts";
 import { Route } from "react-router-dom";
 import { RoutesNotFound } from "../../not-found/RoutesNotFound";
 import {
@@ -11,6 +10,7 @@ import {
     DashGerenciaPage,
     AdminTecnicosPage,
     IndicadorReportPage,
+    ReporteSoportes,
 } from "../../../pages";
 
 export const PagesGerente = () => {
@@ -37,6 +37,8 @@ export const PagesGerente = () => {
                     element={<SolicitudesAnuladasPage />}
                 />
                 <Route path="soportes" element={<SoportesPage />} />
+                <Route path="reporte-soportes" element={<ReporteSoportes />} />
+
 
                 <Route path="indicadores-soportes" element={<IndicadorReportPage />} />
 

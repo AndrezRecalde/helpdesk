@@ -108,9 +108,14 @@ class SoporteAdminController extends Controller
             $soporte = Soporte::create($request->validated());
 
             if ($request->id_usu_tecnico_asig) {
+                $soporte->id_estado = 5;
                 $tecnico = User::where("cdgo_usrio", $request->id_usu_tecnico_asig)
                     ->first(['cdgo_usrio', 'email']);
                 Mail::to($tecnico->email)->send(new SoporteMail($soporte));
+                $soporte->save();
+            } else {
+                $soporte->id_estado = 1;
+                $soporte->save();
             }
 
             return response()->json(
@@ -142,45 +147,34 @@ class SoporteAdminController extends Controller
 
 
     /* REPORTES: INDICADORES */
-    function exportPDFCardSoporte(Request $request)
+    function getIndicadoresSoportes(Request $request): JsonResponse
     {
-        $soporte = Soporte::from('sop_soporte as ss')
-            ->selectRaw('ss.id_sop, ss.anio, ss.numero_sop,
-                                 ss.numero_escrito, ss.fecha_ini, ss.fecha_fin,
-                                 stsol.nombre as tipo_solicitud,
-                                 d.nmbre_dprtmnto as direccion,
-                                 us.nmbre_usrio as usuario_recibe,
-                                 sts.nombre as tipo_soporte,
-                                 ss.incidente, ss.solucion,
-                                 sat.nombre as area_tic,
-                                 se.nombre as estado,
-                                 usu.nmbre_usrio as usuario_creador,
-                                 usua.nmbre_usrio as tecnico_asignado,
-                                 ss.cod_barra, seq.sop_equipo_codigo as codigo_equipo')
-            ->join('sop_tipo_solicitud as stsol', 'stsol.id_tipo_solic', 'ss.id_tipo_solicitud')
-            ->join('dprtmntos as d', 'd.cdgo_dprtmnto', 'ss.id_direccion')
-            ->leftJoin('usrios_sstma as us', 'us.cdgo_usrio', 'ss.id_usu_recibe')
-            ->leftJoin('sop_tipo_soporte as sts', 'sts.id_tipo_soporte', 'ss.id_tipo_soporte')
-            ->leftJoin('sop_areas_tic as sat', 'sat.id_areas_tic', 'ss.id_area_tic')
-            ->join('sop_estado as se', 'se.id_estado_caso', 'ss.id_estado')
-            ->leftJoin('usrios_sstma as usu', 'usu.cdgo_usrio', 'ss.id_usuario_crea')
-            ->leftJoin('usrios_sstma as usua', 'usua.cdgo_usrio', 'ss.id_usu_tecnico_asig')
-            ->leftJoin('sop_equipo as seq', 'seq.idsop_equipo', 'ss.id_equipo')
-            ->where('ss.id_sop', $request->id_sop)
-            ->first();
+        $desempenoForEstados = DB::select('CALL sop_get_desempeno_for_estados(?,?)', [$request->fecha_inicio, $request->fecha_fin]);
+        $desempenoForAreas =   DB::select('CALL sop_get_desempeno_for_areas(?,?)', [$request->fecha_inicio, $request->fecha_fin]);
+        $desempenoForTecnicos = DB::select('CALL sop_get_desempeno_for_tecnicos(?,?)', [$request->fecha_inicio, $request->fecha_fin]);
+        $efectividadForAreas = DB::select('CALL sop_get_efectividad_for_areas(?,?)', [$request->fecha_inicio, $request->fecha_fin]);
+        $efectividadForTecnicos = DB::select('CALL sop_get_efectividad_for_tecnicos(?,?)', [$request->fecha_inicio, $request->fecha_fin]);
+        $sumaDiasHabiles = DB::select('CALL sop_get_dias_habiles(?,?)', [$request->fecha_inicio, $request->fecha_fin]);
 
-        if ($soporte) {
-            $data = [
-                'titulo'      => 'Registro de Soporte al Usuario',
-                'institucion' => 'Gobierno Autónomo Descentralizado Provincial de Esmeraldas',
-                'direccion'   => 'Dirección de Tecnologías de Información y Comunicación (TIC)',
-                'soporte'     => $soporte
-            ];
-            $pdf = Pdf::loadView('pdf.soporte.soporte', $data);
-            return $pdf->setPaper('a4', 'portrait')->download('soporte.pdf');
-        } else {
-            return response()->json(['status' => 'error', 'msg' => 'No existe el soporte registrado'], 500);
-        }
+
+        /* SUMATORIA DE TOTAL DE CASOS EN DESEMPEÑO */
+         $sumaDesempenoForEstados = 0;
+         if (sizeof($desempenoForEstados) > 0) {
+             foreach ($desempenoForEstados as $total_estados) {
+                 $sumaDesempenoForEstados += $total_estados->total_estados;
+             }
+         }
+
+        return response()->json([
+            'status' => 'success',
+            'desempenoForEstados'     => $desempenoForEstados,
+            'sumaDesempenoForEstados' => $sumaDesempenoForEstados,
+            'desempenoForAreas' => $desempenoForAreas,
+            'desempenoForTecnicos' => $desempenoForTecnicos,
+            'efectividadForAreas'  => $efectividadForAreas,
+            'efectividadForTecnicos' => $efectividadForTecnicos,
+            'sumaDiasHabiles'       => $sumaDiasHabiles
+        ], 200);
     }
 
     function exportPDFIndicadores(Request $request)
@@ -188,9 +182,17 @@ class SoporteAdminController extends Controller
         $desempenoForEstados = DB::select('CALL sop_get_desempeno_for_estados(?,?)', [$request->fecha_inicio, $request->fecha_fin]);
         $desempenoForAreas =   DB::select('CALL sop_get_desempeno_for_areas(?,?)', [$request->fecha_inicio, $request->fecha_fin]);
         $desempenoForTecnicos = DB::select('CALL sop_get_desempeno_for_tecnicos(?,?)', [$request->fecha_inicio, $request->fecha_fin]);
-
         $efectividadForAreas = DB::select('CALL sop_get_efectividad_for_areas(?,?)', [$request->fecha_inicio, $request->fecha_fin]);
         $efectividadForTecnicos = DB::select('CALL sop_get_efectividad_for_tecnicos(?,?)', [$request->fecha_inicio, $request->fecha_fin]);
+        $sumaDiasHabiles = DB::select('CALL sop_get_dias_habiles(?,?)', [$request->fecha_inicio, $request->fecha_fin]);
+        $usuarioGenerador = User::from('usrios_sstma as us')
+                            ->selectRaw('us.cdgo_usrio, us.nmbre_usrio as generador, nc.nom_cargo as cargo_generador,
+                                        u.nmbre_usrio as director, ncd.nom_cargo as cargo_director')
+                            ->join('nom_cargo as nc', 'nc.idnom_cargo', 'us.crgo_id')
+                            ->join('dprtmntos as d', 'd.cdgo_dprtmnto', 'us.cdgo_direccion')
+                            ->join('usrios_sstma as u', 'u.cdgo_usrio', 'd.id_jefe')
+                            ->join('nom_cargo as ncd', 'ncd.idnom_cargo', 'u.crgo_id')
+                            ->where('us.cdgo_usrio', auth()->id())->first();
 
         /* SUMATORIA DE TOTAL DE CASOS EN DESEMPEÑO */
         $sumaDesempenoForEstados = 0;
@@ -210,8 +212,9 @@ class SoporteAdminController extends Controller
             'desempenoForAreas' => $desempenoForAreas,
             'desempenoForTecnicos' => $desempenoForTecnicos,
             'efectividadForAreas'  => $efectividadForAreas,
-            'efectividadForTecnicos' => $efectividadForTecnicos
-
+            'efectividadForTecnicos' => $efectividadForTecnicos,
+            'sumaDiasHabiles'       => $sumaDiasHabiles,
+            'usuarioGenerador'      => $usuarioGenerador
         ];
         $pdf = Pdf::loadView('pdf.soporte.indicador', $data);
         return $pdf->setPaper('a4', 'portrait')->download('indicador.pdf');

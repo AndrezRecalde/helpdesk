@@ -13,8 +13,8 @@ export const FormAddTecnico = ({ form }) => {
     useEffect(() => {
         if (activateTecnico !== null) {
             form.setValues({
-                cdgo_usrio: activateTecnico.cdgo_usrio.toString(),
-                roles: activateTecnico.role_id.toString(),
+                cdgo_usrio: activateTecnico.cdgo_usrio?.toString(),
+                roles: activateTecnico.role_id?.toString(),
             });
             return;
         }

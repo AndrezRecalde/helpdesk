@@ -7,6 +7,7 @@ use App\Http\Requests\DiagnosticoRequest;
 use App\Http\Requests\SolicitudRequest;
 use App\Http\Requests\SoporteRequest;
 use App\Models\Soporte;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -88,6 +89,7 @@ class SoporteController extends Controller
         }
     }
 
+    /* Solicitud de Soporte - Usuario */
     function enviarSolicitud(SolicitudRequest $request): JsonResponse
     {
         try {
@@ -118,6 +120,45 @@ class SoporteController extends Controller
             }
         } catch (\Throwable $th) {
             return response()->json(['status' => 'error', 'message' => $th->getMessage()], 500);
+        }
+    }
+
+    function exportPDFCardSoporte(Request $request)
+    {
+        $soporte = Soporte::from('sop_soporte as ss')
+            ->selectRaw('ss.id_sop, ss.anio, ss.numero_sop,
+                                 ss.numero_escrito, ss.fecha_ini, ss.fecha_fin,
+                                 stsol.nombre as tipo_solicitud,
+                                 d.nmbre_dprtmnto as direccion,
+                                 us.nmbre_usrio as usuario_recibe,
+                                 sts.nombre as tipo_soporte,
+                                 ss.incidente, ss.solucion,
+                                 sat.nombre as area_tic,
+                                 se.nombre as estado,
+                                 usua.nmbre_usrio as tecnico_asignado,
+                                 ss.cod_barra, seq.sop_equipo_codigo as codigo_equipo')
+            ->join('sop_tipo_solicitud as stsol', 'stsol.id_tipo_solic', 'ss.id_tipo_solicitud')
+            ->join('dprtmntos as d', 'd.cdgo_dprtmnto', 'ss.id_direccion')
+            ->leftJoin('usrios_sstma as us', 'us.cdgo_usrio', 'ss.id_usu_recibe')
+            ->leftJoin('sop_tipo_soporte as sts', 'sts.id_tipo_soporte', 'ss.id_tipo_soporte')
+            ->leftJoin('sop_areas_tic as sat', 'sat.id_areas_tic', 'ss.id_area_tic')
+            ->join('sop_estado as se', 'se.id_estado_caso', 'ss.id_estado')
+            ->leftJoin('usrios_sstma as usua', 'usua.cdgo_usrio', 'ss.id_usu_tecnico_asig')
+            ->leftJoin('sop_equipo as seq', 'seq.idsop_equipo', 'ss.id_equipo')
+            ->where('ss.id_sop', $request->id_sop)
+            ->first();
+
+        if ($soporte) {
+            $data = [
+                'titulo'      => 'Registro de Soporte al Usuario',
+                'institucion' => 'Gobierno Autónomo Descentralizado Provincial de Esmeraldas',
+                'direccion'   => 'Dirección de Tecnologías de Información y Comunicación (TIC)',
+                'soporte'     => $soporte
+            ];
+            $pdf = Pdf::loadView('pdf.soporte.soporte', $data);
+            return $pdf->setPaper('a4', 'portrait')->download('soporte.pdf');
+        } else {
+            return response()->json(['status' => 'error', 'msg' => 'No existe el soporte registrado'], 500);
         }
     }
 }

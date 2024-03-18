@@ -6,22 +6,30 @@ import {
     IconListDetails,
 } from "@tabler/icons-react";
 import classes from "../../../assets/styles/modules/stats/StatsGrid.module.css";
-
-const icons = {
-    user: IconUserScan,
-    discount: IconUserShield,
-    receipt: IconListDetails,
-    coin: IconBuildingBank,
-};
-
-const data = [
-    { title: "Total Usuarios", icon: "user", value: "368", diff: 34 },
-    { title: "Total Direcciones", icon: "coin", value: "14", diff: -13 },
-    { title: "Total Técnicos", icon: "discount", value: "11", diff: 18 },
-    { title: "Total Subprocesos -TIC", icon: "receipt", value: "5", diff: -30 },
-];
+import { useDashGerenciaStore } from "../../../hooks";
 
 export const DashInfoStats = () => {
+    const { totalUsuarios, totalDirecciones, totalTecnicos, totalAreasTic } =
+        useDashGerenciaStore();
+
+    const icons = {
+        user: IconUserScan,
+        discount: IconUserShield,
+        receipt: IconListDetails,
+        coin: IconBuildingBank,
+    };
+
+    const data = [
+        { title: "Total Usuarios", icon: "user", value: totalUsuarios },
+        { title: "Total Direcciones", icon: "coin", value: totalDirecciones },
+        { title: "Total Técnicos", icon: "discount", value: totalTecnicos },
+        {
+            title: "Total Subprocesos -TIC",
+            icon: "receipt",
+            value: totalAreasTic,
+        },
+    ];
+
     const stats = data.map((stat) => {
         const Icon = icons[stat.icon];
 
@@ -41,7 +49,9 @@ export const DashInfoStats = () => {
     });
     return (
         <div className={classes.root}>
-            <SimpleGrid cols={{ base: 1, xs: 1, sm: 1, md: 1, lg: 1 }}>{stats}</SimpleGrid>
+            <SimpleGrid cols={{ base: 1, xs: 1, sm: 1, md: 1, lg: 1 }}>
+                {stats}
+            </SimpleGrid>
         </div>
     );
 };

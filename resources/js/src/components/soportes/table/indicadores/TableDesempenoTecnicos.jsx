@@ -1,45 +1,44 @@
 import { Table } from "@mantine/core";
 import { TitlePage } from "../../..";
+import { useIndicadorStore } from "../../../../hooks";
 
 export const TableDesempenoTecnicos = () => {
+    const { desempenoForTecnicos } = useIndicadorStore();
     return (
         <>
-            <TitlePage mt={20} order={4} size="h4">
+            <TitlePage mt={20} order={6} size="h6">
                 CASOS POR TÉCNICOS
             </TitlePage>
-            <Table
-                striped
-                withTableBorder
-                withColumnBorders
-                verticalSpacing="md"
-                mt={10}
-            >
-                <Table.Thead>
-                    <Table.Tr>
-                        <Table.Th>Técnico</Table.Th>
-                        <Table.Th>Total Pendientes</Table.Th>
-                        <Table.Th>Total Atendidos</Table.Th>
-                        <Table.Th>Total Finalizados</Table.Th>
-                        <Table.Th>Total Anulados</Table.Th>
-                    </Table.Tr>
-                </Table.Thead>
-                <Table.Tbody>
-                    <Table.Tr>
-                        <Table.Td>Loor Valderrama Jean Manuel</Table.Td>
-                        <Table.Td>5</Table.Td>
-                        <Table.Td>3</Table.Td>
-                        <Table.Td>494</Table.Td>
-                        <Table.Td>0</Table.Td>
-                    </Table.Tr>
-                    <Table.Tr>
-                        <Table.Td>Mendoza Dueñas Darwin Elias</Table.Td>
-                        <Table.Td>2</Table.Td>
-                        <Table.Td>3</Table.Td>
-                        <Table.Td>794</Table.Td>
-                        <Table.Td>0</Table.Td>
-                    </Table.Tr>
-                </Table.Tbody>
-            </Table>
+            <Table.ScrollContainer>
+                <Table
+                    striped
+                    withTableBorder
+                    withColumnBorders
+                    verticalSpacing="md"
+                    mt={10}
+                >
+                    <Table.Thead>
+                        <Table.Tr>
+                            <Table.Th>Técnico</Table.Th>
+                            <Table.Th>Total Pendientes</Table.Th>
+                            <Table.Th>Total Atendidos</Table.Th>
+                            <Table.Th>Total Finalizados</Table.Th>
+                            <Table.Th>Total Anulados</Table.Th>
+                        </Table.Tr>
+                    </Table.Thead>
+                    <Table.Tbody>
+                        {desempenoForTecnicos?.map((desempTecnico) => (
+                            <Table.Tr key={desempTecnico?.cdgo_usrio}>
+                                <Table.Td>{desempTecnico?.tecnico}</Table.Td>
+                                <Table.Td>{desempTecnico?.total_pendientes}</Table.Td>
+                                <Table.Td>{desempTecnico?.total_atendidos}</Table.Td>
+                                <Table.Td>{desempTecnico?.total_finalizados}</Table.Td>
+                                <Table.Td>{desempTecnico?.total_anulados}</Table.Td>
+                            </Table.Tr>
+                        ))}
+                    </Table.Tbody>
+                </Table>
+            </Table.ScrollContainer>
         </>
     );
 };

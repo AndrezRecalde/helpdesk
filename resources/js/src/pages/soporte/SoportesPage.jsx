@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { Card, Container, Group } from "@mantine/core";
 import {
-    BtnSection,
     FilterFormSoportes,
     TextSection,
     TitlePage,
@@ -12,14 +11,17 @@ import {
     ModalAsignarSoporte,
     ModalAnularSoporte,
     ModalDiagnostico,
+    BtnSection,
 } from "../../components";
 import { useDireccionStore, useSoporteStore, useUiSoporte } from "../../hooks";
 import Swal from "sweetalert2";
 
 export const SoportesPage = () => {
+    const usuario = JSON.parse(localStorage.getItem("service_user"));
     const { startLoadDirecciones, clearDirecciones } = useDireccionStore();
     const { message, errores, clearSoportes } = useSoporteStore();
-    const { modalActionAddSolicitud, modalActionCreateSoporte } = useUiSoporte();
+    const { modalActionAddSolicitud, modalActionCreateSoporte } =
+        useUiSoporte();
 
     const handleOpenModalSolicitud = () => {
         modalActionAddSolicitud(1);
@@ -38,7 +40,6 @@ export const SoportesPage = () => {
             clearSoportes();
         };
     }, []);
-
 
     useEffect(() => {
         if (message !== undefined) {
@@ -74,22 +75,27 @@ export const SoportesPage = () => {
                 <TextSection fw={700} tt="" fz={16}>
                     Tienes 20 soportes
                 </TextSection>
-                {/* <BtnSection>Agregar soporte</BtnSection> */}
-                <BtnAddActions
-                    handleOpenModalSolicitud={handleOpenModalSolicitud}
-                    handleOpenModalSoporte={handleOpenModalSoporte}
-                >
-                    Crear nueva
-                </BtnAddActions>
+                {usuario.role_id === 1 ? (
+                    <BtnAddActions
+                        handleOpenModalSolicitud={handleOpenModalSolicitud}
+                        handleOpenModalSoporte={handleOpenModalSoporte}
+                    >
+                        Crear nuevo
+                    </BtnAddActions>
+                ) : (
+                    <BtnSection handleAction={handleOpenModalSoporte}>
+                        Agregar soporte
+                    </BtnSection>
+                )}
             </Group>
-            <FilterFormSoportes role={true} />
+            <FilterFormSoportes role={usuario.role_id === 2 ? true : false} />
             <Card withBorder shadow="sm" radius="md" mt={20} mb={20}>
                 <Card.Section>
-                    <SoportesTable menu={1} />
+                    <SoportesTable />
                 </Card.Section>
             </Card>
             <ModalSolicitudAdminSoporte />
-            <ModalCreateSoporte role={true} /> {/* false: tecnico true: gerente */}
+            <ModalCreateSoporte role={usuario.role_id === 1 ? false : true} />
             <ModalAsignarSoporte />
             <ModalAnularSoporte />
             <ModalDiagnostico />

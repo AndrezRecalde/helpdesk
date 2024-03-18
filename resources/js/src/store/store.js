@@ -1,7 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
 import {
+    actividadSlice,
     authSlice,
     cargoSlice,
+    dashGerenciaSlice,
     departamentoSlice,
     diagnosticoSlice,
     direccionSlice,
@@ -9,12 +11,14 @@ import {
     empresaSlice,
     equipoSlice,
     estadoSlice,
+    indicadorSlice,
     sexoSlice,
     soporteSlice,
     tecnicoSlice,
     tipoContratoSlice,
     tipoSolicitudSlice,
     tiposUsuariosSlice,
+    uiActividadSlice,
     uiDirectorSlice,
     uiSoporteSlice,
     uiTecnicoSlice,
@@ -44,5 +48,9 @@ export const store = configureStore({
         soporte: soporteSlice.reducer,
         uiSoporte: uiSoporteSlice.reducer,
         estado: estadoSlice.reducer,
+        indicador: indicadorSlice.reducer,
+        actividad: actividadSlice.reducer,
+        uiActividad: uiActividadSlice.reducer,
+        dashGerencia: dashGerenciaSlice.reducer
     },
 });

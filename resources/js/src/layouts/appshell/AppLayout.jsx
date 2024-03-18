@@ -3,16 +3,13 @@ import { useDisclosure } from "@mantine/hooks";
 import { AppHeader, AppNavbar, AppNavfooter } from "../../layouts";
 import { useState } from "react";
 import { TextSection } from "../../components";
-
-import classes from "../../assets/styles/modules/layout/Layout.module.css";
 import { Outlet } from "react-router-dom";
+import classes from "../../assets/styles/modules/layout/Layout.module.css";
 
 export const AppLayout = () => {
+    const usuario = JSON.parse(localStorage.getItem("service_user"));
     const [mobileOpened, { toggle: toggleMobile }] = useDisclosure();
     const [desktopOpened, { toggle: toggleDesktop }] = useDisclosure(true);
-
-    /* Cambiarlo por el state */
-    const [role, setRole] = useState("GERENTE");
 
     return (
         <AppShell
@@ -37,11 +34,11 @@ export const AppLayout = () => {
                     <div className={classes.header}>
                         <Group>
                             <div style={{ flex: 1 }}>
-                                <TextSection fw={700} fz={12}>
-                                    Gestión de Tecnologías de la Información
+                                <TextSection fw={700} fz={12} tt="capitalize">
+                                    {usuario?.direccion}
                                 </TextSection>
                             </div>
-                            <Badge radius="md" color="indigo.7">
+                            <Badge radius="sm" color="indigo.7">
                                 GTIC
                             </Badge>
                         </Group>
@@ -52,7 +49,7 @@ export const AppLayout = () => {
                     grow
                     component={ScrollArea}
                 >
-                    <AppNavbar role={role} />
+                    <AppNavbar role={usuario?.role} />
 
                     {/* TODO: Realizar condicional para que se cargue el Navbar de Planificacion */}
                 </AppShell.Section>
@@ -60,7 +57,9 @@ export const AppLayout = () => {
                     <AppNavfooter />
                 </AppShell.Section>
             </AppShell.Navbar>
-            <AppShell.Main><Outlet /></AppShell.Main>
+            <AppShell.Main>
+                <Outlet />
+            </AppShell.Main>
         </AppShell>
     );
 };

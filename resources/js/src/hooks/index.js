@@ -52,6 +52,17 @@ import { useEstadoStore } from "./estado/useEstadoStore";
 import { useSoporteStore } from "./soporte/useSoporteStore";
 import { useUiSoporte } from "./soporte/useUiSoporte";
 
+/* Indicadores */
+import { useIndicadorStore } from "./indicador/useIndicadorStore";
+
+/* Dashboard Gerencia */
+import { useDashGerenciaStore } from "./dashboard/useDashGerenciaStore";
+
+/* Actividades */
+import { useActividadStore } from "./actividad/useActividadStore";
+import { useUiActividad } from "./actividad/useUiActividad";
+
+
 export {
     useErrorException,
 
@@ -89,5 +100,12 @@ export {
     useEstadoStore,
 
     useSoporteStore,
-    useUiSoporte
+    useUiSoporte,
+
+    useIndicadorStore,
+
+    useDashGerenciaStore,
+
+    useActividadStore,
+    useUiActividad
 }

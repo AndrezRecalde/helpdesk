@@ -3,10 +3,19 @@ import { TitlePage } from "./elements/titles/TitlePage";
 import { TextSection } from "./elements/titles/TextSection";
 import { Logo } from "./elements/application/Logo";
 import { AlertSection } from "./elements/alert/AlertSection";
-import { BtnSubmit, BtnSection, BtnAddActions } from "./elements/buttons/BtnServices";
+import {
+    BtnSubmit,
+    BtnSection,
+    BtnAddActions,
+} from "./elements/buttons/BtnServices";
 import { BtnDarkMode } from "./elements/buttons/BtnDarkMode";
 import { TableContent } from "./elements/tables/TableContent";
-import { MenuUsersTable, MenuTable_E, MenuTable_T, MenuSolicitudTable } from "./elements/tables/MenuTable";
+import {
+    MenuUsersTable,
+    MenuTable_E,
+    MenuTable_T,
+    MenuSolicitudTable,
+} from "./elements/tables/MenuTable";
 
 /* Authentication */
 import { AuthForm } from "./auth/AuthForm";
@@ -14,7 +23,6 @@ import { AuthForm } from "./auth/AuthForm";
 /* Usuarios */
 import { UserBtnHeader } from "./user/UserBtnHeader";
 import { ProfileForm } from "./user/ProfileForm";
-
 
 /*Geremcia */
 import { FilterFormUsers } from "./gerencia/filters/FilterFormUsers";
@@ -31,13 +39,11 @@ import { ContactIconsList } from "./solicitudes/ContactIcons";
 
 import { SoportesTable } from "./soportes/table/SoportesTable";
 
-
 import { DashSoporteStats } from "./gerencia/stats/DashSoporteStats";
 import { DashInfoStats } from "./gerencia/stats/DashInfoStats";
 
-
 import { ChartPieSoportes } from "./gerencia/charts/ChartPieSoportes";
-import { ChartAreaSoportes } from "./gerencia/charts/ChartAreaSoportes";
+import { ChartSoportesMes } from "./gerencia/charts/ChartSoportesMes";
 import { ChartBarSoportes } from "./gerencia/charts/ChartBarSoportes";
 
 import { ModalUser } from "./gerencia/modals/ModalUser";
@@ -81,6 +87,18 @@ import { FormDiagnosticar } from "./soportes/form/FormDiagnosticar";
 import { TableDesempenoEstados } from "./soportes/table/indicadores/TableDesempenoEstados";
 import { TableDesempenoAreas } from "./soportes/table/indicadores/TableDesempenoAreas";
 import { TableDesempenoTecnicos } from "./soportes/table/indicadores/TableDesempenoTecnicos";
+import { TableEfectividadAreas } from "./soportes/table/indicadores/TableEfectividadAreas";
+import { TableEfectividadTecnicos } from "./soportes/table/indicadores/TableEfectividadTecnicos";
+import { TableIndicadorEficacia } from "./soportes/table/indicadores/TableIndicadorEficacia";
+
+import { CardIndicadores } from "./soportes/card/indicador/CardIndicadores";
+
+import { ActividadForm } from "./actividad/ActividadForm";
+import { ModalActividad } from "./actividad/modal/ModalActividad";
+
+import { ActionReportPDF } from "./elements/buttons/ActionButton";
+
+import { InformationActividadList } from "./elements/lists/InformationActividadList";
 
 export {
     TitlePage,
@@ -95,75 +113,62 @@ export {
     MenuUsersTable,
     MenuTable_E,
     MenuTable_T,
-
     MenuSolicitudTable,
-
     AuthForm,
-
     UserBtnHeader,
     ProfileForm,
-
     FilterFormUsers,
     FilterFormDirecciones,
     FilterFormSearchDates,
     FilterFormSoportes,
-
     UsersTable,
     DireccionesTable,
     TecnicosTable,
     SolicitudesTable,
-
     ContactIconsList,
-
     SoportesTable,
-
     DashSoporteStats,
     DashInfoStats,
-
     ChartPieSoportes,
-    ChartAreaSoportes,
+    ChartSoportesMes,
     ChartBarSoportes,
-
     ModalUser,
     FormInfoUser,
     FormTrabajoUser,
     FormTipoUser,
-
     StepperUser,
-
     ModalDireccion,
     FormDirector,
-
     ModalAsignarSoporte,
     FormAsignarSoporte,
     ModalActivateUser,
     FormActiveUser,
     ActivateUserBtn,
-
     SolicitudesAnuladasTable,
-
     ModalAnularSoporte,
     FormAnularSoporte,
-
     ModalSolicitudAdminSoporte,
     FormSolicitudAdminSoporte,
-
     ModalCreateSoporte,
     FormCreateSoporte,
-
     ModalResetPwdUser,
     FormResetPwdUser,
-
     ModalAddTecnico,
     ModalActivateTecnico,
-
     FormActivateTecnico,
     FormAddTecnico,
-
     ModalDiagnostico,
     FormDiagnosticar,
-
     TableDesempenoEstados,
     TableDesempenoAreas,
-    TableDesempenoTecnicos
-}
+    TableDesempenoTecnicos,
+    TableEfectividadAreas,
+    TableEfectividadTecnicos,
+    TableIndicadorEficacia,
+    CardIndicadores,
+    ActividadForm,
+    ModalActividad,
+    ActionReportPDF,
+
+    InformationActividadList
+};

@@ -1,5 +1,4 @@
 import {
-    Alert,
     Box,
     Checkbox,
     Grid,
@@ -7,7 +6,7 @@ import {
     TextInput,
     Textarea,
 } from "@mantine/core";
-import { BtnSubmit } from "../../../components";
+import { AlertSection, BtnSubmit } from "../../../components";
 import { IconInfoCircle, IconSend } from "@tabler/icons-react";
 import {
     useDireccionStore,
@@ -24,8 +23,6 @@ export const FormSolicitudAdminSoporte = ({ form }) => {
     const { tecnicos } = useTecnicoStore();
     const { startCreateSolicitudAdmin } = useSoporteStore();
     const { modalActionAddSolicitud } = useUiSoporte();
-
-    const icon = <IconInfoCircle />;
 
     const handleSubmit = () => {
         console.log(form.values);
@@ -160,16 +157,16 @@ export const FormSolicitudAdminSoporte = ({ form }) => {
                 Crear solicitud
             </BtnSubmit>
             {!can_tecnico ? (
-                <Alert
+                <AlertSection
                     variant="light"
                     color="yellow"
                     radius="md"
                     title="Información"
-                    icon={icon}
+                    icon={IconInfoCircle}
                 >
                     Después de crear la solicitud, posteriormente se debe
                     asignar al técnico.
-                </Alert>
+                </AlertSection>
             ) : null}
         </Box>
     );

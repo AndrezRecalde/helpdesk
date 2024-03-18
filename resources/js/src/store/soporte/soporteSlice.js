@@ -4,6 +4,7 @@ export const soporteSlice = createSlice({
     name: "soporte",
     initialState: {
         isLoading: false,
+        loadPDF: false,
         soportes: [],
         activateSoporte: null,
         message: undefined,
@@ -12,6 +13,9 @@ export const soporteSlice = createSlice({
     reducers: {
         onLoading: (state) => {
             state.isLoading = true;
+        },
+        onLoadPDF: (state, { payload }) => {
+            state.loadPDF = payload;
         },
         onLoadSoportes: (state, { payload }) => {
             state.soportes = payload;
@@ -64,6 +68,7 @@ export const soporteSlice = createSlice({
 
 export const {
     onLoading,
+    onLoadPDF,
     onLoadSoportes,
     onUpdateSoporte,
     onAnularSoporte,

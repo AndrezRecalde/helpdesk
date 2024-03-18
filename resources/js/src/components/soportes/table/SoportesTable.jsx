@@ -1,17 +1,13 @@
 import { useCallback, useMemo } from "react";
 import { Badge, Table, Text } from "@mantine/core";
 import { useMantineReactTable } from "mantine-react-table";
-import {
-    MenuSolicitudTable,
-    MenuTable_E,
-    MenuTable_T,
-    TableContent,
-} from "../..";
+import { MenuSolicitudTable, MenuTable_T, TableContent } from "../..";
 import { useSoporteStore, useUiSoporte } from "../../../hooks";
 import dayjs from "dayjs";
 
-export const SoportesTable = ({ menu, role }) => {
-    const { isLoading, soportes, setActivateSoporte } = useSoporteStore();
+export const SoportesTable = () => {
+    const usuario = JSON.parse(localStorage.getItem("service_user"));
+    const { isLoading, soportes, startExportSoporte, setActivateSoporte } = useSoporteStore();
     const {
         modalActionAsignarSoporte,
         modalActionAnularSoporte,
@@ -58,7 +54,7 @@ export const SoportesTable = ({ menu, role }) => {
                 filterVariant: "autocomplete",
             },
         ],
-        []
+        [soportes]
     );
 
     const handleDiagnosticar = useCallback((selected) => {
@@ -81,6 +77,10 @@ export const SoportesTable = ({ menu, role }) => {
         modalActionAnularSoporte(1);
     }, []);
 
+    const handleExportSoporte = useCallback((id_sop) => {
+        startExportSoporte(id_sop);
+    }, []);
+
     const table = useMantineReactTable({
         columns,
         data: soportes, //must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
@@ -88,7 +88,7 @@ export const SoportesTable = ({ menu, role }) => {
         enableFacetedValues: true,
         enableRowActions: true,
         renderRowActionMenuItems: ({ row }) =>
-            menu === 1 ? (
+            usuario.role_id === 1 ? (
                 <MenuSolicitudTable
                     row={row}
                     isEdit={true}
@@ -96,17 +96,15 @@ export const SoportesTable = ({ menu, role }) => {
                     handleEditar={handleEditar}
                     handleAsignar={handleAsignar}
                     handleAnular={handleAnular}
+                    handleExport={handleExportSoporte}
                 />
-            ) : (
-                <MenuTable_T row={row} handleDiagnosticar={handleDiagnosticar} />
-            ),
-        /* mantineTableBodyCellProps: ({ cell }) => ({
-            style: {
-                backgroundColor:
-                    cell.row.original.atendido === 0 ? "#CB3234" : "",
-                color: cell.row.original.atendido === 0 ? "white" : "",
-            },
-        }), */
+            ) : usuario.role_id === 2 ? (
+                <MenuTable_T
+                    row={row}
+                    handleDiagnosticar={handleDiagnosticar}
+                    handleExport={handleExportSoporte}
+                />
+            ) : null,
         renderDetailPanel: ({ row }) => (
             <Table.ScrollContainer minWidth={800}>
                 <Table

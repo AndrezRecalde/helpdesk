@@ -13,7 +13,7 @@ import {
 import { isNotEmpty, useForm } from "@mantine/form";
 
 export const ModalCreateSoporte = ({ role }) => {
-    const user = JSON.parse(localStorage.getItem("service_user"));
+    const usuario = JSON.parse(localStorage.getItem("service_user"));
     const { activateSoporte, setActivateSoporte } = useSoporteStore();
     const { isOpenModalCreateSoporte, modalActionCreateSoporte } =
         useUiSoporte();
@@ -104,10 +104,10 @@ export const ModalCreateSoporte = ({ role }) => {
     useEffect(() => {
         console.log(role);
         if (role) {
-            startLoadTecnicos(user.cdgo_usrio);
+            startLoadTecnicos(usuario.cdgo_usrio);
             form.setFieldValue(
                 "id_usu_tecnico_asig",
-                user?.cdgo_usrio.toString()
+                usuario?.cdgo_usrio.toString()
             );
         } else {
             startLoadTecnicos();

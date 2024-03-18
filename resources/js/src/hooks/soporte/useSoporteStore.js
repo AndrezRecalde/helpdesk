@@ -5,6 +5,7 @@ import {
     onClearSoportes,
     onLoadErrores,
     onLoadMessage,
+    onLoadPDF,
     onLoadSoportes,
     onLoading,
     onSetActivateSoporte,
@@ -207,6 +208,38 @@ export const useSoporteStore = () => {
         }
     };
 
+    /* GENERAL Y GERENCIA */
+    const startExportSoporte = async (id_sop) => {
+        try {
+            dispatch(onLoadPDF(true));
+
+            const response = await helpdeskApi.post(
+                "/general/reporte-soporte",
+                {
+                    id_sop
+                },
+                { responseType: "blob" }
+            );
+
+            const pdfBlob = new Blob([response.data], {
+                type: "application/pdf",
+            });
+            const url = window.URL.createObjectURL(pdfBlob);
+            const tempLink = document.createElement("a");
+            tempLink.href = url;
+            tempLink.setAttribute("download", "ficha_soporte.pdf");
+            document.body.appendChild(tempLink);
+            tempLink.click();
+
+            document.body.removeChild(tempLink);
+            window.URL.revokeObjectURL(url);
+            dispatch(onLoadPDF(false));
+        } catch (error) {
+            console.log(error);
+            ExceptionMessageError(error);
+        }
+    };
+
     const clearSoportes = () => {
         dispatch(onClearSoportes());
     };
@@ -231,6 +264,7 @@ export const useSoporteStore = () => {
         startSearchSoporte,
         startSendSolicitud,
         startDiagnosticarSoporte,
+        startExportSoporte,
         clearSoportes,
         setActivateSoporte,
     };
