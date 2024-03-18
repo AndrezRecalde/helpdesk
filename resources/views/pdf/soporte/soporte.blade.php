@@ -76,16 +76,16 @@
             <table style="width:100% ;border: 1px solid black;">
                 <tr>
                     <td>Dirección solicitante: </td>
-                    <td>{{ $soporte->direccion }}</td>
-                    <td></td>
-                    <td>ORDEN N°: {{ $soporte->numero_sop }} <br>
-                        {!! DNS1D::getBarcodeHTML($soporte->numero_sop, 'KIX') !!}</td>
+                    <td colspan="2">{{ $soporte->direccion }}</td>
+                    <td>
+                        ORDEN N°: {{ $soporte->numero_sop }}
+                        {!! DNS1D::getBarcodeHTML($soporte->cod_barra, 'C128', 1, 33, 'green') !!}
+                    </td>
                 </tr>
                 <tr>
                     <td>Forma de solicitud: </td>
                     <td>{{ $soporte->tipo_solicitud }}</td>
-                    <td>Escrito N°: {{ $soporte->numero_escrito }}</td>
-                    <td></td>
+                    <td colspan="2">Escrito N°: {{ $soporte->numero_escrito }}</td>
                 </tr>
                 <tr>
                     <td>Fecha de Inicio: </td>
@@ -173,17 +173,18 @@
             <table style="width:100% ;border: 1px solid black;">
                 <tr>
                     <td>Dirección solicitante: </td>
-                    <td>{{ $soporte->direccion }}</td>
-                    <td></td>
-                    <td>ORDEN N°: {{ $soporte->numero_sop }} <br>
-                        {!! DNS1D::getBarcodeHTML($soporte->numero_sop, 'KIX') !!}</td>  {{-- intentar codigo barra en otra posicion --}}
+                    <td colspan="2">{{ $soporte->direccion }}</td>
+                    <td>
+                        ORDEN N°: {{ $soporte->numero_sop }}
+                        {!! DNS1D::getBarcodeHTML($soporte->cod_barra, 'C128', 1, 33, 'green') !!}
+                    </td>
                 </tr>
                 <tr>
                     <td>Forma de solicitud: </td>
                     <td>{{ $soporte->tipo_solicitud }}</td>
-                    <td>Escrito N°: {{ $soporte->numero_escrito }}</td>
-                    <td></td>
+                    <td colspan="2">Escrito N°: {{ $soporte->numero_escrito }}</td>
                 </tr>
+
                 <tr>
                     <td>Fecha de Inicio: </td>
                     <td>{{ $soporte->fecha_ini }}</td>

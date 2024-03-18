@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\DiagnosticoRequest;
 use App\Http\Requests\SolicitudRequest;
 use App\Http\Requests\SoporteRequest;
+use App\Models\Departamento;
 use App\Models\Soporte;
+use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
@@ -158,7 +160,42 @@ class SoporteController extends Controller
             $pdf = Pdf::loadView('pdf.soporte.soporte', $data);
             return $pdf->setPaper('a4', 'portrait')->download('soporte.pdf');
         } else {
-            return response()->json(['status' => 'error', 'msg' => 'No existe el soporte registrado'], 500);
+            return response()->json(['status' => 'error', 'msg' => 'No existe el soporte registrado'], 404);
+        }
+    }
+
+    function exportActividadesSoportes(Request $request)
+    {
+        $soportes = Soporte::from('sop_soporte as ss')
+            ->selectRaw('ss.id_sop, ss.numero_sop, ss.fecha_ini,
+                                 ss.incidente, ss.solucion,
+                                 us.nmbre_usrio as tecnico, nc.nom_cargo as cargo_tecnico,
+                                 u.nmbre_usrio as usuario_recibe')
+            ->leftJoin('usrios_sstma as us', 'us.cdgo_usrio', 'ss.id_usu_tecnico_asig')
+            ->leftJoin('usrios_sstma as u', 'u.cdgo_usrio', 'ss.id_usu_recibe')
+            ->join('nom_cargo as nc', 'nc.idnom_cargo', 'us.crgo_id')
+            ->fechas($request->fecha_inicio, $request->fecha_fin)
+            ->tecnico($request->cdgo_usrio)
+            ->get();
+
+        $jefe_departamento = Departamento::from('dprtmntos as d')
+                        ->selectRaw('d.cdgo_dprtmnto, us.nmbre_usrio as jefe, nc.nom_cargo as cargo_jefe')
+                        ->join('usrios_sstma as us', 'us.cdgo_usrio', 'd.id_jefe')
+                        ->join('nom_cargo as nc', 'nc.idnom_cargo', 'us.crgo_id')
+                        ->where('d.cdgo_dprtmnto', 22)
+                        ->first();
+
+        if (sizeof($soportes) > 0) {
+            $data = [
+                'direccion'    => 'Dirección de Técnologias de la Información y Comunicación',
+                'titulo'       => 'Informe de Actividades por Técnico',
+                'soportes'     => $soportes,
+                'jefe_departamento' => $jefe_departamento
+            ];
+            $pdf = Pdf::loadView('pdf.soporte.reporte_soportes', $data);
+            return $pdf->setPaper('a4', 'portrait')->download('reporte_soportes.pdf');
+        } else {
+            return response()->json(['status' => 'error', 'msg' => 'No existe el soporte registrado'], 404);
         }
     }
 }

@@ -24,19 +24,6 @@
             margin-top: 30px;
         }
 
-        footer {
-            position: fixed;
-            bottom: -20px;
-            left: 0px;
-            right: 0px;
-            height: 120px;
-
-            /** Extra personal styles **/
-            text-align: center;
-            border-top: solid 4px green;
-            color: green;
-        }
-
         .marginFooter {
             position: static;
             bottom: -80px;

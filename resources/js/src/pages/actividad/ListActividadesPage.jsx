@@ -64,7 +64,7 @@ export const ListActividadesPage = () => {
                 size: 80,
             },
         ],
-        []
+        [actividades]
     );
 
     const handleSubmit = (e) => {

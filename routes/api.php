@@ -115,6 +115,8 @@ Route::group(['prefix' => 'general', 'middleware' => ['auth:sanctum']], function
     Route::post('/crear-soporte', [SoporteController::class, 'createSoporte']);
     Route::put('/diagnosticar-soporte/{id_sop}', [SoporteController::class, 'diagnosticarSoporte']);
     Route::post('/reporte-soporte', [SoporteController::class, 'exportPDFCardSoporte']);
+    Route::post('/reporte-actividades', [SoporteController::class, 'exportActividadesSoportes']);
+
 
 
     /* TIPOS DE SOLICITUDES DE SOPORTE */

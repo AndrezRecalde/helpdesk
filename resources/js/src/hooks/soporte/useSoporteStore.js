@@ -14,7 +14,7 @@ import {
 import helpdeskApi from "../../api/helpdeskApi";
 
 export const useSoporteStore = () => {
-    const { isLoading, soportes, activateSoporte, message, errores } =
+    const { isLoading, loadPDF, soportes, activateSoporte, message, errores } =
         useSelector((state) => state.soporte);
 
     const { ExceptionMessageError } = useErrorException(onLoadErrores);
@@ -209,6 +209,7 @@ export const useSoporteStore = () => {
     };
 
     /* GENERAL Y GERENCIA */
+    /* TARJETA DE SOPORTE PARA FIRMAR USUARIO SOLICITANTE Y TECNICO */
     const startExportSoporte = async (id_sop) => {
         try {
             dispatch(onLoadPDF(true));
@@ -216,7 +217,7 @@ export const useSoporteStore = () => {
             const response = await helpdeskApi.post(
                 "/general/reporte-soporte",
                 {
-                    id_sop
+                    id_sop,
                 },
                 { responseType: "blob" }
             );
@@ -240,6 +241,41 @@ export const useSoporteStore = () => {
         }
     };
 
+    const startExportActividadesSoportes = async (
+        fecha_inicio,
+        fecha_fin,
+        cdgo_usrio
+    ) => {
+        try {
+            dispatch(onLoadPDF(true));
+            const response = await helpdeskApi.post(
+                "/general/reporte-actividades",
+                {
+                    fecha_inicio,
+                    fecha_fin,
+                    cdgo_usrio,
+                },
+                { responseType: "blob" }
+            );
+            const pdfBlob = new Blob([response.data], {
+                type: "application/pdf",
+            });
+            const url = window.URL.createObjectURL(pdfBlob);
+            const tempLink = document.createElement("a");
+            tempLink.href = url;
+            tempLink.setAttribute("download", "actividades_soportes.pdf");
+            document.body.appendChild(tempLink);
+            tempLink.click();
+
+            document.body.removeChild(tempLink);
+            window.URL.revokeObjectURL(url);
+            dispatch(onLoadPDF(false));
+        } catch (error) {
+            console.log(error);
+            ExceptionMessageError(error);
+        }
+    };
+
     const clearSoportes = () => {
         dispatch(onClearSoportes());
     };
@@ -250,6 +286,7 @@ export const useSoporteStore = () => {
 
     return {
         isLoading,
+        loadPDF,
         soportes,
         activateSoporte,
         message,
@@ -265,6 +302,7 @@ export const useSoporteStore = () => {
         startSendSolicitud,
         startDiagnosticarSoporte,
         startExportSoporte,
+        startExportActividadesSoportes,
         clearSoportes,
         setActivateSoporte,
     };
