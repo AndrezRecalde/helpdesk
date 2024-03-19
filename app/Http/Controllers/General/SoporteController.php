@@ -176,19 +176,22 @@ class SoporteController extends Controller
             ->join('nom_cargo as nc', 'nc.idnom_cargo', 'us.crgo_id')
             ->fechas($request->fecha_inicio, $request->fecha_fin)
             ->tecnico($request->cdgo_usrio)
+            ->orderBy('ss.numero_sop', 'ASC')
             ->get();
 
         $jefe_departamento = Departamento::from('dprtmntos as d')
-                        ->selectRaw('d.cdgo_dprtmnto, us.nmbre_usrio as jefe, nc.nom_cargo as cargo_jefe')
-                        ->join('usrios_sstma as us', 'us.cdgo_usrio', 'd.id_jefe')
-                        ->join('nom_cargo as nc', 'nc.idnom_cargo', 'us.crgo_id')
-                        ->where('d.cdgo_dprtmnto', 22)
-                        ->first();
+            ->selectRaw('d.cdgo_dprtmnto, us.nmbre_usrio as jefe, nc.nom_cargo as cargo_jefe')
+            ->join('usrios_sstma as us', 'us.cdgo_usrio', 'd.id_jefe')
+            ->join('nom_cargo as nc', 'nc.idnom_cargo', 'us.crgo_id')
+            ->where('d.cdgo_dprtmnto', 22)
+            ->first();
 
         if (sizeof($soportes) > 0) {
             $data = [
                 'direccion'    => 'Dirección de Técnologias de la Información y Comunicación',
                 'titulo'       => 'Informe de Actividades por Técnico',
+                'fecha_inicio' => $request->fecha_inicio,
+                'fecha_fin' => (new Carbon($request->fecha_fin))->addDays(-1)->format('Y-m-d'),
                 'soportes'     => $soportes,
                 'jefe_departamento' => $jefe_departamento
             ];
@@ -197,5 +200,67 @@ class SoporteController extends Controller
         } else {
             return response()->json(['status' => 'error', 'msg' => 'No existe el soporte registrado'], 404);
         }
+    }
+
+    function getActividadesSoportes(Request $request): JsonResponse
+    {
+        $soportes = Soporte::from('sop_soporte as ss')
+            ->selectRaw('ss.id_sop, ss.numero_sop, ss.fecha_ini,
+                                 ss.incidente, ss.solucion,
+                                 us.nmbre_usrio as tecnico, nc.nom_cargo as cargo_tecnico,
+                                 u.nmbre_usrio as usuario_recibe')
+            ->leftJoin('usrios_sstma as us', 'us.cdgo_usrio', 'ss.id_usu_tecnico_asig')
+            ->leftJoin('usrios_sstma as u', 'u.cdgo_usrio', 'ss.id_usu_recibe')
+            ->join('nom_cargo as nc', 'nc.idnom_cargo', 'us.crgo_id')
+            ->fechas($request->fecha_inicio, $request->fecha_fin)
+            ->tecnico($request->cdgo_usrio)
+            ->orderBy('ss.numero_sop', 'ASC')
+            ->get();
+
+        if (sizeof($soportes) > 0) {
+            return response()->json(['status' => 'success', 'soportes' => $soportes], 200);
+        } else {
+            return response()->json(['status' => 'error', 'msg' => 'No actividades de soporte en ese rango de fechas'], 404);
+        }
+    }
+
+
+    /* Controlador para las consultas de los Usuarios finales */
+    function getSoportesActualesForUser(Request $request): JsonResponse
+    {
+        $soportes = Soporte::from('sop_soporte as ss')
+            ->selectRaw('ss.id_sop, ss.numero_sop,
+                        ss.fecha_ini, ss.incidente, ss.solucion,
+                        ss.id_usu_recibe, u.nmbre_usrio as usuario_recibe,
+                        ss.id_estado, se.nombre as estado, se.color,
+                        ss.id_usu_tecnico_asig, us.nmbre_usrio as tecnico_asignado')
+            ->join('usrios_sstma as u', 'u.cdgo_usrio', 'ss.id_usu_recibe')
+            ->join('sop_estado as se', 'se.id_estado_caso', 'ss.id_estado')
+            ->leftJoin('usrios_sstma as us', 'us.cdgo_usrio', 'ss.id_usu_tecnico_asig')
+            ->where('ss.fecha_ini', "LIKE", "%" . Carbon::now()->format('Y-m-d') . "%")
+            ->where('ss.id_usu_recibe', $request->cdgo_usrio)
+            ->orderBy('ss.numero_sop', 'DESC')
+            ->get();
+
+        return response()->json(['status' => 'success', 'soportes' => $soportes], 200);
+    }
+
+    function getSoportesAnualesForUser(Request $request): JsonResponse
+    {
+        $soportes = Soporte::from('sop_soporte as ss')
+            ->selectRaw('ss.id_sop, ss.numero_sop,
+                        ss.fecha_ini, ss.incidente, ss.solucion,
+                        ss.id_usu_recibe, u.nmbre_usrio as usuario_recibe,
+                        ss.id_estado, se.nombre as estado, se.color,
+                        ss.id_usu_tecnico_asig, us.nmbre_usrio as tecnico_asignado')
+            ->join('usrios_sstma as u', 'u.cdgo_usrio', 'ss.id_usu_recibe')
+            ->join('sop_estado as se', 'se.id_estado_caso', 'ss.id_estado')
+            ->leftJoin('usrios_sstma as us', 'us.cdgo_usrio', 'ss.id_usu_tecnico_asig')
+            ->where('ss.anio', Carbon::now()->format('Y'))
+            ->where('ss.id_usu_recibe', $request->cdgo_usrio)
+            ->orderBy('ss.numero_sop', 'DESC')
+            ->get();
+
+        return response()->json(['status' => 'success', 'soportes' => $soportes], 200);
     }
 }

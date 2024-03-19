@@ -208,6 +208,25 @@ export const useSoporteStore = () => {
         }
     };
 
+    const startLoadActividadesSoporte = async (
+        fecha_inicio,
+        fecha_fin,
+        cdgo_usrio
+    ) => {
+        try {
+            dispatch(onLoading());
+            const { data } = await helpdeskApi.post(
+                "/general/reporte-actividades",
+                { fecha_inicio, fecha_fin, cdgo_usrio }
+            );
+            const { soportes } = data;
+            dispatch(onLoadSoportes(soportes));
+        } catch (error) {
+            console.log(error);
+            ExceptionMessageError(error);
+        }
+    };
+
     /* GENERAL Y GERENCIA */
     /* TARJETA DE SOPORTE PARA FIRMAR USUARIO SOLICITANTE Y TECNICO */
     const startExportSoporte = async (id_sop) => {
@@ -215,7 +234,7 @@ export const useSoporteStore = () => {
             dispatch(onLoadPDF(true));
 
             const response = await helpdeskApi.post(
-                "/general/reporte-soporte",
+                "/general/reporte-soporte-pdf",
                 {
                     id_sop,
                 },
@@ -249,7 +268,7 @@ export const useSoporteStore = () => {
         try {
             dispatch(onLoadPDF(true));
             const response = await helpdeskApi.post(
-                "/general/reporte-actividades",
+                "/general/reporte-actividades-pdf",
                 {
                     fecha_inicio,
                     fecha_fin,
@@ -270,6 +289,37 @@ export const useSoporteStore = () => {
             document.body.removeChild(tempLink);
             window.URL.revokeObjectURL(url);
             dispatch(onLoadPDF(false));
+        } catch (error) {
+            console.log(error);
+            ExceptionMessageError(error);
+        }
+    };
+
+    /* PARA USUARIOS */
+    const startLoadSoportesActualesUsuarios = async (cdgo_usrio) => {
+        try {
+            dispatch(onLoading());
+            const { data } = await helpdeskApi.post(
+                "/usuario/soportes-actuales",
+                { cdgo_usrio }
+            );
+            const { soportes } = data;
+            dispatch(onLoadSoportes(soportes));
+        } catch (error) {
+            console.log(error);
+            ExceptionMessageError(error);
+        }
+    };
+
+    const startLoadSoportesAnualesUsuarios = async (cdgo_usrio) => {
+        try {
+            dispatch(onLoading());
+            const { data } = await helpdeskApi.post(
+                "/usuario/soportes-anuales",
+                { cdgo_usrio }
+            );
+            const { soportes } = data;
+            dispatch(onLoadSoportes(soportes));
         } catch (error) {
             console.log(error);
             ExceptionMessageError(error);
@@ -301,8 +351,11 @@ export const useSoporteStore = () => {
         startSearchSoporte,
         startSendSolicitud,
         startDiagnosticarSoporte,
+        startLoadActividadesSoporte,
         startExportSoporte,
         startExportActividadesSoportes,
+        startLoadSoportesActualesUsuarios,
+        startLoadSoportesAnualesUsuarios,
         clearSoportes,
         setActivateSoporte,
     };

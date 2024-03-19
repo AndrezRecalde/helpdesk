@@ -127,6 +127,12 @@ export const ListActividadesPage = () => {
         };
     }, [fecha_inicio, fecha_fin]);
 
+    useEffect(() => {
+        return () => {
+            startClearActividades();
+        };
+    }, []);
+
     const table = useMantineReactTable({
         columns,
         data: actividades,
@@ -138,12 +144,6 @@ export const ListActividadesPage = () => {
             <MenuTable_E row={row} handleEdit={handleEditActividad} />
         ),
     });
-
-    useEffect(() => {
-        return () => {
-            startClearActividades();
-        };
-    }, [fecha_inicio, fecha_fin]);
 
     return (
         <Container size="md" my="md">

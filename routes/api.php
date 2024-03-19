@@ -38,6 +38,8 @@ Route::post('/auth/login', [AuthController::class, 'login']);
 Route::get('/refresh', [AuthController::class, 'refresh'])->middleware('auth:sanctum');
 Route::post('/profile', [AuthController::class, 'profile'])->middleware('auth:sanctum');
 Route::post('/auth/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
+Route::put('/change-password/{cdgo_usrio}', [UserController::class, 'updatePassword'])->middleware('auth:sanctum');
+
 
 /* RUTAS: GERENTE */
 
@@ -87,7 +89,7 @@ Route::group(['prefix' => 'gerencia', 'middleware' => ['auth:sanctum']], functio
     Route::post('/crear-solicitud', [SoporteAdminController::class, 'crearSolicitudAdmin']);
     Route::put('/actualizar-soporte/{id_sop}', [SoporteAdminController::class, 'updateSoporte']);
     Route::post('/indicador-soporte', [SoporteAdminController::class, 'getIndicadoresSoportes']);
-    Route::post('/reporte-indicador', [SoporteAdminController::class, 'exportPDFIndicadores']);
+    Route::post('/reporte-indicador-pdf', [SoporteAdminController::class, 'exportPDFIndicadores']); //TODO
 
     /*DASHBOARD */
     Route::get('/dashboard', [DashGerenteController::class, 'getDashboardGerencia']);
@@ -114,9 +116,9 @@ Route::group(['prefix' => 'general', 'middleware' => ['auth:sanctum']], function
     Route::post('/buscar-soportes', [SoporteController::class, 'searchSoportes']);
     Route::post('/crear-soporte', [SoporteController::class, 'createSoporte']);
     Route::put('/diagnosticar-soporte/{id_sop}', [SoporteController::class, 'diagnosticarSoporte']);
-    Route::post('/reporte-soporte', [SoporteController::class, 'exportPDFCardSoporte']);
-    Route::post('/reporte-actividades', [SoporteController::class, 'exportActividadesSoportes']);
-
+    Route::post('/reporte-actividades', [SoporteController::class, 'getActividadesSoportes']);
+    Route::post('/reporte-soporte-pdf', [SoporteController::class, 'exportPDFCardSoporte']);
+    Route::post('/reporte-actividades-pdf', [SoporteController::class, 'exportActividadesSoportes']);
 
 
     /* TIPOS DE SOLICITUDES DE SOPORTE */
@@ -144,4 +146,10 @@ Route::group(['prefix' => 'usuario', 'middleware' => ['auth:sanctum']], function
     Route::post('/create/actividad', [ActividadController::class, 'store']);
     Route::put('/update/actividad/{id}', [ActividadController::class, 'update']);
     Route::post('/export/pdf/actividades', [ActividadController::class, 'exportPDFActividadesForUser']);
+
+    /* SOPORTES */
+    Route::post('/soportes-actuales', [SoporteController::class, 'getSoportesActualesForUser']);
+    Route::post('/soportes-anuales', [SoporteController::class, 'getSoportesAnualesForUser']);
+
+
 });

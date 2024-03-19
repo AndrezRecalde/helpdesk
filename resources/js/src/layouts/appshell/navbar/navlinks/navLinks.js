@@ -81,7 +81,7 @@ export const lUsuario = [
         initiallyOpened: true,
         links: [
             { label: "Solicitar soporte", link: "/gad/d/solicitud" },
-            { label: "Mis soportes", link: "/gad/d/lista-soportes" },
+            { label: "Mis soportes", link: "/gad/d/soportes/actuales" },
         ],
     },
 ]

@@ -73,8 +73,9 @@ export const AuthForm = () => {
                         color="red.8"
                         icon={IconInfoCircle}
                         title="Error"
-                        text={errores}
-                    />
+                    >
+                        {errores}
+                    </AlertSection>
                 ) : null}
                 <Group justify="space-between" mt="lg">
                     <Checkbox

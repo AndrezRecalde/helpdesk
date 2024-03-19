@@ -23,6 +23,7 @@ import { AuthForm } from "./auth/AuthForm";
 /* Usuarios */
 import { UserBtnHeader } from "./user/UserBtnHeader";
 import { ProfileForm } from "./user/ProfileForm";
+import { ChangePwdForm } from "./user/ChangePwdForm";
 
 /*Geremcia */
 import { FilterFormUsers } from "./gerencia/filters/FilterFormUsers";
@@ -100,6 +101,10 @@ import { ActionReportPDF } from "./elements/buttons/ActionButton";
 
 import { InformationActividadList } from "./elements/lists/InformationActividadList";
 
+import { SectionUsersSoportesActuales } from "./soportes/section/SectionUsersSoportesActuales";
+import { SectionUsersSoportesAnuales } from "./soportes/section/SectionUsersSoportesAnuales";
+import { SoportesUsersTable } from "./soportes/table/SoportesUsersTable";
+
 export {
     TitlePage,
     TextSection,
@@ -117,6 +122,7 @@ export {
     AuthForm,
     UserBtnHeader,
     ProfileForm,
+    ChangePwdForm,
     FilterFormUsers,
     FilterFormDirecciones,
     FilterFormSearchDates,
@@ -169,6 +175,8 @@ export {
     ActividadForm,
     ModalActividad,
     ActionReportPDF,
-
-    InformationActividadList
+    InformationActividadList,
+    SectionUsersSoportesActuales,
+    SectionUsersSoportesAnuales,
+    SoportesUsersTable,
 };

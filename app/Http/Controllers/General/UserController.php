@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\General;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UserPasswordRequest;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -41,4 +42,18 @@ class UserController extends Controller
         return response()->json(['status' => 'success', 'usuarios' => $usuarios], 200);
     }
 
+    function updatePassword(UserPasswordRequest $request, int $cdgo_usrio): JsonResponse
+    {
+        $usuario = User::find($cdgo_usrio);
+        try {
+            if ($usuario) {
+                $usuario->update($request->validated());
+                return response()->json(['status' => 'success', 'msg' => 'Contraseña actualizada con éxito'], 200);
+            } else {
+                return response()->json(['status' => 'error', 'msg' => 'Usuario no encontrado'], 404);
+            }
+        } catch (\Throwable $th) {
+            return response()->json(['status' => 'error', 'msg' => $th->getMessage()], 500);
+        }
+    }
 }

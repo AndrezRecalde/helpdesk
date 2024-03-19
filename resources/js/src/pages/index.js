@@ -3,6 +3,7 @@ import { AuthPage } from "./auth/AuthPage";
 
 /* Usuario */
 import { ProfilePage } from "./user/ProfilePage";
+import { ChangePwdPage } from "./user/ChangePwdPage";
 
 /*Gerente */
 import { AdminUsersPage } from "./gerencia/AdminUsersPage";
@@ -19,6 +20,8 @@ import { SoportesPage } from "./soporte/SoportesPage";
 import { BusquedaSoportePage } from "./soporte/BusquedaSoportePage";
 import { IndicadorReportPage } from "./soporte/reporte/IndicadorReportPage";
 import { ReporteSoportes } from "./soporte/reporte/ReporteSoportes";
+/* Vista de Soportes de usuarios */
+import { UserSoportesPage } from "./soporte/UserSoportesPage";
 
 /* Dashboard */
 import { DashGerenciaPage } from "./dashboard/gerencia/DashGerenciaPage";
@@ -34,6 +37,7 @@ import { ErrorAccessDenied } from "./error/ErrorAccessDenied";
 export {
     AuthPage,
     ProfilePage,
+    ChangePwdPage,
 
     AdminUsersPage,
     AdminDireccionesPage,
@@ -48,6 +52,7 @@ export {
     BusquedaSoportePage,
     IndicadorReportPage,
     ReporteSoportes,
+    UserSoportesPage,
 
     DashGerenciaPage,
 

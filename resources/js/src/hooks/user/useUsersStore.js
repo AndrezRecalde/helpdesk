@@ -175,6 +175,19 @@ export const useUsersStore = () => {
         }
     };
 
+    const startChangePwdUser = async (cdgo_usrio, paswrd) => {
+        try {
+            const { data } = await helpdeskApi.put(`/change-password/${cdgo_usrio}`, { paswrd });
+            dispatch(onLoadMessage(data));
+            setTimeout(() => {
+                dispatch(onLoadMessage(undefined));
+            }, 40);
+        } catch (error) {
+            console.log(error);
+            ExceptionMessageError(error);
+        }
+    }
+
     const clearUsers = () => {
         dispatch(onClearUsers());
     };
@@ -203,6 +216,7 @@ export const useUsersStore = () => {
         startUpdateActivoUser,
         verifiedUser,
         startUpdatePassword,
+        startChangePwdUser,
         clearUsers,
         setActivateUser,
         setClearActivateUser,

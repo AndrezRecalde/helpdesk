@@ -57,17 +57,16 @@
                         {{ Str::upper($direccion) }}
                         <hr>
                         {{ Str::upper($titulo) }} <br>
-                        del 2024-01-01 al 2024-12-01 <br>
+                        del {{ $fecha_inicio }} al {{ $fecha_fin }} <br>
                     </div>
                 </td>
             </tr>
         </table>
         <!-- FIN ENCABEZADO -->
         <h6>RESUMEN DE ACTIVIDADES:</h6>
-        <div style="text-align: justify;">Durante el periodo del 2023-01-01 al 2023-01-20, en calidad de funcionario
-            en el Gobierno Autonomo Descentralizado de la Provincia de Esmeraldas, en el área de Técnologias de la
-            Información,
-            he llevado a cabo las siguientes actividades.
+        <div style="text-align: justify;">Durante el periodo del {{ $fecha_inicio }} al {{ $fecha_fin }}, yo {{ $soportes[0]->tecnico }}
+            en calidad de funcionario del Gobierno Autónomo Descentralizado de la Provincia de Esmeraldas, en la
+            Gestión de Tecnologías de la Información y Comunicación (GTIC), he llevado a cabo las siguientes actividades.
         </div>
 
         <!-- CUERPO DE ACTIVIDADES -->

@@ -1,6 +1,6 @@
 import { Route } from "react-router-dom";
 import { RoutesNotFound } from "../../not-found/RoutesNotFound";
-import { ActividadPage, ListActividadesPage, SolicitudPage } from "../../../pages";
+import { ActividadPage, ListActividadesPage, SolicitudPage, UserSoportesPage } from "../../../pages";
 
 export const PagesUsuario = () => {
     console.log("pagesUsuario");
@@ -10,6 +10,7 @@ export const PagesUsuario = () => {
             <Route path="solicitud" element={<SolicitudPage />} />
             <Route path="agregar-actividad" element={<ActividadPage />} />
             <Route path="lista-actividades" element={<ListActividadesPage />} />
+            <Route path="soportes/:soporteValue" element={<UserSoportesPage />} />
         </RoutesNotFound>
     );
 };

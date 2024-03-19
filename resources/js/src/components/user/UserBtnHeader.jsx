@@ -92,7 +92,7 @@ export const UserBtnHeader = () => {
                     Ver perfil
                 </Menu.Item>
                 <Menu.Item
-                onClick={() => navigate("change-password")}
+                onClick={() => navigate("/u/change-password")}
                     leftSection={
                         <IconSettings
                             style={{ width: rem(16), height: rem(16) }}
