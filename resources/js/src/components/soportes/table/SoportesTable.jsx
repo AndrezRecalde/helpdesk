@@ -21,7 +21,7 @@ export const SoportesTable = () => {
                 header: "Estado",
                 Cell: ({ cell }) => (
                     <Badge
-                        variant="light"
+                        variant="dot"
                         radius="sm"
                         color={cell.row.original.color}
                     >

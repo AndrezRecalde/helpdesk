@@ -22,15 +22,24 @@ export const useSoporteStore = () => {
     const dispatch = useDispatch();
 
     /* GERENTE O TECNICO */
-    const startLoadSoportesActuales = async (id_usu_tecnico_asig = null) => {
+    const startLoadSoportesActuales = async (usuario) => {
         try {
-            dispatch(onLoading());
+            //dispatch(onLoading());
+            if (usuario.role_id === 2) {
+                const { data } = await helpdeskApi.post(
+                    "/general/soportes-actuales",
+                    { id_usu_tecnico_asig: usuario.cdgo_usrio }
+                );
+                return data;
+            }
             const { data } = await helpdeskApi.post(
                 "/general/soportes-actuales",
-                { id_usu_tecnico_asig }
+                { id_usu_tecnico_asig: null }
             );
-            const { soportes } = data;
-            dispatch(onLoadSoportes(soportes));
+            return data;
+
+            //const { soportes } = data;
+            //dispatch(onLoadSoportes(soportes));
         } catch (error) {
             console.log(error);
             ExceptionMessageError(error);
@@ -38,9 +47,9 @@ export const useSoporteStore = () => {
     };
 
     /* GERENTE */
-    const startAsignarSoporte = async (soporte) => {
+    const startAsignarSoporte = async (soporte, role_id) => {
         try {
-            //dispatch(onLoading());
+            dispatch(onLoading());
             const { data } = await helpdeskApi.put(
                 `/gerencia/asignar-soporte/${soporte.id_sop}`,
                 soporte
@@ -49,7 +58,7 @@ export const useSoporteStore = () => {
             setTimeout(() => {
                 dispatch(onLoadMessage(undefined));
             }, 40);
-            startLoadSoportesActuales();
+            startLoadSoportesActuales(role_id);
         } catch (error) {
             console.log(error);
             ExceptionMessageError(error);
@@ -326,6 +335,32 @@ export const useSoporteStore = () => {
         }
     };
 
+    const startLoadSoportesSinCalificar = async () => {
+        try {
+            dispatch(onLoading());
+            const { data } = await helpdeskApi.get("/gerencia/soportes-sin-calificar");
+            const { soportes } = data;
+            dispatch(onLoadSoportes(soportes));
+        } catch (error) {
+            console.log(error);
+            ExceptionMessageError(error);
+        }
+    }
+
+    const startUpdateCalificacion = async(id_soportes) => {
+        try {
+            const { data } = await helpdeskApi.post("/gerencia/calificacion", { id_soportes });
+            dispatch(onLoadMessage(data));
+            setTimeout(() => {
+                dispatch(onLoadMessage(undefined));
+            }, 40);
+            startLoadSoportesSinCalificar();
+        } catch (error) {
+            console.log(error);
+            ExceptionMessageError(error);
+        }
+    }
+
     const clearSoportes = () => {
         dispatch(onClearSoportes());
     };
@@ -356,6 +391,8 @@ export const useSoporteStore = () => {
         startExportActividadesSoportes,
         startLoadSoportesActualesUsuarios,
         startLoadSoportesAnualesUsuarios,
+        startLoadSoportesSinCalificar,
+        startUpdateCalificacion,
         clearSoportes,
         setActivateSoporte,
     };

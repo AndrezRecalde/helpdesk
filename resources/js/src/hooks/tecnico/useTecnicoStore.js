@@ -11,7 +11,7 @@ import {
 import helpdeskApi from "../../api/helpdeskApi";
 
 export const useTecnicoStore = () => {
-    const { isLoading, tecnicos, activateTecnico, message, errores } =
+    const { isLoading, tecnicos, activateTecnico, infoSoportes, message, errores } =
         useSelector((state) => state.tecnico);
 
     const { ExceptionMessageError } = useErrorException(onLoadErrores);
@@ -69,6 +69,18 @@ export const useTecnicoStore = () => {
         }
     };
 
+    const startLoadInfoTecnicosSoporte = async (user_id) => {
+        try {
+            dispatch(onLoading());
+            const { data } = await helpdeskApi.post("/general/info-soportes", { user_id });
+            const { info } = data;
+            dispatch(onSetInfoSoportes(info));
+        } catch (error) {
+            console.log(error);
+            ExceptionMessageError(error);
+        }
+    }
+
     const setActivateTecnico = (tecnico) => {
         dispatch(onSetActivateTecnico(tecnico));
     };
@@ -81,12 +93,14 @@ export const useTecnicoStore = () => {
         isLoading,
         tecnicos,
         activateTecnico,
+        infoSoportes,
         message,
         errores,
 
         startLoadTecnicos,
         startLoadTecnicosAdmin,
         startAddUpdateTecnico,
+        startLoadInfoTecnicosSoporte,
         setActivateTecnico,
         clearTecnicos,
     };

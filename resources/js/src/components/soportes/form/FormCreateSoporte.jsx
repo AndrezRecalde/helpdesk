@@ -22,7 +22,8 @@ import {
 } from "../../../hooks";
 import { IconSend } from "@tabler/icons-react";
 
-export const FormCreateSoporte = ({ form, role }) => {
+export const FormCreateSoporte = ({ form }) => {
+    const usuario = JSON.parse(localStorage.getItem("service_user"));
     const { id_tipo_solicitud, terminado } = form.values;
     const { estados } = useEstadoStore();
     const { users } = useUsersStore();
@@ -35,10 +36,10 @@ export const FormCreateSoporte = ({ form, role }) => {
 
     useEffect(() => {
         if (terminado) {
-            form.setFieldValue("id_estado", "4");
-            form.setFieldValue("solucion", "");
-            form.setFieldValue("id_equipo", null);
-            form.setFieldValue("fecha_fin", null);
+            form.setFieldValue("terminado", true);
+            form.setFieldValue("solucion", activateSoporte?.solucion ? activateSoporte?.solucion : "");
+            form.setFieldValue("id_equipo", activateSoporte?.id_equipo ? activateSoporte?.id_equipo.toString() : null);
+            form.setFieldValue("fecha_fin", activateSoporte?.fecha_fin ? new Date(activateSoporte?.fecha_fin) : null);
             return;
         }
         form.setFieldValue(
@@ -56,9 +57,9 @@ export const FormCreateSoporte = ({ form, role }) => {
                 activateSoporte?.fecha_fin ? true : false
             );
             form.setFieldValue("id_estado", "4");
-            form.setFieldValue("solucion", "");
-            form.setFieldValue("id_equipo", null);
-            form.setFieldValue("fecha_fin", null);
+            form.setFieldValue("solucion", activateSoporte?.solucion ? activateSoporte?.solucion : "");
+            form.setFieldValue("id_equipo", activateSoporte?.id_equipo ? activateSoporte?.id_equipo.toString() : null);
+            form.setFieldValue("fecha_fin", activateSoporte?.fecha_fin ? new Date(activateSoporte?.fecha_fin) : null);
             return;
         }
         form.setFieldValue(
@@ -74,6 +75,7 @@ export const FormCreateSoporte = ({ form, role }) => {
         console.log(form.values);
         startCreateSoporte(form.getTransformedValues());
         modalActionCreateSoporte(0);
+        form.reset();
     };
 
     return (
@@ -130,13 +132,13 @@ export const FormCreateSoporte = ({ form, role }) => {
 
                 <Grid.Col span={12}>
                     <Select
-                        disabled={role}
                         withAsterisk
                         searchable
                         clearable
                         label="Técnico"
                         placeholder="Seleccione técnico"
                         {...form.getInputProps("id_usu_tecnico_asig")}
+                        disabled={usuario?.role_id == 2 ? true : false}
                         data={tecnicos.map((tecnico) => {
                             return {
                                 value: tecnico.cdgo_usrio.toString(),
@@ -229,7 +231,7 @@ export const FormCreateSoporte = ({ form, role }) => {
                         iconColor="dark.8"
                         size="md"
                         label="¿Soporte terminado?"
-                        disabled={id_tipo_solicitud == 7 ? true : false}
+                        disabled={id_tipo_solicitud == 7 || id_tipo_solicitud == 4 ? true : false}
                         {...form.getInputProps("terminado", {
                             type: "checkbox",
                         })}
@@ -289,7 +291,7 @@ export const FormCreateSoporte = ({ form, role }) => {
                         valueFormat="YYYY-MM-DD HH:mm"
                         label="Fecha de finalización"
                         placeholder="Seleccione fecha de finalización"
-                        {...form.getInputProps("fecha_fi")}
+                        {...form.getInputProps("fecha_fin")}
                     />
                 </Stack>
             ) : null}

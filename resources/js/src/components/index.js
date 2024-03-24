@@ -105,6 +105,11 @@ import { SectionUsersSoportesActuales } from "./soportes/section/SectionUsersSop
 import { SectionUsersSoportesAnuales } from "./soportes/section/SectionUsersSoportesAnuales";
 import { SoportesUsersTable } from "./soportes/table/SoportesUsersTable";
 
+import { SoportesCalificacionTable } from "./soportes/table/SoportesCalificacionTable";
+
+import { ModalDesempTecnicos } from "./gerencia/modals/ModalDesempTecnicos";
+import { ChartDesempTecnicos } from "./gerencia/charts/ChartDesempTecnicos";
+
 export {
     TitlePage,
     TextSection,
@@ -179,4 +184,8 @@ export {
     SectionUsersSoportesActuales,
     SectionUsersSoportesAnuales,
     SoportesUsersTable,
+
+    SoportesCalificacionTable,
+    ModalDesempTecnicos,
+    ChartDesempTecnicos
 };

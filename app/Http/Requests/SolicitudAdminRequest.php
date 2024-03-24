@@ -23,6 +23,7 @@ class SolicitudAdminRequest extends FormRequest
     {
         return [
             'numero_escrito'      =>  '',
+            'id_area_tic'         =>  'required',
             'id_direccion'        =>  'required',
             'id_usu_recibe'       =>  'required',
             'id_tipo_soporte'     =>  'required',

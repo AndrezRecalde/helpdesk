@@ -7,6 +7,7 @@ use App\Http\Requests\UserPasswordRequest;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -55,5 +56,13 @@ class UserController extends Controller
         } catch (\Throwable $th) {
             return response()->json(['status' => 'error', 'msg' => $th->getMessage()], 500);
         }
+    }
+
+
+    function getInfoUsersSoportes(Request $request): JsonResponse
+    {
+        $info = DB::select('CALL sop_get_info_users_soportes(?)', [$request->user_id]);
+
+        return response()->json(['status' => 'success', 'info' => $info], 200);
     }
 }

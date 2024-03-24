@@ -5,10 +5,14 @@ import { hasLength, isNotEmpty, useForm } from "@mantine/form";
 import { FormDiagnosticar } from "../form/FormDiagnosticar";
 
 export const ModalDiagnostico = () => {
-    const { modalActionDiagnosticar, isOpenModalDiagnosticar } = useUiSoporte();
+    const {
+        modalActionDiagnosticar,
+        isOpenModalDiagnosticar,
+    } = useUiSoporte();
 
     const { setActivateSoporte } = useSoporteStore();
-    const { startLoadEquiposInformaticos, clearEquiposInformaticos } = useEquipoStore();
+    const { startLoadEquiposInformaticos, clearEquiposInformaticos } =
+        useEquipoStore();
 
     const form = useForm({
         initialValues: {
@@ -38,13 +42,15 @@ export const ModalDiagnostico = () => {
     });
 
     useEffect(() => {
-        startLoadEquiposInformaticos();
+        if (isOpenModalDiagnosticar) {
+            startLoadEquiposInformaticos();
+            return;
+        }
 
-      return () => {
-        clearEquiposInformaticos();
-      }
-    }, []);
-
+        return () => {
+            clearEquiposInformaticos();
+        };
+    }, [isOpenModalDiagnosticar]);
 
     const handleCloseModal = () => {
         modalActionDiagnosticar(0);

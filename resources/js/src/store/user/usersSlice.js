@@ -6,6 +6,7 @@ const initialState = {
     activateUser: null,
     storageField: null,
     userVerified: null,  //Aqui
+    infoSoportes: undefined,
     validate: undefined,
     message: undefined,
     errores: undefined,
@@ -41,9 +42,18 @@ export const usersSlice = createSlice({
         onSetUserVerified: (state, { payload }) => {  // AQUI
             state.userVerified = payload;
         },
+        onSetInfoSoportes: (state, { payload }) => {
+            state.infoSoportes = payload;
+            state.isLoading = false;
+        },
         onClearUsers: (state) => {
             state.users = [];
+            state.activateUser = null;
+            state.storageField = null;
+            state.infoSoportes = undefined;
             state.errores = undefined;
+            state.message = undefined;
+            state.isLoading = false;
         },
         onValidate: (state, { payload }) => {
             state.isLoading = false;
@@ -72,6 +82,7 @@ export const {
     onSetActivateUser,
     onSetStorageFields,
     onSetUserVerified,
+    onSetInfoSoportes,
     onClearUsers,
     onValidate,
     onLoadMessage,

@@ -49,10 +49,10 @@ export const ChartSoportesMes = () => {
         datasets: [
             {
                 fill: true,
-                label: "Dataset 2",
+                label: "Total Soportes",
                 data: soportesPorMes?.map(soporte => soporte.total_soportes),
-                borderColor: "rgb(53, 162, 235)",
-                backgroundColor: "rgba(53, 34, 122, 0.5)",
+                borderColor: "rgba(24, 248, 166, 1)",
+                backgroundColor: "rgba(24, 248, 166, 0.55)",
             },
         ],
     };

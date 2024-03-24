@@ -66,7 +66,7 @@ export const useIndicadorStore = () => {
         try {
             dispatch(onLoading(true));
             const response = await helpdeskApi.post(
-                "/gerencia/reporte-indicador",
+                "/gerencia/reporte-indicador-pdf",
                 { fecha_inicio, fecha_fin },
                 { responseType: "blob" }
             );
@@ -90,6 +90,20 @@ export const useIndicadorStore = () => {
         }
     };
 
+    const startLoadDesempenoTecnicosAnual = async () => {
+        try {
+            dispatch(onLoading(true));
+            const { data } = await helpdeskApi.get("/gerencia/desempeno-tecnicos-anual");
+            const { desempenoForTecnicos } = data;
+            dispatch(onLoadDesempenoForTecnicos(desempenoForTecnicos));
+            dispatch(onLoading(false));
+        } catch (error) {
+            console.log(error);
+            ExceptionMessageError(error);
+        }
+    }
+
+
     const clearIndicadores = () => {
         dispatch(onClearIndicadores());
         dispatch(onPageLoad(false));
@@ -109,6 +123,7 @@ export const useIndicadorStore = () => {
 
         startLoadIndicadores,
         startExportPDFIndicadores,
+        startLoadDesempenoTecnicosAnual,
         clearIndicadores,
     };
 };

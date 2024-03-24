@@ -79,7 +79,7 @@ export const ModalCreateSoporte = ({ role }) => {
             //fecha_ini: dayjs(values.fecha_ini),
             id_tipo_solicitud: Number(values.id_tipo_solicitud),
             id_usu_tecnico_asig: Number(values.id_usu_tecnico_asig),
-            id_direccion: Number(values.id_direccion),
+            id_direccion: Number(values.id_direccion) || null,
             id_usu_recibe: Number(values.id_usu_recibe),
             id_tipo_soporte: Number(values.id_tipo_soporte),
             id_area_tic: Number(values.id_area_tic),
@@ -90,28 +90,80 @@ export const ModalCreateSoporte = ({ role }) => {
     const { id_direccion } = form.values;
 
     useEffect(() => {
-        startLoadTiposSolicitudes();
-        startLoadEquiposInformaticos();
-        startLoadEstados();
-
+        if (isOpenModalCreateSoporte) {
+            startLoadTiposSolicitudes();
+            startLoadEquiposInformaticos();
+            startLoadEstados();
+        }
         return () => {
             clearTiposSolicitudes();
             clearEquiposInformaticos();
             clearEstados();
         };
-    }, []);
+    }, [isOpenModalCreateSoporte]);
 
     useEffect(() => {
-        console.log(role);
-        if (role) {
-            startLoadTecnicos(usuario.cdgo_usrio);
-            form.setFieldValue(
-                "id_usu_tecnico_asig",
-                usuario?.cdgo_usrio.toString()
-            );
-        } else {
+        if (activateSoporte !== null) {
             startLoadTecnicos();
+            form.setValues({
+                ...activateSoporte,
+                id_estado: activateSoporte?.id_estado
+                    ? activateSoporte?.id_estado?.toString()
+                    : null,
+                id_tipo_solicitud: activateSoporte?.id_tipo_solicitud
+                    ? activateSoporte?.id_tipo_solicitud?.toString()
+                    : null,
+                numero_escrito: activateSoporte?.numero_escrito
+                    ? activateSoporte?.numero_escrito
+                    : "",
+                id_usu_tecnico_asig: activateSoporte?.id_usu_tecnico_asig
+                    ? activateSoporte?.id_usu_tecnico_asig?.toString()
+                    : null,
+                id_direccion: activateSoporte?.id_direccion || activateSoporte?.id_direccion == 0
+                    ? activateSoporte?.id_direccion?.toString()
+                    : null,
+                id_usu_recibe: activateSoporte?.id_usu_recibe
+                    ? activateSoporte?.id_usu_recibe?.toString()
+                    : null
+                    ? activateSoporte?.id_usu_recibe?.toString()
+                    : null,
+                id_tipo_soporte: activateSoporte?.id_tipo_soporte
+                    ? activateSoporte?.id_tipo_soporte?.toString()
+                    : null,
+                id_area_tic: activateSoporte?.id_area_tic
+                    ? activateSoporte?.id_area_tic?.toString()
+                    : null,
+                incidente: activateSoporte?.incidente
+                    ? activateSoporte?.incidente
+                    : "",
+                solucion: activateSoporte?.solucion
+                    ? activateSoporte?.solucion
+                    : "",
+                id_equipo: activateSoporte?.id_equipo
+                    ? activateSoporte?.id_equipo?.toString()
+                    : null,
+                fecha_ini: new Date(activateSoporte?.fecha_ini),
+                fecha_fin: new Date(activateSoporte?.fecha_fin),
+
+                terminado: activateSoporte?.fecha_fin ? true : false,
+            });
+            return;
         }
+    }, [activateSoporte]);
+
+    useEffect(() => {
+        if (activateSoporte === null) {
+            if (!role) {
+                startLoadTecnicos(usuario.cdgo_usrio);
+                form.setFieldValue(
+                    "id_usu_tecnico_asig",
+                    usuario?.cdgo_usrio.toString()
+                );
+                return;
+            }
+        }
+
+        startLoadTecnicos();
 
         return () => {
             clearTecnicos();
@@ -122,7 +174,7 @@ export const ModalCreateSoporte = ({ role }) => {
         startLoadUsersExtrict(id_direccion);
         form.setFieldValue(
             "id_usu_recibe",
-            activateSoporte?.id_usu_recibe.toString()
+            activateSoporte?.id_usu_recibe
                 ? activateSoporte?.id_usu_recibe.toString()
                 : null
         );
@@ -137,55 +189,6 @@ export const ModalCreateSoporte = ({ role }) => {
         };
     }, [id_direccion, isOpenModalCreateSoporte]);
 
-    useEffect(() => {
-        if (activateSoporte !== null) {
-            form.setValues({
-                ...activateSoporte,
-                id_estado: activateSoporte?.id_estado?.toString()
-                    ? activateSoporte?.id_estado?.toString()
-                    : null,
-                id_tipo_solicitud:
-                    activateSoporte?.id_tipo_solicitud?.toString()
-                        ? activateSoporte?.id_tipo_solicitud?.toString()
-                        : null,
-                numero_escrito: activateSoporte?.numero_escrito
-                    ? activateSoporte?.numero_escrito
-                    : "",
-                id_usu_tecnico_asig:
-                    activateSoporte?.id_usu_tecnico_asig?.toString()
-                        ? activateSoporte?.id_usu_tecnico_asig?.toString()
-                        : null,
-                id_direccion: activateSoporte?.id_direccion?.toString()
-                    ? activateSoporte?.id_direccion?.toString()
-                    : null,
-                id_usu_recibe: activateSoporte?.id_usu_recibe?.toString()
-                    ? activateSoporte?.id_usu_recibe?.toString()
-                    : null
-                    ? activateSoporte?.id_usu_recibe?.toString()
-                    : null,
-                id_tipo_soporte: activateSoporte?.id_tipo_soporte?.toString()
-                    ? activateSoporte?.id_tipo_soporte?.toString()
-                    : null,
-                id_area_tic: activateSoporte?.id_area_tic?.toString()
-                    ? activateSoporte?.id_area_tic?.toString()
-                    : null,
-                incidente: activateSoporte?.incidente
-                    ? activateSoporte?.incidente
-                    : "",
-                solucion: activateSoporte?.solucion
-                    ? activateSoporte?.solucion
-                    : "",
-                id_equipo: activateSoporte?.id_equipo?.toString()
-                    ? activateSoporte?.id_equipo?.toString()
-                    : null,
-                fecha_ini: new Date(activateSoporte?.fecha_ini),
-                fecha_fin: new Date(activateSoporte?.fecha_fin),
-
-                terminado: activateSoporte?.fecha_fin ? true : false,
-            });
-            return;
-        }
-    }, [activateSoporte]);
 
     const handleCloseModal = () => {
         setActivateSoporte(null);

@@ -8,12 +8,13 @@ import dayjs from "dayjs";
 export const ModalAsignarSoporte = () => {
     const { startLoadTecnicos, clearTecnicos } = useTecnicoStore();
     const { setActivateSoporte } = useSoporteStore();
-    const { isOpenModalAsignarSoporte, modalActionAsignarSoporte } = useUiSoporte();
+    const { isOpenModalAsignarSoporte, modalActionAsignarSoporte } =
+        useUiSoporte();
 
     const form = useForm({
         initialValues: {
             //id_usu_tecnico: null,
-            id_tipo_soporte:  null,
+            id_tipo_soporte: null,
             id_area_tic: null,
             //id_estado: 5,
             id_usu_tecnico_asig: null,
@@ -22,23 +23,32 @@ export const ModalAsignarSoporte = () => {
             id_tipo_soporte: isNotEmpty("Por favor seleccione una opción"),
             id_area_tic: isNotEmpty("Por favor seleccione una opción"),
             //id_estado: isNotEmpty("Por favor seleccione una opción"),
-            id_usu_tecnico_asig: isNotEmpty("Por favor seleccione un técnico")
-        }
-    })
+            id_usu_tecnico_asig: isNotEmpty("Por favor seleccione un técnico"),
+        },
+        transformValues: (values) => ({
+            ...values,
+            id_tipo_soporte: Number(values.id_tipo_soporte) || null,
+            id_area_tic: Number(values.id_area_tic) || null,
+            id_usu_tecnico_asig: Number(values.id_usu_tecnico_asig) || null,
+        }),
+    });
 
     useEffect(() => {
-        startLoadTecnicos();
+        if (isOpenModalAsignarSoporte) {
+            startLoadTecnicos();
+            return;
+        }
 
-      return () => {
-        clearTecnicos();
-      }
-    }, [])
-
+        return () => {
+            clearTecnicos();
+        };
+    }, [isOpenModalAsignarSoporte]);
 
     const handleCloseModal = () => {
         modalActionAsignarSoporte(0);
         setActivateSoporte(null);
-    }
+        form.reset();
+    };
 
     return (
         <Modal
@@ -51,7 +61,7 @@ export const ModalAsignarSoporte = () => {
                 blur: 3,
             }}
         >
-           <FormAsignarSoporte form={form} />
+            <FormAsignarSoporte form={form} />
         </Modal>
     );
 };

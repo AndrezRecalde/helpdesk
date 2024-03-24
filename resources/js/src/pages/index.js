@@ -20,6 +20,7 @@ import { SoportesPage } from "./soporte/SoportesPage";
 import { BusquedaSoportePage } from "./soporte/BusquedaSoportePage";
 import { IndicadorReportPage } from "./soporte/reporte/IndicadorReportPage";
 import { ReporteSoportes } from "./soporte/reporte/ReporteSoportes";
+import { SoporteCalificacionPage } from "./soporte/SoporteCalificacionPage";
 /* Vista de Soportes de usuarios */
 import { UserSoportesPage } from "./soporte/UserSoportesPage";
 
@@ -52,6 +53,7 @@ export {
     BusquedaSoportePage,
     IndicadorReportPage,
     ReporteSoportes,
+    SoporteCalificacionPage,
     UserSoportesPage,
 
     DashGerenciaPage,

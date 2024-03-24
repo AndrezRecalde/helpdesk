@@ -7,6 +7,7 @@ import {
     onLoadUsers,
     onLoading,
     onSetActivateUser,
+    onSetInfoSoportes,
     onSetUserVerified,
     onUpdateUsers,
 } from "../../store/user/usersSlice";
@@ -19,6 +20,7 @@ export const useUsersStore = () => {
         activateUser,
         validate,
         userVerified,
+        infoSoportes,
         message,
         errores,
     } = useSelector((state) => state.users);
@@ -188,6 +190,18 @@ export const useUsersStore = () => {
         }
     }
 
+    const startLoadInfoUsersSoporte = async (user_id) => {
+        try {
+            dispatch(onLoading());
+            const { data } = await helpdeskApi.post("/usuario/info-soportes", { user_id });
+            const { info } = data;
+            dispatch(onSetInfoSoportes(info));
+        } catch (error) {
+            console.log(error);
+            ExceptionMessageError(error);
+        }
+    }
+
     const clearUsers = () => {
         dispatch(onClearUsers());
     };
@@ -206,6 +220,7 @@ export const useUsersStore = () => {
         users,
         activateUser,
         userVerified, //aqui
+        infoSoportes,
         validate,
         errores,
         message,
@@ -217,6 +232,7 @@ export const useUsersStore = () => {
         verifiedUser,
         startUpdatePassword,
         startChangePwdUser,
+        startLoadInfoUsersSoporte,
         clearUsers,
         setActivateUser,
         setClearActivateUser,

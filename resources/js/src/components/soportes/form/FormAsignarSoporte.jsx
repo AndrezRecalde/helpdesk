@@ -1,25 +1,32 @@
 import { useEffect } from "react";
 import { Box, Divider, Grid, Select, Text } from "@mantine/core";
-import { useSoporteStore, useTecnicoStore } from "../../../hooks";
+import { useSoporteStore, useTecnicoStore, useUiSoporte } from "../../../hooks";
 import { BtnSubmit } from "../../../components";
 import { IconSend } from "@tabler/icons-react";
 
 export const FormAsignarSoporte = ({ form }) => {
+    const usuario = JSON.parse(localStorage.getItem("service_user"));
     const { tecnicos } = useTecnicoStore();
-    const { activateSoporte, startAsignarSoporte } = useSoporteStore();
+    const { isLoading, activateSoporte, startAsignarSoporte } = useSoporteStore();
+    const { modalActionAsignarSoporte } = useUiSoporte();
 
     useEffect(() => {
         if (activateSoporte !== null) {
             form.setValues({
                 ...activateSoporte,
+                id_area_tic: activateSoporte.id_area_tic ? activateSoporte.id_area_tic.toString() : null,
+                id_tipo_soporte: activateSoporte.id_tipo_soporte ? activateSoporte.id_tipo_soporte.toString() : null,
+                id_usu_tecnico_asig: activateSoporte.id_usu_tecnico_asig ? activateSoporte.id_usu_tecnico_asig.toString() : null
             });
             return;
         }
     }, [activateSoporte]);
 
     const handleSubmit = (e) => {
-        //e.preventDefault();
-        startAsignarSoporte(form.values);
+        e.preventDefault();
+        startAsignarSoporte(form.getTransformedValues(), usuario);
+        modalActionAsignarSoporte(0);
+        form.reset();
         //console.log(form.values);
         //console.log("aki");
     };
@@ -97,7 +104,7 @@ export const FormAsignarSoporte = ({ form }) => {
                     />
                 </Grid.Col>
             </Grid>
-            <BtnSubmit fontSize={16} IconSection={IconSend}>
+            <BtnSubmit fontSize={16} IconSection={IconSend} loading={isLoading} disabled={isLoading}>
                 Asignar Técnico
             </BtnSubmit>
         </Box>

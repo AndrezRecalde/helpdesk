@@ -25,7 +25,8 @@ export const ChangePwdForm = ({ form }) => {
         e.preventDefault();
         //console.log(form.values);
         startChangePwdUser(usuario.cdgo_usrio, paswrd);
-        console.log(form.values);
+        console.log(usuario.cdgo_usrio, paswrd);
+        form.reset();
     };
 
     return (

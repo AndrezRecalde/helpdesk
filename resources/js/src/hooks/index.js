@@ -54,6 +54,7 @@ import { useUiSoporte } from "./soporte/useUiSoporte";
 
 /* Indicadores */
 import { useIndicadorStore } from "./indicador/useIndicadorStore";
+import { useUiIndicador } from "./indicador/useUiIndicador";
 
 /* Dashboard Gerencia */
 import { useDashGerenciaStore } from "./dashboard/useDashGerenciaStore";
@@ -103,6 +104,7 @@ export {
     useUiSoporte,
 
     useIndicadorStore,
+    useUiIndicador,
 
     useDashGerenciaStore,
 

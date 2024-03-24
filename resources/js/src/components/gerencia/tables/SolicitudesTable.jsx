@@ -13,8 +13,8 @@ import es from "dayjs/locale/es";
 
 dayjs.extend(relativeTime).locale(es);
 
-export const SolicitudesTable = ({ menu }) => {
-    const { isLoading, soportes, setActivateSoporte } = useSoporteStore();
+export const SolicitudesTable = ({ menu, isLoading }) => {
+    const { soportes, setActivateSoporte, startExportSoporte } = useSoporteStore();
     const {
         modalActionAsignarSoporte,
         modalActionAnularSoporte,
@@ -64,12 +64,19 @@ export const SolicitudesTable = ({ menu }) => {
         modalActionDiagnosticar(1);
     }, []);
 
+    const handleExportSoporte = useCallback((id_sop) => {
+        startExportSoporte(id_sop);
+    }, []);
+
     const table = useMantineReactTable({
         columns,
         data: soportes, //must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
         state: { showProgressBars: isLoading },
         enableFacetedValues: true,
         enableRowActions: true,
+        localization: {
+            noResultsFound: 'Sin Resultados',
+        },
         renderRowActionMenuItems: ({ row }) =>
             menu === 1 ? (
                 <MenuSolicitudTable
@@ -78,6 +85,7 @@ export const SolicitudesTable = ({ menu }) => {
                     handleDiagnosticar={handleDiagnosticar}
                     handleAsignar={handleAsignar}
                     handleAnular={handleAnular}
+                    handleExport={handleExportSoporte}
                 />
             ) : (
                 <MenuTable_T

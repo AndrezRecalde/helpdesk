@@ -1,4 +1,4 @@
-import { Badge, Grid, Skeleton, Text } from "@mantine/core";
+import { Grid, Skeleton, Text } from "@mantine/core";
 import { useAuthStore } from "../../hooks";
 
 export const ProfileForm = () => {

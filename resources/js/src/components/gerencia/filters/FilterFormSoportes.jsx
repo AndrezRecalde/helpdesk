@@ -11,46 +11,29 @@ import {
 import { BtnSubmit } from "../../../components";
 import { DateInput, YearPickerInput } from "@mantine/dates";
 import { IconSearch } from "@tabler/icons-react";
-import { isNotEmpty, useForm } from "@mantine/form";
-import dayjs from "dayjs";
 import { useDireccionStore, useSoporteStore } from "../../../hooks";
 
-export const FilterFormSoportes = ({ role }) => {
-    const user = JSON.parse(localStorage.getItem("service_user"));
+export const FilterFormSoportes = ({ form }) => {
+    const usuario = JSON.parse(localStorage.getItem("service_user"));
     const { startSearchSoporte } = useSoporteStore();
     const { direcciones } = useDireccionStore();
-    const form = useForm({
-        initialValues: {
-            fecha_inicio: "",
-            fecha_fin: "",
-            anio: dayjs(),
-            id_direccion: null,
-            numero_sop: "",
-            switch_role: role,
-            id_usu_tecnico_asig: user.cdgo_usrio,
-        },
-        validate: {
-            anio: isNotEmpty("Por favor ingresar el año"),
-        },
-        transformValues: (values) => ({
-            ...values,
-            id_direccion: Number(values.id_direccion) || null,
-            id_usu_tecnico_asig: Number(values.id_usu_tecnico_asig) || null,
-        }),
-    });
 
     const { switch_role } = form.values;
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        console.log(switch_role);
         if (switch_role) {
-            console.log(form.getTransformedValues())
-            startSearchSoporte(form.getTransformedValues());
-        } else {
+            console.log("aki");
             const { id_usu_tecnico_asig, ...values } =
                 form.getTransformedValues();
             console.log(values);
             startSearchSoporte(values);
+        } else {
+            console.log("aki2");
+
+            console.log(form.getTransformedValues());
+            startSearchSoporte(form.getTransformedValues());
         }
         //console.log(form.values);
     };
@@ -66,7 +49,7 @@ export const FilterFormSoportes = ({ role }) => {
                         size="xl"
                         onLabel="G"
                         offLabel="T"
-                        disabled={role}
+                        disabled={usuario?.role_id == 2 ? true : false} //Tiene que ser tecnico para que sea true
                         {...form.getInputProps("switch_role")}
                     />
                 </Group>

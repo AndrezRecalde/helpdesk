@@ -17,6 +17,7 @@ export const ChartPieSoportes = () => {
                 label: "Total: ",
                 data: soportesForEstado?.map(soporte => soporte?.total_estados),
                 backgroundColor: soportesForEstado?.map(soporte => soporte?.color),
+                borderColor: soportesForEstado?.map(soporte => soporte?.border),
                 borderWidth: 1,
             },
         ],

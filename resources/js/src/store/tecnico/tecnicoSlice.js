@@ -6,6 +6,7 @@ export const tecnicoSlice = createSlice({
         isLoading: false,
         tecnicos: [],
         activateTecnico: null,
+        infoSoportes: undefined,
         message: undefined,
         errores: undefined,
     },
@@ -32,6 +33,10 @@ export const tecnicoSlice = createSlice({
             state.isLoading = false;
             state.errores = undefined;
         },
+        onSetInfoSoportes: (state, { payload }) => {
+            state.infoSoportes = payload;
+            state.isLoading = false;
+        },
         onClearTecnicos: (state) => {
             state.tecnicos = [];
             state.activateTecnico = null;
@@ -54,6 +59,7 @@ export const {
     onLoadTecnicos,
     onDeleteTecnico,
     onSetActivateTecnico,
+    onSetInfoSoportes,
     onClearTecnicos,
     onLoadMessage,
     onLoadErrores,

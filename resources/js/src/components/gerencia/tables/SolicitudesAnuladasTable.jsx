@@ -30,7 +30,7 @@ export const SolicitudesAnuladasTable = () => {
                 filterVariant: "autocomplete",
             },
         ],
-        []
+        [soportes]
     );
 
     const table = useMantineReactTable({

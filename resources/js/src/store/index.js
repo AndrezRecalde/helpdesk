@@ -52,6 +52,7 @@ import { uiSoporteSlice } from "./soporte/uiSoporteSlice";
 
 /* Indicadores */
 import { indicadorSlice } from "./indicador/indicadorSlice";
+import { uiIndicadorSlice } from "./indicador/uiIndicadorSlice";
 
 /* Dashboards */
 import { dashGerenciaSlice } from "./dashboard/dashGerenciaSlice";
@@ -122,6 +123,7 @@ export {
 
     /* Indicadores */
     indicadorSlice,
+    uiIndicadorSlice,
 
     /* Dashboard */
     dashGerenciaSlice,

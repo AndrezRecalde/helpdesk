@@ -11,6 +11,7 @@ import {
     AdminTecnicosPage,
     IndicadorReportPage,
     ReporteSoportes,
+    SoporteCalificacionPage,
 } from "../../../pages";
 
 export const PagesGerente = () => {
@@ -41,6 +42,9 @@ export const PagesGerente = () => {
 
 
                 <Route path="indicadores-soportes" element={<IndicadorReportPage />} />
+
+                <Route path="calificar" element={<SoporteCalificacionPage />} />
+
 
                 <Route path="dashboard" element={<DashGerenciaPage />} />
 

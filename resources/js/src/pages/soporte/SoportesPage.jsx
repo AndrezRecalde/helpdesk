@@ -14,14 +14,38 @@ import {
     BtnSection,
 } from "../../components";
 import { useDireccionStore, useSoporteStore, useUiSoporte } from "../../hooks";
+import { isNotEmpty, useForm } from "@mantine/form";
 import Swal from "sweetalert2";
+import dayjs from "dayjs";
 
 export const SoportesPage = () => {
     const usuario = JSON.parse(localStorage.getItem("service_user"));
     const { startLoadDirecciones, clearDirecciones } = useDireccionStore();
-    const { message, errores, clearSoportes } = useSoporteStore();
+    const { soportes, message, errores, clearSoportes } = useSoporteStore();
     const { modalActionAddSolicitud, modalActionCreateSoporte } =
         useUiSoporte();
+
+    const form = useForm({
+        initialValues: {
+            fecha_inicio: "",
+            fecha_fin: "",
+            anio: dayjs(),
+            id_direccion: null,
+            numero_sop: "",
+            switch_role: false,
+            id_usu_tecnico_asig: usuario.cdgo_usrio,
+        },
+        validate: {
+            anio: isNotEmpty("Por favor ingresar el año"),
+        },
+        transformValues: (values) => ({
+            ...values,
+            id_direccion: Number(values.id_direccion) || null,
+            id_usu_tecnico_asig: Number(values.id_usu_tecnico_asig) || null,
+        }),
+    });
+
+    const { switch_role } = form.values;
 
     const handleOpenModalSolicitud = () => {
         modalActionAddSolicitud(1);
@@ -73,7 +97,7 @@ export const SoportesPage = () => {
             </TitlePage>
             <Group justify="space-between">
                 <TextSection fw={700} tt="" fz={16}>
-                    Tienes 20 soportes
+                    Tienes {soportes.length ?? 0} soportes
                 </TextSection>
                 {usuario.role_id === 1 ? (
                     <BtnAddActions
@@ -88,14 +112,16 @@ export const SoportesPage = () => {
                     </BtnSection>
                 )}
             </Group>
-            <FilterFormSoportes role={usuario.role_id === 2 ? true : false} />
-            <Card withBorder shadow="sm" radius="md" mt={20} mb={20}>
-                <Card.Section>
-                    <SoportesTable />
-                </Card.Section>
-            </Card>
+            <FilterFormSoportes form={form} />
+            {soportes.length !== 0 ? (
+                <Card withBorder shadow="sm" radius="md" mt={20} mb={20}>
+                    <Card.Section>
+                        <SoportesTable />
+                    </Card.Section>
+                </Card>
+            ) : null}
             <ModalSolicitudAdminSoporte />
-            <ModalCreateSoporte role={usuario.role_id === 1 ? false : true} />
+            <ModalCreateSoporte role={switch_role} />
             <ModalAsignarSoporte />
             <ModalAnularSoporte />
             <ModalDiagnostico />

@@ -158,12 +158,12 @@ class SoporteAdminController extends Controller
 
 
         /* SUMATORIA DE TOTAL DE CASOS EN DESEMPEÑO */
-         $sumaDesempenoForEstados = 0;
-         if (sizeof($desempenoForEstados) > 0) {
-             foreach ($desempenoForEstados as $total_estados) {
-                 $sumaDesempenoForEstados += $total_estados->total_estados;
-             }
-         }
+        $sumaDesempenoForEstados = 0;
+        if (sizeof($desempenoForEstados) > 0) {
+            foreach ($desempenoForEstados as $total_estados) {
+                $sumaDesempenoForEstados += $total_estados->total_estados;
+            }
+        }
 
         return response()->json([
             'status' => 'success',
@@ -186,13 +186,13 @@ class SoporteAdminController extends Controller
         $efectividadForTecnicos = DB::select('CALL sop_get_efectividad_for_tecnicos(?,?)', [$request->fecha_inicio, $request->fecha_fin]);
         $sumaDiasHabiles = DB::select('CALL sop_get_dias_habiles(?,?)', [$request->fecha_inicio, $request->fecha_fin]);
         $usuarioGenerador = User::from('usrios_sstma as us')
-                            ->selectRaw('us.cdgo_usrio, us.nmbre_usrio as generador, nc.nom_cargo as cargo_generador,
+            ->selectRaw('us.cdgo_usrio, us.nmbre_usrio as generador, nc.nom_cargo as cargo_generador,
                                         u.nmbre_usrio as director, ncd.nom_cargo as cargo_director')
-                            ->join('nom_cargo as nc', 'nc.idnom_cargo', 'us.crgo_id')
-                            ->join('dprtmntos as d', 'd.cdgo_dprtmnto', 'us.cdgo_direccion')
-                            ->join('usrios_sstma as u', 'u.cdgo_usrio', 'd.id_jefe')
-                            ->join('nom_cargo as ncd', 'ncd.idnom_cargo', 'u.crgo_id')
-                            ->where('us.cdgo_usrio', auth()->id())->first();
+            ->join('nom_cargo as nc', 'nc.idnom_cargo', 'us.crgo_id')
+            ->join('dprtmntos as d', 'd.cdgo_dprtmnto', 'us.cdgo_direccion')
+            ->join('usrios_sstma as u', 'u.cdgo_usrio', 'd.id_jefe')
+            ->join('nom_cargo as ncd', 'ncd.idnom_cargo', 'u.crgo_id')
+            ->where('us.cdgo_usrio', auth()->id())->first();
 
         /* SUMATORIA DE TOTAL DE CASOS EN DESEMPEÑO */
         $sumaDesempenoForEstados = 0;
@@ -219,5 +219,30 @@ class SoporteAdminController extends Controller
         $pdf = Pdf::loadView('pdf.soporte.indicador', $data);
         return $pdf->setPaper('a4', 'portrait')->download('indicador.pdf');
         /* return response()->json(['status' => 'success', 'data' => $data]); */
+    }
+
+    function getSoportesSinCalificacion(): JsonResponse
+    {
+        $soportes = Soporte::from('sop_soporte as ss')
+            ->selectRaw('ss.id_sop, ss.numero_sop, ss.fecha_ini,
+                        ss.id_direccion, d.nmbre_dprtmnto as direccion,
+                        ss.id_usu_recibe, u.nmbre_usrio as usuario_recibe,
+                        ss.id_usu_tecnico_asig, us.nmbre_usrio as tecnico_asignado')
+            ->join('dprtmntos as d', 'd.cdgo_dprtmnto', 'ss.id_direccion')
+            ->join('usrios_sstma as u', 'u.cdgo_usrio', 'ss.id_usu_recibe')
+            ->leftJoin('usrios_sstma as us', 'us.cdgo_usrio', 'ss.id_usu_tecnico_asig')
+            ->where('ss.id_estado', 3)
+            ->where('ss.id_calificacion', 3)
+            ->orderBy('ss.numero_sop', 'DESC')
+            ->get();
+
+        return response()->json(['status' => 'success', 'soportes' => $soportes], 200);
+    }
+
+    function setCalificacionSoportes(Request $request): JsonResponse
+    {
+        Soporte::whereIn('id_sop', [$request->id_soportes])->update(['id_calificacion' => 5, 'id_estado' => 4]);
+
+        return response()->json(['status' => 'success', 'msg' => 'Se ha(n) actualizado correctamente'], 200);
     }
 }

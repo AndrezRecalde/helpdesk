@@ -8,27 +8,50 @@ import {
     BtnSubmit,
 } from "../../components";
 import { IconSend } from "@tabler/icons-react";
-import { useAuthStore } from "../../hooks";
+import { useAuthStore, useTecnicoStore, useUsersStore } from "../../hooks";
 
 const stats = [
     { value: "34K", label: "Total Soportes" },
-    { value: "187", label: "Pendientes" },
+    { value: "187", label: "En Ejecución" },
     { value: "1.6K", label: "Cerrados" },
 ];
 
 export const ProfilePage = () => {
     useDocumentTitle("Profile");
-    //const user = JSON.parse(localStorage.getItem("service_user"));
+    const usuario = JSON.parse(localStorage.getItem("service_user"));
     const { isLoading, startProfile, profile, clearProfile } = useAuthStore();
+    const {
+        startLoadInfoUsersSoporte,
+        infoSoportes: totalUsersSoportes,
+        clearUsers,
+    } = useUsersStore();
+    const {
+        startLoadInfoTecnicosSoporte,
+        infoSoportes: totalTecnicossSoportes,
+        clearTecnicos,
+    } = useTecnicoStore();
 
     const year = new Date();
 
     useEffect(() => {
         startProfile();
 
-        /* return () => {
+        return () => {
             clearProfile();
-        }; */
+        };
+    }, []);
+
+    useEffect(() => {
+        if (usuario?.role === "TECNICO") {
+            startLoadInfoTecnicosSoporte();
+            return;
+        }
+        startLoadInfoUsersSoporte();
+
+        return () => {
+            clearUsers();
+            clearTecnicos();
+        };
     }, []);
 
     const items = stats.map((stat) => (
@@ -41,8 +64,6 @@ export const ProfilePage = () => {
             </Text>
         </div>
     ));
-
-
 
     return (
         <Container size="sm">
@@ -90,9 +111,16 @@ export const ProfilePage = () => {
                         {items}
                     </Group>
 
-                    <BtnSubmit fontSize={16} IconSection={IconSend}>
-                        Agregar soporte
-                    </BtnSubmit>
+                    {usuario.role === "GERENTE" ||
+                    usuario.role === "TECNICO" ? (
+                        <BtnSubmit fontSize={16} IconSection={IconSend}>
+                            Agregar soporte
+                        </BtnSubmit>
+                    ) : (
+                        <BtnSubmit fontSize={16} IconSection={IconSend}>
+                            Solicitar soporte
+                        </BtnSubmit>
+                    )}
                 </Card.Section>
             </Card>
         </Container>

@@ -25,11 +25,13 @@ class SoporteController extends Controller
                             ss.id_usu_recibe, u.nmbre_usrio as usuario_recibe,
                             ss.fecha_ini, ss.incidente,
                             ss.id_area_tic, sat.nombre as area_tic,
+                            ss.id_tipo_soporte, sts.nombre as tipo_soporte,
                             ss.id_estado, se.nombre as estado, se.color,
                             ss.id_usu_tecnico_asig, us.nmbre_usrio as tecnico_asignado')
             ->join('dprtmntos as d', 'd.cdgo_dprtmnto', 'ss.id_direccion')
             ->join('usrios_sstma as u', 'u.cdgo_usrio', 'ss.id_usu_recibe')
             ->leftJoin('sop_areas_tic as sat', 'sat.id_areas_tic', 'ss.id_area_tic')
+            ->leftJoin('sop_tipo_soporte as sts', 'sts.id_tipo_soporte', 'ss.id_tipo_soporte')
             ->join('sop_estado as se', 'se.id_estado_caso', 'ss.id_estado')
             ->leftJoin('usrios_sstma as us', 'us.cdgo_usrio', 'ss.id_usu_tecnico_asig')
             ->where('ss.fecha_ini', "LIKE", "%" . Carbon::now()->format('Y-m-d') . "%")

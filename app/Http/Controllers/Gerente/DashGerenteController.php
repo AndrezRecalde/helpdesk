@@ -50,4 +50,11 @@ class DashGerenteController extends Controller
             'totalAreasTic'       => $totalAreasTic
         ], 200);
     }
+
+    function getDesempenoForTecnicosAnual(): JsonResponse
+    {
+        $desempenoForTecnicos = DB::select('CALL sop_get_desempeno_for_tecnicos_anual');
+
+        return response()->json(['status' => 'success', 'desempenoForTecnicos' => $desempenoForTecnicos], 200);
+    }
 }

@@ -55,4 +55,11 @@ class TecnicoController extends Controller
             return response()->json(['status' => 'error', 'msg' => $th->getMessage()], 500);
         }
     }
+
+    function getInfoTecnicosSoportes(Request $request): JsonResponse
+    {
+        $info = DB::select('CALL sop_get_info_tecnicos_soportes(?)', [$request->user_id]);
+
+        return response()->json(['status' => 'success', 'info' => $info], 200);
+    }
 }

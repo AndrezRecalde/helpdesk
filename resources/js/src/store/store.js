@@ -20,6 +20,7 @@ import {
     tiposUsuariosSlice,
     uiActividadSlice,
     uiDirectorSlice,
+    uiIndicadorSlice,
     uiSoporteSlice,
     uiTecnicoSlice,
     uiUserSlice,
@@ -49,6 +50,7 @@ export const store = configureStore({
         uiSoporte: uiSoporteSlice.reducer,
         estado: estadoSlice.reducer,
         indicador: indicadorSlice.reducer,
+        uiIndicador: uiIndicadorSlice.reducer,
         actividad: actividadSlice.reducer,
         uiActividad: uiActividadSlice.reducer,
         dashGerencia: dashGerenciaSlice.reducer

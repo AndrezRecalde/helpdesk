@@ -21,7 +21,7 @@ export const FormSolicitudAdminSoporte = ({ form }) => {
     const { direcciones } = useDireccionStore();
     const { users } = useUsersStore();
     const { tecnicos } = useTecnicoStore();
-    const { startCreateSolicitudAdmin } = useSoporteStore();
+    const { isLoading, startCreateSolicitudAdmin } = useSoporteStore();
     const { modalActionAddSolicitud } = useUiSoporte();
 
     const handleSubmit = () => {
@@ -153,7 +153,7 @@ export const FormSolicitudAdminSoporte = ({ form }) => {
                     />
                 </Grid.Col>
             </Grid>
-            <BtnSubmit fontSize={16} IconSection={IconSend}>
+            <BtnSubmit fontSize={16} IconSection={IconSend} loading={isLoading} disabled={isLoading}>
                 Crear solicitud
             </BtnSubmit>
             {!can_tecnico ? (

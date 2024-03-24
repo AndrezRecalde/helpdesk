@@ -90,9 +90,12 @@ Route::group(['prefix' => 'gerencia', 'middleware' => ['auth:sanctum']], functio
     Route::put('/actualizar-soporte/{id_sop}', [SoporteAdminController::class, 'updateSoporte']);
     Route::post('/indicador-soporte', [SoporteAdminController::class, 'getIndicadoresSoportes']);
     Route::post('/reporte-indicador-pdf', [SoporteAdminController::class, 'exportPDFIndicadores']); //TODO
+    Route::get('/soportes-sin-calificar', [SoporteAdminController::class, 'getSoportesSinCalificacion']);
+    Route::post('/calificacion', [SoporteAdminController::class, 'setCalificacionSoportes']);
 
     /*DASHBOARD */
     Route::get('/dashboard', [DashGerenteController::class, 'getDashboardGerencia']);
+    Route::get('/desempeno-tecnicos-anual', [DashGerenteController::class, 'getDesempenoForTecnicosAnual']);
 
 
 });
@@ -106,7 +109,7 @@ Route::group(['prefix' => 'general', 'middleware' => ['auth:sanctum']], function
 
     /* TECNICOS */
     Route::post('/tecnicos', [TecnicoController::class, 'getTecnicos']);
-
+    Route::post("/info-soportes", [TecnicoController::class, 'getInfoTecnicosSoportes']);
 
     /* DIRECCIONES */
     Route::get('/direcciones', [DireccionController::class, 'getDirecciones']);
@@ -140,6 +143,9 @@ Route::group(['prefix' => 'general', 'middleware' => ['auth:sanctum']], function
 Route::group(['prefix' => 'usuario', 'middleware' => ['auth:sanctum']], function () {
     /* SOLICIUTD DE SOPORTE */
     Route::post('/enviar-solicitud', [SoporteController::class, 'enviarSolicitud']);
+
+    /* INFO DE LOS SOPORTES PERFIL */
+    Route::post("/info-soportes", [UserController::class, 'getInfoUsersSoportes']);
 
     /* ACTIVIDADES */
     Route::post('/listar-actividades', [ActividadController::class, 'getActivForUserForDates']);

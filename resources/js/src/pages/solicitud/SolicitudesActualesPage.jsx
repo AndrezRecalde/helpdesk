@@ -1,18 +1,24 @@
+import { useEffect } from "react";
 import { Card, Container, Group } from "@mantine/core";
 import {
+    BtnSection,
     ModalAnularSoporte,
     ModalAsignarSoporte,
+    ModalDesempTecnicos,
     ModalDiagnostico,
     SolicitudesTable,
     TextSection,
     TitlePage,
 } from "../../components";
-import { useSoporteStore } from "../../hooks";
-import { useEffect } from "react";
+import { useSoporteStore, useUiIndicador } from "../../hooks";
 import Swal from "sweetalert2";
+import useSWR, { mutate } from "swr";
+import { useDispatch } from "react-redux";
+import { onLoadSoportes } from "../../store/soporte/soporteSlice";
 
 export const SolicitudesActualesPage = () => {
     const usuario = JSON.parse(localStorage.getItem("service_user"));
+    const dispatch = useDispatch();
     const {
         startLoadSoportesActuales,
         soportes,
@@ -20,18 +26,27 @@ export const SolicitudesActualesPage = () => {
         message,
         errores,
     } = useSoporteStore();
+    const { modalActionDesempTecnicos } = useUiIndicador();
 
     const fecha_actual = new Date();
 
+    const { data, error, isLoading } = useSWR(
+        usuario,
+        startLoadSoportesActuales,
+        { refreshInterval: 2000 }
+    );
+
     useEffect(() => {
-        if (usuario?.role_id === 2) {
-            startLoadSoportesActuales(usuario?.cdgo_usrio);
-            return;
-        }
-        startLoadSoportesActuales();
+        dispatch(onLoadSoportes(data?.soportes ? data?.soportes : []));
+    }, [data]);
 
-
+    useEffect(() => {
         return () => {
+            mutate(
+                (key) => true, // which cache keys are updated
+                undefined, // update cache data to `undefined`
+                { revalidate: false } // do not revalidate
+            );
             clearSoportes();
         };
     }, []);
@@ -61,14 +76,23 @@ export const SolicitudesActualesPage = () => {
         }
     }, [errores]);
 
+    const handleOpenModal = () => {
+        modalActionDesempTecnicos(1);
+    };
+
     return (
         <Container size="xxl">
-            <TitlePage order={2} size="h2">
-                Solicitudes Actuales
-            </TitlePage>
+            <Group justify="space-between">
+                <TitlePage order={2} size="h2">
+                    Solicitudes Actuales
+                </TitlePage>
+                <BtnSection handleAction={handleOpenModal}>
+                    Resumen técnicos
+                </BtnSection>
+            </Group>
             <Group justify="space-between">
                 <TextSection fw={700} tt="" fz={16}>
-                    Tienes {soportes.length} solicitudes
+                    Tienes {soportes?.length} solicitudes
                 </TextSection>
                 <TextSection fw={700} tt="" fz={16}>
                     {fecha_actual.toLocaleDateString()}
@@ -77,13 +101,14 @@ export const SolicitudesActualesPage = () => {
             {/*  {soportes.length !== 0 ? ( */}
             <Card withBorder shadow="sm" radius="md" mt={20} mb={20}>
                 <Card.Section>
-                    <SolicitudesTable menu={1} />
+                    <SolicitudesTable menu={usuario.role_id === 1 ? 1 : 2} isLoading={isLoading} />
                 </Card.Section>
             </Card>
             {/* ) : null} */}
             <ModalAsignarSoporte />
             <ModalAnularSoporte />
             <ModalDiagnostico />
+            <ModalDesempTecnicos />
         </Container>
     );
 };
