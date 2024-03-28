@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import { PublicRoutes } from "./public/PublicRoutes";
 import { AuthPage } from "../pages";
 import { useAuthStore } from "../hooks";
@@ -32,7 +32,7 @@ export const AppRouter = () => {
                     <PublicRoutes>
                         <Routes>
                             <Route path="auth/login/*" element={<AuthPage />} />
-                            {/* <Route path="/*" element={<Navigate replace to="/auth/login" />} /> */}
+                            <Route path="/*" element={<Navigate replace to="/auth/login" />} />
                         </Routes>
                     </PublicRoutes>
                 }

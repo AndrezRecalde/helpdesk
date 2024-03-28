@@ -167,3 +167,30 @@ export const MenuSolicitudTable = ({
         </>
     );
 };
+
+export const MenuTable_Per = ({ row, handleExport, handleAnular }) => {
+    return (
+        <>
+            <Menu.Item
+                leftSection={
+                    <IconPrinter
+                        style={{ width: rem(15), height: rem(15) }}
+                    />
+                }
+                onClick={() => handleExport(row.original)}
+            >
+                Imprimir
+            </Menu.Item>
+            <Menu.Item
+                leftSection={
+                    <IconTrash
+                        style={{ width: rem(15), height: rem(15) }}
+                    />
+                }
+                onClick={() => handleAnular(row.original)}
+            >
+                Anular
+            </Menu.Item>
+        </>
+    );
+};

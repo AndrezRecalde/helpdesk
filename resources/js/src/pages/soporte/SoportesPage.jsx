@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { Card, Container, Group } from "@mantine/core";
+import { useDocumentTitle } from "@mantine/hooks";
 import {
     FilterFormSoportes,
     TextSection,
@@ -19,6 +20,7 @@ import Swal from "sweetalert2";
 import dayjs from "dayjs";
 
 export const SoportesPage = () => {
+    useDocumentTitle("Soportes");
     const usuario = JSON.parse(localStorage.getItem("service_user"));
     const { startLoadDirecciones, clearDirecciones } = useDireccionStore();
     const { soportes, message, errores, clearSoportes } = useSoporteStore();

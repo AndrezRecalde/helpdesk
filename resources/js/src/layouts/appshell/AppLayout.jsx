@@ -1,9 +1,8 @@
 import { AppShell, Badge, Group, ScrollArea } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { AppHeader, AppNavbar, AppNavfooter } from "../../layouts";
-import { useState } from "react";
 import { TextSection } from "../../components";
 import { Outlet } from "react-router-dom";
+import { AppHeader, AppNavbar, AppNavfooter } from "../../layouts";
 import classes from "../../assets/styles/modules/layout/Layout.module.css";
 
 export const AppLayout = () => {
@@ -39,7 +38,7 @@ export const AppLayout = () => {
                                 </TextSection>
                             </div>
                             <Badge radius="sm" color="indigo.7">
-                                GTIC
+                                {usuario?.cdgo_lrgo}
                             </Badge>
                         </Group>
                     </div>
@@ -49,9 +48,10 @@ export const AppLayout = () => {
                     grow
                     component={ScrollArea}
                 >
-                    <AppNavbar role={usuario?.role} />
-
-                    {/* TODO: Realizar condicional para que se cargue el Navbar de Planificacion */}
+                    <AppNavbar
+                        role={usuario?.role}
+                        toggleMobile={toggleMobile}
+                    />
                 </AppShell.Section>
                 <AppShell.Section>
                     <AppNavfooter />

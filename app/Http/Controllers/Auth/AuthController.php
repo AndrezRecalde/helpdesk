@@ -15,7 +15,7 @@ class AuthController extends Controller
         try {
             $user = User::from('usrios_sstma as u')
                 ->selectRaw('u.cdgo_usrio, u.lgin, u.nmbre_usrio, u.usu_alias, u.email, u.crgo_id,
-                            d.cdgo_dprtmnto, d.nmbre_dprtmnto as direccion, d.id_empresa,
+                            d.cdgo_dprtmnto, d.nmbre_dprtmnto as direccion, d.cdgo_lrgo, d.id_empresa,
                             CAST((IFNULL(r.id, 3)) AS UNSIGNED) as role_id,
                             CAST((IFNULL(r.name, "USUARIO")) AS NCHAR) as role')
                 ->join('dprtmntos as d', 'd.cdgo_dprtmnto', 'u.cdgo_direccion')
@@ -45,7 +45,7 @@ class AuthController extends Controller
     {
         $user = User::from('usrios_sstma as u')
             ->selectRaw('u.cdgo_usrio, u.lgin, u.nmbre_usrio, u.usu_alias, u.email, u.crgo_id,
-                        d.cdgo_dprtmnto, d.nmbre_dprtmnto as direccion, d.id_empresa,
+                        d.cdgo_dprtmnto, d.nmbre_dprtmnto as direccion, d.cdgo_lrgo, d.id_empresa,
                         CAST((IFNULL(r.id, 3)) AS UNSIGNED) as role_id,
                         CAST((IFNULL(r.name, "Usuario")) AS NCHAR) as role')
             ->join('dprtmntos as d', 'd.cdgo_dprtmnto', 'u.cdgo_direccion')
@@ -73,7 +73,7 @@ class AuthController extends Controller
     {
         $profile = User::from('usrios_sstma as u')
             ->selectRaw('u.cdgo_usrio, u.lgin, u.nmbre_usrio, u.usu_alias, u.email,
-                    d.cdgo_dprtmnto, d.nmbre_dprtmnto as direccion,
+                    d.cdgo_dprtmnto, d.nmbre_dprtmnto as direccion, d.cdgo_lrgo,
                     ne.nom_empresa as empresa, nc.nom_cargo as cargo,
                     CAST((IFNULL(r.id, 3)) AS UNSIGNED) as role_id,
                     CAST((IFNULL(r.name, "Usuario")) AS NCHAR) as role')

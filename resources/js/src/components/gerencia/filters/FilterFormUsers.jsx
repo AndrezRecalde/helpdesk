@@ -24,7 +24,7 @@ export const FilterFormUsers = () => {
             lgin: "",
         },
         transformValues: (values) => ({
-            cdgo_direccion: Number(values.cdgo_direccion),
+            cdgo_direccion: Number(values.cdgo_direccion) || null,
         }),
     });
 

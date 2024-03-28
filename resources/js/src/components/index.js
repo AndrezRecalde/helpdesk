@@ -15,7 +15,9 @@ import {
     MenuTable_E,
     MenuTable_T,
     MenuSolicitudTable,
+    MenuTable_Per
 } from "./elements/tables/MenuTable";
+import { MenuSeleccion } from "./elements/menu/MenuSeleccion";
 
 /* Authentication */
 import { AuthForm } from "./auth/AuthForm";
@@ -110,6 +112,15 @@ import { SoportesCalificacionTable } from "./soportes/table/SoportesCalificacion
 import { ModalDesempTecnicos } from "./gerencia/modals/ModalDesempTecnicos";
 import { ChartDesempTecnicos } from "./gerencia/charts/ChartDesempTecnicos";
 
+import { FormSolicitudPermiso } from "./gerencia/forms/FormSolicitudPermiso";
+
+import { FilterPermisoAdmin } from "./gerencia/filters/FilterPermisoAdmin";
+import { FilterPermiso } from "./permiso/filter/FilterPermiso";
+
+import { PermisosTable } from "./permiso/table/PermisosTable";
+import { ModalAnularPermiso } from "./permiso/modal/ModalAnularPermiso";
+import { FormAnularPermiso } from "./permiso/form/FormAnularPermiso";
+
 export {
     TitlePage,
     TextSection,
@@ -124,6 +135,8 @@ export {
     MenuTable_E,
     MenuTable_T,
     MenuSolicitudTable,
+    MenuTable_Per,
+    MenuSeleccion,
     AuthForm,
     UserBtnHeader,
     ProfileForm,
@@ -187,5 +200,14 @@ export {
 
     SoportesCalificacionTable,
     ModalDesempTecnicos,
-    ChartDesempTecnicos
+    ChartDesempTecnicos,
+
+    FormSolicitudPermiso,
+
+    FilterPermisoAdmin,
+    FilterPermiso,
+
+    PermisosTable,
+    ModalAnularPermiso,
+    FormAnularPermiso
 };

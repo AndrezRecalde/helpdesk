@@ -24,7 +24,8 @@ import { IconSend } from "@tabler/icons-react";
 
 export const FormCreateSoporte = ({ form }) => {
     const usuario = JSON.parse(localStorage.getItem("service_user"));
-    const { id_tipo_solicitud, terminado } = form.values;
+    const { id_tipo_solicitud, activo_informatico, id_tipo_soporte } =
+        form.values;
     const { estados } = useEstadoStore();
     const { users } = useUsersStore();
     const { tecnicos } = useTecnicoStore();
@@ -35,12 +36,14 @@ export const FormCreateSoporte = ({ form }) => {
     const { modalActionCreateSoporte } = useUiSoporte();
 
     useEffect(() => {
-        if (terminado) {
-            form.setFieldValue("terminado", true);
-            form.setFieldValue("solucion", activateSoporte?.solucion ? activateSoporte?.solucion : "");
-            form.setFieldValue("id_equipo", activateSoporte?.id_equipo ? activateSoporte?.id_equipo.toString() : null);
-            form.setFieldValue("fecha_fin", activateSoporte?.fecha_fin ? new Date(activateSoporte?.fecha_fin) : null);
-            return;
+        if (activo_informatico) {
+            form.setFieldValue("activo_informatico", true);
+            form.setFieldValue(
+                "id_equipo",
+                activateSoporte?.id_equipo
+                    ? activateSoporte?.id_equipo.toString()
+                    : null
+            );
         }
         form.setFieldValue(
             "id_estado",
@@ -48,18 +51,38 @@ export const FormCreateSoporte = ({ form }) => {
                 ? activateSoporte?.id_estado.toString()
                 : "3"
         );
-    }, [terminado]);
+        form.setFieldValue(
+            "solucion",
+            activateSoporte?.solucion ? activateSoporte?.solucion : ""
+        );
+        form.setFieldValue(
+            "fecha_fin",
+            activateSoporte?.fecha_fin
+                ? new Date(activateSoporte?.fecha_fin)
+                : new Date()
+        );
+    }, [activo_informatico]);
 
     useEffect(() => {
         if (id_tipo_solicitud == 7) {
-            form.setFieldValue(
-                "terminado",
-                activateSoporte?.fecha_fin ? true : false
-            );
+            form.setFieldValue("activo_informatico", false);
             form.setFieldValue("id_estado", "4");
-            form.setFieldValue("solucion", activateSoporte?.solucion ? activateSoporte?.solucion : "");
-            form.setFieldValue("id_equipo", activateSoporte?.id_equipo ? activateSoporte?.id_equipo.toString() : null);
-            form.setFieldValue("fecha_fin", activateSoporte?.fecha_fin ? new Date(activateSoporte?.fecha_fin) : null);
+            form.setFieldValue(
+                "solucion",
+                activateSoporte?.solucion ? activateSoporte?.solucion : ""
+            );
+            form.setFieldValue(
+                "id_equipo",
+                activateSoporte?.id_equipo
+                    ? activateSoporte?.id_equipo.toString()
+                    : null
+            );
+            form.setFieldValue(
+                "fecha_fin",
+                activateSoporte?.fecha_fin
+                    ? new Date(activateSoporte?.fecha_fin)
+                    : new Date()
+            );
             return;
         }
         form.setFieldValue(
@@ -186,10 +209,7 @@ export const FormCreateSoporte = ({ form }) => {
                         {...form.getInputProps("id_tipo_soporte")}
                         data={[
                             { value: "1", label: "SOPORTE EN HARDWARE" },
-                            {
-                                value: "2",
-                                label: "SOPORTE EN SOFTWARE",
-                            },
+                            { value: "2", label: "SOPORTE EN SOFTWARE" },
                             { value: "3", label: "SOPORTE A USUARIOS" },
                             { value: "4", label: "PRESTAMO DE EQUIPO" },
                             { value: "5", label: "MANTENIMIENTO PREVENTIVO" },
@@ -225,22 +245,28 @@ export const FormCreateSoporte = ({ form }) => {
                         {...form.getInputProps("incidente")}
                     />
                 </Grid.Col>
-                <Grid.Col span={{ base: 12, md: 12, lg: 12 }}>
-                    <Checkbox
-                        color="blue.4"
-                        iconColor="dark.8"
-                        size="md"
-                        label="¿Soporte terminado?"
-                        disabled={id_tipo_solicitud == 7 || id_tipo_solicitud == 4 ? true : false}
-                        {...form.getInputProps("terminado", {
-                            type: "checkbox",
-                        })}
-                    />
-                </Grid.Col>
             </Grid>
-            {terminado ? (
-                <Stack mt={20}>
-                    {/* <MultiSelect
+            <Stack mt={20}>
+                <Textarea
+                    withAsterisk
+                    label="Solución"
+                    description="Digite como solucionó el incidente"
+                    autosize
+                    minRows={3}
+                    maxRows={3}
+                    {...form.getInputProps("solucion")}
+                />
+                <Checkbox
+                    color="blue.4"
+                    iconColor="dark.8"
+                    size="md"
+                    label="¿Ingresar activo informático?"
+                    disabled={id_tipo_solicitud == 7 ? true : false}
+                    {...form.getInputProps("activo_informatico", {
+                        type: "checkbox",
+                    })}
+                />
+                {/* <MultiSelect
                         searchable
                         label="Diagnostico"
                         placeholder="Seleccione el/los diagnosticos"
@@ -253,17 +279,7 @@ export const FormCreateSoporte = ({ form }) => {
                             };
                         })}
                     /> */}
-
-                    <Textarea
-                        withAsterisk
-                        label="Solución"
-                        description="Digite como solucionó el incidente"
-                        autosize
-                        minRows={3}
-                        maxRows={3}
-                        {...form.getInputProps("solucion")}
-                    />
-
+                {activo_informatico || id_tipo_soporte == 1 ? (
                     <Select
                         searchable
                         clearable
@@ -285,16 +301,16 @@ export const FormCreateSoporte = ({ form }) => {
                             };
                         })}
                     />
+                ) : null}
+                <DateTimePicker
+                    withAsterisk
+                    valueFormat="YYYY-MM-DD HH:mm"
+                    label="Fecha de finalización"
+                    placeholder="Seleccione fecha de finalización"
+                    {...form.getInputProps("fecha_fin")}
+                />
+            </Stack>
 
-                    <DateTimePicker
-                        withAsterisk
-                        valueFormat="YYYY-MM-DD HH:mm"
-                        label="Fecha de finalización"
-                        placeholder="Seleccione fecha de finalización"
-                        {...form.getInputProps("fecha_fin")}
-                    />
-                </Stack>
-            ) : null}
             <BtnSubmit fontSize={16} IconSection={IconSend}>
                 Crear el soporte
             </BtnSubmit>

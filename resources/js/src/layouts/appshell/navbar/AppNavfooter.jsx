@@ -1,15 +1,12 @@
 import { IconLogout } from "@tabler/icons-react";
-
+import { useAuthStore } from "../../../hooks";
 import classes from "../../../assets/styles/modules/layout/navbar/AppNav.module.css";
 
 export const AppNavfooter = () => {
+    const { startLogout } = useAuthStore();
     return (
         <div className={classes.footer}>
-            <a
-                href="#"
-                className={classes.link}
-                onClick={(event) => event.preventDefault()}
-            >
+            <a className={classes.link} onClick={startLogout}>
                 <IconLogout className={classes.linkIcon} stroke={1.5} />
                 <span>Logout</span>
             </a>

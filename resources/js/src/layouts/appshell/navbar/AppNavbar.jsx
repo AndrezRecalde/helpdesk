@@ -1,17 +1,18 @@
 import { LinksGroup } from "./NavbarLinksGroup";
 import {
+    Roles,
     lGerente,
     lTecnico,
     lUsuario,
 } from "./navlinks/navLinks";
 import classes from "../../../assets/styles/modules/layout/navbar/AppNavbar.module.css";
 
-export const AppNavbar = ({ role }) => {
+export const AppNavbar = ({ role, toggleMobile }) => {
     const mockdata =
-        role === "GERENTE" ? lGerente : role === "TECNICO" ? lTecnico : role === "USUARIO" ? lUsuario : [];
+        role === Roles.GERENTE ? lGerente : role === Roles.TECNICO ? lTecnico : role === Roles.USUARIO ? lUsuario : [];
 
     const links = mockdata.map((item) => (
-        <LinksGroup {...item} key={item.label} />
+        <LinksGroup {...item} key={item.label} toggleMobile={toggleMobile} />
     ));
 
     return (

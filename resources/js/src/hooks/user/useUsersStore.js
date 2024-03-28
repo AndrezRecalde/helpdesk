@@ -202,6 +202,10 @@ export const useUsersStore = () => {
         }
     }
 
+    const clearInfoSoportes = () => {
+        dispatch(onSetInfoSoportes(undefined));
+    }
+
     const clearUsers = () => {
         dispatch(onClearUsers());
     };
@@ -233,6 +237,7 @@ export const useUsersStore = () => {
         startUpdatePassword,
         startChangePwdUser,
         startLoadInfoUsersSoporte,
+        clearInfoSoportes,
         clearUsers,
         setActivateUser,
         setClearActivateUser,

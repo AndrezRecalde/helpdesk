@@ -10,10 +10,9 @@ import {
 } from "@mantine/core";
 import { IconChevronRight } from "@tabler/icons-react";
 import { Link } from "react-router-dom";
-
 import classes from "../../../assets/styles/modules/layout/navbar/NavbarLinksGroup.module.css";
 
-export const LinksGroup = ({ icon: Icon, label, initiallyOpened, links }) => {
+export const LinksGroup = ({ icon: Icon, label, initiallyOpened, links, toggleMobile }) => {
     const hasLinks = Array.isArray(links);
     const [opened, setOpened] = useState(initiallyOpened || false);
     const items = (hasLinks ? links : []).map((link) => (
@@ -22,7 +21,7 @@ export const LinksGroup = ({ icon: Icon, label, initiallyOpened, links }) => {
             className={classes.link}
             to={link.link}
             key={link.label}
-            //onClick={(event) => event.preventDefault()}
+            onClick={toggleMobile}
         >
             {link.label}
         </Text>

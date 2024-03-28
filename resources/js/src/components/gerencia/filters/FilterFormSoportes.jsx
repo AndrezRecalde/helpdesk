@@ -95,7 +95,7 @@ export const FilterFormSoportes = ({ form }) => {
                     />
                 </SimpleGrid>
 
-                <BtnSubmit IconSection={IconSearch} heigh={40} fontSize={16}>
+                <BtnSubmit IconSection={IconSearch} fontSize={16}>
                     Buscar
                 </BtnSubmit>
             </Box>

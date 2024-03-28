@@ -1,10 +1,10 @@
 import { Paper, Text } from "@mantine/core";
-import { useDocumentTitle } from "@mantine/hooks";
+import { useTitle } from "../../hooks";
 import { AuthForm, Logo, TitlePage } from "../../components";
 import classes from "../../assets/styles/modules/auth/AuthPageBackground.module.css";
 
 export const AuthPage = () => {
-    useDocumentTitle("Login");
+    useTitle("Helpdesk | Login");
 
     return (
         <div className={classes.wrapper}>

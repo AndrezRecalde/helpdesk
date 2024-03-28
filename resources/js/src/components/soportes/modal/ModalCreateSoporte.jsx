@@ -46,7 +46,7 @@ export const ModalCreateSoporte = ({ role }) => {
             id_equipo: null,
             fecha_fin: new Date(),
 
-            terminado: false,
+            activo_informatico: false,
         },
         validate: {
             id_estado: isNotEmpty("Por favor seleccione una opción"),
@@ -64,8 +64,8 @@ export const ModalCreateSoporte = ({ role }) => {
             id_tipo_soporte: isNotEmpty("Por favor ingrese el tipo de soporte"),
             id_area_tic: isNotEmpty("Por favor seleccione el área"),
             incidente: isNotEmpty("Por favor ingrese la incidencia"),
-            solucion: (value, values) =>
-                values.terminado === true && value.length < 5
+            solucion: (value) =>
+                     value.length < 5
                     ? "Por favor ingrese el detalle de la solución"
                     : null,
             id_equipo: (value, values) =>
@@ -75,14 +75,14 @@ export const ModalCreateSoporte = ({ role }) => {
         },
         transformValues: (values) => ({
             ...values,
-            id_estado: Number(values.id_estado),
+            id_estado: Number(values.id_estado) || null,
             //fecha_ini: dayjs(values.fecha_ini),
-            id_tipo_solicitud: Number(values.id_tipo_solicitud),
-            id_usu_tecnico_asig: Number(values.id_usu_tecnico_asig),
+            id_tipo_solicitud: Number(values.id_tipo_solicitud) || null,
+            id_usu_tecnico_asig: Number(values.id_usu_tecnico_asig) || null,
             id_direccion: Number(values.id_direccion) || null,
-            id_usu_recibe: Number(values.id_usu_recibe),
-            id_tipo_soporte: Number(values.id_tipo_soporte),
-            id_area_tic: Number(values.id_area_tic),
+            id_usu_recibe: Number(values.id_usu_recibe) || null,
+            id_tipo_soporte: Number(values.id_tipo_soporte) || null,
+            id_area_tic: Number(values.id_area_tic) || null,
             id_equipo: Number(values.id_equipo) || null,
         }),
     });
@@ -145,7 +145,7 @@ export const ModalCreateSoporte = ({ role }) => {
                 fecha_ini: new Date(activateSoporte?.fecha_ini),
                 fecha_fin: new Date(activateSoporte?.fecha_fin),
 
-                terminado: activateSoporte?.fecha_fin ? true : false,
+                activo_informatico: activateSoporte?.id_equipo ? true : false,
             });
             return;
         }

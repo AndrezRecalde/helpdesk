@@ -7,6 +7,7 @@ import {
     onLoadTecnicos,
     onSetActivateTecnico,
     onLoading,
+    onSetInfoSoportes,
 } from "../../store/tecnico/tecnicoSlice";
 import helpdeskApi from "../../api/helpdeskApi";
 
@@ -85,6 +86,10 @@ export const useTecnicoStore = () => {
         dispatch(onSetActivateTecnico(tecnico));
     };
 
+    const clearInfoSoportesTecnico = () => {
+        dispatch(onSetInfoSoportes(undefined));
+    }
+
     const clearTecnicos = () => {
         dispatch(onClearTecnicos());
     };
@@ -102,6 +107,7 @@ export const useTecnicoStore = () => {
         startAddUpdateTecnico,
         startLoadInfoTecnicosSoporte,
         setActivateTecnico,
+        clearInfoSoportesTecnico,
         clearTecnicos,
     };
 };

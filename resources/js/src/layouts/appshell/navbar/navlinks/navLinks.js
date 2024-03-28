@@ -1,4 +1,4 @@
-import { IconCategory, IconChartPieFilled, IconDeviceImac, IconPencilPlus, IconTransferIn } from "@tabler/icons-react";
+import { IconCategory, IconChartPieFilled, IconDeviceImac, IconLicense, IconPencilPlus, IconTransferIn } from "@tabler/icons-react";
 
 export const Roles = {
     GERENTE: 'GERENTE',
@@ -20,8 +20,7 @@ export const lGerente = [
         links: [
             { label: "Gestionar Usuarios", link: "/gerencia/usuarios" },
             { label: "Gestionar Direcciones", link: "/gerencia/direcciones" },
-            { label: "Gestionar Técnicos", link: "/gerencia/tecnicos" }
-
+            { label: "Gestionar Técnicos", link: "/gerencia/tecnicos" },
         ],
     },
     {
@@ -44,16 +43,25 @@ export const lGerente = [
             { label: "Reporte de Soportes", link: "/gerencia/reporte-soportes" },
         ],
     },
+    {
+        label: "Permisos 4 horas",
+        icon: IconLicense,
+        initiallyOpened: true,
+        links: [
+            { label: "Solicitar Permisos", link: "/gerencia/permiso" },
+            { label: "Ver Permisos General", link: "/gerencia/ver-permisos" }
+        ]
+    }
 ];
 
 
 export const lTecnico = [
-    {
+    /* {
         label: "Dashboard",
         icon: IconChartPieFilled,
         initiallyOpened: true,
         links: [{ label: "Inicio", link: "/" }],
-    },
+    }, */
     {
         label: "Soportes",
         icon: IconDeviceImac,
@@ -64,6 +72,15 @@ export const lTecnico = [
             { label: "Reporte de Soportes", link: "/tecnico/reporte-soportes" },
         ],
     },
+    {
+        label: "Permisos 4 horas",
+        icon: IconLicense,
+        initiallyOpened: true,
+        links: [
+            { label: "Solicitar Permisos", link: "/tecnico/permiso" },
+            { label: "Ver Permisos", link: "/tecnico/ver-permisos" }
+        ]
+    }
 ];
 
 export const lUsuario = [
@@ -85,4 +102,13 @@ export const lUsuario = [
             { label: "Mis soportes", link: "/gad/d/soportes/actuales" },
         ],
     },
+    {
+        label: "Permisos 4 horas",
+        icon: IconLicense,
+        initiallyOpened: true,
+        links: [
+            { label: "Solicitar Permisos", link: "/gad/d/permiso" },
+            { label: "Ver Permisos", link: "/gad/d/ver-permisos" }
+        ]
+    }
 ]

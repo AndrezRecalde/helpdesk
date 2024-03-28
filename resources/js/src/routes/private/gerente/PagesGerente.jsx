@@ -12,7 +12,9 @@ import {
     IndicadorReportPage,
     ReporteSoportes,
     SoporteCalificacionPage,
+    PermisosPage,
 } from "../../../pages";
+import { ListPermisosAdminPage } from "../../../pages/permisos/ListPermisosAdminPage";
 
 export const PagesGerente = () => {
     console.log('pagesGerente')
@@ -44,6 +46,10 @@ export const PagesGerente = () => {
                 <Route path="indicadores-soportes" element={<IndicadorReportPage />} />
 
                 <Route path="calificar" element={<SoporteCalificacionPage />} />
+
+                <Route path="/permiso" element={<PermisosPage />} />
+
+                <Route path="/ver-permisos" element={<ListPermisosAdminPage />} />
 
 
                 <Route path="dashboard" element={<DashGerenciaPage />} />

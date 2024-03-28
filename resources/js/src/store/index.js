@@ -61,6 +61,10 @@ import { dashGerenciaSlice } from "./dashboard/dashGerenciaSlice";
 import { actividadSlice } from "./actividad/actividadSlice";
 import { uiActividadSlice } from "./actividad/uiActividadSlice";
 
+/* Permisos */
+import { permisoSlice } from "./permiso/permisoSlice";
+import { uiPermisoSlice } from "./permiso/uiPermisoSlice";
+
 import { store } from "./store";
 
 
@@ -130,5 +134,9 @@ export {
 
     /* Actividades */
     actividadSlice,
-    uiActividadSlice
+    uiActividadSlice,
+
+    /* Permisos */
+    permisoSlice,
+    uiPermisoSlice
  };

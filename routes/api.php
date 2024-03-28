@@ -12,6 +12,7 @@ use App\Http\Controllers\Gerente\CargoController;
 use App\Http\Controllers\Gerente\DashGerenteController;
 use App\Http\Controllers\Gerente\DireccionAdminController;
 use App\Http\Controllers\Gerente\EmpresaController;
+use App\Http\Controllers\Gerente\PermisosAdminController;
 use App\Http\Controllers\Gerente\SexoController;
 use App\Http\Controllers\Gerente\SoporteAdminController;
 use App\Http\Controllers\Gerente\TecnicoController;
@@ -93,11 +94,10 @@ Route::group(['prefix' => 'gerencia', 'middleware' => ['auth:sanctum']], functio
     Route::get('/soportes-sin-calificar', [SoporteAdminController::class, 'getSoportesSinCalificacion']);
     Route::post('/calificacion', [SoporteAdminController::class, 'setCalificacionSoportes']);
 
+
     /*DASHBOARD */
     Route::get('/dashboard', [DashGerenteController::class, 'getDashboardGerencia']);
     Route::get('/desempeno-tecnicos-anual', [DashGerenteController::class, 'getDesempenoForTecnicosAnual']);
-
-
 });
 
 /* RUTAS: GERENTE O TECNICO */
@@ -136,6 +136,12 @@ Route::group(['prefix' => 'general', 'middleware' => ['auth:sanctum']], function
 
     /* EQUIPOS */
     Route::get("/equipos", [EquipoController::class, 'getEquiposInformaticos']);
+
+    /* PERMISOS */
+    Route::post('/permiso-pdf', [PermisosAdminController::class, 'exportPDFPermiso']);
+    Route::post('/crear-permiso', [PermisosAdminController::class, 'store']);
+    Route::post('/permisos', [PermisosAdminController::class, 'getPermisosAdmin']);
+    Route::put('/anular-permiso/{idper_permisos}', [PermisosAdminController::class, 'anularPermisos']);
 });
 
 
@@ -156,6 +162,4 @@ Route::group(['prefix' => 'usuario', 'middleware' => ['auth:sanctum']], function
     /* SOPORTES */
     Route::post('/soportes-actuales', [SoporteController::class, 'getSoportesActualesForUser']);
     Route::post('/soportes-anuales', [SoporteController::class, 'getSoportesAnualesForUser']);
-
-
 });

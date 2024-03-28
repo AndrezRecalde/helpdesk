@@ -15,7 +15,7 @@ export const FilterFormDirecciones = () => {
             cdgo_dprtmnto: null,
         },
         transformValues: (values) => ({
-            cdgo_dprtmnto: Number(values.cdgo_direccion)
+            cdgo_dprtmnto: Number(values.cdgo_direccion) || null
         })
     })
 

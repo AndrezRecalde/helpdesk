@@ -15,9 +15,8 @@ import {
     IconSettings,
     IconUserHexagon,
 } from "@tabler/icons-react";
-import { useAuthStore } from "../../hooks/auth/useAuthStore";
 import { useNavigate } from "react-router-dom";
-
+import { useAuthStore } from "../../hooks";
 import classes from "../../assets/styles/modules/user/UserHeader.module.css";
 
 
@@ -31,13 +30,13 @@ export const UserBtnHeader = () => {
     );
     const [userMenuOpened, setUserMenuOpened] = useState(false);
 
-   /*  const iniciales = useCallback(() => {
+    const iniciales = useCallback(() => {
         let inicial_nombre = usuario?.usu_alias?.split(" ");
         let nombre = inicial_nombre[0]?.slice(0,1);
         let apellido = inicial_nombre[1]?.slice(0,1);
 
         return nombre + apellido;
-    }, [usuario]); */
+    }, [usuario]);
 
     return (
         <Menu
@@ -61,14 +60,14 @@ export const UserBtnHeader = () => {
                             radius="xl"
                             color="indigo.7"
                         >
-                            CR
+                            {iniciales()}
                         </Avatar>
                         <div style={{ flex: 1 }}>
                             <Text fw={500} size="sm">
-                                Cristhian Recalde
+                                {usuario?.usu_alias}
                             </Text>
                             <Text size="xs" c="dimmed">
-                                crecalde@gadpe.gob.ec
+                                {usuario?.email}
                             </Text>
                         </div>
                         <IconChevronRight

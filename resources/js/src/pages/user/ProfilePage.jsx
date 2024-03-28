@@ -1,20 +1,15 @@
 import { useEffect } from "react";
-import { Badge, Card, Container, Group, Skeleton, Text } from "@mantine/core";
+import { Badge, Card, Container, Group, SimpleGrid, Skeleton, Text } from "@mantine/core";
 import { useDocumentTitle } from "@mantine/hooks";
 import {
     TextSection,
     TitlePage,
     ProfileForm,
     BtnSubmit,
+    MenuSeleccion,
 } from "../../components";
 import { IconSend } from "@tabler/icons-react";
 import { useAuthStore, useTecnicoStore, useUsersStore } from "../../hooks";
-
-const stats = [
-    { value: "34K", label: "Total Soportes" },
-    { value: "187", label: "En Ejecución" },
-    { value: "1.6K", label: "Cerrados" },
-];
 
 export const ProfilePage = () => {
     useDocumentTitle("Profile");
@@ -23,12 +18,12 @@ export const ProfilePage = () => {
     const {
         startLoadInfoUsersSoporte,
         infoSoportes: totalUsersSoportes,
-        clearUsers,
+        clearInfoSoportes,
     } = useUsersStore();
     const {
         startLoadInfoTecnicosSoporte,
         infoSoportes: totalTecnicossSoportes,
-        clearTecnicos,
+        clearInfoSoportesTecnico,
     } = useTecnicoStore();
 
     const year = new Date();
@@ -42,26 +37,117 @@ export const ProfilePage = () => {
     }, []);
 
     useEffect(() => {
-        if (usuario?.role === "TECNICO") {
-            startLoadInfoTecnicosSoporte();
+        if (usuario?.role === "TECNICO" || usuario?.role === "GERENTE") {
+            startLoadInfoTecnicosSoporte(usuario.cdgo_usrio);
             return;
         }
-        startLoadInfoUsersSoporte();
+        startLoadInfoUsersSoporte(usuario.cdgo_usrio);
 
         return () => {
-            clearUsers();
-            clearTecnicos();
+            clearInfoSoportes();
+            clearInfoSoportesTecnico();
         };
     }, []);
 
-    const items = stats.map((stat) => (
-        <div key={stat.label}>
-            <Text ta="center" fz="lg" fw={500}>
-                {stat.value}
-            </Text>
-            <Text ta="center" fz="sm" c="dimmed" lh={1}>
-                {stat.label}
-            </Text>
+    const itemsTic = totalTecnicossSoportes?.map((stat, i) => (
+        <div key={i}>
+            <SimpleGrid cols={{ base: 3, sm: 3, lg: 5 }}>
+                <div>
+                    <Text ta="center" fz="lg" fw={500}>
+                        {stat.total_soportes}
+                    </Text>
+                    <Text ta="center" fz="sm" c="dimmed" lh={1}>
+                        Total Soportes
+                    </Text>
+                </div>
+                <div>
+                    <Text ta="center" fz="lg" fw={500}>
+                        {stat.total_asignados}
+                    </Text>
+                    <Text ta="center" fz="sm" c="dimmed" lh={1}>
+                        Total Asignados
+                    </Text>
+                </div>
+                <div>
+                    <Text ta="center" fz="lg" fw={500}>
+                        {stat.total_atendidos}
+                    </Text>
+                    <Text ta="center" fz="sm" c="dimmed" lh={1}>
+                        Total Atendidos
+                    </Text>
+                </div>
+                <div>
+                    <Text ta="center" fz="lg" fw={500}>
+                        {stat.total_finalizados}
+                    </Text>
+                    <Text ta="center" fz="sm" c="dimmed" lh={1}>
+                        Total Finalizados
+                    </Text>
+                </div>
+                <div>
+                    <Text ta="center" fz="lg" fw={500}>
+                        {stat.total_anulados}
+                    </Text>
+                    <Text ta="center" fz="sm" c="dimmed" lh={1}>
+                        Total Anulados
+                    </Text>
+                </div>
+            </SimpleGrid>
+        </div>
+    ));
+
+    const itemsUser = totalUsersSoportes?.map((stat, i) => (
+        <div key={i}>
+            <SimpleGrid cols={3}>
+                <div>
+                    <Text ta="center" fz="lg" fw={500}>
+                        {stat.total_soportes}
+                    </Text>
+                    <Text ta="center" fz="sm" c="dimmed" lh={1}>
+                        Total Soportes
+                    </Text>
+                </div>
+                <div>
+                    <Text ta="center" fz="lg" fw={500}>
+                        {stat.total_pendientes}
+                    </Text>
+                    <Text ta="center" fz="sm" c="dimmed" lh={1}>
+                        Total Pendientes
+                    </Text>
+                </div>
+                <div>
+                    <Text ta="center" fz="lg" fw={500}>
+                        {stat.total_asignados}
+                    </Text>
+                    <Text ta="center" fz="sm" c="dimmed" lh={1}>
+                        Total Asignados
+                    </Text>
+                </div>
+                <div>
+                    <Text ta="center" fz="lg" fw={500}>
+                        {stat.total_atendidos}
+                    </Text>
+                    <Text ta="center" fz="sm" c="dimmed" lh={1}>
+                        Total Atendidos
+                    </Text>
+                </div>
+                <div>
+                    <Text ta="center" fz="lg" fw={500}>
+                        {stat.total_finalizados}
+                    </Text>
+                    <Text ta="center" fz="sm" c="dimmed" lh={1}>
+                        Total Finalizados
+                    </Text>
+                </div>
+                <div>
+                    <Text ta="center" fz="lg" fw={500}>
+                        {stat.total_anulados}
+                    </Text>
+                    <Text ta="center" fz="sm" c="dimmed" lh={1}>
+                        Total Anulados
+                    </Text>
+                </div>
+            </SimpleGrid>
         </div>
     ));
 
@@ -108,18 +194,16 @@ export const ProfilePage = () => {
                         </TextSection>
                     </Group>
                     <Group mt="md" justify="center" gap={70}>
-                        {items}
+                        {usuario?.role_id === 1 || usuario?.role_id === 2 ? itemsTic : itemsUser}
                     </Group>
 
-                    {usuario.role === "GERENTE" ||
-                    usuario.role === "TECNICO" ? (
+                    { usuario.role === "GERENTE" ||
+                      usuario.role === "TECNICO" ? (
                         <BtnSubmit fontSize={16} IconSection={IconSend}>
                             Agregar soporte
                         </BtnSubmit>
                     ) : (
-                        <BtnSubmit fontSize={16} IconSection={IconSend}>
-                            Solicitar soporte
-                        </BtnSubmit>
+                        <MenuSeleccion />
                     )}
                 </Card.Section>
             </Card>

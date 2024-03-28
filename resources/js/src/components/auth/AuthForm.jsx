@@ -79,14 +79,14 @@ export const AuthForm = () => {
                 ) : null}
                 <Group justify="space-between" mt="lg">
                     <Checkbox
-                        label="Remember me"
+                        label="Recuerdame"
                         {...form.getInputProps("remember", {
                             type: "checkbox",
                         })}
                     />
-                    <Anchor component="button" size="sm">
+                    {/* <Anchor component="button" size="sm">
                         ¿Olvidó su contraseña?
-                    </Anchor>
+                    </Anchor> */}
                 </Group>
                 <BtnSubmit IconSection={IconChevronsRight}>Acceder</BtnSubmit>
             </Stack>

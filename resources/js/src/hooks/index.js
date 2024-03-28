@@ -1,3 +1,4 @@
+import { useTitle } from "./title/useTitle";
 import { useErrorException } from "./error/useErrorException";
 
 /* Authenticacion */
@@ -63,8 +64,12 @@ import { useDashGerenciaStore } from "./dashboard/useDashGerenciaStore";
 import { useActividadStore } from "./actividad/useActividadStore";
 import { useUiActividad } from "./actividad/useUiActividad";
 
+/* Permisos */
+import { usePermisoStore } from "./permiso/usePermisoStore";
+import { useUiPermiso } from "./permiso/useUiPermiso";
 
 export {
+    useTitle,
     useErrorException,
 
     useAuthStore,
@@ -109,5 +114,8 @@ export {
     useDashGerenciaStore,
 
     useActividadStore,
-    useUiActividad
+    useUiActividad,
+
+    usePermisoStore,
+    useUiPermiso
 }

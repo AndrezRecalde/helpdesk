@@ -31,6 +31,10 @@ import { DashGerenciaPage } from "./dashboard/gerencia/DashGerenciaPage";
 import { ActividadPage } from "./actividad/ActividadPage";
 import { ListActividadesPage } from "./actividad/ListActividadesPage";
 
+/* Permisos */
+import { PermisosPage } from "./permisos/PermisosPage";
+import { ListPermisosPage } from "./permisos/ListPermisosPage";
+
 /* Error */
 import { ErrorNotFound } from "./error/ErrorNotFound";
 import { ErrorAccessDenied } from "./error/ErrorAccessDenied";
@@ -60,6 +64,9 @@ export {
 
     ActividadPage,
     ListActividadesPage,
+
+    PermisosPage,
+    ListPermisosPage,
 
     ErrorNotFound,
     ErrorAccessDenied
