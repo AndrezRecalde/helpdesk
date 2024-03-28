@@ -86,9 +86,11 @@ export const SolicitudesActualesPage = () => {
                 <TitlePage order={2} size="h2">
                     Solicitudes Actuales
                 </TitlePage>
-                <BtnSection handleAction={handleOpenModal}>
-                    Resumen técnicos
-                </BtnSection>
+                {usuario.role_id === 1 ? (
+                    <BtnSection handleAction={handleOpenModal}>
+                        Resumen técnicos
+                    </BtnSection>
+                ) : null}
             </Group>
             <Group justify="space-between">
                 <TextSection fw={700} tt="" fz={16}>
@@ -101,7 +103,10 @@ export const SolicitudesActualesPage = () => {
             {/*  {soportes.length !== 0 ? ( */}
             <Card withBorder shadow="sm" radius="md" mt={20} mb={20}>
                 <Card.Section>
-                    <SolicitudesTable menu={usuario.role_id === 1 ? 1 : 2} isLoading={isLoading} />
+                    <SolicitudesTable
+                        menu={usuario.role_id === 1 ? 1 : 2}
+                        isLoading={isLoading}
+                    />
                 </Card.Section>
             </Card>
             {/* ) : null} */}

@@ -91,6 +91,7 @@ export const SolicitudesTable = ({ menu, isLoading }) => {
                 <MenuTable_T
                     row={row}
                     handleDiagnosticar={handleDiagnosticar}
+                    handleExport={handleExportSoporte}
                 />
             ),
         mantineTableBodyCellProps: ({ cell }) => ({

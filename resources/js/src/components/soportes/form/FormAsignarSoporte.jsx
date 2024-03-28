@@ -7,16 +7,23 @@ import { IconSend } from "@tabler/icons-react";
 export const FormAsignarSoporte = ({ form }) => {
     const usuario = JSON.parse(localStorage.getItem("service_user"));
     const { tecnicos } = useTecnicoStore();
-    const { isLoading, activateSoporte, startAsignarSoporte } = useSoporteStore();
+    const { isLoading, activateSoporte, startAsignarSoporte } =
+        useSoporteStore();
     const { modalActionAsignarSoporte } = useUiSoporte();
 
     useEffect(() => {
         if (activateSoporte !== null) {
             form.setValues({
                 ...activateSoporte,
-                id_area_tic: activateSoporte.id_area_tic ? activateSoporte.id_area_tic.toString() : null,
-                id_tipo_soporte: activateSoporte.id_tipo_soporte ? activateSoporte.id_tipo_soporte.toString() : null,
-                id_usu_tecnico_asig: activateSoporte.id_usu_tecnico_asig ? activateSoporte.id_usu_tecnico_asig.toString() : null
+                id_area_tic: activateSoporte.id_area_tic
+                    ? activateSoporte.id_area_tic.toString()
+                    : null,
+                id_tipo_soporte: activateSoporte.id_tipo_soporte
+                    ? activateSoporte.id_tipo_soporte.toString()
+                    : null,
+                id_usu_tecnico_asig: activateSoporte.id_usu_tecnico_asig
+                    ? activateSoporte.id_usu_tecnico_asig.toString()
+                    : null,
             });
             return;
         }
@@ -27,8 +34,6 @@ export const FormAsignarSoporte = ({ form }) => {
         startAsignarSoporte(form.getTransformedValues(), usuario);
         modalActionAsignarSoporte(0);
         form.reset();
-        //console.log(form.values);
-        //console.log("aki");
     };
 
     return (
@@ -104,7 +109,12 @@ export const FormAsignarSoporte = ({ form }) => {
                     />
                 </Grid.Col>
             </Grid>
-            <BtnSubmit fontSize={16} IconSection={IconSend} loading={isLoading} disabled={isLoading}>
+            <BtnSubmit
+                fontSize={16}
+                IconSection={IconSend}
+                loading={isLoading}
+                disabled={isLoading}
+            >
                 Asignar Técnico
             </BtnSubmit>
         </Box>

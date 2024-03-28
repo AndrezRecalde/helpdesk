@@ -45,8 +45,8 @@ export const ModalAsignarSoporte = () => {
     }, [isOpenModalAsignarSoporte]);
 
     const handleCloseModal = () => {
-        modalActionAsignarSoporte(0);
         setActivateSoporte(null);
+        modalActionAsignarSoporte(0);
         form.reset();
     };
 

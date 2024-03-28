@@ -19,7 +19,7 @@ import classes from "../../../assets/styles/modules/soporte/CardDiagnostico.modu
 import dayjs from "dayjs";
 
 export const FormDiagnosticar = ({ form }) => {
-    const { activo_informatico } = form.values;
+    const { activo_informatico, id_tipo_soporte } = form.values;
     const { equipos } = useEquipoStore();
     const { modalActionDiagnosticar } = useUiSoporte();
     const { activateSoporte, startDiagnosticarSoporte } = useSoporteStore();
@@ -33,6 +33,13 @@ export const FormDiagnosticar = ({ form }) => {
             return;
         }
     }, [activateSoporte]);
+
+    useEffect(() => {
+        if (id_tipo_soporte == 1) {
+            form.setFieldValue("activo_informatico", true);
+        }
+    }, [id_tipo_soporte])
+
 
 
     const handleSubmit = (e) => {

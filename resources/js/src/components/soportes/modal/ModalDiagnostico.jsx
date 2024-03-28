@@ -5,10 +5,7 @@ import { hasLength, isNotEmpty, useForm } from "@mantine/form";
 import { FormDiagnosticar } from "../form/FormDiagnosticar";
 
 export const ModalDiagnostico = () => {
-    const {
-        modalActionDiagnosticar,
-        isOpenModalDiagnosticar,
-    } = useUiSoporte();
+    const { modalActionDiagnosticar, isOpenModalDiagnosticar } = useUiSoporte();
 
     const { setActivateSoporte } = useSoporteStore();
     const { startLoadEquiposInformaticos, clearEquiposInformaticos } =
@@ -32,6 +29,10 @@ export const ModalDiagnostico = () => {
                 { min: 5, max: 200 },
                 "La solución debe tener entre 10 y 200 caracteres"
             ),
+            id_equipo: (value, values) =>
+                values.id_tipo_soporte == 1 && value === null
+                    ? "En soporte a hardware es obligatorio el código del activo"
+                    : null,
         },
         transformValues: (values) => ({
             ...values,
