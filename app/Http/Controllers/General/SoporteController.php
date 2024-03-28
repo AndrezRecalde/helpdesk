@@ -83,6 +83,8 @@ class SoporteController extends Controller
     {
         try {
             $soporte = Soporte::create($request->validated());
+            $soporte->id_calificacion = 3;
+            $soporte->save();
             return response()->json([
                 'status' => 'success',
                 'msg' => 'Soporte creado con éxito',

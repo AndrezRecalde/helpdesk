@@ -27,9 +27,18 @@ export const FormDiagnosticar = ({ form }) => {
     useEffect(() => {
         if (activateSoporte !== null) {
             form.setFieldValue("id_sop", activateSoporte?.id_sop);
-            form.setFieldValue("id_area_tic", activateSoporte?.id_area_tic.toString() ?? null);
-            form.setFieldValue("id_area_tic", activateSoporte?.id_area_tic.toString() ?? null);
-            form.setFieldValue("id_tipo_soporte", activateSoporte?.id_tipo_soporte.toString() ?? null);
+            form.setFieldValue(
+                "id_area_tic",
+                activateSoporte?.id_area_tic.toString() ?? null
+            );
+            form.setFieldValue(
+                "id_area_tic",
+                activateSoporte?.id_area_tic.toString() ?? null
+            );
+            form.setFieldValue(
+                "id_tipo_soporte",
+                activateSoporte?.id_tipo_soporte.toString() ?? null
+            );
             return;
         }
     }, [activateSoporte]);
@@ -37,14 +46,14 @@ export const FormDiagnosticar = ({ form }) => {
     useEffect(() => {
         if (id_tipo_soporte == 1) {
             form.setFieldValue("activo_informatico", true);
+        } else {
+            form.setFieldValue("activo_informatico", false);
         }
-    }, [id_tipo_soporte])
-
-
+    }, [id_tipo_soporte]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(form.getTransformedValues())
+        console.log(form.getTransformedValues());
         startDiagnosticarSoporte(form.getTransformedValues());
         modalActionDiagnosticar(0);
         form.reset();

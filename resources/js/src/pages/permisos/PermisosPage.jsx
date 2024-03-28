@@ -7,7 +7,6 @@ import {
     useDirectorStore,
     useUsersStore,
 } from "../../hooks";
-import dayjs from "dayjs";
 
 export const PermisosPage = () => {
     const usuario = JSON.parse(localStorage.getItem("service_user"));

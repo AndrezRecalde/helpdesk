@@ -10,7 +10,8 @@ import {
     useUiSoporte,
     useUsersStore,
 } from "../../../hooks";
-import { isNotEmpty, useForm } from "@mantine/form";
+import { hasLength, isNotEmpty, useForm } from "@mantine/form";
+import dayjs from "dayjs";
 
 export const ModalCreateSoporte = ({ role }) => {
     const usuario = JSON.parse(localStorage.getItem("service_user"));
@@ -31,7 +32,7 @@ export const ModalCreateSoporte = ({ role }) => {
             id_estado: activateSoporte?.id_estado.toString()
                 ? activateSoporte?.id_estado.toString()
                 : "3",
-            fecha_ini: new Date(),
+            fecha_ini: dayjs(),
             id_tipo_solicitud: activateSoporte?.id_tipo_solicitud
                 ? activateSoporte?.id_tipo_solicitud.toString()
                 : "1",
@@ -64,10 +65,10 @@ export const ModalCreateSoporte = ({ role }) => {
             id_tipo_soporte: isNotEmpty("Por favor ingrese el tipo de soporte"),
             id_area_tic: isNotEmpty("Por favor seleccione el área"),
             incidente: isNotEmpty("Por favor ingrese la incidencia"),
-            solucion: (value) =>
-                     value.length < 5
-                    ? "Por favor ingrese el detalle de la solución"
-                    : null,
+            solucion: hasLength(
+                { min: 5, max: 200 },
+                "La solución debe tener mínimo 5 y máximo 200 caractéres"
+            ),
             id_equipo: (value, values) =>
                 values.id_tipo_soporte == 1 && value === null
                     ? "En soporte a hardware es obligatorio el código del activo"
@@ -119,9 +120,11 @@ export const ModalCreateSoporte = ({ role }) => {
                 id_usu_tecnico_asig: activateSoporte?.id_usu_tecnico_asig
                     ? activateSoporte?.id_usu_tecnico_asig?.toString()
                     : null,
-                id_direccion: activateSoporte?.id_direccion || activateSoporte?.id_direccion == 0
-                    ? activateSoporte?.id_direccion?.toString()
-                    : null,
+                id_direccion:
+                    activateSoporte?.id_direccion ||
+                    activateSoporte?.id_direccion == 0
+                        ? activateSoporte?.id_direccion?.toString()
+                        : null,
                 id_usu_recibe: activateSoporte?.id_usu_recibe
                     ? activateSoporte?.id_usu_recibe?.toString()
                     : null
@@ -189,7 +192,6 @@ export const ModalCreateSoporte = ({ role }) => {
         };
     }, [id_direccion, isOpenModalCreateSoporte]);
 
-
     const handleCloseModal = () => {
         setActivateSoporte(null);
         modalActionCreateSoporte(0);
@@ -208,6 +210,7 @@ export const ModalCreateSoporte = ({ role }) => {
             }}
             opened={isOpenModalCreateSoporte}
             onClose={handleCloseModal}
+            closeOnClickOutside={false}
             position="right"
             size="lg"
             title="Crear soporte"

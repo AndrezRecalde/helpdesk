@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Card, Container, Group } from "@mantine/core";
+import { Card, Container, Group, LoadingOverlay } from "@mantine/core";
 import {
     BtnSection,
     ModalAnularSoporte,
@@ -20,6 +20,7 @@ export const SolicitudesActualesPage = () => {
     const usuario = JSON.parse(localStorage.getItem("service_user"));
     const dispatch = useDispatch();
     const {
+        loadPDF,
         startLoadSoportesActuales,
         soportes,
         clearSoportes,
@@ -103,6 +104,7 @@ export const SolicitudesActualesPage = () => {
             {/*  {soportes.length !== 0 ? ( */}
             <Card withBorder shadow="sm" radius="md" mt={20} mb={20}>
                 <Card.Section>
+                <LoadingOverlay visible={loadPDF} zIndex={1000} overlayProps={{ radius: "sm", blur: 2 }} />
                     <SolicitudesTable
                         menu={usuario.role_id === 1 ? 1 : 2}
                         isLoading={isLoading}

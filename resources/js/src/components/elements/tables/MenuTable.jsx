@@ -10,7 +10,7 @@ import {
 export const MenuUsersTable = ({ row, handleEdit, handleResetPassword }) => {
     return (
         <>
-            <Menu.Item
+           {/*  <Menu.Item
                 leftSection={
                     <IconEditCircle
                         style={{ width: rem(15), height: rem(15) }}
@@ -19,7 +19,7 @@ export const MenuUsersTable = ({ row, handleEdit, handleResetPassword }) => {
                 onClick={() => handleEdit(row.original)}
             >
                 Editar
-            </Menu.Item>
+            </Menu.Item> */}
             <Menu.Item
                 leftSection={
                     <IconTrash style={{ width: rem(15), height: rem(15) }} />

@@ -241,7 +241,6 @@ export const useSoporteStore = () => {
     const startExportSoporte = async (id_sop) => {
         try {
             dispatch(onLoadPDF(true));
-
             const response = await helpdeskApi.post(
                 "/general/reporte-soporte-pdf",
                 {

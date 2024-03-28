@@ -1,5 +1,13 @@
 import { useEffect, useRef } from "react";
-import { ActionIcon, Box, Grid, Select, Textarea, rem } from "@mantine/core";
+import {
+    ActionIcon,
+    Box,
+    Grid,
+    LoadingOverlay,
+    Select,
+    Textarea,
+    rem,
+} from "@mantine/core";
 import { DateInput, TimeInput } from "@mantine/dates";
 import { BtnSubmit } from "../../../components";
 import { IconClock, IconUserBolt } from "@tabler/icons-react";
@@ -18,7 +26,7 @@ export const FormSolicitudPermiso = ({ form, disabled }) => {
     const { direcciones } = useDireccionStore();
     const { users } = useUsersStore();
     const { directores } = useDirectorStore();
-    const { startAddPermiso } = usePermisoStore();
+    const { isLoading, startAddPermiso } = usePermisoStore();
 
     const pickerControl_1 = (
         <ActionIcon
@@ -52,7 +60,6 @@ export const FormSolicitudPermiso = ({ form, disabled }) => {
         console.log(form.getTransformedValues());
         startAddPermiso(form.getTransformedValues());
         form.resetTouched();
-
     };
 
     useEffect(() => {
@@ -74,6 +81,11 @@ export const FormSolicitudPermiso = ({ form, disabled }) => {
             component="form"
             onSubmit={form.onSubmit((_, e) => handleSubmit(e))}
         >
+            <LoadingOverlay
+                visible={isLoading}
+                zIndex={1000}
+                overlayProps={{ radius: "sm", blur: 2 }}
+            />
             <Grid>
                 <Grid.Col span={{ base: 12, md: 12, lg: 12 }}>
                     <Select

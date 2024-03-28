@@ -36,7 +36,7 @@ class SoporteRequest extends FormRequest
             'incidente'         =>  'required',
             'solucion'          =>  '',
             'id_equipo'         =>  '',
-            'fecha_fi'          =>  '',
+            'fecha_fin'          =>  '',
 
         ];
     }
