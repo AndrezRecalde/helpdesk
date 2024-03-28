@@ -1,12 +1,14 @@
 import { Container, Tabs, rem } from "@mantine/core";
-import { IconPhoto, IconMessageCircle, IconDeviceImacUp, IconDeviceImacExclamation } from "@tabler/icons-react";
+import { IconDeviceImacUp, IconDeviceImacExclamation } from "@tabler/icons-react";
 import {
     SectionUsersSoportesActuales,
     SectionUsersSoportesAnuales,
 } from "../../components";
 import { useNavigate, useParams } from "react-router-dom";
+import { useTitlePage } from "../../hooks";
 
 export const UserSoportesPage = () => {
+    useTitlePage("Helpdesk | Mis Soportes");
     const navigate = useNavigate();
     const { soporteValue } = useParams();
     const iconStyle = { width: rem(15), height: rem(15) };

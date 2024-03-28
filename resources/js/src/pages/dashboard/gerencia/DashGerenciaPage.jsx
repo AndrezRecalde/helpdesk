@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { Container, SimpleGrid } from "@mantine/core";
-import { useDocumentTitle } from "@mantine/hooks";
-import { useDashGerenciaStore } from "../../../hooks";
+import { useDashGerenciaStore, useTitlePage } from "../../../hooks";
 import {
     ChartSoportesMes,
     ChartBarSoportes,
@@ -12,7 +11,7 @@ import {
 } from "../../../components";
 
 export const DashGerenciaPage = () => {
-    useDocumentTitle("Soportes");
+    useTitlePage("Helpdesk | Dashboard");
     const { startLoadDashboard, clearDashboard } = useDashGerenciaStore();
 
     useEffect(() => {

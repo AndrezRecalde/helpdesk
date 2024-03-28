@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { Paper, Text, Textarea, Group, Container, Box, Title } from "@mantine/core";
 import { hasLength, useForm } from "@mantine/form";
 import { BtnSubmit, ContactIconsList } from "../../components";
-import { useSoporteStore } from "../../hooks";
+import { useSoporteStore, useTitlePage } from "../../hooks";
 import { IconSend } from "@tabler/icons-react";
 
 import bg from "../../assets/images/bg.svg";
@@ -10,6 +10,7 @@ import classes from "../../assets/styles/modules/solicitud/GetInTouch.module.css
 import Swal from "sweetalert2";
 
 export const SolicitudPage = () => {
+    useTitlePage("Helpdesk | Solicitud");
     const usuario = JSON.parse(localStorage.getItem("service_user"));
     const { startSendSolicitud, isLoading, errores, message } = useSoporteStore();
     const form = useForm({

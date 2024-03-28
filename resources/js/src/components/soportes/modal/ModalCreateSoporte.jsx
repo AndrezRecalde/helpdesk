@@ -65,10 +65,11 @@ export const ModalCreateSoporte = ({ role }) => {
             id_tipo_soporte: isNotEmpty("Por favor ingrese el tipo de soporte"),
             id_area_tic: isNotEmpty("Por favor seleccione el área"),
             incidente: isNotEmpty("Por favor ingrese la incidencia"),
-            solucion: hasLength(
-                { min: 5, max: 200 },
-                "La solución debe tener mínimo 5 y máximo 200 caractéres"
-            ),
+            solucion: (value, values) =>
+                (values.id_estado == 3 || values.id_estado == 4) &&
+                (value.length >= 10 || value.length <= 200)
+                    ? "Proporcione la solución mínimo 10 a máximo 200 caracteres"
+                    : null,
             id_equipo: (value, values) =>
                 values.id_tipo_soporte == 1 && value === null
                     ? "En soporte a hardware es obligatorio el código del activo"

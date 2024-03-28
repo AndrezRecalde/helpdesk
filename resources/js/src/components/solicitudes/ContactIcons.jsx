@@ -21,13 +21,13 @@ function ContactIcon({ icon: Icon, title, description, ...others }) {
 
 const MOCKDATA = [
     { title: "Email", description: "tic@gadpe.gob.ec", icon: IconAt },
-    { title: "Teléfono", description: "(06) 272-1433", icon: IconPhone },
+    { title: "Teléfono", description: "(06) 272-1433 Ext: 133", icon: IconPhone },
    /*  {
         title: "Dirección",
         description: "10 de Agosto entre Bolívar y Pedro Vicente Maldonado",
         icon: IconMapPin,
     }, */
-    { title: "Horas Laborales", description: "8 a.m. - 16 p.m.", icon: IconSun },
+    { title: "Horas Laborales", description: "8 a.m. - 17 p.m.", icon: IconSun },
 ];
 
 export function ContactIconsList() {

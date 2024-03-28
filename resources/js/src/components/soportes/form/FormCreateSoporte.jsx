@@ -236,7 +236,7 @@ export const FormCreateSoporte = ({ form }) => {
                 <Grid.Col span={{ base: 12, md: 12, lg: 12 }}>
                     <Textarea
                         withAsterisk
-                        disabled={activateSoporte ? true : false}
+                        disabled={activateSoporte !== null ? true : false}
                         label="Incidente"
                         description="Digite la incidencia del usuario"
                         autosize

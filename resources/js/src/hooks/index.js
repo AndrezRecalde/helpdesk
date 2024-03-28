@@ -1,4 +1,4 @@
-import { useTitle } from "./title/useTitle";
+import { useTitlePage } from "./title/useTitlePage";
 import { useErrorException } from "./error/useErrorException";
 
 /* Authenticacion */
@@ -69,7 +69,7 @@ import { usePermisoStore } from "./permiso/usePermisoStore";
 import { useUiPermiso } from "./permiso/useUiPermiso";
 
 export {
-    useTitle,
+    useTitlePage,
     useErrorException,
 
     useAuthStore,

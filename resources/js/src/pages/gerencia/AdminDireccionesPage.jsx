@@ -5,11 +5,12 @@ import {
     ModalDireccion,
     TitlePage,
 } from "../../components";
-import { useDirectorStore, useUsersStore } from "../../hooks";
+import { useDirectorStore, useTitlePage, useUsersStore } from "../../hooks";
 import { useEffect } from "react";
 import Swal from "sweetalert2";
 
 export const AdminDireccionesPage = () => {
+    useTitlePage("Helpdesk | Direcciones");
     const { clearUsers } = useUsersStore();
     const { directores, clearDirectores, message, errores } =
         useDirectorStore();

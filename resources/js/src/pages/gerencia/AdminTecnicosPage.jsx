@@ -1,10 +1,10 @@
 import { useEffect } from "react";
 import { Card, Container, Group } from "@mantine/core";
 import { BtnSection, ModalAddTecnico, TecnicosTable, TextSection, TitlePage } from "../../components";
-import { useTecnicoStore, useUiTecnico } from "../../hooks";
+import { useTecnicoStore, useTitlePage, useUiTecnico } from "../../hooks";
 
 export const AdminTecnicosPage = () => {
-
+    useTitlePage("Helpdesk | Técnicos");
     const { tecnicos, startLoadTecnicosAdmin, clearTecnicos } = useTecnicoStore();
     const { modalActionTecnico } = useUiTecnico();
 

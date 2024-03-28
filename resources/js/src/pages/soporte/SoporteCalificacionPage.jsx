@@ -1,10 +1,11 @@
 import { Card, Container } from "@mantine/core";
 import { SoportesCalificacionTable, TitlePage } from "../../components";
-import { useSoporteStore } from "../../hooks";
+import { useSoporteStore, useTitlePage } from "../../hooks";
 import { useEffect } from "react";
 import Swal from "sweetalert2";
 
 export const SoporteCalificacionPage = () => {
+    useTitlePage("Helpdesk | Calificar Soportes");
     const { startLoadSoportesSinCalificar, clearSoportes, message, errores } = useSoporteStore();
 
     useEffect(() => {

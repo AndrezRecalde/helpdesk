@@ -5,10 +5,12 @@ import { isNotEmpty, useForm } from "@mantine/form";
 import {
     useDireccionStore,
     useDirectorStore,
+    useTitlePage,
     useUsersStore,
 } from "../../hooks";
 
 export const PermisosPage = () => {
+    useTitlePage("Helpdesk | Permisos");
     const usuario = JSON.parse(localStorage.getItem("service_user"));
     const { startLoadDirecciones, clearDirecciones } = useDireccionStore();
     const { startLoadUsersExtrict, clearUsers } = useUsersStore();

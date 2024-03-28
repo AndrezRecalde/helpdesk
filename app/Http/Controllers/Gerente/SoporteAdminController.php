@@ -40,10 +40,10 @@ class SoporteAdminController extends Controller
 
                 $soporte_asignado = Soporte::from('sop_soporte as ss')
                     ->selectRaw('ss.id_sop, ss.numero_sop,
-                    ss.id_direccion, d.nmbre_dprtmnto as direccion,
-                    ss.id_usu_tecnico_asig, u.nmbre_usrio as tecnico,
-                    ss.id_usu_recibe, us.nmbre_usrio as solicitante, us.email,
-                    ss.incidente, ss.fecha_ini')
+                                ss.id_direccion, d.nmbre_dprtmnto as direccion,
+                                ss.id_usu_tecnico_asig, u.nmbre_usrio as tecnico,
+                                ss.id_usu_recibe, us.nmbre_usrio as solicitante, us.email,
+                                ss.incidente, ss.fecha_ini')
                     ->join('dprtmntos as d', 'd.cdgo_dprtmnto', 'ss.id_direccion')
                     ->join('usrios_sstma as u', 'u.cdgo_usrio', 'ss.id_usu_tecnico_asig')
                     ->join('usrios_sstma as us', 'us.cdgo_usrio', 'ss.id_usu_recibe')

@@ -1,5 +1,5 @@
 import { useDocumentTitle } from "@mantine/hooks"
 
-export const useTitle = (title = "Helpdesk") => {
+export const useTitlePage = (title = "Helpdesk") => {
   return useDocumentTitle(title);
 }

@@ -6,11 +6,12 @@ import {
     SolicitudesAnuladasTable,
     TitlePage,
 } from "../../components";
-import { useSoporteStore } from "../../hooks";
+import { useSoporteStore, useTitlePage } from "../../hooks";
 import Swal from "sweetalert2";
 import dayjs from "dayjs";
 
 export const SolicitudesAnuladasPage = () => {
+    useTitlePage("Helpdesk | Soportes Anulados");
     const {
         isLoading,
         soportes,

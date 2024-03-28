@@ -7,10 +7,11 @@ import {
     PermisosTable,
     TitlePage,
 } from "../../components";
-import { usePermisoStore } from "../../hooks";
+import { usePermisoStore, useTitlePage } from "../../hooks";
 import Swal from "sweetalert2";
 
 export const ListPermisosPage = () => {
+    useTitlePage("Helpdesk | Lista Permisos");
     const usuario = JSON.parse(localStorage.getItem("service_user"));
     const { startLoadPermisos, clearPermisos, permisos, message, errores } = usePermisoStore();
 

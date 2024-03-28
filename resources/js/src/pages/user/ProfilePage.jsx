@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import { Badge, Card, Container, Group, SimpleGrid, Skeleton, Text } from "@mantine/core";
-import { useDocumentTitle } from "@mantine/hooks";
 import {
     TextSection,
     TitlePage,
@@ -9,10 +8,10 @@ import {
     MenuSeleccion,
 } from "../../components";
 import { IconSend } from "@tabler/icons-react";
-import { useAuthStore, useTecnicoStore, useUsersStore } from "../../hooks";
+import { useAuthStore, useTecnicoStore, useTitlePage, useUsersStore } from "../../hooks";
 
 export const ProfilePage = () => {
-    useDocumentTitle("Profile");
+    useTitlePage("Helpdesk | Perfil");
     const usuario = JSON.parse(localStorage.getItem("service_user"));
     const { isLoading, startProfile, profile, clearProfile } = useAuthStore();
     const {

@@ -10,13 +10,15 @@ import {
     TextSection,
     TitlePage,
 } from "../../components";
-import { useSoporteStore, useUiIndicador } from "../../hooks";
-import Swal from "sweetalert2";
-import useSWR, { mutate } from "swr";
+import { useSoporteStore, useTitlePage, useUiIndicador } from "../../hooks";
 import { useDispatch } from "react-redux";
 import { onLoadSoportes } from "../../store/soporte/soporteSlice";
+import useSWR, { mutate } from "swr";
+import Swal from "sweetalert2";
+
 
 export const SolicitudesActualesPage = () => {
+    useTitlePage("Helpdesk | Solicitudes");
     const usuario = JSON.parse(localStorage.getItem("service_user"));
     const dispatch = useDispatch();
     const {

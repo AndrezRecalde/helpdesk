@@ -1,11 +1,13 @@
 import { useEffect } from "react";
-import { Alert, Card, Container } from "@mantine/core";
+import { Card, Container } from "@mantine/core";
 import { ActividadForm, AlertSection, InformationActividadList, TitlePage } from "../../components";
-import { useActividadStore } from "../../hooks";
-import Swal from "sweetalert2";
+import { useActividadStore, useTitlePage } from "../../hooks";
 import { IconInfoCircle } from "@tabler/icons-react";
+import Swal from "sweetalert2";
+
 
 export const ActividadPage = () => {
+    useTitlePage("Helpdesk | Actividad");
     const { message, errores } = useActividadStore();
 
     useEffect(() => {

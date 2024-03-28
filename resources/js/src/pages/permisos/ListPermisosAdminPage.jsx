@@ -7,11 +7,12 @@ import {
     PermisosTable,
     TitlePage,
 } from "../../components";
-import { useDireccionStore, usePermisoStore, useUsersStore } from "../../hooks";
+import { useDireccionStore, usePermisoStore, useTitlePage, useUsersStore } from "../../hooks";
 import dayjs from "dayjs";
 import Swal from "sweetalert2";
 
 export const ListPermisosAdminPage = () => {
+    useTitlePage("Helpdesk | Lista Permisos");
     const { startLoadDirecciones, clearDirecciones } = useDireccionStore();
     const { startLoadUsersExtrict, clearUsers } = useUsersStore();
     const { startLoadPermisos, permisos, clearPermisos, message, errores } =

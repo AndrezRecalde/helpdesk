@@ -2,10 +2,11 @@ import { useEffect } from "react";
 import { Title, Text, Container } from "@mantine/core";
 import { ChangePwdForm } from "../../components";
 import { useForm } from "@mantine/form";
-import { useUsersStore } from "../../hooks";
+import { useTitlePage, useUsersStore } from "../../hooks";
 import Swal from "sweetalert2";
 
 export const ChangePwdPage = () => {
+    useTitlePage("Helpdesk | Cambio contrasena");
     const { message, errores } = useUsersStore();
 
     const form = useForm({

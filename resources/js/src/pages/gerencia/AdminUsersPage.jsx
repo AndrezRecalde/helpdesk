@@ -1,7 +1,6 @@
 import { useEffect } from "react";
-import { Card, Container, Group } from "@mantine/core";
+import { Card, Container } from "@mantine/core";
 import {
-    BtnSection,
     FilterFormUsers,
     ModalActivateUser,
     ModalResetPwdUser,
@@ -9,10 +8,11 @@ import {
     TitlePage,
     UsersTable,
 } from "../../components";
-import { useUiUser, useUsersStore } from "../../hooks";
+import { useTitlePage, useUiUser, useUsersStore } from "../../hooks";
 import Swal from "sweetalert2";
 
 export const AdminUsersPage = () => {
+    useTitlePage("Helpdesk | Usuarios");
     const { users, errores, message } = useUsersStore();
     const { modalActionUser } = useUiUser();
 
