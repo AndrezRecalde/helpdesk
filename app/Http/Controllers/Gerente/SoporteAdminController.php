@@ -111,7 +111,20 @@ class SoporteAdminController extends Controller
                 $soporte->id_estado = 5;
                 $tecnico = User::where("cdgo_usrio", $request->id_usu_tecnico_asig)
                     ->first(['cdgo_usrio', 'email']);
-                Mail::to($tecnico->email)->send(new SoporteMail($soporte));
+
+                $soporte_asignado = Soporte::from('sop_soporte as ss')
+                    ->selectRaw('ss.id_sop, ss.numero_sop,
+                                ss.id_direccion, d.nmbre_dprtmnto as direccion,
+                                ss.id_usu_tecnico_asig, u.nmbre_usrio as tecnico,
+                                ss.id_usu_recibe, us.nmbre_usrio as solicitante, us.email,
+                                ss.incidente, ss.fecha_ini')
+                    ->join('dprtmntos as d', 'd.cdgo_dprtmnto', 'ss.id_direccion')
+                    ->join('usrios_sstma as u', 'u.cdgo_usrio', 'ss.id_usu_tecnico_asig')
+                    ->join('usrios_sstma as us', 'us.cdgo_usrio', 'ss.id_usu_recibe')
+                    ->where('ss.id_sop', $soporte->id_sop)
+                    ->first();
+
+                Mail::to($tecnico->email)->send(new SoporteMail($soporte_asignado));
                 $soporte->save();
             } else {
                 $soporte->id_estado = 1;

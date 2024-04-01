@@ -32,7 +32,7 @@ export const ModalCreateSoporte = ({ role }) => {
             id_estado: activateSoporte?.id_estado.toString()
                 ? activateSoporte?.id_estado.toString()
                 : "3",
-            fecha_ini: dayjs(),
+            fecha_ini: dayjs(new Date()),
             id_tipo_solicitud: activateSoporte?.id_tipo_solicitud
                 ? activateSoporte?.id_tipo_solicitud.toString()
                 : "1",
@@ -45,7 +45,7 @@ export const ModalCreateSoporte = ({ role }) => {
             incidente: "",
             solucion: "",
             id_equipo: null,
-            fecha_fin: new Date(),
+            fecha_fin: dayjs(new Date()),
 
             activo_informatico: false,
         },
@@ -65,11 +65,10 @@ export const ModalCreateSoporte = ({ role }) => {
             id_tipo_soporte: isNotEmpty("Por favor ingrese el tipo de soporte"),
             id_area_tic: isNotEmpty("Por favor seleccione el área"),
             incidente: isNotEmpty("Por favor ingrese la incidencia"),
-            solucion: (value, values) =>
-                (values.id_estado == 3 || values.id_estado == 4) &&
-                (value.length >= 10 || value.length <= 200)
-                    ? "Proporcione la solución mínimo 10 a máximo 200 caracteres"
-                    : null,
+            solucion: hasLength(
+                { min: 5, max: 200 },
+                "La solución debe tener entre 10 y 200 caracteres"
+            ),
             id_equipo: (value, values) =>
                 values.id_tipo_soporte == 1 && value === null
                     ? "En soporte a hardware es obligatorio el código del activo"
@@ -146,8 +145,8 @@ export const ModalCreateSoporte = ({ role }) => {
                 id_equipo: activateSoporte?.id_equipo
                     ? activateSoporte?.id_equipo?.toString()
                     : null,
-                fecha_ini: new Date(activateSoporte?.fecha_ini),
-                fecha_fin: new Date(activateSoporte?.fecha_fin),
+                fecha_ini: dayjs(activateSoporte?.fecha_ini).toDate(),
+                fecha_fin: dayjs(activateSoporte?.fecha_fin).toDate(),
 
                 activo_informatico: activateSoporte?.id_equipo ? true : false,
             });
@@ -212,6 +211,7 @@ export const ModalCreateSoporte = ({ role }) => {
             opened={isOpenModalCreateSoporte}
             onClose={handleCloseModal}
             closeOnClickOutside={false}
+            closeOnEscape={false}
             position="right"
             size="lg"
             title="Crear soporte"

@@ -1,5 +1,5 @@
 import cx from "clsx";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
     Avatar,
     Group,
@@ -24,19 +24,25 @@ export const UserBtnHeader = () => {
     const theme = useMantineTheme();
     const { startLogout } = useAuthStore();
     const navigate = useNavigate();
-    const usuario = useMemo(
-        () => JSON.parse(localStorage.getItem("service_user")),
-        []
-    );
+    const usuario = JSON.parse(localStorage.getItem("service_user"));
     const [userMenuOpened, setUserMenuOpened] = useState(false);
+    const [nombres, setNombres] = useState("");
+
+    useEffect(() => {
+      if (usuario !== null) {
+        iniciales();
+        return;
+      }
+    }, [])
+
 
     const iniciales = useCallback(() => {
         let inicial_nombre = usuario?.usu_alias?.split(" ");
         let nombre = inicial_nombre[0]?.slice(0,1);
         let apellido = inicial_nombre[1]?.slice(0,1);
 
-        return nombre + apellido;
-    }, [usuario]);
+        setNombres(nombre + apellido);
+    }, []);
 
     return (
         <Menu
@@ -60,7 +66,7 @@ export const UserBtnHeader = () => {
                             radius="xl"
                             color="indigo.7"
                         >
-                            {iniciales()}
+                            {nombres}
                         </Avatar>
                         <div style={{ flex: 1 }}>
                             <Text fw={500} size="sm">
