@@ -4,15 +4,17 @@ import {
     TextSection,
     TitlePage,
     ProfileForm,
-    BtnSubmit,
     MenuSeleccion,
+    BtnSection,
 } from "../../components";
 import { IconSend } from "@tabler/icons-react";
 import { useAuthStore, useTecnicoStore, useTitlePage, useUsersStore } from "../../hooks";
+import { useNavigate } from "react-router-dom";
 
 export const ProfilePage = () => {
     useTitlePage("Helpdesk | Perfil");
     const usuario = JSON.parse(localStorage.getItem("service_user"));
+    const navigate = useNavigate();
     const { isLoading, startProfile, profile, clearProfile } = useAuthStore();
     const {
         startLoadInfoUsersSoporte,
@@ -47,6 +49,10 @@ export const ProfilePage = () => {
             clearInfoSoportesTecnico();
         };
     }, []);
+
+    const handleAction = () => {
+        navigate("/tecnico/soportes");
+    }
 
     const itemsTic = totalTecnicossSoportes?.map((stat, i) => (
         <div key={i}>
@@ -198,9 +204,9 @@ export const ProfilePage = () => {
 
                     { usuario.role === "GERENTE" ||
                       usuario.role === "TECNICO" ? (
-                        <BtnSubmit fontSize={16} IconSection={IconSend}>
-                            Agregar soporte
-                        </BtnSubmit>
+                        <BtnSection fontSize={16} IconSection={IconSend} handleAction={handleAction}>
+                            Gestionar soportes
+                        </BtnSection>
                     ) : (
                         <MenuSeleccion />
                     )}
