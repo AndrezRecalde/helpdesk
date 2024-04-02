@@ -44,7 +44,7 @@ export const FormDirector = ({ form }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(form.values);
+        //console.log(form.values);
         startUpdateDirector(form.values);
         modalActionDirector(0);
     };

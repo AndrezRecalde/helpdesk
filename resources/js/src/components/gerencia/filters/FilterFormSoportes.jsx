@@ -22,17 +22,17 @@ export const FilterFormSoportes = ({ form }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(switch_role);
+        //console.log(switch_role);
         if (switch_role) {
-            console.log("aki");
+           // console.log("aki");
             const { id_usu_tecnico_asig, ...values } =
                 form.getTransformedValues();
             console.log(values);
             startSearchSoporte(values);
         } else {
-            console.log("aki2");
+            //console.log("aki2");
 
-            console.log(form.getTransformedValues());
+            //console.log(form.getTransformedValues());
             startSearchSoporte(form.getTransformedValues());
         }
         //console.log(form.values);

@@ -10,7 +10,7 @@ export const FormInfoUser = ({ form }) => {
     useEffect(() => {
         if (usu_ci !== "") {
             setTimeout(() => {
-                console.log("verified");
+                //console.log("verified");
                 verifiedUser(usu_ci);
             }, 2000);
             return;

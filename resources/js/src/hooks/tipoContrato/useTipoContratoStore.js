@@ -16,7 +16,7 @@ export const useTipoContratoStore = () => {
             const { tiposContratos } = data;
             dispatch(onLoadTiposContratos(tiposContratos));
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     }

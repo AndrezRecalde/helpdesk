@@ -18,7 +18,7 @@ export const useDepartamentoStore = () => {
             const { departamentos } = data;
             dispatch(onLoadDepartamentos(departamentos))
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     }

@@ -41,7 +41,7 @@ export const useSoporteStore = () => {
             //const { soportes } = data;
             //dispatch(onLoadSoportes(soportes));
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };
@@ -60,7 +60,7 @@ export const useSoporteStore = () => {
             }, 40);
             startLoadSoportesActuales(role_id);
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };
@@ -76,7 +76,7 @@ export const useSoporteStore = () => {
             const { soportes } = data;
             dispatch(onLoadSoportes(soportes));
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };
@@ -96,7 +96,7 @@ export const useSoporteStore = () => {
             }, 40);
             dispatch(onAnularSoporte(soporte));
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };
@@ -114,7 +114,7 @@ export const useSoporteStore = () => {
                 dispatch(onLoadMessage(undefined));
             }, 40);
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };
@@ -146,7 +146,7 @@ export const useSoporteStore = () => {
                 dispatch(onLoadMessage(undefined));
             }, 40);
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };
@@ -176,7 +176,7 @@ export const useSoporteStore = () => {
             const { soportes } = data;
             dispatch(onLoadSoportes(soportes));
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };
@@ -194,7 +194,7 @@ export const useSoporteStore = () => {
                 dispatch(onLoadMessage(undefined));
             }, 40);
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };
@@ -212,7 +212,7 @@ export const useSoporteStore = () => {
             }, 40);
             dispatch(onSetActivateSoporte(null));
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };
@@ -231,7 +231,7 @@ export const useSoporteStore = () => {
             const { soportes } = data;
             dispatch(onLoadSoportes(soportes));
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };
@@ -263,7 +263,7 @@ export const useSoporteStore = () => {
             window.URL.revokeObjectURL(url);
             dispatch(onLoadPDF(false));
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };
@@ -298,7 +298,7 @@ export const useSoporteStore = () => {
             window.URL.revokeObjectURL(url);
             dispatch(onLoadPDF(false));
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };
@@ -314,7 +314,7 @@ export const useSoporteStore = () => {
             const { soportes } = data;
             dispatch(onLoadSoportes(soportes));
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };
@@ -329,7 +329,7 @@ export const useSoporteStore = () => {
             const { soportes } = data;
             dispatch(onLoadSoportes(soportes));
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };
@@ -341,7 +341,7 @@ export const useSoporteStore = () => {
             const { soportes } = data;
             dispatch(onLoadSoportes(soportes));
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     }
@@ -355,7 +355,7 @@ export const useSoporteStore = () => {
             }, 40);
             startLoadSoportesSinCalificar();
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     }

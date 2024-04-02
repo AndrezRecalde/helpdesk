@@ -53,7 +53,7 @@ export const SoportesPage = () => {
     };
 
     const handleOpenModalSoporte = () => {
-        console.log("clic");
+        //console.log("clic");
         modalActionCreateSoporte(1);
     };
 
@@ -107,11 +107,11 @@ export const SoportesPage = () => {
                     >
                         Crear nuevo
                     </BtnAddActions>
-                ) : (
+                ) : null /* (
                     <BtnSection handleAction={handleOpenModalSoporte}>
                         Agregar soporte
                     </BtnSection>
-                )}
+                ) */}
             </Group>
             <FilterFormSoportes form={form} />
             {soportes.length !== 0 ? (

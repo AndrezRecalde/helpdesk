@@ -19,7 +19,7 @@ export const FormAnularSoporte = ({ form }) => {
     }, [activateSoporte]);
 
     const handleSubmit = () => {
-        console.log(form.values);
+        //console.log(form.values);
         startAnularSoporte(form.values);
         modalActionAnularSoporte(0);
     };

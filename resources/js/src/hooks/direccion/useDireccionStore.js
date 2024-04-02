@@ -26,7 +26,7 @@ export const useDireccionStore = () => {
             const { direcciones } = data;
             dispatch(onLoadDirecciones(direcciones));
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };

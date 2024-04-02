@@ -97,7 +97,7 @@ export const MenuSolicitudTable = ({
     handleExport,
     isEdit,
 }) => {
-    console.log(isEdit);
+    //console.log(isEdit);
     return (
         <>
             <Menu.Item

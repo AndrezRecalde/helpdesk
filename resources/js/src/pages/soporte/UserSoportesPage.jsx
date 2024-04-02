@@ -12,7 +12,7 @@ export const UserSoportesPage = () => {
     const navigate = useNavigate();
     const { soporteValue } = useParams();
     const iconStyle = { width: rem(15), height: rem(15) };
-    console.log(soporteValue)
+    //console.log(soporteValue)
 
     return (
         <Container size="xxl">

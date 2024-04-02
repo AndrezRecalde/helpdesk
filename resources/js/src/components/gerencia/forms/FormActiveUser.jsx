@@ -20,7 +20,7 @@ export const FormActiveUser = ({ form }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(form.values);
+        //console.log(form.values);
         startUpdateActivoUser(form.values);
         modalActionActiveUser(0);
     };

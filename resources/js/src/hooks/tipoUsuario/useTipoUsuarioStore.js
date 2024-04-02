@@ -17,7 +17,7 @@ export const useTipoUsuarioStore = () => {
             const { tipos_usuarios } = data;
             dispatch(onLoadTiposUsuarios(tipos_usuarios));
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     }

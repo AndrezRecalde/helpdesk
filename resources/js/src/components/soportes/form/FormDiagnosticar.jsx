@@ -53,7 +53,7 @@ export const FormDiagnosticar = ({ form }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(form.getTransformedValues());
+        //console.log(form.getTransformedValues());
         startDiagnosticarSoporte(form.getTransformedValues());
         modalActionDiagnosticar(0);
         form.reset();

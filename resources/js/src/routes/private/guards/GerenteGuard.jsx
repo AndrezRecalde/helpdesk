@@ -6,7 +6,7 @@ export const GerenteGuard = ({ redirectPath = "gerencia", children }) => {
     const user = JSON.parse(localStorage.getItem("service_user"));
 
     //const { user } = useSelector(state => state.auth);
-    console.log(user?.role);
+    //console.log(user?.role);
 
     return token && user?.role === Roles.GERENTE ? (
         children

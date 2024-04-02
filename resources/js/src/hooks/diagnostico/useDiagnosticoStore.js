@@ -17,7 +17,7 @@ export const useDiagnosticoStore = () => {
             const { diagnosticos } = data;
             dispatch(onLoadDiagnosticos(diagnosticos));
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     }

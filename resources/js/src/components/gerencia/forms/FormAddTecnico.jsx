@@ -22,7 +22,7 @@ export const FormAddTecnico = ({ form }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(form.getTransformedValues());
+        //console.log(form.getTransformedValues());
         startAddUpdateTecnico(form.getTransformedValues());
         modalActionTecnico(0);
         form.reset();

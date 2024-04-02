@@ -52,7 +52,7 @@ export const SolicitudPage = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(form.values);
+        //console.log(form.values);
         startSendSolicitud(form.values);
         form.reset();
     };

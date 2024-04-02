@@ -16,7 +16,7 @@ export const useEquipoStore = () => {
             const { equipos } = data;
             dispatch(onLoadEquiposInformaticos(equipos));
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     }

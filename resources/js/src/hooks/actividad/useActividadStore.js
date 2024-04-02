@@ -40,7 +40,7 @@ export const useActividadStore = () => {
             const { actividades } = data;
             dispatch(onLoadActividades(actividades));
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };
@@ -73,7 +73,7 @@ export const useActividadStore = () => {
                 dispatch(onLoadMessage(undefined));
             }, 40);
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };
@@ -98,7 +98,7 @@ export const useActividadStore = () => {
                 type: "application/pdf",
             });
             const url = window.URL.createObjectURL(pdfBlob);
-            console.log(url);
+            //console.log(url);
             const tempLink = document.createElement("a");
             tempLink.href = url;
             tempLink.setAttribute("download", "actividades.pdf");
@@ -109,7 +109,7 @@ export const useActividadStore = () => {
             window.URL.revokeObjectURL(url);
             dispatch(onLoadPDF(false));
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };

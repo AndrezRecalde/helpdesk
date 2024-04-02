@@ -17,7 +17,7 @@ import {
 import { ListPermisosAdminPage } from "../../../pages/permisos/ListPermisosAdminPage";
 
 export const PagesGerente = () => {
-    console.log('pagesGerente')
+    //console.log('pagesGerente')
     return (
             <RoutesNotFound>
                 <Route path="usuarios" element={<AdminUsersPage />} />

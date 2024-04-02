@@ -28,7 +28,7 @@ export const useDirectorStore = () => {
             const { directores } = data;
             dispatch(onLoadDirectores(directores));
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };
@@ -46,7 +46,7 @@ export const useDirectorStore = () => {
                 dispatch(onLoadMessage(undefined));
             }, 40);
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };

@@ -57,7 +57,7 @@ export const useIndicadorStore = () => {
             dispatch(onPageLoad(true));
             dispatch(onLoading(false));
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };
@@ -85,7 +85,7 @@ export const useIndicadorStore = () => {
             window.URL.revokeObjectURL(url);
             dispatch(onLoading(false));
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };
@@ -98,7 +98,7 @@ export const useIndicadorStore = () => {
             dispatch(onLoadDesempenoForTecnicos(desempenoForTecnicos));
             dispatch(onLoading(false));
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     }

@@ -27,7 +27,7 @@ export const useTecnicoStore = () => {
             const { tecnicos } = data;
             dispatch(onLoadTecnicos(tecnicos));
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };
@@ -46,7 +46,7 @@ export const useTecnicoStore = () => {
             const { tecnicos } = data;
             dispatch(onLoadTecnicos(tecnicos));
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };
@@ -65,7 +65,7 @@ export const useTecnicoStore = () => {
                 dispatch(onLoadMessage(undefined));
             }, 40);
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };
@@ -77,7 +77,7 @@ export const useTecnicoStore = () => {
             const { info } = data;
             dispatch(onSetInfoSoportes(info));
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     }

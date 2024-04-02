@@ -92,7 +92,7 @@ export const StepperUser = ({ form }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(form.values);
+        //console.log(form.values);
     }
 
     const { nmbre_usrio } = form.values;

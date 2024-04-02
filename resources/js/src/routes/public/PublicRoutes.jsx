@@ -7,7 +7,7 @@ export const PublicRoutes = ({ children }) => {
     const { state } = useLocation();
 
     const pathname = state?.from?.pathname ?? '/u/profile';
-    console.log(pathname)
+    //console.log(pathname)
 
   return !token ? children : <Navigate to={pathname} />
 }

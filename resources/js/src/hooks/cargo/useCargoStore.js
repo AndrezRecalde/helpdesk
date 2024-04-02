@@ -15,7 +15,7 @@ export const useCargoStore = () => {
             const { cargos } = data;
             dispatch(onLoadCargos(cargos));
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     }

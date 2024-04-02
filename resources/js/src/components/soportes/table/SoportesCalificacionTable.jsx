@@ -35,7 +35,7 @@ export const SoportesCalificacionTable = () => {
 
     const handleCalificar = (rows, table) => {
         rows.map(row => startUpdateCalificacion(row.original.id_sop));
-        console.log(table.resetRowSelection())
+        //console.log(table.resetRowSelection())
     }
 
     const table = useMantineReactTable({

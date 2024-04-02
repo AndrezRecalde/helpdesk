@@ -23,7 +23,7 @@ export const useTipoSolicitudStore = () => {
             const { tipos_solicitudes } = data;
             dispatch(onLoadTiposSolicitudes(tipos_solicitudes));
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };

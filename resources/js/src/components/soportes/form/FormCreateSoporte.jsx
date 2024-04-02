@@ -21,9 +21,11 @@ import {
     useUsersStore,
 } from "../../../hooks";
 import { IconSend } from "@tabler/icons-react";
+import dayjs from "dayjs";
 
 export const FormCreateSoporte = ({ form }) => {
     const usuario = JSON.parse(localStorage.getItem("service_user"));
+    const options = { timeZone: 'America/Guayaquil' };
     const { id_tipo_solicitud, activo_informatico, id_tipo_soporte } =
         form.values;
     const { estados } = useEstadoStore();
@@ -95,7 +97,7 @@ export const FormCreateSoporte = ({ form }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(form.getTransformedValues());
+        //console.log(form.getTransformedValues());
         startCreateSoporte(form.getTransformedValues());
         modalActionCreateSoporte(0);
         form.reset();
@@ -125,7 +127,7 @@ export const FormCreateSoporte = ({ form }) => {
                 <Grid.Col span={6}>
                     <DateTimePicker
                         withAsterisk
-                        valueFormat="YYYY-MM-DD HH:mm"
+                        valueFormat="YYYY-MM-DD hh:mm"
                         label="Fecha de solicitud"
                         placeholder="Seleccione fecha de solicitud"
                         {...form.getInputProps("fecha_ini")}
@@ -304,7 +306,7 @@ export const FormCreateSoporte = ({ form }) => {
                 ) : null}
                 <DateTimePicker
                     withAsterisk
-                    valueFormat="YYYY-MM-DD HH:mm"
+                    valueFormat="YYYY-MM-DD hh:mm"
                     label="Fecha de finalización"
                     placeholder="Seleccione fecha de finalización"
                     {...form.getInputProps("fecha_fin")}

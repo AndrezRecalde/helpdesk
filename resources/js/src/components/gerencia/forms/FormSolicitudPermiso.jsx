@@ -56,8 +56,8 @@ export const FormSolicitudPermiso = ({ form, disabled }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log("clic");
-        console.log(form.getTransformedValues());
+        //console.log("clic");
+        //console.log(form.getTransformedValues());
         startAddPermiso(form.getTransformedValues());
         form.resetTouched();
     };

@@ -58,7 +58,7 @@ export const SolicitudesAnuladasPage = () => {
         e.preventDefault();
         const fecha_i = dayjs(fecha_inicio).toDate();
         const fecha_f = dayjs(fecha_fin).add(1, "days").toDate();
-        console.log(fecha_i, fecha_f);
+        //console.log(fecha_i, fecha_f);
         startLoadSoportesAnulados(fecha_i, fecha_f);
     };
 

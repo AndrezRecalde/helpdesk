@@ -25,7 +25,7 @@ export const FormSolicitudAdminSoporte = ({ form }) => {
     const { modalActionAddSolicitud } = useUiSoporte();
 
     const handleSubmit = () => {
-        console.log(form.values);
+        //console.log(form.values);
         startCreateSolicitudAdmin(form.getTransformedValues());
         modalActionAddSolicitud(0);
         form.reset();

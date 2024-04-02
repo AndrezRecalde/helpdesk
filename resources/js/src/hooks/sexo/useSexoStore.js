@@ -16,7 +16,7 @@ export const useSexoStore = () => {
             const { tipo_sexo } = data;
             dispatch(onLoadSexo(tipo_sexo));
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     }

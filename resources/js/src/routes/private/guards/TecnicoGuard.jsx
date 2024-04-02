@@ -4,7 +4,7 @@ export const TecnicoGuard = ({ children }) => {
     const token = localStorage.getItem("auth_token");
     const user = JSON.parse(localStorage.getItem("service_user"));
 
-    console.log(user?.role)
+    //console.log(user?.role)
 
 
   return token && user?.role === Roles.TECNICO ? (

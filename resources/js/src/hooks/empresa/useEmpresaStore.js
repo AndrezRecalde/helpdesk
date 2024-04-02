@@ -16,7 +16,7 @@ export const useEmpresaStore = () => {
             const { empresas } = data;
             dispatch(onLoadEmpresas(empresas));
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     }

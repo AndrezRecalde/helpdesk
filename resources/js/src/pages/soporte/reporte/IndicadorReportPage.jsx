@@ -58,7 +58,7 @@ export const IndicadorReportPage = () => {
         e.preventDefault();
         const fecha_i = dayjs(fecha_inicio).format("YYYY-MM-DD");
         const fecha_f = dayjs(fecha_fin).add(1, "days").format("YYYY-MM-DD");
-        console.log(fecha_i, fecha_f);
+        //console.log(fecha_i, fecha_f);
         startLoadIndicadores(fecha_i, fecha_f);
     };
 

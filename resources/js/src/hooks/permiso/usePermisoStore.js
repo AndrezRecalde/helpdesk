@@ -31,7 +31,7 @@ export const usePermisoStore = () => {
                 type: "application/pdf",
             });
             const url = window.URL.createObjectURL(pdfBlob);
-            console.log(url);
+            //console.log(url);
             const tempLink = document.createElement("a");
             tempLink.href = url;
             tempLink.setAttribute("download", "permiso.pdf");
@@ -42,7 +42,7 @@ export const usePermisoStore = () => {
             window.URL.revokeObjectURL(url);
             dispatch(onLoading(false));
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };
@@ -59,7 +59,7 @@ export const usePermisoStore = () => {
                 type: "application/pdf",
             });
             const url = window.URL.createObjectURL(pdfBlob);
-            console.log(url);
+            //console.log(url);
             const tempLink = document.createElement("a");
             tempLink.href = url;
             tempLink.setAttribute("download", "permiso.pdf");
@@ -71,7 +71,7 @@ export const usePermisoStore = () => {
             dispatch(onLoading(false));
             dispatch(onSetActivatePermiso(null));
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };
@@ -89,7 +89,7 @@ export const usePermisoStore = () => {
             dispatch(onLoadPermisos(permisos));
             dispatch(onLoading(false));
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };
@@ -105,7 +105,7 @@ export const usePermisoStore = () => {
             }, 40);
             dispatch(onLoading(false));
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     }

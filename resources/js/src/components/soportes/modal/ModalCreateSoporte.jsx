@@ -32,7 +32,7 @@ export const ModalCreateSoporte = ({ role }) => {
             id_estado: activateSoporte?.id_estado.toString()
                 ? activateSoporte?.id_estado.toString()
                 : "3",
-            fecha_ini: dayjs(new Date()),
+            fecha_ini: new Date(),
             id_tipo_solicitud: activateSoporte?.id_tipo_solicitud
                 ? activateSoporte?.id_tipo_solicitud.toString()
                 : "1",
@@ -45,7 +45,7 @@ export const ModalCreateSoporte = ({ role }) => {
             incidente: "",
             solucion: "",
             id_equipo: null,
-            fecha_fin: dayjs(new Date()),
+            fecha_fin: new Date(),
 
             activo_informatico: false,
         },
@@ -77,7 +77,8 @@ export const ModalCreateSoporte = ({ role }) => {
         transformValues: (values) => ({
             ...values,
             id_estado: Number(values.id_estado) || null,
-            //fecha_ini: dayjs(values.fecha_ini),
+            fecha_ini: values.fecha_ini.toLocaleString('es', {timeZone: 'America/Guayaquil'}),
+            fecha_fin: values.fecha_fin.toLocaleString('es', {timeZone: 'America/Guayaquil'}),
             id_tipo_solicitud: Number(values.id_tipo_solicitud) || null,
             id_usu_tecnico_asig: Number(values.id_usu_tecnico_asig) || null,
             id_direccion: Number(values.id_direccion) || null,
@@ -145,8 +146,8 @@ export const ModalCreateSoporte = ({ role }) => {
                 id_equipo: activateSoporte?.id_equipo
                     ? activateSoporte?.id_equipo?.toString()
                     : null,
-                fecha_ini: dayjs(activateSoporte?.fecha_ini).toDate(),
-                fecha_fin: dayjs(activateSoporte?.fecha_fin).toDate(),
+                fecha_ini: new Date(activateSoporte?.fecha_ini),
+                fecha_fin: new Date(activateSoporte?.fecha_fin),
 
                 activo_informatico: activateSoporte?.id_equipo ? true : false,
             });

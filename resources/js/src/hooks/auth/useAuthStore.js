@@ -32,7 +32,7 @@ export const useAuthStore = () => {
             localStorage.setItem("token_init_date", new Date().getTime());
             dispatch(onAuthenticate(user));
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             error.response.data.errores
                 ? dispatch(onValidate(error.response.data.errores))
                 : dispatch(onLogout(error.response.data.msg));
@@ -56,7 +56,7 @@ export const useAuthStore = () => {
             localStorage.setItem("token_init_date", new Date().getTime());
             dispatch(onAuthenticate(user));
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             localStorage.clear();
             dispatch(onLogout());
         }
@@ -70,7 +70,7 @@ export const useAuthStore = () => {
             const { profile } = data;
             dispatch(onLoadProfile(profile));
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };

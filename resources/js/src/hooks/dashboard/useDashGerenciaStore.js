@@ -73,7 +73,7 @@ export const useDashGerenciaStore = () => {
             dispatch(onLoadTotalAreasTic(totalAreasTic));
             dispatch(onLoading(false));
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };

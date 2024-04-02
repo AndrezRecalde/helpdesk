@@ -21,7 +21,7 @@ export const useEstadoStore = () => {
             const { estados } = data;
             dispatch(onLoadEstados(estados));
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };

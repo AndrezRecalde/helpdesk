@@ -9,7 +9,7 @@ import {
 } from "../../../pages";
 
 export const PagesTecnico = () => {
-    console.log("pagesTecnico");
+    //console.log("pagesTecnico");
 
     return (
         <RoutesNotFound>

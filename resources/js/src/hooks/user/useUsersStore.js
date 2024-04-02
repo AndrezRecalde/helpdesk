@@ -39,7 +39,7 @@ export const useUsersStore = () => {
             const { usuarios } = data;
             dispatch(onLoadUsers(usuarios));
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };
@@ -54,7 +54,7 @@ export const useUsersStore = () => {
             const { usuarios } = data;
             dispatch(onLoadUsers(usuarios));
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };
@@ -74,7 +74,7 @@ export const useUsersStore = () => {
             const { usuarios } = data;
             dispatch(onLoadUsers(usuarios));
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };
@@ -92,7 +92,7 @@ export const useUsersStore = () => {
                 dispatch(onLoadMessage(undefined));
             }, 40);
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };
@@ -110,7 +110,7 @@ export const useUsersStore = () => {
                 dispatch(onSetUserVerified(null));
             }
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };
@@ -125,7 +125,7 @@ export const useUsersStore = () => {
                 dispatch(onLoadMessage(undefined));
             }, 40);
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     }
@@ -153,7 +153,7 @@ export const useUsersStore = () => {
                 dispatch(onLoadMessage(undefined));
             }, 40);
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };
@@ -172,7 +172,7 @@ export const useUsersStore = () => {
                 dispatch(onLoadMessage(undefined));
             }, 40);
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };
@@ -185,7 +185,7 @@ export const useUsersStore = () => {
                 dispatch(onLoadMessage(undefined));
             }, 40);
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     }
@@ -197,7 +197,7 @@ export const useUsersStore = () => {
             const { info } = data;
             dispatch(onSetInfoSoportes(info));
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     }

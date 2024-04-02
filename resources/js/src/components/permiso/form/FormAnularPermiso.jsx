@@ -11,7 +11,7 @@ export const FormAnularPermiso = ({ form }) => {
         e.preventDefault();
         modalActionAnularPermiso(0);
         startAnularPermiso(form.values);
-        console.log(form.values);
+        //console.log(form.values);
         form.reset();
     };
 
