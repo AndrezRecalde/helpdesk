@@ -31,6 +31,7 @@
         th {
             text-align: left;
             padding: 8px;
+            font-size: 12px;
         }
 
 
@@ -76,6 +77,7 @@
                 <th><b>No SOPORTE:</b></th>
                 <th><b>FECHA:</b></th>
                 <th><b>ACTIVIDAD</b></th>
+                <th><b>SOLUCIÓN</b></th>
                 <th><b>USUARIO FINAL</b></th>
             </tr>
             @foreach ($soportes as $soporte)
@@ -83,6 +85,7 @@
                     <td>{{ $soporte->numero_sop }}</td>
                     <td>{{ $soporte->fecha_ini }}</td>
                     <td style="text-align: justify;">{{ $soporte->incidente }}</td>
+                    <td style="text-align: justify;">{{ $soporte->solucion }}</td>
                     <td>{{ $soporte->usuario_recibe }}</td>
                 </tr>
             @endforeach
