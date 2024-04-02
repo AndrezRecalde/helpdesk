@@ -1,15 +1,30 @@
 import { useEffect } from "react";
-import { Badge, Card, Container, Group, SimpleGrid, Skeleton, Text } from "@mantine/core";
+import {
+    Badge,
+    Box,
+    Card,
+    Container,
+    Group,
+    SimpleGrid,
+    Skeleton,
+    Text,
+} from "@mantine/core";
 import {
     TextSection,
     TitlePage,
     ProfileForm,
     MenuSeleccion,
     BtnSection,
+    BtnSubmit,
 } from "../../components";
-import { IconSend } from "@tabler/icons-react";
-import { useAuthStore, useTecnicoStore, useTitlePage, useUsersStore } from "../../hooks";
+import {
+    useAuthStore,
+    useTecnicoStore,
+    useTitlePage,
+    useUsersStore,
+} from "../../hooks";
 import { useNavigate } from "react-router-dom";
+import { IconDeviceImacUp } from "@tabler/icons-react";
 
 export const ProfilePage = () => {
     useTitlePage("Helpdesk | Perfil");
@@ -51,8 +66,10 @@ export const ProfilePage = () => {
     }, []);
 
     const handleAction = () => {
-        navigate("/tecnico/soportes");
-    }
+        usuario?.role_id === 1
+            ? navigate("/gerencia/soportes")
+            : navigate("/tecnico/soportes");
+    };
 
     const itemsTic = totalTecnicossSoportes?.map((stat, i) => (
         <div key={i}>
@@ -199,14 +216,21 @@ export const ProfilePage = () => {
                         </TextSection>
                     </Group>
                     <Group mt="md" justify="center" gap={70}>
-                        {usuario?.role_id === 1 || usuario?.role_id === 2 ? itemsTic : itemsUser}
+                        {usuario?.role_id === 1 || usuario?.role_id === 2
+                            ? itemsTic
+                            : itemsUser}
                     </Group>
 
-                    { usuario.role === "GERENTE" ||
-                      usuario.role === "TECNICO" ? (
-                        <BtnSection fontSize={16} IconSection={IconSend} handleAction={handleAction}>
-                            Gestionar soportes
-                        </BtnSection>
+                    {usuario.role === "GERENTE" ||
+                    usuario.role === "TECNICO" ? (
+                        <Box component="form" onSubmit={handleAction}>
+                            <BtnSubmit
+                                fontSize={16}
+                                IconSection={IconDeviceImacUp}
+                            >
+                                Gestionar soportes
+                            </BtnSubmit>
+                        </Box>
                     ) : (
                         <MenuSeleccion />
                     )}
