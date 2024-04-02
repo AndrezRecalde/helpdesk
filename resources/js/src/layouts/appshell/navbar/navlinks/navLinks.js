@@ -63,6 +63,15 @@ export const lTecnico = [
         links: [{ label: "Inicio", link: "/" }],
     }, */
     {
+        label: "Actividades",
+        icon: IconDeviceImac,
+        initiallyOpened: true,
+        links: [
+            { label: "Agregar actividad", link: "/tecnico/agregar-actividad" },
+            { label: "Lista actividades", link: "/tecnico/lista-actividades" },
+        ],
+    },
+    {
         label: "Soportes",
         icon: IconDeviceImac,
         initiallyOpened: true,
