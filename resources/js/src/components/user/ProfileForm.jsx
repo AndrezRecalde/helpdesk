@@ -12,7 +12,7 @@ export const ProfileForm = () => {
                 <Grid>
                     <Grid.Col span={{ base: 12 }}>
                         <Text fz="md" fw={700}>
-                            {profile.empresa}
+                            {profile?.empresa}
                         </Text>
                         <Text fz="xs" tt="uppercase" fw={600} c="dimmed">
                             Institución
@@ -20,7 +20,7 @@ export const ProfileForm = () => {
                     </Grid.Col>
                     <Grid.Col span={{ base: 12 }}>
                         <Text fz="md" fw={700}>
-                            {profile.direccion}
+                            {profile?.direccion}
                         </Text>
                         <Text fz="xs" tt="uppercase" fw={600} c="dimmed">
                             Dirección/Gestión
@@ -28,7 +28,7 @@ export const ProfileForm = () => {
                     </Grid.Col>
                     <Grid.Col span={{ base: 12, md: 6, lg: 6 }}>
                         <Text fz="md" fw={700}>
-                            {profile.nmbre_usrio}
+                            {profile?.nmbre_usrio}
                         </Text>
                         <Text fz="xs" tt="uppercase" fw={600} c="dimmed">
                             Apellidos y Nombres
@@ -36,7 +36,7 @@ export const ProfileForm = () => {
                     </Grid.Col>
                     <Grid.Col span={{ base: 12, md: 6, lg: 6 }}>
                         <Text fz="md" fw={700}>
-                            {profile.cargo}
+                            {profile?.cargo}
                         </Text>
                         <Text fz="xs" tt="uppercase" fw={600} c="dimmed">
                             Cargo

@@ -198,7 +198,7 @@ export const ProfilePage = () => {
                                 size="lg"
                                 radius="sm"
                             >
-                                {profile.role}
+                                {profile?.role}
                             </Badge>
                         )}
                     </Group>
