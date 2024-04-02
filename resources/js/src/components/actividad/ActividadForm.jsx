@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { Box, Grid, Textarea } from "@mantine/core";
 import { DateInput } from "@mantine/dates";
-import { BtnSubmit } from "../../components";
+import { BtnSubmit, FormRichText } from "../../components";
 import { isNotEmpty, useForm } from "@mantine/form";
 import { useActividadStore, useUiActividad } from "../../hooks";
 import { IconDatabase } from "@tabler/icons-react";
@@ -39,8 +39,12 @@ export const ActividadForm = ({ fecha_inicio, fecha_fin }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         startAddActividad(form.values, fecha_inicio, fecha_fin);
+        //console.log(form.values)
         modalActionActividad(0);
         form.reset();
+        setTimeout(() => {
+            window.location.reload();
+        }, 2000);
     };
 
     return (
@@ -60,7 +64,7 @@ export const ActividadForm = ({ fecha_inicio, fecha_fin }) => {
                     />
                 </Grid.Col>
                 <Grid.Col span={{ base: 12, md: 12, lg: 12 }}>
-                    <Textarea
+                    {/* <Textarea
                         label="Actividad"
                         withAsterisk
                         description="Registra la actividad"
@@ -68,7 +72,8 @@ export const ActividadForm = ({ fecha_inicio, fecha_fin }) => {
                         minRows={6}
                         maxRows={8}
                         {...form.getInputProps("actividad")}
-                    />
+                    /> */}
+                    <FormRichText form={form} />
                 </Grid.Col>
             </Grid>
             <BtnSubmit radius="md" IconSection={IconDatabase}>

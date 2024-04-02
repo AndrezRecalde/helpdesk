@@ -11,7 +11,6 @@ import {
     TableContent,
     TitlePage,
 } from "../../components";
-import { IconSearch } from "@tabler/icons-react";
 import { useActividadStore, useUiActividad } from "../../hooks";
 import dayjs from "dayjs";
 import Swal from "sweetalert2";
@@ -54,7 +53,7 @@ export const ListActividadesPage = () => {
                 size: 80,
             },
             {
-                accessorKey: "actividad",
+                accessorFn: (row) => <div dangerouslySetInnerHTML={{ __html: row.actividad }} />,
                 header: "Actividad",
                 size: 200,
             },

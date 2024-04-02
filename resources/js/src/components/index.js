@@ -121,6 +121,8 @@ import { PermisosTable } from "./permiso/table/PermisosTable";
 import { ModalAnularPermiso } from "./permiso/modal/ModalAnularPermiso";
 import { FormAnularPermiso } from "./permiso/form/FormAnularPermiso";
 
+import { FormRichText } from "./actividad/FormRichText";
+
 export {
     TitlePage,
     TextSection,
@@ -209,5 +211,7 @@ export {
 
     PermisosTable,
     ModalAnularPermiso,
-    FormAnularPermiso
+    FormAnularPermiso,
+
+    FormRichText
 };

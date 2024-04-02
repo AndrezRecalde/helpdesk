@@ -135,7 +135,7 @@
                 @foreach ($actividades as $actividad)
                     <tr>
                         <td width="150px">{{ $actividad->current_fecha }}</td>
-                        <td style="text-align: justify;">{{ $actividad->actividad }}</td>
+                        <td style="text-align: justify;">{!! $actividad->actividad !!}</td>
                     </tr>
                 @endforeach
             </table>
