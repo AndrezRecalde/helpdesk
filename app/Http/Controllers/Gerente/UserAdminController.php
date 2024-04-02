@@ -72,6 +72,7 @@ class UserAdminController extends Controller
                     'id_tipo_solicitud' => 7,
                     'id_direccion' => $usuario->cdgo_direccion,
                     'id_usu_recibe' => $usuario->cdgo_usrio,
+                    'id_area_tic'   => 5,
                     'id_usu_tecnico_asig' => auth()->id(),
                     'incidente'     =>  'SOLICITUD DE RESETEO DE CONTRASEÑA',
                     'solucion'      => 'Se reseteo la contraseña al usuario solicitante'
@@ -95,6 +96,7 @@ class UserAdminController extends Controller
                 'id_tipo_solicitud' => 7,
                 'id_direccion' => $usuario->cdgo_direccion,
                 'id_usu_recibe' => $usuario->cdgo_usrio,
+                'id_area_tic'   => 5,
                 'id_usu_tecnico_asig' => auth()->id(),
                 'incidente'     =>  'SOLICITUD DE ACTIVACIÓN DE USUARIO',
                 'solucion'      => 'SE REALIZÓ LA ACTIVACIÓN DEL USUARIO SOLICITANTE'
