@@ -10,7 +10,7 @@ import {
 export const MenuUsersTable = ({ row, handleEdit, handleResetPassword }) => {
     return (
         <>
-           {/*  <Menu.Item
+            {/*  <Menu.Item
                 leftSection={
                     <IconEditCircle
                         style={{ width: rem(15), height: rem(15) }}
@@ -119,7 +119,13 @@ export const MenuSolicitudTable = ({
                 Diagnosticar
             </Menu.Item>
             <Menu.Item
-                disabled={row.original.tecnico_asignado !== null || row.original.id_estado === 2 ? true : false}
+                disabled={
+                    row.original.id_estado === 3 ||
+                    row.original.id_estado === 4 ||
+                    row.original.id_estado === 2
+                        ? true
+                        : false
+                }
                 leftSection={
                     <IconUserShare
                         style={{ width: rem(15), height: rem(15) }}
@@ -127,7 +133,7 @@ export const MenuSolicitudTable = ({
                 }
                 onClick={() => handleAsignar(row.original)}
             >
-                Asignar técnico
+                (RE) Asignar técnico
             </Menu.Item>
             <Menu.Item
                 disabled={
@@ -156,7 +162,7 @@ export const MenuSolicitudTable = ({
                 </Menu.Item>
             ) : null}
             <Menu.Item
-                disabled={ row.original.id_estado === 2 ? true : false }
+                disabled={row.original.id_estado === 2 ? true : false}
                 leftSection={
                     <IconTrash style={{ width: rem(15), height: rem(15) }} />
                 }
@@ -173,9 +179,7 @@ export const MenuTable_Per = ({ row, handleExport, handleAnular }) => {
         <>
             <Menu.Item
                 leftSection={
-                    <IconPrinter
-                        style={{ width: rem(15), height: rem(15) }}
-                    />
+                    <IconPrinter style={{ width: rem(15), height: rem(15) }} />
                 }
                 onClick={() => handleExport(row.original)}
             >
@@ -183,9 +187,7 @@ export const MenuTable_Per = ({ row, handleExport, handleAnular }) => {
             </Menu.Item>
             <Menu.Item
                 leftSection={
-                    <IconTrash
-                        style={{ width: rem(15), height: rem(15) }}
-                    />
+                    <IconTrash style={{ width: rem(15), height: rem(15) }} />
                 }
                 onClick={() => handleAnular(row.original)}
             >
