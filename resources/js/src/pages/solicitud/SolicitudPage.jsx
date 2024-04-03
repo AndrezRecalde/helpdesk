@@ -1,18 +1,23 @@
 import { useEffect } from "react";
 import { Paper, Text, Textarea, Group, Container, Box, Title } from "@mantine/core";
 import { hasLength, useForm } from "@mantine/form";
-import { BtnSubmit, ContactIconsList } from "../../components";
-import { useSoporteStore, useTitlePage } from "../../hooks";
+import { BtnSubmit, ContactIconsList, ModalAnularSoporte, ModalCierreSoportes } from "../../components";
+import { useSoporteStore, useTitlePage, useUiSoporte } from "../../hooks";
 import { IconSend } from "@tabler/icons-react";
+import { onLoadSoportes } from "../../store/soporte/soporteSlice";
 
 import bg from "../../assets/images/bg.svg";
 import classes from "../../assets/styles/modules/solicitud/GetInTouch.module.css";
 import Swal from "sweetalert2";
+import useSWR from "swr";
+import { useDispatch } from "react-redux";
 
 export const SolicitudPage = () => {
     useTitlePage("Helpdesk | Solicitud");
+    const dispatch = useDispatch();
     const usuario = JSON.parse(localStorage.getItem("service_user"));
-    const { startSendSolicitud, isLoading, errores, message } = useSoporteStore();
+    const { modalActionCierreSoporte } = useUiSoporte();
+    const { soportes, startLoadSoportesAtendidos, startSendSolicitud, isLoading, errores, message } = useSoporteStore();
     const form = useForm({
         initialValues: {
             incidente: "",
@@ -24,6 +29,25 @@ export const SolicitudPage = () => {
             ),
         },
     });
+
+    const { data, error, isLoading: loading } = useSWR(
+        usuario?.cdgo_usrio,
+        startLoadSoportesAtendidos,
+        { refreshInterval: 2000 }
+    )
+
+    useEffect(() => {
+        dispatch(onLoadSoportes(data?.soportes ? data?.soportes : []));
+    }, [data]);
+
+    useEffect(() => {
+        if (soportes.length > 0) {
+            modalActionCierreSoporte(1);
+            return;
+        }
+        modalActionCierreSoporte(0);
+
+    }, [soportes]);
 
     useEffect(() => {
         if (message !== undefined) {
@@ -60,7 +84,7 @@ export const SolicitudPage = () => {
         <Container my={50}>
             <Title order={3} mb={20}>
                 Hola,{" "}
-                <Text span c="blue.7" fs="italic" inherit>
+                <Text span c="teal.5" fs="italic" inherit>
                     {usuario.nmbre_usrio}
                 </Text>{" "}
             </Title>
@@ -111,6 +135,8 @@ export const SolicitudPage = () => {
                     </Box>
                 </div>
             </Paper>
+            <ModalCierreSoportes />
+            <ModalAnularSoporte />
         </Container>
     );
 };

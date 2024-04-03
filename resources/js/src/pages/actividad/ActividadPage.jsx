@@ -47,7 +47,7 @@ export const ActividadPage = () => {
                 <Card.Section withBorder inheritPadding py="xs">
                     <AlertSection
                         variant="light"
-                        color="yellow"
+                        color="orange.7"
                         title="Al momento de registrar la actividad: "
                         icon={IconInfoCircle}
                     >

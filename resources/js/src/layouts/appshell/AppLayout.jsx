@@ -37,7 +37,7 @@ export const AppLayout = () => {
                                     {usuario?.direccion}
                                 </TextSection>
                             </div>
-                            <Badge radius="sm" color="indigo.7">
+                            <Badge radius="sm" color="teal.5">
                                 {usuario?.cdgo_lrgo}
                             </Badge>
                         </Group>

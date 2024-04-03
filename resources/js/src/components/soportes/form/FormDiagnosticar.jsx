@@ -173,7 +173,7 @@ export const FormDiagnosticar = ({ form }) => {
                             {...form.getInputProps("solucion")}
                         />
                         <Checkbox
-                            color="blue.4"
+                            color="teal.4"
                             iconColor="dark.8"
                             size="sm"
                             label="¿Aplica un activo informático?"

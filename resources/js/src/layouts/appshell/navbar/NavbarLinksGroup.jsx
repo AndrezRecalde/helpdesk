@@ -37,7 +37,7 @@ export const LinksGroup = ({ icon: Icon, label, initiallyOpened, links, toggleMo
                     <Box style={{ display: "flex", alignItems: "center" }}>
                         <ThemeIcon
                             variant="light"
-                            color="indigo.7"
+                            color="teal.5"
                             radius="md"
                             size="lg"
                         >

@@ -7,7 +7,7 @@ export const AppNavfooter = () => {
     return (
         <div className={classes.footer}>
             <a className={classes.link} onClick={startLogout}>
-                <IconLogout className={classes.linkIcon} stroke={1.5} />
+                <IconLogout color="red" className={classes.linkIcon} stroke={1.5} />
                 <span>Logout</span>
             </a>
         </div>

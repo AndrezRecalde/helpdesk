@@ -25,7 +25,6 @@ import dayjs from "dayjs";
 
 export const FormCreateSoporte = ({ form }) => {
     const usuario = JSON.parse(localStorage.getItem("service_user"));
-    const options = { timeZone: 'America/Guayaquil' };
     const { id_tipo_solicitud, activo_informatico, id_tipo_soporte } =
         form.values;
     const { estados } = useEstadoStore();
@@ -259,7 +258,7 @@ export const FormCreateSoporte = ({ form }) => {
                     {...form.getInputProps("solucion")}
                 />
                 <Checkbox
-                    color="blue.4"
+                    color="teal.4"
                     iconColor="dark.8"
                     size="md"
                     label="¿Ingresar activo informático?"

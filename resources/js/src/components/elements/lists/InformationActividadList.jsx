@@ -7,7 +7,7 @@ export const InformationActividadList = () => {
                 Evita colocar links de páginas exteriores.
             </List.Item>
             <List.Item>
-                Evita colocar links de reuniones de Zoom.
+                Evita colocar links de reuniones de Zoom, para ello puedes registrar el ID de la reunión.
             </List.Item>
             <List.Item>
                 Trata de detallar de manera concisa tu actividad.

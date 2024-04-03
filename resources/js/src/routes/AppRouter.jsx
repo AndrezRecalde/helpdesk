@@ -21,6 +21,7 @@ export const AppRouter = () => {
     useEffect(() => {
         if (token === undefined) {
             checkAuthToken();
+            return;
         }
     }, [token]);
 

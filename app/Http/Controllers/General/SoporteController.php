@@ -43,6 +43,37 @@ class SoporteController extends Controller
         return response()->json(['status' => 'success', 'soportes' => $soportes], 200);
     }
 
+    function getSoportesAtendidosForUsuario(Request $request): JsonResponse
+    {
+        $soportes = Soporte::from('sop_soporte as ss')
+            ->selectRaw('ss.id_sop, ss.numero_sop, ss.incidente, ss.solucion,
+                            ss.id_usu_tecnico_asig, us.nmbre_usrio as tecnico_asignado')
+            ->join('usrios_sstma as us', 'us.cdgo_usrio', 'ss.id_usu_tecnico_asig')
+            ->where('ss.id_estado', 3)
+            ->usuario($request->id_usu_recibe)
+            ->orderBy('ss.numero_sop', 'DESC')
+            ->get();
+
+        return response()->json(['status' => 'success', 'soportes' => $soportes], 200);
+    }
+
+    function cierreSoporteForUsuario(Request $request, int $id_sop): JsonResponse
+    {
+        $soporte = Soporte::find($id_sop);
+        try {
+            if ($soporte) {
+                $soporte->id_calificacion = $request->id_calificacion;
+                $soporte->id_estado = $request->id_estado;
+                $soporte->save();
+                return response()->json(['status' => 'success', 'msg' => 'Soporte cerrado'], 200);
+            } else {
+                return response()->json(['status' => 'error', 'msg' => 'Soporte no encontrado'], 404);
+            }
+        } catch (\Throwable $th) {
+            return response()->json(['status' => 'error', 'message' => $th->getMessage()], 500);
+        }
+    }
+
     function searchSoportes(Request $request): JsonResponse
     {
         $soportes = Soporte::from('sop_soporte as ss')

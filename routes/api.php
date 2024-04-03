@@ -162,4 +162,8 @@ Route::group(['prefix' => 'usuario', 'middleware' => ['auth:sanctum']], function
     /* SOPORTES */
     Route::post('/soportes-actuales', [SoporteController::class, 'getSoportesActualesForUser']);
     Route::post('/soportes-anuales', [SoporteController::class, 'getSoportesAnualesForUser']);
+    Route::post('/soportes-atendidos', [SoporteController::class, 'getSoportesAtendidosForUsuario']);
+    Route::put('/cierre-soporte/{id_sop}', [SoporteController::class, 'cierreSoporteForUsuario']);
+
+
 });

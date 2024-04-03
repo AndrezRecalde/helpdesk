@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useErrorException } from "../../hooks";
 import {
     onAnularSoporte,
+    onCalificarSoporte,
     onClearSoportes,
     onLoadErrores,
     onLoadMessage,
@@ -199,6 +200,37 @@ export const useSoporteStore = () => {
         }
     };
 
+    /* USUARIO SOLICITANTE */
+    const startLoadSoportesAtendidos = async (id_usu_recibe) => {
+        try {
+            //dispatch(onLoading());
+            const { data } = await helpdeskApi.post(
+                "/usuario/soportes-atendidos",
+                { id_usu_recibe }
+            );
+            return data;
+            /* const { soportes } = data; */
+            //dispatch(onLoadSoportes(soportes));
+        } catch (error) {
+            ExceptionMessageError(error);
+        }
+    };
+
+    const startCerrarSoporte = async (soporte, values) => {
+        try {
+            const { data } = await helpdeskApi.put(
+                `/usuario/cierre-soporte/${soporte.id_sop}`, values
+            );
+            dispatch(onCalificarSoporte(soporte));
+            dispatch(onLoadMessage(data));
+            setTimeout(() => {
+                dispatch(onLoadMessage(undefined));
+            }, 40);
+        } catch (error) {
+            ExceptionMessageError(error);
+        }
+    };
+
     /* GENERAL */
     const startDiagnosticarSoporte = async (soporte) => {
         try {
@@ -337,18 +369,22 @@ export const useSoporteStore = () => {
     const startLoadSoportesSinCalificar = async () => {
         try {
             dispatch(onLoading());
-            const { data } = await helpdeskApi.get("/gerencia/soportes-sin-calificar");
+            const { data } = await helpdeskApi.get(
+                "/gerencia/soportes-sin-calificar"
+            );
             const { soportes } = data;
             dispatch(onLoadSoportes(soportes));
         } catch (error) {
             //console.log(error);
             ExceptionMessageError(error);
         }
-    }
+    };
 
-    const startUpdateCalificacion = async(id_soportes) => {
+    const startUpdateCalificacion = async (id_soportes) => {
         try {
-            const { data } = await helpdeskApi.post("/gerencia/calificacion", { id_soportes });
+            const { data } = await helpdeskApi.post("/gerencia/calificacion", {
+                id_soportes,
+            });
             dispatch(onLoadMessage(data));
             setTimeout(() => {
                 dispatch(onLoadMessage(undefined));
@@ -358,7 +394,7 @@ export const useSoporteStore = () => {
             //console.log(error);
             ExceptionMessageError(error);
         }
-    }
+    };
 
     const clearSoportes = () => {
         dispatch(onClearSoportes());
@@ -384,6 +420,8 @@ export const useSoporteStore = () => {
         startCreateSoporte,
         startSearchSoporte,
         startSendSolicitud,
+        startLoadSoportesAtendidos,
+        startCerrarSoporte,
         startDiagnosticarSoporte,
         startLoadActividadesSoporte,
         startExportSoporte,

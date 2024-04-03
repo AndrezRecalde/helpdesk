@@ -15,7 +15,7 @@ import { useNavigate } from "react-router-dom";
 
 const mockdata = [
     { title: "Agregar actividades", icon: IconPencilPlus, color: "violet", link: "/gad/d/agregar-actividad" },
-    { title: "Solicitar Soporte",   icon: IconDeviceImac, color: "indigo", link: "/gad/d/solicitud" },
+    { title: "Solicitar Soporte",   icon: IconDeviceImac, color: "teal", link: "/gad/d/solicitud" },
     { title: "Solicitar Permiso",   icon: IconLicense, color: "blue", link: "/gad/d/permiso" },
 ];
 

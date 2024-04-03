@@ -114,7 +114,7 @@ export const FormSolicitudAdminSoporte = ({ form }) => {
                 <Grid.Col span={{ base: 12, md: 6, lg: 6 }}>
                     <Checkbox
                         description="Es opcional agregar un técnico en este momento"
-                        color="blue.4"
+                        color="teal.4"
                         iconColor="dark.8"
                         size="md"
                         label="¿Desea agregar técnico en este momento?"

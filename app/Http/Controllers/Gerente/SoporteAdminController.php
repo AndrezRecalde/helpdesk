@@ -66,6 +66,7 @@ class SoporteAdminController extends Controller
         try {
             if ($soporte) {
                 $soporte->fill($request->validated());
+                $soporte->id_calificacion = 3;
                 $soporte->id_estado = 2;
                 $soporte->save();
                 return response()->json(['status' => 'success', 'msg' => 'Soporte anulado'], 200);

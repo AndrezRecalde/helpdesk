@@ -81,4 +81,11 @@ class Soporte extends Model
             return $query->where("ss.numero_sop", $numero);
         }
     }
+
+    function scopeUsuario($query, $id_usu_recibe)
+    {
+        if ($id_usu_recibe) {
+            return $query->where('ss.id_usu_recibe', $id_usu_recibe);
+        }
+    }
 }

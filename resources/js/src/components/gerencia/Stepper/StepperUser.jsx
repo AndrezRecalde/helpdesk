@@ -149,7 +149,7 @@ export const StepperUser = ({ form }) => {
                         </Button>
                         <Button
                             variant="gradient"
-                            gradient={{ from: "indigo", to: "blue", deg: 105 }}
+                            gradient={{ from: "teal", to: "blue", deg: 105 }}
                             color="green"
                             radius="md"
                             leftSection={<IconSend />}

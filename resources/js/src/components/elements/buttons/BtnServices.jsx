@@ -16,7 +16,7 @@ export const BtnSubmit = ({
 }) => {
     return (
         <Button
-            color="indigo.7"
+            color="teal.5"
             type="submit"
             fullWidth={fullwidth}
             mt="md"
@@ -51,7 +51,7 @@ export const BtnSection = ({
         <Button
             mt={mt}
             mb={mb}
-            color="indigo.7"
+            color="teal.5"
             variant="light"
             styles={{
                 root: {
@@ -90,7 +90,7 @@ export const BtnAddActions = ({
                     mt={mt}
                     mb={mb}
                     variant="light"
-                    color="indigo.7"
+                    color="teal.5"
                     rightSection={
                         <IconChevronDown
                             style={{ width: rem(18), height: rem(18) }}
@@ -116,7 +116,7 @@ export const BtnAddActions = ({
                     leftSection={
                         <IconMessageUp
                             style={{ width: rem(16), height: rem(16) }}
-                            color={theme.colors.blue[6]}
+                            color={theme.colors.teal[6]}
                             stroke={1.5}
                         />
                     }

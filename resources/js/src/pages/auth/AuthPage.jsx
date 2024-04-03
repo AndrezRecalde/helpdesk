@@ -11,7 +11,7 @@ export const AuthPage = () => {
             <TitlePage ta="center" className={classes.title}>
                 Sistema de Helpdesk
             </TitlePage>
-            <Logo height={70} width={200} />
+            <Logo height={70} width={300} />
             <Paper
                 withBorder
                 shadow="md"

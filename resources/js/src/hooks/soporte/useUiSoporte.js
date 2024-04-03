@@ -3,11 +3,13 @@ import {
     onCloseModalAddSolicitud,
     onCloseModalAnularSoporte,
     onCloseModalAsignarSoporte,
+    onCloseModalCierreSoporte,
     onCloseModalCreateSoporte,
     onCloseModalDiagnosticar,
     onOpenModalAddSolicitud,
     onOpenModalAnularSoporte,
     onOpenModalAsignarSoporte,
+    onOpenModalCierreSoporte,
     onOpenModalCreateSoporte,
     onOpenModalDiagnosticar,
 } from "../../store/soporte/uiSoporteSlice";
@@ -18,7 +20,8 @@ export const useUiSoporte = () => {
         isOpenModalAnularSoporte,
         isOpenModalAddSolicitud,
         isOpenModalCreateSoporte,
-        isOpenModalDiagnosticar
+        isOpenModalDiagnosticar,
+        isOpenModalCierreSoporte
     } = useSelector((state) => state.uiSoporte);
 
     const dispatch = useDispatch();
@@ -53,17 +56,25 @@ export const useUiSoporte = () => {
             : dispatch(onCloseModalDiagnosticar());
     };
 
+    const modalActionCierreSoporte = (behavior) => {
+        behavior === 1
+            ? dispatch(onOpenModalCierreSoporte())
+            : dispatch(onCloseModalCierreSoporte());
+    };
+
     return {
         isOpenModalAsignarSoporte,
         isOpenModalAnularSoporte,
         isOpenModalAddSolicitud,
         isOpenModalCreateSoporte,
         isOpenModalDiagnosticar,
+        isOpenModalCierreSoporte,
 
         modalActionAsignarSoporte,
         modalActionAnularSoporte,
         modalActionAddSolicitud,
         modalActionCreateSoporte,
-        modalActionDiagnosticar
+        modalActionDiagnosticar,
+        modalActionCierreSoporte
     };
 };

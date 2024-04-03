@@ -92,7 +92,7 @@ export const PermisosPage = () => {
     return (
         <Container size="md">
             <TitlePage order={2} size="h2">
-                Crear Permisos - Administrador
+                Crear Permiso
             </TitlePage>
             <Card withBorder shadow="sm" radius="md" mt={20} mb={20}>
                 <LoadingOverlay

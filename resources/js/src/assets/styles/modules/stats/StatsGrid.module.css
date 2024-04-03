@@ -9,7 +9,7 @@
   }
 
   .icon {
-    color: light-dark(var(--mantine-color-indigo-7), var(--mantine-color-indigo-5));
+    color: light-dark(var(--mantine-color-teal-7), var(--mantine-color-teal-5));
   }
 
   .title {

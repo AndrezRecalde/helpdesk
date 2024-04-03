@@ -6,7 +6,7 @@ export const TableIndicadorEficacia = () => {
     const { desempenoForEstados, sumaDiasHabiles } = useIndicadorStore();
 
     let porcentajeEficacia = (
-        (desempenoForEstados[3].total_estados /
+        (desempenoForEstados[3]?.total_estados /
             30 /
             sumaDiasHabiles[0]?.dias_habiles) *
         100

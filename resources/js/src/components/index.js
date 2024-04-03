@@ -123,6 +123,9 @@ import { FormAnularPermiso } from "./permiso/form/FormAnularPermiso";
 
 import { FormRichText } from "./actividad/FormRichText";
 
+import { ModalCierreSoportes } from "./soportes/drawer/ModalCierreSoportes";
+import { FormCierreSoporte } from "./soportes/form/FormCierreSoporte";
+
 export {
     TitlePage,
     TextSection,
@@ -213,5 +216,8 @@ export {
     ModalAnularPermiso,
     FormAnularPermiso,
 
-    FormRichText
+    FormRichText,
+
+    ModalCierreSoportes,
+    FormCierreSoporte
 };

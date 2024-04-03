@@ -31,6 +31,15 @@ export const soporteSlice = createSlice({
             state.activateSoporte = null;
             state.isLoading = false;
         },
+        onCalificarSoporte: (state) => {
+            if (state.activateSoporte) {
+                state.soportes = state.soportes.filter(
+                    (soporte) => soporte.id_sop !== state.activateSoporte.id_sop
+                );
+                state.activateSoporte = null;
+                state.errores = undefined;
+            }
+        },
         onAnularSoporte: (state) => {
             if (state.activateSoporte) {
                 state.soportes = state.soportes.filter(
@@ -71,6 +80,7 @@ export const {
     onLoadPDF,
     onLoadSoportes,
     onUpdateSoporte,
+    onCalificarSoporte,
     onAnularSoporte,
     onSetActivateSoporte,
     onClearSoportes,

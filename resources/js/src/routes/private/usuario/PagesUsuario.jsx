@@ -8,6 +8,8 @@ import {
     SolicitudPage,
     UserSoportesPage,
 } from "../../../pages";
+import { useSoporteStore, useUiSoporte } from "../../../hooks";
+import { useEffect } from "react";
 
 export const PagesUsuario = () => {
     //console.log("pagesUsuario");
