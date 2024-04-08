@@ -5,7 +5,7 @@ import { useTecnicoStore, useUiSoporte, useUsersStore } from "../../../hooks";
 import { FormSolicitudAdminSoporte } from "../../../components";
 
 export const ModalSolicitudAdminSoporte = () => {
-    const { startLoadUsersExtrict, clearUsers } = useUsersStore();
+    const { startLoadUsers, clearUsers } = useUsersStore();
     const { startLoadTecnicos, clearTecnicos } = useTecnicoStore();
     const { isOpenModalAddSolicitud, modalActionAddSolicitud } = useUiSoporte();
 
@@ -37,10 +37,13 @@ export const ModalSolicitudAdminSoporte = () => {
             id_usu_tecnico_asig: Number(values.id_usu_tecnico_asig) || null,
         }),
     });
-    const { id_direccion, can_tecnico } = form.values;
+    const { can_tecnico } = form.values;
 
     useEffect(() => {
-        startLoadTecnicos();
+        if (isOpenModalAddSolicitud) {
+            startLoadTecnicos();
+            return;
+        }
 
         return () => {
             clearTecnicos();
@@ -48,13 +51,16 @@ export const ModalSolicitudAdminSoporte = () => {
     }, [can_tecnico]);
 
     useEffect(() => {
-        startLoadUsersExtrict(id_direccion);
-        form.setFieldValue("id_usu_recibe", null);
+        if (isOpenModalAddSolicitud) {
+            startLoadUsers({});
+            return;
+        }
+        //form.setFieldValue("id_usu_recibe", null);
 
         return () => {
             clearUsers();
         };
-    }, [id_direccion]);
+    }, []);
 
     const handleCloseModal = () => {
         modalActionAddSolicitud(0);

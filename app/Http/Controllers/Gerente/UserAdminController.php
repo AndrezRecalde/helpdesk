@@ -18,7 +18,7 @@ class UserAdminController extends Controller
     {
         $usuarios = User::from('usrios_sstma as us')
             ->selectRaw('us.cdgo_usrio, us.nmbre_usrio, nc.nom_cargo,
-                        d.nmbre_dprtmnto as direccion,
+                        d.cdgo_dprtmnto, d.nmbre_dprtmnto as direccion,
                         de.nmbre_dprtmnto as departamento,
                         us.lgin, us.actvo, us.email')
             ->leftJoin('nom_cargo as nc', 'nc.idnom_cargo', 'us.crgo_id')

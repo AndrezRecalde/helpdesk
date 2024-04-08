@@ -77,8 +77,12 @@ export const ModalCreateSoporte = ({ role }) => {
         transformValues: (values) => ({
             ...values,
             id_estado: Number(values.id_estado) || null,
-            fecha_ini: values.fecha_ini.toLocaleString('es', {timeZone: 'America/Guayaquil'}),
-            fecha_fin: values.fecha_fin.toLocaleString('es', {timeZone: 'America/Guayaquil'}),
+            fecha_ini: values.fecha_ini.toLocaleString("es", {
+                timeZone: "America/Guayaquil",
+            }),
+            fecha_fin: values.fecha_fin.toLocaleString("es", {
+                timeZone: "America/Guayaquil",
+            }),
             id_tipo_solicitud: Number(values.id_tipo_solicitud) || null,
             id_usu_tecnico_asig: Number(values.id_usu_tecnico_asig) || null,
             id_direccion: Number(values.id_direccion) || null,
@@ -175,16 +179,18 @@ export const ModalCreateSoporte = ({ role }) => {
     }, [role, isOpenModalCreateSoporte]);
 
     useEffect(() => {
-        startLoadUsersExtrict(id_direccion);
-        form.setFieldValue(
-            "id_usu_recibe",
-            activateSoporte?.id_usu_recibe
-                ? activateSoporte?.id_usu_recibe.toString()
-                : null
-        );
-
-        if (id_direccion === null) {
-            form.setFieldValue("id_usu_recibe", null);
+        if (isOpenModalCreateSoporte) {
+            startLoadUsersExtrict(id_direccion);
+            form.setFieldValue(
+                "id_usu_recibe",
+                activateSoporte?.id_usu_recibe
+                    ? activateSoporte?.id_usu_recibe.toString()
+                    : null
+            );
+            if (id_direccion === null) {
+                form.setFieldValue("id_usu_recibe", null);
+                return;
+            }
             return;
         }
 

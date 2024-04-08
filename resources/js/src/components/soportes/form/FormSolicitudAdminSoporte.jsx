@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import {
     Box,
     Checkbox,
@@ -17,15 +18,29 @@ import {
 } from "../../../hooks";
 
 export const FormSolicitudAdminSoporte = ({ form }) => {
-    const { can_tecnico } = form.values;
+    const { can_tecnico, id_usu_recibe } = form.values;
     const { direcciones } = useDireccionStore();
     const { users } = useUsersStore();
     const { tecnicos } = useTecnicoStore();
     const { isLoading, startCreateSolicitudAdmin } = useSoporteStore();
     const { modalActionAddSolicitud } = useUiSoporte();
 
+    useEffect(() => {
+        if (id_usu_recibe !== null) {
+            const direccion = users.find(
+                (user) => user.cdgo_usrio == id_usu_recibe
+            );
+            form.setFieldValue(
+                "id_direccion",
+                direccion?.cdgo_dprtmnto.toString()
+            );
+        } else {
+            form.setFieldValue("id_direccion", null);
+        }
+    }, [id_usu_recibe]);
+
     const handleSubmit = () => {
-        //console.log(form.values);
+        console.log(form.getTransformedValues());
         startCreateSolicitudAdmin(form.getTransformedValues());
         modalActionAddSolicitud(0);
         form.reset();
@@ -84,6 +99,21 @@ export const FormSolicitudAdminSoporte = ({ form }) => {
                     <Select
                         searchable
                         clearable
+                        label="Usuario solicitante"
+                        placeholder="Seleccione al usuario solicitante"
+                        {...form.getInputProps("id_usu_recibe")}
+                        data={users.map((user) => {
+                            return {
+                                value: user.cdgo_usrio.toString(),
+                                label: user.nmbre_usrio,
+                            };
+                        })}
+                    />
+                </Grid.Col>
+
+                <Grid.Col span={{ base: 12, md: 6, lg: 6 }}>
+                    <Select
+                        disabled
                         label="Dirección"
                         placeholder="Elige la dirección del usuario solicitante"
                         {...form.getInputProps("id_direccion")}
@@ -96,21 +126,6 @@ export const FormSolicitudAdminSoporte = ({ form }) => {
                     />
                 </Grid.Col>
 
-                <Grid.Col span={{ base: 12, md: 6, lg: 6 }}>
-                    <Select
-                        searchable
-                        clearable
-                        label="Usuario solicitante"
-                        placeholder="Seleccione al usuario solicitante"
-                        {...form.getInputProps("id_usu_recibe")}
-                        data={users.map((user) => {
-                            return {
-                                value: user.cdgo_usrio.toString(),
-                                label: user.nmbre_usrio,
-                            };
-                        })}
-                    />
-                </Grid.Col>
                 <Grid.Col span={{ base: 12, md: 6, lg: 6 }}>
                     <Checkbox
                         description="Es opcional agregar un técnico en este momento"
@@ -153,7 +168,12 @@ export const FormSolicitudAdminSoporte = ({ form }) => {
                     />
                 </Grid.Col>
             </Grid>
-            <BtnSubmit fontSize={16} IconSection={IconSend} loading={isLoading} disabled={isLoading}>
+            <BtnSubmit
+                fontSize={16}
+                IconSection={IconSend}
+                loading={isLoading}
+                disabled={isLoading}
+            >
                 Crear solicitud
             </BtnSubmit>
             {!can_tecnico ? (
