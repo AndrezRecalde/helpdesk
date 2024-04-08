@@ -21,9 +21,9 @@ class UserAdminController extends Controller
                         d.nmbre_dprtmnto as direccion,
                         de.nmbre_dprtmnto as departamento,
                         us.lgin, us.actvo, us.email')
-            ->join('nom_cargo as nc', 'nc.idnom_cargo', 'us.crgo_id')
-            ->join('dprtmntos as d', 'd.cdgo_dprtmnto', 'us.cdgo_direccion')
-            ->join('dprtmntos as de', 'de.cdgo_dprtmnto', 'us.cdgo_dprtmnto')
+            ->leftJoin('nom_cargo as nc', 'nc.idnom_cargo', 'us.crgo_id')
+            ->leftJoin('dprtmntos as d', 'd.cdgo_dprtmnto', 'us.cdgo_direccion')
+            ->leftJoin('dprtmntos as de', 'de.cdgo_dprtmnto', 'us.cdgo_dprtmnto')
             ->direccion($request->cdgo_direccion)
             ->nombres($request->nmbre_usrio)
             ->usuario($request->lgin)
