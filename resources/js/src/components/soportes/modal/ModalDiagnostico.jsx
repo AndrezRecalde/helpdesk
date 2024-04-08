@@ -26,8 +26,8 @@ export const ModalDiagnostico = () => {
             id_area_tic: isNotEmpty("Por favor ingrese el área"),
             id_tipo_soporte: isNotEmpty("Por favor ingrese el tipo"),
             solucion: hasLength(
-                { min: 5, max: 200 },
-                "La solución debe tener entre 10 y 200 caracteres"
+                { min: 5, max: 350 },
+                "La solución debe tener entre 10 y 350 caracteres"
             ),
             id_equipo: (value, values) =>
                 values.id_tipo_soporte == 1 && value === null
