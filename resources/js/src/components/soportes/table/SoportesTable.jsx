@@ -88,29 +88,11 @@ export const SoportesTable = () => {
         state: { showProgressBars: isLoading },
         enableFacetedValues: true,
         enableRowActions: true,
-        mantineTableBodyCellProps: ({ cell }) => ({
-            style: {
-                backgroundColor:
-                    cell.row.original.tecnico_asignado === null
-                        ? "#CB3234"
-                        /* : cell.row.original.id_estado === 5
-                        ? "#f0a660"
-                        : cell.row.original.id_estado === 4
-                        ? "#6df79a"
-                        : cell.row.original.id_estado === 3
-                        ? "#5c9ff2" */
-                        : "",
-                color:
-                    cell.row.original.tecnico_asignado === null
-                        ? "white"
-                        : "",
-            },
-        }),
         renderRowActionMenuItems: ({ row }) =>
             usuario.role_id === 1 ? (
                 <MenuSolicitudTable
                     row={row}
-                    isEdit={true}
+                    isEdit={row.original.id_estado === 2 ? false : true}
                     handleDiagnosticar={handleDiagnosticar}
                     handleEditar={handleEditar}
                     handleAsignar={handleAsignar}
