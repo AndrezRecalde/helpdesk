@@ -95,7 +95,7 @@ export const FormSolicitudAdminSoporte = ({ form }) => {
                     />
                 </Grid.Col>
 
-                <Grid.Col span={{ base: 12, md: 6, lg: 6 }}>
+                <Grid.Col span={{ base: 12, md: 12, lg: 12 }}>
                     <Select
                         searchable
                         clearable
@@ -111,7 +111,7 @@ export const FormSolicitudAdminSoporte = ({ form }) => {
                     />
                 </Grid.Col>
 
-                <Grid.Col span={{ base: 12, md: 6, lg: 6 }}>
+                <Grid.Col span={{ base: 12, md: 12, lg: 12 }}>
                     <Select
                         disabled
                         label="Dirección"

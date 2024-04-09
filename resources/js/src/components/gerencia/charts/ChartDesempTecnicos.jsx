@@ -55,6 +55,12 @@ export const ChartDesempTecnicos = () => {
                 borderColor: "rgba(246, 238, 70, 1)"
             },
             {
+                label: "Total asignados",
+                data: desempenoForTecnicos?.map(tecnico => tecnico.total_asignados),
+                backgroundColor: "rgba(248, 123, 3, 0.66)",
+                borderColor: "rgba(245, 147, 55, 1)"
+            },
+            {
                 label: "Total atendidas",
                 data: desempenoForTecnicos?.map(tecnico => tecnico.total_atendidos),
                 backgroundColor: "rgba(4, 115, 253, 0.66)",
@@ -76,9 +82,9 @@ export const ChartDesempTecnicos = () => {
     };
 
     return (
-        <Card withBorder shadow="sm" radius="md">
+        <Card withBorder shadow="sm" radius="md"  mb="sm">
             <Card.Section withBorder inheritPadding py="xs">
-                Soportes por subprocesos
+                Soportes por técnicos
             </Card.Section>
             <Card.Section withBorder inheritPadding py="xs">
                 <Bar options={options} data={data} />

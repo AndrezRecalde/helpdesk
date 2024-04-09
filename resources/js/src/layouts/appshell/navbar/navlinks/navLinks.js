@@ -1,10 +1,17 @@
-import { IconCategory, IconChartPieFilled, IconDeviceImac, IconLicense, IconPencilPlus, IconTransferIn } from "@tabler/icons-react";
+import {
+    IconCategory,
+    IconChartPieFilled,
+    IconDeviceImac,
+    IconLicense,
+    IconTransferIn,
+    IconListCheck,
+} from "@tabler/icons-react";
 
 export const Roles = {
-    GERENTE: 'GERENTE',
-    TECNICO: 'TECNICO',
-    USUARIO: 'USUARIO'
-  }
+    GERENTE: "GERENTE",
+    TECNICO: "TECNICO",
+    USUARIO: "USUARIO",
+};
 
 export const lGerente = [
     {
@@ -28,8 +35,14 @@ export const lGerente = [
         icon: IconTransferIn,
         initiallyOpened: true,
         links: [
-            { label: "Solicitudes actuales", link: "/gerencia/solicitudes-actuales" },
-            { label: "Solicitudes Anuladas", link: "/gerencia/solicitudes-anuladas" }
+            {
+                label: "Solicitudes actuales",
+                link: "/gerencia/solicitudes-actuales",
+            },
+            {
+                label: "Solicitudes Anuladas",
+                link: "/gerencia/solicitudes-anuladas",
+            },
         ],
     },
     {
@@ -39,8 +52,23 @@ export const lGerente = [
         links: [
             { label: "Gestionar Soportes", link: "/gerencia/soportes" },
             { label: "Calificar Soportes", link: "/gerencia/calificar" },
-            { label: "Indicadores de Soporte", link: "/gerencia/indicadores-soportes" },
-            { label: "Reporte de Soportes", link: "/gerencia/reporte-soportes" },
+            {
+                label: "Indicadores de Soporte",
+                link: "/gerencia/indicadores-soportes",
+            },
+            {
+                label: "Reporte de Soportes",
+                link: "/gerencia/reporte-soportes",
+            },
+        ],
+    },
+    {
+        label: "Actividades",
+        icon: IconListCheck,
+        initiallyOpened: true,
+        links: [
+            { label: "Agregar actividad", link: "/gerencia/agregar-actividad" },
+            { label: "Lista actividades", link: "/gerencia/lista-actividades" },
         ],
     },
     {
@@ -49,11 +77,10 @@ export const lGerente = [
         initiallyOpened: true,
         links: [
             { label: "Solicitar Permisos", link: "/gerencia/permiso" },
-            { label: "Ver Permisos General", link: "/gerencia/ver-permisos" }
-        ]
-    }
+            { label: "Ver Permisos General", link: "/gerencia/ver-permisos" },
+        ],
+    },
 ];
-
 
 export const lTecnico = [
     /* {
@@ -64,7 +91,7 @@ export const lTecnico = [
     }, */
     {
         label: "Actividades",
-        icon: IconDeviceImac,
+        icon: IconListCheck,
         initiallyOpened: true,
         links: [
             { label: "Agregar actividad", link: "/tecnico/agregar-actividad" },
@@ -76,7 +103,10 @@ export const lTecnico = [
         icon: IconDeviceImac,
         initiallyOpened: true,
         links: [
-            { label: "Soportes asignados", link: "/tecnico/solicitudes-actuales" },
+            {
+                label: "Soportes asignados",
+                link: "/tecnico/solicitudes-actuales",
+            },
             { label: "Gestionar Soportes", link: "/tecnico/soportes" },
             { label: "Reporte de Soportes", link: "/tecnico/reporte-soportes" },
         ],
@@ -87,15 +117,15 @@ export const lTecnico = [
         initiallyOpened: true,
         links: [
             { label: "Solicitar Permisos", link: "/tecnico/permiso" },
-            { label: "Ver Permisos", link: "/tecnico/ver-permisos" }
-        ]
-    }
+            { label: "Ver Permisos", link: "/tecnico/ver-permisos" },
+        ],
+    },
 ];
 
 export const lUsuario = [
     {
         label: "Actividades",
-        icon: IconPencilPlus,
+        icon: IconListCheck,
         initiallyOpened: true,
         links: [
             { label: "Agregar actividad", link: "/gad/d/agregar-actividad" },
@@ -117,7 +147,7 @@ export const lUsuario = [
         initiallyOpened: true,
         links: [
             { label: "Solicitar Permisos", link: "/gad/d/permiso" },
-            { label: "Ver Permisos", link: "/gad/d/ver-permisos" }
-        ]
-    }
-]
+            { label: "Ver Permisos", link: "/gad/d/ver-permisos" },
+        ],
+    },
+];

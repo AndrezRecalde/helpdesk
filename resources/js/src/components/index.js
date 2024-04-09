@@ -121,7 +121,7 @@ import { PermisosTable } from "./permiso/table/PermisosTable";
 import { ModalAnularPermiso } from "./permiso/modal/ModalAnularPermiso";
 import { FormAnularPermiso } from "./permiso/form/FormAnularPermiso";
 
-import { FormRichText } from "./actividad/FormRichText";
+import { FormRichText } from "./elements/rte/FormRichText";
 
 import { ModalCierreSoportes } from "./soportes/drawer/ModalCierreSoportes";
 import { FormCierreSoporte } from "./soportes/form/FormCierreSoporte";

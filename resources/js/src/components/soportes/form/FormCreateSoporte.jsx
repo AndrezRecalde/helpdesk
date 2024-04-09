@@ -21,7 +21,6 @@ import {
     useUsersStore,
 } from "../../../hooks";
 import { IconSend } from "@tabler/icons-react";
-import dayjs from "dayjs";
 
 export const FormCreateSoporte = ({ form }) => {
     const usuario = JSON.parse(localStorage.getItem("service_user"));
@@ -171,26 +170,11 @@ export const FormCreateSoporte = ({ form }) => {
                         })}
                     />
                 </Grid.Col>
-                <Grid.Col span={{ base: 6, sm: 6, md: 6, lg: 6 }}>
+                <Grid.Col span={{ base: 12, sm: 12, md: 12, lg: 12 }}>
                     <Select
                         withAsterisk
                         searchable
                         clearable
-                        label="Dirección"
-                        placeholder="Seleccione la dirección/gestión"
-                        {...form.getInputProps("id_direccion")}
-                        data={direcciones.map((direccion) => {
-                            return {
-                                value: direccion.cdgo_dprtmnto.toString(),
-                                label: direccion.nmbre_dprtmnto,
-                            };
-                        })}
-                    />
-                </Grid.Col>
-                <Grid.Col span={{ base: 6, md: 6, lg: 6 }}>
-                    <Select
-                        withAsterisk
-                        searchable
                         label="Usuario solicitante"
                         placeholder="Seleccione el solicitante"
                         {...form.getInputProps("id_usu_recibe")}
@@ -198,6 +182,20 @@ export const FormCreateSoporte = ({ form }) => {
                             return {
                                 value: user.cdgo_usrio.toString(),
                                 label: user.nmbre_usrio,
+                            };
+                        })}
+                    />
+                </Grid.Col>
+                <Grid.Col span={{ base: 12, sm: 12, md: 12, lg: 12 }}>
+                    <Select
+                        withAsterisk
+                        label="Dirección"
+                        placeholder="Seleccione la dirección/gestión"
+                        {...form.getInputProps("id_direccion")}
+                        data={direcciones.map((direccion) => {
+                            return {
+                                value: direccion.cdgo_dprtmnto.toString(),
+                                label: direccion.nmbre_dprtmnto,
                             };
                         })}
                     />

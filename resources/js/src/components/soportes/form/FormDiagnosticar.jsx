@@ -11,7 +11,7 @@ import {
     Grid,
     Box,
 } from "@mantine/core";
-import { DateInput } from "@mantine/dates";
+import { DateTimePicker } from "@mantine/dates";
 import { IconCalendarMonth, IconPinEnd } from "@tabler/icons-react";
 import { BtnSubmit } from "../../../components";
 import { useEquipoStore, useSoporteStore, useUiSoporte } from "../../../hooks";
@@ -111,11 +111,10 @@ export const FormDiagnosticar = ({ form }) => {
                     onSubmit={form.onSubmit((_, e) => handleSubmit(e))}
                 >
                     <SimpleGrid cols={1}>
-                        <DateInput
-                            //dateParser={dateParser}
+                        <DateTimePicker
                             withAsterisk
-                            valueFormat="YYYY-MM-DD HH:mm"
-                            label="Fecha finalización"
+                            valueFormat="YYYY-MM-DD hh:mm"
+                            label="Fecha de finalización"
                             placeholder="Seleccione fecha de finalización"
                             {...form.getInputProps("fecha_fin")}
                         />

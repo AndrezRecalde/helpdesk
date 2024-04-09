@@ -18,7 +18,7 @@ export const ModalCreateSoporte = ({ role }) => {
     const { activateSoporte, setActivateSoporte } = useSoporteStore();
     const { isOpenModalCreateSoporte, modalActionCreateSoporte } =
         useUiSoporte();
-    const { startLoadUsersExtrict, clearUsers } = useUsersStore();
+    const { users, startLoadUsersGeneral, clearUsers } = useUsersStore();
     const { startLoadTecnicos, clearTecnicos } = useTecnicoStore();
     const { startLoadTiposSolicitudes, clearTiposSolicitudes } =
         useTipoSolicitudStore();
@@ -77,10 +77,10 @@ export const ModalCreateSoporte = ({ role }) => {
         transformValues: (values) => ({
             ...values,
             id_estado: Number(values.id_estado) || null,
-            fecha_ini: values.fecha_ini.toLocaleString("es", {
+            fecha_ini: values.fecha_ini.toLocaleString("sv-SE", {
                 timeZone: "America/Guayaquil",
             }),
-            fecha_fin: values.fecha_fin.toLocaleString("es", {
+            fecha_fin: values.fecha_fin.toLocaleString("sv-SE", {
                 timeZone: "America/Guayaquil",
             }),
             id_tipo_solicitud: Number(values.id_tipo_solicitud) || null,
@@ -93,7 +93,7 @@ export const ModalCreateSoporte = ({ role }) => {
         }),
     });
 
-    const { id_direccion } = form.values;
+    const { id_direccion, id_usu_recibe } = form.values;
 
     useEffect(() => {
         if (isOpenModalCreateSoporte) {
@@ -180,24 +180,39 @@ export const ModalCreateSoporte = ({ role }) => {
 
     useEffect(() => {
         if (isOpenModalCreateSoporte) {
-            startLoadUsersExtrict(id_direccion);
+            startLoadUsersGeneral({});
             form.setFieldValue(
                 "id_usu_recibe",
                 activateSoporte?.id_usu_recibe
                     ? activateSoporte?.id_usu_recibe.toString()
                     : null
             );
-            if (id_direccion === null) {
+            /* if (id_direccion === null) {
                 form.setFieldValue("id_usu_recibe", null);
                 return;
-            }
+            } */
             return;
         }
 
         return () => {
             clearUsers();
         };
-    }, [id_direccion, isOpenModalCreateSoporte]);
+    }, [isOpenModalCreateSoporte]);
+
+    useEffect(() => {
+        if (id_usu_recibe !== null) {
+            const direccion = users.find(
+                (user) => user.cdgo_usrio == id_usu_recibe
+            );
+            form.setFieldValue(
+                "id_direccion",
+                direccion?.cdgo_dprtmnto.toString()
+            );
+        } else {
+            form.setFieldValue("id_direccion", null);
+        }
+    }, [id_usu_recibe]);
+
 
     const handleCloseModal = () => {
         setActivateSoporte(null);

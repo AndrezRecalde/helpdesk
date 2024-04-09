@@ -13,47 +13,46 @@ import {
     ReporteSoportes,
     SoporteCalificacionPage,
     PermisosPage,
+    ActividadPage,
+    ListActividadesPage,
 } from "../../../pages";
 import { ListPermisosAdminPage } from "../../../pages/permisos/ListPermisosAdminPage";
 
 export const PagesGerente = () => {
     //console.log('pagesGerente')
     return (
-            <RoutesNotFound>
-                <Route path="usuarios" element={<AdminUsersPage />} />
-                <Route
-                    path="direcciones"
-                    element={<AdminDireccionesPage />}
-                />
-                <Route path="tecnicos" element={<AdminTecnicosPage />} />
+        <RoutesNotFound>
+            <Route path="usuarios" element={<AdminUsersPage />} />
+            <Route path="direcciones" element={<AdminDireccionesPage />} />
+            <Route path="tecnicos" element={<AdminTecnicosPage />} />
 
-                <Route
-                    path="solicitudes-actuales"
-                    element={<SolicitudesActualesPage />}
-                />
-                <Route
-                    path="busqueda-soportes"
-                    element={<BusquedaSoportePage />}
-                />
-                <Route
-                    path="solicitudes-anuladas"
-                    element={<SolicitudesAnuladasPage />}
-                />
-                <Route path="soportes" element={<SoportesPage />} />
-                <Route path="reporte-soportes" element={<ReporteSoportes />} />
+            <Route
+                path="solicitudes-actuales"
+                element={<SolicitudesActualesPage />}
+            />
+            <Route path="busqueda-soportes" element={<BusquedaSoportePage />} />
+            <Route
+                path="solicitudes-anuladas"
+                element={<SolicitudesAnuladasPage />}
+            />
+            <Route path="soportes" element={<SoportesPage />} />
+            <Route path="reporte-soportes" element={<ReporteSoportes />} />
 
+            <Route
+                path="indicadores-soportes"
+                element={<IndicadorReportPage />}
+            />
 
-                <Route path="indicadores-soportes" element={<IndicadorReportPage />} />
+            <Route path="calificar" element={<SoporteCalificacionPage />} />
 
-                <Route path="calificar" element={<SoporteCalificacionPage />} />
+            <Route path="/permiso" element={<PermisosPage />} />
 
-                <Route path="/permiso" element={<PermisosPage />} />
+            <Route path="/ver-permisos" element={<ListPermisosAdminPage />} />
 
-                <Route path="/ver-permisos" element={<ListPermisosAdminPage />} />
+            <Route path="agregar-actividad" element={<ActividadPage />} />
+            <Route path="lista-actividades" element={<ListActividadesPage />} />
 
-
-                <Route path="dashboard" element={<DashGerenciaPage />} />
-
-            </RoutesNotFound>
+            <Route path="dashboard" element={<DashGerenciaPage />} />
+        </RoutesNotFound>
     );
 };

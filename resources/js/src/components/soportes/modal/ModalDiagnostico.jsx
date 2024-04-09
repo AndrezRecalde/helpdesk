@@ -36,6 +36,9 @@ export const ModalDiagnostico = () => {
         },
         transformValues: (values) => ({
             ...values,
+            fecha_fin: values.fecha_fin.toLocaleString("sv-SE", {
+                timeZone: "America/Guayaquil",
+            }),
             id_area_tic: Number(values.id_area_tic) || null,
             id_tipo_soporte: Number(values.id_tipo_soporte) || null,
             id_equipo: Number(values.id_equipo) || null,

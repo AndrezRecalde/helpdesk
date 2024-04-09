@@ -1,21 +1,22 @@
 import { useEffect } from "react";
 import { Modal } from "@mantine/core";
 import { isNotEmpty, useForm } from "@mantine/form";
-import { useTecnicoStore, useUiSoporte, useUsersStore } from "../../../hooks";
+import { useDireccionStore, useTecnicoStore, useUiSoporte, useUsersStore } from "../../../hooks";
 import { FormSolicitudAdminSoporte } from "../../../components";
 
 export const ModalSolicitudAdminSoporte = () => {
-    const { startLoadUsers, clearUsers } = useUsersStore();
+    const { startLoadUsersGeneral, clearUsers } = useUsersStore();
     const { startLoadTecnicos, clearTecnicos } = useTecnicoStore();
     const { isOpenModalAddSolicitud, modalActionAddSolicitud } = useUiSoporte();
+    const { startLoadDirecciones, direcciones } = useDireccionStore();
 
     const form = useForm({
         initialValues: {
             numero_escrito: "",
-            id_area_tic: null,
+            id_area_tic: "5",
             id_direccion: null,
             id_usu_recibe: null,
-            id_tipo_soporte: null,
+            id_tipo_soporte: "3",
             id_usu_tecnico_asig: null,
             incidente: "",
 
@@ -40,6 +41,18 @@ export const ModalSolicitudAdminSoporte = () => {
     const { can_tecnico } = form.values;
 
     useEffect(() => {
+      if (isOpenModalAddSolicitud && direcciones.length === 0) {
+        startLoadDirecciones();
+        return;
+      }
+
+      /* return () => {
+        clearDirecciones()
+      } */
+    }, [isOpenModalAddSolicitud]);
+
+
+    useEffect(() => {
         if (isOpenModalAddSolicitud) {
             startLoadTecnicos();
             return;
@@ -52,7 +65,7 @@ export const ModalSolicitudAdminSoporte = () => {
 
     useEffect(() => {
         if (isOpenModalAddSolicitud) {
-            startLoadUsers({});
+            startLoadUsersGeneral({});
             return;
         }
         //form.setFieldValue("id_usu_recibe", null);
@@ -60,7 +73,7 @@ export const ModalSolicitudAdminSoporte = () => {
         return () => {
             clearUsers();
         };
-    }, []);
+    }, [isOpenModalAddSolicitud]);
 
     const handleCloseModal = () => {
         modalActionAddSolicitud(0);

@@ -4,13 +4,13 @@ import {
     BtnSection,
     ModalAnularSoporte,
     ModalAsignarSoporte,
-    ModalDesempTecnicos,
     ModalDiagnostico,
+    ModalSolicitudAdminSoporte,
     SolicitudesTable,
     TextSection,
     TitlePage,
 } from "../../components";
-import { useSoporteStore, useTitlePage, useUiIndicador } from "../../hooks";
+import { useSoporteStore, useTitlePage, useUiSoporte } from "../../hooks";
 import { useDispatch } from "react-redux";
 import { onLoadSoportes } from "../../store/soporte/soporteSlice";
 import useSWR, { mutate } from "swr";
@@ -29,7 +29,7 @@ export const SolicitudesActualesPage = () => {
         message,
         errores,
     } = useSoporteStore();
-    const { modalActionDesempTecnicos } = useUiIndicador();
+    const { modalActionAddSolicitud } = useUiSoporte();
 
     const fecha_actual = new Date();
 
@@ -80,7 +80,7 @@ export const SolicitudesActualesPage = () => {
     }, [errores]);
 
     const handleOpenModal = () => {
-        modalActionDesempTecnicos(1);
+        modalActionAddSolicitud(1);
     };
 
     return (
@@ -91,7 +91,7 @@ export const SolicitudesActualesPage = () => {
                 </TitlePage>
                 {usuario.role_id === 1 ? (
                     <BtnSection handleAction={handleOpenModal}>
-                        Resumen técnicos
+                        Nueva solicitud
                     </BtnSection>
                 ) : null}
             </Group>
@@ -114,10 +114,10 @@ export const SolicitudesActualesPage = () => {
                 </Card.Section>
             </Card>
             {/* ) : null} */}
+            <ModalSolicitudAdminSoporte />
             <ModalAsignarSoporte />
             <ModalAnularSoporte />
             <ModalDiagnostico />
-            <ModalDesempTecnicos />
         </Container>
     );
 };

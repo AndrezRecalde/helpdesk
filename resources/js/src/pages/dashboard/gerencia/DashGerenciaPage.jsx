@@ -1,27 +1,34 @@
 import { useEffect } from "react";
 import { Container, SimpleGrid } from "@mantine/core";
-import { useDashGerenciaStore, useTitlePage } from "../../../hooks";
+import {
+    useDashGerenciaStore,
+    useIndicadorStore,
+    useTitlePage,
+} from "../../../hooks";
 import {
     ChartSoportesMes,
     ChartBarSoportes,
     ChartPieSoportes,
-    DashInfoStats,
     DashSoporteStats,
     TitlePage,
+    ChartDesempTecnicos,
 } from "../../../components";
 
 export const DashGerenciaPage = () => {
     useTitlePage("Helpdesk | Dashboard");
     const { startLoadDashboard, clearDashboard } = useDashGerenciaStore();
+    const { startLoadDesempenoTecnicosAnual, clearIndicadores } =
+        useIndicadorStore();
 
     useEffect(() => {
         startLoadDashboard();
+        startLoadDesempenoTecnicosAnual();
 
-      return () => {
-        clearDashboard();
-      }
-    }, [])
-
+        return () => {
+            clearDashboard();
+            clearIndicadores();
+        };
+    }, []);
 
     return (
         <Container size="xxl">
@@ -29,9 +36,10 @@ export const DashGerenciaPage = () => {
                 Panel de Soporte Técnico
             </TitlePage>
             <DashSoporteStats />
+            {/* <DashInfoStats /> */}
             <SimpleGrid cols={{ base: 1, sm: 2, md: 2, lg: 2 }}>
-                <DashInfoStats />
                 <ChartPieSoportes />
+                <ChartDesempTecnicos />
             </SimpleGrid>
             <SimpleGrid cols={{ base: 1, sm: 2, md: 2, lg: 2 }}>
                 <ChartSoportesMes />

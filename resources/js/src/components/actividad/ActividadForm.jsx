@@ -1,6 +1,12 @@
 import { useEffect } from "react";
-import { Box, Grid, Textarea } from "@mantine/core";
+import { Box, Grid } from "@mantine/core";
 import { DateInput } from "@mantine/dates";
+import { Link } from "@mantine/tiptap";
+import { useEditor } from "@tiptap/react";
+import StarterKit from "@tiptap/starter-kit";
+import TextAlign from "@tiptap/extension-text-align";
+import Superscript from "@tiptap/extension-superscript";
+import SubScript from "@tiptap/extension-subscript";
 import { BtnSubmit, FormRichText } from "../../components";
 import { isNotEmpty, useForm } from "@mantine/form";
 import { useActividadStore, useUiActividad } from "../../hooks";
@@ -24,6 +30,21 @@ export const ActividadForm = ({ fecha_inicio, fecha_fin }) => {
             ),
         },
     });
+    let content = "";
+    const editor = useEditor({
+        extensions: [
+            StarterKit,
+            Link,
+            Superscript,
+            SubScript,
+            TextAlign.configure({ types: ["heading", "paragraph"] }),
+        ],
+        onUpdate(props) {
+            const content = props.editor.getHTML();
+            form.setFieldValue("actividad", content);
+        },
+        content,
+    });
 
     useEffect(() => {
         if (activateActividad !== null) {
@@ -42,9 +63,10 @@ export const ActividadForm = ({ fecha_inicio, fecha_fin }) => {
         //console.log(form.values)
         modalActionActividad(0);
         form.reset();
-        setTimeout(() => {
+        editor.commands.clearContent();
+        /* setTimeout(() => {
             window.location.reload();
-        }, 2000);
+        }, 2000); */
     };
 
     return (
@@ -73,7 +95,7 @@ export const ActividadForm = ({ fecha_inicio, fecha_fin }) => {
                         maxRows={8}
                         {...form.getInputProps("actividad")}
                     /> */}
-                    <FormRichText form={form} />
+                    <FormRichText form={form} nameInput="actividad" editor={editor} />
                 </Grid.Col>
             </Grid>
             <BtnSubmit radius="md" IconSection={IconDatabase}>

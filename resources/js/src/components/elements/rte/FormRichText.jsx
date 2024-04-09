@@ -1,30 +1,9 @@
-import { RichTextEditor, Link } from "@mantine/tiptap";
-import { useEditor } from "@tiptap/react";
-import StarterKit from "@tiptap/starter-kit";
-import TextAlign from "@tiptap/extension-text-align";
-import Superscript from "@tiptap/extension-superscript";
-import SubScript from "@tiptap/extension-subscript";
+import { Input } from "@mantine/core";
+import { RichTextEditor } from "@mantine/tiptap";
 
-let content = "";
-
-export const FormRichText = ({ form }) => {
-    const editor = useEditor({
-        extensions: [
-            StarterKit,
-            Link,
-            Superscript,
-            SubScript,
-            TextAlign.configure({ types: ["heading", "paragraph"] }),
-        ],
-        onUpdate(props) {
-            const content = props.editor.getHTML();
-            form.setFieldValue("actividad", content);
-        },
-        content,
-    });
-
-
+export const FormRichText = ({ form, nameInput, editor }) => {
     return (
+        <Input.Wrapper {...form.getInputProps(nameInput)}>
             <RichTextEditor editor={editor}>
                 <RichTextEditor.Toolbar sticky stickyOffset={60}>
                     <RichTextEditor.ControlsGroup>
@@ -70,5 +49,6 @@ export const FormRichText = ({ form }) => {
                 </RichTextEditor.Toolbar>
                 <RichTextEditor.Content />
             </RichTextEditor>
+        </Input.Wrapper>
     );
 };
