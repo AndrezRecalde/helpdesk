@@ -38,7 +38,7 @@ export const ChartDesempTecnicos = () => {
             },
             title: {
                 display: true,
-                text: "Resumen por areas",
+                text: "Resumen por técnicos",
             },
         },
     };
@@ -84,7 +84,7 @@ export const ChartDesempTecnicos = () => {
     return (
         <Card withBorder shadow="sm" radius="md" mt="sm" mb="sm">
             <Card.Section withBorder inheritPadding py="xs">
-                Soportes por técnicos
+                Soportes por técnicos - {new Date().getFullYear()}
             </Card.Section>
             <Card.Section withBorder inheritPadding py="xs">
                 <Bar options={options} data={data} />

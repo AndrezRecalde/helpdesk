@@ -189,6 +189,7 @@ export const FormCreateSoporte = ({ form }) => {
                 <Grid.Col span={{ base: 12, sm: 12, md: 12, lg: 12 }}>
                     <Select
                         withAsterisk
+                        disabled
                         label="Dirección"
                         placeholder="Seleccione la dirección/gestión"
                         {...form.getInputProps("id_direccion")}

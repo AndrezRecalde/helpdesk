@@ -39,7 +39,7 @@ export const ChartBarSoportes = () => {
             },
             title: {
                 display: true,
-                text: "Resumen por areas",
+                text: "Resumen por áreas",
             },
         },
     };
@@ -54,6 +54,12 @@ export const ChartBarSoportes = () => {
                 data: soportesForAreas?.map(soporte => soporte.total_pendientes),
                 backgroundColor: "rgba(239, 233, 49, 0.66)",
                 borderColor: "rgba(246, 238, 70, 1)"
+            },
+            {
+                label: "Total asignados",
+                data: soportesForAreas?.map(soporte => soporte.total_asignados),
+                backgroundColor: "rgba(248, 123, 3, 0.66)",
+                borderColor: "rgba(245, 147, 55, 1)"
             },
             {
                 label: "Total atendidas",
