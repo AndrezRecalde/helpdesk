@@ -25,10 +25,16 @@ export const ChartDesempTecnicos = () => {
 
 
     const options = {
+        scales: {
+            xAxes: [{
+                barThickness: 8,  // number (pixels) or 'flex'
+                maxBarThickness: 10 // number (pixels)
+            }]
+        },
         indexAxis: "y",
         elements: {
             bar: {
-                borderWidth: 2,
+                borderWidth: 3,
             },
         },
         responsive: true,

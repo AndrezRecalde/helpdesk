@@ -7,7 +7,8 @@ import dayjs from "dayjs";
 
 export const SoportesTable = () => {
     const usuario = JSON.parse(localStorage.getItem("service_user"));
-    const { isLoading, soportes, startExportSoporte, setActivateSoporte } = useSoporteStore();
+    const { isLoading, soportes, startExportSoporte, setActivateSoporte } =
+        useSoporteStore();
     const {
         modalActionAsignarSoporte,
         modalActionAnularSoporte,
@@ -22,7 +23,7 @@ export const SoportesTable = () => {
                 Cell: ({ cell }) => (
                     <Badge
                         variant="dot"
-                        radius="sm"
+                        radius="md"
                         color={cell.row.original.color}
                     >
                         {cell.row.original.estado}
@@ -87,6 +88,24 @@ export const SoportesTable = () => {
         state: { showProgressBars: isLoading },
         enableFacetedValues: true,
         enableRowActions: true,
+        mantineTableBodyCellProps: ({ cell }) => ({
+            style: {
+                backgroundColor:
+                    cell.row.original.tecnico_asignado === null
+                        ? "#CB3234"
+                        /* : cell.row.original.id_estado === 5
+                        ? "#f0a660"
+                        : cell.row.original.id_estado === 4
+                        ? "#6df79a"
+                        : cell.row.original.id_estado === 3
+                        ? "#5c9ff2" */
+                        : "",
+                color:
+                    cell.row.original.tecnico_asignado === null
+                        ? "white"
+                        : "",
+            },
+        }),
         renderRowActionMenuItems: ({ row }) =>
             usuario.role_id === 1 ? (
                 <MenuSolicitudTable

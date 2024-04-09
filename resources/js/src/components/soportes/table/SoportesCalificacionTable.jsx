@@ -67,7 +67,7 @@ export const SoportesCalificacionTable = () => {
                     leftSection={<IconStars />}
                     variant="filled"
                 >
-                    Calificar
+                    Cerrar
                 </Button>
             </Box>
         ),

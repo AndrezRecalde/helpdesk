@@ -51,7 +51,7 @@ export const lGerente = [
         initiallyOpened: true,
         links: [
             { label: "Gestionar Soportes", link: "/gerencia/soportes" },
-            { label: "Calificar Soportes", link: "/gerencia/calificar" },
+            { label: "Cerrar Soportes", link: "/gerencia/cerrar-soportes" },
             {
                 label: "Indicadores de Soporte",
                 link: "/gerencia/indicadores-soportes",

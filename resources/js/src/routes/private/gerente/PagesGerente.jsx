@@ -43,7 +43,7 @@ export const PagesGerente = () => {
                 element={<IndicadorReportPage />}
             />
 
-            <Route path="calificar" element={<SoporteCalificacionPage />} />
+            <Route path="cerrar-soportes" element={<SoporteCalificacionPage />} />
 
             <Route path="/permiso" element={<PermisosPage />} />
 

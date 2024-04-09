@@ -1,10 +1,9 @@
 import { useMemo } from "react";
 import { useMantineReactTable } from "mantine-react-table";
-import { TableContent } from "../.."
 import { Table, Text } from "@mantine/core";
+import { TableContent } from "../../../components";
 import { useSoporteStore } from "../../../hooks";
 import dayjs from "dayjs";
-
 
 export const SoportesUsersTable = () => {
     const { isLoading, soportes } = useSoporteStore();
@@ -66,7 +65,8 @@ export const SoportesUsersTable = () => {
                             </Table.Td>
                             <Table.Td>
                                 <Text fz="sm">
-                                    {row.original.solucion ?? "Aun sin solución"}
+                                    {row.original.solucion ??
+                                        "Aun sin solución"}
                                 </Text>
                                 <Text fz="xs" c="dimmed">
                                     Retrospectiva del técnico
@@ -79,7 +79,5 @@ export const SoportesUsersTable = () => {
         ),
     });
 
-  return (
-    <TableContent table={table} />
-  )
-}
+    return <TableContent table={table} />;
+};
