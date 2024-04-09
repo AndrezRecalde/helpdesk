@@ -12,6 +12,7 @@ import {
     DashSoporteStats,
     TitlePage,
     ChartDesempTecnicos,
+    DashInfoStats,
 } from "../../../components";
 
 export const DashGerenciaPage = () => {
@@ -36,14 +37,16 @@ export const DashGerenciaPage = () => {
                 Panel de Soporte Técnico
             </TitlePage>
             <DashSoporteStats />
-            {/* <DashInfoStats /> */}
             <SimpleGrid cols={{ base: 1, sm: 2, md: 2, lg: 2 }}>
+                <DashInfoStats />
                 <ChartPieSoportes />
-                <ChartDesempTecnicos />
             </SimpleGrid>
             <SimpleGrid cols={{ base: 1, sm: 2, md: 2, lg: 2 }}>
                 <ChartSoportesMes />
                 <ChartBarSoportes />
+            </SimpleGrid>
+            <SimpleGrid cols={{ base: 1, sm: 1, md: 1, lg: 1 }}>
+                <ChartDesempTecnicos />
             </SimpleGrid>
         </Container>
     );

@@ -49,7 +49,7 @@ export const DashInfoStats = () => {
     });
     return (
         <div className={classes.root}>
-            <SimpleGrid cols={{ base: 4, xs: 1, sm: 4, md: 4, lg: 4 }}>
+            <SimpleGrid cols={{ base: 1, xs: 1, sm: 1, md: 1, lg: 1 }}>
                 {stats}
             </SimpleGrid>
         </div>

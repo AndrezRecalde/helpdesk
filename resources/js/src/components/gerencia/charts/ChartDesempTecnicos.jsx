@@ -82,7 +82,7 @@ export const ChartDesempTecnicos = () => {
     };
 
     return (
-        <Card withBorder shadow="sm" radius="md"  mb="sm">
+        <Card withBorder shadow="sm" radius="md" mt="sm" mb="sm">
             <Card.Section withBorder inheritPadding py="xs">
                 Soportes por técnicos
             </Card.Section>
