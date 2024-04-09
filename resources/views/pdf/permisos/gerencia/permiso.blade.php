@@ -77,7 +77,7 @@
                     <td>SOLICITUD No:</td>
                     <td>{{ $permisos->idper_permisos }}</td>
                     <td>FECHA DE PERMISO:</td>
-                    <td style="background-color: black; color: white;">{{ \Carbon\Carbon::parse($permisos->per_fecha_salida)->format('Y-m-d') }}</td>
+                    <td><strong>{{ \Carbon\Carbon::parse($permisos->per_fecha_salida)->format('Y-m-d') }}</strong></td>
                     <td>{!! DNS1D::getBarcodeHTML($permisos->idper_permisos, 'C128', 1, 33, 'green') !!}</td>
                 </tr>
                 <tr>
@@ -97,10 +97,10 @@
                 </tr>
                 <tr>
                     <td>HORA SALIDA:</td>
-                    <td style="background-color: black; color: white;">{{ \Carbon\Carbon::parse($permisos->per_fecha_salida)->toTimeString() }}</td>
+                    <td><strong>{{ \Carbon\Carbon::parse($permisos->per_fecha_salida)->toTimeString() }}</strong></td>
                     <td></td>
                     <td>HORA ENTRADA:</td>
-                    <td style="background-color: black; color: white;">{{ \Carbon\Carbon::parse($permisos->per_fecha_llegada)->toTimeString() }}</td>
+                    <td><strong>{{ \Carbon\Carbon::parse($permisos->per_fecha_llegada)->toTimeString() }}</strong></td>
                 </tr>
                 <tr>
                     <td colspan="5">OBSERVACION: </td>
@@ -182,7 +182,7 @@
                     <td>SOLICITUD No:</td>
                     <td>{{ $permisos->idper_permisos }}</td>
                     <td>FECHA DE PERMISO:</td>
-                    <td style="background-color: black; color: white;">{{ \Carbon\Carbon::parse($permisos->per_fecha_salida)->format('Y-m-d') }}</td>
+                    <td><strong>{{ \Carbon\Carbon::parse($permisos->per_fecha_salida)->format('Y-m-d') }}</strong></td>
                     <td>{!! DNS1D::getBarcodeHTML($permisos->idper_permisos, 'C128', 1, 33, 'green') !!}</td>
                 </tr>
                 <tr>
@@ -202,10 +202,10 @@
                 </tr>
                 <tr>
                     <td>HORA SALIDA:</td>
-                    <td style="background-color: black; color: white;">{{ \Carbon\Carbon::parse($permisos->per_fecha_salida)->toTimeString() }}</td>
+                    <td><strong>{{ \Carbon\Carbon::parse($permisos->per_fecha_salida)->toTimeString() }}</strong></td>
                     <td></td>
                     <td>HORA ENTRADA:</td>
-                    <td style="background-color: black; color: white;">{{ \Carbon\Carbon::parse($permisos->per_fecha_llegada)->toTimeString() }}</td>
+                    <td><strong>{{ \Carbon\Carbon::parse($permisos->per_fecha_llegada)->toTimeString() }}</strong></td>
                 </tr>
                 <tr>
                     <td colspan="5">OBSERVACION: </td>
