@@ -95,10 +95,10 @@ export const FormCreateSoporte = ({ form }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        //console.log(form.getTransformedValues());
-        startCreateSoporte(form.getTransformedValues());
-        modalActionCreateSoporte(0);
-        form.reset();
+        console.log(form.getTransformedValues());
+        //startCreateSoporte(form.getTransformedValues());
+        //modalActionCreateSoporte(0);
+        //form.reset();
     };
 
     return (

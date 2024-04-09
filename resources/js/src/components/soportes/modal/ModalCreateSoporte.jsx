@@ -56,19 +56,19 @@ export const ModalCreateSoporte = ({ role }) => {
                 "Por favor debe seleccionar una opción "
             ),
             id_usu_tecnico_asig: isNotEmpty("Por favor seleccione un técnico"),
-            id_direccion: isNotEmpty(
+            /* id_direccion: isNotEmpty(
                 "Por favor seleccione la dirección del solicitante"
-            ),
+            ), */
             id_usu_recibe: isNotEmpty(
                 "Por favor seleccione al usuario solicitante"
             ),
             id_tipo_soporte: isNotEmpty("Por favor ingrese el tipo de soporte"),
             id_area_tic: isNotEmpty("Por favor seleccione el área"),
             incidente: isNotEmpty("Por favor ingrese la incidencia"),
-            solucion: hasLength(
+            /* solucion: hasLength(
                 { min: 5, max: 350 },
                 "La solución debe tener entre 10 y 350 caracteres"
-            ),
+            ), */
             id_equipo: (value, values) =>
                 values.id_tipo_soporte == 1 && value === null
                     ? "En soporte a hardware es obligatorio el código del activo"
@@ -200,19 +200,30 @@ export const ModalCreateSoporte = ({ role }) => {
     }, [isOpenModalCreateSoporte]);
 
     useEffect(() => {
+        const direccion = users.find(
+            (user) => user.cdgo_usrio == id_usu_recibe
+        );
         if (id_usu_recibe !== null) {
-            const direccion = users.find(
-                (user) => user.cdgo_usrio == id_usu_recibe
-            );
+            console.log("aki 1");
+
             form.setFieldValue(
                 "id_direccion",
                 direccion?.cdgo_dprtmnto.toString()
             );
-        } else {
-            form.setFieldValue("id_direccion", null);
-        }
-    }, [id_usu_recibe]);
+            console.log(id_direccion)
 
+        } else if (activateSoporte !== null) {
+            console.log("aki 2");
+            form.setFieldValue(
+                "id_direccion",
+                activateSoporte?.id_direccion ||
+                    activateSoporte?.id_direccion == 0
+                    ? activateSoporte?.id_direccion?.toString()
+                    : direccion?.cdgo_dprtmnto.toString()
+            );
+            console.log(id_direccion)
+        }
+    }, [id_usu_recibe, activateSoporte]);
 
     const handleCloseModal = () => {
         setActivateSoporte(null);

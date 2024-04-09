@@ -119,6 +119,7 @@ export const FormTrabajoUser = ({ form }) => {
                         label="Fecha de finalización"
                         description="Vacía si no la sabe"
                         placeholder="Digite la fecha"
+                        valueFormat="YYYY-MM-DD"
                         {...form.getInputProps("usu_f_f_contrato")}
                     />
                 </Grid.Col>

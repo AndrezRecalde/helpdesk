@@ -31,9 +31,9 @@ export const ModalUser = ({ title }) => {
             nmbre_usrio: "",
             nombre_formateado: "",
             email: "",
-            sexo: "",
+            sexo: null,
             lgin: "",
-            actvo: "",
+            actvo: null,
 
             usu_id_empresa: null,
             cdgo_direccion: null,
@@ -41,12 +41,12 @@ export const ModalUser = ({ title }) => {
             id_tipo_usuario: null,
             usu_ult_tipo_contrato: null,
             finaliza_contrato: null,
-            usu_f_f_contrato: "",
+            usu_f_f_contrato: new Date(),
 
-            tecnico: "",
-            secretaria_tic: "",
-            super_user: "",
-            interno: "",
+            tecnico: null,
+            secretaria_tic: null,
+            super_user: null,
+            interno: null,
             usu_estado: null,
             usu_alias: "",
             usu_ing: "",
@@ -88,6 +88,25 @@ export const ModalUser = ({ title }) => {
             usu_estado: isNotEmpty("Por favor selecciona una opción"),
             usu_alias: isNotEmpty("Por favor ingrese el alias del usuario"),
         },
+        transformValues: (values) => ({
+            ...values,
+            sexo: Number(values.sexo) || null,
+            actvo: Number(values.actvo) || null,
+            usu_id_empresa: Number(values.usu_id_empresa) || null,
+            cdgo_direccion: Number(values.cdgo_direccion) || null,
+            crgo_id: Number(values.crgo_id) || null,
+            id_tipo_usuario: Number(values.id_tipo_usuario) || null,
+            usu_ult_tipo_contrato: Number(values.usu_ult_tipo_contrato) || null,
+            finaliza_contrato: Number(values.finaliza_contrato) || null,
+
+            tecnico: Number(values.tecnico) || null,
+            secretaria_tic: Number(values.secretaria_tic) || null,
+            super_user: Number(values.super_user) || null,
+            interno: Number(values.interno) || null,
+            usu_estado: Number(values.usu_estado) || null,
+
+
+        }),
     });
 
     useEffect(() => {
@@ -111,6 +130,7 @@ export const ModalUser = ({ title }) => {
     const handleCloseModal = () => {
         modalActionUser(0);
         setClearActivateUser();
+        form.reset();
     };
     return (
         <Modal
