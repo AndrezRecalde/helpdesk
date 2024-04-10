@@ -36,7 +36,7 @@ export const FormCreateSoporte = ({ form }) => {
     const { modalActionCreateSoporte } = useUiSoporte();
 
     useEffect(() => {
-        if (activo_informatico) {
+        if (activo_informatico || id_tipo_soporte == 1) {
             form.setFieldValue("activo_informatico", true);
             form.setFieldValue(
                 "id_equipo",
@@ -44,6 +44,9 @@ export const FormCreateSoporte = ({ form }) => {
                     ? activateSoporte?.id_equipo.toString()
                     : null
             );
+        }
+        if (id_tipo_soporte != 1) {
+            form.setFieldValue("activo_informatico", false);
         }
         form.setFieldValue(
             "id_estado",
@@ -61,7 +64,7 @@ export const FormCreateSoporte = ({ form }) => {
                 ? new Date(activateSoporte?.fecha_fin)
                 : new Date()
         );
-    }, [activo_informatico]);
+    }, [activo_informatico, id_tipo_soporte]);
 
     useEffect(() => {
         if (id_tipo_solicitud == 7) {
@@ -95,10 +98,10 @@ export const FormCreateSoporte = ({ form }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(form.getTransformedValues());
-        //startCreateSoporte(form.getTransformedValues());
-        //modalActionCreateSoporte(0);
-        //form.reset();
+        //console.log(form.getTransformedValues());
+        startCreateSoporte(form.getTransformedValues());
+        modalActionCreateSoporte(0);
+        form.reset();
     };
 
     return (
@@ -204,22 +207,6 @@ export const FormCreateSoporte = ({ form }) => {
                 <Grid.Col span={{ base: 12, md: 6, lg: 6 }}>
                     <Select
                         withAsterisk
-                        label="Tipo Soporte"
-                        placeholder="Seleccione Tipo Soporte"
-                        {...form.getInputProps("id_tipo_soporte")}
-                        data={[
-                            { value: "1", label: "SOPORTE EN HARDWARE" },
-                            { value: "2", label: "SOPORTE EN SOFTWARE" },
-                            { value: "3", label: "SOPORTE A USUARIOS" },
-                            { value: "4", label: "PRESTAMO DE EQUIPO" },
-                            { value: "5", label: "MANTENIMIENTO PREVENTIVO" },
-                            { value: "6", label: "MANTENIMIENTO CORRECTIVO" },
-                        ]}
-                    />
-                </Grid.Col>
-                <Grid.Col span={{ base: 12, md: 6, lg: 6 }}>
-                    <Select
-                        withAsterisk
                         label="Área del soporte"
                         placeholder="Seleccione el área"
                         {...form.getInputProps("id_area_tic")}
@@ -230,6 +217,22 @@ export const FormCreateSoporte = ({ form }) => {
                                 label: "INFRAESTRUCTURA TECNOLÓGICA",
                             },
                             { value: "5", label: "SOPORTE TÉCNICO" },
+                        ]}
+                    />
+                </Grid.Col>
+                <Grid.Col span={{ base: 12, md: 6, lg: 6 }}>
+                    <Select
+                        withAsterisk
+                        label="Tipo Soporte"
+                        placeholder="Seleccione Tipo Soporte"
+                        {...form.getInputProps("id_tipo_soporte")}
+                        data={[
+                            { value: "1", label: "SOPORTE EN HARDWARE" },
+                            { value: "2", label: "SOPORTE EN SOFTWARE" },
+                            { value: "3", label: "SOPORTE A USUARIOS" },
+                            { value: "4", label: "PRESTAMO DE EQUIPO" },
+                            { value: "5", label: "MANTENIMIENTO PREVENTIVO" },
+                            { value: "6", label: "MANTENIMIENTO CORRECTIVO" },
                         ]}
                     />
                 </Grid.Col>
