@@ -5,6 +5,7 @@ import {
     onClearDirecciones,
     onLoadDirecciones,
     onLoadErrores,
+    onSetActivateDireccion,
 } from "../../store/direccion/direccionSlice";
 
 export const useDireccionStore = () => {
@@ -31,6 +32,10 @@ export const useDireccionStore = () => {
         }
     };
 
+    const setActivateDireccion = (direccion) => {
+        dispatch(onSetActivateDireccion(direccion));
+    }
+
 
     /* LIMPIEZA */
     const clearDirecciones = () => {
@@ -46,6 +51,7 @@ export const useDireccionStore = () => {
         errores,
 
         startLoadDirecciones,
+        setActivateDireccion,
         clearDirecciones,
     };
 };
