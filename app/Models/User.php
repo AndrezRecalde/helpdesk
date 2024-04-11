@@ -105,7 +105,7 @@ class User extends Authenticatable
     function scopeUsuario($query, $lgin)
     {
         if ($lgin) {
-            return $query->where('us.lgin', $lgin);
+            return $query->where('us.lgin', 'like', '%' . $lgin . '%');
         }
     }
 
