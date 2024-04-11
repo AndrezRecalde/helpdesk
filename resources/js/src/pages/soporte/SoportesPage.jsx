@@ -11,7 +11,6 @@ import {
     ModalAsignarSoporte,
     ModalAnularSoporte,
     ModalDiagnostico,
-    BtnSection,
 } from "../../components";
 import { useDireccionStore, useSoporteStore, useTitlePage, useUiSoporte } from "../../hooks";
 import { isNotEmpty, useForm } from "@mantine/form";

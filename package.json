@@ -35,6 +35,7 @@
         "@tiptap/react": "^2.2.4",
         "@tiptap/starter-kit": "^2.2.4",
         "chart.js": "^4.4.1",
+        "chartjs-plugin-datalabels": "^2.2.0",
         "clsx": "^2.1.0",
         "dayjs": "^1.11.10",
         "mantine-react-table": "^2.0.0-beta.0",

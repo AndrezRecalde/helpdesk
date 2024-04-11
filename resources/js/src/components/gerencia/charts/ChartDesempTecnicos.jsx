@@ -10,6 +10,7 @@ import {
 import { Bar } from "react-chartjs-2";
 import { Card } from "@mantine/core";
 import { useIndicadorStore } from "../../../hooks";
+import ChartDataLabels from "chartjs-plugin-datalabels";
 
 ChartJS.register(
     CategoryScale,
@@ -23,66 +24,173 @@ ChartJS.register(
 export const ChartDesempTecnicos = () => {
     const { desempenoForTecnicos } = useIndicadorStore();
 
-
     const options = {
-        scales: {
-            xAxes: [{
-                barThickness: 8,  // number (pixels) or 'flex'
-                maxBarThickness: 10 // number (pixels)
-            }]
-        },
         indexAxis: "y",
+        scales: {
+            y: {
+                ticks: {
+                    font: {
+                        size: 16, //this change the font size
+                        weight: "italic",
+                    },
+                },
+            },
+            x: {
+                ticks: {
+                    font: {
+                        size: 16, //this change the font size
+                        weight: "italic",
+                    },
+                },
+            },
+        },
         elements: {
             bar: {
-                borderWidth: 3,
+                borderWidth: 2,
             },
         },
         responsive: true,
         plugins: {
             legend: {
-                position: "bottom",
+                position: "top",
+
+                labels: {
+                    font: {
+                        size: 14,
+                        weight: "italic",
+                    },
+                },
             },
             title: {
                 display: true,
-                text: "Resumen por técnicos",
+                text: "Desempeño de Técnicos",
+                font: {
+                    size: 20,
+                    weight: "italic",
+                },
             },
         },
     };
 
-    const labels = desempenoForTecnicos?.map(tecnico => tecnico.tecnico);
+    const labels = desempenoForTecnicos?.map((tecnico) => tecnico.tecnico);
 
     const data = {
         labels,
         datasets: [
-            {
+            /* {
                 label: "Total pendientes",
-                data: desempenoForTecnicos?.map(tecnico => tecnico.total_pendientes),
+                data: desempenoForTecnicos?.map(
+                    (tecnico) => tecnico.total_pendientes
+                ),
                 backgroundColor: "rgba(239, 233, 49, 0.66)",
-                borderColor: "rgba(246, 238, 70, 1)"
-            },
+                borderColor: "rgba(246, 238, 70, 1)",
+                borderWidth: 2,
+                borderRadius: 2,
+                plugins: [ChartDataLabels],
+                datalabels: {
+                    color: "black",
+                    align: "bottom",
+                    labels: {
+                        title: {
+                            font: {
+                                weight: "italic",
+                                size: 16,
+                            },
+                        },
+                    },
+                },
+            }, */
             {
                 label: "Total asignados",
-                data: desempenoForTecnicos?.map(tecnico => tecnico.total_asignados),
+                data: desempenoForTecnicos?.map(
+                    (tecnico) => tecnico.total_asignados
+                ),
                 backgroundColor: "rgba(248, 123, 3, 0.66)",
-                borderColor: "rgba(245, 147, 55, 1)"
+                borderColor: "rgba(245, 147, 55, 1)",
+                borderWidth: 2,
+                borderRadius: 2,
+                plugins: [ChartDataLabels],
+                datalabels: {
+                    color: "black",
+                    align: "bottom",
+                    labels: {
+                        title: {
+                            font: {
+                                weight: "italic",
+                                size: 16,
+                            },
+                        },
+                    },
+                },
             },
             {
                 label: "Total atendidas",
-                data: desempenoForTecnicos?.map(tecnico => tecnico.total_atendidos),
+                data: desempenoForTecnicos?.map(
+                    (tecnico) => tecnico.total_atendidos
+                ),
                 backgroundColor: "rgba(4, 115, 253, 0.66)",
-                borderColor: "rgba(30, 166, 238, 1)"
+                borderColor: "rgba(30, 166, 238, 1)",
+                borderWidth: 2,
+                borderRadius: 2,
+                plugins: [ChartDataLabels],
+                datalabels: {
+                    color: "black",
+                    align: "bottom",
+                    labels: {
+                        title: {
+                            font: {
+                                weight: "italic",
+                                size: 16,
+                            },
+                        },
+                    },
+                },
             },
             {
                 label: "Total finalizadas",
-                data: desempenoForTecnicos?.map(tecnico => tecnico.total_finalizados),
+                data: desempenoForTecnicos?.map(
+                    (tecnico) => tecnico.total_finalizados
+                ),
                 backgroundColor: "rgba(1, 250, 82, 0.66)",
-                borderColor: "rgba(47, 239, 111, 1)"
+                borderColor: "rgba(47, 239, 111, 1)",
+                borderWidth: 2,
+                borderRadius: 2,
+                plugins: [ChartDataLabels],
+                datalabels: {
+                    color: "black",
+                    align: "bottom",
+                    labels: {
+                        title: {
+                            font: {
+                                weight: "italic",
+                                size: 16,
+                            },
+                        },
+                    },
+                },
             },
             {
                 label: "Total anuladas",
-                data: desempenoForTecnicos?.map(tecnico => tecnico.total_anuladas),
+                data: desempenoForTecnicos?.map(
+                    (tecnico) => tecnico.total_anuladas
+                ),
                 backgroundColor: "rgba(250, 9, 9, 0.66)",
-                borderColor: "rgba(228, 65, 65, 1)"
+                borderColor: "rgba(228, 65, 65, 1)",
+                borderWidth: 2,
+                borderRadius: 2,
+                plugins: [ChartDataLabels],
+                datalabels: {
+                    color: "black",
+                    align: "bottom",
+                    labels: {
+                        title: {
+                            font: {
+                                weight: "italic",
+                                size: 16,
+                            },
+                        },
+                    },
+                },
             },
         ],
     };
@@ -93,7 +201,7 @@ export const ChartDesempTecnicos = () => {
                 Soportes por técnicos - {new Date().getFullYear()}
             </Card.Section>
             <Card.Section withBorder inheritPadding py="xs">
-                <Bar options={options} data={data} />
+                <Bar options={options} data={data}  />
             </Card.Section>
         </Card>
     );
