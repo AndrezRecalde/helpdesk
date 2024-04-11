@@ -30,14 +30,43 @@ export const ChartSoportesMes = () => {
     const { soportesPorMes } = useDashGerenciaStore();
 
     const options = {
+        scales: {
+            y: {
+                ticks: {
+                    font: {
+                        size: 12, //this change the font size
+                        weight: "italic",
+                    },
+                },
+            },
+            x: {
+                ticks: {
+                    font: {
+                        size: 12, //this change the font size
+                        weight: "italic",
+                    },
+                },
+            },
+        },
         responsive: true,
         plugins: {
             legend: {
                 position: "top",
+
+                labels: {
+                    font: {
+                        size: 12,
+                        weight: "italic",
+                    },
+                },
             },
             title: {
                 display: true,
-                text: "Total Soportes por Mes",
+                text: "Desempeño de Áreas",
+                font: {
+                    size: 16,
+                    weight: "italic",
+                },
             },
         },
     };
@@ -53,6 +82,18 @@ export const ChartSoportesMes = () => {
                 data: soportesPorMes?.map(soporte => soporte.total_soportes),
                 borderColor: "rgba(24, 248, 166, 1)",
                 backgroundColor: "rgba(24, 248, 166, 0.55)",
+                datalabels: {
+                    color: "black",
+                    align: "bottom",
+                    labels: {
+                        title: {
+                            font: {
+                                weight: "italic",
+                                size: 12,
+                            },
+                        },
+                    },
+                },
             },
         ],
     };

@@ -27,6 +27,24 @@ export const ChartBarSoportes = () => {
 
     const options = {
         indexAxis: "y",
+        scales: {
+            y: {
+                ticks: {
+                    font: {
+                        size: 14, //this change the font size
+                        weight: "italic",
+                    },
+                },
+            },
+            x: {
+                ticks: {
+                    font: {
+                        size: 14, //this change the font size
+                        weight: "italic",
+                    },
+                },
+            },
+        },
         elements: {
             bar: {
                 borderWidth: 2,
@@ -35,11 +53,22 @@ export const ChartBarSoportes = () => {
         responsive: true,
         plugins: {
             legend: {
-                position: "right",
+                position: "top",
+
+                labels: {
+                    font: {
+                        size: 14,
+                        weight: "italic",
+                    },
+                },
             },
             title: {
                 display: true,
-                text: "Resumen por áreas",
+                text: "Desempeño de Áreas",
+                font: {
+                    size: 16,
+                    weight: "italic",
+                },
             },
         },
     };
@@ -49,35 +78,83 @@ export const ChartBarSoportes = () => {
     const data = {
         labels,
         datasets: [
-            {
+           /*{
                 label: "Total pendientes",
                 data: soportesForAreas?.map(soporte => soporte.total_pendientes),
                 backgroundColor: "rgba(239, 233, 49, 0.66)",
                 borderColor: "rgba(246, 238, 70, 1)"
-            },
+            }, */
             {
                 label: "Total asignados",
                 data: soportesForAreas?.map(soporte => soporte.total_asignados),
                 backgroundColor: "rgba(248, 123, 3, 0.66)",
-                borderColor: "rgba(245, 147, 55, 1)"
+                borderColor: "rgba(245, 147, 55, 1)",
+                datalabels: {
+                    color: "black",
+                    align: "bottom",
+                    labels: {
+                        title: {
+                            font: {
+                                weight: "italic",
+                                size: 16,
+                            },
+                        },
+                    },
+                },
             },
             {
                 label: "Total atendidas",
                 data: soportesForAreas?.map(soporte => soporte.total_atendidos),
                 backgroundColor: "rgba(4, 115, 253, 0.66)",
-                borderColor: "rgba(30, 166, 238, 1)"
+                borderColor: "rgba(30, 166, 238, 1)",
+                datalabels: {
+                    color: "black",
+                    align: "bottom",
+                    labels: {
+                        title: {
+                            font: {
+                                weight: "italic",
+                                size: 16,
+                            },
+                        },
+                    },
+                },
             },
             {
                 label: "Total finalizadas",
                 data: soportesForAreas?.map(soporte => soporte.total_finalizados),
                 backgroundColor: "rgba(1, 250, 82, 0.66)",
-                borderColor: "rgba(47, 239, 111, 1)"
+                borderColor: "rgba(47, 239, 111, 1)",
+                datalabels: {
+                    color: "black",
+                    align: "bottom",
+                    labels: {
+                        title: {
+                            font: {
+                                weight: "italic",
+                                size: 16,
+                            },
+                        },
+                    },
+                },
             },
             {
                 label: "Total anuladas",
                 data: soportesForAreas?.map(soporte => soporte.total_anuladas),
                 backgroundColor: "rgba(250, 9, 9, 0.66)",
-                borderColor: "rgba(228, 65, 65, 1)"
+                borderColor: "rgba(228, 65, 65, 1)",
+                datalabels: {
+                    color: "black",
+                    align: "bottom",
+                    labels: {
+                        title: {
+                            font: {
+                                weight: "italic",
+                                size: 16,
+                            },
+                        },
+                    },
+                },
             },
         ],
     };

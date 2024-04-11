@@ -10,6 +10,30 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 export const ChartPieSoportes = () => {
     const { soportesForEstado } = useDashGerenciaStore();
 
+    const options = {
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                position: "top",
+
+                labels: {
+                    font: {
+                        size: 12,
+                        weight: "italic",
+                    },
+                },
+            },
+            title: {
+                display: true,
+                text: "Desempeño de Áreas",
+                font: {
+                    size: 16,
+                    weight: "italic",
+                },
+            },
+        },
+    };
+
     const data = {
         labels: soportesForEstado?.map(soporte => soporte.estado),
         datasets: [
@@ -32,7 +56,7 @@ export const ChartPieSoportes = () => {
                 <Pie
                     data={data}
                     height={400}
-                    options={{ maintainAspectRatio: false }}
+                    options={options}
                 />
             </Card.Section>
         </Card>
