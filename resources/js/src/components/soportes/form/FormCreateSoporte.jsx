@@ -15,6 +15,7 @@ import {
     useEquipoStore,
     useEstadoStore,
     useSoporteStore,
+    useStorageField,
     useTecnicoStore,
     useTipoSolicitudStore,
     useUiSoporte,
@@ -34,6 +35,8 @@ export const FormCreateSoporte = ({ form }) => {
     const { equipos } = useEquipoStore();
     const { startCreateSoporte, activateSoporte } = useSoporteStore();
     const { modalActionCreateSoporte } = useUiSoporte();
+    const { storageFields } = useStorageField();
+
 
     useEffect(() => {
         if (activo_informatico || id_tipo_soporte == 1) {
@@ -99,7 +102,7 @@ export const FormCreateSoporte = ({ form }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         //console.log(form.getTransformedValues());
-        startCreateSoporte(form.getTransformedValues());
+        startCreateSoporte(form.getTransformedValues(), storageFields);
         modalActionCreateSoporte(0);
         form.reset();
     };

@@ -15,6 +15,7 @@ import {
     permisoSlice,
     sexoSlice,
     soporteSlice,
+    storageFieldsSlice,
     tecnicoSlice,
     tipoContratoSlice,
     tipoSolicitudSlice,
@@ -57,6 +58,7 @@ export const store = configureStore({
         permiso: permisoSlice.reducer,
         uiPermiso: uiPermisoSlice.reducer,
         uiActividad: uiActividadSlice.reducer,
-        dashGerencia: dashGerenciaSlice.reducer
+        dashGerencia: dashGerenciaSlice.reducer,
+        storageField: storageFieldsSlice.reducer
     },
 });

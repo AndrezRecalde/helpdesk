@@ -68,6 +68,9 @@ import { useUiActividad } from "./actividad/useUiActividad";
 import { usePermisoStore } from "./permiso/usePermisoStore";
 import { useUiPermiso } from "./permiso/useUiPermiso";
 
+/* Storage */
+import { useStorageField } from "./storage/useStorageField";
+
 export {
     useTitlePage,
     useErrorException,
@@ -117,5 +120,7 @@ export {
     useUiActividad,
 
     usePermisoStore,
-    useUiPermiso
+    useUiPermiso,
+
+    useStorageField
 }

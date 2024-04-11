@@ -121,7 +121,7 @@ export const useSoporteStore = () => {
     };
 
     /* GERENTE O TECNICO */
-    const startCreateSoporte = async (soporte) => {
+    const startCreateSoporte = async (soporte, storageFields) => {
         try {
             /* GERENCIA */
             if (soporte.id_sop) {
@@ -134,6 +134,7 @@ export const useSoporteStore = () => {
                 setTimeout(() => {
                     dispatch(onLoadMessage(undefined));
                 }, 40);
+                startSearchSoporte(storageFields);
                 return;
             }
 
@@ -146,6 +147,7 @@ export const useSoporteStore = () => {
             setTimeout(() => {
                 dispatch(onLoadMessage(undefined));
             }, 40);
+            startSearchSoporte(storageFields);
         } catch (error) {
             //console.log(error);
             ExceptionMessageError(error);

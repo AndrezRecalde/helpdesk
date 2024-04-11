@@ -11,12 +11,13 @@ import {
 import { BtnSubmit } from "../../../components";
 import { DateInput, YearPickerInput } from "@mantine/dates";
 import { IconSearch } from "@tabler/icons-react";
-import { useDireccionStore, useSoporteStore } from "../../../hooks";
+import { useDireccionStore, useSoporteStore, useStorageField } from "../../../hooks";
 
 export const FilterFormSoportes = ({ form }) => {
     const usuario = JSON.parse(localStorage.getItem("service_user"));
     const { startSearchSoporte } = useSoporteStore();
     const { direcciones } = useDireccionStore();
+    const { setStorageFields } = useStorageField();
 
     const { switch_role } = form.values;
 
@@ -27,13 +28,15 @@ export const FilterFormSoportes = ({ form }) => {
            // console.log("aki");
             const { id_usu_tecnico_asig, ...values } =
                 form.getTransformedValues();
-            console.log(values);
+            //console.log(values);
             startSearchSoporte(values);
+            setStorageFields(values);
         } else {
             //console.log("aki2");
 
             //console.log(form.getTransformedValues());
             startSearchSoporte(form.getTransformedValues());
+            setStorageFields(form.getTransformedValues());
         }
         //console.log(form.values);
     };

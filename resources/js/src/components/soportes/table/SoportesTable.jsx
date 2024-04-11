@@ -2,7 +2,7 @@ import { useCallback, useMemo } from "react";
 import { Badge, Table, Text } from "@mantine/core";
 import { useMantineReactTable } from "mantine-react-table";
 import { MenuSolicitudTable, MenuTable_T, TableContent } from "../..";
-import { useSoporteStore, useUiSoporte } from "../../../hooks";
+import { useDireccionStore, useSoporteStore, useTecnicoStore, useUiSoporte, useUsersStore } from "../../../hooks";
 import dayjs from "dayjs";
 
 export const SoportesTable = () => {
@@ -15,6 +15,9 @@ export const SoportesTable = () => {
         modalActionCreateSoporte,
         modalActionDiagnosticar,
     } = useUiSoporte();
+    const { direcciones } = useDireccionStore();
+    const { tecnicos } = useTecnicoStore();
+    const { users } = useUsersStore();
     const columns = useMemo(
         () => [
             {
@@ -43,16 +46,25 @@ export const SoportesTable = () => {
                 accessorKey: "usuario_recibe", //normal accessorKey
                 header: "Usuario solicitante",
                 filterVariant: "autocomplete",
+                mantineEditSelectProps: {
+                    data: users,
+                  },
             },
             {
                 accessorKey: "direccion", //normal accessorKey
                 header: "Dirección del usuario",
                 filterVariant: "autocomplete",
+                mantineEditSelectProps: {
+                    data: direcciones,
+                  },
             },
             {
                 accessorFn: (row) => row.tecnico_asignado ?? "No asignado", //normal accessorKey
                 header: "Técnico asignado",
                 filterVariant: "autocomplete",
+                mantineEditSelectProps: {
+                    data: tecnicos,
+                  },
             },
         ],
         [soportes]
@@ -88,6 +100,27 @@ export const SoportesTable = () => {
         state: { showProgressBars: isLoading },
         enableFacetedValues: true,
         enableRowActions: true,
+        mantineTableBodyCellProps: ({ cell }) => ({
+            style: {
+                backgroundColor:
+                    cell.row.original.tecnico_asignado === null
+                        ? "#fa6e70"
+                        : cell.row.original.id_estado == 3
+                        ? "#71c7f5"
+                        : cell.row.original.id_estado == 4
+                        ? "#9af5b8"
+                        : cell.row.original.id_estado == 5 && dayjs(cell.row.original.fecha_ini).toDate() > dayjs(cell.row.original.fecha_ini).add(1, "day").toDate()
+                        ? "#fcb281"
+                        :"",
+                color:
+                    cell.row.original.tecnico_asignado === null ||
+                    cell.row.original.id_estado == 3
+                        ? "white"
+                        : cell.row.original.id_estado == 4
+                        ? "black"
+                        : "",
+            },
+        }),
         renderRowActionMenuItems: ({ row }) =>
             usuario.role_id === 1 ? (
                 <MenuSolicitudTable

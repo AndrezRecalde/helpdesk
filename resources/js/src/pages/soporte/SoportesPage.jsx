@@ -12,7 +12,7 @@ import {
     ModalAnularSoporte,
     ModalDiagnostico,
 } from "../../components";
-import { useDireccionStore, useSoporteStore, useTitlePage, useUiSoporte } from "../../hooks";
+import { useDireccionStore, useSoporteStore, useStorageField, useTitlePage, useUiSoporte } from "../../hooks";
 import { isNotEmpty, useForm } from "@mantine/form";
 import Swal from "sweetalert2";
 import dayjs from "dayjs";
@@ -24,12 +24,13 @@ export const SoportesPage = () => {
     const { soportes, message, errores, clearSoportes } = useSoporteStore();
     const { modalActionAddSolicitud, modalActionCreateSoporte } =
         useUiSoporte();
+    const { clearStorageFields } = useStorageField();
 
     const form = useForm({
         initialValues: {
             fecha_inicio: "",
             fecha_fin: "",
-            anio: dayjs(),
+            anio: new Date(),
             id_direccion: null,
             numero_sop: "",
             switch_role: false,
@@ -42,6 +43,7 @@ export const SoportesPage = () => {
             ...values,
             id_direccion: Number(values.id_direccion) || null,
             id_usu_tecnico_asig: Number(values.id_usu_tecnico_asig) || null,
+            anio: values.anio.getFullYear()
         }),
     });
 
@@ -62,6 +64,7 @@ export const SoportesPage = () => {
         return () => {
             clearDirecciones();
             clearSoportes();
+            clearStorageFields();
         };
     }, []);
 

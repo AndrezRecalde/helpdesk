@@ -10,7 +10,7 @@ import {
     useUiSoporte,
     useUsersStore,
 } from "../../../hooks";
-import { hasLength, isNotEmpty, useForm } from "@mantine/form";
+import { isNotEmpty, useForm } from "@mantine/form";
 
 export const ModalCreateSoporte = ({ role }) => {
     const usuario = JSON.parse(localStorage.getItem("service_user"));

@@ -65,6 +65,9 @@ import { uiActividadSlice } from "./actividad/uiActividadSlice";
 import { permisoSlice } from "./permiso/permisoSlice";
 import { uiPermisoSlice } from "./permiso/uiPermisoSlice";
 
+/* Storage Fields */
+import { storageFieldsSlice } from "./fields/storageFieldsSlice";
+
 import { store } from "./store";
 
 
@@ -138,5 +141,8 @@ export {
 
     /* Permisos */
     permisoSlice,
-    uiPermisoSlice
+    uiPermisoSlice,
+
+    /* Storage */
+    storageFieldsSlice
  };
