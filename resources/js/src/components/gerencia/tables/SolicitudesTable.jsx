@@ -5,7 +5,7 @@ import {
     MenuTable_T,
     TableContent,
 } from "../../../components";
-import { Badge, Table, Text } from "@mantine/core";
+import { Badge, Table, Text, useMantineColorScheme } from "@mantine/core";
 import { useSoporteStore, useUiSoporte } from "../../../hooks";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
@@ -14,7 +14,9 @@ import es from "dayjs/locale/es";
 dayjs.extend(relativeTime).locale(es);
 
 export const SolicitudesTable = ({ menu, isLoading }) => {
-    const { soportes, setActivateSoporte, startExportSoporte } = useSoporteStore();
+    const { colorScheme } = useMantineColorScheme();
+    const { soportes, setActivateSoporte, startExportSoporte } =
+        useSoporteStore();
     const {
         modalActionAsignarSoporte,
         modalActionAnularSoporte,
@@ -75,7 +77,7 @@ export const SolicitudesTable = ({ menu, isLoading }) => {
         enableFacetedValues: true,
         enableRowActions: true,
         localization: {
-            noResultsFound: 'Sin Resultados',
+            noResultsFound: "Sin Resultados",
         },
         renderRowActionMenuItems: ({ row }) =>
             menu === 1 ? (
@@ -98,10 +100,20 @@ export const SolicitudesTable = ({ menu, isLoading }) => {
             style: {
                 backgroundColor:
                     cell.row.original.tecnico_asignado === null
-                        ? "#CB3234"
+                        ? "#fa6e70"
+                        : cell.row.original.id_estado == 5
+                        ? "#fcb281"
                         : "",
                 color:
-                    cell.row.original.tecnico_asignado === null ? "white" : "",
+                    cell.row.original.tecnico_asignado === null
+                        ? "white"
+                        : cell.row.original.id_estado == 5 &&
+                          colorScheme === "dark"
+                        ? "white"
+                        : cell.row.original.id_estado == 5 &&
+                          colorScheme === "light"
+                        ? "black"
+                        : "",
             },
         }),
         renderDetailPanel: ({ row }) => (

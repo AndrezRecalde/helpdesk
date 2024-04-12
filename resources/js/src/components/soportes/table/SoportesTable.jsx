@@ -1,5 +1,5 @@
 import { useCallback, useMemo } from "react";
-import { Badge, Table, Text } from "@mantine/core";
+import { Badge, Table, Text, useMantineColorScheme } from "@mantine/core";
 import { useMantineReactTable } from "mantine-react-table";
 import { MenuSolicitudTable, MenuTable_T, TableContent } from "../..";
 import { useDireccionStore, useSoporteStore, useTecnicoStore, useUiSoporte, useUsersStore } from "../../../hooks";
@@ -7,6 +7,7 @@ import dayjs from "dayjs";
 
 export const SoportesTable = () => {
     const usuario = JSON.parse(localStorage.getItem("service_user"));
+    const { colorScheme } = useMantineColorScheme();
     const { isLoading, soportes, startExportSoporte, setActivateSoporte } =
         useSoporteStore();
     const {
@@ -109,7 +110,7 @@ export const SoportesTable = () => {
                         ? "#71c7f5"
                         : cell.row.original.id_estado == 4
                         ? "#9af5b8"
-                        : cell.row.original.id_estado == 5 && dayjs(cell.row.original.fecha_ini).toDate() > dayjs(cell.row.original.fecha_ini).add(1, "day").toDate()
+                        : cell.row.original.id_estado == 5 && (dayjs(cell.row.original.fecha_ini).isBefore(dayjs(), 'day'))
                         ? "#fcb281"
                         :"",
                 color:
@@ -118,7 +119,11 @@ export const SoportesTable = () => {
                         ? "white"
                         : cell.row.original.id_estado == 4
                         ? "black"
-                        : "",
+                        : cell.row.original.id_estado == 5 && colorScheme === "dark"
+                        ? "white"
+                        : cell.row.original.id_estado == 5 && colorScheme === "light"
+                        ? "black"
+                        :"",
             },
         }),
         renderRowActionMenuItems: ({ row }) =>

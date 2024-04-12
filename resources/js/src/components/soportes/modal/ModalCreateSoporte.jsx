@@ -208,7 +208,7 @@ export const ModalCreateSoporte = ({ role }) => {
                 "id_direccion",
                 direccion
                     ? direccion?.cdgo_dprtmnto.toString()
-                    : activateSoporte.id_direccion.toString()
+                    : activateSoporte?.id_direccion.toString()
             );
             return;
         }
