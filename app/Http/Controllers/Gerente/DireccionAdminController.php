@@ -61,6 +61,7 @@ class DireccionAdminController extends Controller
                     'id_direccion' => $directores->cdgo_dprtmnto,
                     'id_usu_recibe' => $directores->id_encargado,
                     'id_area_tic'   => 5,
+                    'id_tipo_soporte' => 3,
                     'id_usu_tecnico_asig' => auth()->id(),
                     'incidente'     =>  'SOLICITUD DE ENCARGO DE DIRECCIÓN',
                     'solucion'      => 'SE REALIZA EL RESPECTIVO CAMBIO DE DIRECTOR ENCARGADO SOLICITADO'
