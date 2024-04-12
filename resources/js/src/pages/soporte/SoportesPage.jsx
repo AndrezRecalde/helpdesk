@@ -15,7 +15,6 @@ import {
 import { useDireccionStore, useSoporteStore, useStorageField, useTitlePage, useUiSoporte } from "../../hooks";
 import { isNotEmpty, useForm } from "@mantine/form";
 import Swal from "sweetalert2";
-import dayjs from "dayjs";
 
 export const SoportesPage = () => {
     useTitlePage("Helpdesk | Soportes");
@@ -87,7 +86,7 @@ export const SoportesPage = () => {
                 title: "Opps...",
                 text: errores,
                 showConfirmButton: false,
-                timer: 1500,
+                timer: 2000,
             });
             return;
         }

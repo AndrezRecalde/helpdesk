@@ -1,7 +1,6 @@
 import { useEffect } from "react";
-import { Card, Container, Group } from "@mantine/core";
+import { Card, Container } from "@mantine/core";
 import {
-    BtnSection,
     FilterFormUsers,
     ModalActivateUser,
     ModalResetPwdUser,
@@ -52,11 +51,11 @@ export const AdminUsersPage = () => {
             <TitlePage order={2} size="h2">
                 Administrar usuarios
             </TitlePage>
-            <Group justify="flex-end">
+            {/* <Group justify="flex-end">
                 <BtnSection handleAction={handleOpenModal}>
                     Agregar usuario
                 </BtnSection>
-            </Group>
+            </Group> */}
             <FilterFormUsers />
             {users.length !== 0 ? (
                 <Card withBorder shadow="sm" radius="md" mt={20} mb={20}>

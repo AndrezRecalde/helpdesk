@@ -19,6 +19,7 @@ export const ModalResetPwdUser = () => {
 
     const handleCloseModal = () => {
         modalActionResetPwd(0);
+        form.reset();
     };
 
     return (

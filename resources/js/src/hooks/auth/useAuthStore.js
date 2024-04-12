@@ -9,9 +9,13 @@ import {
     onValidate,
 } from "../../store/auth/authSlice";
 import { useErrorException } from "../../hooks";
+import {
+    useMantineColorScheme,
+} from "@mantine/core";
 import helpdeskApi from "../../api/helpdeskApi";
 
 export const useAuthStore = () => {
+    const { clearColorScheme  } = useMantineColorScheme();
     const { isLoading, user, profile, validate, errores } = useSelector(
         (state) => state.auth
     );
@@ -84,9 +88,11 @@ export const useAuthStore = () => {
             await helpdeskApi.post("/auth/logout");
             localStorage.clear();
             dispatch(onLogout());
+            clearColorScheme();
         } catch (error) {
             localStorage.clear();
             dispatch(onLogout());
+            clearColorScheme();
         }
     };
 
