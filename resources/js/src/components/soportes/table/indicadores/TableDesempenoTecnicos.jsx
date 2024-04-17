@@ -20,7 +20,7 @@ export const TableDesempenoTecnicos = () => {
                     <Table.Thead>
                         <Table.Tr>
                             <Table.Th>Técnico</Table.Th>
-                            <Table.Th>Total Pendientes</Table.Th>
+                            {/* <Table.Th>Total Pendientes</Table.Th> */}
                             <Table.Th>Total Atendidos</Table.Th>
                             <Table.Th>Total Finalizados</Table.Th>
                             <Table.Th>Total Anulados</Table.Th>
@@ -30,7 +30,7 @@ export const TableDesempenoTecnicos = () => {
                         {desempenoForTecnicos?.map((desempTecnico) => (
                             <Table.Tr key={desempTecnico?.cdgo_usrio}>
                                 <Table.Td>{desempTecnico?.tecnico}</Table.Td>
-                                <Table.Td>{desempTecnico?.total_pendientes}</Table.Td>
+                                {/* <Table.Td>{desempTecnico?.total_pendientes}</Table.Td> */}
                                 <Table.Td>{desempTecnico?.total_atendidos}</Table.Td>
                                 <Table.Td>{desempTecnico?.total_finalizados}</Table.Td>
                                 <Table.Td>{desempTecnico?.total_anulados}</Table.Td>

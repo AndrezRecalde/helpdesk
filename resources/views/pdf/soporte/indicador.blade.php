@@ -39,6 +39,7 @@
             padding: 5px;
 
         }
+
         .marginFooter {
             position: static;
             bottom: -80px;
@@ -46,6 +47,7 @@
             right: 0px;
             height: 400px;
         }
+
         .marginTop {
             margin-top: 20px;
         }
@@ -57,10 +59,18 @@
         .firma {
             width: 50px;
         }
+
         .marginLineaFirma {
             margin-top: 80px;
         }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+
 </head>
 
 <body>
@@ -118,7 +128,7 @@
                 <thead>
                     <tr>
                         <th>AREA</th>
-                        <th>TOTAL PENDIENTES</th>
+                        {{-- <th>TOTAL PENDIENTES</th> --}}
                         <th>TOTAL ATENDIDOS</th>
                         <th>TOTAL FINALIZADOS</th>
                         <th>TOTAL ANULADOS</th>
@@ -129,7 +139,7 @@
                         <tr>
 
                             <td>{{ $desemparea->area_tic }}</td>
-                            <td>{{ $desemparea->total_pendientes }}</td>
+                            {{-- <td>{{ $desemparea->total_pendientes }}</td> --}}
                             <td>{{ $desemparea->total_atendidos }}</td>
                             <td>{{ $desemparea->total_finalizados }}</td>
                             <td>{{ $desemparea->total_anuladas }}</td>
@@ -146,7 +156,7 @@
                 <thead>
                     <tr>
                         <th>NOMBRE DEL TECNICO</th>
-                        <th>TOTAL PENDIENTES</th>
+                        {{-- <th>TOTAL PENDIENTES</th> --}}
                         <th>TOTAL ATENDIDOS</th>
                         <th>TOTAL FINALIZADOS</th>
                         <th>TOTAL ANULADOS</th>
@@ -156,7 +166,7 @@
                     @foreach ($desempenoForTecnicos as $desemptecnico)
                         <tr>
                             <td>{{ $desemptecnico->tecnico }}</td>
-                            <td>{{ $desemptecnico->total_pendientes }}</td>
+                            {{-- <td>{{ $desemptecnico->total_pendientes }}</td> --}}
                             <td>{{ $desemptecnico->total_atendidos }}</td>
                             <td>{{ $desemptecnico->total_finalizados }}</td>
                             <td>{{ $desemptecnico->total_anulados }}</td>
@@ -274,9 +284,14 @@
             </table>
         </div>
 
-
-
+        <div class="d-flex justify-content-center">
+            <img src="{{ url($chartUrl) }}" alt="Chart">
+        </div>
     </main>
+
+
+
+
 </body>
 
 </html>

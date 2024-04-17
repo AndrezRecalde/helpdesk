@@ -126,6 +126,12 @@ import { FormRichText } from "./elements/rte/FormRichText";
 import { ModalCierreSoportes } from "./soportes/drawer/ModalCierreSoportes";
 import { FormCierreSoporte } from "./soportes/form/FormCierreSoporte";
 
+import { ChartPieEficiencia } from "./gerencia/charts/ChartPieEficiencia";
+import { ChartBarDesempAreas } from "./gerencia/charts/ChartBarDesempAreas";
+
+import { ResumenDesempenoEstados } from "./soportes/section/ResumenDesempenoEstados";
+import { ResumenDesempenoArea } from "./soportes/section/ResumenDesempenoArea";
+
 export {
     TitlePage,
     TextSection,
@@ -219,5 +225,10 @@ export {
     FormRichText,
 
     ModalCierreSoportes,
-    FormCierreSoporte
+    FormCierreSoporte,
+
+    ChartPieEficiencia,
+    ChartBarDesempAreas,
+    ResumenDesempenoEstados,
+    ResumenDesempenoArea
 };

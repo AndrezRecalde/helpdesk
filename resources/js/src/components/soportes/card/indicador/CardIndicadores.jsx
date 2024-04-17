@@ -1,7 +1,14 @@
-import { ActionIcon, Card, Group, LoadingOverlay } from "@mantine/core";
 import {
+    ActionIcon,
+    Card,
+    Group,
+    LoadingOverlay,
+    SimpleGrid,
+} from "@mantine/core";
+import {
+    ResumenDesempenoArea,
+    ResumenDesempenoEstados,
     TableDesempenoAreas,
-    TableDesempenoEstados,
     TableDesempenoTecnicos,
     TableEfectividadAreas,
     TableEfectividadTecnicos,
@@ -45,9 +52,9 @@ export const CardIndicadores = ({ handleExportPDF }) => {
                     </Group>
                 </Card.Section>
                 <Card.Section inheritPadding py="xs">
-                    <TableDesempenoEstados />
+                    <ResumenDesempenoEstados />
 
-                    <TableDesempenoAreas />
+                    <ResumenDesempenoArea />
                     <TableDesempenoTecnicos />
 
                     <TableEfectividadAreas />

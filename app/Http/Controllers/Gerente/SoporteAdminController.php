@@ -13,6 +13,7 @@ use App\Models\Soporte;
 use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
+use GuzzleHttp\Client;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
@@ -215,20 +216,56 @@ class SoporteAdminController extends Controller
                 $sumaDesempenoForEstados += $total_estados->total_estados;
             }
         }
+        $labels = [];
+        $datos_finalizados = [];
+        $indice = 0;
+        foreach ($desempenoForAreas as $area) {
+            $labels[$indice] = $area->area_tic;
+            $datos_finalizados[$indice] = $area->total_finalizados;
+            $indice++;
+        }
+
+        $data = [
+            'type' => 'pie',
+            'data' => [
+                'labels' => $labels,
+                'datasets' => [
+                    [
+                        'data' => $datos_finalizados
+                    ],
+                ]
+            ],
+            'options' => [
+                'plugins' => [
+                    'datalabels' => [
+                        'color' => '#000', // Color de las etiquetas
+                        'font' => [
+                            'size' => 16 // Tamaño de la fuente de las etiquetas
+                        ]
+                    ]
+                ]
+            ]
+        ];
+
+        $chartData = json_encode($data);
+
+        $chartUrl = "http://quickchart.io/chart?width=500&height=200&c=" . urlencode($chartData);
+
 
         $data = [
             'direccion'     =>  'Dirección de Técnologias de Informacion y Comunicación',
             'titulo'        =>  'Reporte General de Indicadores',
-            'fecha_inicio'  =>  '01/01/2023',
-            'fecha_fin'     =>  '31/12/2023',
+            'fecha_inicio'  =>  $request->fecha_ini,
+            'fecha_fin'     =>  $request->fecha_fin,
             'desempenoForEstados'     => $desempenoForEstados,
             'sumaDesempenoForEstados' => $sumaDesempenoForEstados,
-            'desempenoForAreas' => $desempenoForAreas,
-            'desempenoForTecnicos' => $desempenoForTecnicos,
-            'efectividadForAreas'  => $efectividadForAreas,
-            'efectividadForTecnicos' => $efectividadForTecnicos,
-            'sumaDiasHabiles'       => $sumaDiasHabiles,
-            'usuarioGenerador'      => $usuarioGenerador
+            'desempenoForAreas'       => $desempenoForAreas,
+            'desempenoForTecnicos'    => $desempenoForTecnicos,
+            'efectividadForAreas'     => $efectividadForAreas,
+            'efectividadForTecnicos'  => $efectividadForTecnicos,
+            'sumaDiasHabiles'         => $sumaDiasHabiles,
+            'usuarioGenerador'        => $usuarioGenerador,
+            'chartUrl'                => $chartUrl,
         ];
         $pdf = Pdf::loadView('pdf.soporte.indicador', $data);
         return $pdf->setPaper('a4', 'portrait')->download('indicador.pdf');

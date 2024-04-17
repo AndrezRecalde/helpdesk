@@ -12,6 +12,7 @@ import { Card } from "@mantine/core";
 import { useIndicadorStore } from "../../../hooks";
 import ChartDataLabels from "chartjs-plugin-datalabels";
 
+
 ChartJS.register(
     CategoryScale,
     LinearScale,
@@ -22,8 +23,8 @@ ChartJS.register(
     ChartDataLabels
 );
 
-export const ChartDesempTecnicos = () => {
-    const { desempenoForTecnicos } = useIndicadorStore();
+export const ChartBarDesempAreas = () => {
+    const { desempenoForAreas } = useIndicadorStore();
 
     const options = {
         indexAxis: "y",
@@ -31,7 +32,7 @@ export const ChartDesempTecnicos = () => {
             y: {
                 ticks: {
                     font: {
-                        size: 16, //this change the font size
+                        size: 14, //this change the font size
                         weight: "italic",
                     },
                 },
@@ -39,7 +40,7 @@ export const ChartDesempTecnicos = () => {
             x: {
                 ticks: {
                     font: {
-                        size: 16, //this change the font size
+                        size: 14, //this change the font size
                         weight: "italic",
                     },
                 },
@@ -64,52 +65,32 @@ export const ChartDesempTecnicos = () => {
             },
             title: {
                 display: true,
-                text: "Desempeño de Técnicos",
+                text: "Desempeño de Áreas",
                 font: {
-                    size: 20,
+                    size: 16,
                     weight: "italic",
                 },
             },
         },
     };
 
-    const labels = desempenoForTecnicos?.map((tecnico) => tecnico.tecnico);
+    const labels = desempenoForAreas?.map(soporte => soporte.area_tic);
+
 
     const data = {
         labels,
         datasets: [
-            /* {
+           /*{
                 label: "Total pendientes",
-                data: desempenoForTecnicos?.map(
-                    (tecnico) => tecnico.total_pendientes
-                ),
+                data: desempenoForAreas?.map(soporte => soporte.total_pendientes),
                 backgroundColor: "rgba(239, 233, 49, 0.66)",
-                borderColor: "rgba(246, 238, 70, 1)",
-                borderWidth: 2,
-                borderRadius: 2,
-                plugins: [ChartDataLabels],
-                datalabels: {
-                    color: "black",
-                    align: "bottom",
-                    labels: {
-                        title: {
-                            font: {
-                                weight: "italic",
-                                size: 16,
-                            },
-                        },
-                    },
-                },
+                borderColor: "rgba(246, 238, 70, 1)"
             }, */
             {
                 label: "Total asignados",
-                data: desempenoForTecnicos?.map(
-                    (tecnico) => tecnico.total_asignados
-                ),
+                data: desempenoForAreas?.map(soporte => soporte.total_asignados),
                 backgroundColor: "rgba(248, 123, 3, 0.66)",
                 borderColor: "rgba(245, 147, 55, 1)",
-                borderWidth: 2,
-                borderRadius: 2,
                 plugins: [ChartDataLabels],
                 datalabels: {
                     color: "black",
@@ -126,14 +107,9 @@ export const ChartDesempTecnicos = () => {
             },
             {
                 label: "Total atendidas",
-                data: desempenoForTecnicos?.map(
-                    (tecnico) => tecnico.total_atendidos
-                ),
+                data: desempenoForAreas?.map(soporte => soporte.total_atendidos),
                 backgroundColor: "rgba(4, 115, 253, 0.66)",
                 borderColor: "rgba(30, 166, 238, 1)",
-                borderWidth: 2,
-                borderRadius: 2,
-                plugins: [ChartDataLabels],
                 datalabels: {
                     color: "black",
                     align: "bottom",
@@ -149,14 +125,9 @@ export const ChartDesempTecnicos = () => {
             },
             {
                 label: "Total finalizadas",
-                data: desempenoForTecnicos?.map(
-                    (tecnico) => tecnico.total_finalizados
-                ),
+                data: desempenoForAreas?.map(soporte => soporte.total_finalizados),
                 backgroundColor: "rgba(1, 250, 82, 0.66)",
                 borderColor: "rgba(47, 239, 111, 1)",
-                borderWidth: 2,
-                borderRadius: 2,
-                plugins: [ChartDataLabels],
                 datalabels: {
                     color: "black",
                     align: "bottom",
@@ -172,14 +143,9 @@ export const ChartDesempTecnicos = () => {
             },
             {
                 label: "Total anuladas",
-                data: desempenoForTecnicos?.map(
-                    (tecnico) => tecnico.total_anuladas
-                ),
+                data: desempenoForAreas?.map(soporte => soporte.total_anuladas),
                 backgroundColor: "rgba(250, 9, 9, 0.66)",
                 borderColor: "rgba(228, 65, 65, 1)",
-                borderWidth: 2,
-                borderRadius: 2,
-                plugins: [ChartDataLabels],
                 datalabels: {
                     color: "black",
                     align: "bottom",
@@ -197,12 +163,12 @@ export const ChartDesempTecnicos = () => {
     };
 
     return (
-        <Card withBorder shadow="sm" radius="md" mt="sm" mb="sm">
+        <Card withBorder shadow="sm" radius="md">
             <Card.Section withBorder inheritPadding py="xs">
-                Soportes por técnicos - {new Date().getFullYear()}
+                Soportes por subprocesos
             </Card.Section>
             <Card.Section withBorder inheritPadding py="xs">
-                <Bar options={options} data={data}  />
+                <Bar options={options} data={data} />
             </Card.Section>
         </Card>
     );
