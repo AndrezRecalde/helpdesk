@@ -113,7 +113,6 @@ export const ChartDesempTecnicos = () => {
                 plugins: [ChartDataLabels],
                 datalabels: {
                     color: "black",
-                    align: "bottom",
                     labels: {
                         title: {
                             font: {
@@ -136,7 +135,6 @@ export const ChartDesempTecnicos = () => {
                 plugins: [ChartDataLabels],
                 datalabels: {
                     color: "black",
-                    align: "bottom",
                     labels: {
                         title: {
                             font: {
@@ -159,7 +157,6 @@ export const ChartDesempTecnicos = () => {
                 plugins: [ChartDataLabels],
                 datalabels: {
                     color: "black",
-                    align: "bottom",
                     labels: {
                         title: {
                             font: {
@@ -182,7 +179,6 @@ export const ChartDesempTecnicos = () => {
                 plugins: [ChartDataLabels],
                 datalabels: {
                     color: "black",
-                    align: "bottom",
                     labels: {
                         title: {
                             font: {

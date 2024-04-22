@@ -48,8 +48,12 @@
             height: 400px;
         }
 
+        .marginEficacia {
+            margin-top: 100px;
+        }
+
         .marginTop {
-            margin-top: 20px;
+            margin-top: 150px;
         }
 
         .marginBottom {
@@ -66,7 +70,6 @@
 
         img {
             max-width: 100%;
-            height: auto;
         }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
@@ -98,7 +101,7 @@
 
         <!-- A. EFICIENCIA -->
         <div>
-            <p class="text-left marginTop marginBottom">A. EFICIENCIA DE DESEMPEÑO DE ACTIVIDADES</p>
+            <p class="text-left marginBottom">A. EFICIENCIA DE DESEMPEÑO DE ACTIVIDADES</p>
             <p class="text-left marginBottom">{{ $sumaDesempenoForEstados }} casos corresponden al 100%</p>
             <table class="table table-bordered">
                 <tr>
@@ -150,8 +153,12 @@
             </table>
         </div>
 
-        <div>
-            <p class="text-left marginBottom">CASOS POR TÉCNICO</p>
+        <div class="d-flex justify-content-center">
+            <img src="{{ url($chartUrl) }}" alt="Chart">
+        </div>
+
+        <div class="marginTop">
+            <p class="text-left">CASOS POR TÉCNICO</p>
             <table class="table table-bordered">
                 <thead>
                     <tr>
@@ -177,10 +184,14 @@
         </div>
         <!-- A. FIN EFICIENCIA -->
 
+        <div class="d-flex justify-content-center">
+            <img src="{{ $chartUrl2 }}" alt="Chart2">
+        </div>
+
         <!-- B. EFECTIVIDAD -->
-        <div>
-            <p class="text-left marginTop marginBottom">B. CALIDAD DE LA EFECTIVIDAD EN LA ATENCIÓN A USUARIOS</p>
-            <p class="text-left marginTop marginBottom">B1. POR AREAS</p>
+        <div class="marginTop">
+            <p class="text-left marginBottom">B. CALIDAD DE LA EFECTIVIDAD EN LA ATENCIÓN A USUARIOS</p>
+            <p class="text-left marginBottom">B1. POR AREAS</p>
             <table class="table table-bordered">
                 <thead>
                     <tr>
@@ -202,7 +213,7 @@
             </table>
         </div>
         <div>
-            <p class="text-left marginTop marginBottom">B2. POR TECNICOS</p>
+            <p class="text-left marginBottom">B2. POR TECNICOS</p>
             <table class="table table-bordered">
                 <thead>
                     <tr>
@@ -227,9 +238,9 @@
         <!-- B. FIN EFECTIVIDAD -->
 
         <!-- C. EFICACIA -->
-        <div>
-            <p class="text-left marginTop marginBottom">C. EFICACIA</p>
-            <p class="text-left marginTop marginBottom">
+        <div class="marginEficacia">
+            <p class="text-left marginBottom">C. EFICACIA</p>
+            <p class="text-left marginBottom">
                 C1. CASOS FINALIZADOS/META(30 X DIA, EN 261 DIAS):
                 {{ round(($desempenoForEstados[3]->total_estados / 30 / $sumaDiasHabiles[0]->dias_habiles) * 100, 2) }}%
             </p>
@@ -284,9 +295,6 @@
             </table>
         </div>
 
-        <div class="d-flex justify-content-center">
-            <img src="{{ url($chartUrl) }}" alt="Chart">
-        </div>
     </main>
 
 

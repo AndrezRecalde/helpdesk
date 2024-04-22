@@ -94,7 +94,6 @@ export const ChartBarDesempAreas = () => {
                 plugins: [ChartDataLabels],
                 datalabels: {
                     color: "black",
-                    align: "bottom",
                     labels: {
                         title: {
                             font: {
@@ -112,7 +111,6 @@ export const ChartBarDesempAreas = () => {
                 borderColor: "rgba(30, 166, 238, 1)",
                 datalabels: {
                     color: "black",
-                    align: "bottom",
                     labels: {
                         title: {
                             font: {
@@ -130,7 +128,6 @@ export const ChartBarDesempAreas = () => {
                 borderColor: "rgba(47, 239, 111, 1)",
                 datalabels: {
                     color: "black",
-                    align: "bottom",
                     labels: {
                         title: {
                             font: {
@@ -148,7 +145,6 @@ export const ChartBarDesempAreas = () => {
                 borderColor: "rgba(228, 65, 65, 1)",
                 datalabels: {
                     color: "black",
-                    align: "bottom",
                     labels: {
                         title: {
                             font: {

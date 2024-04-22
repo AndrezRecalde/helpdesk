@@ -216,44 +216,48 @@ class SoporteAdminController extends Controller
                 $sumaDesempenoForEstados += $total_estados->total_estados;
             }
         }
-        $labels = [];
+        $labels_areas = [];
+        $labels_tecnicos = [];
+
         $datos_finalizados = [];
-        $indice = 0;
+        $datos_tecnicos = [];
+
+        $indice_a = 0;
+        $indice_t = 0;
         foreach ($desempenoForAreas as $area) {
-            $labels[$indice] = $area->area_tic;
-            $datos_finalizados[$indice] = $area->total_finalizados;
-            $indice++;
+            $labels_areas[$indice_a] = $area->area_tic;
+            $datos_finalizados[$indice_a] = $area->total_finalizados;
+            $indice_a++;
         }
 
-        $data = [
+        foreach ($desempenoForTecnicos as $tecnico ) {
+            $labels_tecnicos[$indice_t] = $tecnico->tecnico;
+            $datos_tecnicos[$indice_t] = $tecnico->total_finalizados;
+            $indice_t++;
+        }
+
+        /* $data = [
             'type' => 'pie',
             'data' => [
-                'labels' => $labels,
+                'labels_areas' => $labels_areas,
                 'datasets' => [
                     [
                         'data' => $datos_finalizados
                     ],
                 ]
             ],
-            'options' => [
-                'plugins' => [
-                    'datalabels' => [
-                        'color' => '#000', // Color de las etiquetas
-                        'font' => [
-                            'size' => 16 // Tamaño de la fuente de las etiquetas
-                        ]
-                    ]
-                ]
-            ]
-        ];
+        ]; */
 
-        $chartData = json_encode($data);
+        $chartUrl = $this->generateQuickChartUrl($labels_areas, $datos_finalizados);
+        $chartUrl2 = $this->generateQuickChartUrl2($labels_tecnicos, $datos_tecnicos);
 
-        $chartUrl = "http://quickchart.io/chart?width=500&height=200&c=" . urlencode($chartData);
+        $url = 'http://quickchart.io/chart?width=500&height=200&c=' . urlencode($chartUrl);
+        $url2 = 'http://quickchart.io/chart?width=900&height=600&c=' . urlencode($chartUrl2);
+
 
 
         $data = [
-            'direccion'     =>  'Dirección de Técnologias de Informacion y Comunicación',
+            'direccion'     =>  'Dirección de Técnologias de Información y Comunicación',
             'titulo'        =>  'Reporte General de Indicadores',
             'fecha_inicio'  =>  $request->fecha_ini,
             'fecha_fin'     =>  $request->fecha_fin,
@@ -265,11 +269,57 @@ class SoporteAdminController extends Controller
             'efectividadForTecnicos'  => $efectividadForTecnicos,
             'sumaDiasHabiles'         => $sumaDiasHabiles,
             'usuarioGenerador'        => $usuarioGenerador,
-            'chartUrl'                => $chartUrl,
+            'chartUrl'                => $url,
+            'chartUrl2'               => $url2
         ];
         $pdf = Pdf::loadView('pdf.soporte.indicador', $data);
         return $pdf->setPaper('a4', 'portrait')->download('indicador.pdf');
         /* return response()->json(['status' => 'success', 'data' => $data]); */
+    }
+
+    private function generateQuickChartUrl($labels, $data)
+    {
+        // Construir el URL del gráfico utilizando QuickChart
+        $url = '{';
+        $url .= '"type":"pie",';
+        $url .= '"data":{';
+        $url .=     '"labels":' . json_encode($labels) . ',';
+        $url .=     '"datasets":[{"data":' . json_encode($data) . '}]';
+        $url .=     '}';
+        $url .= '}';
+
+        return $url;
+    }
+
+    private function generateQuickChartUrl2($labels, $data)
+    {
+        // Construir el URL del gráfico utilizando QuickChart
+        $url = '{';
+        $url .= '"type":"outlabeledPie",';
+        $url .= '"data":{';
+        $url .=         '"labels":'. json_encode($labels) .',';
+        $url .=         '"datasets":[{';
+        $url .=             '"backgroundColor":["#D11717", "#36A2EB", "#22A3A3", "#F77825", "#9966FF", "#32D4ED", "#3FFCC0", "#17FC5F", "#6168BA", "#05C6ED", "#07D9B6", "#D9D207", "#F5830A"],';
+        $url .=             '"data":'. json_encode($data)  .',';
+        $url .=         '}]';
+        $url .=     '},';
+        $url .= '"options":{';
+        $url .=     '"plugins":{';
+        $url .=         '"legend": false,';
+        $url .=         '"outlabels":{';
+        $url .=             '"text": "%l %p",';
+        $url .=             '"color": "white",';
+        $url .=             '"stretch": 35,';
+        $url .=             '"font":{';
+        $url .=                 '"resizable": true,';
+        $url .=                 '"minSize": 12,';
+        $url .=                 '"maxSize": 18,';
+        $url .=              '}';
+        $url .=           '}';
+        $url .=        '}';
+        $url .=     '}';
+        $url .= '}';
+        return $url;
     }
 
     function getSoportesSinCalificacion(): JsonResponse

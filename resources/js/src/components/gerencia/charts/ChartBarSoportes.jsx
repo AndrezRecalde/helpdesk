@@ -91,7 +91,6 @@ export const ChartBarSoportes = () => {
                 borderColor: "rgba(245, 147, 55, 1)",
                 datalabels: {
                     color: "black",
-                    align: "bottom",
                     labels: {
                         title: {
                             font: {
@@ -109,7 +108,6 @@ export const ChartBarSoportes = () => {
                 borderColor: "rgba(30, 166, 238, 1)",
                 datalabels: {
                     color: "black",
-                    align: "bottom",
                     labels: {
                         title: {
                             font: {
@@ -127,7 +125,6 @@ export const ChartBarSoportes = () => {
                 borderColor: "rgba(47, 239, 111, 1)",
                 datalabels: {
                     color: "black",
-                    align: "bottom",
                     labels: {
                         title: {
                             font: {
@@ -145,7 +142,6 @@ export const ChartBarSoportes = () => {
                 borderColor: "rgba(228, 65, 65, 1)",
                 datalabels: {
                     color: "black",
-                    align: "bottom",
                     labels: {
                         title: {
                             font: {

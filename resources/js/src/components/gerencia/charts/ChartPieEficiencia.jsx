@@ -46,7 +46,6 @@ export const ChartPieEficiencia = () => {
                 plugins: [ChartDataLabels],
                 datalabels: {
                     color: "black",
-                    align: "bottom",
                     labels: {
                         title: {
                             font: {
