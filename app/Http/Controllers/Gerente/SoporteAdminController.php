@@ -295,20 +295,19 @@ class SoporteAdminController extends Controller
     {
         // Construir el URL del gráfico utilizando QuickChart
         $url = '{';
-        $url .= '"type":"outlabeledPie",';
+        $url .= '"type":"pie",';
         $url .= '"data":{';
         $url .=         '"labels":'. json_encode($labels) .',';
         $url .=         '"datasets":[{';
-        $url .=             '"backgroundColor":["#D11717", "#36A2EB", "#22A3A3", "#F77825", "#9966FF", "#32D4ED", "#3FFCC0", "#17FC5F", "#6168BA", "#05C6ED", "#07D9B6", "#D9D207", "#F5830A"],';
         $url .=             '"data":'. json_encode($data)  .',';
         $url .=         '}]';
         $url .=     '},';
-        $url .= '"options":{';
+       /*  $url .= '"options":{';
         $url .=     '"plugins":{';
         $url .=         '"legend": false,';
         $url .=         '"outlabels":{';
-        $url .=             '"text": "%l %p",';
-        $url .=             '"color": "white",';
+        $url .=             '"backgroundColor": null';
+        $url .=             '"text": "%l %v",';
         $url .=             '"stretch": 35,';
         $url .=             '"font":{';
         $url .=                 '"resizable": true,';
@@ -317,7 +316,7 @@ class SoporteAdminController extends Controller
         $url .=              '}';
         $url .=           '}';
         $url .=        '}';
-        $url .=     '}';
+        $url .=     '}'; */
         $url .= '}';
         return $url;
     }
