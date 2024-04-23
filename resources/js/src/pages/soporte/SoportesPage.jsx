@@ -40,7 +40,7 @@ export const SoportesPage = () => {
         },
         transformValues: (values) => ({
             ...values,
-            id_direccion: Number(values.id_direccion) || null,
+            id_direccion: Number(values.id_direccion),
             id_usu_tecnico_asig: Number(values.id_usu_tecnico_asig) || null,
             anio: values.anio.getFullYear()
         }),

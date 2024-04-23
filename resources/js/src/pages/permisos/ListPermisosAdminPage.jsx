@@ -29,7 +29,7 @@ export const ListPermisosAdminPage = () => {
         },
         transformValues: (values) => ({
             ...values,
-            id_direccion_pide: Number(values.id_direccion_pide) || null,
+            id_direccion_pide: Number(values.id_direccion_pide),
             id_usu_pide: Number(values.id_usu_pide) || null,
             idper_permisos: Number(values.idper_permisos) || null
         }),

@@ -41,7 +41,7 @@ export const PermisosPage = () => {
         },
         transformValues: (values) => ({
             ...values,
-            id_direccion_pide: Number(values.id_direccion_pide) || null,
+            id_direccion_pide: Number(values.id_direccion_pide),
             id_usu_pide: Number(values.id_usu_pide) || null,
             id_jefe_inmediato: Number(values.id_jefe_inmediato) || null,
             id_tipo_motivo: Number(values.id_tipo_motivo) || null,

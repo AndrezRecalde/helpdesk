@@ -84,7 +84,7 @@ export const ModalCreateSoporte = ({ role }) => {
             }),
             id_tipo_solicitud: Number(values.id_tipo_solicitud) || null,
             id_usu_tecnico_asig: Number(values.id_usu_tecnico_asig) || null,
-            id_direccion: Number(values.id_direccion) || null,
+            id_direccion: Number(values.id_direccion),
             id_usu_recibe: Number(values.id_usu_recibe) || null,
             id_tipo_soporte: Number(values.id_tipo_soporte) || null,
             id_area_tic: Number(values.id_area_tic) || null,
