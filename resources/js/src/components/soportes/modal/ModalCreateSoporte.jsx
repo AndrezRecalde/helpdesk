@@ -92,7 +92,7 @@ export const ModalCreateSoporte = ({ role }) => {
         }),
     });
 
-    const { id_direccion, id_usu_recibe } = form.values;
+    const { id_usu_recibe } = form.values;
 
     useEffect(() => {
         if (isOpenModalCreateSoporte) {
