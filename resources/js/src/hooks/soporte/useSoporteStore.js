@@ -286,14 +286,14 @@ export const useSoporteStore = () => {
             const pdfBlob = new Blob([response.data], {
                 type: "application/pdf",
             });
-            const url = window.URL.createObjectURL(pdfBlob);
-            const tempLink = document.createElement("a");
+            const url = window.open(URL.createObjectURL(pdfBlob));
+            /* const tempLink = document.createElement("a");
             tempLink.href = url;
             tempLink.setAttribute("download", "ficha_soporte.pdf");
             document.body.appendChild(tempLink);
             tempLink.click();
 
-            document.body.removeChild(tempLink);
+            document.body.removeChild(tempLink); */
             window.URL.revokeObjectURL(url);
             dispatch(onLoadPDF(false));
         } catch (error) {
@@ -321,14 +321,14 @@ export const useSoporteStore = () => {
             const pdfBlob = new Blob([response.data], {
                 type: "application/pdf",
             });
-            const url = window.URL.createObjectURL(pdfBlob);
-            const tempLink = document.createElement("a");
+            const url = window.open(URL.createObjectURL(pdfBlob));
+            /* const tempLink = document.createElement("a");
             tempLink.href = url;
             tempLink.setAttribute("download", "actividades_soportes.pdf");
             document.body.appendChild(tempLink);
             tempLink.click();
 
-            document.body.removeChild(tempLink);
+            document.body.removeChild(tempLink); */
             window.URL.revokeObjectURL(url);
             dispatch(onLoadPDF(false));
         } catch (error) {

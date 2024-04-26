@@ -15,7 +15,7 @@
         }
 
         body {
-            background-image: url("https://prefecturadeesmeraldas.gob.ec/wp-content/uploads/2023/11/FondoArchivo7.png");
+            background-image: url("http://prefecturadeesmeraldas.gob.ec/wp-content/uploads/2023/11/FondoArchivo7.png");
             background-repeat: no-repeat;
             background-size: cover;
         }

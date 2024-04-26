@@ -31,10 +31,11 @@ export const FilterFormSoportes = ({ form }) => {
             //console.log(values);
             startSearchSoporte(values);
             setStorageFields(values);
+            console.log(values);
         } else {
             //console.log("aki2");
 
-            //console.log(form.getTransformedValues());
+            console.log(form.getTransformedValues());
             startSearchSoporte(form.getTransformedValues());
             setStorageFields(form.getTransformedValues());
         }
@@ -59,14 +60,14 @@ export const FilterFormSoportes = ({ form }) => {
                 <SimpleGrid cols={{ base: 2, sm: 2, md: 2, lg: 2 }} mt={10}>
                     <DateInput
                         clearable
-                        valueFormat="DD/MM/YYYY"
+                        valueFormat="YYYY-MM-DD"
                         label="Desde"
                         placeholder="Seleccione fecha inicio"
                         {...form.getInputProps("fecha_inicio")}
                     />
                     <DateInput
                         clearable
-                        valueFormat="DD/MM/YYYY"
+                        valueFormat="YYYY-MM-DD"
                         label="Hasta"
                         placeholder="Seleccione fecha final"
                         {...form.getInputProps("fecha_fin")}

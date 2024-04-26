@@ -40,6 +40,8 @@ export const SoportesPage = () => {
         },
         transformValues: (values) => ({
             ...values,
+            fecha_inicio: values.fecha_inicio.toLocaleDateString("sv-SE"),
+            fecha_fin: values.fecha_fin.toLocaleDateString("sv-SE"),
             id_direccion: Number(values.id_direccion),
             id_usu_tecnico_asig: Number(values.id_usu_tecnico_asig) || null,
             anio: values.anio.getFullYear()

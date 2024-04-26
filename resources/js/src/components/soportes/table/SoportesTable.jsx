@@ -110,7 +110,7 @@ export const SoportesTable = () => {
                         ? "#71c7f5"
                         : cell.row.original.id_estado == 4
                         ? "#9af5b8"
-                        : cell.row.original.id_estado == 5 && (dayjs(cell.row.original.fecha_ini).isBefore(dayjs(), 'day'))
+                        : cell.row.original.id_estado == 5 && (dayjs(cell.row.original.fecha_ini).isBefore(dayjs().subtract(2, 'day'), 'day'))
                         ? "#fcb281"
                         :"",
                 color:

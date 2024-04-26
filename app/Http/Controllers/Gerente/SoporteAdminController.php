@@ -111,6 +111,7 @@ class SoporteAdminController extends Controller
 
             if ($request->id_usu_tecnico_asig) {
                 $soporte->id_estado = 5;
+                $soporte->save();
                 $tecnico = User::where("cdgo_usrio", $request->id_usu_tecnico_asig)
                     ->first(['cdgo_usrio', 'email']);
 
@@ -127,7 +128,7 @@ class SoporteAdminController extends Controller
                     ->first();
 
                 Mail::to($tecnico->email)->send(new SoporteMail($soporte_asignado));
-                $soporte->save();
+
             } else {
                 $soporte->id_estado = 1;
                 $soporte->save();

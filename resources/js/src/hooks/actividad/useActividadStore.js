@@ -97,15 +97,15 @@ export const useActividadStore = () => {
             const pdfBlob = new Blob([response.data], {
                 type: "application/pdf",
             });
-            const url = window.URL.createObjectURL(pdfBlob);
+            const url = window.open(URL.createObjectURL(pdfBlob));
             //console.log(url);
-            const tempLink = document.createElement("a");
+           /*  const tempLink = document.createElement("a");
             tempLink.href = url;
             tempLink.setAttribute("download", "actividades.pdf");
             document.body.appendChild(tempLink);
             tempLink.click();
 
-            document.body.removeChild(tempLink);
+            document.body.removeChild(tempLink); */
             window.URL.revokeObjectURL(url);
             dispatch(onLoadPDF(false));
         } catch (error) {
