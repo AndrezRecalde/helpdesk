@@ -249,7 +249,7 @@ class SoporteController extends Controller
             ->join('nom_cargo as nc', 'nc.idnom_cargo', 'us.crgo_id')
             ->fechas($request->fecha_inicio, $request->fecha_fin)
             ->tecnico($request->cdgo_usrio)
-            ->orderBy('ss.numero_sop', 'ASC')
+            ->orderBy('ss.fecha_ini', 'DESC')
             ->get();
 
         if (sizeof($soportes) > 0) {
