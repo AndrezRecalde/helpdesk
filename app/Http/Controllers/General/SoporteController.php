@@ -208,7 +208,7 @@ class SoporteController extends Controller
                                  u.nmbre_usrio as usuario_recibe')
             ->leftJoin('usrios_sstma as us', 'us.cdgo_usrio', 'ss.id_usu_tecnico_asig')
             ->leftJoin('usrios_sstma as u', 'u.cdgo_usrio', 'ss.id_usu_recibe')
-            ->join('nom_cargo as nc', 'nc.idnom_cargo', 'us.crgo_id')
+            ->leftjoin('nom_cargo as nc', 'nc.idnom_cargo', 'us.crgo_id')
             ->fechas($request->fecha_inicio, $request->fecha_fin)
             ->tecnico($request->cdgo_usrio)
             ->orderBy('ss.numero_sop', 'ASC')
@@ -297,5 +297,34 @@ class SoporteController extends Controller
             ->get();
 
         return response()->json(['status' => 'success', 'soportes' => $soportes], 200);
+    }
+
+    function getSoporteForId(Request $request, int $id_sop): JsonResponse
+    {
+        $soporte = Soporte::from('sop_soporte as ss')
+            ->selectRaw('ss.id_sop, ss.anio, ss.numero_sop,
+        ss.id_direccion, d.nmbre_dprtmnto as direccion,
+        ss.id_usu_recibe, u.nmbre_usrio as usuario_recibe,
+        ss.fecha_ini, ss.incidente,
+        ss.id_area_tic, sat.nombre as area_tic,
+        ss.id_tipo_soporte, sts.nombre as tipo_soporte,
+        ss.id_estado, se.nombre as estado, se.color,
+        ss.id_usu_tecnico_asig, us.nmbre_usrio as tecnico_asignado')
+            ->join('dprtmntos as d', 'd.cdgo_dprtmnto', 'ss.id_direccion')
+            ->join('usrios_sstma as u', 'u.cdgo_usrio', 'ss.id_usu_recibe')
+            ->leftJoin('sop_areas_tic as sat', 'sat.id_areas_tic', 'ss.id_area_tic')
+            ->leftJoin('sop_tipo_soporte as sts', 'sts.id_tipo_soporte', 'ss.id_tipo_soporte')
+            ->join('sop_estado as se', 'se.id_estado_caso', 'ss.id_estado')
+            ->leftJoin('usrios_sstma as us', 'us.cdgo_usrio', 'ss.id_usu_tecnico_asig')
+            ->where('ss.id_sop', $id_sop)
+            ->tecnico($request->id_usu_tecnico_asig)
+            ->first();
+
+        if ($soporte) {
+            return response()->json(['status' => 'success', 'soporte' => $soporte], 200);
+        } else {
+            return response()->json(['status' => 'error', 'msg' => 'No autorizado para este soporte'], 403);
+        }
+
     }
 }
