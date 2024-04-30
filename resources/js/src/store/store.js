@@ -61,4 +61,7 @@ export const store = configureStore({
         dashGerencia: dashGerenciaSlice.reducer,
         storageField: storageFieldsSlice.reducer
     },
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware({
+        serializableCheck: false
+    })
 });
