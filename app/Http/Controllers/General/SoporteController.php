@@ -211,7 +211,7 @@ class SoporteController extends Controller
             ->leftjoin('nom_cargo as nc', 'nc.idnom_cargo', 'us.crgo_id')
             ->fechas($request->fecha_inicio, $request->fecha_fin)
             ->tecnico($request->cdgo_usrio)
-            ->orderBy('ss.fecha_ini', 'DESC')
+            ->orderBy('ss.fecha_ini', 'ASC')
             ->get();
 
         $jefe_departamento = Departamento::from('dprtmntos as d')
@@ -249,7 +249,7 @@ class SoporteController extends Controller
             ->join('nom_cargo as nc', 'nc.idnom_cargo', 'us.crgo_id')
             ->fechas($request->fecha_inicio, $request->fecha_fin)
             ->tecnico($request->cdgo_usrio)
-            ->orderBy('ss.fecha_ini', 'DESC')
+            ->orderBy('ss.fecha_ini', 'ASC')
             ->get();
 
         if (sizeof($soportes) > 0) {
