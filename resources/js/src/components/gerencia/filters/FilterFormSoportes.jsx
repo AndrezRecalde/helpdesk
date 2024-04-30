@@ -31,11 +31,11 @@ export const FilterFormSoportes = ({ form }) => {
             //console.log(values);
             startSearchSoporte(values);
             setStorageFields(values);
-            console.log(values);
+            //console.log(values);
         } else {
             //console.log("aki2");
 
-            console.log(form.getTransformedValues());
+            //console.log(form.getTransformedValues());
             startSearchSoporte(form.getTransformedValues());
             setStorageFields(form.getTransformedValues());
         }
