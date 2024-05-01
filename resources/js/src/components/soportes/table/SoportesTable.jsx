@@ -4,11 +4,12 @@ import { useMantineReactTable } from "mantine-react-table";
 import { MenuSolicitudTable, MenuTable_T, TableContent } from "../..";
 import { useDireccionStore, useSoporteStore, useTecnicoStore, useUiSoporte, useUsersStore } from "../../../hooks";
 import dayjs from "dayjs";
+import { useNavigate } from "react-router-dom";
 
 export const SoportesTable = () => {
     const usuario = JSON.parse(localStorage.getItem("service_user"));
     const { colorScheme } = useMantineColorScheme();
-    const { isLoading, soportes, startExportSoporte, setActivateSoporte } =
+    const { isLoading, soportes, startExportSoporte, startSearchSoporteForId, setActivateSoporte } =
         useSoporteStore();
     const {
         modalActionAsignarSoporte,
@@ -70,10 +71,14 @@ export const SoportesTable = () => {
         ],
         [soportes]
     );
+    const navigate  = useNavigate();
 
     const handleDiagnosticar = useCallback((selected) => {
         setActivateSoporte(selected);
         modalActionDiagnosticar(1);
+        /* console.log(selected)
+        startSearchSoporteForId(selected);
+        navigate(`/gerencia/diagnostico/${selected.id_sop}`); */
     }, []);
 
     const handleEditar = useCallback((selected) => {
@@ -111,7 +116,7 @@ export const SoportesTable = () => {
                         : cell.row.original.id_estado == 4
                         ? "#9af5b8"
                         : cell.row.original.id_estado == 5 && (dayjs(cell.row.original.fecha_ini).isBefore(dayjs().subtract(2, 'day'), 'day'))
-                        ? "#fcb281"
+                        ? "#cf001c" //#fcb281
                         :"",
                 color:
                     cell.row.original.tecnico_asignado === null ||
@@ -122,7 +127,7 @@ export const SoportesTable = () => {
                         : cell.row.original.id_estado == 5 && colorScheme === "dark"
                         ? "white"
                         : cell.row.original.id_estado == 5 && colorScheme === "light"
-                        ? "black"
+                        ? "white"
                         :"",
             },
         }),
