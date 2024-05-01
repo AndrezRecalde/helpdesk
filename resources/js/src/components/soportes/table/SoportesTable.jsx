@@ -127,7 +127,7 @@ export const SoportesTable = () => {
                         : cell.row.original.id_estado == 5 && colorScheme === "dark"
                         ? "white"
                         : cell.row.original.id_estado == 5 && colorScheme === "light"
-                        ? "white"
+                        ? "black"
                         :"",
             },
         }),

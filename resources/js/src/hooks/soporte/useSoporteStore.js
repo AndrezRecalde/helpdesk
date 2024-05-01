@@ -184,6 +184,17 @@ export const useSoporteStore = () => {
         }
     };
 
+    const startSearchSoporteForId = async ({ numero_sop, id_usu_tecnico_asig }) => {
+        try {
+            const { data } = await helpdeskApi.post(`/general/soporte/${numero_sop}`, { id_usu_tecnico_asig });
+            const { soporte } = data;
+            dispatch(onSetActivateSoporte(soporte));
+        } catch (error) {
+           //console.log(error);
+           ExceptionMessageError(error);
+        }
+    }
+
     /* USUARIO SOLICITANTE */
     const startSendSolicitud = async (solicitud) => {
         try {
@@ -234,7 +245,7 @@ export const useSoporteStore = () => {
     };
 
     /* GENERAL */
-    const startDiagnosticarSoporte = async (soporte) => {
+    const startDiagnosticarSoporte = async (soporte, option, storageFields={}) => {
         try {
             const { data } = await helpdeskApi.put(
                 `/general/diagnosticar-soporte/${soporte.id_sop}`,
@@ -245,6 +256,9 @@ export const useSoporteStore = () => {
                 dispatch(onLoadMessage(undefined));
             }, 40);
             dispatch(onSetActivateSoporte(null));
+            if (option === 2) {
+                startSearchSoporte(storageFields);
+            }
         } catch (error) {
             //console.log(error);
             ExceptionMessageError(error);
@@ -421,6 +435,7 @@ export const useSoporteStore = () => {
         startCreateSolicitudAdmin,
         startCreateSoporte,
         startSearchSoporte,
+        startSearchSoporteForId,
         startSendSolicitud,
         startLoadSoportesAtendidos,
         startCerrarSoporte,

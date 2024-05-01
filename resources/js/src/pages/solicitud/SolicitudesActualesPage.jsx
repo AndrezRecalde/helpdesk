@@ -117,7 +117,7 @@ export const SolicitudesActualesPage = () => {
             <ModalSolicitudAdminSoporte />
             <ModalAsignarSoporte />
             <ModalAnularSoporte />
-            <ModalDiagnostico />
+            <ModalDiagnostico option={1} />
         </Container>
     );
 };

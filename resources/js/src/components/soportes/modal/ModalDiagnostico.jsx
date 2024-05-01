@@ -1,10 +1,10 @@
 import { useEffect } from "react";
 import { Modal } from "@mantine/core";
 import { useEquipoStore, useSoporteStore, useUiSoporte } from "../../../hooks";
-import { hasLength, isNotEmpty, useForm } from "@mantine/form";
+import { isNotEmpty, useForm } from "@mantine/form";
 import { FormDiagnosticar } from "../form/FormDiagnosticar";
 
-export const ModalDiagnostico = () => {
+export const ModalDiagnostico = ({ option }) => {
     const { modalActionDiagnosticar, isOpenModalDiagnosticar } = useUiSoporte();
 
     const { setActivateSoporte } = useSoporteStore();
@@ -71,7 +71,7 @@ export const ModalDiagnostico = () => {
                 blur: 3,
             }}
         >
-            <FormDiagnosticar form={form} />
+            <FormDiagnosticar form={form} option={option} />
         </Modal>
     );
 };

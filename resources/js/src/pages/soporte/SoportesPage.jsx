@@ -129,7 +129,7 @@ export const SoportesPage = () => {
             <ModalCreateSoporte role={switch_role} />
             <ModalAsignarSoporte />
             <ModalAnularSoporte />
-            <ModalDiagnostico />
+            <ModalDiagnostico option={2} />
         </Container>
     );
 };
