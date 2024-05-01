@@ -93,7 +93,7 @@
                     <td>{{ $permisos->motivo }}</td>
                     <td></td>
                     <td>FECHA DE CREACIÓN:</td>
-                    <td>{{ \Carbon\Carbon::parse($permisos->fecha_um) }}</td>
+                    <td>{{ \Carbon\Carbon::parse($permisos->fecha_ing) }}</td>
                 </tr>
                 <tr>
                     <td>HORA SALIDA:</td>
@@ -198,7 +198,7 @@
                     <td>{{ $permisos->motivo }}</td>
                     <td></td>
                     <td>FECHA DE CREACIÓN:</td>
-                    <td>{{ \Carbon\Carbon::parse($permisos->fecha_um) }}</td>
+                    <td>{{ \Carbon\Carbon::parse($permisos->fecha_ing) }}</td>
                 </tr>
                 <tr>
                     <td>HORA SALIDA:</td>

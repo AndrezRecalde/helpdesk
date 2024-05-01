@@ -66,7 +66,7 @@ class PermisosAdminController extends Controller
                             pp.id_usu_pide, us.nmbre_usrio as usuario_pide,
                             pp.id_direccion_pide, d.nmbre_dprtmnto as direccion_pide,
                             pp.id_tipo_motivo, ptp.tip_per_nombre as motivo,
-                            pp.per_fecha_salida, pp.per_fecha_llegada, pp.fecha_um,
+                            pp.per_fecha_salida, pp.per_fecha_llegada, pp.fecha_ing,
                             pp.id_jefe_inmediato, u.nmbre_usrio as jefe_inmediato,
                             pp.per_observaciones')
                 ->join('usrios_sstma as us', 'us.cdgo_usrio', 'pp.id_usu_pide')
@@ -97,7 +97,7 @@ class PermisosAdminController extends Controller
                             pp.id_usu_pide, us.nmbre_usrio as usuario_pide,
                             pp.id_direccion_pide, d.nmbre_dprtmnto as direccion_pide,
                             pp.id_tipo_motivo, ptp.tip_per_nombre as motivo,
-                            pp.per_fecha_salida, pp.per_fecha_llegada, pp.fecha_um,
+                            pp.per_fecha_salida, pp.per_fecha_llegada, pp.fecha_ing,
                             pp.id_jefe_inmediato, u.nmbre_usrio as jefe_inmediato,
                             pp.per_observaciones')
             ->join('usrios_sstma as us', 'us.cdgo_usrio', 'pp.id_usu_pide')

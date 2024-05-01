@@ -25,10 +25,7 @@ export const ModalDiagnostico = () => {
         validate: {
             id_area_tic: isNotEmpty("Por favor ingrese el área"),
             id_tipo_soporte: isNotEmpty("Por favor ingrese el tipo"),
-            solucion: hasLength(
-                { min: 5, max: 500 },
-                "La solución debe tener entre 10 y 500 caracteres"
-            ),
+            solucion: isNotEmpty("Por favor ingrese una solución"),
             id_equipo: (value, values) =>
                 values.id_tipo_soporte == 1 && value === null
                     ? "En soporte a hardware es obligatorio el código del activo"
