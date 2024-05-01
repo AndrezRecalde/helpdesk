@@ -14,15 +14,16 @@ import {
 import { DateTimePicker } from "@mantine/dates";
 import { IconCalendarMonth, IconPinEnd } from "@tabler/icons-react";
 import { BtnSubmit } from "../../../components";
-import { useEquipoStore, useSoporteStore, useUiSoporte } from "../../../hooks";
+import { useEquipoStore, useSoporteStore, useStorageField, useUiSoporte } from "../../../hooks";
 import classes from "../../../assets/styles/modules/soporte/CardDiagnostico.module.css";
 import dayjs from "dayjs";
 
-export const FormDiagnosticar = ({ form }) => {
+export const FormDiagnosticar = ({ form, option }) => {
     const { activo_informatico, id_tipo_soporte } = form.values;
     const { equipos } = useEquipoStore();
     const { modalActionDiagnosticar } = useUiSoporte();
     const { activateSoporte, startDiagnosticarSoporte } = useSoporteStore();
+    const { storageFields } = useStorageField();
 
     useEffect(() => {
         if (activateSoporte !== null) {
@@ -54,9 +55,15 @@ export const FormDiagnosticar = ({ form }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         //console.log(form.getTransformedValues());
-        startDiagnosticarSoporte(form.getTransformedValues());
-        modalActionDiagnosticar(0);
-        form.reset();
+        if (option === 2) {
+            startDiagnosticarSoporte(form.getTransformedValues(), option, storageFields);
+            modalActionDiagnosticar(0);
+            form.reset();
+            return;
+        }
+            startDiagnosticarSoporte(form.getTransformedValues(), option);
+            modalActionDiagnosticar(0);
+            form.reset();
     };
 
     return (
