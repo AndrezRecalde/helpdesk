@@ -116,8 +116,7 @@
                     <td></td>
                 </tr>
                 <tr>
-                    <td colspan="3">{{ $soporte->solucion }}</td>
-                    <td></td>
+                    <td colspan="4" style="font-size: 12px">{{ $soporte->solucion }}</td>
                 </tr>
                 <!-- FIRMA -->
                 <tr>
@@ -214,8 +213,7 @@
                     <td></td>
                 </tr>
                 <tr>
-                    <td colspan="3">{{ $soporte->solucion }}</td>
-                    <td></td>
+                    <td colspan="4" style="font-size: 14px">{{ $soporte->solucion }}</td>
                 </tr>
                 <!-- FIRMA -->
                 <tr>
