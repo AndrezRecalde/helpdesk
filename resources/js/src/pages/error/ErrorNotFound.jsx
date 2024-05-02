@@ -1,7 +1,8 @@
-import { Button, Container, Group, Text, Title } from "@mantine/core";
-import classes from "../../assets/styles/modules/error/NotFound.module.css";
+import { Container, Group, Text, Title } from "@mantine/core";
 import { BtnSection } from "../../components";
 import { useNavigate } from "react-router-dom";
+import classes from "../../assets/styles/modules/error/NotFound.module.css";
+
 
 export const ErrorNotFound = () => {
 
