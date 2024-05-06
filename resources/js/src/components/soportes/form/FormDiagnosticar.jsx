@@ -179,6 +179,7 @@ export const FormDiagnosticar = ({ form, option }) => {
                             {...form.getInputProps("solucion")}
                         />
                         <Checkbox
+                            disabled={activo_informatico}
                             color="teal.4"
                             iconColor="dark.8"
                             size="sm"
