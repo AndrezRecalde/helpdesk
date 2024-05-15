@@ -39,7 +39,8 @@ export const FormCreateSoporte = ({ form }) => {
 
 
     useEffect(() => {
-        if (activo_informatico || id_tipo_soporte == 1) {
+        if (id_tipo_soporte == 1 || id_tipo_soporte == 4 || id_tipo_soporte == 5 || id_tipo_soporte == 6) {
+            console.log(id_tipo_soporte)
             form.setFieldValue("activo_informatico", true);
             form.setFieldValue(
                 "id_equipo",
@@ -48,7 +49,8 @@ export const FormCreateSoporte = ({ form }) => {
                     : null
             );
         }
-        if (id_tipo_soporte != 1) {
+        if (id_tipo_soporte == 2 || id_tipo_soporte == 3) {
+            console.log('aquii')
             form.setFieldValue("activo_informatico", false);
         }
         form.setFieldValue(
@@ -67,7 +69,18 @@ export const FormCreateSoporte = ({ form }) => {
                 ? new Date(activateSoporte?.fecha_fin)
                 : new Date()
         );
-    }, [activo_informatico, id_tipo_soporte]);
+    }, [id_tipo_soporte]);
+
+    useEffect(() => {
+        if (!activo_informatico) {
+            form.setFieldValue(
+                "id_equipo",
+                null
+            );
+        }
+
+    }, [activo_informatico]);
+
 
     useEffect(() => {
         if (id_tipo_solicitud == 7) {
@@ -101,7 +114,6 @@ export const FormCreateSoporte = ({ form }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        //console.log(form.getTransformedValues());
         startCreateSoporte(form.getTransformedValues(), storageFields);
         modalActionCreateSoporte(0);
         form.reset();
@@ -285,7 +297,7 @@ export const FormCreateSoporte = ({ form }) => {
                             };
                         })}
                     /> */}
-                {activo_informatico || id_tipo_soporte == 1 ? (
+                {activo_informatico ? (
                     <Select
                         searchable
                         clearable

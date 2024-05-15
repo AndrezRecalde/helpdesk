@@ -45,7 +45,7 @@ export const FormDiagnosticar = ({ form, option }) => {
     }, [activateSoporte]);
 
     useEffect(() => {
-        if (id_tipo_soporte == 1) {
+        if (id_tipo_soporte == 1 || id_tipo_soporte == 4 || id_tipo_soporte == 5 || id_tipo_soporte == 6) {
             form.setFieldValue("activo_informatico", true);
         } else {
             form.setFieldValue("activo_informatico", false);
