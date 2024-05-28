@@ -301,7 +301,6 @@ export const FormCreateSoporte = ({ form }) => {
                     <Select
                         searchable
                         clearable
-                        limit={5}
                         label="Activo Informatico"
                         placeholder="Seleccione el activo informatico"
                         {...form.getInputProps("id_equipo")}
