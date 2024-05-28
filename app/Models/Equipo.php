@@ -16,6 +16,6 @@ class Equipo extends Model
 
     function tipos(): BelongsTo
     {
-        return $this->belongsTo(TipoEquipo::class, 'idsop_equipo', 'idsop_tipo_equipo');
+        return $this->belongsTo(TipoEquipo::class, 'id_tipo_equipo', 'idsop_equipo');
     }
 }
