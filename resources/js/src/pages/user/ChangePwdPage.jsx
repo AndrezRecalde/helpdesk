@@ -1,8 +1,7 @@
 import { useEffect } from "react";
-import { Title, Text, Container } from "@mantine/core";
-import { ChangePwdForm } from "../../components";
+import { Container } from "@mantine/core";
+import { ChangePwdForm, TextSection, TitlePage } from "../../components";
 import { useForm } from "@mantine/form";
-import { useTitlePage, useUsersStore } from "../../hooks";
 import Swal from "sweetalert2";
 
 export const ChangePwdPage = () => {
@@ -48,12 +47,12 @@ export const ChangePwdPage = () => {
 
     return (
         <Container size={560} my={30}>
-            <Title order={2} ta="center">
+            <TitlePage order={2} ta="center">
                 Cambiar Contraseña
-            </Title>
-            <Text c="dimmed" fz="sm" ta="center">
+            </TitlePage>
+            <TextSection color="dimmed" fz={12} ta="center">
                 Ingresa tu nueva contraseña y verificala.
-            </Text>
+            </TextSection>
             <ChangePwdForm form={form} />
         </Container>
     );

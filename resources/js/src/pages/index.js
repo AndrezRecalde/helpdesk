@@ -34,6 +34,7 @@ import { ListActividadesPage } from "./actividad/ListActividadesPage";
 /* Permisos */
 import { PermisosPage } from "./permisos/PermisosPage";
 import { ListPermisosPage } from "./permisos/ListPermisosPage";
+import { ListPermisosAdminPage } from "./permisos/ListPermisosAdminPage";
 
 /* Error */
 import { ErrorNotFound } from "./error/ErrorNotFound";
@@ -67,6 +68,7 @@ export {
 
     PermisosPage,
     ListPermisosPage,
+    ListPermisosAdminPage,
 
     ErrorNotFound,
     ErrorAccessDenied

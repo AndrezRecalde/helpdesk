@@ -2,18 +2,19 @@
 
 namespace App\Http\Controllers\Gerente;
 
+use App\Enums\MsgStatus;
 use App\Http\Controllers\Controller;
+use App\Mail\SoporteUsuarioMail;
 use Illuminate\Http\Request;
 use App\Http\Requests\AnularSoporteRequest;
 use App\Http\Requests\SolicitudAdminRequest;
 use App\Http\Requests\SoporteAsignarcionRequest;
 use App\Http\Requests\SoporteRequest;
-use App\Mail\SoporteMail;
+use App\Mail\SoporteTecnicoMail;
 use App\Models\Soporte;
 use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
-use GuzzleHttp\Client;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
@@ -36,8 +37,9 @@ class SoporteAdminController extends Controller
                 $soporte->fecha_asig = Carbon::now();
                 $soporte->save();
 
-                $tecnico = User::where("cdgo_usrio", $request->id_usu_tecnico_asig)
-                    ->first(['cdgo_usrio', 'email']);
+                $tecnico = User::where("cdgo_usrio", $request->id_usu_tecnico_asig)->first(['cdgo_usrio', 'email']);
+
+                $usuario = User::where("cdgo_usrio", $request->id_usu_recibe)->first(['cdgo_usrio', 'email']);
 
                 $soporte_asignado = Soporte::from('sop_soporte as ss')
                     ->selectRaw('ss.id_sop, ss.numero_sop,
@@ -51,13 +53,18 @@ class SoporteAdminController extends Controller
                     ->where('ss.id_sop', $id_sop)
                     ->first();
 
-                Mail::to($tecnico->email)->send(new SoporteMail($soporte_asignado));
-                return response()->json(['status' => 'success', 'msg' => 'Soporte Asignado'], 200);
+                /** Mail para el técnico */
+                Mail::to($usuario->email)->send(new SoporteTecnicoMail($soporte_asignado));
+
+                /** Mail para el usuario */
+                Mail::to($tecnico->email)->send(new SoporteUsuarioMail($soporte_asignado));
+
+                return response()->json(['status' => MsgStatus::Success, 'msg' => MsgStatus::SoporteAsignado], 200);
             } else {
-                return response()->json(['status' => 'error', 'msg' => 'Soporte no encontrado'], 404);
+                return response()->json(['status' => MsgStatus::Error, 'msg' => MsgStatus::SoporteNotFound], 404);
             }
         } catch (\Throwable $th) {
-            return response()->json(['status' => 'error', 'message' => $th->getMessage()], 500);
+            return response()->json(['status' => MsgStatus::Error, 'message' => $th->getMessage()], 500);
         }
     }
 
@@ -70,12 +77,12 @@ class SoporteAdminController extends Controller
                 $soporte->id_calificacion = 3;
                 $soporte->id_estado = 2;
                 $soporte->save();
-                return response()->json(['status' => 'success', 'msg' => 'Soporte anulado'], 200);
+                return response()->json(['status' => MsgStatus::Success, 'msg' => MsgStatus::SoporteAnulado], 200);
             } else {
-                return response()->json(['status' => 'error', 'msg' => 'Soporte no encontrado'], 404);
+                return response()->json(['status' => MsgStatus::Error, 'msg' => MsgStatus::SoporteNotFound], 404);
             }
         } catch (\Throwable $th) {
-            return response()->json(['status' => 'error', 'message' => $th->getMessage()], 500);
+            return response()->json(['status' => MsgStatus::Error, 'message' => $th->getMessage()], 500);
         }
     }
 
@@ -98,9 +105,9 @@ class SoporteAdminController extends Controller
             ->get();
 
         if (sizeof($soportes) >= 1) {
-            return response()->json(['status' => 'success', 'soportes' => $soportes], 200);
+            return response()->json(['status' => MsgStatus::Success, 'soportes' => $soportes], 200);
         } else {
-            return response()->json(['status' => 'error', 'msg' => 'No existen soportes anulados en ese rango de fechas'], 404);
+            return response()->json(['status' => MsgStatus::Error, 'msg' => MsgStatus::SoportesAnuladosNotFound], 404);
         }
     }
 
@@ -109,26 +116,29 @@ class SoporteAdminController extends Controller
         try {
             $soporte = Soporte::create($request->validated());
 
+            $soporte_asignado = Soporte::from('sop_soporte as ss')
+                ->selectRaw('ss.id_sop, ss.numero_sop,
+                                ss.id_direccion, d.nmbre_dprtmnto as direccion,
+                                ss.id_usu_tecnico_asig, u.nmbre_usrio as tecnico,
+                                ss.id_usu_recibe, us.nmbre_usrio as solicitante, us.email,
+                                ss.incidente, ss.fecha_ini')
+                ->join('dprtmntos as d', 'd.cdgo_dprtmnto', 'ss.id_direccion')
+                ->join('usrios_sstma as u', 'u.cdgo_usrio', 'ss.id_usu_tecnico_asig')
+                ->join('usrios_sstma as us', 'us.cdgo_usrio', 'ss.id_usu_recibe')
+                ->where('ss.id_sop', $soporte->id_sop)
+                ->first();
+
             if ($request->id_usu_tecnico_asig) {
                 $soporte->id_estado = 5;
                 $soporte->save();
                 $tecnico = User::where("cdgo_usrio", $request->id_usu_tecnico_asig)
                     ->first(['cdgo_usrio', 'email']);
 
-                $soporte_asignado = Soporte::from('sop_soporte as ss')
-                    ->selectRaw('ss.id_sop, ss.numero_sop,
-                                ss.id_direccion, d.nmbre_dprtmnto as direccion,
-                                ss.id_usu_tecnico_asig, u.nmbre_usrio as tecnico,
-                                ss.id_usu_recibe, us.nmbre_usrio as solicitante, us.email,
-                                ss.incidente, ss.fecha_ini')
-                    ->join('dprtmntos as d', 'd.cdgo_dprtmnto', 'ss.id_direccion')
-                    ->join('usrios_sstma as u', 'u.cdgo_usrio', 'ss.id_usu_tecnico_asig')
-                    ->join('usrios_sstma as us', 'us.cdgo_usrio', 'ss.id_usu_recibe')
-                    ->where('ss.id_sop', $soporte->id_sop)
-                    ->first();
+                /* MAIL PARA EL TÉCNICO */
+                Mail::to($tecnico->email)->send(new SoporteTecnicoMail($soporte_asignado));
 
-                Mail::to($tecnico->email)->send(new SoporteMail($soporte_asignado));
-
+                /* MAIL PARA EL USUARIO */
+                Mail::to($tecnico->email)->send(new SoporteUsuarioMail($soporte_asignado));
             } else {
                 $soporte->id_estado = 1;
                 $soporte->save();
@@ -136,13 +146,13 @@ class SoporteAdminController extends Controller
 
             return response()->json(
                 [
-                    'status' => 'success',
-                    'msg' => 'Solicitud creada con éxito'
+                    'status' => MsgStatus::Success,
+                    'msg'    => MsgStatus::SoporteCreatedSuccess
                 ],
                 200
             );
         } catch (\Throwable $th) {
-            return response()->json(['status' => 'error', 'message' => $th->getMessage()], 500);
+            return response()->json(['status' => MsgStatus::Error, 'message' => $th->getMessage()], 500);
         }
     }
 
@@ -152,12 +162,12 @@ class SoporteAdminController extends Controller
         try {
             if ($soporte) {
                 $soporte->update($request->validated());
-                return response()->json(['status' => 'success', 'msg' => 'Actualizado con éxito'], 200);
+                return response()->json(['status' => MsgStatus::Success, 'msg' => MsgStatus::Updated], 200);
             } else {
-                return response()->json(['status' => 'error', 'msg' => 'Soporte no encontrado'], 404);
+                return response()->json(['status' => MsgStatus::Error, 'msg' => MsgStatus::SoporteNotFound], 404);
             }
         } catch (\Throwable $th) {
-            return response()->json(['status' => 'error', 'message' => $th->getMessage()], 500);
+            return response()->json(['status' => MsgStatus::Error, 'message' => $th->getMessage()], 500);
         }
     }
 
@@ -182,14 +192,14 @@ class SoporteAdminController extends Controller
         }
 
         return response()->json([
-            'status' => 'success',
+            'status'                  => MsgStatus::Success,
             'desempenoForEstados'     => $desempenoForEstados,
             'sumaDesempenoForEstados' => $sumaDesempenoForEstados,
-            'desempenoForAreas' => $desempenoForAreas,
-            'desempenoForTecnicos' => $desempenoForTecnicos,
-            'efectividadForAreas'  => $efectividadForAreas,
-            'efectividadForTecnicos' => $efectividadForTecnicos,
-            'sumaDiasHabiles'       => $sumaDiasHabiles
+            'desempenoForAreas'       => $desempenoForAreas,
+            'desempenoForTecnicos'    => $desempenoForTecnicos,
+            'efectividadForAreas'     => $efectividadForAreas,
+            'efectividadForTecnicos'  => $efectividadForTecnicos,
+            'sumaDiasHabiles'         => $sumaDiasHabiles
         ], 200);
     }
 
@@ -231,7 +241,7 @@ class SoporteAdminController extends Controller
             $indice_a++;
         }
 
-        foreach ($desempenoForTecnicos as $tecnico ) {
+        foreach ($desempenoForTecnicos as $tecnico) {
             $labels_tecnicos[$indice_t] = $tecnico->tecnico;
             $datos_tecnicos[$indice_t] = $tecnico->total_finalizados;
             $indice_t++;
@@ -275,7 +285,7 @@ class SoporteAdminController extends Controller
         ];
         $pdf = Pdf::loadView('pdf.soporte.indicador', $data);
         return $pdf->setPaper('a4', 'portrait')->download('indicador.pdf');
-        /* return response()->json(['status' => 'success', 'data' => $data]); */
+        /* return response()->json(['status' => MsgStatus::Success, 'data' => $data]); */
     }
 
     private function generateQuickChartUrl($labels, $data)
@@ -298,12 +308,12 @@ class SoporteAdminController extends Controller
         $url = '{';
         $url .= '"type":"pie",';
         $url .= '"data":{';
-        $url .=         '"labels":'. json_encode($labels) .',';
+        $url .=         '"labels":' . json_encode($labels) . ',';
         $url .=         '"datasets":[{';
-        $url .=             '"data":'. json_encode($data)  .',';
+        $url .=             '"data":' . json_encode($data)  . ',';
         $url .=         '}]';
         $url .=     '},';
-       /*  $url .= '"options":{';
+        /*  $url .= '"options":{';
         $url .=     '"plugins":{';
         $url .=         '"legend": false,';
         $url .=         '"outlabels":{';
@@ -337,13 +347,13 @@ class SoporteAdminController extends Controller
             ->orderBy('ss.numero_sop', 'DESC')
             ->get();
 
-        return response()->json(['status' => 'success', 'soportes' => $soportes], 200);
+        return response()->json(['status' => MsgStatus::Success, 'soportes' => $soportes], 200);
     }
 
     function setCalificacionSoportes(Request $request): JsonResponse
     {
         Soporte::whereIn('id_sop', [$request->id_soportes])->update(['id_calificacion' => 5, 'id_estado' => 4]);
 
-        return response()->json(['status' => 'success', 'msg' => 'Se ha(n) actualizado correctamente'], 200);
+        return response()->json(['status' => MsgStatus::Success, 'msg' => MsgStatus::Updated], 200);
     }
 }

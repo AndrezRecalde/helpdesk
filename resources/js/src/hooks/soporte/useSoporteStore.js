@@ -162,6 +162,7 @@ export const useSoporteStore = () => {
         id_direccion,
         numero_sop,
         id_usu_tecnico_asig,
+        id_estado
     }) => {
         try {
             dispatch(onLoading());
@@ -174,12 +175,14 @@ export const useSoporteStore = () => {
                     id_direccion,
                     numero_sop,
                     id_usu_tecnico_asig,
+                    id_estado
                 }
             );
             const { soportes } = data;
             dispatch(onLoadSoportes(soportes));
         } catch (error) {
             //console.log(error);
+            dispatch(onClearSoportes())
             ExceptionMessageError(error);
         }
     };

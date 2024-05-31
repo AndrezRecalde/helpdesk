@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Gerente;
 
+use App\Enums\MsgStatus;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -15,6 +16,6 @@ class TipoSolicitudController extends Controller
             ->where('activo', 1)
             ->get(['id_tipo_solic', 'nombre']);
 
-        return response()->json(['status' => 'success', 'tipos_solicitudes' => $tipos_solicitudes], 200);
+        return response()->json(['status' => MsgStatus::Success, 'tipos_solicitudes' => $tipos_solicitudes], 200);
     }
 }

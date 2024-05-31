@@ -1,5 +1,5 @@
 import { Burger, Group } from "@mantine/core";
-import { UserBtnHeader } from "../../../components";
+import { BtnSearchMenu, UserBtnHeader } from "../../../components";
 import { Logo, BtnDarkMode } from "../../../components";
 import classes from "././../../../assets/styles/modules/layout/navbar/AppHeader.module.css";
 
@@ -28,7 +28,7 @@ export const AppHeader = ({
             </Group>
 
             <Group>
-                {/* <BtnSearch classes={classes} /> */}
+                <BtnSearchMenu classes={classes} />
                 <BtnDarkMode classes={classes} />
                 <UserBtnHeader />
             </Group>

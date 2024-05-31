@@ -1,6 +1,7 @@
 import { useEffect } from "react";
-import { Card, Container } from "@mantine/core";
+import { Card, Container, Group } from "@mantine/core";
 import {
+    BtnSection,
     FilterFormUsers,
     ModalActivateUser,
     ModalResetPwdUser,
@@ -10,6 +11,7 @@ import {
 } from "../../components";
 import { useTitlePage, useUiUser, useUsersStore } from "../../hooks";
 import Swal from "sweetalert2";
+import { IconPencilPlus } from "@tabler/icons-react";
 
 export const AdminUsersPage = () => {
     useTitlePage("Helpdesk | Usuarios");
@@ -51,11 +53,11 @@ export const AdminUsersPage = () => {
             <TitlePage order={2} size="h2">
                 Administrar usuarios
             </TitlePage>
-            {/* <Group justify="flex-end">
-                <BtnSection handleAction={handleOpenModal}>
+            <Group justify="flex-end">
+                <BtnSection handleAction={handleOpenModal} IconSection={IconPencilPlus}>
                     Agregar usuario
                 </BtnSection>
-            </Group> */}
+            </Group>
             <FilterFormUsers />
             {users.length !== 0 ? (
                 <Card withBorder shadow="sm" radius="md" mt={20} mb={20}>

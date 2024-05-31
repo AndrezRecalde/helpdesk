@@ -1,6 +1,6 @@
-import { Paper, Text } from "@mantine/core";
+import { Paper } from "@mantine/core";
 import { useTitlePage } from "../../hooks";
-import { AuthForm, Logo, TitlePage } from "../../components";
+import { AuthForm, Logo, TextSection, TitlePage } from "../../components";
 import classes from "../../assets/styles/modules/auth/AuthPageBackground.module.css";
 
 export const AuthPage = () => {
@@ -20,9 +20,9 @@ export const AuthPage = () => {
                 radius="md"
                 className={classes.wrapper_paper}
             >
-                <Text size="lg" fw={500} mb={15}>
+                <TextSection tt="" color="black" fz={20} fw={500} mb={20}>
                     Iniciar sesión
-                </Text>
+                </TextSection>
                 <AuthForm />
             </Paper>
         </div>

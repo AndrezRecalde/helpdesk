@@ -15,6 +15,7 @@ import { useDispatch } from "react-redux";
 import { onLoadSoportes } from "../../store/soporte/soporteSlice";
 import useSWR, { mutate } from "swr";
 import Swal from "sweetalert2";
+import { IconBrandTelegram } from "@tabler/icons-react";
 
 
 export const SolicitudesActualesPage = () => {
@@ -84,13 +85,13 @@ export const SolicitudesActualesPage = () => {
     };
 
     return (
-        <Container size="xxl">
+        <Container size="xl">
             <Group justify="space-between">
                 <TitlePage order={2} size="h2">
                     Solicitudes Actuales
                 </TitlePage>
                 {usuario.role_id === 1 ? (
-                    <BtnSection handleAction={handleOpenModal}>
+                    <BtnSection handleAction={handleOpenModal} IconSection={IconBrandTelegram}>
                         Nueva solicitud
                     </BtnSection>
                 ) : null}

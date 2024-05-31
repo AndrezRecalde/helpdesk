@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Container, SimpleGrid } from "@mantine/core";
+import { Box, Container, LoadingOverlay, SimpleGrid } from "@mantine/core";
 import {
     useDashGerenciaStore,
     useIndicadorStore,
@@ -17,7 +17,8 @@ import {
 
 export const DashGerenciaPage = () => {
     useTitlePage("Helpdesk | Dashboard");
-    const { startLoadDashboard, clearDashboard } = useDashGerenciaStore();
+    const { isLoading, startLoadDashboard, clearDashboard } =
+        useDashGerenciaStore();
     const { startLoadDesempenoTecnicosAnual, clearIndicadores } =
         useIndicadorStore();
 
@@ -33,21 +34,28 @@ export const DashGerenciaPage = () => {
 
     return (
         <Container size="xxl">
-            <TitlePage order={2} size="h2">
-                Panel de Soporte Técnico
-            </TitlePage>
-            <DashSoporteStats />
-            <SimpleGrid cols={{ base: 1, sm: 2, md: 2, lg: 2 }}>
-                <DashInfoStats />
-                <ChartPieSoportes />
-            </SimpleGrid>
-            <SimpleGrid cols={{ base: 1, sm: 2, md: 2, lg: 2 }}>
-                <ChartSoportesMes />
-                <ChartBarSoportes />
-            </SimpleGrid>
-            <SimpleGrid cols={{ base: 1, sm: 1, md: 1, lg: 1 }}>
-                <ChartDesempTecnicos />
-            </SimpleGrid>
+            <Box pos="relative">
+                <TitlePage order={2} size="h2">
+                    Panel de Soporte Técnico
+                </TitlePage>
+                <LoadingOverlay
+                    visible={isLoading}
+                    zIndex={1000}
+                    overlayProps={{ radius: "sm", blur: 2 }}
+                />
+                <DashSoporteStats />
+                <SimpleGrid cols={{ base: 1, sm: 2, md: 2, lg: 2 }}>
+                    <DashInfoStats />
+                    <ChartPieSoportes />
+                </SimpleGrid>
+                <SimpleGrid cols={{ base: 1, sm: 2, md: 2, lg: 2 }}>
+                    <ChartSoportesMes />
+                    <ChartBarSoportes />
+                </SimpleGrid>
+                <SimpleGrid cols={{ base: 1, sm: 1, md: 1, lg: 1 }}>
+                    <ChartDesempTecnicos />
+                </SimpleGrid>
+            </Box>
         </Container>
     );
 };

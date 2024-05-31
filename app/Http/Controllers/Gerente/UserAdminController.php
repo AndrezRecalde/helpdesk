@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Gerente;
 
+use App\Enums\MsgStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ResetPwdRequest;
 use App\Http\Requests\TecnicoRequest;
@@ -30,9 +31,9 @@ class UserAdminController extends Controller
             ->get();
 
         if (sizeof($usuarios) >= 1) {
-            return response()->json(['status' => 'success', 'usuarios' => $usuarios], 200);
+            return response()->json(['status' => MsgStatus::Success, 'usuarios' => $usuarios], 200);
         } else {
-            return response()->json(['status' => 'error', 'msg' => "No existen usuarios con esos filtros de búsqueda"], 404);
+            return response()->json(['status' => MsgStatus::Error, 'msg' => MsgStatus::UsersFilterNotFound], 404);
         }
     }
 
@@ -40,9 +41,9 @@ class UserAdminController extends Controller
     {
         try {
             User::create($request->validated());
-            return response()->json(['status' => 'success', 'msg' => 'Creado con éxito'], 201);
+            return response()->json(['status' => MsgStatus::Success, 'msg' => MsgStatus::Created], 201);
         } catch (\Throwable $th) {
-            return response()->json(['status' => 'error', 'msg' => $th->getMessage()], 500);
+            return response()->json(['status' => MsgStatus::Error, 'msg' => $th->getMessage()], 500);
         }
     }
 
@@ -52,12 +53,12 @@ class UserAdminController extends Controller
         try {
             if ($usuario) {
                 $usuario->update($request->validated());
-                return response()->json(['status' => 'success', 'msg' => 'Actualizado con éxito'], 201);
+                return response()->json(['status' => MsgStatus::Success, 'msg' => MsgStatus::Updated], 201);
             } else {
-                return response()->json(['status' => 'error', 'msg' => 'Usuario no encontrado'], 404);
+                return response()->json(['status' => MsgStatus::Error, 'msg' => MsgStatus::UserNotFound], 404);
             }
         } catch (\Throwable $th) {
-            return response()->json(['status' => 'error', 'msg' => $th->getMessage()], 500);
+            return response()->json(['status' => MsgStatus::Error, 'msg' => $th->getMessage()], 500);
         }
     }
 
@@ -76,15 +77,15 @@ class UserAdminController extends Controller
                     'id_tipo_soporte' => 3,
                     'id_usu_tecnico_asig' => auth()->id(),
                     'incidente'     =>  'SOLICITUD DE RESETEO DE CONTRASEÑA',
-                    'solucion'      => 'Se reseteo la contraseña al usuario solicitante'
+                    'solucion'      =>  'Se reseteo la contraseña al usuario solicitante'
 
                 ]);
-                return response()->json(['status' => 'success', 'msg' => 'Actualizado con éxito'], 201);
+                return response()->json(['status' => MsgStatus::Success, 'msg' => MsgStatus::Updated], 201);
             } else {
-                return response()->json(['status' => 'error', 'msg' => 'Usuario no encontrado'], 404);
+                return response()->json(['status' => MsgStatus::Error, 'msg' => MsgStatus::UserNotFound], 404);
             }
         } catch (\Throwable $th) {
-            return response()->json(['status' => 'error', 'msg' => $th->getMessage()], 500);
+            return response()->json(['status' => MsgStatus::Error, 'msg' => $th->getMessage()], 500);
         }
     }
 
@@ -104,9 +105,9 @@ class UserAdminController extends Controller
                 'solucion'      => 'SE REALIZÓ LA ACTIVACIÓN DEL USUARIO SOLICITANTE'
 
             ]);
-            return response()->json(['status' => 'success', 'msg' => 'Actualizado con éxito'], 201);
+            return response()->json(['status' => MsgStatus::Success, 'msg' => MsgStatus::Updated], 201);
         } else {
-            return response()->json(['status' => 'error', 'msg' => 'Usuario no encontrado'], 404);
+            return response()->json(['status' => MsgStatus::Error, 'msg' => MsgStatus::UserNotFound], 404);
         }
     }
 
@@ -120,10 +121,9 @@ class UserAdminController extends Controller
             ->first();
 
         if ($usuario) {
-            return response()->json(['status' => 'success', 'usuario' => $usuario], 200);
+            return response()->json(['status' => MsgStatus::Success, 'usuario' => $usuario], 200);
         } else {
-            return response()->json(['status' => 'error', 'msg' => 'No existe usuario'], 200);
-
+            return response()->json(['status' => MsgStatus::Error, 'msg' => MsgStatus::UserNotFound], 200);
         }
     }
 }

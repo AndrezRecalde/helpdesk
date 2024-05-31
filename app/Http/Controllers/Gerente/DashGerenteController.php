@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Gerente;
 
+use App\Enums\MsgStatus;
 use App\Http\Controllers\Controller;
 use App\Models\Departamento;
 use App\Models\Soporte;
@@ -36,7 +37,7 @@ class DashGerenteController extends Controller
         $totalAreasTic = DB::table('sop_areas_tic')->where('activo', 1)->count();
 
         return response()->json([
-            'status' => 'success',
+            'status'              => MsgStatus::Success,
             'soportesForEstado'   => $soportesForEstado,
             'soportesPorMes'      => $soportesPorMes,
             'soportesForAreas'    => $soportesForAreas,
@@ -55,6 +56,6 @@ class DashGerenteController extends Controller
     {
         $desempenoForTecnicos = DB::select('CALL sop_get_desempeno_for_tecnicos_anual');
 
-        return response()->json(['status' => 'success', 'desempenoForTecnicos' => $desempenoForTecnicos], 200);
+        return response()->json(['status' => MsgStatus::Success, 'desempenoForTecnicos' => $desempenoForTecnicos], 200);
     }
 }

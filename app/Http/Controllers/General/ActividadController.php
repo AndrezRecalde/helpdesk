@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\General;
 
+use App\Enums\MsgStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ActividadRequest;
 use App\Models\Actividad;
@@ -31,9 +32,9 @@ class ActividadController extends Controller
             ->get();
 
         if (sizeof($actividades) >= 1) {
-            return response()->json(['status' => 'success', 'actividades' => $actividades], 200);
+            return response()->json(['status' => MsgStatus::Success, 'actividades' => $actividades], 200);
         } else {
-            return response()->json(['status' => 'error', 'msg' => 'No existen actividades registradas'], 500);
+            return response()->json(['status' => MsgStatus::Error, 'msg' => MsgStatus::ActivitiesNotFound], 500);
         }
     }
 
@@ -41,9 +42,9 @@ class ActividadController extends Controller
     {
         try {
             Actividad::create($request->validated());
-            return response()->json(['status' => 'success', 'msg' => 'Su actividad se ha registrado'], 201);
+            return response()->json(['status' => MsgStatus::Success, 'msg' => MsgStatus::ActivityRegistred], 201);
         } catch (\Throwable $th) {
-            return response()->json(['status' => 'error', 'msg' => $th->getMessage()], 500);
+            return response()->json(['status' => MsgStatus::Error, 'msg' => $th->getMessage()], 500);
         }
     }
 
@@ -54,12 +55,12 @@ class ActividadController extends Controller
         try {
             if ($actividad) {
                 $actividad->update($request->validated());
-                return response()->json(['status' => 'success', 'msg' => 'Su actividad ha sido actualizada'], 201);
+                return response()->json(['status' => MsgStatus::Success, 'msg' => MsgStatus::ActivityUpdated], 201);
             } else {
-                return response()->json(['status' => 'error', 'msg' => 'Actividad no encontrada'], 404);
+                return response()->json(['status' => MsgStatus::Error, 'msg' => MsgStatus::ActivitiesNotFound], 404);
             }
         } catch (\Throwable $th) {
-            return response()->json(['status' => 'error', 'msg' => $th->getMessage()], 500);
+            return response()->json(['status' => MsgStatus::Error, 'msg' => $th->getMessage()], 500);
         }
     }
 
@@ -94,7 +95,7 @@ class ActividadController extends Controller
             $pdf = Pdf::loadView('pdf.actividades.reporte', $data);
             return $pdf->setPaper('a4', 'portrait')->download('actividades.pdf');
         } else {
-            return response()->json(['status' => 'error', 'msg' => 'No existen actividades registradas'], 500);
+            return response()->json(['status' => MsgStatus::Error, 'msg' => MsgStatus::ActivitiesNotFound], 500);
         }
     }
 }

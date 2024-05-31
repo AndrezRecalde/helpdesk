@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\General;
 
+use App\Enums\MsgStatus;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -15,6 +16,6 @@ class DiagnosticoController extends Controller
             ->where('activo', 1)
             ->get(['id_diagnostico', 'diagnostico']);
 
-        return response()->json(['status' => 'success', 'diagnosticos' => $diagnosticos], 200);
+        return response()->json(['status' => MsgStatus::Success, 'diagnosticos' => $diagnosticos], 200);
     }
 }

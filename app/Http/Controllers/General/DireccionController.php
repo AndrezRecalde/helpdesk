@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\General;
 
+use App\Enums\MsgStatus;
 use App\Http\Controllers\Controller;
 use App\Models\Departamento;
 use Illuminate\Http\JsonResponse;
@@ -18,6 +19,6 @@ class DireccionController extends Controller
             ->where('d.es_direccion', 1)
             ->where('d.interna', 1)
             ->get();
-        return response()->json(['status' => 'success', 'direcciones' => $direcciones], 200);
+        return response()->json(['status' => MsgStatus::Success, 'direcciones' => $direcciones], 200);
     }
 }

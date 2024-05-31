@@ -1,59 +1,32 @@
 import { useEffect } from "react";
-import {
-    Badge,
-    Box,
-    Card,
-    Container,
-    Group,
-    SimpleGrid,
-    Skeleton,
-    Text,
-} from "@mantine/core";
-import {
-    TextSection,
-    TitlePage,
-    ProfileForm,
-    MenuSeleccion,
-    BtnSection,
-    BtnSubmit,
-} from "../../components";
+import { Container } from "@mantine/core";
+import { TitlePage, CardProfile } from "../../components";
 import {
     useAuthStore,
     useTecnicoStore,
     useTitlePage,
     useUsersStore,
 } from "../../hooks";
+import { Roles, lGerente, lTecnico } from "../../layouts";
 import { useNavigate } from "react-router-dom";
-import { IconDeviceImacUp } from "@tabler/icons-react";
 
 export const ProfilePage = () => {
     useTitlePage("Helpdesk | Perfil");
     const usuario = JSON.parse(localStorage.getItem("service_user"));
     const navigate = useNavigate();
-    const { isLoading, startProfile, profile, clearProfile } = useAuthStore();
-    const {
-        startLoadInfoUsersSoporte,
-        infoSoportes: totalUsersSoportes,
-        clearInfoSoportes,
-    } = useUsersStore();
-    const {
-        startLoadInfoTecnicosSoporte,
-        infoSoportes: totalTecnicossSoportes,
-        clearInfoSoportesTecnico,
-    } = useTecnicoStore();
-
-    const year = new Date();
+    const { startProfile, clearProfile } = useAuthStore();
+    const { startLoadInfoUsersSoporte, clearInfoSoportes } = useUsersStore();
+    const { startLoadInfoTecnicosSoporte, clearInfoSoportesTecnico } = useTecnicoStore();
 
     useEffect(() => {
         startProfile();
-
         return () => {
             clearProfile();
         };
     }, []);
 
     useEffect(() => {
-        if (usuario?.role === "TECNICO" || usuario?.role === "GERENTE") {
+        if (usuario?.role === Roles.TECNICO || usuario?.role === Roles.GERENTE) {
             startLoadInfoTecnicosSoporte(usuario.cdgo_usrio);
             return;
         }
@@ -67,175 +40,16 @@ export const ProfilePage = () => {
 
     const handleAction = () => {
         usuario?.role_id === 1
-            ? navigate("/gerencia/soportes")
-            : navigate("/tecnico/soportes");
+            ? navigate(lGerente[3].links[0].link)
+            : navigate(lTecnico[1].links[1].link);
     };
-
-    const itemsTic = totalTecnicossSoportes?.map((stat, i) => (
-        <div key={i}>
-            <SimpleGrid cols={{ base: 3, sm: 3, lg: 5 }}>
-                <div>
-                    <Text ta="center" fz="lg" fw={500}>
-                        {stat.total_soportes}
-                    </Text>
-                    <Text ta="center" fz="sm" c="dimmed" lh={1}>
-                        Total Soportes
-                    </Text>
-                </div>
-                <div>
-                    <Text ta="center" fz="lg" fw={500}>
-                        {stat.total_asignados}
-                    </Text>
-                    <Text ta="center" fz="sm" c="dimmed" lh={1}>
-                        Total Asignados
-                    </Text>
-                </div>
-                <div>
-                    <Text ta="center" fz="lg" fw={500}>
-                        {stat.total_atendidos}
-                    </Text>
-                    <Text ta="center" fz="sm" c="dimmed" lh={1}>
-                        Total Atendidos
-                    </Text>
-                </div>
-                <div>
-                    <Text ta="center" fz="lg" fw={500}>
-                        {stat.total_finalizados}
-                    </Text>
-                    <Text ta="center" fz="sm" c="dimmed" lh={1}>
-                        Total Finalizados
-                    </Text>
-                </div>
-                <div>
-                    <Text ta="center" fz="lg" fw={500}>
-                        {stat.total_anulados}
-                    </Text>
-                    <Text ta="center" fz="sm" c="dimmed" lh={1}>
-                        Total Anulados
-                    </Text>
-                </div>
-            </SimpleGrid>
-        </div>
-    ));
-
-    const itemsUser = totalUsersSoportes?.map((stat, i) => (
-        <div key={i}>
-            <SimpleGrid cols={3}>
-                <div>
-                    <Text ta="center" fz="lg" fw={500}>
-                        {stat.total_soportes}
-                    </Text>
-                    <Text ta="center" fz="sm" c="dimmed" lh={1}>
-                        Total Soportes
-                    </Text>
-                </div>
-                <div>
-                    <Text ta="center" fz="lg" fw={500}>
-                        {stat.total_pendientes}
-                    </Text>
-                    <Text ta="center" fz="sm" c="dimmed" lh={1}>
-                        Total Pendientes
-                    </Text>
-                </div>
-                <div>
-                    <Text ta="center" fz="lg" fw={500}>
-                        {stat.total_asignados}
-                    </Text>
-                    <Text ta="center" fz="sm" c="dimmed" lh={1}>
-                        Total Asignados
-                    </Text>
-                </div>
-                <div>
-                    <Text ta="center" fz="lg" fw={500}>
-                        {stat.total_atendidos}
-                    </Text>
-                    <Text ta="center" fz="sm" c="dimmed" lh={1}>
-                        Total Atendidos
-                    </Text>
-                </div>
-                <div>
-                    <Text ta="center" fz="lg" fw={500}>
-                        {stat.total_finalizados}
-                    </Text>
-                    <Text ta="center" fz="sm" c="dimmed" lh={1}>
-                        Total Finalizados
-                    </Text>
-                </div>
-                <div>
-                    <Text ta="center" fz="lg" fw={500}>
-                        {stat.total_anulados}
-                    </Text>
-                    <Text ta="center" fz="sm" c="dimmed" lh={1}>
-                        Total Anulados
-                    </Text>
-                </div>
-            </SimpleGrid>
-        </div>
-    ));
 
     return (
         <Container size="sm">
-            <TitlePage order={2} size="h2">
+            <TitlePage order={1} size="h1">
                 Perfil
             </TitlePage>
-            <Card withBorder shadow="sm" radius="md" p="lg" mt={20} mb={20}>
-                <Card.Section withBorder inheritPadding py="xs">
-                    <Group justify="space-between">
-                        <TextSection fw={700} tt="" fz={16}>
-                            Bienvenido al Helpdesk
-                        </TextSection>
-                        {isLoading ? (
-                            <Skeleton
-                                height={8}
-                                mt={6}
-                                width="70%"
-                                radius="xl"
-                            />
-                        ) : (
-                            <Badge
-                                variant="light"
-                                color="orange.7"
-                                size="lg"
-                                radius="sm"
-                            >
-                                {profile?.role}
-                            </Badge>
-                        )}
-                    </Group>
-                </Card.Section>
-                <Card.Section withBorder inheritPadding py="xs">
-                    <ProfileForm />
-                </Card.Section>
-                <Card.Section withBorder inheritPadding py="xs">
-                    <Group justify="space-between">
-                        <TextSection fw={700} tt="" fz={16}>
-                            Soportes
-                        </TextSection>
-                        <TextSection fw={700} tt="" fz={16}>
-                            {year.getFullYear()}
-                        </TextSection>
-                    </Group>
-                    <Group mt="md" justify="center" gap={70}>
-                        {usuario?.role_id === 1 || usuario?.role_id === 2
-                            ? itemsTic
-                            : itemsUser}
-                    </Group>
-
-                    {usuario.role === "GERENTE" ||
-                    usuario.role === "TECNICO" ? (
-                        <Box component="form" onSubmit={handleAction}>
-                            <BtnSubmit
-                                fontSize={16}
-                                IconSection={IconDeviceImacUp}
-                            >
-                                Gestionar soportes
-                            </BtnSubmit>
-                        </Box>
-                    ) : (
-                        <MenuSeleccion />
-                    )}
-                </Card.Section>
-            </Card>
+            <CardProfile usuario={usuario} handleAction={handleAction} />
         </Container>
     );
 };

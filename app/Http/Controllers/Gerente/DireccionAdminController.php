@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Gerente;
 
+use App\Enums\MsgStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\DirectorRequest;
 use App\Models\Departamento;
@@ -24,7 +25,7 @@ class DireccionAdminController extends Controller
             ->where('d.es_direccion', 1)
             ->where('d.interna', 1)
             ->get();
-        return response()->json(['status' => 'success', 'directores' => $directores], 200);
+        return response()->json(['status' => MsgStatus::Success, 'directores' => $directores], 200);
     }
 
     function getDepartamentos(Request $request): JsonResponse
@@ -34,7 +35,7 @@ class DireccionAdminController extends Controller
             ->where('d.interna', 1)
             ->where('d.cdgo_dprtmnto', $request->cdgo_dprtmnto)
             ->get();
-        return response()->json(['status' => 'success', 'departamentos' => $departamentos], 200);
+        return response()->json(['status' => MsgStatus::Success, 'departamentos' => $departamentos], 200);
     }
 
     function updateDirectores(DirectorRequest $request, int $cdgo_dprtmnto): JsonResponse
@@ -67,12 +68,12 @@ class DireccionAdminController extends Controller
                     'solucion'      => 'SE REALIZA EL RESPECTIVO CAMBIO DE DIRECTOR ENCARGADO SOLICITADO'
 
                 ]);
-                return response()->json(['status' => 'success', 'msg' => 'Actualizado con exito', 'directores' => $directores], 201);
+                return response()->json(['status' => MsgStatus::Success, 'msg' => MsgStatus::Updated, 'directores' => $directores], 201);
             } else {
-                return response()->json(['status' => 'error', 'msg' => 'Dirección no encontrada'], 404);
+                return response()->json(['status' => MsgStatus::Error, 'msg' => MsgStatus::DireccionNotFound], 404);
             }
         } catch (\Throwable $th) {
-            return response()->json(['status' => 'error', 'msg' => $th->getMessage()], 500);
+            return response()->json(['status' => MsgStatus::Error, 'msg' => $th->getMessage()], 500);
         }
     }
 }

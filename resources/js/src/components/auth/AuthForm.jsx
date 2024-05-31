@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { useForm } from "@mantine/form";
 import {
-    Anchor,
     Box,
     Checkbox,
     Group,
@@ -13,10 +12,8 @@ import {
 import { AlertSection, BtnSubmit } from "../../components";
 import { useAuthStore } from "../../hooks";
 import { IconChevronsRight, IconInfoCircle } from "@tabler/icons-react";
-import { useNavigate } from "react-router-dom";
 
 export const AuthForm = () => {
-    const navigate = useNavigate();
     const { isLoading, startLogin, validate, errores } = useAuthStore();
 
     const form = useForm({

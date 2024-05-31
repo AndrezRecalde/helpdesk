@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Enums\MsgStatus;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
@@ -28,16 +29,16 @@ class AuthController extends Controller
             if ($user) {
                 $token = $user->createToken(name: 'auth_token')->plainTextToken;
                 return response()->json([
-                    'status'        =>  'success',
+                    'status'        =>  MsgStatus::Success,
+                    'token_type'    =>  MsgStatus::TokenBearer,
                     'access_token'  =>  $token,
-                    'token_type'    =>  'Bearer',
-                    'user' => $user
+                    'user'          =>  $user
                 ]);
             } else {
-                return response()->json(['status' => 'error', 'msg' => 'Credenciales incorrectas o usuario no activo'], 404);
+                return response()->json(['status' => MsgStatus::Error, 'msg' => MsgStatus::IncorrectCredentials], 404);
             }
         } catch (\Throwable $th) {
-            return response()->json(['status' => 'error', 'msg' => $th->getMessage()], 500);
+            return response()->json(['status' => MsgStatus::Error, 'msg' => $th->getMessage()], 500);
         }
     }
 
@@ -59,13 +60,13 @@ class AuthController extends Controller
             $user->tokens()->delete();
             $token = $user->createToken(name: 'auth_token')->plainTextToken;
             return response()->json([
-                'status'        =>  'success',
-                'token_type'    =>  'Bearer',
+                'status'        =>  MsgStatus::Success,
+                'token_type'    =>  MsgStatus::TokenBearer,
                 'access_token'  =>  $token,
                 'user'          =>  $user
             ]);
         } else {
-            return response()->json(['status' => 'error', 'msg' => 'Usuario no activo'], 401);
+            return response()->json(['status' => MsgStatus::Error, 'msg' => MsgStatus::UserNotActive], 401);
         }
     }
 
@@ -85,7 +86,7 @@ class AuthController extends Controller
             ->where('u.cdgo_usrio', $request->cdgo_usrio)
             ->first();
 
-        return response()->json(['status' => 'success', 'profile' => $profile], 200);
+        return response()->json(['status' => MsgStatus::Success, 'profile' => $profile], 200);
     }
 
     public function logout()
@@ -93,8 +94,8 @@ class AuthController extends Controller
         auth()->user()->tokens()->delete();
 
         return response()->json([
-            'status' => 'success',
-            'msg' => 'Logged out'
+            'status' => MsgStatus::Success,
+            'msg'    => MsgStatus::Logout
         ], 200);
     }
 }

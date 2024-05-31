@@ -10,8 +10,9 @@ import {
     IconDeviceImac,
     IconLicense,
 } from "@tabler/icons-react";
-import classes from "../../../assets/styles/modules/menu/MenuGrid.module.css";
 import { useNavigate } from "react-router-dom";
+import classes from "../../../assets/styles/modules/menu/MenuGrid.module.css";
+
 
 const mockdata = [
     { title: "Agregar actividades", icon: IconPencilPlus, color: "violet", link: "/gad/d/agregar-actividad" },

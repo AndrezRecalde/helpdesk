@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\General;
 
+use App\Enums\MsgStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\DiagnosticoRequest;
 use App\Http\Requests\SolicitudRequest;
@@ -40,7 +41,7 @@ class SoporteController extends Controller
             ->orderBy('ss.numero_sop', 'DESC')
             ->get();
 
-        return response()->json(['status' => 'success', 'soportes' => $soportes], 200);
+        return response()->json(['status' => MsgStatus::Success, 'soportes' => $soportes], 200);
     }
 
     function getSoportesAtendidosForUsuario(Request $request): JsonResponse
@@ -54,7 +55,7 @@ class SoporteController extends Controller
             ->orderBy('ss.numero_sop', 'DESC')
             ->get();
 
-        return response()->json(['status' => 'success', 'soportes' => $soportes], 200);
+        return response()->json(['status' => MsgStatus::Success, 'soportes' => $soportes], 200);
     }
 
     function cierreSoporteForUsuario(Request $request, int $id_sop): JsonResponse
@@ -65,12 +66,12 @@ class SoporteController extends Controller
                 $soporte->id_calificacion = $request->id_calificacion;
                 $soporte->id_estado = $request->id_estado;
                 $soporte->save();
-                return response()->json(['status' => 'success', 'msg' => 'Soporte cerrado'], 200);
+                return response()->json(['status' => MsgStatus::Success, 'msg' => MsgStatus::SoporteClosed], 200);
             } else {
-                return response()->json(['status' => 'error', 'msg' => 'Soporte no encontrado'], 404);
+                return response()->json(['status' => MsgStatus::Error, 'msg' => MsgStatus::SoporteNotFound], 404);
             }
         } catch (\Throwable $th) {
-            return response()->json(['status' => 'error', 'message' => $th->getMessage()], 500);
+            return response()->json(['status' => MsgStatus::Error, 'message' => $th->getMessage()], 500);
         }
     }
 
@@ -99,12 +100,13 @@ class SoporteController extends Controller
             ->direccion($request->id_direccion)
             ->numero($request->numero_sop)
             ->tecnico($request->id_usu_tecnico_asig)
+            ->estado($request->id_estado)
             ->where('ss.anio', $request->anio)
             ->orderBy('ss.numero_sop', 'DESC')
             ->get();
 
         if (sizeof($soportes) >= 1) {
-            return response()->json(['status' => 'success', 'soportes' => $soportes], 200);
+            return response()->json(['status' => MsgStatus::Success, 'soportes' => $soportes], 200);
         } else {
             return response()->json(['status' => 'error', 'msg' => 'No hay soportes con esos filtros de búsqueda'], 404);
         }
@@ -134,7 +136,7 @@ class SoporteController extends Controller
             $soporte->id_direccion = Auth::user()->cdgo_direccion;
             $soporte->id_usu_recibe = Auth::user()->cdgo_usrio;
             $soporte->save();
-            return response()->json(['status' => 'success', 'msg' => 'Solicitud enviada con éxito'], 200);
+            return response()->json(['status' => 'success', 'msg' => MsgStatus::SoporteSendSuccess], 200);
         } catch (\Throwable $th) {
             return response()->json(['status' => 'error', 'message' => $th->getMessage()], 500);
         }
@@ -148,15 +150,16 @@ class SoporteController extends Controller
                 $soporte->fill($request->validated());
                 $soporte->id_estado = 3; // Estado: Atendido
                 $soporte->save();
+
                 return response()->json([
-                    'status' => 'success',
-                    'msg' => 'Soporte Diagnosticado'
+                    'status' => MsgStatus::Success,
+                    'msg'    => MsgStatus::SoporteDiagnosed
                 ], 200);
             } else {
-                return response()->json(['status' => 'error', 'msg' => 'Soporte no encontrado'], 404);
+                return response()->json(['status' => MsgStatus::Error, 'msg' => MsgStatus::SoporteNotFound], 404);
             }
         } catch (\Throwable $th) {
-            return response()->json(['status' => 'error', 'message' => $th->getMessage()], 500);
+            return response()->json(['status' => MsgStatus::Error, 'message' => $th->getMessage()], 500);
         }
     }
 
@@ -195,7 +198,7 @@ class SoporteController extends Controller
             $pdf = Pdf::loadView('pdf.soporte.soporte', $data);
             return $pdf->setPaper('a4', 'portrait')->download('soporte.pdf');
         } else {
-            return response()->json(['status' => 'error', 'msg' => 'No existe el soporte registrado'], 404);
+            return response()->json(['status' => MsgStatus::Error, 'msg' => MsgStatus::SoporteNotFound], 404);
         }
     }
 
@@ -226,14 +229,14 @@ class SoporteController extends Controller
                 'direccion'    => 'Dirección de Técnologias de la Información y Comunicación',
                 'titulo'       => 'Informe de Actividades por Técnico',
                 'fecha_inicio' => $request->fecha_inicio,
-                'fecha_fin' => (new Carbon($request->fecha_fin))->addDays(-1)->format('Y-m-d'),
+                'fecha_fin'    => (new Carbon($request->fecha_fin))->addDays(-1)->format('Y-m-d'),
                 'soportes'     => $soportes,
                 'jefe_departamento' => $jefe_departamento
             ];
             $pdf = Pdf::loadView('pdf.soporte.reporte_soportes', $data);
             return $pdf->setPaper('a4', 'portrait')->download('reporte_soportes.pdf');
         } else {
-            return response()->json(['status' => 'error', 'msg' => 'No existe el soporte registrado'], 404);
+            return response()->json(['status' => MsgStatus::Error, 'msg' => MsgStatus::SoporteNotFound], 404);
         }
     }
 
@@ -253,9 +256,9 @@ class SoporteController extends Controller
             ->get();
 
         if (sizeof($soportes) > 0) {
-            return response()->json(['status' => 'success', 'soportes' => $soportes], 200);
+            return response()->json(['status' => MsgStatus::Success, 'soportes' => $soportes], 200);
         } else {
-            return response()->json(['status' => 'error', 'msg' => 'No actividades de soporte en ese rango de fechas'], 404);
+            return response()->json(['status' => MsgStatus::Error, 'msg' => MsgStatus::ActivitiesSoportedNotFound], 404);
         }
     }
 
@@ -277,7 +280,7 @@ class SoporteController extends Controller
             ->orderBy('ss.numero_sop', 'DESC')
             ->get();
 
-        return response()->json(['status' => 'success', 'soportes' => $soportes], 200);
+        return response()->json(['status' => MsgStatus::Success, 'soportes' => $soportes], 200);
     }
 
     function getSoportesAnualesForUser(Request $request): JsonResponse
@@ -296,6 +299,6 @@ class SoporteController extends Controller
             ->orderBy('ss.numero_sop', 'DESC')
             ->get();
 
-        return response()->json(['status' => 'success', 'soportes' => $soportes], 200);
+        return response()->json(['status' => MsgStatus::Success, 'soportes' => $soportes], 200);
     }
 }

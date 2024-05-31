@@ -36,12 +36,12 @@ export const LinksGroup = ({ icon: Icon, label, initiallyOpened, links, toggleMo
                 <Group justify="space-between" gap={0}>
                     <Box style={{ display: "flex", alignItems: "center" }}>
                         <ThemeIcon
-                            variant="light"
+                            variant="default"
                             color="teal.5"
-                            radius="md"
+                            radius="lg"
                             size="lg"
                         >
-                            <Icon size="1.1rem" stroke={2.2} />
+                            <Icon size="1.1rem" stroke={1.5} />
                         </ThemeIcon>
                         <Box ml="md">{label}</Box>
                     </Box>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Gerente;
 
+use App\Enums\MsgStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PermisoAdminRequest;
 use App\Models\Permiso;
@@ -36,9 +37,9 @@ class PermisosAdminController extends Controller
             ->get();
 
         if (sizeof($permisos) > 0) {
-            return response()->json(['status' => 'success', 'permisos' => $permisos], 200);
+            return response()->json(['status' => MsgStatus::Success, 'permisos' => $permisos], 200);
         } else {
-            return response()->json(['status' => 'error', 'msg' => 'No existen permisos con esos filtros'], 404);
+            return response()->json(['status' => MsgStatus::Error, 'msg' => 'No existen permisos con esos filtros'], 404);
         }
     }
 
@@ -50,9 +51,9 @@ class PermisosAdminController extends Controller
             $permiso->id_estado = 8;
             $permiso->per_observacion_anulado = $request->per_observacion_anulado;
             $permiso->save();
-            return response()->json(['status' => 'success', 'msg' => 'El permiso entra en proceso de anulación'], 200);
+            return response()->json(['status' => MsgStatus::Success, 'msg' => 'El permiso entra en proceso de anulación'], 200);
         } catch (\Throwable $th) {
-            return response()->json(['status' => 'error', 'msg' => $th->getMessage()], 500);
+            return response()->json(['status' => MsgStatus::Error, 'msg' => $th->getMessage()], 500);
         }
     }
 
@@ -84,9 +85,9 @@ class PermisosAdminController extends Controller
 
             $pdf = Pdf::loadView('pdf.permisos.gerencia.permiso', $data);
             return $pdf->setPaper('a4', 'portrait')->download('permiso.pdf');
-            /* return response()->json(['status' => 'success', 'permisos' => $permisos], 200); */
+            /* return response()->json(['status' => MsgStatus::Success, 'permisos' => $permisos], 200); */
         } catch (\Throwable $th) {
-            return response()->json(['status' => 'error', 'msg' => $th->getMessage()], 500);
+            return response()->json(['status' => MsgStatus::Error, 'msg' => $th->getMessage()], 500);
         }
     }
 

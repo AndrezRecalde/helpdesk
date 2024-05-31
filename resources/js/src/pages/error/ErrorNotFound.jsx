@@ -2,6 +2,7 @@ import { Container, Group, Text, Title } from "@mantine/core";
 import { BtnSection } from "../../components";
 import { useNavigate } from "react-router-dom";
 import classes from "../../assets/styles/modules/error/NotFound.module.css";
+import { IconUserCircle } from "@tabler/icons-react";
 
 
 export const ErrorNotFound = () => {
@@ -28,7 +29,7 @@ export const ErrorNotFound = () => {
                 escrito mal la dirección o la página se ha movido a otra URL.
             </Text>
             <Group justify="center">
-                <BtnSection handleAction={handleAction}>Ir a mi perfil</BtnSection>
+                <BtnSection handleAction={handleAction} IconSection={IconUserCircle}>Ir a mi perfil</BtnSection>
             </Group>
         </Container>
     );

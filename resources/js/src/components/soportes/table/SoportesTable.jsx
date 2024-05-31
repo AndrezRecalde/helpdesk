@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 export const SoportesTable = () => {
     const usuario = JSON.parse(localStorage.getItem("service_user"));
     const { colorScheme } = useMantineColorScheme();
-    const { isLoading, soportes, startExportSoporte, startSearchSoporteForId, setActivateSoporte } =
+    const { isLoading, soportes, startExportSoporte, setActivateSoporte } =
         useSoporteStore();
     const {
         modalActionAsignarSoporte,
@@ -71,7 +71,6 @@ export const SoportesTable = () => {
         ],
         [soportes]
     );
-    const navigate  = useNavigate();
 
     const handleDiagnosticar = useCallback((selected) => {
         setActivateSoporte(selected);

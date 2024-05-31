@@ -229,6 +229,7 @@ export const useUsersStore = () => {
         errores,
         message,
 
+        startAddUser,
         startLoadUsersGeneral,
         startLoadUsersExtrict,
         startLoadUsers,

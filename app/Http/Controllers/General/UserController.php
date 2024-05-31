@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\General;
 
+use App\Enums\MsgStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserPasswordRequest;
 use App\Models\User;
@@ -25,7 +26,7 @@ class UserController extends Controller
             ->where('us.actvo', 1)
             ->get();
 
-        return response()->json(['status' => 'success', 'usuarios' => $usuarios], 200);
+        return response()->json(['status' => MsgStatus::Success, 'usuarios' => $usuarios], 200);
     }
 
     function getUsuariosExtrict(Request $request): JsonResponse
@@ -41,7 +42,7 @@ class UserController extends Controller
             ->where('us.actvo', 1)
             ->get();
 
-        return response()->json(['status' => 'success', 'usuarios' => $usuarios], 200);
+        return response()->json(['status' => MsgStatus::Success, 'usuarios' => $usuarios], 200);
     }
 
     function updatePassword(UserPasswordRequest $request, int $cdgo_usrio): JsonResponse
@@ -50,9 +51,9 @@ class UserController extends Controller
         try {
             if ($usuario) {
                 $usuario->update($request->validated());
-                return response()->json(['status' => 'success', 'msg' => 'Contraseña actualizada con éxito'], 200);
+                return response()->json(['status' => MsgStatus::Success, 'msg' => MsgStatus::PasswordChange], 200);
             } else {
-                return response()->json(['status' => 'error', 'msg' => 'Usuario no encontrado'], 404);
+                return response()->json(['status' => 'error', 'msg' => MsgStatus::UserNotFound], 404);
             }
         } catch (\Throwable $th) {
             return response()->json(['status' => 'error', 'msg' => $th->getMessage()], 500);
@@ -64,6 +65,6 @@ class UserController extends Controller
     {
         $info = DB::select('CALL sop_get_info_users_soportes(?)', [$request->user_id]);
 
-        return response()->json(['status' => 'success', 'info' => $info], 200);
+        return response()->json(['status' => MsgStatus::Success, 'info' => $info], 200);
     }
 }

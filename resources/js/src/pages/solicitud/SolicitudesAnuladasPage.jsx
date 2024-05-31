@@ -63,7 +63,7 @@ export const SolicitudesAnuladasPage = () => {
     };
 
     return (
-        <Container size="xxl">
+        <Container size="xl">
             <TitlePage order={2} size="h2">
                 Solicitudes Anuladas
             </TitlePage>

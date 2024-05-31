@@ -2,6 +2,7 @@ import { Title, Text, Container, Group } from "@mantine/core";
 import { BtnSection } from "../../components";
 import { useNavigate } from "react-router-dom";
 import classes from "../../assets/styles/modules/error/Forbidden.module.css";
+import { IconUserCircle } from "@tabler/icons-react";
 
 
 export const ErrorAccessDenied = () => {
@@ -23,7 +24,7 @@ export const ErrorAccessDenied = () => {
                     de un error.
                 </Text>
                 <Group justify="center">
-                    <BtnSection handleAction={handleAction}>Ir a mi perfil</BtnSection>
+                    <BtnSection handleAction={handleAction} IconSection={IconUserCircle}>Ir a mi perfil</BtnSection>
                 </Group>
             </Container>
         </div>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Gerente;
 
+use App\Enums\MsgStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\TecnicoRequest;
 use App\Models\User;
@@ -14,7 +15,7 @@ class TecnicoController extends Controller
     function getTecnicosAdmin(Request $request): JsonResponse
     {
         $tecnicos = DB::select('CALL getTecnicosAdmin(?)', [($request->current_year)]);
-        return response()->json(['status' => 'success', 'tecnicos' => $tecnicos], 200);
+        return response()->json(['status' => MsgStatus::Success, 'tecnicos' => $tecnicos], 200);
     }
 
     function getTecnicos(Request $request): JsonResponse
@@ -31,7 +32,7 @@ class TecnicoController extends Controller
             ->where('us.actvo', 1)
             ->get();
 
-        return response()->json(['status' => 'success', 'tecnicos' => $tecnicos], 200);
+        return response()->json(['status' => MsgStatus::Success, 'tecnicos' => $tecnicos], 200);
     }
 
     function updateTecnico(TecnicoRequest $request, int $cdgo_usrio): JsonResponse
@@ -47,12 +48,12 @@ class TecnicoController extends Controller
                     $usuario->assignRole($request->roles);
                 }
                 //$usuario->save();
-                return response()->json(['status' => 'success', 'msg' => 'Actualizado con éxito'], 201);
+                return response()->json(['status' => MsgStatus::Success, 'msg' => MsgStatus::Updated], 201);
             } else {
-                return response()->json(['status' => 'error', 'msg' => 'Técnico no encontrado'], 404);
+                return response()->json(['status' => MsgStatus::Error, 'msg' => MsgStatus::TecnicoNotFound], 404);
             }
         } catch (\Throwable $th) {
-            return response()->json(['status' => 'error', 'msg' => $th->getMessage()], 500);
+            return response()->json(['status' => MsgStatus::Error, 'msg' => $th->getMessage()], 500);
         }
     }
 
@@ -60,6 +61,6 @@ class TecnicoController extends Controller
     {
         $info = DB::select('CALL sop_get_info_tecnicos_soportes(?)', [$request->user_id]);
 
-        return response()->json(['status' => 'success', 'info' => $info], 200);
+        return response()->json(['status' => MsgStatus::Success, 'info' => $info], 200);
     }
 }

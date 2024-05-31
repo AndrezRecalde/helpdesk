@@ -12,7 +12,7 @@ import {
     ModalAnularSoporte,
     ModalDiagnostico,
 } from "../../components";
-import { useDireccionStore, useSoporteStore, useStorageField, useTitlePage, useUiSoporte } from "../../hooks";
+import { useDireccionStore, useEstadoStore, useSoporteStore, useStorageField, useTitlePage, useUiSoporte } from "../../hooks";
 import { isNotEmpty, useForm } from "@mantine/form";
 import Swal from "sweetalert2";
 import dayjs from "dayjs";
@@ -21,6 +21,7 @@ export const SoportesPage = () => {
     useTitlePage("Helpdesk | Soportes");
     const usuario = JSON.parse(localStorage.getItem("service_user"));
     const { startLoadDirecciones, clearDirecciones } = useDireccionStore();
+    const { startLoadEstados } = useEstadoStore();
     const { soportes, message, errores, clearSoportes } = useSoporteStore();
     const { modalActionAddSolicitud, modalActionCreateSoporte } =
         useUiSoporte();
@@ -33,6 +34,7 @@ export const SoportesPage = () => {
             anio: new Date(),
             id_direccion: null,
             numero_sop: "",
+            id_estado: null,
             switch_role: false,
             id_usu_tecnico_asig: usuario.cdgo_usrio,
         },
@@ -45,7 +47,8 @@ export const SoportesPage = () => {
             fecha_fin: dayjs(values.fecha_fin).add(1, "day") || "",
             id_direccion: Number(values.id_direccion),
             id_usu_tecnico_asig: Number(values.id_usu_tecnico_asig) || null,
-            anio: values.anio.getFullYear()
+            anio: values.anio.getFullYear(),
+            id_estado: Number(values.id_estado) || null
         }),
     });
 
@@ -62,6 +65,7 @@ export const SoportesPage = () => {
 
     useEffect(() => {
         startLoadDirecciones();
+        startLoadEstados();
 
         return () => {
             clearDirecciones();
@@ -96,7 +100,7 @@ export const SoportesPage = () => {
     }, [errores]);
 
     return (
-        <Container size="xxl">
+        <Container size="xl">
             <TitlePage order={2} size="h2">
                 Gestión De Soportes
             </TitlePage>

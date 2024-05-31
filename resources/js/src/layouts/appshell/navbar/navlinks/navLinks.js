@@ -1,10 +1,10 @@
 import {
     IconCategory,
-    IconChartPieFilled,
     IconDeviceImac,
     IconLicense,
     IconTransferIn,
     IconListCheck,
+    IconChartPie,
 } from "@tabler/icons-react";
 
 export const Roles = {
@@ -16,7 +16,7 @@ export const Roles = {
 export const lGerente = [
     {
         label: "Dashboard",
-        icon: IconChartPieFilled,
+        icon: IconChartPie,
         initiallyOpened: true,
         links: [{ label: "Inicio", link: "/gerencia/dashboard" }],
     },

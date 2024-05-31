@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { Card, Container, Group } from "@mantine/core";
 import { BtnSection, ModalAddTecnico, TecnicosTable, TextSection, TitlePage } from "../../components";
 import { useTecnicoStore, useTitlePage, useUiTecnico } from "../../hooks";
+import { IconPencilPlus } from "@tabler/icons-react";
 
 export const AdminTecnicosPage = () => {
     useTitlePage("Helpdesk | Técnicos");
@@ -30,7 +31,7 @@ export const AdminTecnicosPage = () => {
                 <TextSection fw={700} tt="" fz={16}>
                     {`Tienes ${tecnicos.length} técnicos activados`}
                 </TextSection>
-                <BtnSection handleAction={handleOpenModal} >Agregar Técnico</BtnSection>
+                <BtnSection handleAction={handleOpenModal} IconSection={IconPencilPlus}>Agregar Técnico</BtnSection>
             </Group>
             <Card withBorder shadow="sm" radius="md" mt={20} mb={20}>
                 <Card.Section>

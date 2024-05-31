@@ -33,11 +33,11 @@ export const AppLayout = () => {
                     <div className={classes.header}>
                         <Group>
                             <div style={{ flex: 1 }}>
-                                <TextSection fw={700} fz={12} tt="capitalize">
+                                <TextSection fw={700} fz={12} tt="uppercase" color="dimmed">
                                     {usuario?.direccion}
                                 </TextSection>
                             </div>
-                            <Badge radius="sm" color="teal.5">
+                            <Badge radius="lg" size="lg" variant="default">
                                 {usuario?.cdgo_lrgo}
                             </Badge>
                         </Group>

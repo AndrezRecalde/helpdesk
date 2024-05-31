@@ -2,7 +2,7 @@ import { useMantineReactTable } from "mantine-react-table";
 import { useMemo } from "react";
 import { useSoporteStore } from "../../../hooks";
 import { Box, Button } from "@mantine/core";
-import { IconStars } from "@tabler/icons-react";
+import { IconChecks, IconStars } from "@tabler/icons-react";
 import { TableContent } from "../../../components";
 
 export const SoportesCalificacionTable = () => {
@@ -64,8 +64,8 @@ export const SoportesCalificacionTable = () => {
                     onClick={() =>
                         handleCalificar(table.getSelectedRowModel().rows, table)
                     }
-                    leftSection={<IconStars />}
-                    variant="filled"
+                    leftSection={<IconChecks color="teal" />}
+                    variant="default"
                 >
                     Cerrar
                 </Button>
