@@ -125,9 +125,9 @@ export const WebTabAdminHelpdesk = ({ classes, theme }) => {
                     <TextSection tt="" fz={16} fw={500}>
                         Soporte técnico
                     </TextSection>
-                    <Anchor href="#" fz="xs">
+                    <Link to="/gerencia/dashboard" fz="xs">
                         Dashboard
-                    </Anchor>
+                    </Link>
                 </Group>
 
                 <Divider my="sm" />

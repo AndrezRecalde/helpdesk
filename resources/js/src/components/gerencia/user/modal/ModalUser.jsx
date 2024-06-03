@@ -13,6 +13,7 @@ import { StepperUser } from "../../..";
 import { hasLength, isEmail, isNotEmpty, useForm } from "@mantine/form";
 
 export const ModalUser = ({ title }) => {
+    const usuario = JSON.parse(localStorage.getItem("service_user"));
     const { isOpenModalAddUser, modalActionUser } = useUiUser();
     const { startLoadEmpresas, clearEmpresas } = useEmpresaStore();
     const { startLoadTipoSexo, clearTipoSexo } = useSexoStore();
@@ -22,7 +23,7 @@ export const ModalUser = ({ title }) => {
         useTipoUsuarioStore();
     const { startLoadTiposContratos, clearTiposContratos } =
         useTipoContratoStore();
-    const { startLoadUsersGeneral, clearUsers, setClearActivateUser } =
+    const { startFindUserResponsable, clearUsers, setClearActivateUser } =
         useUsersStore();
 
     const form = useForm({
@@ -114,20 +115,20 @@ export const ModalUser = ({ title }) => {
         if (isOpenModalAddUser) {
             startLoadEmpresas();
             startLoadTipoSexo();
-            startLoadUsersGeneral({ cdgo_direccion: null });
+            startFindUserResponsable(usuario.cdgo_usrio);
             //startLoadDirecciones();
             startLoadCargos();
             startLoadTiposUsuarios();
             startLoadTiposContratos();
         }
         return () => {
-            clearEmpresas();
-            clearTipoSexo();
+            //clearEmpresas();
+            //clearTipoSexo();
             //clearDirecciones();
-            clearUsers();
-            clearCargos();
-            clearTiposUsuarios();
-            clearTiposContratos();
+            //clearUsers();
+            //clearCargos();
+            //clearTiposUsuarios();
+            //clearTiposContratos();
         };
     }, [isOpenModalAddUser]);
 

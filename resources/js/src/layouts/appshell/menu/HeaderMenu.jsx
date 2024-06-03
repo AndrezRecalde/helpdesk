@@ -37,7 +37,7 @@ export const HeaderMenu = () => {
 
     const linkNavigate = (url) => {
         navigate(url);
-    }
+    };
 
     return (
         <>
@@ -61,18 +61,29 @@ export const HeaderMenu = () => {
                             <WebTabActividades
                                 classes={classes}
                                 theme={theme}
+                                linkNavigate={linkNavigate}
                             />
 
                             {/* Permisos */}
-                            <WebTabPermisos classes={classes} theme={theme} />
+                            <WebTabPermisos
+                                classes={classes}
+                                theme={theme}
+                                linkNavigate={linkNavigate}
+                            />
                         </Group>
 
                         <Group visibleFrom="sm">
                             {/* Administracion */}
-                            <BtnAdministracion theme={theme} linkNavigate={linkNavigate} />
+                            <BtnAdministracion
+                                theme={theme}
+                                linkNavigate={linkNavigate}
+                            />
 
                             {/* Solicitar soporte */}
-                            <BtnSolicitarSoporte theme={theme} linkNavigate={linkNavigate} />
+                            <BtnSolicitarSoporte
+                                theme={theme}
+                                linkNavigate={linkNavigate}
+                            />
 
                             <BtnSearchMenu classes={classess} />
                             <BtnDarkMode classes={classess} />

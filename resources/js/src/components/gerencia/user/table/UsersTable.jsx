@@ -9,7 +9,7 @@ import { useUiUser, useUsersStore } from "../../../../hooks";
 
 export const UsersTable = () => {
     const { isLoading, users, setActivateUser } = useUsersStore();
-    const { modalActionActiveUser, modalActionResetPwd } = useUiUser();
+    const { modalActionUser, modalActionActiveUser, modalActionResetPwd } = useUiUser();
     const columns = useMemo(
         () => [
             {
@@ -42,7 +42,9 @@ export const UsersTable = () => {
 
     const handleEdit = useCallback(
         (selected) => {
+            console.log(selected)
             setActivateUser(selected);
+            modalActionUser(1);
         },
         [users]
     );

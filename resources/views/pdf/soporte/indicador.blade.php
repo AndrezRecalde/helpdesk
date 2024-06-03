@@ -131,10 +131,10 @@
                 <thead>
                     <tr>
                         <th>AREA</th>
-                        {{-- <th>TOTAL PENDIENTES</th> --}}
-                        <th>TOTAL ATENDIDOS</th>
-                        <th>TOTAL FINALIZADOS</th>
-                        <th>TOTAL ANULADOS</th>
+                        <th>CASOS SIN <br> RESOLVER</th>
+                        <th>TOTAL <br> ATENDIDOS</th>
+                        <th>TOTAL <br> FINALIZADOS</th>
+                        <th>TOTAL <br> ANULADOS</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -142,7 +142,7 @@
                         <tr>
 
                             <td>{{ $desemparea->area_tic }}</td>
-                            {{-- <td>{{ $desemparea->total_pendientes }}</td> --}}
+                            <td>{{ $desemparea->total_asignados }}</td>
                             <td>{{ $desemparea->total_atendidos }}</td>
                             <td>{{ $desemparea->total_finalizados }}</td>
                             <td>{{ $desemparea->total_anuladas }}</td>
@@ -163,17 +163,17 @@
                 <thead>
                     <tr>
                         <th>NOMBRE DEL TECNICO</th>
-                        {{-- <th>TOTAL PENDIENTES</th> --}}
-                        <th>TOTAL ATENDIDOS</th>
-                        <th>TOTAL FINALIZADOS</th>
-                        <th>TOTAL ANULADOS</th>
+                        <th>CASOS SIN <br> RESOLVER</th>
+                        <th>TOTAL <br> ATENDIDOS</th>
+                        <th>TOTAL <br> FINALIZADOS</th>
+                        <th>TOTAL <br> ANULADOS</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($desempenoForTecnicos as $desemptecnico)
                         <tr>
                             <td>{{ $desemptecnico->tecnico }}</td>
-                            {{-- <td>{{ $desemptecnico->total_pendientes }}</td> --}}
+                            <td>{{ $desemptecnico->total_asignados }}</td>
                             <td>{{ $desemptecnico->total_atendidos }}</td>
                             <td>{{ $desemptecnico->total_finalizados }}</td>
                             <td>{{ $desemptecnico->total_anulados }}</td>

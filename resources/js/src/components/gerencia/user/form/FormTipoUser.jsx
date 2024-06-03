@@ -2,7 +2,7 @@ import { Grid, Select, TextInput } from "@mantine/core";
 import { useUsersStore } from "../../../../hooks";
 
 export const FormTipoUser = ({ form }) => {
-    const { users } = useUsersStore();
+    const { activateResponsable } = useUsersStore();
     return (
         <Grid>
             <Grid.Col span={{ base: 12, sm: 4, md: 4, lg: 4 }}>
@@ -99,7 +99,7 @@ export const FormTipoUser = ({ form }) => {
                     clearable
                     label="Creado por"
                     {...form.getInputProps("usu_ing")}
-                    data={users.map((user) => {
+                    data={activateResponsable.map((user) => {
                         return {
                             label: user.nmbre_usrio,
                             value: user.cdgo_usrio.toString(),

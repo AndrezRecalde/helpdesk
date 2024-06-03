@@ -28,7 +28,7 @@ export const AppHeader = ({
             </Group>
 
             <Group>
-                <BtnSearchMenu classes={classes} />
+                {/* <BtnSearchMenu classes={classes} /> */}
                 <BtnDarkMode classes={classes} />
                 <UserBtnHeader />
             </Group>

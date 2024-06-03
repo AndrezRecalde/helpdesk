@@ -33,7 +33,7 @@ export const DashGerenciaPage = () => {
     }, []);
 
     return (
-        <Container size="xxl">
+        <Container size="xl">
             <Box pos="relative">
                 <TitlePage order={2} size="h2">
                     Panel de Soporte Técnico

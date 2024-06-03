@@ -10,8 +10,8 @@ import {
     UsersTable,
 } from "../../components";
 import { useTitlePage, useUiUser, useUsersStore } from "../../hooks";
-import Swal from "sweetalert2";
 import { IconPencilPlus } from "@tabler/icons-react";
+import Swal from "sweetalert2";
 
 export const AdminUsersPage = () => {
     useTitlePage("Helpdesk | Usuarios");
@@ -36,8 +36,8 @@ export const AdminUsersPage = () => {
                 icon: "error",
                 title: "Opps...",
                 text: errores,
-                confirmButtonColor: '#094293',
-                footer: 'Intenta con otros filtros de búsqueda'
+                confirmButtonColor: "#094293",
+                footer: "Intenta con otros filtros de búsqueda",
             });
             return;
         }
@@ -54,7 +54,11 @@ export const AdminUsersPage = () => {
                 Administrar usuarios
             </TitlePage>
             <Group justify="flex-end">
-                <BtnSection handleAction={handleOpenModal} IconSection={IconPencilPlus}>
+                <BtnSection
+                    heigh={45}
+                    handleAction={handleOpenModal}
+                    IconSection={IconPencilPlus}
+                >
                     Agregar usuario
                 </BtnSection>
             </Group>

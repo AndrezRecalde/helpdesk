@@ -16,7 +16,7 @@ export const TableDesempenoAreas = () => {
                 <Table.Thead>
                     <Table.Tr>
                         <Table.Th>Área</Table.Th>
-                        {/* <Table.Th>Total Pendientes</Table.Th> */}
+                        <Table.Th>Casos sin resolver</Table.Th>
                         <Table.Th>Total Atendidos</Table.Th>
                         <Table.Th>Total Finalizados</Table.Th>
                         <Table.Th>Total Anulados</Table.Th>
@@ -26,7 +26,7 @@ export const TableDesempenoAreas = () => {
                     {desempenoForAreas?.map((desempArea) => (
                         <Table.Tr key={desempArea?.id_areas_tic}>
                             <Table.Td>{desempArea?.area_tic}</Table.Td>
-                            {/* <Table.Td>{desempArea?.total_pendientes}</Table.Td> */}
+                            <Table.Td>{desempArea?.total_asignados}</Table.Td>
                             <Table.Td>{desempArea?.total_atendidos}</Table.Td>
                             <Table.Td>{desempArea?.total_finalizados}</Table.Td>
                             <Table.Td>{desempArea?.total_anuladas}</Table.Td>

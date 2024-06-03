@@ -262,7 +262,7 @@ class SoporteAdminController extends Controller
         $chartUrl = $this->generateQuickChartUrl($labels_areas, $datos_finalizados);
         $chartUrl2 = $this->generateQuickChartUrl2($labels_tecnicos, $datos_tecnicos);
 
-        $url = 'http://quickchart.io/chart?width=500&height=200&c=' . urlencode($chartUrl);
+        $url = 'http://quickchart.io/chart?width=500&height=170&c=' . urlencode($chartUrl);
         $url2 = 'http://quickchart.io/chart?width=900&height=600&c=' . urlencode($chartUrl2);
 
 

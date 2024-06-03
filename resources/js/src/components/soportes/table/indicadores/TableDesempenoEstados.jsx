@@ -96,6 +96,24 @@ export const TableDesempenoEstados = () => {
                             %
                         </Table.Td>
                     </Table.Tr>
+                    <Table.Tr>
+                        <Table.Td>
+                            A5. Casos {desempenoForEstados[0]?.estado}
+                            /Casos totales
+                        </Table.Td>
+                        <Table.Td>
+                            {desempenoForEstados[0]?.total_estados}/
+                            {sumaDesempenoForEstados}
+                        </Table.Td>
+                        <Table.Td>
+                            {(
+                                (desempenoForEstados[0]?.total_estados /
+                                    sumaDesempenoForEstados) *
+                                100
+                            ).toFixed(2)}
+                            %
+                        </Table.Td>
+                    </Table.Tr>
                 </Table.Tbody>
             </Table>
         </Table.ScrollContainer>

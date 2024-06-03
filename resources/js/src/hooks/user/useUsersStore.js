@@ -6,6 +6,7 @@ import {
     onLoadMessage,
     onLoadUsers,
     onLoading,
+    onSetActivateResponsable,
     onSetActivateUser,
     onSetInfoSoportes,
     onSetUserVerified,
@@ -18,6 +19,7 @@ export const useUsersStore = () => {
         isLoading,
         users,
         activateUser,
+        activateResponsable,
         validate,
         userVerified,
         infoSoportes,
@@ -114,6 +116,17 @@ export const useUsersStore = () => {
             ExceptionMessageError(error);
         }
     };
+
+    const startFindUserResponsable = async (cdgo_usrio) => {
+        try {
+            const { data } = await helpdeskApi.post("/gerencia/admin/show-user", { cdgo_usrio });
+            const { usuario } = data;
+            console.log(usuario)
+            dispatch(onSetActivateResponsable(usuario));
+        } catch (error) {
+            ExceptionMessageError(error);
+        }
+    }
 
     /* GERENTE */
     const startUpdatePassword = async (user) => {
@@ -223,6 +236,7 @@ export const useUsersStore = () => {
         isLoading,
         users,
         activateUser,
+        activateResponsable,
         userVerified, //aqui
         infoSoportes,
         validate,
@@ -235,6 +249,7 @@ export const useUsersStore = () => {
         startLoadUsers,
         startUpdateActivoUser,
         verifiedUser,
+        startFindUserResponsable,
         startUpdatePassword,
         startChangePwdUser,
         startLoadInfoUsersSoporte,

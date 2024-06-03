@@ -16,8 +16,9 @@ export const WebTabPermisos = ({ classes, theme }) => {
                     <Center>
                         <span className={classes.linkLabel}>Permisos</span>
                         <IconChevronDown
-                            size="0.9rem"
-                            color={theme.colors.teal[6]}
+                            style={{ width: rem(18), height: rem(18) }}
+                            color={theme.colors.teal[8]}
+                            stroke={1.5}
                         />
                     </Center>
                 </a>
@@ -27,10 +28,9 @@ export const WebTabPermisos = ({ classes, theme }) => {
                 <Menu.Item
                     leftSection={
                         <IconSettings
-                            style={{
-                                width: rem(14),
-                                height: rem(14),
-                            }}
+                            style={{ width: rem(18), height: rem(18) }}
+                            color={theme.colors.teal[8]}
+                            stroke={1.5}
                         />
                     }
                 >
@@ -39,10 +39,9 @@ export const WebTabPermisos = ({ classes, theme }) => {
                 <Menu.Item
                     leftSection={
                         <IconBook
-                            style={{
-                                width: rem(14),
-                                height: rem(14),
-                            }}
+                            style={{ width: rem(18), height: rem(18) }}
+                            color={theme.colors.teal[8]}
+                            stroke={1.5}
                         />
                     }
                 >

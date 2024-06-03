@@ -12,13 +12,28 @@ export const StepperUser = ({ form }) => {
     const [active, setActive] = useState(0);
     const { activateUser } = useUsersStore();
     const { modalActionUser } = useUiUser();
-    const { startAddUser, errores } = useUsersStore();
+    const { startAddUser } = useUsersStore();
     const usuario = JSON.parse(localStorage.getItem("service_user"));
 
     useEffect(() => {
       if (activateUser !== null) {
+        console.log('hola')
         form.setValues({
-            ...activateUser
+            ...activateUser,
+            sexo: activateUser.sexo.toString(),
+            usu_id_empresa: activateUser.usu_id_empresa?.toString(),
+            cdgo_direccion: activateUser.cdgo_direccion?.toString(),
+            crgo_id: activateUser.crgo_id?.toString(),
+            id_tipo_usuario: activateUser.id_tipo_usuario?.toString(),
+            usu_ult_tipo_contrato: activateUser.usu_ult_tipo_contrato?.toString(),
+            finaliza_contrato: activateUser.finaliza_contrato?.toString(),
+            usu_f_f_contrato: activateUser.usu_f_f_contrato?.toString(),
+
+            tecnico: activateUser.tecnico?.toString(),
+            secretaria_tic: activateUser.secretaria_tic?.toString(),
+            super_user: activateUser.super_user?.toString(),
+            interno: activateUser.interno?.toString(),
+            usu_estado: activateUser.usu_estado?.toString(),
         })
         return;
       }

@@ -53,6 +53,8 @@ Route::group(['prefix' => 'gerencia', 'middleware' => ['auth:sanctum']], functio
     Route::put('/update/usuario/activo/{cdgo_usrio}', [UserAdminController::class, 'updateActivoUser']);
     Route::post('/verified/usuario', [UserAdminController::class, 'verifiedUser']);
     Route::put('/usuario/reset-password/{cdgo_usrio}', [UserAdminController::class, 'resetPasword']);
+    Route::post('/admin/show-user', [UserAdminController::class, 'findUser']);
+
 
 
 

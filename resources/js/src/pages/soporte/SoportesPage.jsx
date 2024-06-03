@@ -115,11 +115,11 @@ export const SoportesPage = () => {
                     >
                         Crear nuevo
                     </BtnAddActions>
-                ) : null /* (
+                ) : (
                     <BtnSection handleAction={handleOpenModalSoporte}>
                         Agregar soporte
                     </BtnSection>
-                ) */}
+                ) }
             </Group>
             <FilterFormSoportes form={form} />
             {soportes.length !== 0 ? (
