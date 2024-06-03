@@ -26,13 +26,18 @@ import {
 } from "../menu";
 import classes from "../../../assets/styles/modules/layout/header/HeaderMenu.module.css";
 import classess from "../../../assets/styles/modules/layout/navbar/AppHeader.module.css";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 
 export const HeaderMenu = () => {
     const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] =
         useDisclosure(false);
     const [linksOpened, { toggle: toggleLinks }] = useDisclosure(false);
+    const navigate = useNavigate();
     const theme = useMantineTheme();
+
+    const linkNavigate = (url) => {
+        navigate(url);
+    }
 
     return (
         <>
@@ -64,10 +69,10 @@ export const HeaderMenu = () => {
 
                         <Group visibleFrom="sm">
                             {/* Administracion */}
-                            <BtnAdministracion theme={theme} />
+                            <BtnAdministracion theme={theme} linkNavigate={linkNavigate} />
 
                             {/* Solicitar soporte */}
-                            <BtnSolicitarSoporte theme={theme} />
+                            <BtnSolicitarSoporte theme={theme} linkNavigate={linkNavigate} />
 
                             <BtnSearchMenu classes={classess} />
                             <BtnDarkMode classes={classess} />

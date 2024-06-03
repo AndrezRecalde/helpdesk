@@ -4,13 +4,11 @@ import { useNavigate } from "react-router-dom";
 import classes from "../../assets/styles/modules/error/Forbidden.module.css";
 import { IconUserCircle } from "@tabler/icons-react";
 
-
 export const ErrorAccessDenied = () => {
-
     const navigate = useNavigate();
     const handleAction = () => {
         navigate("/u/profile");
-    }
+    };
 
     return (
         <div className={classes.root}>
@@ -24,7 +22,14 @@ export const ErrorAccessDenied = () => {
                     de un error.
                 </Text>
                 <Group justify="center">
-                    <BtnSection handleAction={handleAction} IconSection={IconUserCircle}>Ir a mi perfil</BtnSection>
+                    <BtnSection
+                        heigh={50}
+                        fontSize={18}
+                        handleAction={handleAction}
+                        IconSection={IconUserCircle}
+                    >
+                        Ir a mi perfil
+                    </BtnSection>
                 </Group>
             </Container>
         </div>

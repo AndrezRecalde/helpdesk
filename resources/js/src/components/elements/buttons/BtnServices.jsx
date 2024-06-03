@@ -1,10 +1,12 @@
 import { ActionIcon, Button, Menu, Tooltip, rem, useMantineTheme } from "@mantine/core";
 import {
+    IconBuildingBank,
     IconChevronDown,
     IconDeviceDesktopExclamation,
     IconDeviceImacUp,
     IconMessageUp,
     IconSettings,
+    IconUserSearch,
     IconUsers,
 } from "@tabler/icons-react";
 
@@ -144,7 +146,7 @@ export const BtnAddActions = ({
     );
 };
 
-export const BtnSolicitarSoporte = ({ theme }) => {
+export const BtnSolicitarSoporte = ({ theme, linkNavigate }) => {
     return (
             <Menu
                 transitionProps={{ transition: "pop-top-right" }}
@@ -165,11 +167,11 @@ export const BtnSolicitarSoporte = ({ theme }) => {
                 </Menu.Target>
                 <Menu.Dropdown>
                     <Menu.Item
-                        onClick={() => console.log("clic")}
+                        onClick={() => linkNavigate("/gad/d/solicitud")}
                         leftSection={
                             <IconMessageUp
-                                style={{ width: rem(16), height: rem(16) }}
-                                color={theme.colors.teal[6]}
+                                style={{ width: rem(18), height: rem(18) }}
+                                color={theme.colors.teal[8]}
                                 stroke={1.5}
                             />
                         }
@@ -177,11 +179,11 @@ export const BtnSolicitarSoporte = ({ theme }) => {
                         Solicitar Soporte
                     </Menu.Item>
                     <Menu.Item
-                        onClick={() => console.log("clic")}
+                        onClick={() => linkNavigate("/gad/d/soportes/actuales")}
                         leftSection={
                             <IconDeviceImacUp
-                                style={{ width: rem(16), height: rem(16) }}
-                                color={theme.colors.pink[6]}
+                                style={{ width: rem(18), height: rem(18) }}
+                                color={theme.colors.teal[8]}
                                 stroke={1.5}
                             />
                         }
@@ -193,7 +195,7 @@ export const BtnSolicitarSoporte = ({ theme }) => {
     );
 };
 
-export const BtnAdministracion = ({ theme }) => {
+export const BtnAdministracion = ({ theme, linkNavigate }) => {
     return (
             <Menu
                 transitionProps={{ transition: "pop-top-right" }}
@@ -214,11 +216,11 @@ export const BtnAdministracion = ({ theme }) => {
                 </Menu.Target>
                 <Menu.Dropdown>
                     <Menu.Item
-                        onClick={() => console.log("clic")}
+                        onClick={() => linkNavigate("/gerencia/usuarios")}
                         leftSection={
-                            <IconMessageUp
-                                style={{ width: rem(16), height: rem(16) }}
-                                color={theme.colors.teal[6]}
+                            <IconUserSearch
+                                style={{ width: rem(18), height: rem(18) }}
+                                color={theme.colors.teal[8]}
                                 stroke={1.5}
                             />
                         }
@@ -226,11 +228,11 @@ export const BtnAdministracion = ({ theme }) => {
                         Administrar usuarios
                     </Menu.Item>
                     <Menu.Item
-                        onClick={() => console.log("clic")}
+                        onClick={() => linkNavigate("/gerencia/direcciones")}
                         leftSection={
-                            <IconDeviceImacUp
-                                style={{ width: rem(16), height: rem(16) }}
-                                color={theme.colors.pink[6]}
+                            <IconBuildingBank
+                                style={{ width: rem(18), height: rem(18) }}
+                                color={theme.colors.teal[8]}
                                 stroke={1.5}
                             />
                         }
@@ -238,11 +240,11 @@ export const BtnAdministracion = ({ theme }) => {
                         Administrar gestiones
                     </Menu.Item>
                     <Menu.Item
-                        onClick={() => console.log("clic")}
+                        onClick={() => linkNavigate("/gerencia/tecnicos")}
                         leftSection={
                             <IconUsers
-                                style={{ width: rem(16), height: rem(16) }}
-                                color={theme.colors.pink[6]}
+                                style={{ width: rem(18), height: rem(18) }}
+                                color={theme.colors.teal[8]}
                                 stroke={1.5}
                             />
                         }
