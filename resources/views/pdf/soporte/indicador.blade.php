@@ -132,7 +132,7 @@
                     <tr>
                         <th>AREA</th>
                         {{-- <th>TOTAL PENDIENTES</th> --}}
-                        <th>TOTAL ATENDIDOS</th>
+                        <th>TOTAL EN ESPERA</th>
                         <th>TOTAL FINALIZADOS</th>
                         <th>TOTAL ANULADOS</th>
                     </tr>
@@ -164,7 +164,7 @@
                     <tr>
                         <th>NOMBRE DEL TECNICO</th>
                         {{-- <th>TOTAL PENDIENTES</th> --}}
-                        <th>TOTAL ATENDIDOS</th>
+                        <th>TOTAL EN ESPERA</th>
                         <th>TOTAL FINALIZADOS</th>
                         <th>TOTAL ANULADOS</th>
                     </tr>

@@ -36,7 +36,7 @@ export const CardProfile = ({ usuario, handleAction }) => {
                         {stat.total_atendidos}
                     </TextSection>
                     <TextSection tt="" ta="center" fz={14} fw={500} color="dimmed">
-                        Total Atendidos
+                        Total En Espera
                     </TextSection>
                 </div>
                 <div>
@@ -91,7 +91,7 @@ export const CardProfile = ({ usuario, handleAction }) => {
                         {stat.total_atendidos}
                     </TextSection>
                     <TextSection tt="" ta="center" fz={14} fw={500} color="dimmed">
-                        Total Atendidos
+                        Total En Espera
                     </TextSection>
                 </div>
                 <div>

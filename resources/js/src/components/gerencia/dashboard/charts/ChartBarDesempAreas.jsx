@@ -105,7 +105,7 @@ export const ChartBarDesempAreas = () => {
                 },
             },
             {
-                label: "Total atendidas",
+                label: "Total En Espera",
                 data: desempenoForAreas?.map(soporte => soporte.total_atendidos),
                 backgroundColor: "rgba(4, 115, 253, 0.66)",
                 borderColor: "rgba(30, 166, 238, 1)",

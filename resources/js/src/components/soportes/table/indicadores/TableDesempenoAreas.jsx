@@ -17,7 +17,7 @@ export const TableDesempenoAreas = () => {
                     <Table.Tr>
                         <Table.Th>Área</Table.Th>
                         {/* <Table.Th>Total Pendientes</Table.Th> */}
-                        <Table.Th>Total Atendidos</Table.Th>
+                        <Table.Th>Total En Espera</Table.Th>
                         <Table.Th>Total Finalizados</Table.Th>
                         <Table.Th>Total Anulados</Table.Th>
                     </Table.Tr>
