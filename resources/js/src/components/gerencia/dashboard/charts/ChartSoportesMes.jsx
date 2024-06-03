@@ -101,9 +101,9 @@ export const ChartSoportesMes = () => {
 
     return (
         <Card withBorder shadow="sm" radius="md">
-            {/* <Card.Section withBorder inheritPadding py="xs">
+            <Card.Section withBorder inheritPadding py="xs">
                 Soportes por mes
-            </Card.Section> */}
+            </Card.Section>
             <Card.Section withBorder inheritPadding py="xs">
                 <Line options={options} data={data} />
             </Card.Section>

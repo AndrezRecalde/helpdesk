@@ -49,10 +49,10 @@ export const ChartPieSoportes = () => {
 
     return (
         <Card withBorder shadow="sm" radius="md" mb="sm">
-            {/* <Card.Section withBorder inheritPadding py="xs">
+            <Card.Section withBorder inheritPadding py="xs">
                 Estados de los soportes - {new Date().getFullYear()}
-            </Card.Section> */}
-            <Card.Section inheritPadding py="xs">
+            </Card.Section>
+            <Card.Section withBorder inheritPadding py="xs">
                 <Pie
                     data={data}
                     height={400}

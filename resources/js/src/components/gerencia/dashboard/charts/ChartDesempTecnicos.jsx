@@ -124,7 +124,7 @@ export const ChartDesempTecnicos = () => {
                 },
             },
             {
-                label: "Total En Espera",
+                label: "Total atendidas",
                 data: desempenoForTecnicos?.map(
                     (tecnico) => tecnico.total_atendidos
                 ),
@@ -194,9 +194,9 @@ export const ChartDesempTecnicos = () => {
 
     return (
         <Card withBorder shadow="sm" radius="md" mt="sm" mb="sm">
-            {/* <Card.Section withBorder inheritPadding py="xs">
+            <Card.Section withBorder inheritPadding py="xs">
                 Soportes por técnicos - {new Date().getFullYear()}
-            </Card.Section> */}
+            </Card.Section>
             <Card.Section withBorder inheritPadding py="xs">
                 <Bar options={options} data={data}  />
             </Card.Section>

@@ -102,7 +102,7 @@ export const ChartBarSoportes = () => {
                 },
             },
             {
-                label: "Total En Espera",
+                label: "Total atendidas",
                 data: soportesForAreas?.map(soporte => soporte.total_atendidos),
                 backgroundColor: "rgba(4, 115, 253, 0.66)",
                 borderColor: "rgba(30, 166, 238, 1)",
@@ -157,9 +157,9 @@ export const ChartBarSoportes = () => {
 
     return (
         <Card withBorder shadow="sm" radius="md">
-            {/* <Card.Section withBorder inheritPadding py="xs">
+            <Card.Section withBorder inheritPadding py="xs">
                 Soportes por subprocesos
-            </Card.Section> */}
+            </Card.Section>
             <Card.Section withBorder inheritPadding py="xs">
                 <Bar options={options} data={data} />
             </Card.Section>
