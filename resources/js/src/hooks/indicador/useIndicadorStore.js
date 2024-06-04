@@ -74,14 +74,14 @@ export const useIndicadorStore = () => {
             const pdfBlob = new Blob([response.data], {
                 type: "application/pdf",
             });
-            const url = window.URL.createObjectURL(pdfBlob);
-            const tempLink = document.createElement("a");
+            const url = window.open(URL.createObjectURL(pdfBlob));
+            /* const tempLink = document.createElement("a");
             tempLink.href = url;
             tempLink.setAttribute("download", "indicador.pdf");
             document.body.appendChild(tempLink);
             tempLink.click();
 
-            document.body.removeChild(tempLink);
+            document.body.removeChild(tempLink); */
             window.URL.revokeObjectURL(url);
             dispatch(onLoading(false));
         } catch (error) {
