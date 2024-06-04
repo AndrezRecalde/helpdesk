@@ -10,14 +10,14 @@ import { BrowserRouter } from "react-router-dom";
 import { AppRouter } from "./routes/AppRouter";
 import { theme } from "./theme";
 import { store } from "./store";
-import { AppRouter2 } from "./routes/AppRouter2";
+//import { AppRouter2 } from "./routes/AppRouter2";
 
 export const App = () => {
     return (
         <MantineProvider theme={theme} defaultColorScheme="light">
             <Provider store={store}>
                 <BrowserRouter>
-                    <AppRouter2 />
+                    <AppRouter />
                 </BrowserRouter>
             </Provider>
         </MantineProvider>
