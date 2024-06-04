@@ -83,12 +83,22 @@ class PermisosAdminController extends Controller
                 'permisos' => $permisos
             ];
 
-            $pdf = Pdf::loadView('pdf.permisos.gerencia.permiso', $data);
-            return $pdf->setPaper('a4', 'portrait')->download('permiso.pdf');
-            /* return response()->json(['status' => MsgStatus::Success, 'permisos' => $permisos], 200); */
+            /* $pdf = Pdf::loadView('pdf.permisos.gerencia.permiso', $data);
+            return $pdf->setPaper('a4', 'portrait')->download('permiso.pdf'); */
+            return response()->json([
+                'status' => MsgStatus::Success,
+                'msg'    => 'Permiso creado con éxito',
+                'data'   => $data
+            ], 200);
         } catch (\Throwable $th) {
             return response()->json(['status' => MsgStatus::Error, 'msg' => $th->getMessage()], 500);
         }
+    }
+
+    function exportCardPDFPermiso(array $data)
+    {
+        $pdf = Pdf::loadView('pdf.permisos.gerencia.permiso', $data);
+        return $pdf->setPaper('a4', 'portrait')->download('permiso.pdf');
     }
 
     function exportPDFPermiso(Request $request)

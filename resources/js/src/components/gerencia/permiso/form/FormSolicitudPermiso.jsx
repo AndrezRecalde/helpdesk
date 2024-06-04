@@ -132,10 +132,10 @@ export const FormSolicitudPermiso = ({ form, disabled }) => {
                         placeholder="Seleccione el jefe inmediato del solicitante"
                         {...form.getInputProps("id_jefe_inmediato")}
                         nothingFoundMessage="Nothing found..."
-                        data={directores.map((director) => {
+                        data={users.map((director) => {
                             return {
-                                label: director.jefe,
-                                value: director.id_jefe.toString(),
+                                label: director.nmbre_usrio,
+                                value: director.cdgo_usrio.toString(),
                             };
                         })}
                     />

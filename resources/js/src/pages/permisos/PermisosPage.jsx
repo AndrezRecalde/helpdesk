@@ -1,6 +1,6 @@
 import { useEffect } from "react";
-import { Card, Container, LoadingOverlay } from "@mantine/core";
-import { FormSolicitudPermiso, TitlePage } from "../../components";
+import { Card, Container, Group, LoadingOverlay } from "@mantine/core";
+import { BtnSection, FormSolicitudPermiso, TitlePage } from "../../components";
 import { isNotEmpty, useForm } from "@mantine/form";
 import {
     useDireccionStore,
@@ -8,14 +8,19 @@ import {
     useTitlePage,
     useUsersStore,
 } from "../../hooks";
+import { IconChevronsRight } from "@tabler/icons-react";
 
 export const PermisosPage = () => {
     useTitlePage("Helpdesk | Permisos");
     const usuario = JSON.parse(localStorage.getItem("service_user"));
     const { startLoadDirecciones, clearDirecciones } = useDireccionStore();
     const { startLoadUsersExtrict, clearUsers } = useUsersStore();
-    const { startLoadDirectores, directores, isLoading: loadDirectores, clearDirectores } =
-        useDirectorStore();
+    const {
+        startLoadDirectores,
+        directores,
+        isLoading: loadDirectores,
+        clearDirectores,
+    } = useDirectorStore();
 
     const form = useForm({
         initialValues: {
@@ -91,12 +96,19 @@ export const PermisosPage = () => {
 
     return (
         <Container size="md">
-            <TitlePage order={2} size="h2">
-                Crear Permiso
-            </TitlePage>
+            <Group justify="space-between">
+                <TitlePage order={2} size="h2">
+                    Crear Permiso
+                </TitlePage>
+                <BtnSection IconSection={IconChevronsRight}>
+                    Ver permisos
+                </BtnSection>
+            </Group>
             <Card withBorder shadow="sm" radius="md" mt={20} mb={20}>
                 <LoadingOverlay
-                    visible={usuario.role_id !== 1 && loadDirectores ? true : false}
+                    visible={
+                        usuario.role_id !== 1 && loadDirectores ? true : false
+                    }
                     zIndex={1000}
                     overlayProps={{ radius: "sm", blur: 2 }}
                 />

@@ -104,24 +104,40 @@
             <p class="text-left marginBottom">A. EFICIENCIA DE DESEMPEÑO DE ACTIVIDADES</p>
             <p class="text-left marginBottom">{{ $sumaDesempenoForEstados }} casos corresponden al 100%</p>
             <table class="table table-bordered">
+               <thead>
                 <tr>
-                    <td>A.1 Casos {{ $desempenoForEstados[3]->estado }}/Casos Totales</td>
-                    <td>{{ $desempenoForEstados[3]->total_estados }}/{{ $sumaDesempenoForEstados }}</td>
-                    <td>{{ round(($desempenoForEstados[3]->total_estados / $sumaDesempenoForEstados) * 100, 2) }}%</td>
-
-                    <td>A.2 Casos {{ $desempenoForEstados[1]->estado }}/Casos Totales</td>
-                    <td>{{ $desempenoForEstados[1]->total_estados }}/{{ $sumaDesempenoForEstados }}</td>
-                    <td>{{ round(($desempenoForEstados[1]->total_estados / $sumaDesempenoForEstados) * 100, 2) }}%</td>
+                    <th>DETALLE DE LOS CASOS</th>
+                    <th>TOTAL DE LOS CASOS/ TOTAL DE CASOS FINALIZADOS</th>
+                    <th>PORCENTAJE</th>
                 </tr>
-                <tr>
-                    <td>A.3 Casos {{ $desempenoForEstados[0]->estado }}/Casos Totales</td>
-                    <td>{{ $desempenoForEstados[0]->total_estados }}/{{ $sumaDesempenoForEstados }}</td>
-                    <td>{{ round(($desempenoForEstados[0]->total_estados / $sumaDesempenoForEstados) * 100, 2) }}%</td>
-
-                    <td>A.4 Casos {{ $desempenoForEstados[2]->estado }}/Casos Totales</td>
-                    <td>{{ $desempenoForEstados[2]->total_estados }}/{{ $sumaDesempenoForEstados }}</td>
-                    <td>{{ round(($desempenoForEstados[2]->total_estados / $sumaDesempenoForEstados) * 100, 2) }}%</td>
-                </tr>
+                <tbody>
+                    <tr>
+                        <td>A.1 Casos {{ $desempenoForEstados[3]->estado }}/Casos Totales</td>
+                        <td>{{ $desempenoForEstados[3]->total_estados }}/{{ $sumaDesempenoForEstados }}</td>
+                        <td>{{ round(($desempenoForEstados[3]->total_estados / $sumaDesempenoForEstados) * 100, 2) }}%</td>
+                    </tr>
+                    <tr>
+                        <td>A.2 Casos Sin Cerrar/Casos Totales</td>
+                        <td>{{ $desempenoForEstados[2]->total_estados }}/{{ $sumaDesempenoForEstados }}</td>
+                        <td>{{ round(($desempenoForEstados[2]->total_estados / $sumaDesempenoForEstados) * 100, 2) }}%</td>
+                    </tr>
+                    <tr>
+                        <td>A.3 Casos {{ $desempenoForEstados[1]->estado }}/Casos Totales</td>
+                        <td>{{ $desempenoForEstados[1]->total_estados }}/{{ $sumaDesempenoForEstados }}</td>
+                        <td>{{ round(($desempenoForEstados[1]->total_estados / $sumaDesempenoForEstados) * 100, 2) }}%</td>
+                    </tr>
+                    <tr>
+                        <td>A.4 Casos {{ $desempenoForEstados[4]->estado }}/Casos Totales</td>
+                        <td>{{ $desempenoForEstados[4]->total_estados }}/{{ $sumaDesempenoForEstados }}</td>
+                        <td>{{ round(($desempenoForEstados[4]->total_estados / $sumaDesempenoForEstados) * 100, 2) }}%</td>
+                    </tr>
+                    <tr>
+                        <td>A.5 Casos {{ $desempenoForEstados[0]->estado }}/Casos Totales</td>
+                        <td>{{ $desempenoForEstados[0]->total_estados }}/{{ $sumaDesempenoForEstados }}</td>
+                        <td>{{ round(($desempenoForEstados[0]->total_estados / $sumaDesempenoForEstados) * 100, 2) }}%</td>
+                    </tr>
+                </tbody>
+               </thead>
             </table>
         </div>
 
@@ -132,7 +148,7 @@
                     <tr>
                         <th>AREA</th>
                         <th>CASOS SIN <br> RESOLVER</th>
-                        <th>TOTAL <br> ATENDIDOS</th>
+                        <th>CASOS SIN <br> CERRAR</th>
                         <th>TOTAL <br> FINALIZADOS</th>
                         <th>TOTAL <br> ANULADOS</th>
                     </tr>
@@ -164,7 +180,7 @@
                     <tr>
                         <th>NOMBRE DEL TECNICO</th>
                         <th>CASOS SIN <br> RESOLVER</th>
-                        <th>TOTAL <br> ATENDIDOS</th>
+                        <th>CASOS SIN <br> CERRAR</th>
                         <th>TOTAL <br> FINALIZADOS</th>
                         <th>TOTAL <br> ANULADOS</th>
                     </tr>

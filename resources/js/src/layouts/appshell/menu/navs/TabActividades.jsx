@@ -26,6 +26,7 @@ export const WebTabActividades = ({ classes, theme, linkNavigate }) => {
             <Menu.Dropdown>
                 <Menu.Label>General</Menu.Label>
                 <Menu.Item
+                    onClick={() => linkNavigate("/gerencia/agregar-actividad")}
                     leftSection={
                         <IconSettings
                             style={{ width: rem(18), height: rem(18) }}
@@ -37,6 +38,7 @@ export const WebTabActividades = ({ classes, theme, linkNavigate }) => {
                     Crear Actividad
                 </Menu.Item>
                 <Menu.Item
+                    onClick={() => linkNavigate("/gerencia/lista-actividades")}
                     leftSection={
                         <IconBook
                             style={{ width: rem(18), height: rem(18) }}
