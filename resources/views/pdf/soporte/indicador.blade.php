@@ -257,7 +257,7 @@
         <div class="marginEficacia">
             <p class="text-left marginBottom">C. EFICACIA</p>
             <p class="text-left marginBottom">
-                C1. CASOS FINALIZADOS/META(30 X DIA, EN 261 DIAS):
+                C1. CASOS FINALIZADOS/META(30 X DIA, EN {{ $sumaDiasHabiles[0]->dias_habiles }} DIAS):
                 {{ round(($desempenoForEstados[3]->total_estados / 30 / $sumaDiasHabiles[0]->dias_habiles) * 100, 2) }}%
             </p>
             <table class="table table-bordered">
