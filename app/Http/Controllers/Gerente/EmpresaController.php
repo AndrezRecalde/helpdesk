@@ -12,7 +12,7 @@ class EmpresaController extends Controller
 {
     function getEmpresas(): JsonResponse
     {
-        $empresas = Empresa::whereIn("idnom_empresa", [2,6,8,10])->get();
+        $empresas = Empresa::whereNotIn("idnom_empresa", [2,6,8,10])->get();
         return response()->json(['status' => MsgStatus::Success, 'empresas' => $empresas], 200);
     }
 }

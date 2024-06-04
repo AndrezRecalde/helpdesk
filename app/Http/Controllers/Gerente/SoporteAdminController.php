@@ -262,15 +262,15 @@ class SoporteAdminController extends Controller
         $chartUrl = $this->generateQuickChartUrl($labels_areas, $datos_finalizados);
         $chartUrl2 = $this->generateQuickChartUrl2($labels_tecnicos, $datos_tecnicos);
 
-        $url = 'http://quickchart.io/chart?width=500&height=170&c=' . urlencode($chartUrl);
-        $url2 = 'http://quickchart.io/chart?width=900&height=600&c=' . urlencode($chartUrl2);
+        $url = 'http://quickchart.io/chart?width=500&height=550&c=' . urlencode($chartUrl);
+        $url2 = 'http://quickchart.io/chart?width=900&height=800&c=' . urlencode($chartUrl2);
 
 
 
         $data = [
             'direccion'     =>  'Dirección de Técnologias de Información y Comunicación',
             'titulo'        =>  'Reporte General de Indicadores',
-            'fecha_inicio'  =>  $request->fecha_ini,
+            'fecha_inicio'  =>  $request->fecha_inicio,
             'fecha_fin'     =>  $request->fecha_fin,
             'desempenoForEstados'     => $desempenoForEstados,
             'sumaDesempenoForEstados' => $sumaDesempenoForEstados,

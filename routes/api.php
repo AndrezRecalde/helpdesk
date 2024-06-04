@@ -144,6 +144,8 @@ Route::group(['prefix' => 'general', 'middleware' => ['auth:sanctum']], function
     Route::post('/crear-permiso', [PermisosAdminController::class, 'store']);
     Route::post('/permisos', [PermisosAdminController::class, 'getPermisosAdmin']);
     Route::put('/anular-permiso/{idper_permisos}', [PermisosAdminController::class, 'anularPermisos']);
+    Route::post('/export-card-pdf', [PermisosAdminController::class, 'exportCardPDFPermiso']);
+
 });
 
 

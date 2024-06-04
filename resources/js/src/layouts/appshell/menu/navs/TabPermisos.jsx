@@ -1,7 +1,7 @@
 import { Center, Menu, rem } from "@mantine/core";
 import { IconBook, IconChevronDown, IconSettings } from "@tabler/icons-react";
 
-export const WebTabPermisos = ({ classes, theme }) => {
+export const WebTabPermisos = ({ classes, theme, linkNavigate }) => {
     return (
         <Menu
             trigger="hover"
@@ -26,6 +26,7 @@ export const WebTabPermisos = ({ classes, theme }) => {
             <Menu.Dropdown>
                 <Menu.Label>General</Menu.Label>
                 <Menu.Item
+                    onClick={() => linkNavigate("/gerencia/permiso")}
                     leftSection={
                         <IconSettings
                             style={{ width: rem(18), height: rem(18) }}
@@ -37,6 +38,7 @@ export const WebTabPermisos = ({ classes, theme }) => {
                     Crear Permiso
                 </Menu.Item>
                 <Menu.Item
+                    onClick={() => linkNavigate("/gerencia/ver-permisos")}
                     leftSection={
                         <IconBook
                             style={{ width: rem(18), height: rem(18) }}

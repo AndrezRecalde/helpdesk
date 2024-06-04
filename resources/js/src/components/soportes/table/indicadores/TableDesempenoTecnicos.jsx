@@ -20,8 +20,8 @@ export const TableDesempenoTecnicos = () => {
                     <Table.Thead>
                         <Table.Tr>
                             <Table.Th>Técnico</Table.Th>
-                            <Table.Th>Casos sin resolver</Table.Th>
-                            <Table.Th>Total Atendidos</Table.Th>
+                            <Table.Th>Casos Sin resolver</Table.Th>
+                            <Table.Th>Casos Sin Cerrar</Table.Th>
                             <Table.Th>Total Finalizados</Table.Th>
                             <Table.Th>Total Anulados</Table.Th>
                         </Table.Tr>

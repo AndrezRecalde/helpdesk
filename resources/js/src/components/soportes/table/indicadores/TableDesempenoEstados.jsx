@@ -24,10 +24,10 @@ export const TableDesempenoEstados = () => {
                     </Table.Tr>
                 </Table.Thead>
                 <Table.Tbody>
+
                     <Table.Tr>
                         <Table.Td>
-                            A1. Casos {desempenoForEstados[3]?.estado}
-                            s/Casos totales
+                            A1. Casos {desempenoForEstados[3]?.estado}s/Casos totales
                         </Table.Td>
                         <Table.Td>
                             {desempenoForEstados[3]?.total_estados}/
@@ -42,9 +42,28 @@ export const TableDesempenoEstados = () => {
                             %
                         </Table.Td>
                     </Table.Tr>
+
                     <Table.Tr>
                         <Table.Td>
-                            A2. Casos {desempenoForEstados[1]?.estado}
+                            A2. Casos Sin Cerrar/Casos totales
+                        </Table.Td>
+                        <Table.Td>
+                            {desempenoForEstados[2]?.total_estados}/
+                            {sumaDesempenoForEstados}
+                        </Table.Td>
+                        <Table.Td>
+                            {(
+                                (desempenoForEstados[2]?.total_estados /
+                                    sumaDesempenoForEstados) *
+                                100
+                            ).toFixed(2)}
+                            %
+                        </Table.Td>
+                    </Table.Tr>
+
+                    <Table.Tr>
+                        <Table.Td>
+                            A3. Casos {desempenoForEstados[1]?.estado}
                             /Casos totales
                         </Table.Td>
                         <Table.Td>
@@ -60,24 +79,7 @@ export const TableDesempenoEstados = () => {
                             %
                         </Table.Td>
                     </Table.Tr>
-                    <Table.Tr>
-                        <Table.Td>
-                            A3. Casos {desempenoForEstados[2]?.estado}
-                            /Casos totales
-                        </Table.Td>
-                        <Table.Td>
-                            {desempenoForEstados[2]?.total_estados}/
-                            {sumaDesempenoForEstados}
-                        </Table.Td>
-                        <Table.Td>
-                            {(
-                                (desempenoForEstados[2]?.total_estados /
-                                    sumaDesempenoForEstados) *
-                                100
-                            ).toFixed(2)}
-                            %
-                        </Table.Td>
-                    </Table.Tr>
+
                     <Table.Tr>
                         <Table.Td>
                             A4. Casos {desempenoForEstados[4]?.estado}
@@ -96,6 +98,7 @@ export const TableDesempenoEstados = () => {
                             %
                         </Table.Td>
                     </Table.Tr>
+
                     <Table.Tr>
                         <Table.Td>
                             A5. Casos {desempenoForEstados[0]?.estado}
@@ -114,6 +117,7 @@ export const TableDesempenoEstados = () => {
                             %
                         </Table.Td>
                     </Table.Tr>
+
                 </Table.Tbody>
             </Table>
         </Table.ScrollContainer>
