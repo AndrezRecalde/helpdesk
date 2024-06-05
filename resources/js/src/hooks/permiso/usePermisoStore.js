@@ -19,7 +19,24 @@ export const usePermisoStore = () => {
 
     const dispatch = useDispatch();
 
+    //TODO: CREAR UN ENDPOINT NORMAL PARA CREAR EL PERMISO.
+    //TODO: CREAR OTRA VARIABLE QUE ALMACENE LA DATA EN EL SLICE.
+    //TODO: CREAR UNA FUNCION QUE AGARRE LA DATA Y SE PUEDA IMPRIMIR.
+
     const startAddPermiso = async (permiso) => {
+        try {
+            const { data } = await helpdeskApi.post("/general/crear-permiso", permiso);
+            dispatch(onLoadMessage(data));
+            setTimeout(() => {
+                dispatch(onLoadMessage(undefined));
+            }, 40);
+        } catch (error) {
+            ExceptionMessageError(error);
+        }
+    }
+
+
+    const startCardPermiso = async (permiso) => {
         try {
             dispatch(onLoading(true));
             const response = await helpdeskApi.post(
@@ -40,6 +57,7 @@ export const usePermisoStore = () => {
 
             document.body.removeChild(tempLink); */
             window.URL.revokeObjectURL(url);
+            dispatch(onLoadMessage(data));
             dispatch(onLoading(false));
         } catch (error) {
             //console.log(error);

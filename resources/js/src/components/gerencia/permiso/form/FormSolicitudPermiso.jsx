@@ -18,6 +18,7 @@ import {
     useUsersStore,
 } from "../../../../hooks";
 import dayjs from "dayjs";
+import Swal from "sweetalert2";
 
 export const FormSolicitudPermiso = ({ form, disabled }) => {
     const { hora_1, hora_2, fecha } = form.values;
@@ -26,7 +27,7 @@ export const FormSolicitudPermiso = ({ form, disabled }) => {
     const { direcciones } = useDireccionStore();
     const { users } = useUsersStore();
     const { directores } = useDirectorStore();
-    const { isLoading, startAddPermiso } = usePermisoStore();
+    const { isLoading, message, errores, startAddPermiso } = usePermisoStore();
 
     const pickerControl_1 = (
         <ActionIcon
@@ -54,12 +55,46 @@ export const FormSolicitudPermiso = ({ form, disabled }) => {
         </ActionIcon>
     );
 
+    useEffect(() => {
+        if (message !== undefined) {
+            Swal.fire({
+                icon: message.status,
+                text: message.msg,
+                showConfirmButton: true,
+            });
+            return;
+        }
+    }, [message]);
+
+    useEffect(() => {
+        if (errores !== undefined) {
+            Swal.fire({
+                icon: "error",
+                text: errores,
+                showConfirmButton: true,
+            });
+            return;
+        }
+    }, [errores]);
+
     const handleSubmit = (e) => {
         e.preventDefault();
         //console.log("clic");
         //console.log(form.getTransformedValues());
-        startAddPermiso(form.getTransformedValues());
-        form.resetTouched();
+        Swal.fire({
+            title: "¿Estas seguro?",
+            text: "¿Confirmas en crear este permiso?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Si, confirmo!",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                startAddPermiso(form.getTransformedValues());
+                form.resetTouched();
+            }
+        });
     };
 
     useEffect(() => {

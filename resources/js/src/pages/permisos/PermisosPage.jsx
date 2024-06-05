@@ -9,6 +9,7 @@ import {
     useUsersStore,
 } from "../../hooks";
 import { IconChevronsRight } from "@tabler/icons-react";
+import { useNavigate } from "react-router-dom";
 
 export const PermisosPage = () => {
     useTitlePage("Helpdesk | Permisos");
@@ -21,6 +22,7 @@ export const PermisosPage = () => {
         isLoading: loadDirectores,
         clearDirectores,
     } = useDirectorStore();
+    const navigate = useNavigate();
 
     const form = useForm({
         initialValues: {
@@ -94,13 +96,17 @@ export const PermisosPage = () => {
         }
     }, [id_direccion_pide, directores]);
 
+    const handleNavigate = () => {
+        navigate("/gerencia/ver-permisos");
+    }
+
     return (
         <Container size="md">
             <Group justify="space-between">
                 <TitlePage order={2} size="h2">
                     Crear Permiso
                 </TitlePage>
-                <BtnSection IconSection={IconChevronsRight}>
+                <BtnSection IconSection={IconChevronsRight} handleAction={handleNavigate}>
                     Ver permisos
                 </BtnSection>
             </Group>
