@@ -1,8 +1,14 @@
 import { useEffect } from "react";
-import { Box, Divider, Flex, Grid, Group, Select, Text } from "@mantine/core";
+import {
+    Box,
+    Divider,
+    Flex,
+    Select,
+    Stack,
+} from "@mantine/core";
 import { IconChecks, IconUserScan } from "@tabler/icons-react";
 import { useUiUser, useUsersStore } from "../../../../hooks";
-import { BtnSubmit } from "../../..";
+import { BtnSubmit, TextSection } from "../../../../components";
 
 export const FormActiveUser = ({ form }) => {
     const { modalActionActiveUser } = useUiUser();
@@ -30,42 +36,35 @@ export const FormActiveUser = ({ form }) => {
             component="form"
             onSubmit={form.onSubmit((_, e) => handleSubmit(e))}
         >
-            <Grid>
-                <Grid.Col sm={12} md={12} lg={12} xl={12}>
-                    <Flex
-                        mih={50}
-                        gap="md"
-                        justify="center"
-                        align="center"
-                        direction="column"
-                        wrap="wrap"
-                    >
-                        <IconUserScan size={50} stroke={1.2} />
-                        <Text>{activateUser?.nmbre_usrio}</Text>
-                    </Flex>
-                </Grid.Col>
-                <Grid.Col sm={12} md={12} lg={12} xl={12}>
-                    <Select
-                        required
-                        data={[
-                            { label: "Si", value: "1" },
-                            { label: "No", value: "0" },
-                        ]}
-                        placeholder="¿Desea activar el usuario?"
-                        label="Activar"
-                        radius="md"
-                        mb={20}
-                        withAsterisk
-                        {...form.getInputProps("actvo")}
-                    />
-                    <Divider />
-                </Grid.Col>
-            </Grid>
-            <Group position="center" mt="xl">
+            <Stack>
+                <Flex
+                    mih={30}
+                    gap="md"
+                    justify="center"
+                    align="center"
+                    direction="column"
+                    wrap="wrap"
+                >
+                    <IconUserScan size={50} stroke={1.2} />
+                    <TextSection tt="" fz={16}>{activateUser?.nmbre_usrio}</TextSection>
+                </Flex>
+                <Select
+                    required
+                    data={[
+                        { label: "Si", value: "1" },
+                        { label: "No", value: "0" },
+                    ]}
+                    placeholder="¿Desea activar el usuario?"
+                    label="Activar"
+                    radius="md"
+                    withAsterisk
+                    {...form.getInputProps("actvo")}
+                />
+                <Divider />
                 <BtnSubmit IconSection={IconChecks} fontSize={16}>
                     Guardar
                 </BtnSubmit>
-            </Group>
+            </Stack>
         </Box>
     );
 };

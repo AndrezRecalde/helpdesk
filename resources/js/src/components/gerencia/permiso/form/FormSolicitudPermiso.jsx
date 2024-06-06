@@ -15,6 +15,7 @@ import {
     useDireccionStore,
     useDirectorStore,
     usePermisoStore,
+    useStorageField,
     useUsersStore,
 } from "../../../../hooks";
 import dayjs from "dayjs";
@@ -26,8 +27,8 @@ export const FormSolicitudPermiso = ({ form, disabled }) => {
     const ref_2 = useRef(null);
     const { direcciones } = useDireccionStore();
     const { users } = useUsersStore();
-    const { directores } = useDirectorStore();
-    const { isLoading, message, errores, startAddPermiso } = usePermisoStore();
+    const { isLoading, message, errores, startAddPermiso, startCardPermiso } = usePermisoStore();
+    const { setStoragePermisoFields } = useStorageField();
 
     const pickerControl_1 = (
         <ActionIcon
@@ -57,10 +58,19 @@ export const FormSolicitudPermiso = ({ form, disabled }) => {
 
     useEffect(() => {
         if (message !== undefined) {
+            setStoragePermisoFields(message);
             Swal.fire({
-                icon: message.status,
-                text: message.msg,
-                showConfirmButton: true,
+                text: `${message.msg}, ¿Deseas imprimir el permiso?`,
+                icon: "success",
+                showCancelButton: true,
+                confirmButtonColor: "#20c997",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Si, imprimir!",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    startCardPermiso(message.idper_permisos);
+                    console.log(message.idper_permisos)
+                }
             });
             return;
         }
@@ -86,7 +96,7 @@ export const FormSolicitudPermiso = ({ form, disabled }) => {
             text: "¿Confirmas en crear este permiso?",
             icon: "warning",
             showCancelButton: true,
-            confirmButtonColor: "#3085d6",
+            confirmButtonColor: "#20c997",
             cancelButtonColor: "#d33",
             confirmButtonText: "Si, confirmo!",
         }).then((result) => {

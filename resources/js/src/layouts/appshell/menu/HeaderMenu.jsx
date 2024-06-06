@@ -47,45 +47,48 @@ export const HeaderMenu = () => {
                     <Group justify="space-between" h="100%">
                         <Group>
                             <Logo height={50} width={200} />
+
+                            {/* Administracion */}
+                            <BtnAdministracion
+                                theme={theme}
+                                linkNavigate={linkNavigate}
+                            />
+                            {/* Solicitar soporte */}
+                            <BtnSolicitarSoporte
+                                theme={theme}
+                                linkNavigate={linkNavigate}
+                            />
                         </Group>
                         <Group h="100%" gap={0} visibleFrom="sm">
                             {/* Inicio */}
-                            <TabHome classes={classes} />
+                            {/* <TabHome classes={classes} /> */}
+
+                            <BtnSearchMenu classes={classess} />
+
+
+                            {/* Actividades */}
+                            {/* <WebTabActividades
+                                    classes={classes}
+                                    theme={theme}
+                                    linkNavigate={linkNavigate}
+                                /> */}
+
+                            {/* Permisos */}
+                            {/* <WebTabPermisos
+                                    classes={classes}
+                                    theme={theme}
+                                    linkNavigate={linkNavigate}
+                                /> */}
+                        </Group>
+
+                        <Group visibleFrom="lg">
 
                             <WebTabAdminHelpdesk
                                 classes={classes}
                                 theme={theme}
                             />
 
-                            {/* Actividades */}
-                            <WebTabActividades
-                                classes={classes}
-                                theme={theme}
-                                linkNavigate={linkNavigate}
-                            />
-
-                            {/* Permisos */}
-                            <WebTabPermisos
-                                classes={classes}
-                                theme={theme}
-                                linkNavigate={linkNavigate}
-                            />
-                        </Group>
-
-                        <Group visibleFrom="sm">
-                            {/* Administracion */}
-                            <BtnAdministracion
-                                theme={theme}
-                                linkNavigate={linkNavigate}
-                            />
-
-                            {/* Solicitar soporte */}
-                            <BtnSolicitarSoporte
-                                theme={theme}
-                                linkNavigate={linkNavigate}
-                            />
-
-                            <BtnSearchMenu classes={classess} />
+                            {/* <BtnSearchMenu classes={classess} /> */}
                             <BtnDarkMode classes={classess} />
                             <UserBtnHeader />
                         </Group>
@@ -93,7 +96,7 @@ export const HeaderMenu = () => {
                         <Burger
                             opened={drawerOpened}
                             onClick={toggleDrawer}
-                            hiddenFrom="sm"
+                            hiddenFrom="lg"
                         />
                     </Group>
                 </header>
@@ -105,13 +108,13 @@ export const HeaderMenu = () => {
                     size="100%"
                     padding="md"
                     title="Menu"
-                    hiddenFrom="sm"
+                    hiddenFrom="lg"
                     zIndex={1000000}
                 >
                     <ScrollArea h={`calc(100vh - ${rem(80)})`} mx="-md">
                         <Divider my="sm" />
 
-                        <TabHome classes={classes} />
+                        {/* <TabHome classes={classes} /> */}
 
                         {/* Soporte tecnico */}
                         <MobileTabAdminHelpdesk

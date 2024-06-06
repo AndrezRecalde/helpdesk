@@ -1,23 +1,39 @@
-import { useDispatch, useSelector } from "react-redux"
-import { onSetStorageFields } from "../../store/fields/storageFieldsSlice";
+import { useDispatch, useSelector } from "react-redux";
+import {
+    onSetStorageFields,
+    onSetStoragePermisoFields,
+    onSetStorageUserFields,
+} from "../../store/fields/storageFieldsSlice";
 
 export const useStorageField = () => {
+    const { storageFields, storageUserFields, storagePermisoFields } =
+        useSelector((state) => state.storageField);
+    const dispatch = useDispatch();
 
-  const { storageFields } = useSelector(state => state.storageField);
-  const dispatch = useDispatch();
+    const setStorageFields = (fields) => {
+        dispatch(onSetStorageFields(fields));
+    };
 
-  const setStorageFields = (fields) => {
-    dispatch(onSetStorageFields(fields));
-  }
+    const setStorageUserFields = (fields) => {
+        dispatch(onSetStorageUserFields(fields));
+    };
 
-  const clearStorageFields = () => {
-    dispatch(onSetStorageFields(null));
-  }
+    const setStoragePermisoFields = (fields) => {
+        dispatch(onSetStoragePermisoFields(fields));
+    };
 
-  return {
-    storageFields,
+    const clearStorageFields = () => {
+        dispatch(onSetStorageFields(null));
+    };
 
-    setStorageFields,
-    clearStorageFields
-  }
-}
+    return {
+        storageFields,
+        storageUserFields,
+        storagePermisoFields,
+
+        setStorageUserFields,
+        setStoragePermisoFields,
+        setStorageFields,
+        clearStorageFields,
+    };
+};

@@ -9,13 +9,14 @@ import {
 } from "@mantine/core";
 import { BtnSubmit } from "../../..";
 import { IconSearch } from "@tabler/icons-react";
-import { useDireccionStore, useUsersStore } from "../../../../hooks";
+import { useDireccionStore, useStorageField, useUsersStore } from "../../../../hooks";
 import { useForm } from "@mantine/form";
 
 export const FilterFormUsers = () => {
     const { startLoadUsers, clearUsers } = useUsersStore();
     const { startLoadDirecciones, direcciones, clearDirecciones } =
         useDireccionStore();
+    const { setStorageUserFields } = useStorageField();
 
     const form = useForm({
         initialValues: {
@@ -39,6 +40,7 @@ export const FilterFormUsers = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        setStorageUserFields(form.values);
         startLoadUsers(form.values);
         //console.log(form.values);
     };

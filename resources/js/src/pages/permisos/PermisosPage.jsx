@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { Card, Container, Group, LoadingOverlay } from "@mantine/core";
 import { BtnSection, FormSolicitudPermiso, TitlePage } from "../../components";
-import { isNotEmpty, useForm } from "@mantine/form";
+import { hasLength, isNotEmpty, useForm } from "@mantine/form";
 import {
     useDireccionStore,
     useDirectorStore,
@@ -45,6 +45,10 @@ export const PermisosPage = () => {
             id_jefe_inmediato: isNotEmpty("Por favor seleccione al jefe"),
             hora_1: isNotEmpty("Seleccione las horas a solicitar"),
             hora_2: isNotEmpty("Seleccione las horas a solicitar"),
+            per_observaciones: hasLength(
+                { min: 5, max: 200 },
+                "La observación admite un minimo de 5 caracteres y máximo 200 caracteres"
+            ),
         },
         transformValues: (values) => ({
             ...values,

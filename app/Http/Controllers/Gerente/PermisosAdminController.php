@@ -62,7 +62,22 @@ class PermisosAdminController extends Controller
         try {
             $permiso = Permiso::create($request->validated());
 
-            $permisos = Permiso::from('per_permisos as pp')
+
+            /* $pdf = Pdf::loadView('pdf.permisos.gerencia.permiso', $data);
+            return $pdf->setPaper('a4', 'portrait')->download('permiso.pdf'); */
+            return response()->json([
+                'status' => MsgStatus::Success,
+                'msg'    => 'Permiso #' .$permiso->idper_permisos. ' creado con éxito',
+                'idper_permisos' => $permiso->idper_permisos
+            ], 200);
+        } catch (\Throwable $th) {
+            return response()->json(['status' => MsgStatus::Error, 'msg' => $th->getMessage()], 500);
+        }
+    }
+
+    function exportCardPDFPermiso(Request $request)
+    {
+        $permisos = Permiso::from('per_permisos as pp')
                 ->selectRaw('pp.idper_permisos,
                             pp.id_usu_pide, us.nmbre_usrio as usuario_pide,
                             pp.id_direccion_pide, d.nmbre_dprtmnto as direccion_pide,
@@ -74,7 +89,7 @@ class PermisosAdminController extends Controller
                 ->join('dprtmntos as d', 'd.cdgo_dprtmnto', 'pp.id_direccion_pide')
                 ->join('per_tipo_permiso as ptp', 'ptp.idper_tipo_permiso', 'pp.id_tipo_motivo')
                 ->join('usrios_sstma as u', 'u.cdgo_usrio', 'pp.id_jefe_inmediato')
-                ->where('pp.idper_permisos', $permiso->idper_permisos)
+                ->where('pp.idper_permisos', $request->idper_permisos)
                 ->first();
 
             $data = [
@@ -82,21 +97,6 @@ class PermisosAdminController extends Controller
                 'titulo'   =>  'CONCESIÓN DE PERMISO HASTA 4 HORAS',
                 'permisos' => $permisos
             ];
-
-            /* $pdf = Pdf::loadView('pdf.permisos.gerencia.permiso', $data);
-            return $pdf->setPaper('a4', 'portrait')->download('permiso.pdf'); */
-            return response()->json([
-                'status' => MsgStatus::Success,
-                'msg'    => 'Permiso creado con éxito',
-                'data'   => $data
-            ], 200);
-        } catch (\Throwable $th) {
-            return response()->json(['status' => MsgStatus::Error, 'msg' => $th->getMessage()], 500);
-        }
-    }
-
-    function exportCardPDFPermiso(array $data)
-    {
         $pdf = Pdf::loadView('pdf.permisos.gerencia.permiso', $data);
         return $pdf->setPaper('a4', 'portrait')->download('permiso.pdf');
     }

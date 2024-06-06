@@ -1,14 +1,12 @@
 import { useEffect, useState } from "react";
 import {
-    ActionIcon,
-    Alert,
     Box,
+    ActionIcon,
     CopyButton,
     Divider,
     Flex,
     PasswordInput,
     Stack,
-    Text,
     Tooltip,
 } from "@mantine/core";
 import {
@@ -18,7 +16,7 @@ import {
     IconUserScan,
 } from "@tabler/icons-react";
 import { useUiUser, useUsersStore } from "../../../../hooks";
-import { BtnSubmit } from "../../../../components";
+import { AlertSection, BtnSubmit, TextSection } from "../../../../components";
 
 export const FormResetPwdUser = ({ form }) => {
     const { paswrd } = form.values;
@@ -47,7 +45,7 @@ export const FormResetPwdUser = ({ form }) => {
         startUpdatePassword(form.values);
         //console.log(form.values);
         modalActionResetPwd(0);
-    }
+    };
 
     return (
         <Box
@@ -56,7 +54,7 @@ export const FormResetPwdUser = ({ form }) => {
         >
             <Stack>
                 <Flex
-                    mih={50}
+                    mih={30}
                     gap="md"
                     justify="center"
                     align="center"
@@ -87,19 +85,21 @@ export const FormResetPwdUser = ({ form }) => {
                             </Tooltip>
                         )}
                     </CopyButton>
-
-                    <Text fw={500} fz={20}>
+                    <TextSection tt="" fw={500} fz={18}>
                         {activateUser?.nmbre_usrio}
-                    </Text>
+                    </TextSection>
                 </Flex>
-                <Alert
-                    icon={<IconAlertCircle size="1rem" />}
-                    title="Informacion!"
+                <AlertSection
+                    mt={0}
+                    mb={0}
+                    variant="light"
                     color="yellow.7"
+                    title="¡Información!"
+                    icon={IconAlertCircle}
                 >
                     Por favor dar clic en el icono de la parte superior para
                     continuar con el reseteo de contraseña.
-                </Alert>
+                </AlertSection>
                 <PasswordInput
                     data-autofocus
                     disabled
