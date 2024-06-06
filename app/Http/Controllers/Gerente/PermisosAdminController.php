@@ -33,7 +33,7 @@ class PermisosAdminController extends Controller
             ->codigo($request->idper_permisos)
             ->where('pp.per_fecha_salida', 'LIKE', '%' . Carbon::now()->format('Y') . '%')
             ->whereNotIn('pp.id_estado', [6, 8])
-            ->orderBy('pp.idper_permisos', 'DESC')
+            ->orderBy('pp.per_fecha_salida', 'DESC')
             ->get();
 
         if (sizeof($permisos) > 0) {
