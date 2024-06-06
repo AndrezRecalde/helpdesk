@@ -46,7 +46,7 @@ export const PermisosPage = () => {
             hora_1: isNotEmpty("Seleccione las horas a solicitar"),
             hora_2: isNotEmpty("Seleccione las horas a solicitar"),
             per_observaciones: hasLength(
-                { min: 5, max: 200 },
+                { min: 0, max: 200 },
                 "La observación admite un minimo de 5 caracteres y máximo 200 caracteres"
             ),
         },
