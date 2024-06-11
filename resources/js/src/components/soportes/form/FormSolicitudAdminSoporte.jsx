@@ -41,9 +41,7 @@ export const FormSolicitudAdminSoporte = ({ form }) => {
 
     const handleSubmit = () => {
         //console.log(form.getTransformedValues());
-        startCreateSolicitudAdmin(form.getTransformedValues());
-        modalActionAddSolicitud(0);
-        form.reset();
+        startCreateSolicitudAdmin(form.getTransformedValues(), modalActionAddSolicitud, form);
     };
 
     return (

@@ -103,7 +103,7 @@ export const useSoporteStore = () => {
     };
 
     /* GERENTE */
-    const startCreateSolicitudAdmin = async (solicitud) => {
+    const startCreateSolicitudAdmin = async (solicitud, modalActionAddSolicitud, form) => {
         try {
             dispatch(onLoading());
             const { data } = await helpdeskApi.post(
@@ -114,6 +114,8 @@ export const useSoporteStore = () => {
             setTimeout(() => {
                 dispatch(onLoadMessage(undefined));
             }, 40);
+            modalActionAddSolicitud(0);
+            form.reset();
         } catch (error) {
             //console.log(error);
             ExceptionMessageError(error);
