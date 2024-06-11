@@ -29,7 +29,10 @@ export const ChartDesempTecnicos = () => {
         indexAxis: "y",
         scales: {
             y: {
+                beginAtZero: true,
                 ticks: {
+                    stepSize: 10, // Incremento entre los valores
+                    suggestedMax: 40, // Máximo valor del eje Y
                     font: {
                         size: 16, //this change the font size
                         weight: "italic",
@@ -198,7 +201,7 @@ export const ChartDesempTecnicos = () => {
                 Soportes por técnicos - {new Date().getFullYear()}
             </Card.Section>
             <Card.Section withBorder inheritPadding py="xs">
-                <Bar options={options} data={data}  />
+                <Bar options={options} data={data} />
             </Card.Section>
         </Card>
     );
