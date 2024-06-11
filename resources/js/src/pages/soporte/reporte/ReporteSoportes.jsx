@@ -7,12 +7,13 @@ import {
     TitlePage,
 } from "../../../components";
 import { isNotEmpty, useForm } from "@mantine/form";
-import { useSoporteStore } from "../../../hooks";
+import { useSoporteStore, useTitlePage } from "../../../hooks";
 import { useMantineReactTable } from "mantine-react-table";
 import dayjs from "dayjs";
 import Swal from "sweetalert2";
 
 export const ReporteSoportes = () => {
+    useTitlePage("Helpdesk | Reporte");
     const usuario = JSON.parse(localStorage.getItem("service_user"));
     const {
         isLoading,

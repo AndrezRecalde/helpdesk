@@ -6,11 +6,12 @@ import {
     FilterFormSearchDates,
     TitlePage,
 } from "../../../components";
-import { useIndicadorStore } from "../../../hooks";
+import { useIndicadorStore, useTitlePage } from "../../../hooks";
 import dayjs from "dayjs";
 import Swal from "sweetalert2";
 
 export const IndicadorReportPage = () => {
+    useTitlePage("Helpdesk | Indicadores");
     const {
         isLoading,
         pageLoad,

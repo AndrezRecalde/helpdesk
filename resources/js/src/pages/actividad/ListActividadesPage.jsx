@@ -16,6 +16,7 @@ import dayjs from "dayjs";
 import Swal from "sweetalert2";
 
 export const ListActividadesPage = () => {
+    useTitlePage("Helpdesk | Mis Actividades")
     const srv_user = JSON.parse(localStorage.getItem("service_user"));
     const { modalActionActividad } = useUiActividad();
 

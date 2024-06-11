@@ -124,7 +124,7 @@ export const ChartDesempTecnicos = () => {
                 },
             },
             {
-                label: "Total atendidas",
+                label: "Sin Cerrar",
                 data: desempenoForTecnicos?.map(
                     (tecnico) => tecnico.total_atendidos
                 ),
