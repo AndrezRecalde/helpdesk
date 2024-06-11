@@ -5,6 +5,7 @@ import {
     LoadingOverlay,
 } from "@mantine/core";
 import {
+    ChartDesempTecnicos,
     ResumenDesempenoArea,
     ResumenDesempenoEstados,
     TableDesempenoTecnicos,
@@ -51,9 +52,10 @@ export const CardIndicadores = ({ handleExportPDF }) => {
                 </Card.Section>
                 <Card.Section inheritPadding py="xs">
                     <ResumenDesempenoEstados />
-
                     <ResumenDesempenoArea />
+
                     <TableDesempenoTecnicos />
+                    <ChartDesempTecnicos />
 
                     <TableEfectividadAreas />
                     <TableEfectividadTecnicos />
