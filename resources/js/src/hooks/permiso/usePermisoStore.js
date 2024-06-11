@@ -27,21 +27,23 @@ export const usePermisoStore = () => {
         try {
             const { data } = await helpdeskApi.post("/general/crear-permiso", permiso);
             dispatch(onLoadMessage(data));
+            console.log(data)
             setTimeout(() => {
                 dispatch(onLoadMessage(undefined));
-            }, 40);
+            }, 8000);
+            dispatch(onLoading(false));
         } catch (error) {
             ExceptionMessageError(error);
         }
     }
 
 
-    const startCardPermiso = async (permiso) => {
+    const startCardPermiso = async (idper_permisos) => {
         try {
             dispatch(onLoading(true));
             const response = await helpdeskApi.post(
-                "/general/crear-permiso",
-                permiso,
+                "/general/export-permiso-pdf",
+                {idper_permisos},
                 { responseType: "blob" }
             );
             const pdfBlob = new Blob([response.data], {
@@ -57,10 +59,10 @@ export const usePermisoStore = () => {
 
             document.body.removeChild(tempLink); */
             window.URL.revokeObjectURL(url);
-            dispatch(onLoadMessage(data));
+            //dispatch(onLoadMessage(data));
             dispatch(onLoading(false));
         } catch (error) {
-            //console.log(error);
+            console.log(error);
             ExceptionMessageError(error);
         }
     };
@@ -144,6 +146,7 @@ export const usePermisoStore = () => {
         errores,
 
         startAddPermiso,
+        startCardPermiso,
         startExportPermiso,
         startAnularPermiso,
         startLoadPermisos,

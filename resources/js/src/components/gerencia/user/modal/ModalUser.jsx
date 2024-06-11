@@ -132,6 +132,20 @@ export const ModalUser = ({ title }) => {
         };
     }, [isOpenModalAddUser]);
 
+    useEffect(() => {
+
+      return () => {
+        clearEmpresas();
+        clearTipoSexo();
+        //clearDirecciones();
+        clearUsers();
+        clearCargos();
+        clearTiposUsuarios();
+        clearTiposContratos();
+      }
+    }, [])
+
+
     const handleCloseModal = () => {
         modalActionUser(0);
         setClearActivateUser();

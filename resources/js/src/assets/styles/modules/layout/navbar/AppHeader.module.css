@@ -27,7 +27,7 @@
   }
 
   .BtnSearch {
-    @media (max-width: $mantine-breakpoint-sm) {
+    @media (max-width: $mantine-breakpoint-xl) {
         display: none;
     }
   }

@@ -3,12 +3,10 @@ import {
     Card,
     Group,
     LoadingOverlay,
-    SimpleGrid,
 } from "@mantine/core";
 import {
     ResumenDesempenoArea,
     ResumenDesempenoEstados,
-    TableDesempenoAreas,
     TableDesempenoTecnicos,
     TableEfectividadAreas,
     TableEfectividadTecnicos,

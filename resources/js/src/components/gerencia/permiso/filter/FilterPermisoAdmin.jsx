@@ -27,7 +27,6 @@ export const FilterPermisoAdmin = ({
             >
                 <SimpleGrid cols={{ base: 1 }} mt={10}>
                     <YearPickerInput
-                        required
                         disabled
                         label="Año"
                         placeholder="Seleccione el año"

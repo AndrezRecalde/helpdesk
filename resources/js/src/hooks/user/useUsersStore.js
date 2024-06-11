@@ -99,11 +99,11 @@ export const useUsersStore = () => {
         }
     };
 
-    const verifiedUser = async (usu_ci) => {
+    const verifiedUser = async ({ lgin }) => {
         try {
             const { data } = await helpdeskApi.post(
                 "/gerencia/verified/usuario",
-                { usu_ci }
+                { lgin }
             );
             if (data.status === "success") {
                 const { usuario } = data;
@@ -147,7 +147,7 @@ export const useUsersStore = () => {
         try {
             if (user.cdgo_usrio) {
                 const { data } = await helpdeskApi.put(
-                    `/update/usuario/${user.cdgo_usrio}`,
+                    `/gerencia/update/usuario/${user.cdgo_usrio}`,
                     user
                 );
                 dispatch(onLoadMessage(data));
@@ -166,7 +166,7 @@ export const useUsersStore = () => {
                 dispatch(onLoadMessage(undefined));
             }, 40);
         } catch (error) {
-            //console.log(error);
+            console.log(error);
             ExceptionMessageError(error);
         }
     };

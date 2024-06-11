@@ -24,6 +24,8 @@ class UserRequest extends FormRequest
      */
     public function rules(): array
     {
+        $cdgo_usrio = $this->request->get('cdgo_usrio');
+
         return [
             'usu_ci'                => 'required',
             'titulo'                => 'required',
@@ -33,8 +35,8 @@ class UserRequest extends FormRequest
             //'usu_id_sub_empresa'    => 'required',
             'crgo_id'               => 'required',
             'actvo'                 => 'required',
-            'lgin'                  => ['required', Rule::unique('usrios_sstma')->ignore($this->request->get('cdgo_usrio'))],
-            'email'                 => ['required', Rule::unique('usrios_sstma')->ignore($this->request->get('cdgo_usrio'))],
+            'lgin'                  => ['required', Rule::unique('usrios_sstma')->ignore($cdgo_usrio, 'cdgo_usrio')],
+            'email'                 => ['required', Rule::unique('usrios_sstma')->ignore($cdgo_usrio, 'cdgo_usrio')],
             'cdgo_direccion'        => 'required',
             //'cdgo_dprtmnto'         => 'required',
             'sexo'                  => 'required',
@@ -43,7 +45,7 @@ class UserRequest extends FormRequest
             'super_user'            => 'required',
             'interno'               => 'required',
             'finaliza_contrato'     => 'required',
-            //'usu_f_f_contrato'      => 'required',
+            'usu_f_f_contrato'      => '',
             'usu_estado'            => 'required',
             'id_tipo_usuario'       => 'required',
             'usu_ult_tipo_contrato' => 'required',

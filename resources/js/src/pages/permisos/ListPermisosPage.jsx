@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { Container } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import {
+    BtnSection,
     FilterPermiso,
     ModalAnularPermiso,
     PermisosTable,
@@ -9,11 +10,13 @@ import {
 } from "../../components";
 import { usePermisoStore, useTitlePage } from "../../hooks";
 import Swal from "sweetalert2";
+import { IconChevronsRight } from "@tabler/icons-react";
 
 export const ListPermisosPage = () => {
     useTitlePage("Helpdesk | Lista Permisos");
     const usuario = JSON.parse(localStorage.getItem("service_user"));
-    const { startLoadPermisos, clearPermisos, permisos, message, errores } = usePermisoStore();
+    const { startLoadPermisos, clearPermisos, permisos, message, errores } =
+        usePermisoStore();
 
     const form = useForm({
         initialValues: {
@@ -32,7 +35,7 @@ export const ListPermisosPage = () => {
         }
         return () => {
             clearPermisos();
-        }
+        };
     }, []);
 
     useEffect(() => {
@@ -57,6 +60,10 @@ export const ListPermisosPage = () => {
         }
     }, [errores]);
 
+    const handleNavigate = () => {
+        navigate("/tecnico/permiso");
+    }
+
     const handleSubmit = (e) => {
         e.preventDefault();
         startLoadPermisos({
@@ -67,9 +74,17 @@ export const ListPermisosPage = () => {
 
     return (
         <Container size="md">
-            <TitlePage order={2} size="h2">
-                Lista de permisos - {new Date().getFullYear()}
-            </TitlePage>
+            <Group>
+                <TitlePage order={2} size="h2">
+                    Lista de permisos - {new Date().getFullYear()}
+                </TitlePage>
+                <BtnSection
+                    IconSection={IconChevronsRight}
+                    handleAction={handleNavigate}
+                >
+                    Crear permiso
+                </BtnSection>
+            </Group>
             <FilterPermiso
                 form={form}
                 handleSubmit={handleSubmit}
