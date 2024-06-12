@@ -26,6 +26,8 @@ export const FilterFormUsers = () => {
         },
         transformValues: (values) => ({
             cdgo_direccion: Number(values.cdgo_direccion) || null,
+            nmbre_usrio: values.nmbre_usrio,
+            lgin: values.lgin
         }),
     });
 
@@ -40,9 +42,9 @@ export const FilterFormUsers = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        setStorageUserFields(form.values);
-        startLoadUsers(form.values);
-        //console.log(form.values);
+        setStorageUserFields(form.getTransformedValues());
+        startLoadUsers(form.getTransformedValues());
+        //console.log(form.getTransformedValues());
     };
 
     return (
