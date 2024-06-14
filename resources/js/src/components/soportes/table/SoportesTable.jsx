@@ -4,7 +4,7 @@ import { useMantineReactTable } from "mantine-react-table";
 import { MenuSolicitudTable, MenuTable_T, TableContent } from "../..";
 import { useDireccionStore, useSoporteStore, useTecnicoStore, useUiSoporte, useUsersStore } from "../../../hooks";
 import dayjs from "dayjs";
-import { useNavigate } from "react-router-dom";
+//import { useNavigate } from "react-router-dom";
 
 export const SoportesTable = () => {
     const usuario = JSON.parse(localStorage.getItem("service_user"));
@@ -23,7 +23,7 @@ export const SoportesTable = () => {
     const columns = useMemo(
         () => [
             {
-                accessorKey: "id_estado", //access nested data with dot notation
+                accessorKey: "estado", //access nested data with dot notation
                 header: "Estado",
                 Cell: ({ cell }) => (
                     <Badge

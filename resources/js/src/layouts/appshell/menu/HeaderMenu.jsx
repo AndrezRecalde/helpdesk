@@ -47,6 +47,33 @@ export const HeaderMenu = () => {
                     <Group justify="space-between" h="100%">
                         <Group>
                             <Logo height={50} width={200} />
+                        </Group>
+                        <Group h="100%" gap={0} visibleFrom="sm">
+                            {/* Inicio */}
+                            {/* <TabHome classes={classes} /> */}
+
+                            <WebTabAdminHelpdesk
+                                classes={classes}
+                                theme={theme}
+                            />
+
+                            {/* Actividades */}
+                            <WebTabActividades
+                                    classes={classes}
+                                    theme={theme}
+                                    linkNavigate={linkNavigate}
+                                />
+
+                            {/* Permisos */}
+                            <WebTabPermisos
+                                    classes={classes}
+                                    theme={theme}
+                                    linkNavigate={linkNavigate}
+                                />
+                        </Group>
+
+                        <Group visibleFrom="lg">
+                            <BtnSearchMenu classes={classess} />
 
                             {/* Administracion */}
                             <BtnAdministracion
@@ -57,35 +84,6 @@ export const HeaderMenu = () => {
                             <BtnSolicitarSoporte
                                 theme={theme}
                                 linkNavigate={linkNavigate}
-                            />
-                        </Group>
-                        <Group h="100%" gap={0} visibleFrom="sm">
-                            {/* Inicio */}
-                            {/* <TabHome classes={classes} /> */}
-
-                            <BtnSearchMenu classes={classess} />
-
-
-                            {/* Actividades */}
-                            {/* <WebTabActividades
-                                    classes={classes}
-                                    theme={theme}
-                                    linkNavigate={linkNavigate}
-                                /> */}
-
-                            {/* Permisos */}
-                            {/* <WebTabPermisos
-                                    classes={classes}
-                                    theme={theme}
-                                    linkNavigate={linkNavigate}
-                                /> */}
-                        </Group>
-
-                        <Group visibleFrom="lg">
-
-                            <WebTabAdminHelpdesk
-                                classes={classes}
-                                theme={theme}
                             />
 
                             {/* <BtnSearchMenu classes={classess} /> */}

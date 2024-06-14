@@ -15,6 +15,7 @@ export const UsersTable = () => {
             {
                 accessorKey: "direccion", //access nested data with dot notation
                 header: "Dirección",
+                filterVariant: "autocomplete",
             },
             {
                 accessorKey: "nmbre_usrio", //access nested data with dot notation
@@ -28,6 +29,10 @@ export const UsersTable = () => {
             {
                 accessorKey: "lgin",
                 header: "Usuario",
+            },
+            {
+                accessorKey: "email",
+                header: "Correo",
             },
             {
                 accessorKey: "actvo",

@@ -64,7 +64,7 @@ export const AdminUsersPage = () => {
             </Group>
             <FilterFormUsers />
             {users.length !== 0 ? (
-                <Card withBorder shadow="sm" radius="md" mt={20} mb={20}>
+                <Card shadow="md" radius="md" mt={20} mb={20}>
                     <Card.Section>
                         <UsersTable />
                     </Card.Section>
