@@ -14,6 +14,18 @@ import {
 import { AuthGuard } from "./private/guards";
 import { AppLayout } from "../layouts";
 
+const AuthRoutes = () => (
+    <PublicRoutes>
+        <Routes>
+            <Route path="auth/login/*" element={<AuthPage />} />
+            <Route
+                path="/*"
+                element={<Navigate replace to="/auth/login" />}
+            />
+        </Routes>
+    </PublicRoutes>
+);
+
 export const AppRouter = () => {
     const { checkAuthToken } = useAuthStore();
 
@@ -23,20 +35,7 @@ export const AppRouter = () => {
 
     return (
         <RoutesNotFound>
-            <Route
-                path="/*"
-                element={
-                    <PublicRoutes>
-                        <Routes>
-                            <Route path="auth/login/*" element={<AuthPage />} />
-                            <Route
-                                path="/*"
-                                element={<Navigate replace to="/auth/login" />}
-                            />
-                        </Routes>
-                    </PublicRoutes>
-                }
-            />
+            <Route path="/*" element={<AuthRoutes />} />
 
             <Route element={<AppLayout />}>
                 <Route
