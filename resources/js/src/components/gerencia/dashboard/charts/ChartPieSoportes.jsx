@@ -2,8 +2,10 @@ import { Card } from "@mantine/core";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Pie } from "react-chartjs-2";
 import { useDashGerenciaStore } from "../../../../hooks";
+import ChartDataLabels from 'chartjs-plugin-datalabels';
 
-ChartJS.register(ArcElement, Tooltip, Legend);
+
+ChartJS.register(ArcElement, Tooltip, Legend, ChartDataLabels);
 
 
 
@@ -13,6 +15,18 @@ export const ChartPieSoportes = () => {
     const options = {
         maintainAspectRatio: false,
         plugins: {
+            datalabels: {
+                anchor: 'end',
+                align: 'end',
+                formatter: (value, context) => {
+                    return `${value}`;
+                },
+                color: '#000',
+                backgroundColor: '#FFF',
+                borderRadius: 3,
+                borderColor: '#FFF',
+                borderWidth: 1,
+              },
             legend: {
                 position: "top",
 
