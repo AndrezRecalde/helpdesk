@@ -16,9 +16,13 @@ export const AppLayout = () => {
             navbar={{
                 width: 310,
                 breakpoint: "sm",
-                collapsed: { mobile: !mobileOpened, desktop: !desktopOpened },
+                collapsed: {
+                    mobile: !mobileOpened,
+                    desktop: !desktopOpened,
+                },
             }}
             padding="md"
+            className={classes.container}
         >
             <AppShell.Header>
                 <AppHeader
@@ -33,7 +37,12 @@ export const AppLayout = () => {
                     <div className={classes.header}>
                         <Group>
                             <div style={{ flex: 1 }}>
-                                <TextSection fw={700} fz={12} tt="uppercase" color="dimmed">
+                                <TextSection
+                                    fw={700}
+                                    fz={12}
+                                    tt="uppercase"
+                                    color="dimmed"
+                                >
                                     {usuario?.direccion}
                                 </TextSection>
                             </div>

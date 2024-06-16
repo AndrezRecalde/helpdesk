@@ -1,8 +1,4 @@
-body {
-    background-image: url('../images/logo_background.png');
-    background-repeat: no-repeat;
-    min-height: 100vh;
-}
+
 
 @font-face {
     font-family: 'Greycliff CF';
