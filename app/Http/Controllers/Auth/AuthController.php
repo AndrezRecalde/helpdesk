@@ -49,7 +49,7 @@ class AuthController extends Controller
             ->selectRaw('u.cdgo_usrio, u.lgin, u.nmbre_usrio, u.usu_alias, u.email, u.crgo_id,
                         d.cdgo_dprtmnto, d.nmbre_dprtmnto as direccion, d.cdgo_lrgo, d.id_empresa,
                         CAST((IFNULL(r.id, 3)) AS UNSIGNED) as role_id,
-                        CAST((IFNULL(r.name, "Usuario")) AS NCHAR) as role')
+                        CAST((IFNULL(r.name, "USUARIO")) AS NCHAR) as role')
             ->join('dprtmntos as d', 'd.cdgo_dprtmnto', 'u.cdgo_direccion')
             ->leftJoin('model_has_roles as mh', 'mh.model_id', 'u.cdgo_usrio')
             ->leftJoin('roles as r', 'r.id', 'mh.role_id')
@@ -78,7 +78,7 @@ class AuthController extends Controller
                     d.cdgo_dprtmnto, d.nmbre_dprtmnto as direccion, d.cdgo_lrgo,
                     ne.nom_empresa as empresa, nc.nom_cargo as cargo,
                     CAST((IFNULL(r.id, 3)) AS UNSIGNED) as role_id,
-                    CAST((IFNULL(r.name, "Usuario")) AS NCHAR) as role')
+                    CAST((IFNULL(r.name, "USUARIO")) AS NCHAR) as role')
             ->join('dprtmntos as d', 'd.cdgo_dprtmnto', 'u.cdgo_direccion')
             ->join('nom_empresa as ne', 'ne.idnom_empresa', 'd.id_empresa')
             ->join('nom_cargo as nc', 'nc.idnom_cargo', 'u.crgo_id')
