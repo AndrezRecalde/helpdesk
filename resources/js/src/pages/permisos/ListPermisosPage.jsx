@@ -12,12 +12,14 @@ import { usePermisoStore, useTitlePage } from "../../hooks";
 import Swal from "sweetalert2";
 import { IconChevronsRight } from "@tabler/icons-react";
 import { Roles } from "../../layouts/appshell/navbar/navlinks/navLinks";
+import { useNavigate } from "react-router-dom";
 
 export const ListPermisosPage = () => {
     useTitlePage("Helpdesk | Lista Permisos");
     const usuario = JSON.parse(localStorage.getItem("service_user"));
     const { startLoadPermisos, clearPermisos, permisos, message, errores } =
         usePermisoStore();
+    const navigate = useNavigate();
 
     const form = useForm({
         initialValues: {
