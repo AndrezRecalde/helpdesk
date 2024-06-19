@@ -10,6 +10,7 @@ import {
 } from "../../hooks";
 import { IconChevronsRight } from "@tabler/icons-react";
 import { useNavigate } from "react-router-dom";
+import { Roles } from "../../layouts/appshell/navbar/navlinks/navLinks";
 
 export const PermisosPage = () => {
     useTitlePage("Helpdesk | Permisos");
@@ -101,8 +102,12 @@ export const PermisosPage = () => {
     }, [id_direccion_pide, directores]);
 
     const handleNavigate = () => {
-        navigate("/gerencia/ver-permisos");
-    }
+        usuario.role === Roles.GERENTE
+            ? navigate("/gerencia/ver-permisos")
+            : usuario.role === Roles.TECNICO
+            ? navigate("/tecnico/ver-permisos")
+            : navigate("/gad/d/ver-permisos");
+    };
 
     return (
         <Container size="md">
@@ -110,7 +115,10 @@ export const PermisosPage = () => {
                 <TitlePage order={2} size="h2">
                     Crear Permiso
                 </TitlePage>
-                <BtnSection IconSection={IconChevronsRight} handleAction={handleNavigate}>
+                <BtnSection
+                    IconSection={IconChevronsRight}
+                    handleAction={handleNavigate}
+                >
                     Ver permisos
                 </BtnSection>
             </Group>

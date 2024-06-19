@@ -62,11 +62,11 @@ export const ListPermisosPage = () => {
     }, [errores]);
 
     const handleNavigate = () => {
-        navigate(
-            usuario.role === Roles.USUARIO
-                ? "/gad/d/permiso"
-                : "/tecnico/permiso"
-        );
+        usuario.role === Roles.GERENTE
+            ? navigate("/gerencia/permiso")
+            : usuario.role === Roles.TECNICO
+            ? navigate("/tecnico/permiso")
+            : navigate("/gad/d/permiso");
     };
 
     const handleSubmit = (e) => {
