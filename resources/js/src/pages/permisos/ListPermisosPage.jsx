@@ -11,6 +11,7 @@ import {
 import { usePermisoStore, useTitlePage } from "../../hooks";
 import Swal from "sweetalert2";
 import { IconChevronsRight } from "@tabler/icons-react";
+import { Roles } from "../../layouts/appshell/navbar/navlinks/navLinks";
 
 export const ListPermisosPage = () => {
     useTitlePage("Helpdesk | Lista Permisos");
@@ -61,8 +62,12 @@ export const ListPermisosPage = () => {
     }, [errores]);
 
     const handleNavigate = () => {
-        navigate("/tecnico/permiso");
-    }
+        navigate(
+            usuario.role === Roles.USUARIO
+                ? "/gad/d/permiso"
+                : "/tecnico/permiso"
+        );
+    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
