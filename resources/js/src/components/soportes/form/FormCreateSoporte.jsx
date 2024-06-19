@@ -40,7 +40,7 @@ export const FormCreateSoporte = ({ form }) => {
 
     useEffect(() => {
         if (id_tipo_soporte == 1 || id_tipo_soporte == 4 || id_tipo_soporte == 5 || id_tipo_soporte == 6) {
-            console.log(id_tipo_soporte)
+            //console.log(id_tipo_soporte)
             form.setFieldValue("activo_informatico", true);
             form.setFieldValue(
                 "id_equipo",
@@ -50,7 +50,7 @@ export const FormCreateSoporte = ({ form }) => {
             );
         }
         if (id_tipo_soporte == 2 || id_tipo_soporte == 3) {
-            console.log('aquii')
+            //console.log('aquii')
             form.setFieldValue("activo_informatico", false);
         }
         form.setFieldValue(

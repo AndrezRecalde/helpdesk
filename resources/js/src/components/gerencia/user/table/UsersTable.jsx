@@ -47,7 +47,7 @@ export const UsersTable = () => {
 
     const handleEdit = useCallback(
         (selected) => {
-            console.log(selected)
+            //console.log(selected)
             setActivateUser(selected);
             modalActionUser(1);
         },

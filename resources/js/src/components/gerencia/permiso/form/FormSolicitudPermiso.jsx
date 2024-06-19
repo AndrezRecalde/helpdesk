@@ -69,7 +69,7 @@ export const FormSolicitudPermiso = ({ form, disabled }) => {
             }).then((result) => {
                 if (result.isConfirmed) {
                     startCardPermiso(message.idper_permisos);
-                    console.log(message.idper_permisos)
+                    //console.log(message.idper_permisos)
                 }
             });
             return;
