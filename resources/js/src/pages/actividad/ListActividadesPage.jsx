@@ -4,19 +4,18 @@ import { isNotEmpty, useForm } from "@mantine/form";
 import { useMantineReactTable } from "mantine-react-table";
 import {
     ActionReportPDF,
-    BtnSubmit,
     FilterFormSearchDates,
     MenuTable_E,
     ModalActividad,
     TableContent,
     TitlePage,
 } from "../../components";
-import { useActividadStore, useUiActividad } from "../../hooks";
+import { useActividadStore, useTitlePage, useUiActividad } from "../../hooks";
 import dayjs from "dayjs";
 import Swal from "sweetalert2";
 
 export const ListActividadesPage = () => {
-    useTitlePage("Helpdesk | Mis Actividades")
+    useTitlePage("Helpdesk | Mis Actividades");
     const srv_user = JSON.parse(localStorage.getItem("service_user"));
     const { modalActionActividad } = useUiActividad();
 
@@ -54,7 +53,9 @@ export const ListActividadesPage = () => {
                 size: 80,
             },
             {
-                accessorFn: (row) => <div dangerouslySetInnerHTML={{ __html: row.actividad }} />,
+                accessorFn: (row) => (
+                    <div dangerouslySetInnerHTML={{ __html: row.actividad }} />
+                ),
                 header: "Actividad",
                 size: 200,
             },
