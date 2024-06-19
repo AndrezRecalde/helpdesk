@@ -121,7 +121,7 @@ export const useUsersStore = () => {
         try {
             const { data } = await helpdeskApi.post("/gerencia/admin/show-user", { cdgo_usrio });
             const { usuario } = data;
-            console.log(usuario)
+            //console.log(usuario)
             dispatch(onSetActivateResponsable(usuario));
         } catch (error) {
             ExceptionMessageError(error);
@@ -166,7 +166,7 @@ export const useUsersStore = () => {
                 dispatch(onLoadMessage(undefined));
             }, 40);
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };

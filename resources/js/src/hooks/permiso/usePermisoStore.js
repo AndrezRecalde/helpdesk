@@ -27,7 +27,7 @@ export const usePermisoStore = () => {
         try {
             const { data } = await helpdeskApi.post("/general/crear-permiso", permiso);
             dispatch(onLoadMessage(data));
-            console.log(data)
+            //console.log(data)
             setTimeout(() => {
                 dispatch(onLoadMessage(undefined));
             }, 8000);
@@ -62,7 +62,7 @@ export const usePermisoStore = () => {
             //dispatch(onLoadMessage(data));
             dispatch(onLoading(false));
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };

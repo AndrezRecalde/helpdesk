@@ -17,7 +17,7 @@ export const StepperUser = ({ form }) => {
 
     useEffect(() => {
       if (activateUser !== null) {
-        console.log('hola')
+        //console.log('hola')
         form.setValues({
             ...activateUser,
             sexo: activateUser.sexo.toString(),
