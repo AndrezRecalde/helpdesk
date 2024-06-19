@@ -13,12 +13,16 @@ export default defineConfig({
         }),
         react(),
     ],
-    optimizeDeps: {
-        entries: ['resources/js/app.js'], // Archivos de entrada de tu aplicación
-        manualChunks(id) {
-            if (id.includes('node_modules')) {
-                return 'vendor'; // Agrupa módulos de node_modules en un fragmento separado
-            }
+    build: {
+        chunkSizeWarningLimit: 1000, // Ajusta según sea necesario
+        rollupOptions: {
+            output: {
+                manualChunks(id) {
+                    if (id.includes('node_modules')) {
+                        return 'vendor'; // Agrupa módulos de node_modules en un fragmento separado
+                    }
+                },
+            },
         },
     },
 });
