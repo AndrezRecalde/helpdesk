@@ -12,25 +12,26 @@ import {
     PrivateRoutes,
 } from "./private";
 import { AuthGuard } from "./private/guards";
-import { AppLayout } from "../layouts";
+import { AppLayout, Roles } from "../layouts";
 
 const AuthRoutes = () => (
     <PublicRoutes>
         <Routes>
             <Route path="auth/login/*" element={<AuthPage />} />
-            <Route
-                path="/*"
-                element={<Navigate replace to="/auth/login" />}
-            />
+            <Route path="/*" element={<Navigate replace to="/auth/login" />} />
         </Routes>
     </PublicRoutes>
 );
 
 export const AppRouter = () => {
+    const token = localStorage.getItem("auth_token");
     const { checkAuthToken } = useAuthStore();
 
     useEffect(() => {
-        checkAuthToken();
+        if (!token) {
+            checkAuthToken();
+            return;
+        }
     }, []);
 
     return (
@@ -41,7 +42,7 @@ export const AppRouter = () => {
                 <Route
                     path="/gerencia/*"
                     element={
-                        <PrivateRoutes role="GERENTE">
+                        <PrivateRoutes role={Roles.GERENTE}>
                             <PagesGerente />
                         </PrivateRoutes>
                     }
@@ -50,7 +51,7 @@ export const AppRouter = () => {
                 <Route
                     path="/tecnico/*"
                     element={
-                        <PrivateRoutes role="TECNICO">
+                        <PrivateRoutes role={Roles.TECNICO}>
                             <PagesTecnico />
                         </PrivateRoutes>
                     }
@@ -59,7 +60,7 @@ export const AppRouter = () => {
                 <Route
                     path="/gad/d/*"
                     element={
-                        <PrivateRoutes role="USUARIO">
+                        <PrivateRoutes role={Roles.USUARIO}>
                             <PagesUsuario />
                         </PrivateRoutes>
                     }

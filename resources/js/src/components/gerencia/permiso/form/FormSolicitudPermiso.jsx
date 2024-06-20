@@ -13,7 +13,6 @@ import { BtnSubmit } from "../../..";
 import { IconClock, IconUserBolt } from "@tabler/icons-react";
 import {
     useDireccionStore,
-    useDirectorStore,
     usePermisoStore,
     useStorageField,
     useUsersStore,
@@ -102,7 +101,11 @@ export const FormSolicitudPermiso = ({ form, disabled }) => {
         }).then((result) => {
             if (result.isConfirmed) {
                 startAddPermiso(form.getTransformedValues());
-                form.resetTouched();
+                form.setFieldValue('fecha', '');
+                form.setFieldValue('hora_1', '');
+                form.setFieldValue('hora_2', '');
+                form.setFieldValue('per_observaciones', '');
+                form.resetDirty(['fecha', 'id_jefe_inmediato', 'hora_1', 'hora_2', 'per_observaciones']);
             }
         });
     };
@@ -172,7 +175,6 @@ export const FormSolicitudPermiso = ({ form, disabled }) => {
                     <Select
                         withAsterisk
                         searchable
-                        disabled={disabled}
                         label="Jefe inmediato"
                         placeholder="Seleccione el jefe inmediato del solicitante"
                         {...form.getInputProps("id_jefe_inmediato")}
