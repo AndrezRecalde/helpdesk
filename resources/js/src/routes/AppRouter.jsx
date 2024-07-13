@@ -24,14 +24,10 @@ const AuthRoutes = () => (
 );
 
 export const AppRouter = () => {
-    const token = localStorage.getItem("auth_token");
     const { checkAuthToken } = useAuthStore();
 
     useEffect(() => {
-        if (!token) {
-            checkAuthToken();
-            return;
-        }
+        checkAuthToken();
     }, []);
 
     return (

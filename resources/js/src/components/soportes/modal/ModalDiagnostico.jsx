@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import { Modal } from "@mantine/core";
-import { useEquipoStore, useSoporteStore, useUiSoporte } from "../../../hooks";
 import { isNotEmpty, useForm } from "@mantine/form";
-import { FormDiagnosticar } from "../form/FormDiagnosticar";
+import { TextSection, FormDiagnosticar } from "../../../components";
+import { useEquipoStore, useSoporteStore, useUiSoporte } from "../../../hooks";
 
 export const ModalDiagnostico = ({ option }) => {
     const { modalActionDiagnosticar, isOpenModalDiagnosticar } = useUiSoporte();
@@ -64,7 +64,11 @@ export const ModalDiagnostico = ({ option }) => {
             closeOnClickOutside={false}
             opened={isOpenModalDiagnosticar}
             onClose={handleCloseModal}
-            title="Diagnosticar soporte"
+            title={
+                <TextSection tt="" fz={16} fw={700}>
+                    Diagnosticar soporte
+                </TextSection>
+            }
             size="xl"
             overlayProps={{
                 backgroundOpacity: 0.55,

@@ -52,6 +52,7 @@ class User extends Authenticatable
         'usu_id_sub_empresa',
         'cdgo_dprtmnto',
         'paswrd',
+        'asi_id_reloj'
     ];
 
     /**

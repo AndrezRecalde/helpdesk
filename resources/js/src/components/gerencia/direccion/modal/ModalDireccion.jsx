@@ -1,7 +1,7 @@
 import { Modal } from "@mantine/core";
-import { useDirectorStore, useUiDirector } from "../../../../hooks";
-import { FormDirector } from "../../..";
 import { isNotEmpty, useForm } from "@mantine/form";
+import { useDirectorStore, useUiDirector } from "../../../../hooks";
+import { FormDirector, TextSection } from "../../../../components";
 
 export const ModalDireccion = () => {
     const { setClearActivateDirectores } = useDirectorStore();
@@ -27,7 +27,7 @@ export const ModalDireccion = () => {
         <Modal
             opened={isOpenModalActionDirector}
             onClose={handleCloseModal}
-            title="Cambio de director"
+            title={<TextSection tt="" fz={16} fw={700}>Cambio de director</TextSection>}
             size="xl"
             overlayProps={{
                 backgroundOpacity: 0.55,

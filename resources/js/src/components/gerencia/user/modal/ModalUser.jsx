@@ -9,7 +9,7 @@ import {
     useUiUser,
     useUsersStore,
 } from "../../../../hooks";
-import { StepperUser } from "../../..";
+import { StepperUser, TextSection } from "../../..";
 import { hasLength, isEmail, isNotEmpty, useForm } from "@mantine/form";
 
 export const ModalUser = ({ title }) => {
@@ -155,7 +155,7 @@ export const ModalUser = ({ title }) => {
         <Modal
             opened={isOpenModalAddUser}
             onClose={handleCloseModal}
-            title={title}
+            title={<TextSection tt="" fz={16} fw={700}>{title}</TextSection>}
             size="xl"
             closeOnClickOutside={false}
             overlayProps={{

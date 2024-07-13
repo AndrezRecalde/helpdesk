@@ -1,8 +1,12 @@
 import { useEffect } from "react";
 import { Modal } from "@mantine/core";
 import { isNotEmpty, useForm } from "@mantine/form";
-import { FormAddTecnico } from "../../..";
-import { useTecnicoStore, useUiTecnico, useUsersStore } from "../../../../hooks";
+import { FormAddTecnico, TextSection } from "../../../../components";
+import {
+    useTecnicoStore,
+    useUiTecnico,
+    useUsersStore,
+} from "../../../../hooks";
 import Swal from "sweetalert2";
 
 export const ModalAddTecnico = () => {
@@ -68,7 +72,11 @@ export const ModalAddTecnico = () => {
         <Modal
             opened={isOpenModalAddTecnico}
             onClose={handleCloseModal}
-            title="Gestionar Técnico"
+            title={
+                <TextSection tt="" fz={16} fw={700}>
+                    Gestionar Técnico
+                </TextSection>
+            }
             size="md"
             overlayProps={{
                 backgroundOpacity: 0.55,

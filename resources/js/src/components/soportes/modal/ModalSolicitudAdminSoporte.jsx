@@ -1,8 +1,13 @@
 import { useEffect } from "react";
 import { Modal } from "@mantine/core";
 import { isNotEmpty, useForm } from "@mantine/form";
-import { useDireccionStore, useTecnicoStore, useUiSoporte, useUsersStore } from "../../../hooks";
-import { FormSolicitudAdminSoporte } from "../../../components";
+import {
+    useDireccionStore,
+    useTecnicoStore,
+    useUiSoporte,
+    useUsersStore,
+} from "../../../hooks";
+import { FormSolicitudAdminSoporte, TextSection } from "../../../components";
 
 export const ModalSolicitudAdminSoporte = () => {
     const { startLoadUsersGeneral, clearUsers } = useUsersStore();
@@ -41,16 +46,15 @@ export const ModalSolicitudAdminSoporte = () => {
     const { can_tecnico } = form.values;
 
     useEffect(() => {
-      if (isOpenModalAddSolicitud && direcciones.length === 0) {
-        startLoadDirecciones();
-        return;
-      }
+        if (isOpenModalAddSolicitud && direcciones.length === 0) {
+            startLoadDirecciones();
+            return;
+        }
 
-      /* return () => {
+        /* return () => {
         clearDirecciones()
       } */
     }, [isOpenModalAddSolicitud]);
-
 
     useEffect(() => {
         if (isOpenModalAddSolicitud) {
@@ -84,7 +88,11 @@ export const ModalSolicitudAdminSoporte = () => {
         <Modal
             opened={isOpenModalAddSolicitud}
             onClose={handleCloseModal}
-            title="Realizar solicitud"
+            title={
+                <TextSection tt="" fz={16} fw={700}>
+                    Realizar solicitud
+                </TextSection>
+            }
             size="xl"
             overlayProps={{
                 backgroundOpacity: 0.55,

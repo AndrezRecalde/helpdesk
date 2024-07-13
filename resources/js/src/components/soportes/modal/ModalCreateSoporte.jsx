@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { Drawer } from "@mantine/core";
-import { FormCreateSoporte } from "../../../components";
+import { FormCreateSoporte, TextSection } from "../../../components";
 import {
     useEquipoStore,
     useEstadoStore,
@@ -237,7 +237,7 @@ export const ModalCreateSoporte = ({ role }) => {
             closeOnEscape={false}
             position="right"
             size="lg"
-            title="Crear soporte"
+            title={<TextSection tt="" fz={16} fw={700}>Crear soporte</TextSection>}
         >
             <FormCreateSoporte form={form} role={role} />
         </Drawer>

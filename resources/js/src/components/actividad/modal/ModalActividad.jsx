@@ -1,5 +1,5 @@
 import { Modal } from "@mantine/core";
-import { ActividadForm } from "../../../components";
+import { ActividadForm, TextSection } from "../../../components";
 import { useActividadStore, useUiActividad } from "../../..//hooks";
 
 export const ModalActividad = ({ fecha_inicio, fecha_fin }) => {
@@ -17,7 +17,7 @@ export const ModalActividad = ({ fecha_inicio, fecha_fin }) => {
         <Modal
             opened={isOpenModalActividad}
             onClose={handleCloseModal}
-            title="Actividad"
+            title={<TextSection tt="" fz={16} fw={700}>Actividad</TextSection>}
             overlayProps={{
                 backgroundOpacity: 0.55,
                 blur: 3,

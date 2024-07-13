@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
     Card,
     Text,
@@ -20,6 +20,7 @@ import dayjs from "dayjs";
 
 export const FormDiagnosticar = ({ form, option }) => {
     const { activo_informatico, id_tipo_soporte } = form.values;
+    const [checkEstado, setCheckEstado] = useState(false);
     const { equipos } = useEquipoStore();
     const { modalActionDiagnosticar } = useUiSoporte();
     const { activateSoporte, startDiagnosticarSoporte } = useSoporteStore();
@@ -47,8 +48,10 @@ export const FormDiagnosticar = ({ form, option }) => {
     useEffect(() => {
         if (id_tipo_soporte == 1 || id_tipo_soporte == 4 || id_tipo_soporte == 5 || id_tipo_soporte == 6) {
             form.setFieldValue("activo_informatico", true);
+            setCheckEstado(true);
         } else {
             form.setFieldValue("activo_informatico", false);
+            setCheckEstado(false);
         }
     }, [id_tipo_soporte]);
 
@@ -179,7 +182,7 @@ export const FormDiagnosticar = ({ form, option }) => {
                             {...form.getInputProps("solucion")}
                         />
                         <Checkbox
-                            disabled={activo_informatico}
+                            disabled={checkEstado}
                             color="teal.4"
                             iconColor="dark.8"
                             size="sm"

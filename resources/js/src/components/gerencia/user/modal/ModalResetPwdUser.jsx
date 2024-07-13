@@ -1,7 +1,7 @@
 import { Modal } from "@mantine/core";
 import { isNotEmpty, useForm } from "@mantine/form";
 import { useUiUser } from "../../../../hooks";
-import { FormResetPwdUser } from "../../../../components";
+import { FormResetPwdUser, TextSection } from "../../../../components";
 
 export const ModalResetPwdUser = () => {
     const { isOpenModalResetPwd, modalActionResetPwd } = useUiUser();
@@ -27,7 +27,7 @@ export const ModalResetPwdUser = () => {
             centered
             opened={isOpenModalResetPwd}
             onClose={handleCloseModal}
-            title="Resetear contraseña"
+            title={<TextSection tt="" fw={700} fz={16}>Resetear contraseña</TextSection>}
             size="md"
             overlayProps={{
                 backgroundOpacity: 0.55,

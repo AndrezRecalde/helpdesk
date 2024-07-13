@@ -10,9 +10,20 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
     <title>Permiso 4 horas</title>
     <style>
-        @page {
-            size: 21cm 29.7cm;
-            margin: 20px;
+        body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .page {
+            width: 210mm;
+            /* Ancho de una página A4 */
+            height: 297mm;
+            /* Altura de una página A4 */
+            page-break-after: always;
+            margin-top: 20mm; /* Ajusta el margen superior aquí */
         }
 
         hr {
@@ -46,6 +57,15 @@
             margin-top: 3%;
             margin-bottom: 3%;
         }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .full-width-table {
+            width: 100%;
+        }
     </style>
 </head>
 
@@ -53,7 +73,7 @@
     <main class="mb-5">
         <div>
             <!-- ENCABEZADO -->
-            <table style="width:100%">
+            <table class="full-width-table">
                 <tr>
                     <td>
                         <img class="img-fluid" alt="logo"
@@ -72,12 +92,13 @@
             <!-- FIN ENCABEZADO -->
 
             <!-- CUERPO DEL PERMISO -->
-            <table style="width:100% ;border: 1px solid black;">
+            <table class="full-width-table" style="width:100% ;border: 1px solid black;">
                 <tr>
                     <td>SOLICITUD No:</td>
                     <td>{{ $permisos->idper_permisos }}</td>
                     <td>FECHA DE PERMISO:</td>
-                    <td style="font-size: 16px"><strong>{{ \Carbon\Carbon::parse($permisos->per_fecha_salida)->format('Y-m-d') }}</strong></td>
+                    <td style="font-size: 16px">
+                        <strong>{{ \Carbon\Carbon::parse($permisos->per_fecha_salida)->format('Y-m-d') }}</strong></td>
                     <td>{!! DNS1D::getBarcodeHTML($permisos->idper_permisos, 'C128', 1, 33, 'green') !!}</td>
                 </tr>
                 <tr>
@@ -97,10 +118,12 @@
                 </tr>
                 <tr>
                     <td>HORA SALIDA:</td>
-                    <td style="font-size: 16px"><strong>{{ \Carbon\Carbon::parse($permisos->per_fecha_salida)->toTimeString() }}</strong></td>
+                    <td style="font-size: 16px">
+                        <strong>{{ \Carbon\Carbon::parse($permisos->per_fecha_salida)->toTimeString() }}</strong></td>
                     <td></td>
                     <td>HORA ENTRADA:</td>
-                    <td style="font-size: 16px"><strong>{{ \Carbon\Carbon::parse($permisos->per_fecha_llegada)->toTimeString() }}</strong></td>
+                    <td style="font-size: 16px">
+                        <strong>{{ \Carbon\Carbon::parse($permisos->per_fecha_llegada)->toTimeString() }}</strong></td>
                 </tr>
                 <tr>
                     <td colspan="5">OBSERVACION: </td>
@@ -109,15 +132,6 @@
                     <td colspan="5" style="font-size: 11px">{{ $permisos->per_observaciones }}</td>
                 </tr>
                 <!-- FIRMA -->
-                <tr>
-                    <td colspan="5"></td>
-                </tr>
-                <tr>
-                    <td colspan="5"></td>
-                </tr>
-                <tr>
-                    <td colspan="5"></td>
-                </tr>
                 <tr class="marginLineaFirma">
                     <td colspan="2">
                         <p style="font-size: 12px">JEFE INMEDIATO:</p>
@@ -137,9 +151,6 @@
                         <hr class="marginLineaFirma">
                         <p style="font-size: 14px">{{ $permisos->usuario_pide }}</p>
                     </td>
-                </tr>
-                <tr>
-                    <td colspan="5"></td>
                 </tr>
                 <tr>
                     <td colspan="1"></td>
@@ -158,7 +169,7 @@
         <hr class="corte">
         <div>
             <!-- ENCABEZADO -->
-            <table style="width:100%">
+            <table class="full-width-table">
                 <tr>
                     <td>
                         <img class="img-fluid" alt="logo"
@@ -177,12 +188,13 @@
             <!-- FIN ENCABEZADO -->
 
             <!-- CUERPO DEL PERMISO -->
-            <table style="width:100% ;border: 1px solid black;">
+            <table class="full-width-table" style="width:100% ;border: 1px solid black;">
                 <tr>
                     <td>SOLICITUD No:</td>
                     <td>{{ $permisos->idper_permisos }}</td>
                     <td>FECHA DE PERMISO:</td>
-                    <td style="font-size: 16px"><strong>{{ \Carbon\Carbon::parse($permisos->per_fecha_salida)->format('Y-m-d') }}</strong></td>
+                    <td style="font-size: 16px">
+                        <strong>{{ \Carbon\Carbon::parse($permisos->per_fecha_salida)->format('Y-m-d') }}</strong></td>
                     <td>{!! DNS1D::getBarcodeHTML($permisos->idper_permisos, 'C128', 1, 33, 'green') !!}</td>
                 </tr>
                 <tr>
@@ -202,10 +214,12 @@
                 </tr>
                 <tr>
                     <td>HORA SALIDA:</td>
-                    <td style="font-size: 16px"><strong>{{ \Carbon\Carbon::parse($permisos->per_fecha_salida)->toTimeString() }}</strong></td>
+                    <td style="font-size: 16px">
+                        <strong>{{ \Carbon\Carbon::parse($permisos->per_fecha_salida)->toTimeString() }}</strong></td>
                     <td></td>
                     <td>HORA ENTRADA:</td>
-                    <td style="font-size: 16px"><strong>{{ \Carbon\Carbon::parse($permisos->per_fecha_llegada)->toTimeString() }}</strong></td>
+                    <td style="font-size: 16px">
+                        <strong>{{ \Carbon\Carbon::parse($permisos->per_fecha_llegada)->toTimeString() }}</strong></td>
                 </tr>
                 <tr>
                     <td colspan="5">OBSERVACION: </td>
@@ -214,15 +228,6 @@
                     <td colspan="5" style="font-size: 11px">{{ $permisos->per_observaciones }}</td>
                 </tr>
                 <!-- FIRMA -->
-                <tr>
-                    <td colspan="5"></td>
-                </tr>
-                <tr>
-                    <td colspan="5"></td>
-                </tr>
-                <tr>
-                    <td colspan="5"></td>
-                </tr>
                 <tr class="marginLineaFirma">
                     <td colspan="2">
                         <p style="font-size: 12px">JEFE INMEDIATO:</p>
@@ -242,9 +247,6 @@
                         <hr class="marginLineaFirma">
                         <p style="font-size: 14px">{{ $permisos->usuario_pide }}</p>
                     </td>
-                </tr>
-                <tr>
-                    <td colspan="5"></td>
                 </tr>
                 <tr>
                     <td colspan="1"></td>

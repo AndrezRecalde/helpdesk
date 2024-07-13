@@ -8,6 +8,7 @@ export const PrivateRoutes = ({
 }) => {
     let location = useLocation();
     const token = localStorage.getItem("auth_token");
+    //const { token } = useAuthStore();
     const user = JSON.parse(localStorage.getItem("service_user"));
 
     const userHasRequiredRole = token && role === user.role ? true : false;

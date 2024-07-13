@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\General\ActividadController;
+use App\Http\Controllers\General\CheckInOutController;
 use App\Http\Controllers\General\DiagnosticoController;
 use App\Http\Controllers\General\DireccionController;
 use App\Http\Controllers\General\EquipoController;
@@ -37,7 +38,7 @@ use Illuminate\Support\Facades\Route;
 Route::post('/auth/login', [AuthController::class, 'login']);
 
 Route::get('/refresh', [AuthController::class, 'refresh'])->middleware('auth:sanctum');
-Route::post('/profile', [AuthController::class, 'profile'])->middleware('auth:sanctum');
+Route::get('/profile', [AuthController::class, 'profile'])->middleware('auth:sanctum');
 Route::post('/auth/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 Route::put('/change-password/{cdgo_usrio}', [UserController::class, 'updatePassword'])->middleware('auth:sanctum');
 
@@ -169,5 +170,8 @@ Route::group(['prefix' => 'usuario', 'middleware' => ['auth:sanctum']], function
     Route::post('/soportes-atendidos', [SoporteController::class, 'getSoportesAtendidosForUsuario']);
     Route::put('/cierre-soporte/{id_sop}', [SoporteController::class, 'cierreSoporteForUsuario']);
 
+
+    /* MARCACIONES */
+    Route::post('/checkinout', [CheckInOutController::class, 'getMarcacionesForUser']);
 
 });

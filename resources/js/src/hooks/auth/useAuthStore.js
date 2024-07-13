@@ -16,7 +16,7 @@ import helpdeskApi from "../../api/helpdeskApi";
 
 export const useAuthStore = () => {
     const { clearColorScheme  } = useMantineColorScheme();
-    const { isLoading, user, profile, validate, errores } = useSelector(
+    const { isLoading, user, token, profile, validate, errores } = useSelector(
         (state) => state.auth
     );
     const dispatch = useDispatch();
@@ -49,7 +49,7 @@ export const useAuthStore = () => {
     };
 
     const checkAuthToken = async () => {
-        const token = localStorage.getItem("auth_token");
+        //const token = localStorage.getItem("auth_token");
         if (!token) return dispatch(onLogout());
 
         try {
@@ -69,12 +69,12 @@ export const useAuthStore = () => {
     const startProfile = async () => {
         try {
             dispatch(onLoading());
-            const user = await JSON.parse(localStorage.getItem("service_user"));
-            const { data } = await helpdeskApi.post("/profile", { cdgo_usrio: user?.cdgo_usrio });
+            //const user = await JSON.parse(localStorage.getItem("service_user"));
+            const { data } = await helpdeskApi.get("/profile");
             const { profile } = data;
             dispatch(onLoadProfile(profile));
         } catch (error) {
-            //console.log(error);
+            console.log(error);
             ExceptionMessageError(error);
         }
     };
@@ -99,6 +99,7 @@ export const useAuthStore = () => {
     return {
         isLoading,
         user,
+        token,
         profile,
         validate,
         errores,

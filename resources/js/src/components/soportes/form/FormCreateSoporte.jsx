@@ -21,7 +21,7 @@ import {
     useUiSoporte,
     useUsersStore,
 } from "../../../hooks";
-import { IconSend } from "@tabler/icons-react";
+import { IconBrandTelegram } from "@tabler/icons-react";
 
 export const FormCreateSoporte = ({ form }) => {
     const usuario = JSON.parse(localStorage.getItem("service_user"));
@@ -328,7 +328,7 @@ export const FormCreateSoporte = ({ form }) => {
                 />
             </Stack>
 
-            <BtnSubmit fontSize={16} IconSection={IconSend}>
+            <BtnSubmit fontSize={16} IconSection={IconBrandTelegram}>
                 Crear el soporte
             </BtnSubmit>
         </Box>

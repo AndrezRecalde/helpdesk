@@ -10,7 +10,7 @@ import {
 } from "@mantine/core";
 import { DateInput, TimeInput } from "@mantine/dates";
 import { BtnSubmit } from "../../..";
-import { IconClock, IconUserBolt } from "@tabler/icons-react";
+import { IconChecks, IconClock } from "@tabler/icons-react";
 import {
     useDireccionStore,
     usePermisoStore,
@@ -249,7 +249,7 @@ export const FormSolicitudPermiso = ({ form, disabled }) => {
             </Grid>
             <BtnSubmit
                 fontSize={16}
-                IconSection={IconUserBolt}
+                IconSection={IconChecks}
                 //loading={isLoading}
             >
                 Registrar permiso

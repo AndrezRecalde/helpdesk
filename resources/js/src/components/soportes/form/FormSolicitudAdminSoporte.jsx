@@ -8,7 +8,7 @@ import {
     Textarea,
 } from "@mantine/core";
 import { AlertSection, BtnSubmit } from "../../../components";
-import { IconInfoCircle, IconSend } from "@tabler/icons-react";
+import { IconBrandTelegram, IconInfoCircle, IconSend } from "@tabler/icons-react";
 import {
     useDireccionStore,
     useSoporteStore,
@@ -170,7 +170,7 @@ export const FormSolicitudAdminSoporte = ({ form }) => {
             </Grid>
             <BtnSubmit
                 fontSize={16}
-                IconSection={IconSend}
+                IconSection={IconBrandTelegram}
                 loading={isLoading}
                 disabled={isLoading}
             >

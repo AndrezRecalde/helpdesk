@@ -1,5 +1,6 @@
 import { Modal } from "@mantine/core";
 import { useTecnicoStore, useUiTecnico } from "../../../../hooks";
+import { FormDirector, TextSection } from "../../../../components";
 
 export const ModalActivateTecnico = () => {
 
@@ -15,7 +16,7 @@ export const ModalActivateTecnico = () => {
         <Modal
             opened={isOpenModalActivateTecnico}
             onClose={handleCloseModal}
-            title="Desactivar Técnico"
+            title={<TextSection tt="" fw={700} fz={16}>Desactivar Técnico</TextSection>}
             size="md"
             overlayProps={{
                 backgroundOpacity: 0.55,

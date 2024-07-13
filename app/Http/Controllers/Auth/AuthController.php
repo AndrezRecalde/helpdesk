@@ -71,7 +71,7 @@ class AuthController extends Controller
         }
     }
 
-    function profile(Request $request): JsonResponse
+    function profile(): JsonResponse
     {
         $profile = User::from('usrios_sstma as u')
             ->selectRaw('u.cdgo_usrio, u.lgin, u.nmbre_usrio, u.usu_alias, u.email,
@@ -84,7 +84,7 @@ class AuthController extends Controller
             ->join('nom_cargo as nc', 'nc.idnom_cargo', 'u.crgo_id')
             ->leftJoin('model_has_roles as mh', 'mh.model_id', 'u.cdgo_usrio')
             ->leftJoin('roles as r', 'r.id', 'mh.role_id')
-            ->where('u.cdgo_usrio', $request->cdgo_usrio)
+            ->where('u.cdgo_usrio', Auth::user()->cdgo_usrio)
             ->first();
 
         return response()->json(['status' => MsgStatus::Success, 'profile' => $profile], 200);
