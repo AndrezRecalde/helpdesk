@@ -4,6 +4,7 @@ import {
     ActividadPage,
     ListActividadesPage,
     ListPermisosPage,
+    MarcacionesPage,
     PermisosPage,
     SolicitudPage,
     UserSoportesPage,
@@ -25,6 +26,8 @@ export const PagesUsuario = () => {
             />
             <Route path="/permiso" element={<PermisosPage />} />
             <Route path="/ver-permisos" element={<ListPermisosPage />} />
+            <Route path="/ver-marcaciones" element={<MarcacionesPage />} />
+
         </RoutesNotFound>
     );
 };

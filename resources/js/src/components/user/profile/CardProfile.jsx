@@ -1,5 +1,10 @@
 import { Badge, Box, Card, Group, SimpleGrid, Skeleton } from "@mantine/core";
-import { BtnSubmit, MenuSeleccion, ProfileForm, TextSection } from "../../../components";
+import {
+    BtnSubmit,
+    MenuSeleccion,
+    ProfileForm,
+    TextSection,
+} from "../../../components";
 import { IconDeviceImacUp } from "@tabler/icons-react";
 import { useAuthStore, useTecnicoStore, useUsersStore } from "../../../hooks";
 import { Roles } from "../../../layouts/appshell/navbar/navlinks/navLinks";
@@ -18,7 +23,13 @@ export const CardProfile = ({ usuario, handleAction }) => {
                     <TextSection tt="" ta="center" fz={18} fw={500}>
                         {stat.total_soportes}
                     </TextSection>
-                    <TextSection tt="" ta="center" fz={14} fw={500} color="dimmed">
+                    <TextSection
+                        tt=""
+                        ta="center"
+                        fz={14}
+                        fw={500}
+                        color="dimmed"
+                    >
                         Total Soportes
                     </TextSection>
                 </div>
@@ -26,16 +37,27 @@ export const CardProfile = ({ usuario, handleAction }) => {
                     <TextSection tt="" ta="center" fz={18} fw={500}>
                         {stat.total_asignados}
                     </TextSection>
-                    <TextSection tt="" ta="center" fz={14} fw={500} color="dimmed">
+                    <TextSection
+                        tt=""
+                        ta="center"
+                        fz={14}
+                        fw={500}
+                        color="dimmed"
+                    >
                         Total Asignados
                     </TextSection>
                 </div>
                 <div>
-
                     <TextSection tt="" ta="center" fz={18} fw={500}>
                         {stat.total_atendidos}
                     </TextSection>
-                    <TextSection tt="" ta="center" fz={14} fw={500} color="dimmed">
+                    <TextSection
+                        tt=""
+                        ta="center"
+                        fz={14}
+                        fw={500}
+                        color="dimmed"
+                    >
                         Total Atendidos
                     </TextSection>
                 </div>
@@ -43,7 +65,13 @@ export const CardProfile = ({ usuario, handleAction }) => {
                     <TextSection tt="" ta="center" fz={18} fw={500}>
                         {stat.total_finalizados}
                     </TextSection>
-                    <TextSection tt="" ta="center" fz={14} fw={500} color="dimmed">
+                    <TextSection
+                        tt=""
+                        ta="center"
+                        fz={14}
+                        fw={500}
+                        color="dimmed"
+                    >
                         Total Finalizados
                     </TextSection>
                 </div>
@@ -51,7 +79,13 @@ export const CardProfile = ({ usuario, handleAction }) => {
                     <TextSection tt="" ta="center" fz={18} fw={500}>
                         {stat.total_anulados}
                     </TextSection>
-                    <TextSection tt="" ta="center" fz={14} fw={500} color="dimmed">
+                    <TextSection
+                        tt=""
+                        ta="center"
+                        fz={14}
+                        fw={500}
+                        color="dimmed"
+                    >
                         Total Anulados
                     </TextSection>
                 </div>
@@ -66,7 +100,13 @@ export const CardProfile = ({ usuario, handleAction }) => {
                     <TextSection tt="" ta="center" fz={16} fw={500}>
                         {stat.total_soportes}
                     </TextSection>
-                    <TextSection tt="" ta="center" fz={14} fw={500} color="dimmed">
+                    <TextSection
+                        tt=""
+                        ta="center"
+                        fz={14}
+                        fw={500}
+                        color="dimmed"
+                    >
                         Total Soportes
                     </TextSection>
                 </div>
@@ -74,7 +114,13 @@ export const CardProfile = ({ usuario, handleAction }) => {
                     <TextSection tt="" ta="center" fz={16} fw={500}>
                         {stat.total_pendientes}
                     </TextSection>
-                    <TextSection tt="" ta="center" fz={14} fw={500} color="dimmed">
+                    <TextSection
+                        tt=""
+                        ta="center"
+                        fz={14}
+                        fw={500}
+                        color="dimmed"
+                    >
                         Total Pendientes
                     </TextSection>
                 </div>
@@ -82,7 +128,13 @@ export const CardProfile = ({ usuario, handleAction }) => {
                     <TextSection tt="" ta="center" fz={16} fw={500}>
                         {stat.total_asignados}
                     </TextSection>
-                    <TextSection tt="" ta="center" fz={14} fw={500} color="dimmed">
+                    <TextSection
+                        tt=""
+                        ta="center"
+                        fz={14}
+                        fw={500}
+                        color="dimmed"
+                    >
                         Total Asignados
                     </TextSection>
                 </div>
@@ -90,7 +142,13 @@ export const CardProfile = ({ usuario, handleAction }) => {
                     <TextSection tt="" ta="center" fz={16} fw={500}>
                         {stat.total_atendidos}
                     </TextSection>
-                    <TextSection tt="" ta="center" fz={14} fw={500} color="dimmed">
+                    <TextSection
+                        tt=""
+                        ta="center"
+                        fz={14}
+                        fw={500}
+                        color="dimmed"
+                    >
                         Total Atendidos
                     </TextSection>
                 </div>
@@ -98,7 +156,13 @@ export const CardProfile = ({ usuario, handleAction }) => {
                     <TextSection tt="" ta="center" fz={16} fw={500}>
                         {stat.total_finalizados}
                     </TextSection>
-                    <TextSection tt="" ta="center" fz={14} fw={500} color="dimmed">
+                    <TextSection
+                        tt=""
+                        ta="center"
+                        fz={14}
+                        fw={500}
+                        color="dimmed"
+                    >
                         Total Finalizados
                     </TextSection>
                 </div>
@@ -106,7 +170,13 @@ export const CardProfile = ({ usuario, handleAction }) => {
                     <TextSection tt="" ta="center" fz={16} fw={500}>
                         {stat.total_anulados}
                     </TextSection>
-                    <TextSection tt="" ta="center" fz={14} fw={500} color="dimmed">
+                    <TextSection
+                        tt=""
+                        ta="center"
+                        fz={14}
+                        fw={500}
+                        color="dimmed"
+                    >
                         Total Anulados
                     </TextSection>
                 </div>
@@ -128,7 +198,7 @@ export const CardProfile = ({ usuario, handleAction }) => {
                             variant="light"
                             color="orange.7"
                             size="lg"
-                            radius="lg"
+                            radius="md"
                         >
                             {profile?.role}
                         </Badge>
@@ -139,21 +209,24 @@ export const CardProfile = ({ usuario, handleAction }) => {
                 <ProfileForm />
             </Card.Section>
             <Card.Section withBorder inheritPadding py="xs">
-                <Group justify="space-between">
-                    <TextSection fw={700} tt="" fz={16} color="dimmed">
-                        Soportes
-                    </TextSection>
-                    <TextSection fw={700} tt="" fz={16} color="dimmed">
-                        {year.getFullYear()}
-                    </TextSection>
-                </Group>
-                <Group mt="md" justify="center" gap={70}>
-                    { usuario?.role_id === 1 || usuario?.role_id === 2
-                        ? itemsTic
-                        : itemsUser }
-                </Group>
+                {usuario.role_id === 1 || usuario.role_id === 2 ? (
+                    <div>
+                        <Group justify="space-between">
+                            <TextSection fw={700} tt="" fz={16} color="dimmed">
+                                Soportes
+                            </TextSection>
+                            <TextSection fw={700} tt="" fz={16} color="dimmed">
+                                {year.getFullYear()}
+                            </TextSection>
+                        </Group>
+                        <Group mt="md" justify="center" gap={70}>
+                            {itemsTic}
+                        </Group>
+                    </div>
+                ) : null}
 
-                {usuario.role === Roles.GERENTE || usuario.role === Roles.TECNICO ? (
+                {usuario.role === Roles.GERENTE ||
+                usuario.role === Roles.TECNICO ? (
                     <Box component="form" onSubmit={handleAction}>
                         <BtnSubmit fontSize={16} IconSection={IconDeviceImacUp}>
                             Gestionar soportes

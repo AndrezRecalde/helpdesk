@@ -65,6 +65,9 @@ import { uiActividadSlice } from "./actividad/uiActividadSlice";
 import { permisoSlice } from "./permiso/permisoSlice";
 import { uiPermisoSlice } from "./permiso/uiPermisoSlice";
 
+/* Marcaciones */
+import { marcacionSlice } from "./marcacion/marcacionSlice";
+
 /* Storage Fields */
 import { storageFieldsSlice } from "./fields/storageFieldsSlice";
 
@@ -142,6 +145,9 @@ export {
     /* Permisos */
     permisoSlice,
     uiPermisoSlice,
+
+    /* Marcaciones */
+    marcacionSlice,
 
     /* Storage */
     storageFieldsSlice

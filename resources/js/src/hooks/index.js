@@ -68,6 +68,9 @@ import { useUiActividad } from "./actividad/useUiActividad";
 import { usePermisoStore } from "./permiso/usePermisoStore";
 import { useUiPermiso } from "./permiso/useUiPermiso";
 
+/* Marcaciones */
+import { useMarcacionStore } from "./marcacion/useMarcacionStore";
+
 /* Storage */
 import { useStorageField } from "./storage/useStorageField";
 
@@ -121,6 +124,8 @@ export {
 
     usePermisoStore,
     useUiPermiso,
+
+    useMarcacionStore,
 
     useStorageField
 }

@@ -100,6 +100,10 @@ import { TableIndicadorEficacia } from "./soportes/table/indicadores/TableIndica
 import { ActividadForm } from "./actividad/form/ActividadForm";
 import { ModalActividad } from "./actividad/modal/ModalActividad";
 
+/* Marcaciones */
+import { FilterFormMarcaciones } from "./marcacion/form/FilterFormMarcaciones";
+import { TableMarcaciones } from "./marcacion/table/TableMarcaciones";
+
 
 /* Elementos */
 import { Logo } from "./elements/application/Logo";
@@ -228,6 +232,10 @@ export {
     /* Actividades */
     ActividadForm,
     ModalActividad,
+
+    /* Marcaciones */
+    FilterFormMarcaciones,
+    TableMarcaciones,
 
 
     /* Elements */

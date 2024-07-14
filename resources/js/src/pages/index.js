@@ -36,6 +36,10 @@ import { PermisosPage } from "./permisos/PermisosPage";
 import { ListPermisosPage } from "./permisos/ListPermisosPage";
 import { ListPermisosAdminPage } from "./permisos/ListPermisosAdminPage";
 
+/* Marcaciones */
+import { MarcacionesPage } from "./marcacion/MarcacionesPage";
+
+
 /* Error */
 import { ErrorNotFound } from "./error/ErrorNotFound";
 import { ErrorAccessDenied } from "./error/ErrorAccessDenied";
@@ -69,6 +73,8 @@ export {
     PermisosPage,
     ListPermisosPage,
     ListPermisosAdminPage,
+
+    MarcacionesPage,
 
     ErrorNotFound,
     ErrorAccessDenied

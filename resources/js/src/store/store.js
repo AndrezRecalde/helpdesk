@@ -12,6 +12,7 @@ import {
     equipoSlice,
     estadoSlice,
     indicadorSlice,
+    marcacionSlice,
     permisoSlice,
     sexoSlice,
     soporteSlice,
@@ -57,6 +58,7 @@ export const store = configureStore({
         actividad: actividadSlice.reducer,
         permiso: permisoSlice.reducer,
         uiPermiso: uiPermisoSlice.reducer,
+        marcacion: marcacionSlice.reducer,
         uiActividad: uiActividadSlice.reducer,
         dashGerencia: dashGerenciaSlice.reducer,
         storageField: storageFieldsSlice.reducer

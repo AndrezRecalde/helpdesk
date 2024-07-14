@@ -9,6 +9,7 @@ import {
     IconPencilPlus,
     IconDeviceImac,
     IconLicense,
+    IconFingerprintScan,
 } from "@tabler/icons-react";
 import { useNavigate } from "react-router-dom";
 import classes from "../../../assets/styles/modules/menu/MenuGrid.module.css";
@@ -18,6 +19,7 @@ const mockdata = [
     { title: "Agregar actividades", icon: IconPencilPlus, color: "violet", link: "/gad/d/agregar-actividad" },
     { title: "Solicitar Soporte",   icon: IconDeviceImac, color: "teal", link: "/gad/d/solicitud" },
     { title: "Solicitar Permiso",   icon: IconLicense, color: "blue", link: "/gad/d/permiso" },
+    { title: "Revisar Marcaciones",   icon: IconFingerprintScan, color: "indigo", link: "/gad/d/permiso" },
 ];
 
 export const MenuSeleccion = () => {
@@ -36,7 +38,7 @@ export const MenuSeleccion = () => {
     return (
         <Card radius="md" className={classes.card}>
             <Text className={classes.title}>Servicios</Text>
-            <SimpleGrid cols={3} mt="md">
+            <SimpleGrid cols={2} mt="md">
                 {items}
             </SimpleGrid>
         </Card>

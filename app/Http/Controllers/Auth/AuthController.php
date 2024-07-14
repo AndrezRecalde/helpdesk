@@ -15,7 +15,7 @@ class AuthController extends Controller
     {
         try {
             $user = User::from('usrios_sstma as u')
-                ->selectRaw('u.cdgo_usrio, u.lgin, u.nmbre_usrio, u.usu_alias, u.email, u.crgo_id,
+                ->selectRaw('u.cdgo_usrio, u.lgin, u.nmbre_usrio, u.asi_id_reloj, u.usu_alias, u.email, u.crgo_id,
                             d.cdgo_dprtmnto, d.nmbre_dprtmnto as direccion, d.cdgo_lrgo, d.id_empresa,
                             CAST((IFNULL(r.id, 3)) AS UNSIGNED) as role_id,
                             CAST((IFNULL(r.name, "USUARIO")) AS NCHAR) as role')
@@ -46,7 +46,7 @@ class AuthController extends Controller
     {
         $authUserId = Auth::id();
         $user = User::from('usrios_sstma as u')
-            ->selectRaw('u.cdgo_usrio, u.lgin, u.nmbre_usrio, u.usu_alias, u.email, u.crgo_id,
+            ->selectRaw('u.cdgo_usrio, u.lgin, u.nmbre_usrio, u.asi_id_reloj, u.usu_alias, u.email, u.crgo_id,
                         d.cdgo_dprtmnto, d.nmbre_dprtmnto as direccion, d.cdgo_lrgo, d.id_empresa,
                         CAST((IFNULL(r.id, 3)) AS UNSIGNED) as role_id,
                         CAST((IFNULL(r.name, "USUARIO")) AS NCHAR) as role')
@@ -74,7 +74,7 @@ class AuthController extends Controller
     function profile(): JsonResponse
     {
         $profile = User::from('usrios_sstma as u')
-            ->selectRaw('u.cdgo_usrio, u.lgin, u.nmbre_usrio, u.usu_alias, u.email,
+            ->selectRaw('u.cdgo_usrio, u.lgin, u.nmbre_usrio, u.asi_id_reloj, u.usu_alias, u.email,
                     d.cdgo_dprtmnto, d.nmbre_dprtmnto as direccion, d.cdgo_lrgo,
                     ne.nom_empresa as empresa, nc.nom_cargo as cargo,
                     CAST((IFNULL(r.id, 3)) AS UNSIGNED) as role_id,
