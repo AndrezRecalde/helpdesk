@@ -4,13 +4,15 @@ namespace App\Http\Controllers\Gerente;
 
 use App\Enums\MsgStatus;
 use App\Http\Controllers\Controller;
+use App\Mail\SoporteTecnicoMail;
 use App\Mail\SoporteUsuarioMail;
+use App\Mail\TecnicoMail;
+use App\Mail\UsuarioMail;
 use Illuminate\Http\Request;
 use App\Http\Requests\AnularSoporteRequest;
 use App\Http\Requests\SolicitudAdminRequest;
 use App\Http\Requests\SoporteAsignarcionRequest;
 use App\Http\Requests\SoporteRequest;
-use App\Mail\SoporteTecnicoMail;
 use App\Models\Soporte;
 use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -41,7 +43,7 @@ class SoporteAdminController extends Controller
 
                 $usuario = User::where("cdgo_usrio", $request->id_usu_recibe)->first(['cdgo_usrio', 'email']);
 
-                $soporte_asignado = Soporte::from('sop_soporte as ss')
+                $asignacion = Soporte::from('sop_soporte as ss')
                     ->selectRaw('ss.id_sop, ss.numero_sop,
                                 ss.id_direccion, d.nmbre_dprtmnto as direccion,
                                 ss.id_usu_tecnico_asig, u.nmbre_usrio as tecnico,
@@ -54,10 +56,10 @@ class SoporteAdminController extends Controller
                     ->first();
 
                 /** Mail para el técnico */
-                Mail::to($tecnico->email)->send(new SoporteTecnicoMail($soporte_asignado));
+                Mail::to($tecnico->email)->send(new TecnicoMail($asignacion));
 
                 /** Mail para el usuario */
-                Mail::to($usuario->email)->send(new SoporteUsuarioMail($soporte_asignado));
+                Mail::to($usuario->email)->send(new UsuarioMail($asignacion));
 
                 return response()->json(['status' => MsgStatus::Success, 'msg' => MsgStatus::SoporteAsignado], 200);
             } else {
@@ -116,9 +118,7 @@ class SoporteAdminController extends Controller
         try {
             $soporte = Soporte::create($request->validated());
 
-            if ($request->id_usu_tecnico_asig) {
-
-                $soporte_asignado = Soporte::from('sop_soporte as ss')
+            $asignacion = Soporte::from('sop_soporte as ss')
                     ->selectRaw('ss.id_sop, ss.numero_sop,
                                 ss.id_direccion, d.nmbre_dprtmnto as direccion,
                                 ss.id_usu_tecnico_asig, u.nmbre_usrio as tecnico,
@@ -130,18 +130,20 @@ class SoporteAdminController extends Controller
                     ->where('ss.id_sop', $soporte->id_sop)
                     ->first();
 
-                $soporte->id_estado = 5;
-                $soporte->save();
+            if ($request->id_usu_tecnico_asig) {
 
                 $usuario = User::where("cdgo_usrio", $request->id_usu_recibe)->first(['cdgo_usrio', 'email']);
                 $tecnico = User::where("cdgo_usrio", $request->id_usu_tecnico_asig)
                     ->first(['cdgo_usrio', 'email']);
 
                 /* MAIL PARA EL TÉCNICO */
-                Mail::to($tecnico->email)->send(new SoporteTecnicoMail($soporte_asignado));
+                Mail::to($tecnico->email)->send(new TecnicoMail($asignacion));
 
                 /* MAIL PARA EL USUARIO */
-                Mail::to($usuario->email)->send(new SoporteUsuarioMail($soporte_asignado));
+                Mail::to($usuario->email)->send(new UsuarioMail($asignacion));
+
+                $soporte->id_estado = 5;
+                $soporte->save();
             } else {
                 $soporte->id_estado = 1;
                 $soporte->save();
@@ -150,7 +152,8 @@ class SoporteAdminController extends Controller
             return response()->json(
                 [
                     'status' => MsgStatus::Success,
-                    'msg'    => MsgStatus::SoporteCreatedSuccess
+                    'msg'    => MsgStatus::SoporteCreatedSuccess,
+                    'asignacion' => $asignacion
                 ],
                 200
             );

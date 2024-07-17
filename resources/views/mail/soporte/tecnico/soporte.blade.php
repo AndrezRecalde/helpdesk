@@ -1,16 +1,16 @@
 <x-mail::message>
 # Nueva Solicitud
 ### Asistencia Técnica
-### Número de soporte: {{ $soporte_asignado }}
+### Número de soporte: {{ $asignacion['numero_sop'] }}
 
-Buen día, estimado ingeniero/a {{ $soporte_asignado['tecnico'] }}, se solicita de su ayuda con: <br>
+Buen día, estimado ingeniero/a {{ $asignacion['tecnico'] }}, se solicita de su ayuda con: <br>
 
-El funcionario: {{ $soporte_asignado['solicitante'] }} <br>
-Con correo: {{ $soporte_asignado['email'] }}<br>
-del departamento: {{ $soporte_asignado['direccion'] }}
+El funcionario: {{ $asignacion['solicitante'] }} <br>
+Con correo: {{ $asignacion['email'] }}<br>
+del departamento: {{ $asignacion['direccion'] }}
 
 ### Descripción del problema: <br>
-{{ $soporte_asignado['incidente'] }}
+{{ $asignacion['incidente'] }}
 
 <br><br>
 Por favor para más información contactese con el funcionario solicitante.

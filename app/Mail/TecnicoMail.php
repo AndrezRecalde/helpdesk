@@ -9,18 +9,19 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class SoporteTecnicoMail extends Mailable implements ShouldQueue
+class TecnicoMail extends Mailable
 {
     use Queueable, SerializesModels;
-
-    public $soporte_asignado;
 
     /**
      * Create a new message instance.
      */
-    public function __construct($soporte_asignado)
+
+     public $asignacion;
+
+    public function __construct($asignacion)
     {
-        $this->soporte_asignado = $soporte_asignado;
+        $this->asignacion = $asignacion;
     }
 
     /**
@@ -29,7 +30,7 @@ class SoporteTecnicoMail extends Mailable implements ShouldQueue
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'SE LE HA ASIGNADO UN SOPORTE',
+            subject: 'Tecnico Mail',
         );
     }
 
