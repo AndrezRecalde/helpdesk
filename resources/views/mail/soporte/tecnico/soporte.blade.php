@@ -1,7 +1,7 @@
 <x-mail::message>
 # Nueva Solicitud
 ### Asistencia Técnica
-### Número de soporte: {{ $soporte['numero_sop'] }}
+### Número de soporte: {{ $soporte }}
 
 Buen día, estimado ingeniero/a {{ $soporte['tecnico'] }}, se solicita de su ayuda con: <br>
 
