@@ -3,14 +3,14 @@
 ### Asistencia Técnica
 ### Número de soporte: {{ $soporte->numero_sop }}
 
-Buen día, estimado ingeniero/a {{ $soporte['tecnico'] }}, se solicita de su ayuda con: <br>
+Buen día, estimado ingeniero/a {{ $soporte->tecnico }}, se solicita de su ayuda con: <br>
 
-El funcionario: {{ $soporte['solicitante'] }} <br>
-Con correo: {{ $soporte['email'] }}<br>
-del departamento: {{ $soporte['direccion'] }}
+El funcionario: {{ $soporte->solicitante }} <br>
+Con correo: {{ $soporte->email }}<br>
+del departamento: {{ $soporte->direccion }}
 
 ### Descripción del problema: <br>
-{{ $soporte['incidente'] }}
+{{ $soporte->incidente }}
 
 <br><br>
 Por favor para más información contactese con el funcionario solicitante.
