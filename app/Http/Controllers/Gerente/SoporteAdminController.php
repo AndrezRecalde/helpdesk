@@ -54,10 +54,10 @@ class SoporteAdminController extends Controller
                     ->first();
 
                 /** Mail para el técnico */
-                Mail::to($tecnico->email)->send(new SoporteTecnicoMail($soporte_asignado));
+                /* Mail::to($tecnico->email)->send(new SoporteTecnicoMail($soporte_asignado)); */
 
                 /** Mail para el usuario */
-                Mail::to($usuario->email)->send(new SoporteUsuarioMail($soporte_asignado));
+               /*  Mail::to($usuario->email)->send(new SoporteUsuarioMail($soporte_asignado)); */
 
                 return response()->json(['status' => MsgStatus::Success, 'msg' => MsgStatus::SoporteAsignado], 200);
             } else {
@@ -116,31 +116,32 @@ class SoporteAdminController extends Controller
         try {
             $soporte = Soporte::create($request->validated());
 
-            $soporte_asignado = Soporte::from('sop_soporte as ss')
-                ->selectRaw('ss.id_sop, ss.numero_sop,
+            if ($request->id_usu_tecnico_asig) {
+
+                $soporte_asignado = Soporte::from('sop_soporte as ss')
+                    ->selectRaw('ss.id_sop, ss.numero_sop,
                                 ss.id_direccion, d.nmbre_dprtmnto as direccion,
                                 ss.id_usu_tecnico_asig, u.nmbre_usrio as tecnico,
                                 ss.id_usu_recibe, us.nmbre_usrio as solicitante, us.email,
                                 ss.incidente, ss.fecha_ini')
-                ->join('dprtmntos as d', 'd.cdgo_dprtmnto', 'ss.id_direccion')
-                ->join('usrios_sstma as u', 'u.cdgo_usrio', 'ss.id_usu_tecnico_asig')
-                ->join('usrios_sstma as us', 'us.cdgo_usrio', 'ss.id_usu_recibe')
-                ->where('ss.id_sop', $soporte->id_sop)
-                ->first();
+                    ->join('dprtmntos as d', 'd.cdgo_dprtmnto', 'ss.id_direccion')
+                    ->join('usrios_sstma as u', 'u.cdgo_usrio', 'ss.id_usu_tecnico_asig')
+                    ->join('usrios_sstma as us', 'us.cdgo_usrio', 'ss.id_usu_recibe')
+                    ->where('ss.id_sop', $soporte->id_sop)
+                    ->first();
 
-            $usuario = User::where("cdgo_usrio", $request->id_usu_recibe)->first(['cdgo_usrio', 'email']);
-
-            if ($request->id_usu_tecnico_asig) {
                 $soporte->id_estado = 5;
                 $soporte->save();
+
+                $usuario = User::where("cdgo_usrio", $request->id_usu_recibe)->first(['cdgo_usrio', 'email']);
                 $tecnico = User::where("cdgo_usrio", $request->id_usu_tecnico_asig)
                     ->first(['cdgo_usrio', 'email']);
 
                 /* MAIL PARA EL TÉCNICO */
-                Mail::to($tecnico->email)->send(new SoporteTecnicoMail($soporte_asignado));
+                /* Mail::to($tecnico->email)->send(new SoporteTecnicoMail($soporte_asignado)); */
 
                 /* MAIL PARA EL USUARIO */
-                Mail::to($usuario->email)->send(new SoporteUsuarioMail($soporte_asignado));
+                /* Mail::to($usuario->email)->send(new SoporteUsuarioMail($soporte_asignado)); */
             } else {
                 $soporte->id_estado = 1;
                 $soporte->save();
