@@ -23,7 +23,7 @@ class SoporteAdminController extends Controller
 {
 
     //SE ENVÍA AL CORREO AL TECNICO
-    //Mail::to($tecnico->email)->queue(new SoporteMail($request));
+    //Mail::to($tecnico->email)->send(new SoporteMail($request));
 
     function asignarSoporte(SoporteAsignarcionRequest $request, int $id_sop): JsonResponse
     {
@@ -54,10 +54,10 @@ class SoporteAdminController extends Controller
                     ->first();
 
                 /** Mail para el técnico */
-                Mail::to($tecnico->email)->queue(new TecnicoMail($asignacion));
+                Mail::to($tecnico->email)->send(new TecnicoMail($asignacion));
 
                 /** Mail para el usuario */
-                Mail::to($usuario->email)->queue(new UsuarioMail($asignacion));
+                Mail::to($usuario->email)->send(new UsuarioMail($asignacion));
 
                 return response()->json(['status' => MsgStatus::Success, 'msg' => MsgStatus::SoporteAsignado], 200);
             } else {
@@ -135,10 +135,10 @@ class SoporteAdminController extends Controller
                     ->first(['cdgo_usrio', 'email']);
 
                 /* MAIL PARA EL TÉCNICO */
-                Mail::to($tecnico->email)->queue(new TecnicoMail($asignacion));
+                Mail::to($tecnico->email)->send(new TecnicoMail($asignacion));
 
                 /* MAIL PARA EL USUARIO */
-                Mail::to($usuario->email)->queue(new UsuarioMail($asignacion));
+                Mail::to($usuario->email)->send(new UsuarioMail($asignacion));
 
                 $soporte->id_estado = 5;
                 $soporte->save();
