@@ -9,18 +9,18 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class SoporteTecnicoMail extends Mailable
+class SoporteTecnicoMail extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
-    public $soporte_asignado;
+    public $soporte;
 
     /**
      * Create a new message instance.
      */
-    public function __construct($soporte_asignado)
+    public function __construct($soporte)
     {
-        $this->soporte_asignado = $soporte_asignado;
+        $this->soporte = $soporte;
     }
 
     /**
