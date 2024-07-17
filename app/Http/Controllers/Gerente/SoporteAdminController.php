@@ -4,8 +4,6 @@ namespace App\Http\Controllers\Gerente;
 
 use App\Enums\MsgStatus;
 use App\Http\Controllers\Controller;
-use App\Mail\SoporteTecnicoMail;
-use App\Mail\SoporteUsuarioMail;
 use App\Mail\TecnicoMail;
 use App\Mail\UsuarioMail;
 use Illuminate\Http\Request;
@@ -56,10 +54,10 @@ class SoporteAdminController extends Controller
                     ->first();
 
                 /** Mail para el técnico */
-                Mail::to($tecnico->email)->send(new TecnicoMail($asignacion));
+                Mail::to($tecnico->email)->queue(new TecnicoMail($asignacion));
 
                 /** Mail para el usuario */
-                Mail::to($usuario->email)->send(new UsuarioMail($asignacion));
+                Mail::to($usuario->email)->queue(new UsuarioMail($asignacion));
 
                 return response()->json(['status' => MsgStatus::Success, 'msg' => MsgStatus::SoporteAsignado], 200);
             } else {
@@ -118,7 +116,9 @@ class SoporteAdminController extends Controller
         try {
             $soporte = Soporte::create($request->validated());
 
-            $asignacion = Soporte::from('sop_soporte as ss')
+            if ($request->id_usu_tecnico_asig) {
+
+                $asignacion = Soporte::from('sop_soporte as ss')
                     ->selectRaw('ss.id_sop, ss.numero_sop,
                                 ss.id_direccion, d.nmbre_dprtmnto as direccion,
                                 ss.id_usu_tecnico_asig, u.nmbre_usrio as tecnico,
@@ -130,17 +130,15 @@ class SoporteAdminController extends Controller
                     ->where('ss.id_sop', $soporte->id_sop)
                     ->first();
 
-            if ($request->id_usu_tecnico_asig) {
-
                 $usuario = User::where("cdgo_usrio", $request->id_usu_recibe)->first(['cdgo_usrio', 'email']);
                 $tecnico = User::where("cdgo_usrio", $request->id_usu_tecnico_asig)
                     ->first(['cdgo_usrio', 'email']);
 
                 /* MAIL PARA EL TÉCNICO */
-                Mail::to($tecnico->email)->send(new TecnicoMail($asignacion));
+                Mail::to($tecnico->email)->queue(new TecnicoMail($asignacion));
 
                 /* MAIL PARA EL USUARIO */
-                Mail::to($usuario->email)->send(new UsuarioMail($asignacion));
+                Mail::to($usuario->email)->queue(new UsuarioMail($asignacion));
 
                 $soporte->id_estado = 5;
                 $soporte->save();

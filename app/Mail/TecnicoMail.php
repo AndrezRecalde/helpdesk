@@ -9,7 +9,7 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class TecnicoMail extends Mailable
+class TecnicoMail extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
@@ -30,7 +30,7 @@ class TecnicoMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Tecnico Mail',
+            subject: 'SE LE HA ASIGNADO UN SOPORTE',
         );
     }
 
