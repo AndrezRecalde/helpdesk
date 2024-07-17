@@ -6,10 +6,13 @@ use App\Enums\MsgStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ActividadRequest;
 use App\Models\Actividad;
+use App\Models\Soporte;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 
 class ActividadController extends Controller
 {
@@ -41,8 +44,24 @@ class ActividadController extends Controller
     function store(ActividadRequest $request): JsonResponse
     {
         try {
-            Actividad::create($request->validated());
-            return response()->json(['status' => MsgStatus::Success, 'msg' => MsgStatus::ActivityRegistred], 201);
+            $actividad = Actividad::create($request->validated());
+            $user = Auth::user();
+            $role = $user->roles->first();
+
+            if ($role->id == 1 || $role->id == 2) {
+                Soporte::create([
+                    'id_tipo_solicitud' => 7,
+                    'id_direccion' => 22,
+                    'id_usu_recibe' => 701,
+                    'id_tipo_soporte' => '3',
+                    'incidente'   => 'SOLICITUD INTERNA DE LA GESTIÓN/DEPARTAMENTO',
+                    'solucion'    => $actividad->actividad,
+                    'id_area_tic' => 5,
+                    'id_usu_tecnico_asig' => $user->cdgo_usrio
+                ]);
+            }
+
+            return response()->json(['status' => MsgStatus::Success, 'msg' => MsgStatus::ActivityRegistred, 'role' => $role], 201);
         } catch (\Throwable $th) {
             return response()->json(['status' => MsgStatus::Error, 'msg' => $th->getMessage()], 500);
         }

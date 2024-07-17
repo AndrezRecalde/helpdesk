@@ -54,10 +54,10 @@ class SoporteAdminController extends Controller
                     ->first();
 
                 /** Mail para el técnico */
-                /* Mail::to($tecnico->email)->send(new SoporteTecnicoMail($soporte_asignado)); */
+                Mail::to($tecnico->email)->send(new SoporteTecnicoMail($soporte_asignado));
 
                 /** Mail para el usuario */
-               /*  Mail::to($usuario->email)->send(new SoporteUsuarioMail($soporte_asignado)); */
+                Mail::to($usuario->email)->send(new SoporteUsuarioMail($soporte_asignado));
 
                 return response()->json(['status' => MsgStatus::Success, 'msg' => MsgStatus::SoporteAsignado], 200);
             } else {
@@ -138,10 +138,10 @@ class SoporteAdminController extends Controller
                     ->first(['cdgo_usrio', 'email']);
 
                 /* MAIL PARA EL TÉCNICO */
-                /* Mail::to($tecnico->email)->send(new SoporteTecnicoMail($soporte_asignado)); */
+                Mail::to($tecnico->email)->send(new SoporteTecnicoMail($soporte_asignado));
 
                 /* MAIL PARA EL USUARIO */
-                /* Mail::to($usuario->email)->send(new SoporteUsuarioMail($soporte_asignado)); */
+                Mail::to($usuario->email)->send(new SoporteUsuarioMail($soporte_asignado));
             } else {
                 $soporte->id_estado = 1;
                 $soporte->save();

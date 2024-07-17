@@ -85,7 +85,7 @@
                     <td>{{ $soporte->numero_sop }}</td>
                     <td>{{ $soporte->fecha_ini }}</td>
                     <td style="text-align: justify;">{{ $soporte->incidente }}</td>
-                    <td style="text-align: justify;">{{ $soporte->solucion }}</td>
+                    <td style="text-align: justify;">{!! $soporte->solucion !!}</td>
                     <td>{{ $soporte->usuario_recibe }}</td>
                 </tr>
             @endforeach
