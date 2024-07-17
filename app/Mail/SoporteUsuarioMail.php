@@ -13,14 +13,14 @@ class SoporteUsuarioMail extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
-    public $soporte;
+    public $soporte_asignado;
 
     /**
      * Create a new message instance.
      */
-    public function __construct($soporte)
+    public function __construct($soporte_asignado)
     {
-        $this->soporte = $soporte;
+        $this->soporte_asignado = $soporte_asignado;
     }
 
     /**
