@@ -38,7 +38,7 @@ export const MarcacionesPage = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        startLoadMarcaciones(form.values);
+        startLoadMarcaciones(form.getTransformedValues());
         console.log(form.getTransformedValues());
     };
 
