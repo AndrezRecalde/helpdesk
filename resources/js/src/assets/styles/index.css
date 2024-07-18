@@ -179,17 +179,6 @@
     font-style: normal;
 }
 
-@font-face {
-    font-family: 'Greycliff CF Thin Oblique';
-    src: url('../fonts/GreycliffCF/GreycliffCF-ThinOblique.eot');
-    src: local('Greycliff CF Thin Oblique'), local('GreycliffCF-ThinOblique'),
-        url('../fonts/GreycliffCF/GreycliffCF-ThinOblique.eot?#iefix') format('embedded-opentype'),
-        url('../fonts/GreycliffCF/GreycliffCF-ThinOblique.woff2') format('woff2'),
-        url('../fonts/GreycliffCF/GreycliffCF-ThinOblique.woff') format('woff'),
-        url('../fonts/GreycliffCF/GreycliffCF-ThinOblique.ttf') format('truetype');
-    font-weight: 100;
-    font-style: italic;
-}
 
 @font-face {
     font-family: 'Greycliff CF';
@@ -203,14 +192,3 @@
     font-style: normal;
 }
 
-@font-face {
-    font-family: 'Greycliff CF Oblique';
-    src: url('../fonts/GreycliffCF/GreycliffCF-RegularOblique.eot');
-    src: local('Greycliff CF Oblique'), local('GreycliffCF-RegularOblique'),
-        url('../fonts/GreycliffCF/GreycliffCF-RegularOblique.eot?#iefix') format('embedded-opentype'),
-        url('../fonts/GreycliffCF/GreycliffCF-RegularOblique.woff2') format('woff2'),
-        url('../fonts/GreycliffCF/GreycliffCF-RegularOblique.woff') format('woff'),
-        url('../fonts/GreycliffCF/GreycliffCF-RegularOblique.ttf') format('truetype');
-    font-weight: normal;
-    font-style: italic;
-}
