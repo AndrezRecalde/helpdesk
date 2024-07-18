@@ -6,14 +6,13 @@ import {
     TextSection,
 } from "../../../components";
 import { IconDeviceImacUp } from "@tabler/icons-react";
-import { useAuthStore, useTecnicoStore, useUsersStore } from "../../../hooks";
+import { useAuthStore, useTecnicoStore } from "../../../hooks";
 import { Roles } from "../../../layouts/appshell/navbar/navlinks/navLinks";
 
 export const CardProfile = ({ usuario, handleAction }) => {
     const year = new Date();
     const { isLoading, profile } = useAuthStore();
 
-    const { infoSoportes: totalUsersSoportes } = useUsersStore();
     const { infoSoportes: totalTecnicossSoportes } = useTecnicoStore();
 
     const itemsTic = totalTecnicossSoportes?.map((stat, i) => (
@@ -77,97 +76,6 @@ export const CardProfile = ({ usuario, handleAction }) => {
                 </div>
                 <div>
                     <TextSection tt="" ta="center" fz={18} fw={500}>
-                        {stat.total_anulados}
-                    </TextSection>
-                    <TextSection
-                        tt=""
-                        ta="center"
-                        fz={14}
-                        fw={500}
-                        color="dimmed"
-                    >
-                        Total Anulados
-                    </TextSection>
-                </div>
-            </SimpleGrid>
-        </div>
-    ));
-
-    const itemsUser = totalUsersSoportes?.map((stat, i) => (
-        <div key={i}>
-            <SimpleGrid cols={3}>
-                <div>
-                    <TextSection tt="" ta="center" fz={16} fw={500}>
-                        {stat.total_soportes}
-                    </TextSection>
-                    <TextSection
-                        tt=""
-                        ta="center"
-                        fz={14}
-                        fw={500}
-                        color="dimmed"
-                    >
-                        Total Soportes
-                    </TextSection>
-                </div>
-                <div>
-                    <TextSection tt="" ta="center" fz={16} fw={500}>
-                        {stat.total_pendientes}
-                    </TextSection>
-                    <TextSection
-                        tt=""
-                        ta="center"
-                        fz={14}
-                        fw={500}
-                        color="dimmed"
-                    >
-                        Total Pendientes
-                    </TextSection>
-                </div>
-                <div>
-                    <TextSection tt="" ta="center" fz={16} fw={500}>
-                        {stat.total_asignados}
-                    </TextSection>
-                    <TextSection
-                        tt=""
-                        ta="center"
-                        fz={14}
-                        fw={500}
-                        color="dimmed"
-                    >
-                        Total Asignados
-                    </TextSection>
-                </div>
-                <div>
-                    <TextSection tt="" ta="center" fz={16} fw={500}>
-                        {stat.total_atendidos}
-                    </TextSection>
-                    <TextSection
-                        tt=""
-                        ta="center"
-                        fz={14}
-                        fw={500}
-                        color="dimmed"
-                    >
-                        Total Atendidos
-                    </TextSection>
-                </div>
-                <div>
-                    <TextSection tt="" ta="center" fz={16} fw={500}>
-                        {stat.total_finalizados}
-                    </TextSection>
-                    <TextSection
-                        tt=""
-                        ta="center"
-                        fz={14}
-                        fw={500}
-                        color="dimmed"
-                    >
-                        Total Finalizados
-                    </TextSection>
-                </div>
-                <div>
-                    <TextSection tt="" ta="center" fz={16} fw={500}>
                         {stat.total_anulados}
                     </TextSection>
                     <TextSection

@@ -7,6 +7,7 @@ export const FilterFormMarcaciones = ({ form, handleSubmit }) => {
     return (
         <Fieldset
             mt={20}
+            mb={20}
             legend={
                 <TextSection tt="" fw={700} fz={16}>
                     Filtrar marcaciones
@@ -33,7 +34,7 @@ export const FilterFormMarcaciones = ({ form, handleSubmit }) => {
                         {...form.getInputProps("fecha_fin")}
                     />
                 </SimpleGrid>
-                <BtnSubmit IconSection={IconSearch} fontSize={16}>
+                <BtnSubmit IconSection={IconSearch}>
                     Buscar
                 </BtnSubmit>
             </Box>

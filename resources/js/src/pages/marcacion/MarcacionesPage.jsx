@@ -17,7 +17,7 @@ export const MarcacionesPage = () => {
         initialValues: {
             fecha_inicio: "",
             fecha_fin: "",
-            badgenumber: usuario?.asi_id_reloj,
+            badgenumber: usuario.asi_id_reloj,
         },
         validate: {
             fecha_inicio: isNotEmpty("Por favor ingrese fecha inicio"),

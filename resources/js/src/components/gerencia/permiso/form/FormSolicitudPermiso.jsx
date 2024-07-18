@@ -26,7 +26,8 @@ export const FormSolicitudPermiso = ({ form, disabled }) => {
     const ref_2 = useRef(null);
     const { direcciones } = useDireccionStore();
     const { users } = useUsersStore();
-    const { isLoading, message, errores, startAddPermiso, startCardPermiso } = usePermisoStore();
+    const { isLoading, message, errores, startAddPermiso, startCardPermiso } =
+        usePermisoStore();
     const { setStoragePermisoFields } = useStorageField();
 
     const pickerControl_1 = (
@@ -101,11 +102,17 @@ export const FormSolicitudPermiso = ({ form, disabled }) => {
         }).then((result) => {
             if (result.isConfirmed) {
                 startAddPermiso(form.getTransformedValues());
-                form.setFieldValue('fecha', '');
-                form.setFieldValue('hora_1', '');
-                form.setFieldValue('hora_2', '');
-                form.setFieldValue('per_observaciones', '');
-                form.resetDirty(['fecha', 'id_jefe_inmediato', 'hora_1', 'hora_2', 'per_observaciones']);
+                form.setFieldValue("fecha", "");
+                form.setFieldValue("hora_1", "");
+                form.setFieldValue("hora_2", "");
+                form.setFieldValue("per_observaciones", "");
+                form.resetDirty([
+                    "fecha",
+                    "id_jefe_inmediato",
+                    "hora_1",
+                    "hora_2",
+                    "per_observaciones",
+                ]);
             }
         });
     };
@@ -210,9 +217,10 @@ export const FormSolicitudPermiso = ({ form, disabled }) => {
                 <Grid.Col span={{ base: 12, md: 12, lg: 12 }}>
                     <DateInput
                         withAsterisk
-                        //maxDate={dayjs(new Date()).add(1, "month").toDate()}
+                        minDate={dayjs(new Date()).add(-12, "day").toDate()}
+                        maxDate={dayjs(new Date()).add(1, "month").toDate()}
                         valueFormat="YYYY-MM-DD"
-                        label="Fecha de la actividad"
+                        label="Fecha del permiso"
                         placeholder="Registra la fecha"
                         {...form.getInputProps("fecha")}
                     />

@@ -11,6 +11,7 @@ import {
 } from "@mantine/core";
 import {
     IconChevronRight,
+    IconFingerprint,
     IconLogout,
     IconSettings,
     IconUserHexagon,
@@ -18,7 +19,6 @@ import {
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "../../../hooks";
 import classes from "../../../assets/styles/modules/user/UserHeader.module.css";
-
 
 export const UserBtnHeader = () => {
     const theme = useMantineTheme();
@@ -29,17 +29,16 @@ export const UserBtnHeader = () => {
     const [nombres, setNombres] = useState("");
 
     useEffect(() => {
-      if (usuario !== null) {
-        iniciales();
-        return;
-      }
-    }, [])
-
+        if (usuario !== null) {
+            iniciales();
+            return;
+        }
+    }, []);
 
     const iniciales = useCallback(() => {
         let inicial_nombre = usuario?.usu_alias?.split(" ");
-        let nombre = inicial_nombre[0]?.slice(0,1);
-        let apellido = inicial_nombre[1]?.slice(0,1);
+        let nombre = inicial_nombre[0]?.slice(0, 1);
+        let apellido = inicial_nombre[1]?.slice(0, 1);
 
         setNombres(nombre + apellido);
     }, []);
@@ -85,7 +84,7 @@ export const UserBtnHeader = () => {
             </Menu.Target>
             <Menu.Dropdown>
                 <Menu.Item
-                onClick={() => navigate("/u/profile")}
+                    onClick={() => navigate("/u/profile")}
                     leftSection={
                         <IconUserHexagon
                             style={{ width: rem(16), height: rem(16) }}
@@ -97,7 +96,7 @@ export const UserBtnHeader = () => {
                     Ver perfil
                 </Menu.Item>
                 <Menu.Item
-                onClick={() => navigate("/u/change-password")}
+                    onClick={() => navigate("/u/change-password")}
                     leftSection={
                         <IconSettings
                             style={{ width: rem(16), height: rem(16) }}
@@ -107,7 +106,18 @@ export const UserBtnHeader = () => {
                 >
                     Cambiar contraseña
                 </Menu.Item>
-                <Menu.Label>Settings</Menu.Label>
+                <Menu.Item
+                    onClick={() => navigate("/u/ver-marcaciones")}
+                    leftSection={
+                        <IconFingerprint
+                            style={{ width: rem(16), height: rem(16) }}
+                            stroke={1.5}
+                        />
+                    }
+                >
+                    Ver marcaciones
+                </Menu.Item>
+                <Menu.Label>Sesión</Menu.Label>
                 <Menu.Item
                     onClick={startLogout}
                     color="red"

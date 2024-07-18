@@ -74,7 +74,7 @@ export const useAuthStore = () => {
             const { profile } = data;
             dispatch(onLoadProfile(profile));
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };

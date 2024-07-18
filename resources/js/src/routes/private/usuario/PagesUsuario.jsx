@@ -4,13 +4,10 @@ import {
     ActividadPage,
     ListActividadesPage,
     ListPermisosPage,
-    MarcacionesPage,
     PermisosPage,
     SolicitudPage,
     UserSoportesPage,
 } from "../../../pages";
-import { useSoporteStore, useUiSoporte } from "../../../hooks";
-import { useEffect } from "react";
 
 export const PagesUsuario = () => {
     //console.log("pagesUsuario");
@@ -26,8 +23,6 @@ export const PagesUsuario = () => {
             />
             <Route path="/permiso" element={<PermisosPage />} />
             <Route path="/ver-permisos" element={<ListPermisosPage />} />
-            <Route path="/ver-marcaciones" element={<MarcacionesPage />} />
-
         </RoutesNotFound>
     );
 };

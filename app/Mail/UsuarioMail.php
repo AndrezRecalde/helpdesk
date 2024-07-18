@@ -30,7 +30,7 @@ class UsuarioMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'SOLICITUD DE SOPORTE TÉCNICO',
+            subject: 'SOLICITUD DE SOPORTE TECNICO',
         );
     }
 
