@@ -9,11 +9,17 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-
+use GuzzleHttp\Client;
 
 
 class CheckInOutController extends Controller
 {
+    protected $client;
+    public function __construct() {
+        $this->client = new Client([
+            'base_uri' => config('services.api.base_url'),
+        ]);
+    }
     function getMarcacionesForUser(Request $request): JsonResponse
     {
 
@@ -48,7 +54,7 @@ class CheckInOutController extends Controller
 
         } catch (\Exception $e) {
             Log::error('Error al ejecutar el procedimiento almacenado: ' . $e->getMessage());
-            return response()->json(['error' => 'Error al ejecutar el procedimiento almacenado'], 500);
+            return response()->json(['error' => 'Error al ejecutar el procedimiento almacenado' . $e->getMessage()], 500);
         }
     }
 }

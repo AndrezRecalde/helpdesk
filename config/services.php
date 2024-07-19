@@ -14,6 +14,10 @@ return [
     |
     */
 
+    'api' => [
+        'base_url' => env('API_URL', 'http://192.168.124.54'),
+    ],
+
     'mailgun' => [
         'domain' => env('MAILGUN_DOMAIN'),
         'secret' => env('MAILGUN_SECRET'),
