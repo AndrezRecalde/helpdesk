@@ -13,7 +13,7 @@ export const TableMarcaciones = () => {
                 header: "Trabajador",
             },
             {
-                accessorFn: (row) =>  permisos.map(permiso => permiso.STARTSPECDAY ? permiso.STARTSPECDAY : row.CHECKTIME) ,
+                accessorFn: (row) =>  row.CHECKTIME ,
                 header: "Fecha",
             },
             {

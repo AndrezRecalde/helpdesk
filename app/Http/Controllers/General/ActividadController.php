@@ -51,6 +51,9 @@ class ActividadController extends Controller
             if ($role->id == 1 || $role->id == 2) {
                 Soporte::create([
                     'id_tipo_solicitud' => 7,
+                    'fecha_ini' => $actividad->fecha_actividad,
+                    'fecha_fin' => $actividad->fecha_actividad,
+                    'fecha_asig' => $actividad->fecha_actividad,
                     'id_direccion' => 22,
                     'id_usu_recibe' => 701,
                     'id_tipo_soporte' => '3',
