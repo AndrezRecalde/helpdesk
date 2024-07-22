@@ -57,7 +57,7 @@ class ActividadController extends Controller
                     'id_direccion' => 22,
                     'id_usu_recibe' => 701,
                     'id_tipo_soporte' => '3',
-                    'incidente'   => 'SOLICITUD INTERNA DE LA GESTIÓN/DEPARTAMENTO',
+                    'incidente'   => 'SOLICITUD INTERNA DEL ÁREA DE TIC',
                     'solucion'    => $actividad->actividad,
                     'id_area_tic' => 5,
                     'id_usu_tecnico_asig' => $user->cdgo_usrio

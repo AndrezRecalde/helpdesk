@@ -165,7 +165,7 @@ export const SoportesTable = () => {
                             </Table.Td>
                             <Table.Td>
                                 <Text fz="sm">
-                                    {row.original.solucion ?? "Sin solución"}
+                                    <div dangerouslySetInnerHTML={{ __html: row.original.solucion ?? "Sin solución" }} />
                                 </Text>
                                 <Text fz="xs" c="dimmed">
                                     Retrospectiva del técnico
