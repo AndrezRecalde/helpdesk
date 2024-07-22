@@ -48,7 +48,7 @@ class ActividadController extends Controller
             $user = Auth::user();
             $role = $user->roles->first();
 
-            if ($role->id == 1 || $role->id == 2) {
+            if ($role && ($role->id == 1 || $role->id == 2)) {
                 Soporte::create([
                     'id_tipo_solicitud' => 7,
                     'fecha_ini' => $actividad->fecha_actividad,
