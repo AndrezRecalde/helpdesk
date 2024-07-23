@@ -102,8 +102,7 @@ import { ModalActividad } from "./actividad/modal/ModalActividad";
 
 /* Marcaciones */
 import { FilterFormMarcaciones } from "./marcacion/form/FilterFormMarcaciones";
-import { TableMarcaciones } from "./marcacion/table/TableMarcaciones";
-
+import { TableMarcacion } from "./marcacion/table/TableMarcacion";
 
 /* Elementos */
 import { Logo } from "./elements/application/Logo";
@@ -235,7 +234,7 @@ export {
 
     /* Marcaciones */
     FilterFormMarcaciones,
-    TableMarcaciones,
+    TableMarcacion,
 
 
     /* Elements */

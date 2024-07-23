@@ -43,7 +43,7 @@ export const ActividadForm = ({ fecha_inicio, fecha_fin }) => {
             const content = props.editor.getHTML();
             form.setFieldValue("actividad", content);
         },
-        content,
+        content: activateActividad?.actividad ? activateActividad?.actividad : content,
     });
 
     useEffect(() => {

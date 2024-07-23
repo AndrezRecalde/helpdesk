@@ -127,7 +127,7 @@
         </p>
         <p>A continuación, detallo las siguientes actividades realizadas: </p>
         <div class="mt-3 mb-3">
-            <table style="width:100%;">
+            <table class="table table-bordered">
                 <tr>
                     <th><b>FECHA:</b></th>
                     <th><b>ACTIVIDAD</b></th>

@@ -37,7 +37,7 @@ import { ListPermisosPage } from "./permisos/ListPermisosPage";
 import { ListPermisosAdminPage } from "./permisos/ListPermisosAdminPage";
 
 /* Marcaciones */
-import { MarcacionesPage } from "./marcacion/MarcacionesPage";
+import { MarcacionPage } from "./marcacion/MarcacionPage";
 
 
 /* Error */
@@ -74,7 +74,7 @@ export {
     ListPermisosPage,
     ListPermisosAdminPage,
 
-    MarcacionesPage,
+    MarcacionPage,
 
     ErrorNotFound,
     ErrorAccessDenied

@@ -121,7 +121,7 @@ export const ReporteSoportes = () => {
     });
 
     return (
-        <Container size="xl">
+        <Container size="xxl">
             <TitlePage order={2} size="h2">
                 Reporte de soportes
             </TitlePage>

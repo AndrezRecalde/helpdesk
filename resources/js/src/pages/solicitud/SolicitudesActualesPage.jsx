@@ -85,7 +85,7 @@ export const SolicitudesActualesPage = () => {
     };
 
     return (
-        <Container size="xl">
+        <Container size="xxl">
             <Group justify="space-between">
                 <TitlePage order={2} size="h2">
                     Solicitudes Actuales

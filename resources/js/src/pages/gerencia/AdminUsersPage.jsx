@@ -49,7 +49,7 @@ export const AdminUsersPage = () => {
     };
 
     return (
-        <Container size="xl">
+        <Container size="xxl">
             <TitlePage order={2} size="h2">
                 Administrar usuarios
             </TitlePage>

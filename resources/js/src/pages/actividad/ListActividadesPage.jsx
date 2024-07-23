@@ -161,6 +161,7 @@ export const ListActividadesPage = () => {
                 form={form}
                 handleSubmit={handleSubmit}
                 isLoading={isLoading}
+                title="Filtrar por fechas"
             />
             {tableLoad ? <TableContent table={table} /> : null}
             <ModalActividad fecha_inicio={fecha_inicio} fecha_fin={fecha_fin} />

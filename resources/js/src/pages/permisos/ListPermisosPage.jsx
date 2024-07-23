@@ -80,7 +80,7 @@ export const ListPermisosPage = () => {
     };
 
     return (
-        <Container size="md">
+        <Container size="lg">
             <Group justify="space-between">
                 <TitlePage order={2} size="h2">
                     Lista de permisos - {new Date().getFullYear()}

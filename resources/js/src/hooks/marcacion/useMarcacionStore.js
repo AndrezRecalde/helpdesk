@@ -5,34 +5,31 @@ import {
     onLoadErrores,
     onLoading,
     onLoadMarcaciones,
-    onLoadPermisos,
 } from "../../store/marcacion/marcacionSlice";
 import helpdeskApi from "../../api/helpdeskApi";
 
 export const useMarcacionStore = () => {
-    const { isLoading, marcaciones, permisos, activateMarcacion, message, errores } =
+    const { isLoading, marcaciones, activateMarcacion, message, errores } =
         useSelector((state) => state.marcacion);
     const { ExceptionMessageError } = useErrorException(onLoadErrores);
 
     const dispatch = useDispatch();
 
     const startLoadMarcaciones = async ({
-        badgenumber,
+        asi_id_reloj,
         fecha_inicio,
         fecha_fin,
     }) => {
         try {
-            dispatch(onLoading());
-            const { data } = await helpdeskApi.post("/usuario/checkinout", {
-                badgenumber,
+            dispatch(onLoading(true));
+            const { data } = await helpdeskApi.post("/usuario/marcaciones", {
+                asi_id_reloj,
                 fecha_inicio,
                 fecha_fin,
             });
             console.log(data)
-            const { results, results_permisos } = data;
-            dispatch(onLoadMarcaciones(results));
-            dispatch(onLoadPermisos(results_permisos));
-            dispatch(onLoading(false));
+            const { marcaciones } = data;
+            dispatch(onLoadMarcaciones(marcaciones));
         } catch (error) {
             console.log(error);
             ExceptionMessageError(error);
@@ -46,7 +43,6 @@ export const useMarcacionStore = () => {
     return {
         isLoading,
         marcaciones,
-        permisos,
         activateMarcacion,
         message,
         errores,

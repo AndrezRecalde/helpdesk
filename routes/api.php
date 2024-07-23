@@ -7,6 +7,7 @@ use App\Http\Controllers\General\DiagnosticoController;
 use App\Http\Controllers\General\DireccionController;
 use App\Http\Controllers\General\EquipoController;
 use App\Http\Controllers\General\EstadoSoporteController;
+use App\Http\Controllers\General\MarcacionController;
 use App\Http\Controllers\General\SoporteController;
 use App\Http\Controllers\General\UserController;
 use App\Http\Controllers\Gerente\CargoController;
@@ -172,6 +173,7 @@ Route::group(['prefix' => 'usuario', 'middleware' => ['auth:sanctum']], function
 
 
     /* MARCACIONES */
-    Route::post('/checkinout', [CheckInOutController::class, 'getMarcacionesForUser']);
+    Route::post('/marcaciones', [MarcacionController::class, 'getMarcaciones']);
+
 
 });

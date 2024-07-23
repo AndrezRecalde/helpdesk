@@ -48,7 +48,7 @@ export const AdminDireccionesPage = () => {
     }, [errores]);
 
     return (
-        <Container size="xl">
+        <Container size="xxl">
             <TitlePage order={2} size="h2">
                 Administrar Direcciones
             </TitlePage>

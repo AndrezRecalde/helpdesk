@@ -8,7 +8,7 @@ import {
     Text,
     TextInput,
 } from "@mantine/core";
-import { BtnSubmit } from "../../..";
+import { BtnSubmit, TextSection } from "../../..";
 import { DateInput, YearPickerInput } from "@mantine/dates";
 import { IconSearch } from "@tabler/icons-react";
 import {
@@ -20,7 +20,7 @@ import {
 
 export const FilterFormSoportes = ({ form }) => {
     const usuario = JSON.parse(localStorage.getItem("service_user"));
-    const { startSearchSoporte } = useSoporteStore();
+    const { isLoading, startSearchSoporte } = useSoporteStore();
     const { direcciones } = useDireccionStore();
     const { estados } = useEstadoStore();
     const { setStorageFields } = useStorageField();
@@ -49,7 +49,7 @@ export const FilterFormSoportes = ({ form }) => {
     };
 
     return (
-        <Fieldset mt={20} legend={<Text>Filtrar Soportes</Text>}>
+        <Fieldset mt={20} legend={<TextSection tt="" fz={16} fw={700}>Filtrar Soportes</TextSection>}>
             <Box
                 component="form"
                 onSubmit={form.onSubmit((_, e) => handleSubmit(e))}
@@ -117,7 +117,7 @@ export const FilterFormSoportes = ({ form }) => {
                     />
                 </SimpleGrid>
 
-                <BtnSubmit IconSection={IconSearch} fontSize={16}>
+                <BtnSubmit IconSection={IconSearch} loading={isLoading}>
                     Buscar
                 </BtnSubmit>
             </Box>
