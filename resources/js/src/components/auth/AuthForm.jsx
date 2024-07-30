@@ -22,6 +22,10 @@ export const AuthForm = () => {
             paswrd: "",
             remember: true,
         },
+        transformValues: (values) => ({
+            ...values,
+            lgin: values.lgin.toLowerCase()
+        })
     });
 
     useEffect(() => {
@@ -38,7 +42,7 @@ export const AuthForm = () => {
     const handleLogin = (e) => {
         e.preventDefault();
         //startLogin(form.values);
-        startLogin(form.values);
+        startLogin(form.getTransformedValues());
         //navigate("/u/profile", { replace: true })
     };
 

@@ -15,7 +15,7 @@ export const FilterFormDirecciones = () => {
             cdgo_dprtmnto: null,
         },
         transformValues: (values) => ({
-            cdgo_dprtmnto: Number(values.cdgo_direccion) || null
+            cdgo_dprtmnto: Number(values.cdgo_direccion)
         })
     })
 
@@ -29,7 +29,7 @@ export const FilterFormDirecciones = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        startLoadDirectores(form.values);
+        startLoadDirectores(form.getTransformedValues());
     }
 
     return (

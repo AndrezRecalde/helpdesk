@@ -27,11 +27,11 @@ export const useMarcacionStore = () => {
                 fecha_inicio,
                 fecha_fin,
             });
-            console.log(data)
+            //console.log(data)
             const { marcaciones } = data;
             dispatch(onLoadMarcaciones(marcaciones));
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };
