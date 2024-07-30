@@ -34,6 +34,10 @@ export const ReporteSoportes = () => {
             fecha_inicio: isNotEmpty("Por favor ingrese fecha inicio"),
             fecha_fin: isNotEmpty("Por favor ingrese fecha fin"),
         },
+        transformValues: (values) => ({
+            fecha_inicio: dayjs(values.fecha_inicio) || "",
+            fecha_fin: dayjs(values.fecha_fin).add(1, "day") || "",
+        })
     });
 
     const { fecha_inicio, fecha_fin } = form.values;
@@ -53,7 +57,7 @@ export const ReporteSoportes = () => {
                 header: "Actividad realizada",
             },
             {
-                accessorKey: "solucion", //normal accessorKey
+                accessorFn: (row) => <div dangerouslySetInnerHTML={{ __html: row.solucion }} />,
                 header: "Solucion de la actividad",
             },
             {
