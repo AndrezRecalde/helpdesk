@@ -39,7 +39,6 @@ export const ActividadPage = () => {
             <TitlePage order={2} size="h2">
                 Registrar actividad
             </TitlePage>
-
             <Card withBorder shadow="sm" radius="md" mt="md">
                 <Card.Section withBorder inheritPadding py="xs">
                     <ActividadForm />

@@ -22,6 +22,7 @@ export const ModalActividad = ({ fecha_inicio, fecha_fin }) => {
                 backgroundOpacity: 0.55,
                 blur: 3,
             }}
+            size="lg"
         >
             <ActividadForm fecha_inicio={fecha_inicio} fecha_fin={fecha_fin} />
         </Modal>

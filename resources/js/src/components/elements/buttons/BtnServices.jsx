@@ -1,9 +1,11 @@
-import { ActionIcon, Button, Menu, Tooltip, rem, useMantineTheme } from "@mantine/core";
+import { ActionIcon, Button, Group, Menu, Tooltip, rem, useMantineTheme } from "@mantine/core";
 import {
     IconBuildingBank,
+    IconCategory,
     IconChevronDown,
     IconDeviceDesktopExclamation,
     IconDeviceImacUp,
+    IconMailFast,
     IconMessageUp,
     IconSettings,
     IconUserSearch,
@@ -253,5 +255,34 @@ export const BtnAdministracion = ({ theme, linkNavigate }) => {
                     </Menu.Item>
                 </Menu.Dropdown>
             </Menu>
+    );
+};
+
+export const BtnServicesApps = () => {
+    return (
+        <Group grow mt="md">
+            <Button
+                leftSection={<IconMailFast size={16} color="orange" />}
+                radius="md"
+                variant="light"
+                component="a"
+                href="https://www.gadpe.gob.ec/webmail"
+                target="_blank"
+                color="orange"
+            >
+                Webmail
+            </Button>
+            <Button
+                leftSection={<IconCategory size={16} color="teal" />}
+                radius="md"
+                variant="light"
+                component="a"
+                href="http://186.46.193.22:8080/intranet"
+                target="_blank"
+                color="teal"
+            >
+                Intranet
+            </Button>
+        </Group>
     );
 };

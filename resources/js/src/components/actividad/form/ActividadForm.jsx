@@ -30,7 +30,7 @@ export const ActividadForm = ({ fecha_inicio, fecha_fin }) => {
             ),
         },
     });
-    let content = "";
+    let content = '';
     const editor = useEditor({
         extensions: [
             StarterKit,
@@ -99,7 +99,7 @@ export const ActividadForm = ({ fecha_inicio, fecha_fin }) => {
                 </Grid.Col>
             </Grid>
             <BtnSubmit radius="md" IconSection={IconDatabase}>
-                Registrar actividad
+                Guardar actividad
             </BtnSubmit>
         </Box>
     );

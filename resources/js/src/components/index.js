@@ -114,7 +114,8 @@ import {
     BtnSection,
     BtnAddActions,
     BtnSolicitarSoporte,
-    BtnAdministracion
+    BtnAdministracion,
+    BtnServicesApps
 } from "./elements/buttons/BtnServices";
 import { BtnDarkMode, ActionReportPDF, BtnSearchMenu } from "./elements/buttons/BtnActions";
 import { InformationActividadList } from "./elements/lists/InformationActividadList";
@@ -247,6 +248,7 @@ export {
     BtnAddActions,
     BtnSolicitarSoporte,
     BtnAdministracion,
+    BtnServicesApps,
     BtnDarkMode,
     ActionReportPDF,
     BtnSearchMenu,

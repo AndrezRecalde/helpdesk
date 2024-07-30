@@ -55,7 +55,7 @@ export const BtnDarkMode = ({ classes }) => {
 export const ActionReportPDF = ({ handleExportDataPDF }) => (
     <ActionIcon
         size={40}
-        variant="subtle"
+        variant="filled"
         color="red.7"
         aria-label="Exportacion pdf"
         onClick={handleExportDataPDF}

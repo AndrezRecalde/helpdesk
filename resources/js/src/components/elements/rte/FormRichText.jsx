@@ -1,9 +1,10 @@
 import { Input } from "@mantine/core";
 import { RichTextEditor } from "@mantine/tiptap";
+import classes from "../../../assets/styles/modules/solicitud/Richtext.module.css";
 
 export const FormRichText = ({ form, nameInput, editor }) => {
     return (
-        <Input.Wrapper {...form.getInputProps(nameInput)}>
+        <Input.Wrapper {...form.getInputProps(nameInput)} >
             <RichTextEditor editor={editor}>
                 <RichTextEditor.Toolbar sticky stickyOffset={60}>
                     <RichTextEditor.ControlsGroup>
@@ -47,7 +48,7 @@ export const FormRichText = ({ form, nameInput, editor }) => {
                         <RichTextEditor.Redo />
                     </RichTextEditor.ControlsGroup>
                 </RichTextEditor.Toolbar>
-                <RichTextEditor.Content />
+                <RichTextEditor.Content className={classes.rich} />
             </RichTextEditor>
         </Input.Wrapper>
     );

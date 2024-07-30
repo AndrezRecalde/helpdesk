@@ -24,6 +24,6 @@
 
 .title {
     margin-top: auto;
-    font-family: Greycliff CF, var(--mantine-font-family);
+    font-family: var(--mantine-font-family);
     font-weight: 900;
 }

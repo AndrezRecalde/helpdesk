@@ -3,7 +3,7 @@ import { Paper, Text, Textarea, Group, Container, Box, Title } from "@mantine/co
 import { hasLength, useForm } from "@mantine/form";
 import { BtnSubmit, ContactIconsList, ModalAnularSoporte, ModalCierreSoportes } from "../../components";
 import { useSoporteStore, useTitlePage, useUiSoporte } from "../../hooks";
-import { IconSend } from "@tabler/icons-react";
+import { IconBrandTelegram } from "@tabler/icons-react";
 import { onLoadSoportes } from "../../store/soporte/soporteSlice";
 
 import bg from "../../assets/images/bg.svg";
@@ -127,7 +127,7 @@ export const SolicitudPage = () => {
                             />
 
                             <Group justify="center" mt="md">
-                                <BtnSubmit loading={isLoading} fontSize={14} IconSection={IconSend}>
+                                <BtnSubmit loading={isLoading} fontSize={16} IconSection={IconBrandTelegram}>
                                     Solicitar soporte
                                 </BtnSubmit>
                             </Group>

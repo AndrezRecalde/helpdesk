@@ -34,7 +34,7 @@ export const FilterFormSearchDates = ({
                     />
                 </SimpleGrid>
 
-                <BtnSubmit IconSection={IconSearch} fontSize={16} loading={isLoading}>
+                <BtnSubmit IconSection={IconSearch} fontSize={18} loading={isLoading}>
                     Buscar
                 </BtnSubmit>
             </Box>

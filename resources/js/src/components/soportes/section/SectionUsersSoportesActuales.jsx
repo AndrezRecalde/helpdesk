@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Card, Container } from "@mantine/core";
+import { Container } from "@mantine/core";
 import {
     AlertSection,
     SoportesUsersTable,
@@ -38,11 +38,7 @@ export const SectionUsersSoportesActuales = ({ tabValue }) => {
             >
                 Se visualizan el seguimiento de los soportes del día actual
             </AlertSection>
-            <Card withBorder shadow="sm" radius="md" mt={20} mb={20}>
-                <Card.Section>
-                    <SoportesUsersTable />
-                </Card.Section>
-            </Card>
+            <SoportesUsersTable />
         </Container>
     );
 };

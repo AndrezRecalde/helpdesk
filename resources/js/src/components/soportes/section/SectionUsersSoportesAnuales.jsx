@@ -1,12 +1,17 @@
 import { useEffect } from "react";
-import { Card, Container } from "@mantine/core";
-import { AlertSection, SoportesUsersTable, TitlePage } from "../../../components";
+import { Container } from "@mantine/core";
+import {
+    AlertSection,
+    SoportesUsersTable,
+    TitlePage,
+} from "../../../components";
 import { useSoporteStore } from "../../../hooks";
 import { IconInfoCircle } from "@tabler/icons-react";
 
 export const SectionUsersSoportesAnuales = ({ tabValue }) => {
     const usuario = JSON.parse(localStorage.getItem("service_user"));
-    const { startLoadSoportesAnualesUsuarios, clearSoportes } = useSoporteStore();
+    const { startLoadSoportesAnualesUsuarios, clearSoportes } =
+        useSoporteStore();
 
     useEffect(() => {
         if (tabValue === "anuales") {
@@ -14,9 +19,9 @@ export const SectionUsersSoportesAnuales = ({ tabValue }) => {
             return;
         }
 
-      return () => {
-        clearSoportes();
-      }
+        return () => {
+            clearSoportes();
+        };
     }, [tabValue]);
     return (
         <Container size="xl" my={20}>
@@ -30,13 +35,10 @@ export const SectionUsersSoportesAnuales = ({ tabValue }) => {
                 title=""
                 icon={IconInfoCircle}
             >
-                Se visualizan el seguimiento de los soportes de todo el año actual
+                Se visualizan el seguimiento de los soportes de todo el año
+                actual
             </AlertSection>
-            <Card withBorder shadow="sm" radius="md" mt={20} mb={20}>
-                <Card.Section>
-                    <SoportesUsersTable />
-                </Card.Section>
-            </Card>
+            <SoportesUsersTable />
         </Container>
     );
 };

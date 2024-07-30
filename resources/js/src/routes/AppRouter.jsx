@@ -38,7 +38,7 @@ export const AppRouter = () => {
                 <Route
                     path="/gerencia/*"
                     element={
-                        <PrivateRoutes role={Roles.GERENTE}>
+                        <PrivateRoutes requiredRole={Roles.GERENTE}>
                             <PagesGerente />
                         </PrivateRoutes>
                     }
@@ -47,7 +47,7 @@ export const AppRouter = () => {
                 <Route
                     path="/tecnico/*"
                     element={
-                        <PrivateRoutes role={Roles.TECNICO}>
+                        <PrivateRoutes requiredRole={Roles.TECNICO}>
                             <PagesTecnico />
                         </PrivateRoutes>
                     }
@@ -56,7 +56,7 @@ export const AppRouter = () => {
                 <Route
                     path="/gad/d/*"
                     element={
-                        <PrivateRoutes role={Roles.USUARIO}>
+                        <PrivateRoutes requiredRole={Roles.USUARIO}>
                             <PagesUsuario />
                         </PrivateRoutes>
                     }

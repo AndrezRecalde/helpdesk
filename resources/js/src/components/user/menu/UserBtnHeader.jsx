@@ -24,23 +24,20 @@ export const UserBtnHeader = () => {
     const theme = useMantineTheme();
     const { startLogout } = useAuthStore();
     const navigate = useNavigate();
-    const usuario = JSON.parse(localStorage.getItem("service_user"));
     const [userMenuOpened, setUserMenuOpened] = useState(false);
     const [nombres, setNombres] = useState("");
 
+    const usuario = JSON.parse(localStorage.getItem("service_user"));
+
     useEffect(() => {
-        if (usuario !== null) {
-            iniciales();
-            return;
+        if (usuario) {
+            setNombres(getInitials(usuario.usu_alias));
         }
-    }, []);
+    }, [usuario]);
 
-    const iniciales = useCallback(() => {
-        let inicial_nombre = usuario?.usu_alias?.split(" ");
-        let nombre = inicial_nombre[0]?.slice(0, 1);
-        let apellido = inicial_nombre[1]?.slice(0, 1);
-
-        setNombres(nombre + apellido);
+    const getInitials = useCallback((alias) => {
+        const [firstName, lastName] = alias?.split(" ") || [];
+        return `${firstName?.[0] || ""}${lastName?.[0] || ""}`;
     }, []);
 
     return (
@@ -58,15 +55,15 @@ export const UserBtnHeader = () => {
                     className={cx(classes.user, {
                         [classes.userActive]: userMenuOpened,
                     })}
+                    aria-hidden={false}
                 >
                     <Group gap={7}>
                         <Avatar
-                            alt="{usuario.apellidos}"
+                            alt={nombres}
                             radius="xl"
                             color="teal.7"
-                        >
-                            {nombres}
-                        </Avatar>
+                            name={nombres}
+                        />
                         <div style={{ flex: 1 }}>
                             <Text fw={500} size="sm">
                                 {usuario?.usu_alias}
