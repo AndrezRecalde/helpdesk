@@ -105,7 +105,12 @@
                     <td width="80px"><b>PARA:</b></td>
                     <td>
                         {{ $actividades[0]->director }}
-                        <sub><i>{{ $actividades[0]->cargo_director . ' DE ' . $actividades[0]->departamento }}</i></sub>
+
+                        @if (strcasecmp($actividades[0]->cargo_director, 'PREFECTO/A' === 0))
+                            <sub><i> {{ $actividades[0]->cargo_director . ' PROVINCIAL' }}</i></sub>
+                        @else
+                            <sub><i>{{ $actividades[0]->cargo_director . ' DE ' . $actividades[0]->departamento }}</i></sub>
+                        @endif
                     </td>
 
                 </tr>
@@ -134,8 +139,8 @@
                 </tr>
                 @foreach ($actividades as $actividad)
                     <tr>
-                        <td width="150px">{{ $actividad->current_fecha }}</td>
-                        <td style="text-align: justify;">{!! $actividad->actividad !!}</td>
+                        <td width="150px" style="font-size: 11px">{{ $actividad->current_fecha }}</td>
+                        <td style="text-align: justify; font-size: 11px;">{!! $actividad->actividad !!}</td>
                     </tr>
                 @endforeach
             </table>
@@ -146,10 +151,10 @@
         <table>
             <tr>
                 <td class="firma">
-                    <p class="mb-5" style="font-size: 12px">Generado por:</p>
+                    <p class="mb-5" style="font-size: 11px">Generado por:</p>
                 </td>
                 <td class="firma">
-                    <p class="mb-5" style="font-size: 12px">Aprobado por:</p>
+                    <p class="mb-5" style="font-size: 11px">Aprobado por:</p>
                 </td>
             </tr>
             <tr>
@@ -162,14 +167,14 @@
             </tr>
             <tr>
                 <td>
-                    <p style="font-size: 14px">{{ $actividades[0]->usuario }}</p>
-                    <p style="font-size: 14px; margin-top: 5px">{{ $actividades[0]->cargo_usuario }}</p>
+                    <p style="font-size: 12px">{{ $actividades[0]->usuario }}</p>
+                    <p style="font-size: 12px; margin-top: 5px">{{ $actividades[0]->cargo_usuario }}</p>
                 </td>
                 <td>
-                    <p style="font-size: 14px">
+                    <p style="font-size: 12px">
                         {{ $actividades[0]->crgo_id === 5 ? 'González Cervantes Mónica Alexandra' : $actividades[0]->director }}
                     </p>
-                    <p style="font-size: 14px; margin-top: 5px">
+                    <p style="font-size: 12px; margin-top: 5px">
                         {{ $actividades[0]->crgo_id === 5 ? 'DIRECTOR/A' : $actividades[0]->cargo_director }}
                     </p>
                 </td>

@@ -147,7 +147,7 @@ export const ListActividadesPage = () => {
     });
 
     return (
-        <Container size="md" my="md">
+        <Container size="xl" my="md">
             <TitlePage order={2} size="h2">
                 Lista de actividades
             </TitlePage>

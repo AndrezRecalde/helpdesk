@@ -24,7 +24,7 @@ export const SectionUsersSoportesAnuales = ({ tabValue }) => {
         };
     }, [tabValue]);
     return (
-        <Container size="xl" my={20}>
+        <Container size="xxl" my={20}>
             <TitlePage order={2} size="h2">
                 Todas Mis Solicitudes
             </TitlePage>

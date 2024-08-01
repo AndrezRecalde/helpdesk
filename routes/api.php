@@ -2,13 +2,14 @@
 
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\General\ActividadController;
-use App\Http\Controllers\General\CheckInOutController;
 use App\Http\Controllers\General\DiagnosticoController;
 use App\Http\Controllers\General\DireccionController;
 use App\Http\Controllers\General\EquipoController;
 use App\Http\Controllers\General\EstadoSoporteController;
 use App\Http\Controllers\General\MarcacionController;
+use App\Http\Controllers\General\PisoController;
 use App\Http\Controllers\General\SoporteController;
+use App\Http\Controllers\General\STipoEquipoController;
 use App\Http\Controllers\General\UserController;
 use App\Http\Controllers\Gerente\CargoController;
 use App\Http\Controllers\Gerente\DashGerenteController;
@@ -58,9 +59,6 @@ Route::group(['prefix' => 'gerencia', 'middleware' => ['auth:sanctum']], functio
     Route::post('/admin/show-user', [UserAdminController::class, 'findUser']);
 
 
-
-
-
     /* TECNICOS */
     Route::post('/admin/tecnicos', [TecnicoController::class, 'getTecnicosAdmin']);
     Route::put('/update/tecnico/{cdgo_usrio}', [TecnicoController::class, 'updateTecnico']);
@@ -102,6 +100,17 @@ Route::group(['prefix' => 'gerencia', 'middleware' => ['auth:sanctum']], functio
     /*DASHBOARD */
     Route::get('/dashboard', [DashGerenteController::class, 'getDashboardGerencia']);
     Route::get('/desempeno-tecnicos-anual', [DashGerenteController::class, 'getDesempenoForTecnicosAnual']);
+
+
+    /* NUEVO SISTEMA DE INVENTARIO */
+
+    /* PISOS */
+    Route::get('/pisos', [PisoController::class, 'getPisos']);
+
+    /* TIPO DE EQUIPOS */
+    Route::get('/tipo-equipos', [STipoEquipoController::class, 'getTiposdeEquipos']);
+
+
 });
 
 /* RUTAS: GERENTE O TECNICO */
