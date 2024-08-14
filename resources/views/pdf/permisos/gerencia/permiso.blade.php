@@ -129,7 +129,7 @@
                     <td colspan="5">OBSERVACION: </td>
                 </tr>
                 <tr>
-                    <td colspan="5" style="font-size: 11px">{{ $permisos->per_observaciones }}</td>
+                    <td colspan="5" style="font-size: 10px">{{ $permisos->per_observaciones }}</td>
                 </tr>
                 <!-- FIRMA -->
                 <tr class="marginLineaFirma">
@@ -144,12 +144,12 @@
                 <tr>
                     <td colspan="2">
                         <hr class="marginLineaFirma">
-                        <p style="font-size: 14px">{{ $permisos->jefe_inmediato }}</p>
+                        <p style="font-size: 13px">{{ $permisos->jefe_inmediato }}</p>
                     </td>
                     <td></td>
                     <td colspan="2">
                         <hr class="marginLineaFirma">
-                        <p style="font-size: 14px">{{ $permisos->usuario_pide }}</p>
+                        <p style="font-size: 13px">{{ $permisos->usuario_pide }}</p>
                     </td>
                 </tr>
                 <tr>
@@ -225,7 +225,7 @@
                     <td colspan="5">OBSERVACION: </td>
                 </tr>
                 <tr>
-                    <td colspan="5" style="font-size: 11px">{{ $permisos->per_observaciones }}</td>
+                    <td colspan="5" style="font-size: 10px">{{ $permisos->per_observaciones }}</td>
                 </tr>
                 <!-- FIRMA -->
                 <tr class="marginLineaFirma">
@@ -240,12 +240,12 @@
                 <tr>
                     <td colspan="2">
                         <hr class="marginLineaFirma">
-                        <p style="font-size: 14px">{{ $permisos->jefe_inmediato }}</p>
+                        <p style="font-size: 13px">{{ $permisos->jefe_inmediato }}</p>
                     </td>
                     <td></td>
                     <td colspan="2">
                         <hr class="marginLineaFirma">
-                        <p style="font-size: 14px">{{ $permisos->usuario_pide }}</p>
+                        <p style="font-size: 13px">{{ $permisos->usuario_pide }}</p>
                     </td>
                 </tr>
                 <tr>
