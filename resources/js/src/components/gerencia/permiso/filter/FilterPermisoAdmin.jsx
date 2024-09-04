@@ -20,7 +20,7 @@ export const FilterPermisoAdmin = ({
     const { direcciones } = useDireccionStore();
     const { users } = useUsersStore();
     return (
-        <Fieldset mt={20} legend={<Text>{title}</Text>}>
+        <Fieldset mt={20} mb={20} legend={<Text>{title}</Text>}>
             <Box
                 component="form"
                 onSubmit={form.onSubmit((_, e) => handleSubmit(e))}

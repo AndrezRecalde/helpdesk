@@ -75,6 +75,7 @@ export const useSoporteStore = () => {
                 { fecha_inicio, fecha_fin }
             );
             const { soportes } = data;
+            //console.log(soportes)
             dispatch(onLoadSoportes(soportes));
         } catch (error) {
             //console.log(error);

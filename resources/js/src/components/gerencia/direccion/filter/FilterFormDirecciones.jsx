@@ -14,9 +14,9 @@ export const FilterFormDirecciones = () => {
         initialValues: {
             cdgo_dprtmnto: null,
         },
-        transformValues: (values) => ({
-            cdgo_dprtmnto: Number(values.cdgo_direccion)
-        })
+        /* transformValues: (values) => ({
+            cdgo_dprtmnto: Number(values.cdgo_dprtmnto) || ""
+        }) */
     })
 
     useEffect(() => {
@@ -29,7 +29,8 @@ export const FilterFormDirecciones = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        startLoadDirectores(form.getTransformedValues());
+        startLoadDirectores(form.getValues());
+        //console.log(form.getValues());
     }
 
     return (

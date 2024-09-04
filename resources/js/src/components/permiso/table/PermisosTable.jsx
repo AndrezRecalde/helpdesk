@@ -15,6 +15,10 @@ export const PermisosTable = () => {
                 header: "Código permiso",
             },
             {
+                accessorKey: "usuario_pide", //access nested data with dot notation
+                header: "Usuario solicitante",
+            },
+            {
                 accessorFn: (row) =>
                     dayjs(row.per_fecha_salida).format("YYYY-MM-DD"),
                 header: "Fecha",

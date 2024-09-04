@@ -28,7 +28,7 @@ class Departamento extends Model
 
     function scopeDireccion($query, $cdgo_dprtmnto)
     {
-        if ($cdgo_dprtmnto != null) {
+        if ($cdgo_dprtmnto !== null) {
             return $query->where("d.cdgo_dprtmnto", $cdgo_dprtmnto);
         }
     }

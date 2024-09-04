@@ -41,7 +41,7 @@ class Permiso extends Model
 
     function scopeDireccion($query, $id_direccion_pide)
     {
-        if ($id_direccion_pide) {
+        if ($id_direccion_pide !== null) {
             return $query->where('pp.id_direccion_pide', $id_direccion_pide);
         }
     }

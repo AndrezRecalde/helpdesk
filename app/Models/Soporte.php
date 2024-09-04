@@ -70,7 +70,7 @@ class Soporte extends Model
 
     function scopeDireccion($query, $id_direccion)
     {
-        if ($id_direccion) {
+        if ($id_direccion !== null) {
             return $query->where("ss.id_direccion", $id_direccion);
         }
     }
