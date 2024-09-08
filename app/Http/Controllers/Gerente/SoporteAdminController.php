@@ -142,19 +142,25 @@ class SoporteAdminController extends Controller
 
                 $soporte->id_estado = 5;
                 $soporte->save();
+                return response()->json(
+                    [
+                        'status'     => MsgStatus::Success,
+                        'msg'        => MsgStatus::SoporteCreatedSuccess,
+                        'asignacion' => is_null($asignacion) || null
+                    ],
+                    200
+                );
             } else {
                 $soporte->id_estado = 1;
                 $soporte->save();
+                return response()->json(
+                    [
+                        'status'     => MsgStatus::Success,
+                        'msg'        => MsgStatus::SoporteCreatedSuccess
+                    ],
+                    200
+                );
             }
-
-            return response()->json(
-                [
-                    'status' => MsgStatus::Success,
-                    'msg'    => MsgStatus::SoporteCreatedSuccess,
-                    'asignacion' => $asignacion
-                ],
-                200
-            );
         } catch (\Throwable $th) {
             return response()->json(['status' => MsgStatus::Error, 'message' => $th->getMessage()], 500);
         }
