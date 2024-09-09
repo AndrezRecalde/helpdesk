@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
@@ -74,6 +75,10 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         //'paswrd' => 'string',
     ];
+
+    function equipos() : BelongsToMany {
+        return $this->belongsToMany(InvEquipo::class, 'usuario_equipo', 'cdgo_usrio', 'equipo_id');
+    }
 
     static function create(array $attributes = []): object
     {

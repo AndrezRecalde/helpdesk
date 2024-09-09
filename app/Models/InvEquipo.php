@@ -2,9 +2,11 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class InvEquipo extends Model
 {
@@ -31,6 +33,16 @@ class InvEquipo extends Model
         'marca_id'
     ];
 
+    function usuarios(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'usuario_equipo', 'equipo_id', 'cdgo_usrio');
+    }
+
+    function departamentos(): BelongsToMany
+    {
+        return $this->belongsToMany(Departamento::class, 'departamento_equipo', 'equipo_id', 'cdgo_dprtmnto');
+    }
+
     function ubicacion(): BelongsTo
     {
         return $this->belongsTo(InvUbicacion::class, 'ubicacion_id');
@@ -49,5 +61,33 @@ class InvEquipo extends Model
     function marca(): BelongsTo
     {
         return $this->belongsTo(InvMarca::class, 'marca_id');
+    }
+
+    function scopeCodigoAntiguo(Builder $query, $codigo_antiguo)
+    {
+        if ($codigo_antiguo) {
+            return $query->where('inve.codigo_antiguo', $codigo_antiguo);
+        }
+    }
+
+    function scopeCodigoNuevo(Builder $query, $codigo_nuevo)
+    {
+        if ($codigo_nuevo) {
+            return $query->where('inve.codigo_nuevo', $codigo_nuevo);
+        }
+    }
+
+    function scopeEstadoId(Builder $query, $estado_id)
+    {
+        if ($estado_id) {
+            return $query->where('inve.estado_id', $estado_id);
+        }
+    }
+
+    function scopeCategoriaId(Builder $query, $categoria_id)
+    {
+        if ($categoria_id) {
+            return $query->where('inve.categoria_id', $categoria_id);
+        }
     }
 }

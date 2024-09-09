@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Departamento extends Model
 {
@@ -18,6 +19,11 @@ class Departamento extends Model
         "id_jefe",
         "id_encargado"
     ];
+
+    function equipos(): BelongsToMany
+    {
+        return $this->belongsToMany(InvEquipo::class, 'departamento_equipo', 'cdgo_dprtmnto', 'equipo_id');
+    }
 
     function scopeEmpresa($query, $id_empresa)
     {
