@@ -3,11 +3,11 @@ import { createSlice } from "@reduxjs/toolkit";
 export const uiInvCategoriaSlice = createSlice({
     name: "uiInvCategoria",
     initialState: {
-        isOpenModalCategoria: false,
+        isOpenModalInvCategoria: false,
     },
     reducers: {
-        onOpenModalCategoria: (state, { payload }) => {
-            state.isOpenModalCategoria = payload;
+        onOpenModalInvCategoria: (state, { payload }) => {
+            state.isOpenModalInvCategoria = payload;
         },
     },
 });

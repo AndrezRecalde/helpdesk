@@ -13,15 +13,15 @@ export const invCategoriaSlice = createSlice({
         onLoading: (state, { payload }) => {
             state.isLoading = payload;
         },
-        onLoadCategorias: (state, { payload }) => {
+        onLoadInvCategorias: (state, { payload }) => {
             state.categorias = payload;
             state.isLoading = false;
         },
-        onAddCategoria: (state, { payload }) => {
+        onAddInvCategoria: (state, { payload }) => {
             state.categorias.push(payload);
             state.isLoading = false;
         },
-        onUpdateCategoria: (state, { payload }) => {
+        onUpdateInvCategoria: (state, { payload }) => {
             state.categorias = state.categorias.map((categoria) => {
                 if (categoria.id === payload.id) {
                     return payload;
@@ -31,7 +31,7 @@ export const invCategoriaSlice = createSlice({
             state.activateCategoria = null;
             state.isLoading = false;
         },
-        onDeleteCategoria: (state) => {
+        onDeleteInvCategoria: (state) => {
             if (state.activateCategoria) {
                 state.categorias = state.categorias.filter(
                     (categoria) => categoria.id === state.activateCategoria.id
@@ -40,12 +40,12 @@ export const invCategoriaSlice = createSlice({
             state.activateCategoria = null;
             state.errores = undefined;
         },
-        onSetActivateCategoria: (state, { payload }) => {
+        onSetActivateInvCategoria: (state, { payload }) => {
             state.activateCategoria = payload;
             state.isLoading = false;
             state.errores = undefined;
         },
-        onClearCategorias: (state) => {
+        onClearInvCategorias: (state) => {
             state.categorias = [];
             state.activateCategoria = null;
             state.isLoading = false;
@@ -63,12 +63,12 @@ export const invCategoriaSlice = createSlice({
 
 export const {
     onLoading,
-    onLoadCategorias,
-    onAddCategoria,
-    onUpdateCategoria,
-    onDeleteCategoria,
-    onSetActivateCategoria,
-    onClearCategorias,
+    onLoadInvCategorias,
+    onAddInvCategoria,
+    onUpdateInvCategoria,
+    onDeleteInvCategoria,
+    onSetActivateInvCategoria,
+    onClearInvCategorias,
     onLoadMessage,
     onLoadErrores,
 } = invCategoriaSlice.actions;

@@ -13,15 +13,15 @@ export const invTipocategoriaSlice = createSlice({
         onLoading: (state, { payload }) => {
             state.isLoading = payload;
         },
-        onLoadTiposcategorias: (state, { payload }) => {
+        onLoadInvTiposcategorias: (state, { payload }) => {
             state.tiposcategorias = payload;
             state.isLoading = false;
         },
-        onAddTipocategoria: (state, { payload }) => {
+        onAddInvTipocategoria: (state, { payload }) => {
             state.tiposcategorias.push(payload);
             state.isLoading = false;
         },
-        onUpdateTipocategoria: (state, { payload }) => {
+        onUpdateInvTipocategoria: (state, { payload }) => {
             state.tiposcategorias = state.tiposcategorias.map((tipo) => {
                 if (tipo.id === payload.id) {
                     return payload;
@@ -31,7 +31,7 @@ export const invTipocategoriaSlice = createSlice({
             state.activateTipocategoria = null;
             state.isLoading = false;
         },
-        onDeleteTipocategoria: (state) => {
+        onDeleteInvTipocategoria: (state) => {
             if (state.activateTipocategoria) {
                 state.tiposcategorias = state.tiposcategorias.filter(
                     (tipo) => tipo.id === state.activateTipocategoria.id
@@ -40,12 +40,12 @@ export const invTipocategoriaSlice = createSlice({
             state.activateTipocategoria = null;
             state.errores = undefined;
         },
-        onSetActivateTipocategoria: (state, { payload }) => {
+        onSetActivateInvTipocategoria: (state, { payload }) => {
             state.activateTipocategoria = payload;
             state.isLoading = false;
             state.errores = undefined;
         },
-        onClearTipocategorias: (state) => {
+        onClearInvTipocategorias: (state) => {
             state.tiposcategorias = [];
             state.activateTipocategoria = null;
             state.isLoading = false;
@@ -63,12 +63,12 @@ export const invTipocategoriaSlice = createSlice({
 
 export const {
     onLoading,
-    onLoadTiposcategorias,
-    onAddTipocategoria,
-    onUpdateTipocategoria,
-    onDeleteTipocategoria,
-    onSetActivateTipocategoria,
-    onClearTipocategorias,
+    onLoadInvTiposcategorias,
+    onAddInvTipocategoria,
+    onUpdateInvTipocategoria,
+    onDeleteInvTipocategoria,
+    onSetActivateInvTipocategoria,
+    onClearInvTipocategorias,
     onLoadMessage,
     onLoadErrores,
 } = invTipocategoriaSlice.actions;
