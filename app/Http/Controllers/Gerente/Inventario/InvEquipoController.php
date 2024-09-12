@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Gerente;
+namespace App\Http\Controllers\Gerente\Inventario;
 
 use App\Enums\MsgStatus;
 use App\Http\Controllers\Controller;
@@ -10,7 +10,7 @@ use App\Models\InvEquipo;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
-class EquipoInvController extends Controller
+class InvEquipoController extends Controller
 {
     function getEquiposInv(Request $request): JsonResponse
     {
@@ -113,15 +113,30 @@ class EquipoInvController extends Controller
         }
     }
 
-    public function removeUserFromEquipo($equipo_id, $user_id)
+    public function removeUserFromEquipo($equipoId, $userId)
     {
         // Buscar el equipo
-        $equipo = InvEquipo::findOrFail($equipo_id);
+        $equipo = InvEquipo::find($equipoId);
 
         // Eliminar la relación entre el usuario y el equipo
-        $equipo->usuarios()->detach($user_id);
+        $equipo->usuarios()->detach($userId);
 
         // Retornar una respuesta o redireccionar
         return response()->json(['status' => MsgStatus::Success, 'msg' => MsgStatus::Deleted], 200);
+    }
+
+    function destroy(int $id): JsonResponse
+    {
+        $equipo = InvEquipo::find($id);
+        try {
+            if ($equipo) {
+                $equipo->delete();
+                return response()->json(['status' => MsgStatus::Success, 'msg' => MsgStatus::Deleted], 200);
+            } else {
+                return response()->json(['status' => MsgStatus::Error, 'msg' => MsgStatus::NotFound], 404);
+            }
+        } catch (\Throwable $th) {
+            return response()->json(['status' => 'error', 'message' => $th->getMessage()], 500);
+        }
     }
 }

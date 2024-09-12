@@ -1,17 +1,16 @@
 <?php
 
-namespace App\Http\Controllers\Gerente;
+namespace App\Http\Controllers\Gerente\Inventario;
 
 use App\Enums\MsgStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CategoriaRequest;
 use App\Http\Requests\StatusRequest;
 use App\Models\InvCategoria;
-use App\Models\InvTipocategoria;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
-class CategoriaController extends Controller
+class InvCategoriaController extends Controller
 {
     function getCategorias(Request $request): JsonResponse
     {
@@ -31,7 +30,7 @@ class CategoriaController extends Controller
     function store(CategoriaRequest $request): JsonResponse
     {
         try {
-            InvTipocategoria::create($request->validated());
+            InvCategoria::create($request->validated());
             return response()->json([
                 'status' => 'success',
                 'msg' => MsgStatus::Created,

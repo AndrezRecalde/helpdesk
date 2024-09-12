@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-export const invUiUbicacionSlice = createSlice({
+export const uiInvUbicacionSlice = createSlice({
     name: "invUiUbicacion",
     initialState: {
         isOpenModalInvUbicacion: false,
@@ -12,4 +12,4 @@ export const invUiUbicacionSlice = createSlice({
     },
 });
 
-export const { onOpenModalInvUbicacion } = invUiUbicacionSlice.actions;
+export const { onOpenModalInvUbicacion } = uiInvUbicacionSlice.actions;

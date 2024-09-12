@@ -15,6 +15,10 @@ use App\Http\Controllers\Gerente\CargoController;
 use App\Http\Controllers\Gerente\DashGerenteController;
 use App\Http\Controllers\Gerente\DireccionAdminController;
 use App\Http\Controllers\Gerente\EmpresaController;
+use App\Http\Controllers\Gerente\Inventario\InvEquipoController;
+use App\Http\Controllers\Gerente\Inventario\InvEstadoController;
+use App\Http\Controllers\Gerente\Inventario\InvMarcaController;
+use App\Http\Controllers\Gerente\Inventario\InvTipoCategoriaController;
 use App\Http\Controllers\Gerente\PermisosAdminController;
 use App\Http\Controllers\Gerente\SexoController;
 use App\Http\Controllers\Gerente\SoporteAdminController;
@@ -102,13 +106,45 @@ Route::group(['prefix' => 'gerencia', 'middleware' => ['auth:sanctum']], functio
     Route::get('/desempeno-tecnicos-anual', [DashGerenteController::class, 'getDesempenoForTecnicosAnual']);
 
 
-    /* NUEVO SISTEMA DE INVENTARIO */
+    /* INVENTARIO */
+    /* TIPOS CATEGORIAS */
+    Route::get('/inventario/tipos-categorias', [InvTipoCategoriaController::class, 'getTiposCategorias']);
+    Route::post('/inventario/tipo-categoria/store', [InvTipoCategoriaController::class, 'store']);
+    Route::put('/inventario/tipo-categoria/update/{id}', [InvTipoCategoriaController::class, 'update']);
+    Route::delete('/inventario/tipo-categoria/destroy/{id}', [InvTipoCategoriaController::class, 'destroy']);
 
-    /* PISOS */
-    Route::get('/pisos', [PisoController::class, 'getPisos']);
+    /* CATEGORIAS */
+    Route::get('/inventario/categorias', [InvTipoCategoriaController::class, 'getCategorias']);
+    Route::post('/inventario/categoria/store', [InvTipoCategoriaController::class, 'store']);
+    Route::put('/inventario/categoria/update/{id}', [InvTipoCategoriaController::class, 'update']);
+    Route::delete('/inventario/categoria/destroy/{id}', [InvTipoCategoriaController::class, 'update']);
 
-    /* TIPO DE EQUIPOS */
-    Route::get('/tipo-equipos', [STipoEquipoController::class, 'getTiposdeEquipos']);
+    /* ESTADOS */
+    Route::get('/inventario/estados', [InvEstadoController::class, 'getEstadosInv']);
+    Route::post('/inventario/estado/store', [InvEstadoController::class, 'store']);
+    Route::put('/inventario/estado/update/{id}', [InvEstadoController::class, 'update']);
+    Route::delete('/inventario/estado/destroy/{id}', [InvEstadoController::class, 'destroy']);
+
+    /* MARCAS  */
+    Route::get('/inventario/marcas', [InvMarcaController::class, 'getMarcasInv']);
+    Route::post('/inventario/marca/store', [InvMarcaController::class, 'store']);
+    Route::put('/inventario/marca/update/{id}', [InvMarcaController::class, 'update']);
+    Route::delete('/inventario/marca/destroy/{id}', [InvMarcaController::class, 'destroy']);
+
+    /* UBICACIONES */
+    Route::get('/inventario/ubicaciones', [InvMarcaController::class, 'getUbicacionesInv']);
+    Route::post('/inventario/ubicacion/store', [InvMarcaController::class, 'store']);
+    Route::put('/inventario/ubicacion/update/{id}', [InvMarcaController::class, 'update']);
+    Route::delete('/inventario/ubicacion/destroy/{id}', [InvMarcaController::class, 'destroy']);
+
+    /* EQUIPOS */
+    Route::get('/inventario/equipos', [InvEquipoController::class, 'getEquiposInv']);
+    Route::post('/inventario/equipo/store', [InvEquipoController::class, 'store']);
+    Route::put('/inventario/equipo/update/{id}', [InvEquipoController::class, 'update']);
+    Route::delete('/inventario/equipo/destroy/{id}', [InvEquipoController::class, 'destroy']);
+    Route::put('/inventario/asignar/{id}', [InvEquipoController::class, 'assignResponsable']);
+    Route::delete('/equipos/{equipoId}/usuarios/{userId}', [EquipoController::class, 'removeUserFromEquipo']);
+
 
 
 });
@@ -156,7 +192,6 @@ Route::group(['prefix' => 'general', 'middleware' => ['auth:sanctum']], function
     Route::post('/permisos', [PermisosAdminController::class, 'getPermisosAdmin']);
     Route::put('/anular-permiso/{idper_permisos}', [PermisosAdminController::class, 'anularPermisos']);
     Route::post('/export-permiso-pdf', [PermisosAdminController::class, 'exportCardPDFPermiso']);
-
 });
 
 
@@ -183,6 +218,4 @@ Route::group(['prefix' => 'usuario', 'middleware' => ['auth:sanctum']], function
 
     /* MARCACIONES */
     Route::post('/marcaciones', [MarcacionController::class, 'getMarcaciones']);
-
-
 });

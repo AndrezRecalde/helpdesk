@@ -68,6 +68,35 @@ import { uiPermisoSlice } from "./permiso/uiPermisoSlice";
 /* Marcaciones */
 import { marcacionSlice } from "./marcacion/marcacionSlice";
 
+/* Inventario: Tipos Categorias */
+import { invTipocategoriaSlice } from "./inventario/tipocategoria/invTipocategoriaSlice";
+import { uiInvTipocategoriaSlice } from "./inventario/tipocategoria/uiInvTipocategoriaSlice";
+
+/* Inventario: Categorias */
+import { invCategoriaSlice } from "./inventario/categoria/invCategoriaSlice";
+import { uiInvCategoriaSlice } from "./inventario/categoria/uiInvCategoriaSlice";
+
+/* Inventario: Marca */
+import { invMarcaSlice } from "./inventario/marca/invMarcaSlice";
+import { uiInvMarcaSlice } from "./inventario/marca/uiInvMarcaSlice";
+
+/* Inventario: Estados */
+import { invEstadoSlice } from "./inventario/estado/invEstadoSlice";
+import { uiInvEstadoSlice } from "./inventario/estado/uiInvEstadoSlice";
+
+/* Inventario: Ubicaciones */
+import { invUbicacionSlice } from "./inventario/ubicacion/invUbicacionSlice";
+import { uiInvUbicacionSlice } from "./inventario/ubicacion/uiInvUbicacionSlice";
+
+/* Inventario: Equipos */
+import { invEquipoSlice } from "./inventario/equipo/invEquipoSlice";
+import { uiInvEquipoSlice } from "./inventario/equipo/uiInvEquipoSlice";
+
+
+
+
+
+
 /* Storage Fields */
 import { storageFieldsSlice } from "./fields/storageFieldsSlice";
 
@@ -148,6 +177,30 @@ export {
 
     /* Marcaciones */
     marcacionSlice,
+
+    /* Inventario: Tipos Categorias */
+    invTipocategoriaSlice,
+    uiInvTipocategoriaSlice,
+
+    /* Inventario: Categorias */
+    invCategoriaSlice,
+    uiInvCategoriaSlice,
+
+    /* Inventario: Marca */
+    invMarcaSlice,
+    uiInvMarcaSlice,
+
+    /* Inventario: Estados */
+    invEstadoSlice,
+    uiInvEstadoSlice,
+
+    /* Inventario: Ubicaciones */
+    invUbicacionSlice,
+    uiInvUbicacionSlice,
+
+    /* Inventario: Equipos */
+    invEquipoSlice,
+    uiInvEquipoSlice,
 
     /* Storage */
     storageFieldsSlice

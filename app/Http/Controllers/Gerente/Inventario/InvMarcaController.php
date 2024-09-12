@@ -1,30 +1,30 @@
 <?php
 
-namespace App\Http\Controllers\Gerente;
+namespace App\Http\Controllers\Gerente\Inventario;
 
 use App\Enums\MsgStatus;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\EstadoInvRequest;
-use App\Models\InvEstado;
+use App\Http\Requests\MarcaInvRequest;
+use App\Models\InvMarca;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
-class EstadoInvController extends Controller
+class InvMarcaController extends Controller
 {
-    function getEstadosInv(): JsonResponse
+    function getMarcasInv(): JsonResponse
     {
-        $estados = InvEstado::get(['id', 'nombre_estado']);
+        $marcas = InvMarca::get(['id', 'nombre_marca']);
 
         return response()->json([
             'status' => MsgStatus::Success,
-            'estados' => $estados
+            'marcas' => $marcas
         ]);
     }
 
-    function store(EstadoInvRequest $request): JsonResponse
+    function store(MarcaInvRequest $request): JsonResponse
     {
         try {
-            InvEstado::create($request->validated());
+            InvMarca::create($request->validated());
             return response()->json([
                 'status' => 'success',
                 'msg' => MsgStatus::Created,
@@ -34,12 +34,12 @@ class EstadoInvController extends Controller
         }
     }
 
-    function update(EstadoInvRequest $request, int $id): JsonResponse
+    function update(MarcaInvRequest $request, int $id): JsonResponse
     {
-        $estado = InvEstado::find($id);
+        $marca = InvMarca::find($id);
         try {
-            if ($estado) {
-                $estado->update($request->validated());
+            if ($marca) {
+                $marca->update($request->validated());
                 return response()->json(['status' => MsgStatus::Success, 'msg' => MsgStatus::Updated], 201);
             } else {
                 return response()->json(['status' => MsgStatus::Error, 'msg' => MsgStatus::NotFound], 404);
@@ -51,10 +51,10 @@ class EstadoInvController extends Controller
 
     function destroy(int $id): JsonResponse
     {
-        $estado = InvEstado::find($id);
+        $marca = InvMarca::find($id);
         try {
-            if ($estado) {
-                $estado->delete();
+            if ($marca) {
+                $marca->delete();
                 return response()->json(['status' => MsgStatus::Success, 'msg' => MsgStatus::Updated], 201);
             } else {
                 return response()->json(['status' => MsgStatus::Error, 'msg' => MsgStatus::NotFound], 404);

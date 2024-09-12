@@ -12,6 +12,12 @@ import {
     equipoSlice,
     estadoSlice,
     indicadorSlice,
+    invCategoriaSlice,
+    invEquipoSlice,
+    invEstadoSlice,
+    invMarcaSlice,
+    invTipocategoriaSlice,
+    invUbicacionSlice,
     marcacionSlice,
     permisoSlice,
     sexoSlice,
@@ -24,6 +30,12 @@ import {
     uiActividadSlice,
     uiDirectorSlice,
     uiIndicadorSlice,
+    uiInvCategoriaSlice,
+    uiInvEquipoSlice,
+    uiInvEstadoSlice,
+    uiInvMarcaSlice,
+    uiInvTipocategoriaSlice,
+    uiInvUbicacionSlice,
     uiPermisoSlice,
     uiSoporteSlice,
     uiTecnicoSlice,
@@ -61,6 +73,26 @@ export const store = configureStore({
         marcacion: marcacionSlice.reducer,
         uiActividad: uiActividadSlice.reducer,
         dashGerencia: dashGerenciaSlice.reducer,
+
+        /* Inventario */
+        invTipocategoria: invTipocategoriaSlice.reducer,
+        uiInvTipocategoria: uiInvTipocategoriaSlice.reducer,
+
+        invCategoria: invCategoriaSlice.reducer,
+        uiInvCategoria: uiInvCategoriaSlice.reducer,
+
+        invMarca: invMarcaSlice.reducer,
+        uiInvMarca: uiInvMarcaSlice.reducer,
+
+        invEstado: invEstadoSlice.reducer,
+        uiInvEstado: uiInvEstadoSlice.reducer,
+
+        invUbicacion: invUbicacionSlice.reducer,
+        uiInvUbicacion: uiInvUbicacionSlice.reducer,
+
+        invEquipo: invEquipoSlice.reducer,
+        uiInvEquipo: uiInvEquipoSlice.reducer,
+
         storageField: storageFieldsSlice.reducer
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware({

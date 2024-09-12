@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Gerente;
+namespace App\Http\Controllers\Gerente\Inventario;
 
 use App\Enums\MsgStatus;
 use App\Http\Controllers\Controller;
@@ -9,7 +9,7 @@ use App\Models\InvTipocategoria;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
-class TipoCategoriaController extends Controller
+class InvTipoCategoriaController extends Controller
 {
     function getTiposCategorias(): JsonResponse
     {
