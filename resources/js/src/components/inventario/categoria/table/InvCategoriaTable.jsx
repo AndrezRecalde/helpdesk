@@ -1,41 +1,42 @@
-import { useCallback, useMemo } from "react";
+import { useCallback } from "react";
+import { BtnSection, MenuTable_E, TableContent } from "../../../../components";
 import { useMantineReactTable } from "mantine-react-table";
-import { BtnSection, MenuTable_E, TableContent } from "../../../components";
+import { useInvCategoriaStore, useInvUiCategoria } from "../../../../hooks";
 import { IconCopyPlus } from "@tabler/icons-react";
-import { useInvTipocategoriaStore, useInvUiTipocategoria } from "../../../hooks";
 
-export const InvTipocategoriasPage = () => {
+export const InvCategoriaTable = () => {
 
-    const { isLoading, tiposcategorias, setActivateTipocategoria } = useInvTipocategoriaStore();
-    const { modalActionTipocategoria } = useInvUiTipocategoria();
+    const { isLoading, categorias, setActivateInvCategoria } = useInvCategoriaStore();
+    const { modalActionCategoria } = useInvUiCategoria();
 
     const columns = useMemo(
         () => [
             {
-                header: "Tipos categorías",
+                header: "Categorias",
+                accessorKey: "nombre_categoria",
+            },
+            {
+                header: "Categorias",
                 accessorKey: "nombre_tipocategoria",
-                minSize: 100, //min size enforced during resizing
-                maxSize: 400, //max size enforced during resizing
-                size: 300, //medium column
             },
         ],
-        []
+        [categorias]
     );
-
-    const handleEditar = useCallback((selected) => {
-        console.log("editar");
-        setActivateTipocategoria(selected);
-        modalActionTipocategoria(true);
-    }, [tiposcategorias]);
 
     const handleAgregar = useCallback(() => {
         console.log("agregar");
-        modalActionTipocategoria(true);
-    }, [tiposcategorias]);
+        modalActionCategoria(true);
+    }, [categorias]);
+
+    const handleEditar = useCallback((selected) => {
+        console.log("editar");
+        setActivateInvCategoria(selected);
+        modalActionCategoria(true);
+    }, [categorias]);
 
     const table = useMantineReactTable({
         columns,
-        data: tiposcategorias, //must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
+        data: categorias, //must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
         state: { showProgressBars: isLoading },
         enableFacetedValues: true,
         enableDensityToggle: false,
@@ -55,7 +56,6 @@ export const InvTipocategoriasPage = () => {
             </BtnSection>
         ),
     });
-
 
     return <TableContent table={table} />;
 };

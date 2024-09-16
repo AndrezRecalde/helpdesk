@@ -1,12 +1,12 @@
 import { useCallback, useMemo } from "react";
+import { useInvTipocategoriaStore, useInvUiTipocategoria } from "../../../../hooks";
+import { BtnSection, MenuTable_E, TableContent } from "../../../../components";
 import { useMantineReactTable } from "mantine-react-table";
-import { BtnSection, MenuTable_E, TableContent } from "../../../components";
 import { IconCopyPlus } from "@tabler/icons-react";
-import { useInvTipocategoriaStore, useInvUiTipocategoria } from "../../../hooks";
 
-export const InvTipocategoriasPage = () => {
-
-    const { isLoading, tiposcategorias, setActivateTipocategoria } = useInvTipocategoriaStore();
+export const InvTipocategoriaTable = () => {
+    const { isLoading, tiposcategorias, setActivateTipocategoria } =
+        useInvTipocategoriaStore();
     const { modalActionTipocategoria } = useInvUiTipocategoria();
 
     const columns = useMemo(
@@ -19,14 +19,17 @@ export const InvTipocategoriasPage = () => {
                 size: 300, //medium column
             },
         ],
-        []
+        [tiposcategorias]
     );
 
-    const handleEditar = useCallback((selected) => {
-        console.log("editar");
-        setActivateTipocategoria(selected);
-        modalActionTipocategoria(true);
-    }, [tiposcategorias]);
+    const handleEditar = useCallback(
+        (selected) => {
+            console.log("editar");
+            setActivateTipocategoria(selected);
+            modalActionTipocategoria(true);
+        },
+        [tiposcategorias]
+    );
 
     const handleAgregar = useCallback(() => {
         console.log("agregar");
@@ -55,7 +58,6 @@ export const InvTipocategoriasPage = () => {
             </BtnSection>
         ),
     });
-
 
     return <TableContent table={table} />;
 };

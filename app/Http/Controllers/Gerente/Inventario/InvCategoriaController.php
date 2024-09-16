@@ -15,7 +15,8 @@ class InvCategoriaController extends Controller
     function getCategorias(Request $request): JsonResponse
     {
         $categorias = InvCategoria::from('inv_categorias as invc')
-            ->selectRaw('invc.id, invc.nombre_categoria, invc.tipocategoria_id, invc.activo')
+            ->selectRaw('invc.id, invc.nombre_categoria,
+                        invt.nombre_tipocategoria, invc.tipocategoria_id, invc.activo')
             ->join('inv_tipocategorias as invt', 'invt.id', 'invc.tipocategoria_id')
             ->byTipocategoriaId($request->tipocategoria_id)
             ->activo($request->activo)

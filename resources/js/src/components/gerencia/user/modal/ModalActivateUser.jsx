@@ -1,5 +1,5 @@
 import { Modal } from "@mantine/core";
-import { FormActiveUser, TextSection } from "../../../../components";
+import { FormActiveUser, ModalActivateElement, TextSection } from "../../../../components";
 import { useUiUser, useUsersStore } from "../../../../hooks";
 import { isNotEmpty, useForm } from "@mantine/form";
 
@@ -34,6 +34,8 @@ export const ModalActivateUser = () => {
             }}
         >
             <FormActiveUser form={form} />
+
+            <ModalActivateElement />
         </Modal>
     );
 };

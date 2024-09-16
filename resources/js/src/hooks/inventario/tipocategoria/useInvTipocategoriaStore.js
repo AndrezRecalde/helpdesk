@@ -18,7 +18,7 @@ export const useInvTipocategoriaStore = () => {
         activateTipocategoria,
         message,
         errores,
-    } = useSelector((state) => state.invTipoCategoria);
+    } = useSelector((state) => state.invTipocategoria);
 
     const { ExceptionMessageError } = useErrorException(onLoadErrores);
 
@@ -28,7 +28,7 @@ export const useInvTipocategoriaStore = () => {
         try {
             dispatch(onLoading(true));
             const { data } = await helpdeskApi.get(
-                "/inventario/tipos-categorias"
+                "/gerencia/inventario/tipos-categorias"
             );
             const { tipos_categorias } = data;
             dispatch(onLoadInvTiposcategorias(tipos_categorias));
@@ -42,7 +42,7 @@ export const useInvTipocategoriaStore = () => {
         try {
             if (tipocategoria.id) {
                 const { data } = await helpdeskApi.put(
-                    `/inventario/tipo-categoria/update/${tipocategoria.id}`,
+                    `/gerencia/inventario/tipo-categoria/update/${tipocategoria.id}`,
                     tipocategoria
                 );
                 startLoadTiposcategorias();
@@ -70,7 +70,7 @@ export const useInvTipocategoriaStore = () => {
     const startDeleteTipocategoria = async (tipocategoria) => {
         try {
             const { data } = await helpdeskApi.delete(
-                `/inventario/tipo-categoria/destroy/${tipocategoria.id}`
+                `/gerencia/inventario/tipo-categoria/destroy/${tipocategoria.id}`
             );
             dispatch(onDeleteInvTipocategoria());
             dispatch(onLoadMessage(data));

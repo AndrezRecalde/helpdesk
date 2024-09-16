@@ -16,6 +16,7 @@ import {
     ActividadPage,
     ListActividadesPage,
     ListPermisosAdminPage,
+    ConfigInventarioPage,
 } from "../../../pages";
 import { HeaderMenu } from "../../../layouts/appshell/menu/HeaderMenu";
 /* import { ListPermisosAdminPage } from "../../../pages/permisos/ListPermisosAdminPage"; */
@@ -24,7 +25,6 @@ export const PagesGerente = () => {
     //console.log('pagesGerente')
     return (
         <>
-
             <RoutesNotFound>
                 <Route path="usuarios" element={<AdminUsersPage />} />
                 <Route path="direcciones" element={<AdminDireccionesPage />} />
@@ -66,6 +66,11 @@ export const PagesGerente = () => {
                 <Route
                     path="lista-actividades"
                     element={<ListActividadesPage />}
+                />
+
+                <Route
+                    path="configuracion-inventario"
+                    element={<ConfigInventarioPage />}
                 />
 
                 <Route path="dashboard" element={<DashGerenciaPage />} />

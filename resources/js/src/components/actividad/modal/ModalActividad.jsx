@@ -1,6 +1,6 @@
 import { Modal } from "@mantine/core";
 import { ActividadForm, TextSection } from "../../../components";
-import { useActividadStore, useUiActividad } from "../../..//hooks";
+import { useActividadStore, useUiActividad } from "../../../hooks";
 
 export const ModalActividad = ({ fecha_inicio, fecha_fin }) => {
 

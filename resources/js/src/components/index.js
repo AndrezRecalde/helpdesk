@@ -10,30 +10,30 @@ import { UserBtnHeader } from "./user/menu/UserBtnHeader";
 import { ChangePwdForm } from "./user/password/ChangePwdForm";
 
 /* Elementos Gerencia */
-    /* CHARTS */
+/* CHARTS */
 import { ChartBarDesempAreas } from "./gerencia/dashboard/charts/ChartBarDesempAreas";
 import { ChartBarSoportes } from "./gerencia/dashboard/charts/ChartBarSoportes";
 import { ChartDesempTecnicos } from "./gerencia/dashboard/charts/ChartDesempTecnicos";
 import { ChartPieEficiencia } from "./gerencia/dashboard/charts/ChartPieEficiencia";
 import { ChartPieSoportes } from "./gerencia/dashboard/charts/ChartPieSoportes";
 import { ChartSoportesMes } from "./gerencia/dashboard/charts/ChartSoportesMes";
-    /* STATS */
+/* STATS */
 import { DashInfoStats } from "./gerencia/dashboard/stats/DashInfoStats";
 import { DashSoporteStats } from "./gerencia/dashboard/stats/DashSoporteStats";
-    /* DIRECCION */
+/* DIRECCION */
 import { FilterFormDirecciones } from "./gerencia/direccion/filter/FilterFormDirecciones";
 import { FormDirector } from "./gerencia/direccion/form/FormDirector";
 import { ModalDireccion } from "./gerencia/direccion/modal/ModalDireccion";
 import { DireccionesTable } from "./gerencia/direccion/table/DireccionesTable";
-    /* PERMISO */
+/* PERMISO */
 import { FilterPermisoAdmin } from "./gerencia/permiso/filter/FilterPermisoAdmin";
 import { FormSolicitudPermiso } from "./gerencia/permiso/form/FormSolicitudPermiso";
-    /* SOPORTE */
+/* SOPORTE */
 import { FilterFormSearchDates } from "./gerencia/soporte/filter/FilterFormSearchDates";
 import { FilterFormSoportes } from "./gerencia/soporte/filter/FilterFormSoportes";
 import { SolicitudesAnuladasTable } from "./gerencia/soporte/table/SolicitudesAnuladasTable";
 import { SolicitudesTable } from "./gerencia/soporte/table/SolicitudesTable";
-    /* TECNICO */
+/* TECNICO */
 import { FormActivateTecnico } from "./gerencia/tecnico/form/FormActivateTecnico";
 import { FormAddTecnico } from "./gerencia/tecnico/form/FormAddTecnico";
 import { ModalActivateTecnico } from "./gerencia/tecnico/modal/ModalActivateTecnico";
@@ -41,7 +41,7 @@ import { ModalAddTecnico } from "./gerencia/tecnico/modal/ModalAddTecnico";
 import { ModalDesempTecnicos } from "./gerencia/tecnico/modal/ModalDesempTecnicos";
 import { TecnicosTable } from "./gerencia/tecnico/table/TecnicosTable";
 
-    /* Usuario */
+/* Usuario */
 import { ActivateUserBtn } from "./gerencia/user/btn/ActivateUserBtn";
 import { FilterFormUsers } from "./gerencia/user/filter/FilterFormUsers";
 import { FormActiveUser } from "./gerencia/user/form/FormActiveUser";
@@ -60,7 +60,6 @@ import { FilterPermiso } from "./permiso/filter/FilterPermiso";
 import { FormAnularPermiso } from "./permiso/form/FormAnularPermiso";
 import { ModalAnularPermiso } from "./permiso/modal/ModalAnularPermiso";
 import { PermisosTable } from "./permiso/table/PermisosTable";
-
 
 /* Soportes */
 import { CardIndicadores } from "./soportes/card/indicador/CardIndicadores";
@@ -83,7 +82,10 @@ import { ResumenDesempenoEstados } from "./soportes/section/ResumenDesempenoEsta
 import { SectionUsersSoportesActuales } from "./soportes/section/SectionUsersSoportesActuales";
 import { SectionUsersSoportesAnuales } from "./soportes/section/SectionUsersSoportesAnuales";
 
-import { ContactIcon, ContactIconsList } from "./soportes/solicitudes/ContactIcons";
+import {
+    ContactIcon,
+    ContactIconsList,
+} from "./soportes/solicitudes/ContactIcons";
 
 import { SoportesCalificacionTable } from "./soportes/table/SoportesCalificacionTable";
 import { SoportesTable } from "./soportes/table/SoportesTable";
@@ -104,6 +106,11 @@ import { ModalActividad } from "./actividad/modal/ModalActividad";
 import { FilterFormMarcaciones } from "./marcacion/form/FilterFormMarcaciones";
 import { TableMarcacion } from "./marcacion/table/TableMarcacion";
 
+/* Inventario: Tipos Categorias */
+import { InvTipocategoriaTable } from "./inventario/tipocategoria/table/InvTipocategoriaTable";
+import { InvTipocategoriaModal } from "./inventario/tipocategoria/modal/InvTipocategoriaModal";
+import { InvTipocategoriaForm } from "./inventario/tipocategoria/form/InvTipocategoriaForm";
+
 /* Elementos */
 import { Logo } from "./elements/application/Logo";
 import { TitlePage } from "./elements/titles/TitlePage";
@@ -115,9 +122,15 @@ import {
     BtnAddActions,
     BtnSolicitarSoporte,
     BtnAdministracion,
-    BtnServicesApps
+    BtnServicesApps,
 } from "./elements/buttons/BtnServices";
-import { BtnDarkMode, ActionReportPDF, BtnSearchMenu } from "./elements/buttons/BtnActions";
+import { BtnActivateElement } from "./elements/buttons/BtnActivateElement";
+import {
+    BtnDarkMode,
+    ActionReportPDF,
+    BtnSearchMenu,
+} from "./elements/buttons/BtnActions";
+import { ModalActivateElement } from "./elements/modal/ModalActivateElement";
 import { InformationActividadList } from "./elements/lists/InformationActividadList";
 import { MenuSeleccion } from "./elements/menu/MenuSeleccion";
 import { FormRichText } from "./elements/rte/FormRichText";
@@ -129,7 +142,6 @@ import {
     MenuTable_Per,
 } from "./elements/tables/MenuTable";
 import { TableContent } from "./elements/tables/TableContent";
-
 
 export {
     /* Authenticacion */
@@ -204,24 +216,20 @@ export {
     FormCreateSoporte,
     FormDiagnosticar,
     FormSolicitudAdminSoporte,
-
     ModalAnularSoporte,
     ModalAsignarSoporte,
     ModalCreateSoporte,
     ModalDiagnostico,
     ModalSolicitudAdminSoporte,
-
     ResumenDesempenoArea,
     ResumenDesempenoEstados,
     SectionUsersSoportesActuales,
     SectionUsersSoportesAnuales,
-
     ContactIcon,
     ContactIconsList,
     SoportesCalificacionTable,
     SoportesTable,
     SoportesUsersTable,
-
     TableDesempenoAreas,
     TableDesempenoEstados,
     TableDesempenoTecnicos,
@@ -237,6 +245,10 @@ export {
     FilterFormMarcaciones,
     TableMarcacion,
 
+    /* Inventario: Tipos de categorias */
+    InvTipocategoriaTable,
+    InvTipocategoriaModal,
+    InvTipocategoriaForm,
 
     /* Elements */
     Logo,
@@ -249,9 +261,11 @@ export {
     BtnSolicitarSoporte,
     BtnAdministracion,
     BtnServicesApps,
+    BtnActivateElement,
     BtnDarkMode,
     ActionReportPDF,
     BtnSearchMenu,
+    ModalActivateElement,
     InformationActividadList,
     MenuSeleccion,
     FormRichText,
@@ -260,5 +274,5 @@ export {
     MenuTable_T,
     MenuSolicitudTable,
     MenuTable_Per,
-    TableContent
+    TableContent,
 };

@@ -39,6 +39,8 @@ import { ListPermisosAdminPage } from "./permisos/ListPermisosAdminPage";
 /* Marcaciones */
 import { MarcacionPage } from "./marcacion/MarcacionPage";
 
+/* Inventario */
+import { ConfigInventarioPage } from "./inventario/ConfigInventarioPage";
 
 /* Error */
 import { ErrorNotFound } from "./error/ErrorNotFound";
@@ -75,6 +77,8 @@ export {
     ListPermisosAdminPage,
 
     MarcacionPage,
+
+    ConfigInventarioPage,
 
     ErrorNotFound,
     ErrorAccessDenied
