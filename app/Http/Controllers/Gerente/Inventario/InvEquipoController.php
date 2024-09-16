@@ -113,13 +113,13 @@ class InvEquipoController extends Controller
         }
     }
 
-    public function removeUserFromEquipo($equipoId, $userId)
+    public function removeUserFromEquipo($equipo_id, $user_id)
     {
         // Buscar el equipo
-        $equipo = InvEquipo::find($equipoId);
+        $equipo = InvEquipo::find($equipo_id);
 
         // Eliminar la relación entre el usuario y el equipo
-        $equipo->usuarios()->detach($userId);
+        $equipo->usuarios()->detach($user_id);
 
         // Retornar una respuesta o redireccionar
         return response()->json(['status' => MsgStatus::Success, 'msg' => MsgStatus::Deleted], 200);

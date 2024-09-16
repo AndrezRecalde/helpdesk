@@ -71,6 +71,33 @@ import { useUiPermiso } from "./permiso/useUiPermiso";
 /* Marcaciones */
 import { useMarcacionStore } from "./marcacion/useMarcacionStore";
 
+/* Inventario: Tipos categorias */
+import { useInvTipocategoriaStore } from "./inventario/tipocategoria/useInvTipocategoriaStore";
+import { useInvUiTipocategoria } from "./inventario/tipocategoria/useInvUiTipocategoria";
+
+/* Inventario: Categorias */
+import { useInvCategoriaStore } from "./inventario/categoria/useInvCategoriaStore";
+import { useInvUiCategoria } from "./inventario/categoria/useInvUiCategoria";
+
+/* Inventario: Marcas */
+import { useInvMarcaStore } from "./inventario/marca/useInvMarcaStore";
+import { useInvUiMarca } from "./inventario/marca/useInvUiMarca";
+
+
+/* Inventario: Estados */
+import { useInvEstadoStore } from "./inventario/estado/useInvEstadoStore";
+import { useInvUiEstado } from "./inventario/estado/useInvUiEstado";
+
+
+/* Inventario: Equipos */
+import { useInvEquipoStore } from "./inventario/equipo/useInvEquipoStore";
+import { useInvUiEquipo } from "./inventario/equipo/useInvUiEquipo";
+
+/* Inventario: Ubicaciones */
+import { useInvUbicacionStore } from "./inventario/ubicacion/useInvUbicacionStore";
+import { useInvUiUbicacion } from "./inventario/ubicacion/useInvUiUbicacion";
+
+
 /* Storage */
 import { useStorageField } from "./storage/useStorageField";
 
@@ -126,6 +153,25 @@ export {
     useUiPermiso,
 
     useMarcacionStore,
+
+
+    useInvTipocategoriaStore,
+    useInvUiTipocategoria,
+
+    useInvCategoriaStore,
+    useInvUiCategoria,
+
+    useInvMarcaStore,
+    useInvUiMarca,
+
+    useInvEstadoStore,
+    useInvUiEstado,
+
+    useInvEquipoStore,
+    useInvUiEquipo,
+
+    useInvUbicacionStore,
+    useInvUiUbicacion,
 
     useStorageField
 }

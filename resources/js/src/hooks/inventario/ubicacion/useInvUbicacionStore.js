@@ -1,43 +1,44 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useErrorException } from "../../../hooks";
 import {
-    onClearInvEstados,
-    onDeleteInvEstado,
+    onClearInvUbicaciones,
+    onDeleteInvUbicacion,
     onLoadErrores,
-    onLoadInvEstados,
+    onLoading,
+    onLoadInvUbicaciones,
     onLoadMessage,
-    onSetActivateInvEstado,
-} from "../../../store/inventario/estado/invEstadoSlice";
+    onSetActivateInvUbicacion,
+} from "../../../store/inventario/ubicacion/invUbicacionSlice";
 import helpdeskApi from "../../../api/helpdeskApi";
 
-export const useInvEstadoStore = () => {
-    const { isLoading, invEstados, activateInvEstado, message, errores } =
-        useSelector((state) => state.invEstado);
+export const useInvUbicacionStore = () => {
+    const { isLoading, invUbicaciones, activateUbicacion, message, errores } =
+        useSelector((state) => state.invUbicacion);
 
     const { ExceptionMessageError } = useErrorException(onLoadErrores);
 
     const dispatch = useDispatch();
 
-    const startLoadInvEstados = async () => {
+    const startLoadInvUbicaciones = async () => {
         try {
             dispatch(onLoading(true));
-            const { data } = await helpdeskApi.get("/inventario/estados");
-            const { estados } = data;
-            dispatch(onLoadInvEstados(estados));
+            const { data } = await helpdeskApi.get("/inventario/ubicaciones");
+            const { ubicaciones } = data;
+            dispatch(onLoadInvUbicaciones(ubicaciones));
         } catch (error) {
             console.log(error);
             ExceptionMessageError(error);
         }
     };
 
-    const startAddInvEstado = async (estado) => {
+    const startAddInvUbicacion = async (ubicacion) => {
         try {
-            if (estado.id) {
+            if (ubicacion.id) {
                 const { data } = await helpdeskApi.put(
-                    `/inventario/estado/update/${estado.id}`,
-                    estado
+                    `/inventario/ubicacion/update/${ubicacion.id}`,
+                    ubicacion
                 );
-                startLoadInvEstados();
+                startLoadInvUbicaciones();
                 dispatch(onLoadMessage(data));
                 setTimeout(() => {
                     dispatch(onLoadMessage(undefined));
@@ -45,10 +46,10 @@ export const useInvEstadoStore = () => {
                 return;
             }
             const { data } = await helpdeskApi.post(
-                "/inventario/estado/store",
-                estado
+                "/inventario/ubicacion/store",
+                ubicacion
             );
-            startLoadInvEstados();
+            startLoadInvUbicaciones();
             dispatch(onLoadMessage(data));
             setTimeout(() => {
                 dispatch(onLoadMessage(undefined));
@@ -59,12 +60,12 @@ export const useInvEstadoStore = () => {
         }
     };
 
-    const startDeleteInvEstado = async (estado) => {
+    const startDeleteInvUbicacion = async (ubicacion) => {
         try {
             const { data } = await helpdeskApi.delete(
-                `/inventario/estado/destroy/${estado.id}`
+                `/inventario/ubicacion/destroy/${ubicacion.id}`
             );
-            dispatch(onDeleteInvEstado());
+            dispatch(onDeleteInvUbicacion());
             dispatch(onLoadMessage(data));
             setTimeout(() => {
                 dispatch(onLoadMessage(undefined));
@@ -75,25 +76,25 @@ export const useInvEstadoStore = () => {
         }
     };
 
-    const setActivateInvEstado = (estado) => {
-        dispatch(onSetActivateInvEstado(estado));
-    }
+    const setActivateInvUbicacion = (ubicacion) => {
+        dispatch(onSetActivateInvUbicacion(ubicacion));
+    };
 
-    const startClearInvEstados = () => {
-        dispatch(onClearInvEstados());
+    const startClearInvUbicaciones = () => {
+        dispatch(onClearInvUbicaciones());
     }
 
     return {
         isLoading,
-        invEstados,
-        activateInvEstado,
+        invUbicaciones,
+        activateUbicacion,
         message,
         errores,
 
-        startLoadInvEstados,
-        startAddInvEstado,
-        startDeleteInvEstado,
-        setActivateInvEstado,
-        startClearInvEstados
+        startLoadInvUbicaciones,
+        startAddInvUbicacion,
+        startDeleteInvUbicacion,
+        setActivateInvUbicacion,
+        startClearInvUbicaciones
     };
 };

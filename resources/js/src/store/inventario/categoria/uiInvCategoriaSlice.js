@@ -12,4 +12,4 @@ export const uiInvCategoriaSlice = createSlice({
     },
 });
 
-export const { onOpenModalCategoria } = uiInvCategoriaSlice.actions;
+export const { onOpenModalInvCategoria } = uiInvCategoriaSlice.actions;
