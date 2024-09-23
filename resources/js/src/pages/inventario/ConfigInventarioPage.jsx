@@ -1,6 +1,4 @@
-import { useEffect } from "react";
 import { Container, Divider, rem, Tabs } from "@mantine/core";
-import { useInvTipocategoriaStore } from "../../hooks";
 import {
     TitlePage,
 } from "../../components";
@@ -9,16 +7,6 @@ import { IconMessageCircle, IconPhoto, IconSettings } from "@tabler/icons-react"
 export const ConfigInventarioPage = () => {
     const iconStyle = { width: rem(12), height: rem(12) };
 
-    const { startLoadTiposcategorias, startClearTiposcategorias } =
-        useInvTipocategoriaStore();
-
-    useEffect(() => {
-        startLoadTiposcategorias();
-
-        return () => {
-            startClearTiposcategorias();
-        };
-    }, []);
 
     return (
         <Container size="xxl">
