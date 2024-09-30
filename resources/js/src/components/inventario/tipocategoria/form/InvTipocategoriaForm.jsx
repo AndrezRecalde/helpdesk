@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Box, Stack, TextInput } from "@mantine/core";
 import { BtnSubmit } from "../../../../components";
 import { IconChecks } from "@tabler/icons-react";
@@ -5,7 +6,6 @@ import {
     useInvTipocategoriaStore,
     useInvUiTipocategoria,
 } from "../../../../hooks";
-import { useEffect } from "react";
 
 export const InvTipocategoriaForm = ({ form }) => {
     const {

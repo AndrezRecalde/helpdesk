@@ -3,7 +3,7 @@ import { onOpenModalInvCategoria } from "../../../store/inventario/categoria/uiI
 
 export const useInvUiCategoria = () => {
 
-  const { isOpenModalInvCategoria } = useSelector(state => state.uiInvCategoriaSlice);
+  const { isOpenModalInvCategoria } = useSelector(state => state.uiInvCategoria);
   const dispatch = useDispatch();
 
   const modalActionCategoria = (behavior) => {

@@ -111,6 +111,26 @@ import { InvTipocategoriaTable } from "./inventario/tipocategoria/table/InvTipoc
 import { InvTipocategoriaModal } from "./inventario/tipocategoria/modal/InvTipocategoriaModal";
 import { InvTipocategoriaForm } from "./inventario/tipocategoria/form/InvTipocategoriaForm";
 
+/* Inventario: Categorias */
+import { InvCategoriaTable } from "./inventario/categoria/table/InvCategoriaTable";
+import { InvCategoriaForm } from "./inventario/categoria/form/InvCategoriaForm";
+import { InvCategoriaModal } from "./inventario/categoria/modal/InvCategoriaModal";
+
+/* Inventario: Marca */
+import { InvMarcaTable } from "./inventario/marca/table/InvMarcaTable";
+import { InvMarcaModal } from "./inventario/marca/modal/InvMarcaModal";
+import { InvMarcaForm } from "./inventario/marca/form/InvMarcaForm";
+
+/* Inventario: Estado */
+import { InvEstadoTable } from "./inventario/estado/table/InvEstadoTable";
+import { InvEstadoModal } from "./inventario/estado/modal/InvEstadoModal";
+import { InvEstadoForm } from "./inventario/estado/form/InvEstadoForm";
+
+/* Inventario: Ubicacion */
+import { InvUbicacionTable } from "./inventario/ubicacion/table/InvUbicacionTable";
+import { InvUbicacionModal } from "./inventario/ubicacion/modal/InvUbicacionModal";
+import { InvUbicacionForm } from "./inventario/ubicacion/form/InvUbicacionForm";
+
 /* Elementos */
 import { Logo } from "./elements/application/Logo";
 import { TitlePage } from "./elements/titles/TitlePage";
@@ -249,6 +269,26 @@ export {
     InvTipocategoriaTable,
     InvTipocategoriaModal,
     InvTipocategoriaForm,
+
+    /* Inventario: Categorias */
+    InvCategoriaTable,
+    InvCategoriaForm,
+    InvCategoriaModal,
+
+    /* Inventario: Marca */
+    InvMarcaTable,
+    InvMarcaModal,
+    InvMarcaForm,
+
+    /* Inventario: Estado */
+    InvEstadoTable,
+    InvEstadoModal,
+    InvEstadoForm,
+
+    /* Inventario: Ubicacion */
+    InvUbicacionTable,
+    InvUbicacionModal,
+    InvUbicacionForm,
 
     /* Elements */
     Logo,

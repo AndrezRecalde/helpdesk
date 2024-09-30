@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import { BtnSection, MenuTable_E, TableContent } from "../../../../components";
 import { useMantineReactTable } from "mantine-react-table";
 import { useInvCategoriaStore, useInvUiCategoria } from "../../../../hooks";
@@ -16,7 +16,7 @@ export const InvCategoriaTable = () => {
                 accessorKey: "nombre_categoria",
             },
             {
-                header: "Categorias",
+                header: "Tipo Categoria",
                 accessorKey: "nombre_tipocategoria",
             },
         ],
@@ -40,7 +40,6 @@ export const InvCategoriaTable = () => {
         state: { showProgressBars: isLoading },
         enableFacetedValues: true,
         enableDensityToggle: false,
-        defaultColumn: { minSize: 80, maxSize: 200, size: 100 },
         enableRowActions: true,
         renderRowActionMenuItems: ({ row }) => (
             <MenuTable_E row={row} handleEdit={handleEditar} />

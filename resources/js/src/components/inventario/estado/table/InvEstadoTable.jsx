@@ -1,41 +1,45 @@
-import { useCallback, useMemo } from "react";
-import { useInvTipocategoriaStore, useInvUiTipocategoria } from "../../../../hooks";
-import { BtnSection, MenuTable_E, TableContent } from "../../../../components";
 import { useMantineReactTable } from "mantine-react-table";
+import { useCallback, useMemo } from "react";
+import { BtnSection, MenuTable_E, TableContent } from "../../../../components";
+import { useInvEstadoStore, useInvUiEstado } from "../../../../hooks";
 import { IconCopyPlus } from "@tabler/icons-react";
 
-export const InvTipocategoriaTable = () => {
-    const { isLoading, tiposcategorias, setActivateTipocategoria } =
-        useInvTipocategoriaStore();
-    const { modalActionTipocategoria } = useInvUiTipocategoria();
+export const InvEstadoTable = () => {
+
+    const { isLoading, invEstados, setActivateInvEstado } = useInvEstadoStore();
+    const { modalActionEstado } = useInvUiEstado();
 
     const columns = useMemo(
         () => [
             {
-                header: "Tipos categorías",
-                accessorKey: "nombre_tipocategoria",
+                header: "Estado",
+                accessorKey: "nombre_estado",
+            },
+            {
+                header: "Color",
+                accessorKey: "color",
             },
         ],
-        [tiposcategorias]
+        [invEstados]
     );
 
     const handleEditar = useCallback(
         (selected) => {
             console.log("editar");
-            setActivateTipocategoria(selected);
-            modalActionTipocategoria(true);
+            setActivateInvEstado(selected);
+            modalActionEstado(true);
         },
-        [tiposcategorias]
+        [invEstados]
     );
 
     const handleAgregar = useCallback(() => {
         console.log("agregar");
-        modalActionTipocategoria(true);
-    }, [tiposcategorias]);
+        modalActionEstado(true);
+    }, [invEstados]);
 
     const table = useMantineReactTable({
         columns,
-        data: tiposcategorias, //must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
+        data: invEstados, //must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
         state: { showProgressBars: isLoading },
         enableFacetedValues: true,
         enableDensityToggle: false,

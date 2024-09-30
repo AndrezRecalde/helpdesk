@@ -1,12 +1,20 @@
-import { Container, Divider, rem, Tabs } from "@mantine/core";
+import { Container, Divider, rem, SimpleGrid, Tabs } from "@mantine/core";
+import { TitlePage } from "../../components";
 import {
-    TitlePage,
-} from "../../components";
-import { IconMessageCircle, IconPhoto, IconSettings } from "@tabler/icons-react";
+    IconAdjustments,
+    IconBrandDatabricks,
+    IconCategoryPlus,
+    IconMapPins,
+} from "@tabler/icons-react";
+import {
+    InvTipocategoriasPage,
+    InvCategoriasPage,
+    InvMarcaPage,
+    InvEstadoPage,
+} from "../../pages";
 
 export const ConfigInventarioPage = () => {
-    const iconStyle = { width: rem(12), height: rem(12) };
-
+    const iconStyle = { width: rem(18), height: rem(18) };
 
     return (
         <Container size="xxl">
@@ -15,51 +23,56 @@ export const ConfigInventarioPage = () => {
             </TitlePage>
             <Divider my="md" />
 
-            <Tabs defaultValue="gallery">
+            <Tabs defaultValue="categoria">
                 <Tabs.List grow>
                     <Tabs.Tab
-                        value="gallery"
-                        leftSection={<IconPhoto style={iconStyle} />}
+                        value="categoria"
+                        leftSection={<IconCategoryPlus style={iconStyle} />}
                     >
                         Categorias
                     </Tabs.Tab>
                     <Tabs.Tab
-                        value="messages"
-                        leftSection={<IconMessageCircle style={iconStyle} />}
-                    >
-                        Tipos categorias
-                    </Tabs.Tab>
-                    <Tabs.Tab
-                        value="settings"
-                        leftSection={<IconSettings style={iconStyle} />}
+                        value="marca"
+                        leftSection={<IconBrandDatabricks style={iconStyle} />}
                     >
                         Marcas
                     </Tabs.Tab>
                     <Tabs.Tab
-                        value="settings"
-                        leftSection={<IconSettings style={iconStyle} />}
+                        value="estado"
+                        leftSection={<IconAdjustments style={iconStyle} />}
                     >
                         Estados
                     </Tabs.Tab>
                     <Tabs.Tab
-                        value="settings"
-                        leftSection={<IconSettings style={iconStyle} />}
+                        value="ubicacion"
+                        leftSection={<IconMapPins style={iconStyle} />}
                     >
                         Ubicaciones
                     </Tabs.Tab>
                 </Tabs.List>
 
-                <Tabs.Panel value="gallery">Table de Categorias</Tabs.Panel>
+                <Tabs.Panel value="categoria">
+                    <SimpleGrid
+                        cols={{ base: 1, sm: 1, md: 2, lg: 2 }}
+                    >
+                        <InvTipocategoriasPage />
+                        <InvCategoriasPage />
+                    </SimpleGrid>
+                </Tabs.Panel>
 
-                <Tabs.Panel value="messages">Table de Tipos categorias</Tabs.Panel>
+                <Tabs.Panel value="marca">
+                    <SimpleGrid cols={1} mt={20}>
+                        <InvMarcaPage />
+                    </SimpleGrid>
+                </Tabs.Panel>
 
-                <Tabs.Panel value="settings">Table de Marcas</Tabs.Panel>
+                <Tabs.Panel value="estado">
+                    <SimpleGrid cols={1} mt={20}>
+                        <InvEstadoPage />
+                    </SimpleGrid>
+                </Tabs.Panel>
 
-                <Tabs.Panel value="settings">Table de Estados</Tabs.Panel>
-
-                <Tabs.Panel value="settings">Table de Ubicaciones</Tabs.Panel>
-
-
+                <Tabs.Panel value="ubicacion">Table de Ubicaciones</Tabs.Panel>
             </Tabs>
         </Container>
     );

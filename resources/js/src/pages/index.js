@@ -42,6 +42,21 @@ import { MarcacionPage } from "./marcacion/MarcacionPage";
 /* Inventario */
 import { ConfigInventarioPage } from "./inventario/ConfigInventarioPage";
 
+/* Inventario: Tipos de categoria */
+import { InvTipocategoriasPage } from "./inventario/categorias/InvTipocategoriasPage";
+
+/* Inventario: Categoria */
+import { InvCategoriasPage } from "./inventario/categorias/InvCategoriasPage";
+
+/* Inventario: Marca */
+import { InvMarcaPage } from "./inventario/marca/InvMarcaPage";
+
+/* Inventario: Estado */
+import { InvEstadoPage } from "./inventario/estado/InvEstadoPage";
+
+/* Inventario: Ubicacion */
+import { InvUbicacionPage } from "./inventario/ubicacion/InvUbicacionPage";
+
 /* Error */
 import { ErrorNotFound } from "./error/ErrorNotFound";
 import { ErrorAccessDenied } from "./error/ErrorAccessDenied";
@@ -79,6 +94,15 @@ export {
     MarcacionPage,
 
     ConfigInventarioPage,
+
+    InvTipocategoriasPage,
+    InvCategoriasPage,
+
+    InvMarcaPage,
+
+    InvEstadoPage,
+
+    InvUbicacionPage,
 
     ErrorNotFound,
     ErrorAccessDenied

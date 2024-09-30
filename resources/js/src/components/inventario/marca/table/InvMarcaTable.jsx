@@ -1,41 +1,40 @@
 import { useCallback, useMemo } from "react";
-import { useInvTipocategoriaStore, useInvUiTipocategoria } from "../../../../hooks";
-import { BtnSection, MenuTable_E, TableContent } from "../../../../components";
 import { useMantineReactTable } from "mantine-react-table";
+import { BtnSection, MenuTable_E, TableContent } from "../../../../components";
+import { useInvMarcaStore, useInvUiMarca } from "../../../../hooks";
 import { IconCopyPlus } from "@tabler/icons-react";
 
-export const InvTipocategoriaTable = () => {
-    const { isLoading, tiposcategorias, setActivateTipocategoria } =
-        useInvTipocategoriaStore();
-    const { modalActionTipocategoria } = useInvUiTipocategoria();
+export const InvMarcaTable = () => {
+    const { isLoading, invMarcas, setActivateInvMarca } = useInvMarcaStore();
+    const { modalActionMarca } = useInvUiMarca();
 
     const columns = useMemo(
         () => [
             {
-                header: "Tipos categorías",
-                accessorKey: "nombre_tipocategoria",
+                header: "Marca",
+                accessorKey: "nombre_marca",
             },
         ],
-        [tiposcategorias]
+        [invMarcas]
     );
 
     const handleEditar = useCallback(
         (selected) => {
             console.log("editar");
-            setActivateTipocategoria(selected);
-            modalActionTipocategoria(true);
+            setActivateInvMarca(selected);
+            modalActionMarca(true);
         },
-        [tiposcategorias]
+        [invMarcas]
     );
 
     const handleAgregar = useCallback(() => {
         console.log("agregar");
-        modalActionTipocategoria(true);
-    }, [tiposcategorias]);
+        modalActionMarca(true);
+    }, [invMarcas]);
 
     const table = useMantineReactTable({
         columns,
-        data: tiposcategorias, //must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
+        data: invMarcas, //must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
         state: { showProgressBars: isLoading },
         enableFacetedValues: true,
         enableDensityToggle: false,

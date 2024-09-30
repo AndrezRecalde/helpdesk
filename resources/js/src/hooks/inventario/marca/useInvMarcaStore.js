@@ -19,7 +19,7 @@ export const useInvMarcaStore = () => {
 
     const dispatch = useDispatch();
 
-    const startLoadInvCategorias = async () => {
+    const startLoadInvMarcas = async () => {
         try {
             dispatch(onLoading(true));
             const { data } = await helpdeskApi.get("/inventario/marcas");
@@ -38,7 +38,7 @@ export const useInvMarcaStore = () => {
                     `/inventario/marca/update/${marca.id}`,
                     marca
                 );
-                startLoadInvCategorias();
+                startLoadInvMarcas();
                 dispatch(onLoadMessage(data));
                 setTimeout(() => {
                     dispatch(onLoadMessage(undefined));
@@ -49,7 +49,7 @@ export const useInvMarcaStore = () => {
                 "/inventario/marca/store",
                 marca
             );
-            startLoadInvCategorias();
+            startLoadInvMarcas();
             dispatch(onLoadMessage(data));
             setTimeout(() => {
                 dispatch(onLoadMessage(undefined));
@@ -91,7 +91,7 @@ export const useInvMarcaStore = () => {
         message,
         errores,
 
-        startLoadInvCategorias,
+        startLoadInvMarcas,
         startAddInvMarca,
         startDeleteInvMarca,
         setActivateInvMarca,
