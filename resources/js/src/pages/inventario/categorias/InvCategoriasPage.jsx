@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useInvCategoriaStore } from "../../../hooks";
 import { InvCategoriaModal, InvCategoriaTable } from "../../../components";
 
-export const InvCategoriasPage = () => {
+export const InvCategoriasPage = ({ tabValue }) => {
     const { startLoadInvCategorias, startClearInvCategorias } =
         useInvCategoriaStore();
 
@@ -12,7 +12,7 @@ export const InvCategoriasPage = () => {
         return () => {
             startClearInvCategorias();
         };
-    }, []);
+    }, [tabValue]);
 
     return (
         <>

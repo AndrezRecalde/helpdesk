@@ -18,8 +18,6 @@ import {
     ListPermisosAdminPage,
     ConfigInventarioPage,
 } from "../../../pages";
-import { HeaderMenu } from "../../../layouts/appshell/menu/HeaderMenu";
-/* import { ListPermisosAdminPage } from "../../../pages/permisos/ListPermisosAdminPage"; */
 
 export const PagesGerente = () => {
     //console.log('pagesGerente')
@@ -69,7 +67,7 @@ export const PagesGerente = () => {
                 />
 
                 <Route
-                    path="configuracion-inventario"
+                    path="/configuracion-inventario/:tabValue/*"
                     element={<ConfigInventarioPage />}
                 />
 

@@ -1,16 +1,14 @@
-import { useEffect } from "react";
 import { Modal } from "@mantine/core";
 import { InvCategoriaForm, TextSection } from "../../../../components";
 import { isNotEmpty, useForm } from "@mantine/form";
 import {
     useInvCategoriaStore,
-    useInvTipocategoriaStore,
     useInvUiCategoria,
 } from "../../../../hooks";
 
 export const InvCategoriaModal = () => {
-    const { startLoadTiposcategorias, startClearTiposcategorias } =
-        useInvTipocategoriaStore();
+    /* const { startLoadTiposcategorias, startClearTiposcategorias } =
+        useInvTipocategoriaStore(); */
     const { activateCategoria, setActivateInvCategoria } =
         useInvCategoriaStore();
     const { isOpenModalInvCategoria, modalActionCategoria } =
@@ -33,7 +31,7 @@ export const InvCategoriaModal = () => {
         }),
     });
 
-    useEffect(() => {
+    /* useEffect(() => {
         if (isOpenModalInvCategoria) {
             startLoadTiposcategorias();
         }
@@ -41,7 +39,7 @@ export const InvCategoriaModal = () => {
         return () => {
             startClearTiposcategorias();
         };
-    }, [isOpenModalInvCategoria]);
+    }, [isOpenModalInvCategoria]); */
 
     const handleCloseModal = () => {
         if (activateCategoria !== null) {

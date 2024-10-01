@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useInvTipocategoriaStore } from "../../../hooks";
 import { InvTipocategoriaModal, InvTipocategoriaTable } from "../../../components";
 
-export const InvTipocategoriasPage = () => {
+export const InvTipocategoriasPage = ({ tabValue }) => {
 
     const { startLoadTiposcategorias, startClearTiposcategorias } = useInvTipocategoriaStore();
 
@@ -12,7 +12,7 @@ export const InvTipocategoriasPage = () => {
       return () => {
         startClearTiposcategorias();
       }
-    }, []);
+    }, [tabValue]);
 
 
     return (

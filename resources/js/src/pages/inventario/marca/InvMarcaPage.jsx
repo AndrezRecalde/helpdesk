@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { InvMarcaModal, InvMarcaTable } from "../../../components"
 import { useInvMarcaStore } from "../../../hooks"
 
-export const InvMarcaPage = () => {
+export const InvMarcaPage = ({ tabValue }) => {
 
   const { startLoadInvMarcas, startClearInvMarcas } = useInvMarcaStore();
 
@@ -12,7 +12,7 @@ export const InvMarcaPage = () => {
     return () => {
         startClearInvMarcas();
     }
-  }, []);
+  }, [tabValue]);
 
 
   return (

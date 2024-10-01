@@ -12,9 +12,13 @@ import {
     InvMarcaPage,
     InvEstadoPage,
 } from "../../pages";
+import { Route, Routes, useNavigate, useParams } from "react-router-dom";
 
 export const ConfigInventarioPage = () => {
     const iconStyle = { width: rem(18), height: rem(18) };
+
+    const navigate = useNavigate();
+    const { tabValue } = useParams();
 
     return (
         <Container size="xxl">
@@ -23,7 +27,12 @@ export const ConfigInventarioPage = () => {
             </TitlePage>
             <Divider my="md" />
 
-            <Tabs defaultValue="categoria">
+            <Tabs
+                value={tabValue}
+                onChange={(value) =>
+                    navigate(`/gerencia/configuracion-inventario/${value}`)
+                }
+            >
                 <Tabs.List grow>
                     <Tabs.Tab
                         value="categoria"
@@ -54,26 +63,31 @@ export const ConfigInventarioPage = () => {
                 <Tabs.Panel value="categoria">
                     <SimpleGrid
                         cols={{ base: 1, sm: 1, md: 2, lg: 2 }}
+                        mt={20}
                     >
-                        <InvTipocategoriasPage />
-                        <InvCategoriasPage />
+                        <InvTipocategoriasPage tabValue={tabValue} />
+                        <InvCategoriasPage tabValue={tabValue} />
                     </SimpleGrid>
                 </Tabs.Panel>
 
                 <Tabs.Panel value="marca">
                     <SimpleGrid cols={1} mt={20}>
-                        <InvMarcaPage />
+                        <InvMarcaPage tabValue={tabValue} />
                     </SimpleGrid>
                 </Tabs.Panel>
 
                 <Tabs.Panel value="estado">
                     <SimpleGrid cols={1} mt={20}>
-                        <InvEstadoPage />
+                        <InvEstadoPage tabValue={tabValue} />
                     </SimpleGrid>
                 </Tabs.Panel>
 
                 <Tabs.Panel value="ubicacion">Table de Ubicaciones</Tabs.Panel>
             </Tabs>
+            {/* <Routes>
+                <Route path="categoria" element={<InvCategoriasPage />} />
+                <Route path="marca" element={<InvMarcaPage />} />
+            </Routes> */}
         </Container>
     );
 };
