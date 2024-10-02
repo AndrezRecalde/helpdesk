@@ -11,6 +11,7 @@ import {
     InvCategoriasPage,
     InvMarcaPage,
     InvEstadoPage,
+    InvUbicacionPage,
 } from "../../pages";
 import { Route, Routes, useNavigate, useParams } from "react-router-dom";
 
@@ -61,10 +62,7 @@ export const ConfigInventarioPage = () => {
                 </Tabs.List>
 
                 <Tabs.Panel value="categoria">
-                    <SimpleGrid
-                        cols={{ base: 1, sm: 1, md: 2, lg: 2 }}
-                        mt={20}
-                    >
+                    <SimpleGrid cols={{ base: 1, sm: 1, md: 2, lg: 2 }} mt={20}>
                         <InvTipocategoriasPage tabValue={tabValue} />
                         <InvCategoriasPage tabValue={tabValue} />
                     </SimpleGrid>
@@ -82,7 +80,11 @@ export const ConfigInventarioPage = () => {
                     </SimpleGrid>
                 </Tabs.Panel>
 
-                <Tabs.Panel value="ubicacion">Table de Ubicaciones</Tabs.Panel>
+                <Tabs.Panel value="ubicacion">
+                    <SimpleGrid cols={1} mt={20}>
+                        <InvUbicacionPage />
+                    </SimpleGrid>
+                </Tabs.Panel>
             </Tabs>
             {/* <Routes>
                 <Route path="categoria" element={<InvCategoriasPage />} />

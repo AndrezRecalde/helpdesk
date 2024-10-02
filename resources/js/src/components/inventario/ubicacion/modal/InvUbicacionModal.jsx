@@ -35,7 +35,7 @@ export const InvUbicacionModal = () => {
             size="lg"
             title={
                 <TextSection fz={18} fw={700} tt="capitalize">
-                    Marca
+                    Ubicacion física
                 </TextSection>
             }
             overlayProps={{

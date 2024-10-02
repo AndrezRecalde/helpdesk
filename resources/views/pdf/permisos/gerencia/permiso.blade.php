@@ -22,8 +22,8 @@
             /* Ancho de una página A4 */
             height: 297mm;
             /* Altura de una página A4 */
-            page-break-after: always;
-            margin-top: 20mm; /* Ajusta el margen superior aquí */
+            page-break-after: avoid;
+            margin-top: 10mm; /* Ajusta el margen superior aquí */
         }
 
         hr {
@@ -54,7 +54,7 @@
             background-color: black;
             border: medium none;
             border-top: 1px dashed white !important;
-            margin-top: 3%;
+            margin-top: 5%;
             margin-bottom: 3%;
         }
 
@@ -221,7 +221,7 @@
                     <td style="font-size: 16px">
                         <strong>{{ \Carbon\Carbon::parse($permisos->per_fecha_llegada)->toTimeString() }}</strong></td>
                 </tr>
-                <tr>
+                <tr style="margin">
                     <td colspan="5">OBSERVACION: </td>
                 </tr>
                 <tr>

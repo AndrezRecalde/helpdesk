@@ -122,7 +122,7 @@ export const PermisosPage = () => {
                     Ver permisos
                 </BtnSection>
             </Group>
-            <Card withBorder shadow="sm" radius="md" mt={20} mb={20}>
+            <Card withBorder shadow="sm" radius="sm" mt={20} mb={20}>
                 <LoadingOverlay
                     visible={
                         usuario.role_id !== 1 && loadDirectores ? true : false

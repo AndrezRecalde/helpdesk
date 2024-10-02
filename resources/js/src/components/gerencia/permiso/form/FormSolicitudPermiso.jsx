@@ -246,7 +246,6 @@ export const FormSolicitudPermiso = ({ form, disabled }) => {
                 <Grid.Col span={{ base: 12, md: 12, lg: 12 }}>
                     <Textarea
                         label="Observación"
-                        withAsterisk
                         description="Si el permiso es personal no es necesario registrar tu observación"
                         autosize
                         minRows={6}

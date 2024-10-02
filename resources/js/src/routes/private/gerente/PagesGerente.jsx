@@ -17,6 +17,7 @@ import {
     ListActividadesPage,
     ListPermisosAdminPage,
     ConfigInventarioPage,
+    InvEquiposPage,
 } from "../../../pages";
 
 export const PagesGerente = () => {
@@ -69,6 +70,11 @@ export const PagesGerente = () => {
                 <Route
                     path="/configuracion-inventario/:tabValue/*"
                     element={<ConfigInventarioPage />}
+                />
+
+                <Route
+                    path="/inventario/equipo"
+                    element={<InvEquiposPage />}
                 />
 
                 <Route path="dashboard" element={<DashGerenciaPage />} />

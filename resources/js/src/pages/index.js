@@ -57,6 +57,9 @@ import { InvEstadoPage } from "./inventario/estado/InvEstadoPage";
 /* Inventario: Ubicacion */
 import { InvUbicacionPage } from "./inventario/ubicacion/InvUbicacionPage";
 
+/* Inventario: Equipos */
+import { InvEquiposPage } from "./inventario/equipo/InvEquiposPage";
+
 /* Error */
 import { ErrorNotFound } from "./error/ErrorNotFound";
 import { ErrorAccessDenied } from "./error/ErrorAccessDenied";
@@ -103,6 +106,8 @@ export {
     InvEstadoPage,
 
     InvUbicacionPage,
+
+    InvEquiposPage,
 
     ErrorNotFound,
     ErrorAccessDenied
