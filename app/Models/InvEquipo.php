@@ -90,4 +90,12 @@ class InvEquipo extends Model
             return $query->where('inve.categoria_id', $categoria_id);
         }
     }
+
+    function scopeBuscarPorCodigo(Builder $query, string $codigo)
+    {
+        if ($codigo) {
+            return $query->where('codigo_antiguo', $codigo)
+                ->orWhere('codigo_nuevo', $codigo);
+        }
+    }
 }

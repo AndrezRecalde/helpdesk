@@ -1,6 +1,7 @@
 import { Menu, rem } from "@mantine/core";
 import {
     IconEditCircle,
+    IconEyeCheck,
     IconPrinter,
     IconSortAscending,
     IconTrash,
@@ -10,7 +11,7 @@ import {
 export const MenuUsersTable = ({ row, handleEdit, handleResetPassword }) => {
     return (
         <>
-             <Menu.Item
+            <Menu.Item
                 leftSection={
                     <IconEditCircle
                         style={{ width: rem(15), height: rem(15) }}
@@ -44,6 +45,32 @@ export const MenuTable_E = ({ row, handleEdit }) => {
                 onClick={() => handleEdit(row.original)}
             >
                 Editar
+            </Menu.Item>
+        </>
+    );
+};
+
+export const MenuTable_VE = ({ row, handleEdit, handleView }) => {
+    return (
+        <>
+            <Menu.Item
+                leftSection={
+                    <IconEditCircle
+                        style={{ width: rem(15), height: rem(15) }}
+                    />
+                }
+                onClick={() => handleEdit(row.original)}
+            >
+                Editar
+            </Menu.Item>
+            <Menu.Item
+                leftSection={
+                    <IconEyeCheck
+                        style={{ width: rem(15), height: rem(15) }} />
+                }
+                onClick={() => handleView(row.original)}
+            >
+                Ver
             </Menu.Item>
         </>
     );

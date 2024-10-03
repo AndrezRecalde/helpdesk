@@ -33,8 +33,9 @@ class InvEquipoController extends Controller
             ->join('inv_tipocategorias as invt', 'invt.id', 'invc.tipocategoria_id')
             ->join('inv_estados as inves', 'inves.id', 'inve.estado_id')
             ->join('inv_marcas as invm', 'invm.id', 'inve.marca_id')
-            ->byCodigoAntiguo($request->codigo_antiguo)
-            ->byCodigoNuevo($request->codigo_nuevo)
+            //->byCodigoAntiguo($request->codigo_antiguo)
+            //->byCodigoNuevo($request->codigo_nuevo)
+            ->buscarPorCodigo($request->codigo)
             ->byEstadoId($request->estado_id)
             ->byCategoriaId($request->categoria_id)
             ->latest();

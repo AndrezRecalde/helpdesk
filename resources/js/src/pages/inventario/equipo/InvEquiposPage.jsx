@@ -1,5 +1,5 @@
 import { Container } from "@mantine/core";
-import { TitlePage } from "../../../components";
+import { FilterFormEquipos, InvEquipoTable, TitlePage } from "../../../components";
 
 export const InvEquiposPage = () => {
     return (
@@ -7,6 +7,8 @@ export const InvEquiposPage = () => {
             <TitlePage order={2} size="h2">
                 Inventario de Equipos
             </TitlePage>
+            <FilterFormEquipos />
+            <InvEquipoTable />
         </Container>
     );
 };

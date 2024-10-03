@@ -8,7 +8,7 @@ import { useForm } from "@mantine/form";
 export const FilterFormDirecciones = () => {
     const { startLoadDirecciones, direcciones, clearDirecciones } =
         useDireccionStore();
-        const { startLoadDirectores } = useDirectorStore();
+    const { startLoadDirectores } = useDirectorStore();
 
     const form = useForm({
         initialValues: {
@@ -17,7 +17,7 @@ export const FilterFormDirecciones = () => {
         /* transformValues: (values) => ({
             cdgo_dprtmnto: Number(values.cdgo_dprtmnto) || ""
         }) */
-    })
+    });
 
     useEffect(() => {
         startLoadDirecciones();
@@ -31,7 +31,7 @@ export const FilterFormDirecciones = () => {
         e.preventDefault();
         startLoadDirectores(form.getValues());
         //console.log(form.getValues());
-    }
+    };
 
     return (
         <Fieldset mt={20} legend={<Text>Filtrar dirección</Text>}>

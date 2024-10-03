@@ -131,6 +131,13 @@ import { InvUbicacionTable } from "./inventario/ubicacion/table/InvUbicacionTabl
 import { InvUbicacionModal } from "./inventario/ubicacion/modal/InvUbicacionModal";
 import { InvUbicacionForm } from "./inventario/ubicacion/form/InvUbicacionForm";
 
+/* Inventario: Equipos */
+import { FilterFormEquipos } from "./inventario/equipo/filter/FilterFormEquipos";
+import { InvEquipoTable } from "./inventario/equipo/table/InvEquipoTable";
+import { InvEquipoModal } from "./inventario/equipo/modal/InvEquipoModal";
+import { InvEquipoForm } from "./inventario/equipo/form/InvEquipoForm";
+
+
 /* Elementos */
 import { Logo } from "./elements/application/Logo";
 import { TitlePage } from "./elements/titles/TitlePage";
@@ -157,6 +164,7 @@ import { FormRichText } from "./elements/rte/FormRichText";
 import {
     MenuUsersTable,
     MenuTable_E,
+    MenuTable_VE,
     MenuTable_T,
     MenuSolicitudTable,
     MenuTable_Per,
@@ -290,6 +298,12 @@ export {
     InvUbicacionModal,
     InvUbicacionForm,
 
+    /* Inventario: Equipos */
+    FilterFormEquipos,
+    InvEquipoTable,
+    InvEquipoModal,
+    InvEquipoForm,
+
     /* Elements */
     Logo,
     TitlePage,
@@ -311,6 +325,7 @@ export {
     FormRichText,
     MenuUsersTable,
     MenuTable_E,
+    MenuTable_VE,
     MenuTable_T,
     MenuSolicitudTable,
     MenuTable_Per,

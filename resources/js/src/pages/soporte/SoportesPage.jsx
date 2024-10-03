@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Card, Container, Group } from "@mantine/core";
+import { Container, Group } from "@mantine/core";
 import {
     FilterFormSoportes,
     TextSection,
@@ -12,7 +12,14 @@ import {
     ModalAnularSoporte,
     ModalDiagnostico,
 } from "../../components";
-import { useDireccionStore, useEstadoStore, useSoporteStore, useStorageField, useTitlePage, useUiSoporte } from "../../hooks";
+import {
+    useDireccionStore,
+    useEstadoStore,
+    useSoporteStore,
+    useStorageField,
+    useTitlePage,
+    useUiSoporte,
+} from "../../hooks";
 import { isNotEmpty, useForm } from "@mantine/form";
 import Swal from "sweetalert2";
 import dayjs from "dayjs";
@@ -48,7 +55,7 @@ export const SoportesPage = () => {
             //id_direccion: Number(values.id_direccion),
             id_usu_tecnico_asig: Number(values.id_usu_tecnico_asig) || null,
             anio: values.anio.getFullYear(),
-            id_estado: Number(values.id_estado) || null
+            id_estado: Number(values.id_estado) || null,
         }),
     });
 
@@ -115,18 +122,10 @@ export const SoportesPage = () => {
                     >
                         Crear nuevo
                     </BtnAddActions>
-                ) : ( null
-
-                ) }
+                ) : null}
             </Group>
             <FilterFormSoportes form={form} />
-            {soportes.length !== 0 ? (
-                <Card withBorder shadow="sm" radius="md" mt={20} mb={20}>
-                    <Card.Section>
-                        <SoportesTable />
-                    </Card.Section>
-                </Card>
-            ) : null}
+            {soportes.length !== 0 ? <SoportesTable /> : null}
             <ModalSolicitudAdminSoporte />
             <ModalCreateSoporte role={switch_role} />
             <ModalAsignarSoporte />

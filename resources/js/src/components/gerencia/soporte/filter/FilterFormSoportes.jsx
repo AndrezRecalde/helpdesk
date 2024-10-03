@@ -49,7 +49,7 @@ export const FilterFormSoportes = ({ form }) => {
     };
 
     return (
-        <Fieldset mt={20} legend={<TextSection tt="" fz={16} fw={700}>Filtrar Soportes</TextSection>}>
+        <Fieldset mt={20} mb={20} legend={<TextSection tt="" fz={16} fw={700}>Filtrar Soportes</TextSection>}>
             <Box
                 component="form"
                 onSubmit={form.onSubmit((_, e) => handleSubmit(e))}
