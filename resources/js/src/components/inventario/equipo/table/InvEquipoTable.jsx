@@ -5,7 +5,7 @@ import { useInvEquipoStore, useInvUiEquipo } from "../../../../hooks";
 
 export const InvEquipoTable = () => {
     const { isLoading, invEquipos, setActivateInvEquipo } = useInvEquipoStore();
-    const { modalActionEquipo } = useInvUiEquipo();
+    const { modalActionViewEquipo } = useInvUiEquipo();
 
     const columns = useMemo(
         () => [
@@ -46,6 +46,7 @@ export const InvEquipoTable = () => {
     const handleView = useCallback(
         (selected) => {
             console.log("editar");
+            modalActionViewEquipo(true);
         },
         [invEquipos]
     );

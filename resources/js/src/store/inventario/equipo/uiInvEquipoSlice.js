@@ -5,6 +5,7 @@ export const uiInvEquipoSlice = createSlice({
     initialState: {
         isOpenModalInvEquipo: false,
         isOpenModalAssignEquipo: false,
+        isOpenModalViewEquipo: false,
     },
     reducers: {
         onOpenModalInvEquipo: (state, { payload }) => {
@@ -13,8 +14,14 @@ export const uiInvEquipoSlice = createSlice({
         onOpenModalAssignEquipo: (state, { payload }) => {
             state.isOpenModalAssignEquipo = payload;
         },
+        onOpenModalViewEquipo: (state, { payload }) => {
+            state.isOpenModalViewEquipo = payload;
+        },
     },
 });
 
-export const { onOpenModalInvEquipo, onOpenModalAssignEquipo } =
-    uiInvEquipoSlice.actions;
+export const {
+    onOpenModalInvEquipo,
+    onOpenModalAssignEquipo,
+    onOpenModalViewEquipo,
+} = uiInvEquipoSlice.actions;

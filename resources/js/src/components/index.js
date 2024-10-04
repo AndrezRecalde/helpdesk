@@ -135,6 +135,7 @@ import { InvUbicacionForm } from "./inventario/ubicacion/form/InvUbicacionForm";
 import { FilterFormEquipos } from "./inventario/equipo/filter/FilterFormEquipos";
 import { InvEquipoTable } from "./inventario/equipo/table/InvEquipoTable";
 import { InvEquipoModal } from "./inventario/equipo/modal/InvEquipoModal";
+import { InvViewEquipoModal } from "./inventario/equipo/modal/InvViewEquipoModal";
 import { InvEquipoForm } from "./inventario/equipo/form/InvEquipoForm";
 
 
@@ -302,6 +303,7 @@ export {
     FilterFormEquipos,
     InvEquipoTable,
     InvEquipoModal,
+    InvViewEquipoModal,
     InvEquipoForm,
 
     /* Elements */
