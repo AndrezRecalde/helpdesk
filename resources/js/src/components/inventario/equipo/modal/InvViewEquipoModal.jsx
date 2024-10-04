@@ -1,21 +1,60 @@
-import { Card, Divider, Drawer, rem, Stack, Tabs, Text } from "@mantine/core";
+import {
+    Card,
+    Divider,
+    Drawer,
+    rem,
+    Stack,
+    Table,
+    Tabs,
+    Text,
+} from "@mantine/core";
 import { useInvUiEquipo } from "../../../../hooks";
 import { TitlePage } from "../../../../components";
-import { IconMessageCircle, IconPhoto, IconSettings } from "@tabler/icons-react";
+import { IconAdjustments, IconFiles, IconMapPin } from "@tabler/icons-react";
+
+const elements = [
+    { symbol: "BUENO", name: "ESTADO" },
+    { symbol: "DELL INSPIRON", name: "MARCA" },
+    { symbol: "3520", name: "MODELO" },
+    { symbol: "001-007-526", name: "NÚMERO SERIE" },
+    { symbol: "20/06/2023", name: "FECHA DE ADQUISICIÓN" },
+    { symbol: "NO REGISTRA", name: "FECHA DE AMORTIZACIÓN" },
+    { symbol: "5", name: "VIDA ÚTIL (EN AÑOS)" },
+    { symbol: "SÍ", name: "BIEN ADQUIRIDO" },
+    { symbol: "NO", name: "BIEN DONADO" },
+    { symbol: "NO", name: "BIEN USADO" },
+];
+const ubicaciones = [
+    { symbol: "NOMBRE DE EDIFICIO", name: "TALLERES DE SAN MATEO" },
+    { symbol: "UBICACIÓN FÍSICA", name: "SAN MATEO" },
+];
 
 export const InvViewEquipoModal = () => {
-    const iconStyle = { width: rem(12), height: rem(12) };
+    const iconStyle = { width: rem(18), height: rem(18) };
     const { isOpenModalViewEquipo, modalActionViewEquipo } = useInvUiEquipo();
 
     const handleCloseModal = () => {
         modalActionViewEquipo(false);
     };
 
+    const rows = elements.map((element) => (
+        <Table.Tr key={element.name}>
+            <Table.Td>{element.name}</Table.Td>
+            <Table.Td>{element.symbol}</Table.Td>
+        </Table.Tr>
+    ));
+    const ubicacion = ubicaciones.map((element) => (
+        <Table.Tr key={element.name}>
+            <Table.Td>{element.name}</Table.Td>
+            <Table.Td>{element.symbol}</Table.Td>
+        </Table.Tr>
+    ));
+
     return (
         <Drawer
             position="right"
-            size="xl"
-            opened={false}
+            size="50rem"
+            opened={true}
             onClose={handleCloseModal}
             title={
                 <TitlePage order={3} ta="left">
@@ -30,7 +69,15 @@ export const InvViewEquipoModal = () => {
                         001663
                     </Text>
                     <Text fz="xs" tt="uppercase" fw={700} c="dimmed">
-                        Codigo
+                        Codigo Nuevo
+                    </Text>
+                </div>
+                <div>
+                    <Text fz="md" fw={300}>
+                        001663
+                    </Text>
+                    <Text fz="xs" tt="uppercase" fw={700} c="dimmed">
+                        Codigo Antiguo
                     </Text>
                 </div>
                 <div>
@@ -68,32 +115,54 @@ export const InvViewEquipoModal = () => {
             </Stack>
 
             <Tabs mt={30} variant="outline" defaultValue="general">
-                <Tabs.List>
+                <Tabs.List grow>
                     <Tabs.Tab
                         value="general"
-                        leftSection={<IconPhoto style={iconStyle} />}
+                        leftSection={<IconAdjustments style={iconStyle} />}
                     >
                         General
                     </Tabs.Tab>
                     <Tabs.Tab
                         value="ubicacion"
-                        leftSection={<IconMessageCircle style={iconStyle} />}
+                        leftSection={<IconMapPin style={iconStyle} />}
                     >
-                        Ubicacion Fisica
+                        Ubicación Física
                     </Tabs.Tab>
                     <Tabs.Tab
-                        value="complementaria"
-                        leftSection={<IconSettings style={iconStyle} />}
+                        value="documentos"
+                        leftSection={<IconFiles style={iconStyle} />}
                     >
-                        Complementaria
+                        Doc. de Respaldo
                     </Tabs.Tab>
                 </Tabs.List>
 
-                <Tabs.Panel value="gallery">General</Tabs.Panel>
+                <Tabs.Panel value="general">
+                    <Table mt={20} withTableBorder withColumnBorders>
+                        <Table.Thead>
+                            <Table.Tr>
+                                <Table.Th>Caracteristicas</Table.Th>
+                                <Table.Th>Descripción</Table.Th>
+                            </Table.Tr>
+                        </Table.Thead>
+                        <Table.Tbody>{rows}</Table.Tbody>
+                    </Table>
+                </Tabs.Panel>
 
-                <Tabs.Panel value="messages">Ubicacion Fisica</Tabs.Panel>
+                <Tabs.Panel value="ubicacion">
+                    <Table mt={20} withTableBorder withColumnBorders>
+                        <Table.Thead>
+                            <Table.Tr>
+                                <Table.Th>Caracteristicas</Table.Th>
+                                <Table.Th>Descripción</Table.Th>
+                            </Table.Tr>
+                        </Table.Thead>
+                        <Table.Tbody>{ubicacion}</Table.Tbody>
+                    </Table>
+                </Tabs.Panel>
 
-                <Tabs.Panel value="settings">Complementaria</Tabs.Panel>
+                <Tabs.Panel value="documentos">
+                    Documentos de Respaldo
+                </Tabs.Panel>
             </Tabs>
         </Drawer>
     );

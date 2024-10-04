@@ -13,7 +13,7 @@ import {
     InvEstadoPage,
     InvUbicacionPage,
 } from "../../pages";
-import { Route, Routes, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 export const ConfigInventarioPage = () => {
     const iconStyle = { width: rem(18), height: rem(18) };
