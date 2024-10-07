@@ -76,8 +76,10 @@ class User extends Authenticatable
         //'paswrd' => 'string',
     ];
 
-    function equipos() : BelongsToMany {
-        return $this->belongsToMany(InvEquipo::class, 'usuario_equipo', 'cdgo_usrio', 'equipo_id');
+    function equipos(): BelongsToMany
+    {
+        return $this->belongsToMany(InvEquipo::class, 'usuario_equipo', 'usuario_id', 'equipo_id')
+                    ->withPivot('direccion_id', 'concepto_id');;
     }
 
     static function create(array $attributes = []): object

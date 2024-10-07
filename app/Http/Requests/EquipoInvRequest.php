@@ -40,8 +40,11 @@ class EquipoInvRequest extends FormRequest
             'categoria_id'      =>  'required',
             'estado_id'         =>  'required',
             'marca_id'          =>  'required',
-            'usuario'          =>  '',
-            'departamento'     =>  ''
+            'usuario_id'        =>  '',
+            'direccion_id'      =>  '',
+            'concepto_id'       =>  '',
+            'observacion'       => ''
+
         ];
     }
 

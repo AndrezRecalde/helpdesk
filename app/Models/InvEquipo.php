@@ -35,13 +35,14 @@ class InvEquipo extends Model
 
     function usuarios(): BelongsToMany
     {
-        return $this->belongsToMany(User::class, 'usuario_equipo', 'equipo_id', 'cdgo_usrio');
+        return $this->belongsToMany(User::class, 'usuario_equipo', 'equipo_id', 'usuario_id')
+                    ->withPivot('direccion_id', 'concepto_id');;
     }
 
-    function departamentos(): BelongsToMany
+    /* function departamentos(): BelongsToMany
     {
         return $this->belongsToMany(Departamento::class, 'departamento_equipo', 'equipo_id', 'cdgo_dprtmnto');
-    }
+    } */
 
     function ubicacion(): BelongsTo
     {

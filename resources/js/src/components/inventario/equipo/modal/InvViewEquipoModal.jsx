@@ -9,8 +9,13 @@ import {
     Text,
 } from "@mantine/core";
 import { useInvUiEquipo } from "../../../../hooks";
-import { TitlePage } from "../../../../components";
-import { IconAdjustments, IconFiles, IconMapPin } from "@tabler/icons-react";
+import { InvEquipoResponsablesTable, TitlePage } from "../../../../components";
+import {
+    IconAdjustments,
+    IconFiles,
+    IconMapPin,
+    IconUserCheck,
+} from "@tabler/icons-react";
 
 const elements = [
     { symbol: "BUENO", name: "ESTADO" },
@@ -25,8 +30,13 @@ const elements = [
     { symbol: "NO", name: "BIEN USADO" },
 ];
 const ubicaciones = [
-    { symbol: "NOMBRE DE EDIFICIO", name: "TALLERES DE SAN MATEO" },
-    { symbol: "UBICACIÓN FÍSICA", name: "SAN MATEO" },
+    { symbol: "TALLERES DE SAN MATEO", name: "NOMBRE DE EDIFICIO" },
+    { symbol: "SAN MATEO", name: "UBICACIÓN FÍSICA" },
+];
+
+const archivos = [
+    { documento: "REASIGNACION DE EQUIPOS", name: "documento.pdf" },
+    { documento: "BAJA DEL EQUIPO", name: "documento.pdf" },
 ];
 
 export const InvViewEquipoModal = () => {
@@ -43,10 +53,19 @@ export const InvViewEquipoModal = () => {
             <Table.Td>{element.symbol}</Table.Td>
         </Table.Tr>
     ));
+
     const ubicacion = ubicaciones.map((element) => (
         <Table.Tr key={element.name}>
             <Table.Td>{element.name}</Table.Td>
             <Table.Td>{element.symbol}</Table.Td>
+            <Table.Td>{element.descripcion}</Table.Td>
+        </Table.Tr>
+    ));
+
+    const documento = archivos.map((element) => (
+        <Table.Tr key={element.documento}>
+            <Table.Td>{element.documento}</Table.Td>
+            <Table.Td>{element.name}</Table.Td>
         </Table.Tr>
     ));
 
@@ -129,6 +148,12 @@ export const InvViewEquipoModal = () => {
                         Ubicación Física
                     </Tabs.Tab>
                     <Tabs.Tab
+                        value="responsable"
+                        leftSection={<IconUserCheck style={iconStyle} />}
+                    >
+                        Responsable
+                    </Tabs.Tab>
+                    <Tabs.Tab
                         value="documentos"
                         leftSection={<IconFiles style={iconStyle} />}
                     >
@@ -159,9 +184,19 @@ export const InvViewEquipoModal = () => {
                         <Table.Tbody>{ubicacion}</Table.Tbody>
                     </Table>
                 </Tabs.Panel>
-
+                <Tabs.Panel value="responsable">
+                    <InvEquipoResponsablesTable />
+                </Tabs.Panel>
                 <Tabs.Panel value="documentos">
-                    Documentos de Respaldo
+                    <Table mt={20} withTableBorder withColumnBorders>
+                        <Table.Thead>
+                            <Table.Tr>
+                                <Table.Th>Documento</Table.Th>
+                                <Table.Th>Archivo PDF</Table.Th>
+                            </Table.Tr>
+                        </Table.Thead>
+                        <Table.Tbody>{documento}</Table.Tbody>
+                    </Table>
                 </Tabs.Panel>
             </Tabs>
         </Drawer>

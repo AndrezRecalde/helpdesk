@@ -27,7 +27,6 @@ class InvEquipoController extends Controller
                                 inve.estado_id, inves.nombre_estado, inves.color,
                                 inve.marca_id, invm.nombre_marca')
             ->with(['usuarios'])
-            ->with(['departamentos'])
             ->join('inv_ubicaciones as invu', 'invu.id', 'inve.ubicacion_id')
             ->join('inv_categorias as invc', 'invc.id', 'inve.categoria_id')
             ->join('inv_tipocategorias as invt', 'invt.id', 'invc.tipocategoria_id')
@@ -51,12 +50,12 @@ class InvEquipoController extends Controller
         try {
             $equipo = InvEquipo::create($request->validated());
 
-            if ($request->filled('usuario')) {
-                $equipo->usuarios()->attach($request->usuario);
-            }
-
-            if ($request->filled('departamento')) {
-                $equipo->usuarios()->attach($request->departamento);
+            if ($request->filled('usuario_id' && $request->filled('direccion_id'))) {
+                $equipo->usuarios()->attach($request->usuario_id, [
+                    'direccion_id' => $request->direccion_id,
+                    'concepto_id'  => $request->concepto_id,
+                    'observacion' =>  $request->observacion
+                ]);
             }
 
             return response()->json([
@@ -75,12 +74,12 @@ class InvEquipoController extends Controller
             if ($equipo) {
                 $equipo->update($request->validated());
 
-                if ($request->filled('usuario')) {
-                    $equipo->usuarios()->attach($request->usuario);
-                }
-
-                if ($request->filled('departamento')) {
-                    $equipo->usuarios()->attach($request->departamento);
+                if ($request->filled('usuario_id' && $request->filled('direccion_id'))) {
+                    $equipo->usuarios()->attach($request->usuario_id, [
+                        'direccion_id' => $request->direccion_id,
+                        'concepto_id'  => $request->concepto_id,
+                        'observacion' =>  $request->observacion
+                    ]);
                 }
 
                 return response()->json(['status' => MsgStatus::Success, 'msg' => MsgStatus::Updated], 201);
@@ -97,12 +96,12 @@ class InvEquipoController extends Controller
         $equipo = InvEquipo::find($id);
         try {
             if ($equipo) {
-                if ($request->filled('usuario')) {
-                    $equipo->usuarios()->attach($request->usuario);
-                }
-
-                if ($request->filled('departamento')) {
-                    $equipo->usuarios()->attach($request->departamento);
+                if ($request->filled('usuario_id' && $request->filled('direccion_id'))) {
+                    $equipo->usuarios()->attach($request->usuario_id, [
+                        'direccion_id' => $request->direccion_id,
+                        'concepto_id'  => $request->concepto_id,
+                        'observacion'  =>  $request->observacion
+                    ]);
                 }
 
                 return response()->json(['status' => MsgStatus::Success, 'msg' => MsgStatus::Updated], 201);

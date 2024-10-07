@@ -134,8 +134,10 @@ import { InvUbicacionForm } from "./inventario/ubicacion/form/InvUbicacionForm";
 /* Inventario: Equipos */
 import { FilterFormEquipos } from "./inventario/equipo/filter/FilterFormEquipos";
 import { InvEquipoTable } from "./inventario/equipo/table/InvEquipoTable";
+import { InvEquipoResponsablesTable } from "./inventario/equipo/table/InvEquipoResponsablesTable";
 import { InvEquipoModal } from "./inventario/equipo/modal/InvEquipoModal";
 import { InvViewEquipoModal } from "./inventario/equipo/modal/InvViewEquipoModal";
+import { InvEquipoAsignacionModal } from "./inventario/equipo/modal/InvEquipoAsignacionModal";
 import { InvEquipoForm } from "./inventario/equipo/form/InvEquipoForm";
 
 
@@ -302,8 +304,10 @@ export {
     /* Inventario: Equipos */
     FilterFormEquipos,
     InvEquipoTable,
+    InvEquipoResponsablesTable,
     InvEquipoModal,
     InvViewEquipoModal,
+    InvEquipoAsignacionModal,
     InvEquipoForm,
 
     /* Elements */
