@@ -1,45 +1,41 @@
 import { useCallback, useMemo } from "react";
 import { useMantineReactTable } from "mantine-react-table";
-import { BtnSection, MenuTable_E, TableContent } from "../../../../components";
-import { useInvEstadoStore, useInvUiEstado } from "../../../../hooks";
+import { BtnSection, MenuTable_E, TableContent } from "../../../../components"
 import { IconCopyPlus } from "@tabler/icons-react";
+import { useInvConceptoStore, useInvUiConcepto } from "../../../../hooks";
 
-export const InvEstadoTable = () => {
+export const InvConceptoTable = () => {
 
-    const { isLoading, invEstados, setActivateInvEstado } = useInvEstadoStore();
-    const { modalActionEstado } = useInvUiEstado();
+    const { isLoading, invConceptos, setActivateInvConceptos } = useInvConceptoStore();
+    const { modalActionConcepto } = useInvUiConcepto();
 
     const columns = useMemo(
         () => [
             {
-                header: "Estado",
-                accessorKey: "nombre_estado",
-            },
-            {
-                header: "Color",
-                accessorKey: "color",
+                header: "Concepto de Estado",
+                accessorKey: "nombre_concepto",
             },
         ],
-        [invEstados]
+        [invConceptos]
     );
 
     const handleEditar = useCallback(
         (selected) => {
             console.log("editar");
-            setActivateInvEstado(selected);
-            modalActionEstado(true);
+            setActivateInvConceptos(selected);
+            modalActionConcepto(true);
         },
-        [invEstados]
+        [invConceptos]
     );
 
     const handleAgregar = useCallback(() => {
         console.log("agregar");
-        modalActionEstado(true);
-    }, [invEstados]);
+        modalActionConcepto(true);
+    }, [invConceptos]);
 
     const table = useMantineReactTable({
         columns,
-        data: invEstados, //must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
+        data: invConceptos, //must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
         state: { showProgressBars: isLoading },
         enableFacetedValues: true,
         enableDensityToggle: false,
@@ -59,5 +55,7 @@ export const InvEstadoTable = () => {
         ),
     });
 
-    return <TableContent table={table} />;
-};
+  return (
+    <TableContent table={table} />
+  )
+}

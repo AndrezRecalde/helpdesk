@@ -16,6 +16,7 @@ use App\Http\Controllers\Gerente\DashGerenteController;
 use App\Http\Controllers\Gerente\DireccionAdminController;
 use App\Http\Controllers\Gerente\EmpresaController;
 use App\Http\Controllers\Gerente\Inventario\InvCategoriaController;
+use App\Http\Controllers\Gerente\Inventario\InvConceptoController;
 use App\Http\Controllers\Gerente\Inventario\InvEquipoController;
 use App\Http\Controllers\Gerente\Inventario\InvEstadoController;
 use App\Http\Controllers\Gerente\Inventario\InvMarcaController;
@@ -127,6 +128,13 @@ Route::group(['prefix' => 'gerencia', 'middleware' => ['auth:sanctum']], functio
     Route::put('/inventario/estado/update/{id}', [InvEstadoController::class, 'update']);
     Route::delete('/inventario/estado/destroy/{id}', [InvEstadoController::class, 'destroy']);
 
+    /* CONCEPTOS DE PRESTAMOS */
+    Route::get('/inventario/conceptos', [InvConceptoController::class, 'getInvConceptos']);
+    Route::post('/inventario/concepto/store', [InvConceptoController::class, 'store']);
+    Route::put('/inventario/concepto/update/{id}', [InvConceptoController::class, 'update']);
+    Route::delete('/inventario/concepto/destroy/{id}', [InvConceptoController::class, 'destroy']);
+
+
     /* MARCAS  */
     Route::get('/inventario/marcas', [InvMarcaController::class, 'getMarcasInv']);
     Route::post('/inventario/marca/store', [InvMarcaController::class, 'store']);
@@ -146,9 +154,6 @@ Route::group(['prefix' => 'gerencia', 'middleware' => ['auth:sanctum']], functio
     Route::delete('/inventario/equipo/destroy/{id}', [InvEquipoController::class, 'destroy']);
     Route::put('/inventario/asignar/{id}', [InvEquipoController::class, 'assignResponsable']);
     Route::delete('/equipo/{equipo_id}/usuario/{user_id}', [InvEquipoController::class, 'removeUserFromEquipo']);
-
-
-
 });
 
 /* RUTAS: GERENTE O TECNICO */

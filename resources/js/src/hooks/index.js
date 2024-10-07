@@ -88,6 +88,10 @@ import { useInvUiMarca } from "./inventario/marca/useInvUiMarca";
 import { useInvEstadoStore } from "./inventario/estado/useInvEstadoStore";
 import { useInvUiEstado } from "./inventario/estado/useInvUiEstado";
 
+/* Inventario: Conceptos */
+import { useInvConceptoStore } from "./inventario/concepto/useInvConceptoStore";
+import { useInvUiConcepto } from "./inventario/concepto/useInvUiConcepto";
+
 
 /* Inventario: Equipos */
 import { useInvEquipoStore } from "./inventario/equipo/useInvEquipoStore";
@@ -166,6 +170,9 @@ export {
 
     useInvEstadoStore,
     useInvUiEstado,
+
+    useInvConceptoStore,
+    useInvUiConcepto,
 
     useInvEquipoStore,
     useInvUiEquipo,

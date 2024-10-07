@@ -36,6 +36,8 @@
         "@tiptap/pm": "^2.8.0",
         "@tiptap/react": "^2.8.0",
         "@tiptap/starter-kit": "^2.8.0",
+        "@types/react": "^18.3.11",
+        "@types/react-dom": "^18.3.0",
         "chart.js": "^4.4.1",
         "chartjs-plugin-datalabels": "^2.2.0",
         "clsx": "^2.1.1",

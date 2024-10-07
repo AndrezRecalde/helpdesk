@@ -13,6 +13,7 @@ import {
     estadoSlice,
     indicadorSlice,
     invCategoriaSlice,
+    invConceptoSlice,
     invEquipoSlice,
     invEstadoSlice,
     invMarcaSlice,
@@ -31,6 +32,7 @@ import {
     uiDirectorSlice,
     uiIndicadorSlice,
     uiInvCategoriaSlice,
+    uiInvConceptoSlice,
     uiInvEquipoSlice,
     uiInvEstadoSlice,
     uiInvMarcaSlice,
@@ -86,6 +88,9 @@ export const store = configureStore({
 
         invEstado: invEstadoSlice.reducer,
         uiInvEstado: uiInvEstadoSlice.reducer,
+
+        invConcepto: invConceptoSlice.reducer,
+        uiInvConcepto: uiInvConceptoSlice.reducer,
 
         invUbicacion: invUbicacionSlice.reducer,
         uiInvUbicacion: uiInvUbicacionSlice.reducer,
