@@ -4,6 +4,7 @@ import {
     onClearInvEstados,
     onDeleteInvEstado,
     onLoadErrores,
+    onLoading,
     onLoadInvEstados,
     onLoadMessage,
     onSetActivateInvEstado,

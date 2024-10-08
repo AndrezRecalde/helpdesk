@@ -1,5 +1,5 @@
 
-export const InvEquipoForm = () => {
+export const InvEquipoForm = ({ form }) => {
   return (
     <div>InvEquipoForm</div>
   )

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class InvEquipo extends Model
 {
@@ -36,7 +37,7 @@ class InvEquipo extends Model
     function usuarios(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'usuario_equipo', 'equipo_id', 'usuario_id')
-                    ->withPivot('direccion_id', 'concepto_id');;
+            ->withPivot('direccion_id', 'concepto_id');;
     }
 
     /* function departamentos(): BelongsToMany
@@ -62,6 +63,11 @@ class InvEquipo extends Model
     function marca(): BelongsTo
     {
         return $this->belongsTo(InvMarca::class, 'marca_id');
+    }
+
+    function documentos(): HasMany
+    {
+        return $this->hasMany(InvDocumentoEquipo::class, 'equipo_id');
     }
 
     function scopeCodigoAntiguo(Builder $query, $codigo_antiguo)

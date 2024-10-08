@@ -1,9 +1,10 @@
 import { useEffect } from "react";
 import { Modal } from "@mantine/core";
-import { TextSection } from "../../..";
+import { InvEquipoAsignacionForm, TextSection } from "../../../../components";
 import { isNotEmpty, useForm } from "@mantine/form";
 import {
     useDireccionStore,
+    useInvConceptoStore,
     useInvEquipoStore,
     useInvUiEquipo,
     useUsersStore,
@@ -15,21 +16,28 @@ export const InvEquipoAsignacionModal = () => {
         useInvUiEquipo();
     const { startLoadUsersGeneral, clearUsers } = useUsersStore();
     const { startLoadDirecciones, clearDirecciones } = useDireccionStore();
+    const { startLoadInvConceptos, startClearInvConceptos } = useInvConceptoStore();
 
     const form = useForm({
         initialValues: {
-            cdgo_usrio: null,
-            cdgo_dprtmnto: null,
+            usuario_id: null,
+            direccion_id: null,
+            concepto_id: null,
+            observacion: "",
         },
         validate: {
-            tipocategoria_id: isNotEmpty(
-                "Por favor ingrese el tipo de categoría"
+            usuario_id: isNotEmpty(
+                "Por favor seleccione un usuario responsable"
             ),
-            nombre_categoria: isNotEmpty("Por favor ingrese la categoría"),
+            direccion_id: isNotEmpty(
+                "Por favor seleccione una dirección o gestión"
+            ),
+            concepto_id: isNotEmpty("Por favor seleccione un estado de uso"),
         },
         transformValues: (values) => ({
-            cdgo_usrio: Number(values.cdgo_usrio) || null,
-            cdgo_dprtmnto: Number(values.cdgo_dprtmnto),
+            usuario_id: Number(values.usuario_id) || null,
+            direccion_id: Number(values.direccion_id),
+            concepto_id: Number(values.concepto_id) || null,
         }),
     });
 
@@ -37,11 +45,13 @@ export const InvEquipoAsignacionModal = () => {
         if (isOpenModalAssignEquipo) {
             startLoadUsersGeneral();
             startLoadDirecciones();
+            startLoadInvConceptos();
         }
 
         return () => {
             clearUsers();
             clearDirecciones();
+            startClearInvConceptos();
         };
     }, [isOpenModalAssignEquipo]);
 
@@ -60,7 +70,7 @@ export const InvEquipoAsignacionModal = () => {
             size="lg"
             title={
                 <TextSection fz={18} fw={700} tt="capitalize">
-                    Categorías
+                    Asignación Responsabilidad
                 </TextSection>
             }
             overlayProps={{
@@ -68,7 +78,7 @@ export const InvEquipoAsignacionModal = () => {
                 blur: 3,
             }}
         >
-            <InvEquipoAsignacionForm />
+            <InvEquipoAsignacionForm form={form} />
         </Modal>
     );
 };

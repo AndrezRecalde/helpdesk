@@ -54,6 +54,9 @@ import { InvMarcaPage } from "./inventario/marca/InvMarcaPage";
 /* Inventario: Estado */
 import { InvEstadoPage } from "./inventario/estado/InvEstadoPage";
 
+/* Inventario: Conceptos de Estados */
+import { InvConceptoPage } from "./inventario/concepto/InvConceptoPage";
+
 /* Inventario: Ubicacion */
 import { InvUbicacionPage } from "./inventario/ubicacion/InvUbicacionPage";
 
@@ -104,6 +107,8 @@ export {
     InvMarcaPage,
 
     InvEstadoPage,
+
+    InvConceptoPage,
 
     InvUbicacionPage,
 

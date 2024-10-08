@@ -31,7 +31,7 @@ export const useInvConceptoStore = () => {
         }
     };
 
-    const startAddInvConceptos = async (concepto) => {
+    const startAddInvConcepto = async (concepto) => {
         try {
             if (concepto.id) {
                 const { data } = helpdeskApi.put(
@@ -75,7 +75,7 @@ export const useInvConceptoStore = () => {
             ExceptionMessageError(error);
         }
     };
-    const setActivateInvConceptos = (conceptos) => {
+    const setActivateInvConcepto = (conceptos) => {
         dispatch(onSetActivateInvConcepto(conceptos));
     };
 
@@ -90,9 +90,9 @@ export const useInvConceptoStore = () => {
         message,
         errores,
         startLoadInvConceptos,
-        startAddInvConceptos,
+        startAddInvConcepto,
         startDeleteInvConcepto,
-        setActivateInvConceptos,
+        setActivateInvConcepto,
         startClearInvConceptos,
     };
 };

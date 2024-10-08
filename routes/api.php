@@ -17,6 +17,7 @@ use App\Http\Controllers\Gerente\DireccionAdminController;
 use App\Http\Controllers\Gerente\EmpresaController;
 use App\Http\Controllers\Gerente\Inventario\InvCategoriaController;
 use App\Http\Controllers\Gerente\Inventario\InvConceptoController;
+use App\Http\Controllers\Gerente\Inventario\InvDocumentoController;
 use App\Http\Controllers\Gerente\Inventario\InvEquipoController;
 use App\Http\Controllers\Gerente\Inventario\InvEstadoController;
 use App\Http\Controllers\Gerente\Inventario\InvMarcaController;
@@ -30,6 +31,7 @@ use App\Http\Controllers\Gerente\TipoContratoController;
 use App\Http\Controllers\Gerente\TipoSolicitudController;
 use App\Http\Controllers\Gerente\TipoUsuarioController;
 use App\Http\Controllers\Gerente\UserAdminController;
+use App\Models\InvDocumentoEquipo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -133,6 +135,12 @@ Route::group(['prefix' => 'gerencia', 'middleware' => ['auth:sanctum']], functio
     Route::post('/inventario/concepto/store', [InvConceptoController::class, 'store']);
     Route::put('/inventario/concepto/update/{id}', [InvConceptoController::class, 'update']);
     Route::delete('/inventario/concepto/destroy/{id}', [InvConceptoController::class, 'destroy']);
+
+    /* DOCUMENTOS DE EQUIPOS */
+    Route::post('/inventario/documento', [InvDocumentoController::class, 'getDocumentosForEquipos']);
+    Route::post('/inventario/documento/store', [InvDocumentoController::class, 'store']);
+    Route::put('/inventario/documento/update/{id}', [InvDocumentoController::class, 'update']);
+    Route::delete('/inventario/documento/destroy/{id}', [InvDocumentoController::class, 'destroy']);
 
 
     /* MARCAS  */

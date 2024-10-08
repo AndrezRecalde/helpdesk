@@ -126,6 +126,12 @@ import { InvEstadoTable } from "./inventario/estado/table/InvEstadoTable";
 import { InvEstadoModal } from "./inventario/estado/modal/InvEstadoModal";
 import { InvEstadoForm } from "./inventario/estado/form/InvEstadoForm";
 
+/* Inventario: Conceptos de Estados */
+import { InvConceptoTable } from "./inventario/concepto/table/InvConceptoTable";
+import { InvConceptoModal } from "./inventario/concepto/modal/InvConceptoModal";
+import { InvConceptoForm } from "./inventario/concepto/form/InvConceptoForm";
+
+
 /* Inventario: Ubicacion */
 import { InvUbicacionTable } from "./inventario/ubicacion/table/InvUbicacionTable";
 import { InvUbicacionModal } from "./inventario/ubicacion/modal/InvUbicacionModal";
@@ -139,6 +145,7 @@ import { InvEquipoModal } from "./inventario/equipo/modal/InvEquipoModal";
 import { InvViewEquipoModal } from "./inventario/equipo/modal/InvViewEquipoModal";
 import { InvEquipoAsignacionModal } from "./inventario/equipo/modal/InvEquipoAsignacionModal";
 import { InvEquipoForm } from "./inventario/equipo/form/InvEquipoForm";
+import { InvEquipoAsignacionForm } from "./inventario/equipo/form/InvEquipoAsignacionForm";
 
 
 /* Elementos */
@@ -296,6 +303,11 @@ export {
     InvEstadoModal,
     InvEstadoForm,
 
+    /* Inventario: Conceptos de Estados */
+    InvConceptoTable,
+    InvConceptoModal,
+    InvConceptoForm,
+
     /* Inventario: Ubicacion */
     InvUbicacionTable,
     InvUbicacionModal,
@@ -309,6 +321,7 @@ export {
     InvViewEquipoModal,
     InvEquipoAsignacionModal,
     InvEquipoForm,
+    InvEquipoAsignacionForm,
 
     /* Elements */
     Logo,

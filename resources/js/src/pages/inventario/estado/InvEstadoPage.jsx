@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { InvEstadoModal, InvEstadoTable } from "../../../components"
 import { useInvEstadoStore } from "../../../hooks"
 
-export const InvEstadoPage = () => {
+export const InvEstadoPage = ({ tabValue }) => {
   const { startLoadInvEstados, startClearInvEstados } = useInvEstadoStore();
 
   useEffect(() => {
@@ -11,7 +11,7 @@ export const InvEstadoPage = () => {
     return () => {
         startClearInvEstados();
     }
-  }, [])
+  }, [tabValue])
 
 
   return (

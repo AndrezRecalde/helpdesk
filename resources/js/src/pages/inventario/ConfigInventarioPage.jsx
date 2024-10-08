@@ -12,6 +12,7 @@ import {
     InvMarcaPage,
     InvEstadoPage,
     InvUbicacionPage,
+    InvConceptoPage,
 } from "../../pages";
 import { useNavigate, useParams } from "react-router-dom";
 
@@ -75,14 +76,15 @@ export const ConfigInventarioPage = () => {
                 </Tabs.Panel>
 
                 <Tabs.Panel value="estado">
-                    <SimpleGrid cols={1} mt={20}>
+                    <SimpleGrid cols={{ base: 1, sm: 1, md: 2, lg: 2 }} mt={20}>
                         <InvEstadoPage tabValue={tabValue} />
+                        <InvConceptoPage tabValue={tabValue} />
                     </SimpleGrid>
                 </Tabs.Panel>
 
                 <Tabs.Panel value="ubicacion">
                     <SimpleGrid cols={1} mt={20}>
-                        <InvUbicacionPage />
+                        <InvUbicacionPage tabValue={tabValue} />
                     </SimpleGrid>
                 </Tabs.Panel>
             </Tabs>

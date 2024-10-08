@@ -73,7 +73,7 @@ export const InvViewEquipoModal = () => {
         <Drawer
             position="right"
             size="50rem"
-            opened={true}
+            opened={isOpenModalViewEquipo}
             onClose={handleCloseModal}
             title={
                 <TitlePage order={3} ta="left">

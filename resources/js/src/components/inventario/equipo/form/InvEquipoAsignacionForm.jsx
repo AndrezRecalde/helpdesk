@@ -3,6 +3,7 @@ import { BtnSubmit } from "../../../../components";
 import { IconChecks } from "@tabler/icons-react";
 import {
     useDireccionStore,
+    useInvConceptoStore,
     useInvEquipoStore,
     useInvUiEquipo,
     useUsersStore,
@@ -14,6 +15,7 @@ export const InvEquipoAsignacionForm = ({ form }) => {
     const { modalActionAssignEquipo } = useInvUiEquipo();
     const { users } = useUsersStore();
     const { direcciones } = useDireccionStore();
+    const { invConceptos } = useInvConceptoStore();
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -40,7 +42,7 @@ export const InvEquipoAsignacionForm = ({ form }) => {
                     withAsterisk
                     label="Seleccione Usuario"
                     placeholder="Seleccione el usuario a asignar"
-                    {...form.getInputProps("cdgo_usrio")}
+                    {...form.getInputProps("usuario_id")}
                     data={users.map((user) => {
                         return {
                             value: user.cdgo_usrio.toString(),
@@ -52,7 +54,7 @@ export const InvEquipoAsignacionForm = ({ form }) => {
                     withAsterisk
                     label="Seleccione Dirección"
                     placeholder="Seleccione la dirección"
-                    {...form.getInputProps("cdgo_dprtmnto")}
+                    {...form.getInputProps("direccion_id")}
                     data={direcciones.map((direccion) => {
                         return {
                             value: direccion.cdgo_dprtmnto.toString(),
@@ -64,8 +66,13 @@ export const InvEquipoAsignacionForm = ({ form }) => {
                     withAsterisk
                     label="Estado"
                     placeholder="Seleccione un estado"
-                    {...form.getInputProps("estado_id")}
-                    data={[]}
+                    {...form.getInputProps("concepto_id")}
+                    data={invConceptos.map((concepto) => {
+                        return {
+                            value: concepto.id.toString(),
+                            label: concepto.nombre_concepto,
+                        };
+                    })}
                 />
                 <Textarea
                     label="Observación"

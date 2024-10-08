@@ -1,6 +1,115 @@
+import { Modal } from "@mantine/core";
+import { InvEquipoForm, TextSection } from "../../../../components";
+import {
+    //useInvCategoriaStore,
+    useInvEquipoStore,
+    useInvEstadoStore,
+    useInvMarcaStore,
+    useInvTipocategoriaStore,
+    useInvUbicacionStore,
+    useInvUiEquipo,
+} from "../../../../hooks";
+import { hasLength, isNotEmpty, useForm } from "@mantine/form";
 
 export const InvEquipoModal = () => {
-  return (
-    <div>InvEquipoModal</div>
-  )
-}
+    const { activateInvEquipo, setActivateInvEquipo } = useInvEquipoStore();
+    const { isOpenModalInvEquipo, modalActionEquipo } = useInvUiEquipo();
+
+    const { startLoadInvUbicaciones, startClearInvUbicaciones } =
+        useInvUbicacionStore();
+    const { startLoadTiposcategorias, startClearTiposcategorias } =
+        useInvTipocategoriaStore();
+    /* const { startLoadInvCategorias, startClearInvCategorias } =
+        useInvCategoriaStore(); */
+    const { startLoadInvEstados, startClearInvEstados } = useInvEstadoStore();
+    const { startLoadInvMarcas, startClearInvMarcas } = useInvMarcaStore();
+
+    const form = useForm({
+        initialValues: {
+            nombre_equipo: "",
+            codigo_antiguo: "",
+            codigo_nuevo: "",
+            modelo: "",
+            numero_serie: "",
+            fecha_adquisicion: new Date(),
+            fecha_amortizacion: new Date(),
+            vida_util: "",
+            descripcion: "",
+            bien_adquirido: false,
+            bien_donado: false,
+            bien_usado: false,
+            ubicacion_id: null,
+            categoria_id: null,
+            estado_id: null,
+            marca_id: null,
+        },
+        validate: {
+            nombre_equipo: isNotEmpty("Por favor ingrese la marca"),
+            modelo: isNotEmpty("Por favor ingrese el modelo"),
+            numero_serie: isNotEmpty("Por favor ingrese el número de serie"),
+            vida_util: isNotEmpty("Por favor ingrese la vida útil"),
+            descripcion: hasLength(
+                { min: 5, max: 200 },
+                "La descripción debe tener entre 5 y 200 caracteres"
+            ),
+            ubicacion_id: isNotEmpty(
+                "Por favor seleccione la ubicación física"
+            ),
+            categoria_id: isNotEmpty("Por favor seleccione una categoría"),
+            estado_id: isNotEmpty("Por favor seleccione el estado del equipo"),
+            marca_id: isNotEmpty("Por favor seleccione una marca"),
+        },
+        transformValues: (values) => ({
+            ...values,
+            ubicacion_id: Number(values.ubicacion_id) || null,
+            categoria_id: Number(values.categoria_id) || null,
+            estado_id: Number(values.estado_id) || null,
+            marca_id: Number(values.marca_id) || null,
+        }),
+    });
+
+    useEffect(() => {
+        if (isOpenModalInvEquipo) {
+            startLoadInvUbicaciones();
+            startLoadTiposcategorias();
+            //startLoadInvCategorias();
+            startLoadInvEstados();
+            startLoadInvMarcas();
+        }
+
+        return () => {
+            startClearInvUbicaciones();
+            startClearTiposcategorias();
+            //startClearInvCategorias();
+            startClearInvEstados();
+            startClearInvMarcas();
+        };
+    }, [isOpenModalInvEquipo]);
+
+    const handleCloseModal = () => {
+        if (activateInvEquipo !== null) {
+            setActivateInvEquipo(null);
+        }
+        modalActionEquipo(false);
+    };
+
+    return (
+        <Modal
+            centered
+            opened={isOpenModalInvEquipo}
+            onClose={handleCloseModal}
+            size="lg"
+            title={
+                <TextSection fz={18} fw={700} tt="capitalize">
+                    Equipo
+                </TextSection>
+            }
+            overlayProps={{
+                backgroundOpacity: 0.55,
+                blur: 3,
+            }}
+        >
+            <InvEquipoForm form={form} />
+        </Modal>
+    );
+};

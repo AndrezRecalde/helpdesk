@@ -2,13 +2,21 @@ import { Container, Group } from "@mantine/core";
 import {
     BtnSection,
     FilterFormEquipos,
+    InvEquipoAsignacionModal,
     InvEquipoTable,
     InvViewEquipoModal,
     TitlePage,
 } from "../../../components";
-import { IconPlus } from "@tabler/icons-react";
+import { IconCopyPlus } from "@tabler/icons-react";
+import { useInvUiConcepto } from "../../../hooks";
 
 export const InvEquiposPage = () => {
+    const { modalActionConcepto } = useInvUiConcepto();
+
+    const handleAgregar = () => {
+        modalActionConcepto(true);
+    }
+
     return (
         <Container size="xxl">
             <Group justify="space-between">
@@ -16,8 +24,8 @@ export const InvEquiposPage = () => {
                     Inventario de Equipos
                 </TitlePage>
                 <BtnSection
-                    IconSection={IconPlus}
-                    handleAction={() => console.log("clic")}
+                    IconSection={IconCopyPlus}
+                    handleAction={handleAgregar}
                 >
                     Agregar
                 </BtnSection>
@@ -26,6 +34,7 @@ export const InvEquiposPage = () => {
             <InvEquipoTable />
 
             <InvViewEquipoModal />
+            <InvEquipoAsignacionModal />
         </Container>
     );
 };
