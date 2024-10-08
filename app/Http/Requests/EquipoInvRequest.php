@@ -43,7 +43,7 @@ class EquipoInvRequest extends FormRequest
             'usuario_id'        =>  '',
             'direccion_id'      =>  '',
             'concepto_id'       =>  '',
-            'observacion'       => ''
+            'observacion'       =>  ''
 
         ];
     }
@@ -51,10 +51,10 @@ class EquipoInvRequest extends FormRequest
     function message(): array
     {
         return [
-            'nombre_equipo.required'    =>  'El nombre del equipo es requerido',
+            'nombre_equipo.required'    =>   'El nombre del equipo es requerido',
             'modelo.required'           =>   'El modelo es requerido',
             'numero_serie.required'     =>   'El número de serie es requerido',
-            'fecha_adquisicion.required' =>   'La fecha de adquisición es requerida',
+            'fecha_adquisicion.required' =>  'La fecha de adquisición es requerida',
             'vida_util.required'        =>   'Coloque la vida útil en años',
             'descripcion.required'      =>   'Por favor coloqué una descripción al equipo',
             'bien_adquirido.required'   =>   'Por favor seleccione una opción',

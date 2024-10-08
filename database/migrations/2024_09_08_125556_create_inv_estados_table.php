@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('inv_estados', function (Blueprint $table) {
             $table->id();
-            $table->strign('nombre_estado');
+            $table->string('nombre_estado');
             $table->string('color');
             $table->timestamps();
         });

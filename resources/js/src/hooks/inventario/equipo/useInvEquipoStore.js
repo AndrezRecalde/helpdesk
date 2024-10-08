@@ -26,7 +26,7 @@ export const useInvEquipoStore = () => {
     }) => {
         try {
             dispatch(onLoading(true));
-            const { data } = await helpdeskApi.post("/inventario/equipos", {
+            const { data } = await helpdeskApi.post("/gerencia/inventario/equipos", {
                 codigo_antiguo,
                 codigo_nuevo,
                 estado_id,
@@ -44,7 +44,7 @@ export const useInvEquipoStore = () => {
         try {
             if (equipo.id) {
                 const { data } = await helpdeskApi.put(
-                    `/inventario/equipo/update/${equipo.id}`,
+                    `/gerencia/inventario/equipo/update/${equipo.id}`,
                     equipo
                 );
                 dispatch(onLoadMessage(data));
@@ -54,7 +54,7 @@ export const useInvEquipoStore = () => {
                 return;
             }
             const { data } = await helpdeskApi.post(
-                "/inventario/equipo/store",
+                "/gerencia/inventario/equipo/store",
                 equipo
             );
             dispatch(onLoadMessage(data));
@@ -70,7 +70,7 @@ export const useInvEquipoStore = () => {
     const startDeleteInvEquipo = async (equipo) => {
         try {
             const { data } = await helpdeskApi.delete(
-                `/inventario/equipo/destroy/${equipo.id}`
+                `/gerencia/inventario/equipo/destroy/${equipo.id}`
             );
             dispatch(onDeleteInvEquipo());
             dispatch(onLoadMessage(data));
@@ -95,7 +95,7 @@ export const useInvEquipoStore = () => {
         try {
             dispatch(onLoading(true));
             const { data } = await helpdeskApi.put(
-                `/inventario/asignar/${equipo.id}`,
+                `/gerencia/inventario/asignar/${equipo.id}`,
                 equipo
             );
             dispatch(onLoadMessage(data));
@@ -112,7 +112,7 @@ export const useInvEquipoStore = () => {
         try {
             dispatch(onLoading(true));
             const { data } = await helpdeskApi.delete(
-                `/equipo/${equipo_id}/usuario/${user_id}`
+                `/gerencia/inventario/equipo/${equipo_id}/usuario/${user_id}`
             );
             dispatch(onLoadMessage(data));
             setTimeout(() => {

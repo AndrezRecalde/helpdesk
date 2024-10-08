@@ -22,7 +22,7 @@ export const useInvUbicacionStore = () => {
     const startLoadInvUbicaciones = async () => {
         try {
             dispatch(onLoading(true));
-            const { data } = await helpdeskApi.get("/inventario/ubicaciones");
+            const { data } = await helpdeskApi.get("/gerencia/inventario/ubicaciones");
             const { ubicaciones } = data;
             dispatch(onLoadInvUbicaciones(ubicaciones));
         } catch (error) {
@@ -35,7 +35,7 @@ export const useInvUbicacionStore = () => {
         try {
             if (ubicacion.id) {
                 const { data } = await helpdeskApi.put(
-                    `/inventario/ubicacion/update/${ubicacion.id}`,
+                    `/gerencia/inventario/ubicacion/update/${ubicacion.id}`,
                     ubicacion
                 );
                 startLoadInvUbicaciones();
@@ -46,7 +46,7 @@ export const useInvUbicacionStore = () => {
                 return;
             }
             const { data } = await helpdeskApi.post(
-                "/inventario/ubicacion/store",
+                "/gerencia/inventario/ubicacion/store",
                 ubicacion
             );
             startLoadInvUbicaciones();
@@ -63,7 +63,7 @@ export const useInvUbicacionStore = () => {
     const startDeleteInvUbicacion = async (ubicacion) => {
         try {
             const { data } = await helpdeskApi.delete(
-                `/inventario/ubicacion/destroy/${ubicacion.id}`
+                `/gerencia/inventario/ubicacion/destroy/${ubicacion.id}`
             );
             dispatch(onDeleteInvUbicacion());
             dispatch(onLoadMessage(data));

@@ -22,7 +22,7 @@ export const useInvConceptoStore = () => {
     const startLoadInvConceptos = async () => {
         try {
             dispatch(onLoading(true));
-            const { data } = await helpdeskApi.get("/inventario/concepto");
+            const { data } = await helpdeskApi.get("/gerencia/inventario/conceptos");
             const { conceptos } = data;
             dispatch(onLoadInvConceptos(conceptos));
         } catch (error) {
@@ -35,7 +35,7 @@ export const useInvConceptoStore = () => {
         try {
             if (concepto.id) {
                 const { data } = helpdeskApi.put(
-                    `/inventario/concepto/update/${concepto.id}`,
+                    `/gerencia/inventario/concepto/update/${concepto.id}`,
                     concepto
                 );
                 startLoadInvConceptos();
@@ -46,7 +46,7 @@ export const useInvConceptoStore = () => {
                 return;
             }
             const { data } = await helpdeskApi.post(
-                "/inventario/concepto/store",
+                "/gerencia/inventario/concepto/store",
                 concepto
             );
             startLoadInvConceptos();
@@ -63,7 +63,7 @@ export const useInvConceptoStore = () => {
     const startDeleteInvConcepto = async (conceptos) => {
         try {
             const { data } = await helpdeskApi.delete(
-                `/inventario/concepto/destroy/${conceptos.id}`
+                `/gerencia/inventario/concepto/destroy/${conceptos.id}`
             );
             dispatch(onDeleteInvConcepto());
             dispatch(onLoadMessage(data));

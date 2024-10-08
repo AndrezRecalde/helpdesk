@@ -161,7 +161,7 @@ Route::group(['prefix' => 'gerencia', 'middleware' => ['auth:sanctum']], functio
     Route::put('/inventario/equipo/update/{id}', [InvEquipoController::class, 'update']);
     Route::delete('/inventario/equipo/destroy/{id}', [InvEquipoController::class, 'destroy']);
     Route::put('/inventario/asignar/{id}', [InvEquipoController::class, 'assignResponsable']);
-    Route::delete('/equipo/{equipo_id}/usuario/{user_id}', [InvEquipoController::class, 'removeUserFromEquipo']);
+    Route::delete('/inventario/equipo/{equipo_id}/usuario/{user_id}', [InvEquipoController::class, 'removeUserFromEquipo']);
 });
 
 /* RUTAS: GERENTE O TECNICO */

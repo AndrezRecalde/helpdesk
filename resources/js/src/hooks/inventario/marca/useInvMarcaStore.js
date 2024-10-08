@@ -22,7 +22,7 @@ export const useInvMarcaStore = () => {
     const startLoadInvMarcas = async () => {
         try {
             dispatch(onLoading(true));
-            const { data } = await helpdeskApi.get("/inventario/marcas");
+            const { data } = await helpdeskApi.get("/gerencia/inventario/marcas");
             const { marcas } = data;
             dispatch(onLoadInvMarcas(marcas));
         } catch (error) {
@@ -35,7 +35,7 @@ export const useInvMarcaStore = () => {
         try {
             if (marca.id) {
                 const { data } = await helpdeskApi.put(
-                    `/inventario/marca/update/${marca.id}`,
+                    `/gerencia/inventario/marca/update/${marca.id}`,
                     marca
                 );
                 startLoadInvMarcas();
@@ -46,7 +46,7 @@ export const useInvMarcaStore = () => {
                 return;
             }
             const { data } = await helpdeskApi.post(
-                "/inventario/marca/store",
+                "/gerencia/inventario/marca/store",
                 marca
             );
             startLoadInvMarcas();

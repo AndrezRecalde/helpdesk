@@ -10,6 +10,7 @@ import {
     useInvUiEquipo,
 } from "../../../../hooks";
 import { hasLength, isNotEmpty, useForm } from "@mantine/form";
+import { useEffect } from "react";
 
 export const InvEquipoModal = () => {
     const { activateInvEquipo, setActivateInvEquipo } = useInvEquipoStore();
@@ -39,9 +40,16 @@ export const InvEquipoModal = () => {
             bien_donado: false,
             bien_usado: false,
             ubicacion_id: null,
+            tipocategoria_id: null,
             categoria_id: null,
             estado_id: null,
             marca_id: null,
+
+            usuario_id: null,
+            direccion_id: null,
+            concepto_id: null,
+            observacion: ""
+
         },
         validate: {
             nombre_equipo: isNotEmpty("Por favor ingrese la marca"),
@@ -58,6 +66,7 @@ export const InvEquipoModal = () => {
             categoria_id: isNotEmpty("Por favor seleccione una categoría"),
             estado_id: isNotEmpty("Por favor seleccione el estado del equipo"),
             marca_id: isNotEmpty("Por favor seleccione una marca"),
+
         },
         transformValues: (values) => ({
             ...values,
@@ -65,6 +74,11 @@ export const InvEquipoModal = () => {
             categoria_id: Number(values.categoria_id) || null,
             estado_id: Number(values.estado_id) || null,
             marca_id: Number(values.marca_id) || null,
+
+            usuario_id: Number(values.usuario_id) || null,
+            direccion_id: Number(values.direccion_id),
+            concepto_id: Number(values.concepto_id) || null,
+
         }),
     });
 
@@ -98,7 +112,7 @@ export const InvEquipoModal = () => {
             centered
             opened={isOpenModalInvEquipo}
             onClose={handleCloseModal}
-            size="lg"
+            size="65rem"
             title={
                 <TextSection fz={18} fw={700} tt="capitalize">
                     Equipo

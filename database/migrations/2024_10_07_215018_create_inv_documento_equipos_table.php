@@ -16,11 +16,10 @@ return new class extends Migration
             $table->string('nombre_documento');
             $table->string('documento');
             $table->unsignedBigInteger('equipo_id');
+            $table->timestamps();
 
             $table->foreign('equipo_id')->references('id')->on('inv_equipos')->onDelete('cascade');
-
-
-            $table->timestamps();
+            $table->index('equipo_id');
         });
     }
 

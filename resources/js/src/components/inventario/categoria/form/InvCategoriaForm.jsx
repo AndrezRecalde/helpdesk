@@ -16,7 +16,7 @@ export const InvCategoriaForm = ({ form }) => {
             form.setValues({
                 ...activateCategoria,
                 tipocategoria_id:
-                    activateCategoria.tipocategoria_id.id.toString(),
+                    activateCategoria.tipocategoria_id.toString(),
             });
         }
     }, [activateCategoria]);

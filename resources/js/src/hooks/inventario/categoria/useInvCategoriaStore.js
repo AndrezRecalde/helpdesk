@@ -25,7 +25,7 @@ export const useInvCategoriaStore = () => {
     }) => {
         try {
             dispatch(onLoading(true));
-            const { data } = await helpdeskApi.post("/inventario/categorias", {
+            const { data } = await helpdeskApi.post("/gerencia/inventario/categorias", {
                 tipocategoria_id,
                 activo,
             });
@@ -41,7 +41,7 @@ export const useInvCategoriaStore = () => {
         try {
             if (categoria.id) {
                 const { data } = await helpdeskApi.put(
-                    `/inventario/categoria/update/${categoria.id}`
+                    `/gerencia/inventario/categoria/update/${categoria.id}`
                 );
                 startLoadInvCategorias({});
                 dispatch(onLoadMessage(data));
@@ -51,7 +51,7 @@ export const useInvCategoriaStore = () => {
                 return;
             }
             const { data } = await helpdeskApi.post(
-                "/inventario/categoria/store",
+                "/gerencia/inventario/categoria/store",
                 categoria
             );
             startLoadInvCategorias({});
@@ -68,7 +68,7 @@ export const useInvCategoriaStore = () => {
     const startDeleteInvCategoria = async (categoria) => {
         try {
             const { data } = await helpdeskApi.delete(
-                `/inventario/categoria/destroy/${categoria.id}`
+                `/gerencia/inventario/categoria/destroy/${categoria.id}`
             );
             dispatch(onDeleteInvCategoria());
             dispatch(onLoadMessage(data));

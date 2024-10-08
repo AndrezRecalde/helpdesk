@@ -99,20 +99,20 @@ export const InvViewEquipoModal = () => {
                         Codigo Antiguo
                     </Text>
                 </div>
-                <div>
+                {/* <div>
                     <Text fz="md" fw={300}>
                         PROPIEDAD, PLANTA Y EQUIPO DE ADMINISTRACION
                     </Text>
                     <Text fz="xs" tt="uppercase" fw={700} c="dimmed">
                         Tipo
                     </Text>
-                </div>
+                </div> */}
                 <div>
                     <Text fz="md" fw={300}>
                         BIENES MUEBLES
                     </Text>
                     <Text fz="xs" tt="uppercase" fw={700} c="dimmed">
-                        SubTipo
+                        Tipo de Categoría
                     </Text>
                 </div>
                 <div>

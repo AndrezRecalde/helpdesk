@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('inv_conceptos', function (Blueprint $table) {
             $table->id();
-            $table->strign('nombre_concepto');
+            $table->string('nombre_concepto');
             $table->timestamps();
         });
     }

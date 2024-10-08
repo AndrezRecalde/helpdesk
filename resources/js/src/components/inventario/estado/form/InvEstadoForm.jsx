@@ -43,7 +43,7 @@ export const InvEstadoForm = ({ form }) => {
             >
                 <TextInput
                     label="Marca"
-                    placeholder="Digite el nombre el nombre del estado"
+                    placeholder="Digite el nombre del estado"
                     {...form.getInputProps("nombre_estado")}
                 />
                 <BtnSubmit fontSize={16} IconSection={IconChecks}>

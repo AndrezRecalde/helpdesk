@@ -146,7 +146,9 @@ import { InvViewEquipoModal } from "./inventario/equipo/modal/InvViewEquipoModal
 import { InvEquipoAsignacionModal } from "./inventario/equipo/modal/InvEquipoAsignacionModal";
 import { InvEquipoForm } from "./inventario/equipo/form/InvEquipoForm";
 import { InvEquipoAsignacionForm } from "./inventario/equipo/form/InvEquipoAsignacionForm";
-
+import { InvAsignacionForm } from "./inventario/equipo/form/InvAsignacionForm";
+import { InvEquipoGeneralForm } from "./inventario/equipo/form/stepper/InvEquipoGeneralForm";
+import { InvEquipoComplementaria } from "./inventario/equipo/form/stepper/InvEquipoComplementaria";
 
 /* Elementos */
 import { Logo } from "./elements/application/Logo";
@@ -321,7 +323,10 @@ export {
     InvViewEquipoModal,
     InvEquipoAsignacionModal,
     InvEquipoForm,
+    InvAsignacionForm,
     InvEquipoAsignacionForm,
+    InvEquipoGeneralForm,
+    InvEquipoComplementaria,
 
     /* Elements */
     Logo,

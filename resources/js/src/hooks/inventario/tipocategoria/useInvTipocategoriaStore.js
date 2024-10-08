@@ -53,7 +53,7 @@ export const useInvTipocategoriaStore = () => {
                 return;
             }
             const { data } = await helpdeskApi.post(
-                "/inventario/tipo-categoria/store",
+                "/gerencia/inventario/tipo-categoria/store",
                 tipocategoria
             );
             startLoadTiposcategorias();

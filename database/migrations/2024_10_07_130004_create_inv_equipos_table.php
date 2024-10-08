@@ -25,11 +25,24 @@ return new class extends Migration
             $table->boolean('bien_adquirido')->default(false);
             $table->boolean('bien_donado')->default(false);
             $table->boolean('bien_usado')->default(false);
-            $table->unsignedInteger('ubicacion_id');
-            $table->unsignedInteger('categoria_id');
-            $table->unsignedInteger('estado_id');
-            $table->unsignedInteger('marca_id');
+            $table->unsignedBigInteger('ubicacion_id');
+            $table->unsignedBigInteger('categoria_id');
+            $table->unsignedBigInteger('estado_id');
+            $table->unsignedBigInteger('marca_id');
             $table->timestamps();
+
+
+            $table->foreign('ubicacion_id')->references('id')->on('inv_ubicaciones')->onDelete('cascade');
+            $table->foreign('categoria_id')->references('id')->on('inv_categorias')->onDelete('cascade');
+            $table->foreign('estado_id')->references('id')->on('inv_estados')->onDelete('cascade');
+            $table->foreign('marca_id')->references('id')->on('inv_marcas')->onDelete('cascade');
+
+            $table->index('ubicacion_id');
+            $table->index('categoria_id');
+            $table->index('estado_id');
+            $table->index('marca_id');
+
+
         });
     }
 

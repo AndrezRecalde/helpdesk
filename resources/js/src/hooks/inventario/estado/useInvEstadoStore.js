@@ -22,7 +22,7 @@ export const useInvEstadoStore = () => {
     const startLoadInvEstados = async () => {
         try {
             dispatch(onLoading(true));
-            const { data } = await helpdeskApi.get("/inventario/estados");
+            const { data } = await helpdeskApi.get("/gerencia/inventario/estados");
             const { estados } = data;
             dispatch(onLoadInvEstados(estados));
         } catch (error) {
@@ -35,7 +35,7 @@ export const useInvEstadoStore = () => {
         try {
             if (estado.id) {
                 const { data } = await helpdeskApi.put(
-                    `/inventario/estado/update/${estado.id}`,
+                    `/gerencia/inventario/estado/update/${estado.id}`,
                     estado
                 );
                 startLoadInvEstados();
@@ -46,7 +46,7 @@ export const useInvEstadoStore = () => {
                 return;
             }
             const { data } = await helpdeskApi.post(
-                "/inventario/estado/store",
+                "/gerencia/inventario/estado/store",
                 estado
             );
             startLoadInvEstados();
@@ -63,7 +63,7 @@ export const useInvEstadoStore = () => {
     const startDeleteInvEstado = async (estado) => {
         try {
             const { data } = await helpdeskApi.delete(
-                `/inventario/estado/destroy/${estado.id}`
+                `/gerencia/inventario/estado/destroy/${estado.id}`
             );
             dispatch(onDeleteInvEstado());
             dispatch(onLoadMessage(data));

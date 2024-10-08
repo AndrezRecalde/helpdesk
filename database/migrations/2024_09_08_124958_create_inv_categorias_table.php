@@ -14,9 +14,15 @@ return new class extends Migration
         Schema::create('inv_categorias', function (Blueprint $table) {
             $table->id();
             $table->string('nombre_categoria');
-            $table->unsignedInteger('tipocategoria_id');
+            $table->unsignedBigInteger('tipocategoria_id');
             $table->boolean('activo');
             $table->timestamps();
+
+            $table->foreign('tipocategoria_id')->references('id')->on('inv_tipocategorias')->onDelete('cascade');
+
+
+            $table->index('tipocategoria_id');
+
         });
     }
 

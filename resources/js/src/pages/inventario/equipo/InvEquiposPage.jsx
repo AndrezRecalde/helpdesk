@@ -3,18 +3,19 @@ import {
     BtnSection,
     FilterFormEquipos,
     InvEquipoAsignacionModal,
+    InvEquipoModal,
     InvEquipoTable,
     InvViewEquipoModal,
     TitlePage,
 } from "../../../components";
 import { IconCopyPlus } from "@tabler/icons-react";
-import { useInvUiConcepto } from "../../../hooks";
+import { useInvUiEquipo } from "../../../hooks";
 
 export const InvEquiposPage = () => {
-    const { modalActionConcepto } = useInvUiConcepto();
+    const { modalActionEquipo } = useInvUiEquipo();
 
     const handleAgregar = () => {
-        modalActionConcepto(true);
+        modalActionEquipo(true);
     }
 
     return (
@@ -35,6 +36,7 @@ export const InvEquiposPage = () => {
 
             <InvViewEquipoModal />
             <InvEquipoAsignacionModal />
+            <InvEquipoModal />
         </Container>
     );
 };
