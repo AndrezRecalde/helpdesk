@@ -16,22 +16,33 @@ class InvEquipo extends Model
     protected $table = 'inv_equipos';
 
     protected $fillable = [
-        'nombre_equipo',
-        'codigo_antiguo',
-        'codigo_nuevo',
+        //'nombre_equipo',
         'modelo',
         'numero_serie',
+        'codigo_antiguo',
+        'codigo_nuevo',
         'fecha_adquisicion',
         'fecha_amortizacion',
+        'fecha_baja',
         'vida_util',
         'descripcion',
         'bien_adquirido',
         'bien_donado',
         'bien_usado',
+        'stock',
         'ubicacion_id',
         'categoria_id',
         'estado_id',
-        'marca_id'
+        'marca_id',
+    ];
+
+    protected $casts = [
+        'bien_adquirido' => 'boolean',
+        'bien_donado' => 'boolean',
+        'bien_usado' => 'boolean',
+        'fecha_adquisicion' => 'date',
+        'fecha_amortizacion' => 'date',
+        'fecha_baja'        => 'date'
     ];
 
     function usuarios(): BelongsToMany
@@ -68,6 +79,33 @@ class InvEquipo extends Model
     function documentos(): HasMany
     {
         return $this->hasMany(InvDocumentoEquipo::class, 'equipo_id');
+    }
+
+    // Método para agregar stock
+    public function agregarStock($cantidad)
+    {
+        $this->stock += $cantidad;
+        $this->save();
+    }
+
+    // Método para reducir stock
+    public function reducirStock($cantidad)
+    {
+        // Verificar si la cantidad solicitada es mayor al stock disponible
+        if ($this->stock >= $cantidad) {
+            $this->stock -= $cantidad;
+            $this->save();
+            return [
+                'status' => 'success',
+                'msg' => "Stock reducido con éxito. Cantidad actual: {$this->stock}"
+            ];
+        } else {
+            // Lógica para manejar cuando no hay suficiente stock
+            return [
+                'status' => 'error',
+                'msg' => "No hay suficiente stock. Disponible: {$this->stock}, Solicitado: {$cantidad}"
+            ];
+        }
     }
 
     function scopeCodigoAntiguo(Builder $query, $codigo_antiguo)

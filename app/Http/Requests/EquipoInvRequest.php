@@ -36,6 +36,7 @@ class EquipoInvRequest extends FormRequest
             'bien_adquirido'    =>  'required',
             'bien_donado'       =>  'required',
             'bien_usado'        =>  'required',
+            'stock'             =>  '',
             'ubicacion_id'      =>  '',
             'categoria_id'      =>  'required',
             'estado_id'         =>  'required',

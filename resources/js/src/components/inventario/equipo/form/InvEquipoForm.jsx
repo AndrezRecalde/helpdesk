@@ -20,7 +20,7 @@ export const InvEquipoForm = ({ form }) => {
         switch (active) {
             case 0:
                 if (
-                    errors.hasOwnProperty("nombre_equipo") ||
+                    errors.hasOwnProperty("ubicacion_id") ||
                     errors.hasOwnProperty("modelo") ||
                     errors.hasOwnProperty("numero_serie") ||
                     errors.hasOwnProperty("marca_id") ||
@@ -75,7 +75,7 @@ export const InvEquipoForm = ({ form }) => {
 
     return (
         <>
-            <Stepper active={active} onStepClick={setActive}>
+            <Stepper active={active} onStepClick={setActive} allowNextStepsSelect={false}>
                 <Stepper.Step
                     label="Informacion"
                     description="Información General"

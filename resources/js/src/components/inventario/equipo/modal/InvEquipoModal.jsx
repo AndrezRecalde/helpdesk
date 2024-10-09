@@ -29,18 +29,19 @@ export const InvEquipoModal = () => {
 
     const form = useForm({
         initialValues: {
-            nombre_equipo: "",
-            codigo_antiguo: "",
-            codigo_nuevo: "",
+            //nombre_equipo: "",
             modelo: "",
             numero_serie: "",
+            codigo_antiguo: "",
+            codigo_nuevo: "",
             fecha_adquisicion: new Date(),
             fecha_amortizacion: new Date(),
-            vida_util: "",
+            vida_util: 1,
             descripcion: "",
             bien_adquirido: false,
             bien_donado: false,
             bien_usado: false,
+            stock: 1,
             ubicacion_id: null,
             tipocategoria_id: null,
             categoria_id: null,
@@ -54,12 +55,12 @@ export const InvEquipoModal = () => {
 
         },
         validate: {
-            nombre_equipo: isNotEmpty("Por favor ingrese la marca"),
+            //nombre_equipo: isNotEmpty("Por favor ingrese la marca"),
             modelo: isNotEmpty("Por favor ingrese el modelo"),
             numero_serie: isNotEmpty("Por favor ingrese el número de serie"),
             vida_util: isNotEmpty("Por favor ingrese la vida útil"),
             descripcion: hasLength(
-                { min: 5, max: 200 },
+                { min: 5, max: 300 },
                 "La descripción debe tener entre 5 y 200 caracteres"
             ),
             ubicacion_id: isNotEmpty(

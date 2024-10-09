@@ -17,6 +17,12 @@ export const InvEquipoComplementaria = ({ form }) => {
             justify="center"
             gap="lg"
         >
+            <NumberInput
+                label="Stock"
+                placeholder="Agregue Stock para este tipo de equipo"
+                allowNegative={false}
+                {...form.getInputProps("stock")}
+            />
             <div>
                 <TextSection fw={500}>Modalidad del bien: </TextSection>
                 <Group>
@@ -62,6 +68,7 @@ export const InvEquipoComplementaria = ({ form }) => {
             <NumberInput
                 label="Vida útil (En años)"
                 placeholder="Seleccione la vida útil en años"
+                allowNegative={false}
                 {...form.getInputProps("vida_util")}
             />
             <Textarea
