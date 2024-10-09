@@ -49,7 +49,7 @@ export const AdminDireccionesPage = () => {
 
     return (
         <Container size="xxl">
-            <TitlePage order={2} size="h2">
+            <TitlePage order={2}>
                 Administrar Direcciones
             </TitlePage>
             <FilterFormDirecciones />

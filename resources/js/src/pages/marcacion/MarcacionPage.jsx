@@ -37,7 +37,7 @@ export const MarcacionPage = () => {
 
     return (
         <Container size="xxl">
-            <TitlePage order={1} size="h1">
+            <TitlePage order={1}>
                 Mis marcaciones
             </TitlePage>
             <FilterFormMarcaciones form={form} handleSubmit={handleSubmit} />

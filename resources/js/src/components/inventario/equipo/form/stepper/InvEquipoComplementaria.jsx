@@ -7,6 +7,7 @@ import {
     Textarea,
 } from "@mantine/core";
 import { DateInput } from "@mantine/dates";
+import { TextSection } from "../../../../../components";
 
 export const InvEquipoComplementaria = ({ form }) => {
     return (
@@ -16,17 +17,30 @@ export const InvEquipoComplementaria = ({ form }) => {
             justify="center"
             gap="lg"
         >
-            <Checkbox.Group
-                defaultValue={["bien_adquirido"]}
-                label="Selecione la modalidad del bien"
-                withAsterisk
-            >
-                <Group mt="xs">
-                    <Checkbox value="bien_adquirido" label="Bien adquirido" />
-                    <Checkbox value="bien_donado" label="Bien donado" />
-                    <Checkbox value="bien_usado" label="Bien usado" />
+            <div>
+                <TextSection fw={500}>Modalidad del bien: </TextSection>
+                <Group>
+                    <Checkbox
+                        label="Bien adquirido"
+                        {...form.getInputProps("bien_adquirido", {
+                            type: "checkbox",
+                        })}
+                    />
+                    <Checkbox
+                        label="Bien donado"
+                        {...form.getInputProps("bien_donado", {
+                            type: "checkbox",
+                        })}
+                    />
+                    <Checkbox
+                        label="Bien usado"
+                        {...form.getInputProps("bien_usado", {
+                            type: "checkbox",
+                        })}
+                    />
                 </Group>
-            </Checkbox.Group>
+            </div>
+
             <SimpleGrid cols={{ base: 1, xs: 1, sm: 2, md: 2, lg: 2 }}>
                 <DateInput
                     //dateParser={dateParser}
@@ -46,8 +60,9 @@ export const InvEquipoComplementaria = ({ form }) => {
                 />
             </SimpleGrid>
             <NumberInput
-                label="Vida útil"
+                label="Vida útil (En años)"
                 placeholder="Seleccione la vida útil en años"
+                {...form.getInputProps("vida_util")}
             />
             <Textarea
                 label="Descripción del equipo"

@@ -6,10 +6,10 @@ export const TableEfectividadAreas = () => {
     const { efectividadForAreas } = useIndicadorStore();
     return (
         <>
-            <TitlePage fw={900} mt={20} order={3} size="h3">
+            <TitlePage fw={900} mt={20} order={3}>
                 B. CALIDAD DE LA EFECTIVIDAD
             </TitlePage>
-            <TitlePage mt={20} order={6} size="h6">
+            <TitlePage mt={20} order={6}>
                 EFECTIVIDAD POR ÁREA
             </TitlePage>
             <Table.ScrollContainer>

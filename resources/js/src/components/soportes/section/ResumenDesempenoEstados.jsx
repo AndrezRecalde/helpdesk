@@ -12,7 +12,7 @@ export const ResumenDesempenoEstados = () => {
 
     return (
         <>
-            <TitlePage fw={900} mt={20} order={3} size="h3">
+            <TitlePage fw={900} mt={20} order={3}>
                 A. EFICIENCIA DE DESEMPEÑO
             </TitlePage>
             <TextSection fw={700} tt="" fz={16} ta="left">

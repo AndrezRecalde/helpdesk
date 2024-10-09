@@ -35,7 +35,7 @@ export const DashGerenciaPage = () => {
     return (
         <Container size="xxl">
             <Box pos="relative">
-                <TitlePage order={2} size="h2">
+                <TitlePage order={2}>
                     Panel de Soporte Técnico
                 </TitlePage>
                 <LoadingOverlay

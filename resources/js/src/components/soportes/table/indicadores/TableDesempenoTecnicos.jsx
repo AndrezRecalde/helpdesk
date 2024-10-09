@@ -6,7 +6,7 @@ export const TableDesempenoTecnicos = () => {
     const { desempenoForTecnicos } = useIndicadorStore();
     return (
         <>
-            <TitlePage mt={20} order={6} size="h6">
+            <TitlePage mt={20} order={6}>
                 CASOS POR TÉCNICOS
             </TitlePage>
             <Table.ScrollContainer>

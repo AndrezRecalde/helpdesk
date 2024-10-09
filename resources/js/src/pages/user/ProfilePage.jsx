@@ -46,7 +46,7 @@ export const ProfilePage = () => {
 
     return (
         <Container size="sm">
-            <TitlePage order={1} size="h1">
+            <TitlePage order={1}>
                 Perfil
             </TitlePage>
             <CardProfile usuario={usuario} handleAction={handleAction} />

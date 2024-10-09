@@ -112,7 +112,7 @@ export const PermisosPage = () => {
     return (
         <Container size="md">
             <Group justify="space-between">
-                <TitlePage order={2} size="h2">
+                <TitlePage order={2}>
                     Crear Permiso
                 </TitlePage>
                 <BtnSection

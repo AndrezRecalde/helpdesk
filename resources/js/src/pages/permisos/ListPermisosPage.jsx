@@ -82,7 +82,7 @@ export const ListPermisosPage = () => {
     return (
         <Container size="xl">
             <Group justify="space-between">
-                <TitlePage order={2} size="h2">
+                <TitlePage order={2}>
                     Lista de permisos - {new Date().getFullYear()}
                 </TitlePage>
                 <BtnSection

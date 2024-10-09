@@ -108,7 +108,7 @@ export const SoportesPage = () => {
 
     return (
         <Container size="xxl">
-            <TitlePage order={2} size="h2">
+            <TitlePage order={2}>
                 Gestión De Soportes
             </TitlePage>
             <Group justify="space-between">

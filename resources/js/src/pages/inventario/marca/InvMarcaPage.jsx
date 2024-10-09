@@ -1,7 +1,8 @@
 import { useEffect } from "react";
-import { InvMarcaModal, InvMarcaTable } from "../../../components";
+import { InvMarcaModal, InvMarcaTable, TitlePage } from "../../../components";
 import { useInvMarcaStore } from "../../../hooks";
 import Swal from "sweetalert2";
+import { Divider } from "@mantine/core";
 
 export const InvMarcaPage = ({ tabValue }) => {
     const { startLoadInvMarcas, startClearInvMarcas, message, errores } =
@@ -43,9 +44,11 @@ export const InvMarcaPage = ({ tabValue }) => {
     }, [errores]);
 
     return (
-        <>
+        <div>
+            <TitlePage order={4}>Marcas de Equipos</TitlePage>
+            <Divider my="sm" />
             <InvMarcaTable />
             <InvMarcaModal />
-        </>
+        </div>
     );
 };

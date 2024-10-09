@@ -14,10 +14,10 @@ export const TableIndicadorEficacia = () => {
 
     return (
         <>
-            <TitlePage fw={900} mt={20} order={3} size="h3">
+            <TitlePage fw={900} mt={20} order={3}>
                 C. EFICACIA
             </TitlePage>
-            <TitlePage mt={20} order={6} size="h6">
+            <TitlePage mt={20} order={6}>
                 C.1 CASOS DE FINALIZADOS/META(30 X DIA, EN{" "}
                 {sumaDiasHabiles[0]?.dias_habiles} DIAS) = <Badge variant="light" color="teal.7" size="lg" radius="sm">{porcentajeEficacia}%</Badge>
             </TitlePage>

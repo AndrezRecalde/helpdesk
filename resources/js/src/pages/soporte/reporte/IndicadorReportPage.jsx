@@ -72,7 +72,7 @@ export const IndicadorReportPage = () => {
 
     return (
         <Container size="xxl">
-            <TitlePage order={2} size="h2">
+            <TitlePage order={2}>
                 Reporte de indicadores
             </TitlePage>
             <FilterFormSearchDates

@@ -36,7 +36,7 @@ export const ActividadPage = () => {
 
     return (
         <Container size="sm" my="md">
-            <TitlePage order={2} size="h2">
+            <TitlePage order={2}>
                 Registrar actividad
             </TitlePage>
             <Card withBorder shadow="sm" radius="md" mt="md">

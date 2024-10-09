@@ -1,6 +1,23 @@
+import { useEffect } from "react";
 import { Select, SimpleGrid, Stack, TextInput } from "@mantine/core";
+import {
+    useInvCategoriaStore,
+    useInvEstadoStore,
+    useInvMarcaStore,
+    useInvTipocategoriaStore,
+} from "../../../../../hooks";
 
 export const InvEquipoGeneralForm = ({ form }) => {
+    const { tipocategoria_id } = form.values;
+    const { invMarcas } = useInvMarcaStore();
+    const { invEstados } = useInvEstadoStore();
+    const { tiposcategorias } = useInvTipocategoriaStore();
+    const { startLoadInvCategorias, categorias } = useInvCategoriaStore();
+
+    useEffect(() => {
+        startLoadInvCategorias({ tipocategoria_id: tipocategoria_id });
+    }, [tipocategoria_id]);
+
     return (
         <Stack
             bg="var(--mantine-color-body)"
@@ -34,7 +51,7 @@ export const InvEquipoGeneralForm = ({ form }) => {
                 <TextInput
                     label="Número de serie"
                     placeholder="Digite el número de serie"
-                    {...form.getInputProps("modelo")}
+                    {...form.getInputProps("numero_serie")}
                 />
             </SimpleGrid>
             <SimpleGrid cols={{ base: 1, xs: 1, sm: 2, md: 2, lg: 2 }}>
@@ -42,15 +59,25 @@ export const InvEquipoGeneralForm = ({ form }) => {
                     withAsterisk
                     label="Marca del Equipo"
                     placeholder="Seleccione una marca"
-                    {...form.getInputProps("tipocategoria_id")}
-                    data={[]}
+                    {...form.getInputProps("marca_id")}
+                    data={invMarcas.map((marca) => {
+                        return {
+                            value: marca.id.toString(),
+                            label: marca.nombre_marca,
+                        };
+                    })}
                 />
                 <Select
                     withAsterisk
                     label="Estado del equipo"
                     placeholder="Seleccione el estado del equipo"
                     {...form.getInputProps("estado_id")}
-                    data={[]}
+                    data={invEstados.map((estado) => {
+                        return {
+                            value: estado.id.toString(),
+                            label: estado.nombre_estado,
+                        };
+                    })}
                 />
             </SimpleGrid>
             <SimpleGrid cols={{ base: 1, xs: 1, sm: 2, md: 2, lg: 2 }}>
@@ -59,14 +86,24 @@ export const InvEquipoGeneralForm = ({ form }) => {
                     label="Tipo Categoría"
                     placeholder="Seleccione un tipo de categoría"
                     {...form.getInputProps("tipocategoria_id")}
-                    data={[]}
+                    data={tiposcategorias.map((tipo) => {
+                        return {
+                            value: tipo.id.toString(),
+                            label: tipo.nombre_tipocategoria,
+                        };
+                    })}
                 />
                 <Select
                     withAsterisk
                     label="Categoría"
                     placeholder="Seleccione la categoría"
                     {...form.getInputProps("categoria_id")}
-                    data={[]}
+                    data={categorias.map((categoria) => {
+                        return {
+                            value: categoria.id.toString(),
+                            label: categoria.nombre_categoria,
+                        };
+                    })}
                 />
             </SimpleGrid>
         </Stack>

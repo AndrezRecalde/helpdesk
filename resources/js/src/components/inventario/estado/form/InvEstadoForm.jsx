@@ -1,34 +1,31 @@
 import { useEffect } from "react";
-import { Box, Stack, TextInput } from "@mantine/core";
+import { Box, ColorInput, Stack, TextInput } from "@mantine/core";
 import { BtnSubmit } from "../../../../components";
 import { IconChecks } from "@tabler/icons-react";
 import { useInvEstadoStore, useInvUiEstado } from "../../../../hooks";
 
-
 export const InvEstadoForm = ({ form }) => {
+    const { startAddInvEstado, activateInvEstado, setActivateInvEstado } =
+        useInvEstadoStore();
+    const { modalActionEstado } = useInvUiEstado();
 
-   const { startAddInvEstado, activateInvEstado, setActivateInvEstado } = useInvEstadoStore();
-   const { modalActionEstado } = useInvUiEstado();
+    useEffect(() => {
+        if (activateInvEstado !== null) {
+            form.setValues({
+                ...activateInvEstado,
+            });
+        }
+    }, [activateInvEstado]);
 
-   useEffect(() => {
-     if (activateInvEstado !== null) {
-        form.setValues({
-            ...activateInvEstado,
-        });
-     }
-
-   }, [activateInvEstado]);
-
-   const handleSubmit = (e) => {
-    e.preventDefault();
-    startAddInvEstado(form.getValues());
-    if (activateInvEstado !== null) {
-        setActivateInvEstado(null);
-    }
-    form.reset();
-    modalActionEstado(false);
-};
-
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        startAddInvEstado(form.getValues());
+        if (activateInvEstado !== null) {
+            setActivateInvEstado(null);
+        }
+        form.reset();
+        modalActionEstado(false);
+    };
 
     return (
         <Box
@@ -42,9 +39,14 @@ export const InvEstadoForm = ({ form }) => {
                 gap="lg"
             >
                 <TextInput
-                    label="Marca"
+                    label="Estado"
                     placeholder="Digite el nombre del estado"
                     {...form.getInputProps("nombre_estado")}
+                />
+                <ColorInput
+                    label="Color del estado"
+                    placeholder="Seleccione un color para el estado"
+                    {...form.getInputProps("color")}
                 />
                 <BtnSubmit fontSize={16} IconSection={IconChecks}>
                     Guardar

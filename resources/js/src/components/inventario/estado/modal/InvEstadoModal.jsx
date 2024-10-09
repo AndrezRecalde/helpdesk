@@ -34,7 +34,7 @@ export const InvEstadoModal = () => {
             size="lg"
             title={
                 <TextSection fz={18} fw={700} tt="capitalize">
-                    Marca
+                    Estado del Equipo
                 </TextSection>
             }
             overlayProps={{

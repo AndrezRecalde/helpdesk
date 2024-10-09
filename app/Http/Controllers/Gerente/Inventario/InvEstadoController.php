@@ -13,7 +13,7 @@ class InvEstadoController extends Controller
 {
     function getEstadosInv(): JsonResponse
     {
-        $estados = InvEstado::get(['id', 'nombre_estado']);
+        $estados = InvEstado::get(['id', 'nombre_estado', 'color']);
 
         return response()->json([
             'status' => MsgStatus::Success,

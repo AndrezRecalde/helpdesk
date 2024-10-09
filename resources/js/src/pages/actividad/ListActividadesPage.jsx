@@ -148,7 +148,7 @@ export const ListActividadesPage = () => {
 
     return (
         <Container size="xl" my="md">
-            <TitlePage order={2} size="h2">
+            <TitlePage order={2}>
                 Lista de actividades
             </TitlePage>
             <LoadingOverlay

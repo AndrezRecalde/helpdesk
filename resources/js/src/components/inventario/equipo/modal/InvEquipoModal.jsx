@@ -1,6 +1,7 @@
 import { Modal } from "@mantine/core";
 import { InvEquipoForm, TextSection } from "../../../../components";
 import {
+    useInvConceptoStore,
     //useInvCategoriaStore,
     useInvEquipoStore,
     useInvEstadoStore,
@@ -24,6 +25,7 @@ export const InvEquipoModal = () => {
         useInvCategoriaStore(); */
     const { startLoadInvEstados, startClearInvEstados } = useInvEstadoStore();
     const { startLoadInvMarcas, startClearInvMarcas } = useInvMarcaStore();
+    const { startLoadInvConceptos, startClearInvConceptos } = useInvConceptoStore();
 
     const form = useForm({
         initialValues: {
@@ -89,6 +91,7 @@ export const InvEquipoModal = () => {
             //startLoadInvCategorias();
             startLoadInvEstados();
             startLoadInvMarcas();
+            startLoadInvConceptos();
         }
 
         return () => {
@@ -97,6 +100,7 @@ export const InvEquipoModal = () => {
             //startClearInvCategorias();
             startClearInvEstados();
             startClearInvMarcas();
+            startClearInvConceptos();
         };
     }, [isOpenModalInvEquipo]);
 
@@ -105,6 +109,7 @@ export const InvEquipoModal = () => {
             setActivateInvEquipo(null);
         }
         modalActionEquipo(false);
+        form.reset();
     };
 
     return (

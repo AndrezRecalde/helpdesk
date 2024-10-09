@@ -3,8 +3,10 @@ import { useInvTipocategoriaStore } from "../../../hooks";
 import {
     InvTipocategoriaModal,
     InvTipocategoriaTable,
+    TitlePage,
 } from "../../../components";
 import Swal from "sweetalert2";
+import { Divider } from "@mantine/core";
 
 export const InvTipocategoriasPage = ({ tabValue }) => {
     const {
@@ -51,9 +53,13 @@ export const InvTipocategoriasPage = ({ tabValue }) => {
     }, [errores]);
 
     return (
-        <>
+        <div>
+            <TitlePage order={4}>
+                Tipos de categorías
+            </TitlePage>
+            <Divider my="sm" />
             <InvTipocategoriaTable />
             <InvTipocategoriaModal />
-        </>
+        </div>
     );
 };

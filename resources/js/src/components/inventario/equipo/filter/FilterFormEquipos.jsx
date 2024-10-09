@@ -2,8 +2,19 @@ import { Box, Fieldset, Select, SimpleGrid, TextInput } from "@mantine/core";
 import { BtnSubmit, TextSection } from "../../../../components";
 import { IconSearch } from "@tabler/icons-react";
 import { useForm } from "@mantine/form";
+import {
+    useDireccionStore,
+    useInvCategoriaStore,
+    useInvEstadoStore,
+    useUsersStore,
+} from "../../../../hooks";
 
 export const FilterFormEquipos = () => {
+    const { direcciones } = useDireccionStore();
+    const { users } = useUsersStore();
+    const { categorias } = useInvCategoriaStore();
+    const { invEstados } = useInvEstadoStore();
+
     const form = useForm({
         initialValues: {
             cdgo_dprtmnto: null,
@@ -50,16 +61,26 @@ export const FilterFormEquipos = () => {
                         placeholder="Elige la dirección"
                         {...form.getInputProps("cdgo_dprtmnto")}
                         nothingFoundMessage="Nothing found..."
-                        data={[]}
+                        data={direcciones.map((direccion) => {
+                            return {
+                                value: direccion.cdgo_dprtmnto.toString(),
+                                label: direccion.nmbre_dprtmnto,
+                            };
+                        })}
                     />
                     <Select
                         searchable
                         clearable
                         label="Usuario"
                         placeholder="Elige el usuario"
-                        {...form.getInputProps("cdgo_dprtmnto")}
+                        {...form.getInputProps("cdgo_usrio")}
                         nothingFoundMessage="Nothing found..."
-                        data={[]}
+                        data={users.map((usuario) => {
+                            return {
+                                value: usuario.cdgo_usrio.toString(),
+                                label: usuario.nmbre_usrio,
+                            };
+                        })}
                     />
                     <TextInput
                         label="Código"
@@ -73,7 +94,12 @@ export const FilterFormEquipos = () => {
                         placeholder="Elige la categoria"
                         {...form.getInputProps("categoria_id")}
                         nothingFoundMessage="Nothing found..."
-                        data={[]}
+                        data={categorias.map((categoria) => {
+                            return {
+                                value: categoria.id.toString(),
+                                label: categoria.nombre_categoria,
+                            };
+                        })}
                     />
                     <TextInput
                         label="Numero de serie"
@@ -87,7 +113,12 @@ export const FilterFormEquipos = () => {
                         placeholder="Elige el estado"
                         {...form.getInputProps("estado_id")}
                         nothingFoundMessage="Nothing found..."
-                        data={[]}
+                        data={invEstados.map((estado) => {
+                            return {
+                                value: estado.id.toString(),
+                                label: estado.nombre_estado,
+                            };
+                        })}
                     />
                 </SimpleGrid>
                 <BtnSubmit IconSection={IconSearch} fontSize={16}>

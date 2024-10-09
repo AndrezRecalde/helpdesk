@@ -4,7 +4,7 @@ import { FilterFormSearchDates, SolicitudesTable, TitlePage } from "../../compon
 export const BusquedaSoportePage = () => {
     return (
         <Container size="xxl">
-            <TitlePage order={2} size="h2">
+            <TitlePage order={2}>
                 Busqueda de Soportes
             </TitlePage>
             <FilterFormSearchDates />

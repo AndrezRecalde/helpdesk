@@ -8,7 +8,7 @@ import {
 export const ResumenDesempenoArea = () => {
     return (
         <>
-            <TitlePage mt={20} order={6} size="h6">
+            <TitlePage mt={20} order={6}>
                 CASOS POR ÁREA
             </TitlePage>
             <SimpleGrid cols={{ base: 1, sm: 1, md: 1, lg: 1 }}>

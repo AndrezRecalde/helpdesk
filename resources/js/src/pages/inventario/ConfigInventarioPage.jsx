@@ -24,7 +24,7 @@ export const ConfigInventarioPage = () => {
 
     return (
         <Container size="xxl">
-            <TitlePage order={2} size="h2">
+            <TitlePage order={2}>
                 Parametros del Inventario
             </TitlePage>
             <Divider my="md" />

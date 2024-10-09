@@ -1,7 +1,8 @@
 import { useEffect } from "react";
 import { useInvCategoriaStore } from "../../../hooks";
-import { InvCategoriaModal, InvCategoriaTable } from "../../../components";
+import { InvCategoriaModal, InvCategoriaTable, TitlePage } from "../../../components";
 import Swal from "sweetalert2";
+import { Divider } from "@mantine/core";
 
 export const InvCategoriasPage = ({ tabValue }) => {
     const {
@@ -47,9 +48,13 @@ export const InvCategoriasPage = ({ tabValue }) => {
     }, [errores]);
 
     return (
-        <>
+        <div>
+            <TitlePage order={4}>
+                Categorías
+            </TitlePage>
+            <Divider my="sm" />
             <InvCategoriaTable />
             <InvCategoriaModal />
-        </>
+        </div>
     );
 };

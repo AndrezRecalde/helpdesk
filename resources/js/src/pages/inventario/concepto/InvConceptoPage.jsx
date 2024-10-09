@@ -1,7 +1,8 @@
 import { useEffect } from "react";
-import { InvConceptoModal, InvConceptoTable } from "../../../components";
+import { InvConceptoModal, InvConceptoTable, TitlePage } from "../../../components";
 import { useInvConceptoStore } from "../../../hooks";
 import Swal from "sweetalert2";
+import { Divider } from "@mantine/core";
 
 export const InvConceptoPage = ({ tabValue }) => {
     const { startLoadInvConceptos, startClearInvConceptos, message, errores } =
@@ -43,9 +44,11 @@ export const InvConceptoPage = ({ tabValue }) => {
     }, [errores]);
 
     return (
-        <>
+        <div>
+            <TitlePage order={4}>Estados de Uso</TitlePage>
+            <Divider my="sm" />
             <InvConceptoTable />
             <InvConceptoModal />
-        </>
+        </div>
     );
 };

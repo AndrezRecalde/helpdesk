@@ -50,7 +50,7 @@ export const AdminUsersPage = () => {
 
     return (
         <Container size="xxl">
-            <TitlePage order={2} size="h2">
+            <TitlePage order={2}>
                 Administrar usuarios
             </TitlePage>
             <Group justify="flex-end">

@@ -26,7 +26,7 @@ export const SectionUsersSoportesActuales = ({ tabValue }) => {
 
     return (
         <Container size="xxl" my={20}>
-            <TitlePage order={2} size="h2">
+            <TitlePage order={2}>
                 Seguimiento de Soportes
             </TitlePage>
             <AlertSection
