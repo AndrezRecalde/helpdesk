@@ -114,7 +114,10 @@ import { InvTipocategoriaForm } from "./inventario/tipocategoria/form/InvTipocat
 /* Inventario: Categorias */
 import { InvCategoriaTable } from "./inventario/categoria/table/InvCategoriaTable";
 import { InvCategoriaForm } from "./inventario/categoria/form/InvCategoriaForm";
+import { InvStockCategoriaForm } from "./inventario/categoria/form/InvStockCategoriaForm";
 import { InvCategoriaModal } from "./inventario/categoria/modal/InvCategoriaModal";
+import { InvStockCategoriaModal } from "./inventario/categoria/modal/InvStockCategoriaModal";
+
 
 /* Inventario: Marca */
 import { InvMarcaTable } from "./inventario/marca/table/InvMarcaTable";
@@ -142,13 +145,22 @@ import { FilterFormEquipos } from "./inventario/equipo/filter/FilterFormEquipos"
 import { InvEquipoTable } from "./inventario/equipo/table/InvEquipoTable";
 import { InvEquipoResponsablesTable } from "./inventario/equipo/table/InvEquipoResponsablesTable";
 import { InvEquipoModal } from "./inventario/equipo/modal/InvEquipoModal";
-import { InvViewEquipoModal } from "./inventario/equipo/modal/InvViewEquipoModal";
+import { InvShowEquipoModal } from "./inventario/equipo/modal/InvShowEquipoModal";
 import { InvEquipoAsignacionModal } from "./inventario/equipo/modal/InvEquipoAsignacionModal";
 import { InvEquipoForm } from "./inventario/equipo/form/InvEquipoForm";
 import { InvEquipoAsignacionForm } from "./inventario/equipo/form/InvEquipoAsignacionForm";
 import { InvAsignacionForm } from "./inventario/equipo/form/InvAsignacionForm";
 import { InvEquipoGeneralForm } from "./inventario/equipo/form/stepper/InvEquipoGeneralForm";
 import { InvEquipoComplementaria } from "./inventario/equipo/form/stepper/InvEquipoComplementaria";
+import { InvInfoGeneralEquipo } from "./inventario/equipo/form/elements/InvInfoGeneralEquipo";
+import { InvTabsDetalleEquipo } from "./inventario/equipo/form/elements/tabs/InvTabsDetalleEquipo";
+import { InvTabGeneralEquipo } from "./inventario/equipo/form/elements/tabs/InvTabGeneralEquipo";
+import { InvTabUbicacionEquipo } from "./inventario/equipo/form/elements/tabs/InvTabUbicacionEquipo";
+import { InvTabDocumentoEquipo } from "./inventario/equipo/form/elements/tabs/InvTabDocumentoEquipo";
+import { InvDeleteEquipoModal } from "./inventario/equipo/modal/InvDeleteEquipoModal";
+import { InvDeleteEquipoForm } from "./inventario/equipo/form/InvDeleteEquipoForm";
+import { InvBajaEquipoModal } from "./inventario/equipo/modal/InvBajaEquipoModal";
+import { InvBajaEquipoForm } from "./inventario/equipo/form/InvBajaEquipoForm";
 
 /* Elementos */
 import { Logo } from "./elements/application/Logo";
@@ -176,6 +188,7 @@ import { FormRichText } from "./elements/rte/FormRichText";
 import {
     MenuUsersTable,
     MenuTable_E,
+    MenuTable_D,
     MenuTable_VE,
     MenuTable_T,
     MenuSolicitudTable,
@@ -293,7 +306,9 @@ export {
     /* Inventario: Categorias */
     InvCategoriaTable,
     InvCategoriaForm,
+    InvStockCategoriaForm,
     InvCategoriaModal,
+    InvStockCategoriaModal,
 
     /* Inventario: Marca */
     InvMarcaTable,
@@ -320,13 +335,22 @@ export {
     InvEquipoTable,
     InvEquipoResponsablesTable,
     InvEquipoModal,
-    InvViewEquipoModal,
+    InvShowEquipoModal,
     InvEquipoAsignacionModal,
     InvEquipoForm,
     InvAsignacionForm,
     InvEquipoAsignacionForm,
     InvEquipoGeneralForm,
     InvEquipoComplementaria,
+    InvInfoGeneralEquipo,
+    InvTabsDetalleEquipo,
+    InvTabGeneralEquipo,
+    InvTabUbicacionEquipo,
+    InvTabDocumentoEquipo,
+    InvDeleteEquipoModal,
+    InvDeleteEquipoForm,
+    InvBajaEquipoModal,
+    InvBajaEquipoForm,
 
     /* Elements */
     Logo,
@@ -349,6 +373,7 @@ export {
     FormRichText,
     MenuUsersTable,
     MenuTable_E,
+    MenuTable_D,
     MenuTable_VE,
     MenuTable_T,
     MenuSolicitudTable,

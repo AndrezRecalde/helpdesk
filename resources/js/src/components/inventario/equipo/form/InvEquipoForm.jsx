@@ -1,12 +1,18 @@
 import { useState } from "react";
 import { Button, Code, Group, Stepper } from "@mantine/core";
 import {
+    AlertSection,
     BtnSection,
     InvAsignacionForm,
     InvEquipoComplementaria,
     InvEquipoGeneralForm,
 } from "./../../../../components";
-import { IconChevronsLeft, IconChevronsRight, IconSend } from "@tabler/icons-react";
+import {
+    IconChevronsLeft,
+    IconChevronsRight,
+    IconInfoCircle,
+    IconSend,
+} from "@tabler/icons-react";
 import { useInvEquipoStore, useInvUiEquipo } from "../../../../hooks";
 
 export const InvEquipoForm = ({ form }) => {
@@ -65,17 +71,21 @@ export const InvEquipoForm = ({ form }) => {
     const prevStep = () =>
         setActive((current) => (current > 0 ? current - 1 : current));
 
-
     const handleSubmit = (e) => {
         e.preventDefault();
         startAddInvEquipo(form.getTransformedValues());
+        console.log(form.getTransformedValues());
         modalActionEquipo(false);
         form.reset();
-    }
+    };
 
     return (
         <>
-            <Stepper active={active} onStepClick={setActive} allowNextStepsSelect={false}>
+            <Stepper
+                active={active}
+                onStepClick={setActive}
+                allowNextStepsSelect={false}
+            >
                 <Stepper.Step
                     label="Informacion"
                     description="Información General"
@@ -93,6 +103,15 @@ export const InvEquipoForm = ({ form }) => {
                     description="Designación de responsables"
                 >
                     <InvAsignacionForm form={form} />
+                    <AlertSection
+                        variant="light"
+                        color="indigo"
+                        title="Información"
+                        icon={IconInfoCircle}
+                    >
+                        Por favor, si lo considera necesario, puede reasignar el
+                        responsable en cualquier otro momento.
+                    </AlertSection>
                 </Stepper.Step>
                 <Stepper.Completed>
                     <Code>{JSON.stringify(form.getTransformedValues())}</Code>

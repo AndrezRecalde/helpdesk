@@ -41,7 +41,6 @@ export const InvEquipoModal = () => {
             bien_adquirido: false,
             bien_donado: false,
             bien_usado: false,
-            stock: 1,
             ubicacion_id: null,
             tipocategoria_id: null,
             categoria_id: null,

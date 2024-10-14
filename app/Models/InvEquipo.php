@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\DB;
 
 class InvEquipo extends Model
 {
@@ -29,7 +30,6 @@ class InvEquipo extends Model
         'bien_adquirido',
         'bien_donado',
         'bien_usado',
-        'stock',
         'ubicacion_id',
         'categoria_id',
         'estado_id',
@@ -48,7 +48,18 @@ class InvEquipo extends Model
     function usuarios(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'usuario_equipo', 'equipo_id', 'usuario_id')
-            ->withPivot('direccion_id', 'concepto_id');;
+            ->withPivot('id', 'direccion_id', 'concepto_id', 'observacion')
+            ->join('dprtmntos', 'usuario_equipo.direccion_id', '=', 'dprtmntos.cdgo_dprtmnto')
+            ->join('inv_conceptos', 'usuario_equipo.concepto_id', '=', 'inv_conceptos.id')
+            ->select('usuario_equipo.id',
+                'usrios_sstma.cdgo_usrio as user_id',
+                'usrios_sstma.nmbre_usrio as responsable',
+                'dprtmntos.cdgo_dprtmnto as direccion_id',
+                'dprtmntos.nmbre_dprtmnto as direccion',
+                'inv_conceptos.id as concepto_id',
+                'inv_conceptos.nombre_concepto as concepto_nombre',
+                'usuario_equipo.observacion'
+            );
     }
 
     /* function departamentos(): BelongsToMany
@@ -81,34 +92,7 @@ class InvEquipo extends Model
         return $this->hasMany(InvDocumentoEquipo::class, 'equipo_id');
     }
 
-    // Método para agregar stock
-    public function agregarStock($cantidad)
-    {
-        $this->stock += $cantidad;
-        $this->save();
-    }
-
-    // Método para reducir stock
-    public function reducirStock($cantidad)
-    {
-        // Verificar si la cantidad solicitada es mayor al stock disponible
-        if ($this->stock >= $cantidad) {
-            $this->stock -= $cantidad;
-            $this->save();
-            return [
-                'status' => 'success',
-                'msg' => "Stock reducido con éxito. Cantidad actual: {$this->stock}"
-            ];
-        } else {
-            // Lógica para manejar cuando no hay suficiente stock
-            return [
-                'status' => 'error',
-                'msg' => "No hay suficiente stock. Disponible: {$this->stock}, Solicitado: {$cantidad}"
-            ];
-        }
-    }
-
-    function scopeCodigoAntiguo(Builder $query, $codigo_antiguo)
+    /* function scopeCodigoAntiguo(Builder $query, $codigo_antiguo)
     {
         if ($codigo_antiguo) {
             return $query->where('inve.codigo_antiguo', $codigo_antiguo);
@@ -120,27 +104,60 @@ class InvEquipo extends Model
         if ($codigo_nuevo) {
             return $query->where('inve.codigo_nuevo', $codigo_nuevo);
         }
-    }
+    } */
 
-    function scopeEstadoId(Builder $query, $estado_id)
+    function scopeByEstadoId(Builder $query, $estado_id)
     {
         if ($estado_id) {
             return $query->where('inve.estado_id', $estado_id);
         }
     }
 
-    function scopeCategoriaId(Builder $query, $categoria_id)
+    function scopeByCategoriaId(Builder $query, $categoria_id)
     {
         if ($categoria_id) {
             return $query->where('inve.categoria_id', $categoria_id);
         }
     }
 
-    function scopeBuscarPorCodigo(Builder $query, string $codigo)
+    function scopeBuscarPorCodigo(Builder $query, $codigo)
     {
         if ($codigo) {
-            return $query->where('codigo_antiguo', $codigo)
-                ->orWhere('codigo_nuevo', $codigo);
+            return $query->where('inve.codigo_antiguo', $codigo)
+                ->orWhere('inve.codigo_nuevo', $codigo);
+        }
+    }
+
+    function scopeByNumeroSerie(Builder $query, $numero_serie)
+    {
+        if ($numero_serie) {
+            return $query->where('inve.numero_serie', $numero_serie);
+        }
+    }
+
+    public function scopeByUsuarioId(Builder $query, $usuario_id)
+    {
+        if ($usuario_id) {
+            return $query->whereExists(function ($subquery) use ($usuario_id) {
+                $subquery->select(DB::raw(1))
+                    ->from('usuario_equipo as ue')
+                    ->join('usrios_sstma as u', 'u.cdgo_usrio', '=', 'ue.usuario_id') // Relación con usuarios
+                    ->whereColumn('ue.equipo_id', 'inve.id') // Usar el alias "inve"
+                    ->where('ue.usuario_id', $usuario_id); // Filtrar por direccion_id
+            });
+        }
+    }
+
+    public function scopeByDireccionId(Builder $query, $direccion_id)
+    {
+        if ($direccion_id) {
+            return $query->whereExists(function ($subquery) use ($direccion_id) {
+                $subquery->select(DB::raw(1))
+                    ->from('usuario_equipo as ue')
+                    ->join('dprtmntos as d', 'd.cdgo_dprtmnto', '=', 'ue.direccion_id') // Relación con usuarios
+                    ->whereColumn('ue.equipo_id', 'inve.id') // Usar el alias "inve"
+                    ->where('ue.direccion_id', $direccion_id); // Filtrar por direccion_id
+            });
         }
     }
 }

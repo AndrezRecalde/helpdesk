@@ -1,24 +1,28 @@
+import { useEffect } from "react";
 import { Box } from "@mantine/core";
 import { BtnSubmit, InvAsignacionForm } from "../../../../components";
 import { IconChecks } from "@tabler/icons-react";
 import {
-    useDireccionStore,
-    useInvConceptoStore,
     useInvEquipoStore,
     useInvUiEquipo,
-    useUsersStore,
 } from "../../../../hooks";
 
 export const InvEquipoAsignacionForm = ({ form }) => {
     const { startAssignEquipo, activateInvEquipo, setActivateInvEquipo } =
         useInvEquipoStore();
     const { modalActionAssignEquipo } = useInvUiEquipo();
-    const { users } = useUsersStore();
-    const { direcciones } = useDireccionStore();
-    const { invConceptos } = useInvConceptoStore();
+
+    useEffect(() => {
+      if (activateInvEquipo !== null) {
+        form.setValues({ id: activateInvEquipo.id });
+        return;
+      }
+    }, [activateInvEquipo])
+
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        console.log(form.getTransformedValues())
         startAssignEquipo(form.getTransformedValues());
         if (activateInvEquipo !== null) {
             setActivateInvEquipo(null);

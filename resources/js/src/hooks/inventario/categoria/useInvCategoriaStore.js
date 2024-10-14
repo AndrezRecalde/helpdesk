@@ -25,10 +25,13 @@ export const useInvCategoriaStore = () => {
     }) => {
         try {
             dispatch(onLoading(true));
-            const { data } = await helpdeskApi.post("/gerencia/inventario/categorias", {
-                tipocategoria_id,
-                activo,
-            });
+            const { data } = await helpdeskApi.post(
+                "/gerencia/inventario/categorias",
+                {
+                    tipocategoria_id,
+                    activo,
+                }
+            );
             const { categorias } = data;
             dispatch(onLoadInvCategorias(categorias));
         } catch (error) {
@@ -81,6 +84,23 @@ export const useInvCategoriaStore = () => {
         }
     };
 
+    const startAddIncrementarStock = async (categoria) => {
+        try {
+            const { data } = await helpdeskApi.put(
+                `/gerencia/inventario/categoria/incrementar/${categoria.id}`,
+                categoria
+            );
+            startLoadInvCategorias({});
+            dispatch(onLoadMessage(data));
+            setTimeout(() => {
+                dispatch(onLoadMessage(undefined));
+            }, 40);
+        } catch (error) {
+            console.log(error);
+            ExceptionMessageError(error);
+        }
+    };
+
     const setActivateInvCategoria = (categoria) => {
         dispatch(onSetActivateInvCategoria(categoria));
     };
@@ -99,6 +119,7 @@ export const useInvCategoriaStore = () => {
         startLoadInvCategorias,
         startAddInvCategoria,
         startDeleteInvCategoria,
+        startAddIncrementarStock,
         setActivateInvCategoria,
         startClearInvCategorias,
     };

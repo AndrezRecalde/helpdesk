@@ -1,36 +1,18 @@
-import { useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import { useMantineReactTable } from "mantine-react-table";
-import { TableContent } from "../../../../components";
+import {
+    AlertSection,
+    MenuTable_D,
+    TableContent,
+} from "../../../../components";
 import { Text } from "@mantine/core";
-
-const responsables = [
-    {
-        index: 1,
-        responsable: "Cristhian Andres Recalde Solano",
-        departamento:
-            "GESTION DE TECNOLOGIAS DE LA INFORMACION Y COMUNICACIÓN",
-        estado: "EN USO",
-        observacion: "",
-    },
-    {
-        index: 2,
-        responsable: "Venus Jasmina Estupiñan Hurtado",
-        departamento:
-            "GESTION DE TECNOLOGIAS DE LA INFORMACION Y COMUNICACIÓN",
-        estado: "EN USO",
-        observacion: "",
-    },
-    {
-        index: 3,
-        responsable: "Venus Jasmina Estupiñan Hurtado",
-        departamento: "GESTION DE CUENCA RIEGO Y DRENAJE",
-        estado: "PRESTADO",
-        observacion:
-            "SE CEDIO EL EQUIPO A LA COMPAÑERA DE LA GESTIÓN DE CUENCA RIEGO Y DRENAJE FANNY QUIÑONES",
-    },
-];
+import { useInvEquipoStore } from "../../../../hooks";
+import Swal from "sweetalert2";
+import { IconInfoCircle } from "@tabler/icons-react";
 
 export const InvEquipoResponsablesTable = () => {
+    const { activateInvEquipo, startRemoveUsuarioEquipo } = useInvEquipoStore();
+    const { usuarios: responsables = [] } = activateInvEquipo || {};
 
     const columns = useMemo(
         () => [
@@ -41,14 +23,36 @@ export const InvEquipoResponsablesTable = () => {
             },
             {
                 header: "Departamento",
-                accessorKey: "departamento",
+                accessorKey: "direccion",
                 filterVariant: "autocomplete",
             },
             {
-                header: "Estado",
-                accessorKey: "estado",
+                header: "Concepto de uso",
+                accessorKey: "concepto_nombre",
             },
         ],
+        [responsables]
+    );
+
+    const handleDelete = useCallback(
+        (selected) => {
+            const { pivot = {} } = selected;
+            console.log(pivot);
+
+            Swal.fire({
+                text: `¿Deseas remover el responsable? ${selected.responsable}`,
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#20c997",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Si, eliminar!",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    startRemoveUsuarioEquipo(pivot.equipo_id, pivot.id);
+                    //console.log(message.idper_permisos)
+                }
+            });
+        },
         [responsables]
     );
 
@@ -58,18 +62,41 @@ export const InvEquipoResponsablesTable = () => {
         //state: { showProgressBars: isLoading },
         enableFacetedValues: true,
         enableDensityToggle: false,
-        enableRowActions: false,
+        enableRowActions: true,
         renderDetailPanel: ({ row }) => (
             <div>
                 <Text fz="md" fw={300}>
-                    { row.original.observacion || 'Sin Observación' }
+                    {row.original.observacion || "Sin Observación"}
                 </Text>
                 <Text fz="xs" tt="uppercase" fw={700} c="dimmed">
                     Observación
                 </Text>
             </div>
         ),
+        renderRowActionMenuItems: ({ row }) => (
+            <MenuTable_D row={row} handleDelete={handleDelete} />
+        ),
     });
 
-    return <TableContent table={table} />;
+    return (
+        <div>
+            <div>
+                {activateInvEquipo?.fecha_baja ? (
+                    <AlertSection
+                        variant="light"
+                        color="indigo.5"
+                        title="Información"
+                        icon={IconInfoCircle}
+                    >
+                        El equipo se ha dado de baja, no mantiene un responsable
+                        activo actualmente. El equipo reposa en las
+                        instalaciones de Bodega de la Gestión Administrativa
+                    </AlertSection>
+                ) : null}
+            </div>
+            <div>
+                <TableContent table={table} />
+            </div>
+        </div>
+    );
 };

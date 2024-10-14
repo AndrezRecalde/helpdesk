@@ -6,6 +6,7 @@ use App\Enums\MsgStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\EquipoInvRequest;
 use App\Http\Requests\EquipoResponsableInvRequest;
+use App\Models\InvCategoria;
 use App\Models\InvEquipo;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -15,17 +16,45 @@ class InvEquipoController extends Controller
     function getEquiposInv(Request $request): JsonResponse
     {
         $equipos = InvEquipo::from('inv_equipos as inve')
-            ->selectRaw('inve.id, inve.nombre_equipo,
-                                inve.codigo_antiguo, inve.codigo_nuevo,
-                                inve.modelo, inve.numero_serie,
-                                inve.fecha_adquisicion, inve.fecha_amortizacion,
-                                inve.vida_util, inve.descripcion,
-                                inve.bien_adquirido, inve.bien_donado, inve.bien_usado,
-                                inve.ubicacion_id, invu.nombre_ubicacion, invu.nombre_edificio,
-                                inve.categoria_id, invc.nombre_categoria,
-                                invt.nombre_tipocategoria,
-                                inve.estado_id, inves.nombre_estado, inves.color,
-                                inve.marca_id, invm.nombre_marca')
+            ->selectRaw('inve.id, inve.modelo,
+                                     inve.codigo_antiguo, inve.codigo_nuevo,
+                                     inve.numero_serie,
+                                     inve.categoria_id, invc.nombre_categoria,
+                                     inve.estado_id, inves.nombre_estado, inves.color,
+                                     inve.marca_id, invm.nombre_marca')
+            ->join('inv_categorias as invc', 'invc.id', 'inve.categoria_id')
+            ->join('inv_estados as inves', 'inves.id', 'inve.estado_id')
+            ->join('inv_marcas as invm', 'invm.id', 'inve.marca_id')
+            //->byCodigoAntiguo($request->codigo_antiguo)
+            //->byCodigoNuevo($request->codigo_nuevo)
+            ->byUsuarioId($request->usuario_id)
+            ->byDireccionId($request->direccion_id)
+            ->byNumeroSerie($request->numero_serie)
+            ->buscarPorCodigo($request->codigo)
+            ->byEstadoId($request->estado_id)
+            ->byCategoriaId($request->categoria_id)
+            ->get();
+
+        return response()->json([
+            'status' => MsgStatus::Success,
+            'equipos' =>  $equipos
+        ], 200);
+    }
+
+    function show(int $id): JsonResponse
+    {
+        $equipo = InvEquipo::from('inv_equipos as inve')
+            ->selectRaw('inve.id,
+                            inve.codigo_antiguo, inve.codigo_nuevo,
+                            inve.modelo, inve.numero_serie,
+                            inve.fecha_adquisicion, inve.fecha_amortizacion, inve.fecha_baja,
+                            inve.vida_util, inve.descripcion,
+                            inve.bien_adquirido, inve.bien_donado, inve.bien_usado,
+                            inve.ubicacion_id, invu.nombre_ubicacion, invu.nombre_edificio,
+                            inve.categoria_id, invc.nombre_categoria,
+                            invt.nombre_tipocategoria,
+                            inve.estado_id, inves.nombre_estado, inves.color,
+                            inve.marca_id, invm.nombre_marca')
             ->with(['usuarios'])
             ->join('inv_ubicaciones as invu', 'invu.id', 'inve.ubicacion_id')
             ->join('inv_categorias as invc', 'invc.id', 'inve.categoria_id')
@@ -34,14 +63,12 @@ class InvEquipoController extends Controller
             ->join('inv_marcas as invm', 'invm.id', 'inve.marca_id')
             //->byCodigoAntiguo($request->codigo_antiguo)
             //->byCodigoNuevo($request->codigo_nuevo)
-            ->buscarPorCodigo($request->codigo)
-            ->byEstadoId($request->estado_id)
-            ->byCategoriaId($request->categoria_id)
-            ->latest();
+            ->where('inve.id', $id)
+            ->first();
 
         return response()->json([
             'status' => MsgStatus::Success,
-            'equipos' =>  $equipos
+            'equipo' =>  $equipo
         ], 200);
     }
 
@@ -49,14 +76,17 @@ class InvEquipoController extends Controller
     {
         try {
             $equipo = InvEquipo::create($request->validated());
+            $categoria = InvCategoria::find($request->categoria_id);
 
-            if ($request->filled('usuario_id' && $request->filled('direccion_id'))) {
+            if ($request->filled('usuario_id') && $request->filled('direccion_id')) {
                 $equipo->usuarios()->attach($request->usuario_id, [
                     'direccion_id' => $request->direccion_id,
                     'concepto_id'  => $request->concepto_id,
                     'observacion' =>  $request->observacion
                 ]);
             }
+
+            $categoria->reducirStock(1);
 
             return response()->json([
                 'status' => 'success',
@@ -74,7 +104,7 @@ class InvEquipoController extends Controller
             if ($equipo) {
                 $equipo->update($request->validated());
 
-                if ($request->filled('usuario_id' && $request->filled('direccion_id'))) {
+                if ($request->filled('usuario_id') && $request->filled('direccion_id')) {
                     $equipo->usuarios()->attach($request->usuario_id, [
                         'direccion_id' => $request->direccion_id,
                         'concepto_id'  => $request->concepto_id,
@@ -96,7 +126,7 @@ class InvEquipoController extends Controller
         $equipo = InvEquipo::find($id);
         try {
             if ($equipo) {
-                if ($request->filled('usuario_id' && $request->filled('direccion_id'))) {
+                if ($request->filled('usuario_id') && $request->filled('direccion_id')) {
                     $equipo->usuarios()->attach($request->usuario_id, [
                         'direccion_id' => $request->direccion_id,
                         'concepto_id'  => $request->concepto_id,
@@ -113,13 +143,13 @@ class InvEquipoController extends Controller
         }
     }
 
-    public function removeUserFromEquipo($equipo_id, $user_id)
+    public function removeUserFromEquipo($equipo_id, $id)
     {
         // Buscar el equipo
         $equipo = InvEquipo::find($equipo_id);
 
         // Eliminar la relación entre el usuario y el equipo
-        $equipo->usuarios()->detach($user_id);
+        $equipo->usuarios()->wherePivot('id', $id)->detach();
 
         // Retornar una respuesta o redireccionar
         return response()->json(['status' => MsgStatus::Success, 'msg' => MsgStatus::Deleted], 200);

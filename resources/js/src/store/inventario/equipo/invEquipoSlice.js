@@ -31,14 +31,22 @@ export const invEquipoSlice = createSlice({
             state.activateInvEquipo = null;
             state.isLoading = false;
         },
-        onDeleteInvEquipo: (state, { payload }) => {
+        onDeleteInvEquipo: (state) => {
             if (state.activateInvEquipo) {
                 state.invEquipos = state.invEquipos.filter(
                     (equipo) => equipo.id === state.activateInvEquipo.id
                 );
             }
             state.activateInvEquipo = null;
-            satisfies.errores = undefined;
+            state.errores = undefined;
+        },
+        onRemoveUserFromEquipo: (state) => {
+            if (state.activateInvEquipo) {
+                state.activateInvEquipo.usuarios = state.activateInvEquipo.usuarios.filter(
+                    pivot => pivot.id === state.activateInvEquipo.usuarios.id
+                );
+            }
+
         },
         onSetActivateInvEquipo: (state, { payload }) => {
             state.activateInvEquipo = payload;
@@ -67,6 +75,7 @@ export const {
     onAddInvEquipo,
     onUpdateInvEquipo,
     onDeleteInvEquipo,
+    onRemoveUserFromEquipo,
     onSetActivateInvEquipo,
     onClearInvEquipos,
     onLoadMessage,

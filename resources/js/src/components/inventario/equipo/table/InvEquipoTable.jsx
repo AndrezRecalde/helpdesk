@@ -4,20 +4,20 @@ import { useCallback, useMemo } from "react";
 import { useInvEquipoStore, useInvUiEquipo } from "../../../../hooks";
 
 export const InvEquipoTable = () => {
-    const { isLoading, invEquipos, setActivateInvEquipo } = useInvEquipoStore();
-    const { modalActionViewEquipo } = useInvUiEquipo();
+    const { isLoading, invEquipos, startShowInvEquipo, setActivateInvEquipo } = useInvEquipoStore();
+    const { modalActionEquipo, modalActionViewEquipo, modalActionAssignEquipo, modalActionDeleteEquipo } = useInvUiEquipo();
 
     const columns = useMemo(
         () => [
             {
-                header: "Equipo",
-                accessorKey: "nombre_equipo",
+                header: "Código",
+                accessorFn: (row) =>
+                    row.codigo_antiguo + " || " + row.codigo_nuevo, //normal accessorKey
                 filterVariant: "autocomplete",
             },
             {
-                header: "Código",
-                accessorFn: (row) =>
-                    row.codigo_antiguo + " " + row.codigo_nuevo, //normal accessorKey
+                header: "Equipo",
+                accessorFn: (row) => row.nombre_marca + " " + row.modelo,
                 filterVariant: "autocomplete",
             },
             {
@@ -39,14 +39,35 @@ export const InvEquipoTable = () => {
     const handleEditar = useCallback(
         (selected) => {
             console.log("editar");
+            modalActionEquipo(true);
+            startShowInvEquipo(selected);
         },
         [invEquipos]
     );
 
-    const handleView = useCallback(
+    const handleShow = useCallback(
         (selected) => {
-            console.log("editar");
+            console.log(selected);
             modalActionViewEquipo(true);
+            startShowInvEquipo(selected);
+        },
+        [invEquipos]
+    );
+
+    const handleAssign = useCallback(
+        (selected) => {
+            console.log(selected);
+            setActivateInvEquipo(selected);
+            modalActionAssignEquipo(true);
+        },
+        [invEquipos]
+    );
+
+    const handleDelete = useCallback(
+        (selected) => {
+            console.log(selected);
+            setActivateInvEquipo(selected);
+            modalActionDeleteEquipo(true);
         },
         [invEquipos]
     );
@@ -62,33 +83,51 @@ export const InvEquipoTable = () => {
             <MenuTable_VE
                 row={row}
                 handleEdit={handleEditar}
-                handleView={handleView}
+                handleShow={handleShow}
+                handleAssign={handleAssign}
+                handleDelete={handleDelete}
             />
         ),
         mantineTableBodyCellProps: ({ cell }) => ({
             style: {
                 backgroundColor:
-                    cell.row.original.estado_id == 3
-                        ? "#71c7f5"
-                        : cell.row.original.estado_id == 4
+                    cell.row.original.estado_id == 1
+                        ? "#08c2a6"
+                        : cell.row.original.estado_id == 2
                         ? "#9af5b8"
-                        : cell.row.original.estado_id == 5
+                        : cell.row.original.estado_id == 3
                         ? "#cf001c" //#fcb281
                         : "",
                 color:
-                    cell.row.original.estado_id == 3
+                    cell.row.original.estado_id == 1
                         ? "white"
-                        : cell.row.original.estado_id == 4
+                        : cell.row.original.estado_id == 2
                         ? "black"
-                        : cell.row.original.estado_id == 5 &&
+                        : cell.row.original.estado_id == 3 &&
                           colorScheme === "dark"
                         ? "white"
-                        : cell.row.original.estado_id == 5 &&
+                        : cell.row.original.estado_id == 3 &&
                           colorScheme === "light"
                         ? "black"
                         : "",
             },
         }),
+        mantineTableProps: {
+            withColumnBorders: true,
+            striped: true,
+            //withTableBorder: colorScheme === "light",
+            sx: {
+                "thead > tr": {
+                    backgroundColor: "inherit",
+                },
+                "thead > tr > th": {
+                    backgroundColor: "inherit",
+                },
+                "tbody > tr > td": {
+                    backgroundColor: "inherit",
+                },
+            },
+        },
     });
 
     return <TableContent table={table} />;

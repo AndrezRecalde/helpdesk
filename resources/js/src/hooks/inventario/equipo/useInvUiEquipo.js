@@ -1,14 +1,20 @@
 import { useDispatch, useSelector } from "react-redux";
 import {
     onOpenModalAssignEquipo,
+    onOpenModalBajaEquipo,
+    onOpenModalDeleteEquipo,
     onOpenModalInvEquipo,
     onOpenModalViewEquipo,
 } from "../../../store/inventario/equipo/uiInvEquipoSlice";
 
 export const useInvUiEquipo = () => {
-    const { isOpenModalInvEquipo, isOpenModalAssignEquipo, isOpenModalViewEquipo } = useSelector(
-        (state) => state.uiInvEquipo
-    );
+    const {
+        isOpenModalInvEquipo,
+        isOpenModalAssignEquipo,
+        isOpenModalViewEquipo,
+        isOpenModalDeleteEquipo,
+        isOpenModalBajaEquipo
+    } = useSelector((state) => state.uiInvEquipo);
 
     const dispatch = useDispatch();
 
@@ -22,15 +28,27 @@ export const useInvUiEquipo = () => {
 
     const modalActionViewEquipo = (behavior) => {
         dispatch(onOpenModalViewEquipo(behavior));
+    };
+
+    const modalActionDeleteEquipo = (behavior) => {
+        dispatch(onOpenModalDeleteEquipo(behavior));
+    }
+
+    const modalActionBajaEquipo = (behavior) => {
+        dispatch(onOpenModalBajaEquipo(behavior));
     }
 
     return {
         isOpenModalInvEquipo,
         isOpenModalAssignEquipo,
         isOpenModalViewEquipo,
+        isOpenModalDeleteEquipo,
+        isOpenModalBajaEquipo,
 
         modalActionEquipo,
         modalActionAssignEquipo,
-        modalActionViewEquipo
+        modalActionViewEquipo,
+        modalActionDeleteEquipo,
+        modalActionBajaEquipo
     };
 };

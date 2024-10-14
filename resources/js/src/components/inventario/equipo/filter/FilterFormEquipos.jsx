@@ -5,11 +5,13 @@ import { useForm } from "@mantine/form";
 import {
     useDireccionStore,
     useInvCategoriaStore,
+    useInvEquipoStore,
     useInvEstadoStore,
     useUsersStore,
 } from "../../../../hooks";
 
 export const FilterFormEquipos = () => {
+    const { startLoadInvEquipos } = useInvEquipoStore();
     const { direcciones } = useDireccionStore();
     const { users } = useUsersStore();
     const { categorias } = useInvCategoriaStore();
@@ -17,26 +19,26 @@ export const FilterFormEquipos = () => {
 
     const form = useForm({
         initialValues: {
-            cdgo_dprtmnto: null,
-            cdgo_usrio: null,
+            direccion_id: null,
+            usuario_id: null,
             codigo: "",
-
             categoria_id: null,
             numero_serie: "",
             estado_id: null,
         },
         transformValues: (values) => ({
             ...values,
-            cdgo_dprtmnto: Number(values.cdgo_dprtmnto),
-            cdgo_usrio: Number(values.cdgo_usrio),
-            categoria_id: Number(values.categoria_id),
-            estado_id: Number(values.estado_id),
+            direccion_id: Number(values.direccion_id) || null,
+            usuario_id: Number(values.usuario_id) || null,
+            categoria_id: Number(values.categoria_id) || null,
+            estado_id: Number(values.estado_id) || null,
         }),
     });
 
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log(form.getTransformedValues());
+        startLoadInvEquipos(form.getTransformedValues());
     };
 
     return (
@@ -59,7 +61,7 @@ export const FilterFormEquipos = () => {
                         clearable
                         label="Dirección"
                         placeholder="Elige la dirección"
-                        {...form.getInputProps("cdgo_dprtmnto")}
+                        {...form.getInputProps("direccion_id")}
                         nothingFoundMessage="Nothing found..."
                         data={direcciones.map((direccion) => {
                             return {
@@ -73,7 +75,7 @@ export const FilterFormEquipos = () => {
                         clearable
                         label="Usuario"
                         placeholder="Elige el usuario"
-                        {...form.getInputProps("cdgo_usrio")}
+                        {...form.getInputProps("usuario_id")}
                         nothingFoundMessage="Nothing found..."
                         data={users.map((usuario) => {
                             return {
@@ -102,7 +104,7 @@ export const FilterFormEquipos = () => {
                         })}
                     />
                     <TextInput
-                        label="Numero de serie"
+                        label="Número de serie"
                         placeholder="Digite el numero de serie"
                         {...form.getInputProps("numero_serie")}
                     />

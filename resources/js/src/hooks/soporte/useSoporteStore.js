@@ -47,6 +47,18 @@ export const useSoporteStore = () => {
         }
     };
 
+    const startLoadSoporte = async ({ numero_sop }) => {
+        try {
+            const { data } = await helpdeskApi.post("/gerencia/soporte", {
+                numero_sop,
+            });
+            const { soporte } = data;
+            dispatch(onSetActivateSoporte(soporte));
+        } catch (error) {
+            ExceptionMessageError(error);
+        }
+    };
+
     /* GERENTE */
     const startAsignarSoporte = async (soporte, role_id) => {
         try {
@@ -62,6 +74,33 @@ export const useSoporteStore = () => {
             startLoadSoportesActuales(role_id);
         } catch (error) {
             //console.log(error);
+            ExceptionMessageError(error);
+        }
+    };
+
+    const startExportActaPDF = async (soporte) => {
+        try {
+            dispatch(onLoadPDF(true));
+            const response = await helpdeskApi.post(
+                "/gerencia/soporte-acta",
+                soporte,
+                { responseType: "blob" }
+            );
+            const pdfBlob = new Blob([response.data], {
+                type: "application/pdf",
+            });
+            const url = window.open(URL.createObjectURL(pdfBlob));
+            //console.log(url);
+            /*  const tempLink = document.createElement("a");
+            tempLink.href = url;
+            tempLink.setAttribute("download", "permiso.pdf");
+            document.body.appendChild(tempLink);
+            tempLink.click();
+
+            document.body.removeChild(tempLink); */
+            window.URL.revokeObjectURL(url);
+            dispatch(onLoadPDF(false));
+        } catch (error) {
             ExceptionMessageError(error);
         }
     };
@@ -163,7 +202,7 @@ export const useSoporteStore = () => {
         id_direccion,
         numero_sop,
         id_usu_tecnico_asig,
-        id_estado
+        id_estado,
     }) => {
         try {
             dispatch(onLoading());
@@ -176,19 +215,19 @@ export const useSoporteStore = () => {
                     id_direccion,
                     numero_sop,
                     id_usu_tecnico_asig,
-                    id_estado
+                    id_estado,
                 }
             );
             const { soportes } = data;
             dispatch(onLoadSoportes(soportes));
         } catch (error) {
             //console.log(error);
-            dispatch(onClearSoportes())
+            dispatch(onClearSoportes());
             ExceptionMessageError(error);
         }
     };
 
-    const startSearchSoporteForId = async ({ numero_sop, id_usu_tecnico_asig }) => {
+    /* const startSearchSoporteForId = async ({ numero_sop, id_usu_tecnico_asig }) => {
         try {
             const { data } = await helpdeskApi.post(`/general/soporte/${numero_sop}`, { id_usu_tecnico_asig });
             const { soporte } = data;
@@ -197,7 +236,7 @@ export const useSoporteStore = () => {
            //console.log(error);
            ExceptionMessageError(error);
         }
-    }
+    } */
 
     /* USUARIO SOLICITANTE */
     const startSendSolicitud = async (solicitud) => {
@@ -236,7 +275,8 @@ export const useSoporteStore = () => {
     const startCerrarSoporte = async (soporte, values) => {
         try {
             const { data } = await helpdeskApi.put(
-                `/usuario/cierre-soporte/${soporte.id_sop}`, values
+                `/usuario/cierre-soporte/${soporte.id_sop}`,
+                values
             );
             dispatch(onCalificarSoporte(soporte));
             dispatch(onLoadMessage(data));
@@ -249,7 +289,11 @@ export const useSoporteStore = () => {
     };
 
     /* GENERAL */
-    const startDiagnosticarSoporte = async (soporte, option, storageFields={}) => {
+    const startDiagnosticarSoporte = async (
+        soporte,
+        option,
+        storageFields = {}
+    ) => {
         try {
             const { data } = await helpdeskApi.put(
                 `/general/diagnosticar-soporte/${soporte.id_sop}`,
@@ -433,13 +477,15 @@ export const useSoporteStore = () => {
         errores,
 
         startLoadSoportesActuales,
+        startLoadSoporte,
         startAsignarSoporte,
+        startExportActaPDF,
         startLoadSoportesAnulados,
         startAnularSoporte,
         startCreateSolicitudAdmin,
         startCreateSoporte,
         startSearchSoporte,
-        startSearchSoporteForId,
+        //startSearchSoporteForId,
         startSendSolicitud,
         startLoadSoportesAtendidos,
         startCerrarSoporte,

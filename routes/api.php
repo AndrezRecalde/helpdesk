@@ -95,6 +95,7 @@ Route::group(['prefix' => 'gerencia', 'middleware' => ['auth:sanctum']], functio
     Route::get('/tipos-contratos', [TipoContratoController::class, 'getTiposContratos']);
 
     /* SOPORTES */
+    Route::post('/soporte', [SoporteAdminController::class, 'getSoporteForNumero']);
     Route::put('/asignar-soporte/{id_sop}', [SoporteAdminController::class, 'asignarSoporte']);
     Route::put('/anular-soporte/{id_sop}', [SoporteAdminController::class, 'anularSoportes']);
     Route::post('/soportes-anulados', [SoporteAdminController::class, 'getSoporteAnulados']);
@@ -104,6 +105,7 @@ Route::group(['prefix' => 'gerencia', 'middleware' => ['auth:sanctum']], functio
     Route::post('/reporte-indicador-pdf', [SoporteAdminController::class, 'exportPDFIndicadores']); //TODO
     Route::get('/soportes-sin-calificar', [SoporteAdminController::class, 'getSoportesSinCalificacion']);
     Route::post('/calificacion', [SoporteAdminController::class, 'setCalificacionSoportes']);
+    Route::post('/soporte-acta', [SoporteAdminController::class, 'exportActaBajaEquipo']);
 
 
     /*DASHBOARD */
@@ -122,6 +124,7 @@ Route::group(['prefix' => 'gerencia', 'middleware' => ['auth:sanctum']], functio
     Route::post('/inventario/categorias', [InvCategoriaController::class, 'getCategorias']);
     Route::post('/inventario/categoria/store', [InvCategoriaController::class, 'store']);
     Route::put('/inventario/categoria/update/{id}', [InvCategoriaController::class, 'update']);
+    Route::put('/inventario/categoria/incrementar/{id}', [InvCategoriaController::class, 'incrementarStock']);
     Route::delete('/inventario/categoria/destroy/{id}', [InvCategoriaController::class, 'update']);
 
     /* ESTADOS */
@@ -157,11 +160,12 @@ Route::group(['prefix' => 'gerencia', 'middleware' => ['auth:sanctum']], functio
 
     /* EQUIPOS */
     Route::post('/inventario/equipos', [InvEquipoController::class, 'getEquiposInv']);
+    Route::get('/inventario/equipo/{id}', [InvEquipoController::class, 'show']);
     Route::post('/inventario/equipo/store', [InvEquipoController::class, 'store']);
     Route::put('/inventario/equipo/update/{id}', [InvEquipoController::class, 'update']);
     Route::delete('/inventario/equipo/destroy/{id}', [InvEquipoController::class, 'destroy']);
     Route::put('/inventario/asignar/{id}', [InvEquipoController::class, 'assignResponsable']);
-    Route::delete('/inventario/equipo/{equipo_id}/usuario/{user_id}', [InvEquipoController::class, 'removeUserFromEquipo']);
+    Route::delete('/inventario/equipo/{equipo_id}/{id}', [InvEquipoController::class, 'removeUserFromEquipo']);
 });
 
 /* RUTAS: GERENTE O TECNICO */

@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             //$table->string('nombre_equipo');
             $table->string('modelo');
-            $table->string('numero_serie');
-            $table->string('codigo_antiguo');
-            $table->string('codigo_nuevo');
+            $table->string('numero_serie')->unique();
+            $table->string('codigo_antiguo')->unique();
+            $table->string('codigo_nuevo')->unique();
             $table->date('fecha_adquisicion')->nullable();
             $table->date('fecha_amortizacion')->nullable();
             $table->date('fecha_baja')->nullable();
@@ -26,7 +26,6 @@ return new class extends Migration
             $table->boolean('bien_adquirido')->default(false);
             $table->boolean('bien_donado')->default(false);
             $table->boolean('bien_usado')->default(false);
-            $table->integer('stock')->default(0);
             $table->unsignedBigInteger('ubicacion_id');
             $table->unsignedBigInteger('categoria_id');
             $table->unsignedBigInteger('estado_id');

@@ -4,8 +4,10 @@ import {
     onClearInvEquipos,
     onDeleteInvEquipo,
     onLoadErrores,
+    onLoading,
     onLoadInvEquipos,
     onLoadMessage,
+    onRemoveUserFromEquipo,
     onSetActivateInvEquipo,
 } from "../../../store/inventario/equipo/invEquipoSlice";
 import helpdeskApi from "../../../api/helpdeskApi";
@@ -19,19 +21,26 @@ export const useInvEquipoStore = () => {
     const dispatch = useDispatch();
 
     const startLoadInvEquipos = async ({
-        codigo_antiguo = null,
-        codigo_nuevo = null,
+        usuario_id = null,
+        direccion_id = null,
+        codigo = null,
         estado_id = null,
         categoria_id = null,
+        numero_serie = null
     }) => {
         try {
             dispatch(onLoading(true));
-            const { data } = await helpdeskApi.post("/gerencia/inventario/equipos", {
-                codigo_antiguo,
-                codigo_nuevo,
-                estado_id,
-                categoria_id,
-            });
+            const { data } = await helpdeskApi.post(
+                "/gerencia/inventario/equipos",
+                {
+                    usuario_id,
+                    direccion_id,
+                    codigo,
+                    estado_id,
+                    categoria_id,
+                    numero_serie
+                }
+            );
             const { equipos } = data;
             dispatch(onLoadInvEquipos(equipos));
         } catch (error) {
@@ -61,6 +70,20 @@ export const useInvEquipoStore = () => {
             setTimeout(() => {
                 dispatch(onLoadMessage(undefined));
             }, 40);
+        } catch (error) {
+            console.log(error);
+            ExceptionMessageError(error);
+        }
+    };
+
+    const startShowInvEquipo = async (equipo) => {
+        try {
+            dispatch(onLoading(true));
+            const { data } = await helpdeskApi.get(
+                `/gerencia/inventario/equipo/${equipo.id}`
+            );
+            const { equipo: invEquipo } = data;
+            dispatch(onSetActivateInvEquipo(invEquipo));
         } catch (error) {
             console.log(error);
             ExceptionMessageError(error);
@@ -108,12 +131,13 @@ export const useInvEquipoStore = () => {
         }
     };
 
-    const startRemoveUsuarioEquipo = async (equipo_id, user_id) => {
+    const startRemoveUsuarioEquipo = async (equipo_id, id) => {
         try {
             dispatch(onLoading(true));
             const { data } = await helpdeskApi.delete(
-                `/gerencia/inventario/equipo/${equipo_id}/usuario/${user_id}`
+                `/gerencia/inventario/equipo/${equipo_id}/${id}`
             );
+            dispatch(onRemoveUserFromEquipo())
             dispatch(onLoadMessage(data));
             setTimeout(() => {
                 dispatch(onLoadMessage(undefined));
@@ -133,10 +157,11 @@ export const useInvEquipoStore = () => {
 
         startLoadInvEquipos,
         startAddInvEquipo,
+        startShowInvEquipo,
         startDeleteInvEquipo,
         setActivateInvEquipo,
         startClearInvEquipos,
         startAssignEquipo,
-        startRemoveUsuarioEquipo
+        startRemoveUsuarioEquipo,
     };
 };

@@ -16,8 +16,37 @@ class InvCategoria extends Model
     protected $fillable = [
         'nombre_categoria',
         'tipocategoria_id',
+        'stock',
         'activo'
     ];
+
+    // Método para agregar stock
+    public function agregarStock($cantidad): void
+    {
+        $this->stock += $cantidad;
+        $this->actualizarEstadoActivo();
+        $this->save();
+    }
+
+    // Método para reducir stock
+    public function reducirStock(int $cantidad): bool
+    {
+        // Verifica que la cantidad a reducir no deje el stock en negativo
+        if ($this->stock >= $cantidad) {
+            $this->stock -= $cantidad;
+            $this->actualizarEstadoActivo();
+            $this->save();
+            return true;
+        }
+
+        return false; // Retorna false si no es posible reducir el stock
+    }
+
+    protected function actualizarEstadoActivo(): void
+    {
+        // Si el stock es 0, desactiva la categoría; de lo contrario, la activa
+        $this->activo = $this->stock > 0;
+    }
 
     function tipocategoria(): BelongsTo
     {

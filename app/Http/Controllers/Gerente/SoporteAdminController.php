@@ -25,6 +25,23 @@ class SoporteAdminController extends Controller
     //SE ENVÍA AL CORREO AL TECNICO
     //Mail::to($tecnico->email)->send(new SoporteMail($request));
 
+    function getSoporteForNumero(Request $request): JsonResponse
+    {
+        $soporte = Soporte::from('sop_soporte as ss')
+            ->selectRaw('ss.id_sop, ss.numero_sop,
+                                 ss.id_usu_recibe, us.nmbre_usrio as solicitante,
+                                 ss.id_usu_tecnico_asig, u.nmbre_usrio as tecnico,
+                                 ss.id_direccion, d.nmbre_dprtmnto as direccion,
+                                 ss.fecha_ini, ss.fecha_fin, ss.solucion')
+            ->join('dprtmntos as d', 'd.cdgo_dprtmnto', 'ss.id_direccion')
+            ->join('usrios_sstma as u', 'u.cdgo_usrio', 'ss.id_usu_tecnico_asig')
+            ->join('usrios_sstma as us', 'us.cdgo_usrio', 'ss.id_usu_recibe')
+            ->where('numero_sop', $request->numero_sop)
+            ->first();
+
+        return response()->json(['status' => MsgStatus::Success, 'soporte' => $soporte], 200);
+    }
+
     function asignarSoporte(SoporteAsignarcionRequest $request, int $id_sop): JsonResponse
     {
         $soporte = Soporte::find($id_sop);
@@ -365,5 +382,20 @@ class SoporteAdminController extends Controller
         Soporte::whereIn('id_sop', [$request->id_soportes])->update(['id_calificacion' => 5, 'id_estado' => 4]);
 
         return response()->json(['status' => MsgStatus::Success, 'msg' => MsgStatus::Updated], 200);
+    }
+
+    function exportActaBajaEquipo(Request $soporte)
+    {
+        //$soporteActa = $this->getSoporteForNumero($soporte);
+
+        $data = [
+            'direccion'     =>  'Dirección de Técnologias de Información y Comunicación',
+            'titulo'        =>  'Reporte General de Indicadores',
+            'fecha'         =>   Carbon::now()->format('Y-m-d'),
+            'soporte'       =>   $soporte
+        ];
+
+        $pdf = Pdf::loadView('pdf.soporte.acta', $data);
+        return $pdf->setPaper('a4', 'portrait')->download('acta.pdf');
     }
 }

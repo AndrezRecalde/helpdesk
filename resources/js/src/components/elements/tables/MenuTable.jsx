@@ -1,7 +1,10 @@
 import { Menu, rem } from "@mantine/core";
 import {
+    IconDeviceDesktopDown,
     IconEditCircle,
     IconEyeCheck,
+    IconFiles,
+    IconLayersIntersect,
     IconPrinter,
     IconSortAscending,
     IconTrash,
@@ -50,9 +53,40 @@ export const MenuTable_E = ({ row, handleEdit }) => {
     );
 };
 
-export const MenuTable_VE = ({ row, handleEdit, handleView }) => {
+export const MenuTable_D = ({ row, handleDelete }) => {
     return (
         <>
+            <Menu.Item
+                leftSection={
+                    <IconTrash
+                        style={{ width: rem(15), height: rem(15) }}
+                    />
+                }
+                onClick={() => handleDelete(row.original)}
+            >
+                Eliminar
+            </Menu.Item>
+        </>
+    );
+};
+
+export const MenuTable_VE = ({
+    row,
+    handleShow,
+    handleEdit,
+    handleAssign,
+    handleDelete,
+}) => {
+    return (
+        <>
+            <Menu.Item
+                leftSection={
+                    <IconEyeCheck style={{ width: rem(15), height: rem(15) }} />
+                }
+                onClick={() => handleShow(row.original)}
+            >
+                Ver
+            </Menu.Item>
             <Menu.Item
                 leftSection={
                     <IconEditCircle
@@ -65,12 +99,31 @@ export const MenuTable_VE = ({ row, handleEdit, handleView }) => {
             </Menu.Item>
             <Menu.Item
                 leftSection={
-                    <IconEyeCheck
-                        style={{ width: rem(15), height: rem(15) }} />
+                    <IconLayersIntersect
+                        style={{ width: rem(15), height: rem(15) }}
+                    />
                 }
-                onClick={() => handleView(row.original)}
+                onClick={() => handleAssign(row.original)}
             >
-                Ver
+                Asignar
+            </Menu.Item>
+            <Menu.Item
+                leftSection={
+                    <IconFiles
+                        style={{ width: rem(15), height: rem(15) }}
+                    />
+                }
+                onClick={() => handleDelete(row.original)}
+            >
+                Documentar
+            </Menu.Item>
+            <Menu.Item
+                leftSection={
+                    <IconTrash style={{ width: rem(15), height: rem(15) }} />
+                }
+                onClick={() => handleDelete(row.original)}
+            >
+                Eliminar
             </Menu.Item>
         </>
     );

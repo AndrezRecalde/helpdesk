@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Validation\Rule;
 
 class EquipoInvRequest extends FormRequest
 {
@@ -23,12 +24,15 @@ class EquipoInvRequest extends FormRequest
      */
     public function rules(): array
     {
+        $codigo_antiguo = $this->request->get('codigo_antiguo');
+        $codigo_nuevo = $this->request->get('codigo_nuevo');
+        $numero_serie = $this->request->get('numero_serie');
+
         return [
-            'nombre_equipo'     =>  'required',
-            'codigo_antiguo'    =>  '',
-            'codigo_nuevo'      =>  '',
+            'codigo_antiguo'    =>  ['', Rule::unique('inv_equipos')->ignore($codigo_antiguo, 'codigo_antiguo')],
+            'codigo_nuevo'      =>  ['required', Rule::unique('inv_equipos')->ignore($codigo_nuevo, 'codigo_nuevo')],
             'modelo'            =>  'required',
-            'numero_serie'      =>  'required',
+            'numero_serie'      =>  ['', Rule::unique('inv_equipos')->ignore($numero_serie, 'numero_serie')],
             'fecha_adquisicion' =>  'required',
             'fecha_amortizacion' => '',
             'vida_util'         =>  'required',
@@ -36,7 +40,6 @@ class EquipoInvRequest extends FormRequest
             'bien_adquirido'    =>  'required',
             'bien_donado'       =>  'required',
             'bien_usado'        =>  'required',
-            'stock'             =>  '',
             'ubicacion_id'      =>  '',
             'categoria_id'      =>  'required',
             'estado_id'         =>  'required',
@@ -52,7 +55,6 @@ class EquipoInvRequest extends FormRequest
     function message(): array
     {
         return [
-            'nombre_equipo.required'    =>   'El nombre del equipo es requerido',
             'modelo.required'           =>   'El modelo es requerido',
             'numero_serie.required'     =>   'El número de serie es requerido',
             'fecha_adquisicion.required' =>  'La fecha de adquisición es requerida',

@@ -17,7 +17,7 @@ export const InvEquipoGeneralForm = ({ form }) => {
     const { startLoadInvCategorias, categorias } = useInvCategoriaStore();
 
     useEffect(() => {
-        startLoadInvCategorias({ tipocategoria_id: tipocategoria_id });
+        startLoadInvCategorias({ tipocategoria_id: tipocategoria_id, activo: true });
     }, [tipocategoria_id]);
 
     return (

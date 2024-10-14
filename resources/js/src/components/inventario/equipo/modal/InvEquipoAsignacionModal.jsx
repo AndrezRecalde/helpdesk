@@ -20,6 +20,7 @@ export const InvEquipoAsignacionModal = () => {
 
     const form = useForm({
         initialValues: {
+            id: null,
             usuario_id: null,
             direccion_id: null,
             concepto_id: null,
@@ -35,6 +36,8 @@ export const InvEquipoAsignacionModal = () => {
             concepto_id: isNotEmpty("Por favor seleccione un estado de uso"),
         },
         transformValues: (values) => ({
+            ...values,
+            id: Number(values.id) || null,
             usuario_id: Number(values.usuario_id) || null,
             direccion_id: Number(values.direccion_id),
             concepto_id: Number(values.concepto_id) || null,
@@ -43,16 +46,16 @@ export const InvEquipoAsignacionModal = () => {
 
     useEffect(() => {
         if (isOpenModalAssignEquipo) {
-            startLoadUsersGeneral();
+            startLoadUsersGeneral({});
             startLoadDirecciones();
             startLoadInvConceptos();
         }
 
-        return () => {
+ /*        return () => {
             clearUsers();
             clearDirecciones();
             startClearInvConceptos();
-        };
+        }; */
     }, [isOpenModalAssignEquipo]);
 
     const handleCloseModal = () => {
