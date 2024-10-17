@@ -67,6 +67,11 @@ class InvEquipo extends Model
         return $this->belongsToMany(Departamento::class, 'departamento_equipo', 'equipo_id', 'cdgo_dprtmnto');
     } */
 
+    public function perifericos()
+    {
+        return $this->hasMany(InvPeriferico::class, 'equipo_id');
+    }
+
     function ubicacion(): BelongsTo
     {
         return $this->belongsTo(InvUbicacion::class, 'ubicacion_id');

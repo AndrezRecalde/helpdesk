@@ -10,6 +10,8 @@ use App\Models\InvCategoria;
 use App\Models\InvEquipo;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
 
 class InvEquipoController extends Controller
 {
@@ -55,7 +57,7 @@ class InvEquipoController extends Controller
                             invt.nombre_tipocategoria,
                             inve.estado_id, inves.nombre_estado, inves.color,
                             inve.marca_id, invm.nombre_marca')
-            ->with(['usuarios'])
+            ->with(['usuarios', 'perifericos'])
             ->join('inv_ubicaciones as invu', 'invu.id', 'inve.ubicacion_id')
             ->join('inv_categorias as invc', 'invc.id', 'inve.categoria_id')
             ->join('inv_tipocategorias as invt', 'invt.id', 'invc.tipocategoria_id')
@@ -75,9 +77,11 @@ class InvEquipoController extends Controller
     function store(EquipoInvRequest $request): JsonResponse
     {
         try {
+            DB::beginTransaction();  // Iniciar transacción
             $equipo = InvEquipo::create($request->validated());
             $categoria = InvCategoria::find($request->categoria_id);
 
+            // Registrar la relación con un usuario, si los campos correspondientes están presentes
             if ($request->filled('usuario_id') && $request->filled('direccion_id')) {
                 $equipo->usuarios()->attach($request->usuario_id, [
                     'direccion_id' => $request->direccion_id,
@@ -86,13 +90,23 @@ class InvEquipoController extends Controller
                 ]);
             }
 
+            // Reducir el stock de la categoría relacionada
             $categoria->reducirStock(1);
+
+            // Registrar periféricos si se incluyen en la solicitud
+            if ($request->filled('perifericos')) {
+                foreach ($request->perifericos as $periferico) {
+                    $equipo->perifericos()->create($periferico);
+                }
+            }
+            DB::commit();  // Confirmar la transacción si todo sale bien
 
             return response()->json([
                 'status' => 'success',
                 'msg'    => MsgStatus::Created,
             ], 200);
         } catch (\Throwable $th) {
+            DB::rollBack();  // Revertir la transacción en caso de error
             return response()->json(['status' => 'error', 'message' => $th->getMessage()], 500);
         }
     }
@@ -100,23 +114,47 @@ class InvEquipoController extends Controller
     function update(EquipoInvRequest $request, int $id): JsonResponse
     {
         $equipo = InvEquipo::find($id);
+
         try {
             if ($equipo) {
+                DB::beginTransaction();  // Iniciar la transacción
+
+                // Actualizar el equipo con los datos validados
                 $equipo->update($request->validated());
 
+                // Actualizar la relación de usuario si se incluyen los campos correspondientes
                 if ($request->filled('usuario_id') && $request->filled('direccion_id')) {
-                    $equipo->usuarios()->attach($request->usuario_id, [
+                    $equipo->usuarios()->syncWithoutDetaching([$request->usuario_id => [
                         'direccion_id' => $request->direccion_id,
                         'concepto_id'  => $request->concepto_id,
-                        'observacion' =>  $request->observacion
-                    ]);
+                        'observacion'  => $request->observacion,
+                    ]]);
                 }
+
+                // Manejo de periféricos: actualizar o crear periféricos si están presentes en la solicitud
+                if ($request->filled('perifericos')) {
+                    foreach ($request->perifericos as $periferico) {
+                        // Intentar encontrar un periférico existente según el número de serie
+                        $existingPeriferico = $equipo->perifericos()->where('numero_serie', $periferico['numero_serie'])->first();
+
+                        if ($existingPeriferico) {
+                            // Actualizar periférico existente
+                            $existingPeriferico->update($periferico);
+                        } else {
+                            // Crear nuevo periférico
+                            $equipo->perifericos()->create($periferico);
+                        }
+                    }
+                }
+
+                DB::commit();  // Confirmar la transacción si todo sale bien
 
                 return response()->json(['status' => MsgStatus::Success, 'msg' => MsgStatus::Updated], 201);
             } else {
                 return response()->json(['status' => MsgStatus::Error, 'msg' => MsgStatus::NotFound], 404);
             }
         } catch (\Throwable $th) {
+            DB::rollBack();  // Revertir la transacción en caso de error
             return response()->json(['status' => 'error', 'message' => $th->getMessage()], 500);
         }
     }

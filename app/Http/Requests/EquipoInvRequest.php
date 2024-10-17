@@ -24,15 +24,14 @@ class EquipoInvRequest extends FormRequest
      */
     public function rules(): array
     {
-        $codigo_antiguo = $this->request->get('codigo_antiguo');
-        $codigo_nuevo = $this->request->get('codigo_nuevo');
-        $numero_serie = $this->request->get('numero_serie');
+        $equipoId = $this->route('id');  // Obtener el ID del equipo que se está actualizando
+        $perifericos = $this->request->get('perifericos', []);  // Obtener periféricos de la solicitud, por defecto es un array vacío
 
         return [
-            'codigo_antiguo'    =>  ['', Rule::unique('inv_equipos')->ignore($codigo_antiguo, 'codigo_antiguo')],
-            'codigo_nuevo'      =>  ['required', Rule::unique('inv_equipos')->ignore($codigo_nuevo, 'codigo_nuevo')],
+            'codigo_antiguo'    =>  ['', Rule::unique('inv_equipos')->ignore($equipoId)],
+            'codigo_nuevo'      =>  ['required', Rule::unique('inv_equipos')->ignore($equipoId)],
             'modelo'            =>  'required',
-            'numero_serie'      =>  ['', Rule::unique('inv_equipos')->ignore($numero_serie, 'numero_serie')],
+            'numero_serie'      =>  ['', Rule::unique('inv_equipos')->ignore($equipoId)],
             'fecha_adquisicion' =>  'required',
             'fecha_amortizacion' => '',
             'vida_util'         =>  'required',
@@ -47,8 +46,17 @@ class EquipoInvRequest extends FormRequest
             'usuario_id'        =>  '',
             'direccion_id'      =>  '',
             'concepto_id'       =>  '',
-            'observacion'       =>  ''
+            'observacion'       =>  '',
 
+            // Validación de periféricos si están presentes
+            'perifericos'       =>  'array|nullable',  // Aceptar un array o nulo si no hay periféricos
+
+            // Validación de cada periférico en el array
+            'perifericos.*.numero_serie' => [
+                'required',
+                Rule::unique('inv_perifericos', 'numero_serie')
+                    ->ignore($equipoId, 'equipo_id')  // Ignorar si el número de serie ya pertenece al equipo actual
+            ],
         ];
     }
 
@@ -57,6 +65,7 @@ class EquipoInvRequest extends FormRequest
         return [
             'modelo.required'           =>   'El modelo es requerido',
             'numero_serie.required'     =>   'El número de serie es requerido',
+            'numero_serie.unique'       =>   'El número de serie ya está registrado en otro equipo o periférico',
             'fecha_adquisicion.required' =>  'La fecha de adquisición es requerida',
             'vida_util.required'        =>   'Coloque la vida útil en años',
             'descripcion.required'      =>   'Por favor coloqué una descripción al equipo',
@@ -69,6 +78,10 @@ class EquipoInvRequest extends FormRequest
             'marca_id.required'         =>   'Por favor seleccione la marca del equipo',
             //'usuario.required'         =>   'Por favor seleccione el usuario a quien le pertenece',
             //'departamento.required'    =>   'Por favor seleccione el departamento donde se encuentra',
+
+
+            'perifericos.*.numero_serie.required' => 'El número de serie del periférico es requerido',
+            'perifericos.*.numero_serie.unique'   => 'El número de serie del periférico ya está registrado',
         ];
     }
 
