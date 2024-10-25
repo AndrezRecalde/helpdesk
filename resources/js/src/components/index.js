@@ -161,6 +161,20 @@ import { InvDeleteEquipoModal } from "./inventario/equipo/modal/InvDeleteEquipoM
 import { InvDeleteEquipoForm } from "./inventario/equipo/form/InvDeleteEquipoForm";
 import { InvBajaEquipoModal } from "./inventario/equipo/modal/InvBajaEquipoModal";
 import { InvBajaEquipoForm } from "./inventario/equipo/form/InvBajaEquipoForm";
+import { InvTabComponentesEquipos } from "./inventario/equipo/form/elements/tabs/InvTabComponentesEquipos";
+import { InvTabResponsableEquipo } from "./inventario/equipo/form/elements/tabs/InvTabResponsableEquipo";
+import { InvEquipoComponentesTable } from "./inventario/equipo/table/InvEquipoComponentesTable";
+import { InvEquipoComponenteForm } from "./inventario/equipo/form/InvEquipoComponenteForm";
+import { InvEquipoAssignComponente } from "./inventario/equipo/modal/InvEquipoAssignComponente";
+import { InvEquipoDocumentosTable } from "./inventario/equipo/table/InvEquipoDocumentosTable";
+import { InvEquipoDocumentoModal } from "./inventario/equipo/modal/InvEquipoDocumentoModal";
+import { InvEquipoDocumentoForm } from "./inventario/equipo/form/InvEquipoDocumentoForm";
+import { BtnDownloadDocumento } from "./inventario/equipo/form/elements/btn/BtnDownloadDocumento";
+
+/* Perifericos */
+import { InvTransferirPerifericoModal } from "./inventario/periferico/modal/InvTransferirPerifericoModal";
+import { InvTransferirPerifericoForm } from "./inventario/periferico/form/InvTransferirPerifericoForm";
+
 
 /* Elementos */
 import { Logo } from "./elements/application/Logo";
@@ -193,6 +207,7 @@ import {
     MenuTable_T,
     MenuSolicitudTable,
     MenuTable_Per,
+    MenuTable_Perif
 } from "./elements/tables/MenuTable";
 import { TableContent } from "./elements/tables/TableContent";
 
@@ -351,6 +366,20 @@ export {
     InvDeleteEquipoForm,
     InvBajaEquipoModal,
     InvBajaEquipoForm,
+    InvTabComponentesEquipos,
+    InvTabResponsableEquipo,
+    InvEquipoComponentesTable,
+    InvEquipoComponenteForm,
+    InvEquipoAssignComponente,
+    InvEquipoDocumentosTable,
+    InvEquipoDocumentoModal,
+    InvEquipoDocumentoForm,
+    BtnDownloadDocumento,
+
+    /* Perifericos */
+    InvTransferirPerifericoModal,
+    InvTransferirPerifericoForm,
+
 
     /* Elements */
     Logo,
@@ -378,5 +407,6 @@ export {
     MenuTable_T,
     MenuSolicitudTable,
     MenuTable_Per,
+    MenuTable_Perif,
     TableContent,
 };

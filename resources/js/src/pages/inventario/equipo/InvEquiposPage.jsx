@@ -6,9 +6,12 @@ import {
     InvBajaEquipoModal,
     InvDeleteEquipoModal,
     InvEquipoAsignacionModal,
+    InvEquipoAssignComponente,
+    InvEquipoDocumentoModal,
     InvEquipoModal,
     InvEquipoTable,
     InvShowEquipoModal,
+    InvTransferirPerifericoModal,
     TitlePage,
 } from "../../../components";
 import { IconCopyPlus } from "@tabler/icons-react";
@@ -92,6 +95,9 @@ export const InvEquiposPage = () => {
             <InvEquipoAsignacionModal />
             <InvDeleteEquipoModal />
             <InvBajaEquipoModal />
+            <InvEquipoAssignComponente />
+            <InvTransferirPerifericoModal />
+            <InvEquipoDocumentoModal />
         </Container>
     );
 };

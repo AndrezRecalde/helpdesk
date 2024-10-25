@@ -18,6 +18,9 @@ export const InvTabGeneralEquipo = () => {
         { caracteristica: "BIEN ADQUIRIDO", value: activateInvEquipo?.bien_adquirido === true ? "Sí" : "No" || "Cargando..." },
         { caracteristica: "BIEN DONADO", value: activateInvEquipo?.bien_donado === true ? "Sí" : "No" || "Cargando..." },
         { caracteristica: "BIEN USADO", value: activateInvEquipo?.bien_usado === true ? "Sí" : "No" || "Cargando..." },
+        { caracteristica: "UBICACIÓN FÍSICA", value: activateInvEquipo?.nombre_ubicacion || "Cargando..." },
+        { caracteristica: "NOMBRE DE EDIFICIO", value: activateInvEquipo?.nombre_edificio || "Cargando..." },
+
     ];
 
     const rows = elements.map((element) => (

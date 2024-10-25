@@ -5,7 +5,7 @@ import { useInvEquipoStore, useInvUiEquipo } from "../../../../hooks";
 
 export const InvEquipoTable = () => {
     const { isLoading, invEquipos, startShowInvEquipo, setActivateInvEquipo } = useInvEquipoStore();
-    const { modalActionEquipo, modalActionViewEquipo, modalActionAssignEquipo, modalActionDeleteEquipo } = useInvUiEquipo();
+    const { modalActionEquipo, modalActionViewEquipo, modalActionDeleteEquipo } = useInvUiEquipo();
 
     const columns = useMemo(
         () => [
@@ -40,7 +40,8 @@ export const InvEquipoTable = () => {
         (selected) => {
             console.log("editar");
             modalActionEquipo(true);
-            startShowInvEquipo(selected);
+            //startShowInvEquipo(selected);
+            setActivateInvEquipo(selected);
         },
         [invEquipos]
     );
@@ -54,14 +55,14 @@ export const InvEquipoTable = () => {
         [invEquipos]
     );
 
-    const handleAssign = useCallback(
+    /* const handleAssign = useCallback(
         (selected) => {
             console.log(selected);
             setActivateInvEquipo(selected);
             modalActionAssignEquipo(true);
         },
         [invEquipos]
-    );
+    ); */
 
     const handleDelete = useCallback(
         (selected) => {
@@ -84,7 +85,7 @@ export const InvEquipoTable = () => {
                 row={row}
                 handleEdit={handleEditar}
                 handleShow={handleShow}
-                handleAssign={handleAssign}
+                //handleAssign={handleAssign}
                 handleDelete={handleDelete}
             />
         ),

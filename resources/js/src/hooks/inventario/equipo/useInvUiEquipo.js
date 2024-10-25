@@ -1,6 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
 import {
+    onOpenModalAddDocumento,
     onOpenModalAssignEquipo,
+    onOpenModalAssignPeriferico,
     onOpenModalBajaEquipo,
     onOpenModalDeleteEquipo,
     onOpenModalInvEquipo,
@@ -13,7 +15,9 @@ export const useInvUiEquipo = () => {
         isOpenModalAssignEquipo,
         isOpenModalViewEquipo,
         isOpenModalDeleteEquipo,
-        isOpenModalBajaEquipo
+        isOpenModalBajaEquipo,
+        isOpenModalAssignPeriferico,
+        isOpenModalAddDocumento,
     } = useSelector((state) => state.uiInvEquipo);
 
     const dispatch = useDispatch();
@@ -32,11 +36,19 @@ export const useInvUiEquipo = () => {
 
     const modalActionDeleteEquipo = (behavior) => {
         dispatch(onOpenModalDeleteEquipo(behavior));
-    }
+    };
 
     const modalActionBajaEquipo = (behavior) => {
         dispatch(onOpenModalBajaEquipo(behavior));
-    }
+    };
+
+    const modalActionAssignPeriferico = (behavior) => {
+        dispatch(onOpenModalAssignPeriferico(behavior));
+    };
+
+    const modalActionAddDocumento = (behavior) => {
+        dispatch(onOpenModalAddDocumento(behavior));
+    };
 
     return {
         isOpenModalInvEquipo,
@@ -44,11 +56,15 @@ export const useInvUiEquipo = () => {
         isOpenModalViewEquipo,
         isOpenModalDeleteEquipo,
         isOpenModalBajaEquipo,
+        isOpenModalAssignPeriferico,
+        isOpenModalAddDocumento,
 
         modalActionEquipo,
         modalActionAssignEquipo,
         modalActionViewEquipo,
         modalActionDeleteEquipo,
-        modalActionBajaEquipo
+        modalActionBajaEquipo,
+        modalActionAssignPeriferico,
+        modalActionAddDocumento
     };
 };

@@ -8,7 +8,7 @@ import {
 } from "../../../../hooks";
 
 export const InvEquipoAsignacionForm = ({ form }) => {
-    const { startAssignEquipo, activateInvEquipo, setActivateInvEquipo } =
+    const { startAssignEquipo, activateInvEquipo } =
         useInvEquipoStore();
     const { modalActionAssignEquipo } = useInvUiEquipo();
 
@@ -24,9 +24,9 @@ export const InvEquipoAsignacionForm = ({ form }) => {
         e.preventDefault();
         console.log(form.getTransformedValues())
         startAssignEquipo(form.getTransformedValues());
-        if (activateInvEquipo !== null) {
+        /* if (activateInvEquipo !== null) {
             setActivateInvEquipo(null);
-        }
+        } */
         form.reset();
         modalActionAssignEquipo(false);
     };

@@ -47,10 +47,10 @@ export const InvEquipoModal = () => {
             estado_id: null,
             marca_id: null,
 
-            usuario_id: null,
+            /* usuario_id: null,
             direccion_id: null,
             concepto_id: null,
-            observacion: ""
+            observacion: "" */
 
         },
         validate: {
@@ -77,9 +77,9 @@ export const InvEquipoModal = () => {
             estado_id: Number(values.estado_id) || null,
             marca_id: Number(values.marca_id) || null,
 
-            usuario_id: Number(values.usuario_id) || null,
+           /*  usuario_id: Number(values.usuario_id) || null,
             direccion_id: Number(values.direccion_id),
-            concepto_id: Number(values.concepto_id) || null,
+            concepto_id: Number(values.concepto_id) || null, */
 
         }),
     });

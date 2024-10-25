@@ -1,24 +1,38 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Code, Group, Stepper } from "@mantine/core";
 import {
-    AlertSection,
+    //AlertSection,
     BtnSection,
-    InvAsignacionForm,
+    //InvAsignacionForm,
     InvEquipoComplementaria,
     InvEquipoGeneralForm,
 } from "./../../../../components";
 import {
     IconChevronsLeft,
     IconChevronsRight,
-    IconInfoCircle,
     IconSend,
 } from "@tabler/icons-react";
 import { useInvEquipoStore, useInvUiEquipo } from "../../../../hooks";
 
 export const InvEquipoForm = ({ form }) => {
-    const { startAddInvEquipo } = useInvEquipoStore();
+    const { startAddInvEquipo, activateInvEquipo } = useInvEquipoStore();
     const { modalActionEquipo } = useInvUiEquipo();
     const [active, setActive] = useState(0);
+
+    useEffect(() => {
+        if (activateInvEquipo !== null) {
+            form.setValues({
+                ...activateInvEquipo,
+                ubicacion_id: activateInvEquipo.ubicacion_id.toString(),
+                categoria_id: activateInvEquipo.categoria_id.toString(),
+                tipocategoria_id: activateInvEquipo.tipocategoria_id.toString(),
+                estado_id: activateInvEquipo.estado_id.toString(),
+                marca_id: activateInvEquipo.marca_id.toString(),
+                //fechas
+            });
+            return;
+        }
+    }, [activateInvEquipo]);
 
     const nextStep = () => {
         const { errors } = form.validate();
@@ -37,7 +51,7 @@ export const InvEquipoForm = ({ form }) => {
                     setActive((current) => current * 1);
                 } else {
                     setActive((current) =>
-                        current < 3 ? current + 1 : current
+                        current < 2 ? current + 1 : current
                     );
                     form.clearErrors();
                 }
@@ -54,14 +68,14 @@ export const InvEquipoForm = ({ form }) => {
                     setActive((current) => current * 1);
                 } else {
                     setActive((current) =>
-                        current < 3 ? current + 1 : current
+                        current < 2 ? current + 1 : current
                     );
                     form.clearErrors();
                 }
                 break;
 
             case 2:
-                setActive((current) => (current < 3 ? current + 1 : current));
+                setActive((current) => (current < 2 ? current + 1 : current));
                 break;
             default:
                 break;
@@ -98,7 +112,7 @@ export const InvEquipoForm = ({ form }) => {
                 >
                     <InvEquipoComplementaria form={form} />
                 </Stepper.Step>
-                <Stepper.Step
+                {/* <Stepper.Step
                     label="Responsables"
                     description="Designación de responsables"
                 >
@@ -112,13 +126,15 @@ export const InvEquipoForm = ({ form }) => {
                         Por favor, si lo considera necesario, puede reasignar el
                         responsable en cualquier otro momento.
                     </AlertSection>
-                </Stepper.Step>
+                </Stepper.Step> */}
                 <Stepper.Completed>
-                    <Code>{JSON.stringify(form.getTransformedValues())}</Code>
+                    <Code>
+                        {JSON.stringify(form.getTransformedValues(), null, 2)}
+                    </Code>
                 </Stepper.Completed>
             </Stepper>
 
-            {active === 3 ? (
+            {active === 2 ? (
                 <Group justify="center" mt="xl">
                     <BtnSection
                         IconSection={IconChevronsLeft}
@@ -134,7 +150,7 @@ export const InvEquipoForm = ({ form }) => {
                         leftSection={<IconSend />}
                         onClick={(e) => handleSubmit(e)}
                     >
-                        Agregar usuario
+                        Agregar Equipo
                     </Button>
                 </Group>
             ) : (

@@ -45,4 +45,6 @@ enum MsgStatus:string {
     /* Usuarios */
     case UsersFilterNotFound = 'No existen usuarios con esos filtros de búsqueda';
 
+    /* Inventario */
+    case ComponentesSuccess = 'Componentes asignados correctamente al equipo';
 }

@@ -1,10 +1,7 @@
 import { Menu, rem } from "@mantine/core";
 import {
-    IconDeviceDesktopDown,
     IconEditCircle,
     IconEyeCheck,
-    IconFiles,
-    IconLayersIntersect,
     IconPrinter,
     IconSortAscending,
     IconTrash,
@@ -70,11 +67,27 @@ export const MenuTable_D = ({ row, handleDelete }) => {
     );
 };
 
+export const MenuTable_Perif = ({ row, handleTrasnferir }) => {
+    return (
+        <>
+            <Menu.Item
+                leftSection={
+                    <IconTrash
+                        style={{ width: rem(15), height: rem(15) }}
+                    />
+                }
+                onClick={() => handleTrasnferir(row.original)}
+            >
+                Transferir
+            </Menu.Item>
+        </>
+    );
+};
+
 export const MenuTable_VE = ({
     row,
     handleShow,
     handleEdit,
-    handleAssign,
     handleDelete,
 }) => {
     return (
@@ -96,26 +109,6 @@ export const MenuTable_VE = ({
                 onClick={() => handleEdit(row.original)}
             >
                 Editar
-            </Menu.Item>
-            <Menu.Item
-                leftSection={
-                    <IconLayersIntersect
-                        style={{ width: rem(15), height: rem(15) }}
-                    />
-                }
-                onClick={() => handleAssign(row.original)}
-            >
-                Asignar
-            </Menu.Item>
-            <Menu.Item
-                leftSection={
-                    <IconFiles
-                        style={{ width: rem(15), height: rem(15) }}
-                    />
-                }
-                onClick={() => handleDelete(row.original)}
-            >
-                Documentar
             </Menu.Item>
             <Menu.Item
                 leftSection={

@@ -8,6 +8,8 @@ export const uiInvEquipoSlice = createSlice({
         isOpenModalViewEquipo: false,
         isOpenModalDeleteEquipo: false,
         isOpenModalBajaEquipo: false,
+        isOpenModalAssignPeriferico: false,
+        isOpenModalAddDocumento: false
     },
     reducers: {
         onOpenModalInvEquipo: (state, { payload }) => {
@@ -24,6 +26,12 @@ export const uiInvEquipoSlice = createSlice({
         },
         onOpenModalBajaEquipo: (state, { payload }) => {
             state.isOpenModalBajaEquipo = payload;
+        },
+        onOpenModalAssignPeriferico: (state, { payload }) => {
+            state.isOpenModalAssignPeriferico = payload;
+        },
+        onOpenModalAddDocumento: (state, { payload }) => {
+            state.isOpenModalAddDocumento = payload;
         }
     },
 });
@@ -33,5 +41,7 @@ export const {
     onOpenModalAssignEquipo,
     onOpenModalViewEquipo,
     onOpenModalDeleteEquipo,
-    onOpenModalBajaEquipo
+    onOpenModalBajaEquipo,
+    onOpenModalAssignPeriferico,
+    onOpenModalAddDocumento
 } = uiInvEquipoSlice.actions;

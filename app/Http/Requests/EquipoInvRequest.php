@@ -25,7 +25,7 @@ class EquipoInvRequest extends FormRequest
     public function rules(): array
     {
         $equipoId = $this->route('id');  // Obtener el ID del equipo que se está actualizando
-        $perifericos = $this->request->get('perifericos', []);  // Obtener periféricos de la solicitud, por defecto es un array vacío
+        //$perifericos = $this->request->get('perifericos', []);  // Obtener periféricos de la solicitud, por defecto es un array vacío
 
         return [
             'codigo_antiguo'    =>  ['', Rule::unique('inv_equipos')->ignore($equipoId)],
@@ -49,14 +49,14 @@ class EquipoInvRequest extends FormRequest
             'observacion'       =>  '',
 
             // Validación de periféricos si están presentes
-            'perifericos'       =>  'array|nullable',  // Aceptar un array o nulo si no hay periféricos
+            /* 'perifericos'       =>  'array|nullable',  // Aceptar un array o nulo si no hay periféricos
 
             // Validación de cada periférico en el array
             'perifericos.*.numero_serie' => [
                 'required',
                 Rule::unique('inv_perifericos', 'numero_serie')
                     ->ignore($equipoId, 'equipo_id')  // Ignorar si el número de serie ya pertenece al equipo actual
-            ],
+            ], */
         ];
     }
 

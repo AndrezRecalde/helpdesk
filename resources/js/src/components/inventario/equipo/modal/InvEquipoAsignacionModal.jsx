@@ -59,9 +59,9 @@ export const InvEquipoAsignacionModal = () => {
     }, [isOpenModalAssignEquipo]);
 
     const handleCloseModal = () => {
-        if (activateInvEquipo !== null) {
+        /* if (activateInvEquipo !== null) {
             setActivateInvEquipo(null);
-        }
+        } */
         modalActionAssignEquipo(false);
     };
 

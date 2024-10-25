@@ -21,6 +21,7 @@ use App\Http\Controllers\Gerente\Inventario\InvDocumentoController;
 use App\Http\Controllers\Gerente\Inventario\InvEquipoController;
 use App\Http\Controllers\Gerente\Inventario\InvEstadoController;
 use App\Http\Controllers\Gerente\Inventario\InvMarcaController;
+use App\Http\Controllers\Gerente\Inventario\InvPerifericoController;
 use App\Http\Controllers\Gerente\Inventario\InvTipoCategoriaController;
 use App\Http\Controllers\Gerente\Inventario\InvUbicacionController;
 use App\Http\Controllers\Gerente\PermisosAdminController;
@@ -105,7 +106,7 @@ Route::group(['prefix' => 'gerencia', 'middleware' => ['auth:sanctum']], functio
     Route::post('/reporte-indicador-pdf', [SoporteAdminController::class, 'exportPDFIndicadores']); //TODO
     Route::get('/soportes-sin-calificar', [SoporteAdminController::class, 'getSoportesSinCalificacion']);
     Route::post('/calificacion', [SoporteAdminController::class, 'setCalificacionSoportes']);
-    Route::post('/soporte-acta', [SoporteAdminController::class, 'exportActaBajaEquipo']);
+    //Route::post('/soporte-acta', [SoporteAdminController::class, 'exportActaBajaEquipo']);
 
 
     /*DASHBOARD */
@@ -166,6 +167,18 @@ Route::group(['prefix' => 'gerencia', 'middleware' => ['auth:sanctum']], functio
     Route::delete('/inventario/equipo/destroy/{id}', [InvEquipoController::class, 'destroy']);
     Route::put('/inventario/asignar/{id}', [InvEquipoController::class, 'assignResponsable']);
     Route::delete('/inventario/equipo/{equipo_id}/{id}', [InvEquipoController::class, 'removeUserFromEquipo']);
+    Route::put('/inventario/asignar/componente/{id}', [InvEquipoController::class, 'assignComponente']);
+    Route::post('/equipo/{id}/documento/guardar', [InvEquipoController::class, 'guardarDocumento']);
+    Route::delete('/equipo/documento/{id}/eliminar', [InvEquipoController::class, 'eliminarDocumento']);
+    Route::get('/equipo/descargar-documento/{id}', [InvEquipoController::class, 'descargarDocumento']);
+
+
+    /* PERIFERICOS */
+    Route::post('/inventario/perifericos', [InvPerifericoController::class, 'getInvPerifericos']);
+    Route::put('/inventario/transferir/periferico/{id}', [InvPerifericoController::class, 'transferPeriferico']);
+    Route::put('/inventario/update/periferico/{id}', [InvPerifericoController::class, 'update']);
+
+
 });
 
 /* RUTAS: GERENTE O TECNICO */

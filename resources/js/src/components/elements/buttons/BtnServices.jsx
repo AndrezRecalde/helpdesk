@@ -69,7 +69,7 @@ export const BtnSection = ({
                     fontSize: fontSize,
                 },
             }}
-            onClick={(e) => handleAction(e)}
+            onClick={handleAction}
         >
             {children}
         </Button>

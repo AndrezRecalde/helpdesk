@@ -11,7 +11,7 @@ class InvDocumentoEquipo extends Model
     use HasFactory;
 
     protected $fillable = [
-        'nombre_concepto',
+        'nombre_documento',
         'documento',
         'equipo_id'
     ];

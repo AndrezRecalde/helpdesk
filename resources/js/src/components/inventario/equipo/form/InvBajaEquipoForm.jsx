@@ -3,8 +3,8 @@ import {
     Box,
     Code,
     Fieldset,
-    FileInput,
     Grid,
+    MultiSelect,
     rem,
     Stack,
     TextInput,
@@ -15,30 +15,31 @@ import {
     IconCircleDashedCheck,
     IconDevicesDown,
     IconFile3d,
-    IconFileTypePdf,
 } from "@tabler/icons-react";
 import { useInvEquipoStore, useSoporteStore } from "../../../../hooks";
 import { useEffect, useState } from "react";
+import { DateInput } from "@mantine/dates";
 
-export const InvBajaEquipoForm = ({ form_soporte, form_documento }) => {
-    const { numero_sop } = form_soporte.values;
+export const InvBajaEquipoForm = ({ form }) => {
+    const { numero_sop } = form.values;
     const { activateInvEquipo } = useInvEquipoStore();
-    const { startLoadSoporte, startExportActaPDF, activateSoporte } = useSoporteStore();
+    const { startLoadSoporte, startExportActaPDF, activateSoporte } =
+        useSoporteStore();
     const [btnDisabled, setBtnDisabled] = useState(true);
+
+    const { perifericos = [] } = activateInvEquipo || {};
 
     const icon = (
         <IconFile3d style={{ width: rem(18), height: rem(18) }} stroke={1.5} />
     );
 
     useEffect(() => {
-      if (activateSoporte !== null) {
-        setBtnDisabled(false);
-      } else {
-        setBtnDisabled(true);
-      }
-
+        if (activateSoporte !== null && activateInvEquipo?.solucion === null) {
+            setBtnDisabled(false);
+        } else {
+            setBtnDisabled(true);
+        }
     }, [activateSoporte]);
-
 
     const handleSubmitCheckSoporte = (e) => {
         e.preventDefault();
@@ -48,11 +49,6 @@ export const InvBajaEquipoForm = ({ form_soporte, form_documento }) => {
     const handleGenerarActa = (e) => {
         e.preventDefault();
         startExportActaPDF(activateInvEquipo);
-    }
-
-    const handleSubmitDocumento = (e) => {
-        e.preventDefault();
-        console.log("clic1");
     };
 
     return (
@@ -84,14 +80,36 @@ export const InvBajaEquipoForm = ({ form_soporte, form_documento }) => {
             </div>
             <Box
                 component="form"
-                onSubmit={form_soporte.onSubmit((_, e) => handleGenerarActa(e))}
+                onSubmit={form.onSubmit((_, e) => handleGenerarActa(e))}
             >
-                <Fieldset legend="Información del Soporte">
+                <Fieldset legend="Información adicional">
                     <Grid>
+                        <Grid.Col span={12}>
+                            <DateInput
+                                clearable
+                                valueFormat="YYYY-MM-DD"
+                                label="Fecha de baja"
+                                placeholder="Seleccione fecha de baja"
+                                {...form.getInputProps("fecha_baja")}
+                            />
+                        </Grid.Col>
+                        <Grid.Col span={12}>
+                            <MultiSelect
+                                label="Perifericos/Componentes"
+                                placeholder="Selecciona perifericos u componentes"
+                                data={perifericos.map((periferico) => {
+                                    return {
+                                        label: `${periferico.modelo} ${periferico.numero_serie}`,
+                                        value: periferico.id.toString(),
+                                    };
+                                })}
+                                {...form.getInputProps("perifericos")}
+                            />
+                        </Grid.Col>
                         <Grid.Col span={10}>
                             <TextInput
                                 placeholder="Digite el número de soporte"
-                                {...form_soporte.getInputProps("numero_sop")}
+                                {...form.getInputProps("numero_sop")}
                             />
                         </Grid.Col>
                         <Grid.Col span={2}>
@@ -110,44 +128,33 @@ export const InvBajaEquipoForm = ({ form_soporte, form_documento }) => {
                         </Grid.Col>
                     </Grid>
                     <Code>
-                        {
-                            activateSoporte !== null ? (
-                                JSON.stringify({
-                                    numero_sop: activateSoporte.numero_sop || "Sin carga...",
-                                    solicitante: activateSoporte.solicitante || "Sin solicitante...",
-                                    tecnico: activateSoporte.tecnico || "Sin técnico...",
-                                    solucion: activateSoporte.solucion || "Sin solución..."
-                                }, 4, "\t")
-                            ) : null
-                        }
+                        {activateSoporte !== null
+                            ? JSON.stringify(
+                                  {
+                                      numero_sop:
+                                          activateSoporte.numero_sop ||
+                                          "Sin carga...",
+                                      solicitante:
+                                          activateSoporte.solicitante ||
+                                          "Sin solicitante...",
+                                      tecnico:
+                                          activateSoporte.tecnico ||
+                                          "Sin técnico...",
+                                      solucion:
+                                          activateSoporte.solucion ||
+                                          "Sin solución...",
+                                  },
+                                  4,
+                                  "\t"
+                              )
+                            : null}
                     </Code>
                     <BtnSubmit
                         fontSize={16}
-                        IconSection={IconFileTypePdf}
+                        IconSection={IconChecks}
                         disabled={btnDisabled}
                     >
-                        Generar Acta
-                    </BtnSubmit>
-                </Fieldset>
-            </Box>
-            <Box
-                component="form"
-                onSubmit={form_documento.onSubmit((_, e) => handleSubmitDocumento(e))}
-            >
-                <Fieldset legend="Información del documento">
-                    <FileInput
-                        leftSection={icon}
-                        label="Archivo firmado"
-                        placeholder="Adjunta el archivo generado con las firmas"
-                        leftSectionPointerEvents="none"
-                        {...form_documento.getInputProps("documento")}
-                    />
-                    <BtnSubmit
-                        fontSize={16}
-                        IconSection={IconChecks}
-                        disabled={true}
-                    >
-                        Guardar
+                        Dar baja
                     </BtnSubmit>
                 </Fieldset>
             </Box>

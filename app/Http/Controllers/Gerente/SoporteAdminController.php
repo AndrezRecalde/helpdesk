@@ -384,7 +384,7 @@ class SoporteAdminController extends Controller
         return response()->json(['status' => MsgStatus::Success, 'msg' => MsgStatus::Updated], 200);
     }
 
-    function exportActaBajaEquipo(Request $soporte)
+    /* function exportActaBajaEquipo(Request $soporte)
     {
         //$soporteActa = $this->getSoporteForNumero($soporte);
 
@@ -397,5 +397,5 @@ class SoporteAdminController extends Controller
 
         $pdf = Pdf::loadView('pdf.soporte.acta', $data);
         return $pdf->setPaper('a4', 'portrait')->download('acta.pdf');
-    }
+    } */
 }

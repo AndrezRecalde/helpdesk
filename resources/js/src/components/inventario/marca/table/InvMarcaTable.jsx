@@ -20,7 +20,7 @@ export const InvMarcaTable = () => {
 
     const handleEditar = useCallback(
         (selected) => {
-            console.log("editar");
+            //console.log("editar");
             setActivateInvMarca(selected);
             modalActionMarca(true);
         },

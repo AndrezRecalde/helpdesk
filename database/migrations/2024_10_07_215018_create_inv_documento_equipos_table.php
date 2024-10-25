@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('inv_documento_equipos', function (Blueprint $table) {
             $table->id();
             $table->string('nombre_documento');
-            $table->string('documento');
+            $table->string('ruta_documento');
             $table->unsignedBigInteger('equipo_id');
             $table->timestamps();
 

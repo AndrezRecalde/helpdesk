@@ -101,6 +101,10 @@ import { useInvUiEquipo } from "./inventario/equipo/useInvUiEquipo";
 import { useInvUbicacionStore } from "./inventario/ubicacion/useInvUbicacionStore";
 import { useInvUiUbicacion } from "./inventario/ubicacion/useInvUiUbicacion";
 
+/* Inventario: Perifericos */
+import { useInvPerifericoStore } from "./inventario/periferico/useInvPerifericoStore";
+import { useInvUiPeriferico } from "./inventario/periferico/useInvUiPeriferico";
+
 
 /* Storage */
 import { useStorageField } from "./storage/useStorageField";
@@ -179,6 +183,9 @@ export {
 
     useInvUbicacionStore,
     useInvUiUbicacion,
+
+    useInvPerifericoStore,
+    useInvUiPeriferico,
 
     useStorageField
 }

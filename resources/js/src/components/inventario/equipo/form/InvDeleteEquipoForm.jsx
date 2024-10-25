@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { Box, Stack, TextInput } from "@mantine/core";
 import { AlertSection, BtnSubmit, TextSection } from "../../../../components";
-import { IconChecks, IconTrashOff } from "@tabler/icons-react";
 import { useInvEquipoStore, useInvUiEquipo } from "../../../../hooks";
+import { IconChecks, IconTrashOff } from "@tabler/icons-react";
 
 export const InvDeleteEquipoForm = ({ form }) => {
     const { codigo, serie } = form.values;

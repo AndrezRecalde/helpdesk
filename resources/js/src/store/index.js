@@ -96,6 +96,10 @@ import { uiInvEquipoSlice } from "./inventario/equipo/uiInvEquipoSlice";
 import { invConceptoSlice } from "./inventario/concepto/invConceptoSlice";
 import { uiInvConceptoSlice } from "./inventario/concepto/uiInvConceptoSlice";
 
+/* Inventario: Perifericos */
+import { invPerifericoSlice } from "./inventario/periferico/invPerifericoSlice";
+import { uiInvPerifericoSlice } from "./inventario/periferico/uiInvPerifericoSlice";
+
 
 /* Storage Fields */
 import { storageFieldsSlice } from "./fields/storageFieldsSlice";
@@ -205,6 +209,10 @@ export {
     /* Inventario: Conceptos */
     invConceptoSlice,
     uiInvConceptoSlice,
+
+    /* Inventario: Perifericos */
+    invPerifericoSlice,
+    uiInvPerifericoSlice,
 
     /* Storage */
     storageFieldsSlice

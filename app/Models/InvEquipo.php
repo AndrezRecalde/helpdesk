@@ -51,7 +51,8 @@ class InvEquipo extends Model
             ->withPivot('id', 'direccion_id', 'concepto_id', 'observacion')
             ->join('dprtmntos', 'usuario_equipo.direccion_id', '=', 'dprtmntos.cdgo_dprtmnto')
             ->join('inv_conceptos', 'usuario_equipo.concepto_id', '=', 'inv_conceptos.id')
-            ->select('usuario_equipo.id',
+            ->select(
+                'usuario_equipo.id',
                 'usrios_sstma.cdgo_usrio as user_id',
                 'usrios_sstma.nmbre_usrio as responsable',
                 'dprtmntos.cdgo_dprtmnto as direccion_id',
@@ -59,7 +60,7 @@ class InvEquipo extends Model
                 'inv_conceptos.id as concepto_id',
                 'inv_conceptos.nombre_concepto as concepto_nombre',
                 'usuario_equipo.observacion'
-            );
+            )->orderBy('usuario_equipo.id', 'DESC');
     }
 
     /* function departamentos(): BelongsToMany

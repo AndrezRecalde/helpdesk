@@ -8,24 +8,19 @@ export const InvBajaEquipoModal = () => {
     const { setActivateSoporte } = useSoporteStore();
     const { isOpenModalBajaEquipo, modalActionBajaEquipo } = useInvUiEquipo();
 
-    const form_soporte = useForm({
+    const form = useForm({
         initialValues: {
-            numero_sop: null,
+            numero_sop: "",
+            fecha_baja: new Date(),
+            perifericos: [],
+            //documento: null,
         },
         validate: {
             numero_sop: isNotEmpty(
-                "Especifica el número de soporte para poder generar el documento"
+                "Por favor ingresa la fecha de baja del equipo"
             ),
-        },
-    });
-
-    const form_documento = useForm({
-        initialValues: {
-            documento: null,
-        },
-        validate: {
-            documento: isNotEmpty(
-                "Por favor ingresa el documento firmado por las autoridades correspondientes"
+            fecha_baja: isNotEmpty(
+                "Por favor ingresa la fecha de baja del equipo"
             ),
         },
     });
@@ -34,8 +29,7 @@ export const InvBajaEquipoModal = () => {
         modalActionBajaEquipo(false);
         //setActivateInvEquipo(null);
         setActivateSoporte(null);
-        form_soporte.reset();
-        form_documento.reset();
+        form.reset();
     };
 
     return (
@@ -55,8 +49,7 @@ export const InvBajaEquipoModal = () => {
             }}
         >
             <InvBajaEquipoForm
-                form_soporte={form_soporte}
-                form_documento={form_documento}
+                form={form}
             />
         </Modal>
     );

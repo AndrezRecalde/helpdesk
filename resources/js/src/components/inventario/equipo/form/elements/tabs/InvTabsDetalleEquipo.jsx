@@ -1,18 +1,21 @@
 import { rem, Tabs } from "@mantine/core";
 import {
     IconAdjustments,
+    IconDevices2,
     IconFiles,
-    IconMapPin,
+    //IconMapPin,
     IconUserCheck,
 } from "@tabler/icons-react";
 import {
-    InvEquipoResponsablesTable,
+    InvTabComponentesEquipos,
     InvTabDocumentoEquipo,
     InvTabGeneralEquipo,
-    InvTabUbicacionEquipo,
+    InvTabResponsableEquipo,
 } from "../../../../../../components";
+import { useInvEquipoStore } from "../../../../../../hooks";
 
 export const InvTabsDetalleEquipo = () => {
+    const { activateInvEquipo } = useInvEquipoStore();
     const iconStyle = { width: rem(18), height: rem(18) };
 
     return (
@@ -24,12 +27,14 @@ export const InvTabsDetalleEquipo = () => {
                 >
                     General
                 </Tabs.Tab>
-                <Tabs.Tab
-                    value="ubicacion"
-                    leftSection={<IconMapPin style={iconStyle} />}
-                >
-                    Ubicación Física
-                </Tabs.Tab>
+                {activateInvEquipo?.categoria_id === 1 && (
+                    <Tabs.Tab
+                        value="componentes"
+                        leftSection={<IconDevices2 style={iconStyle} />}
+                    >
+                        Componentes
+                    </Tabs.Tab>
+                )}
                 <Tabs.Tab
                     value="responsable"
                     leftSection={<IconUserCheck style={iconStyle} />}
@@ -46,12 +51,15 @@ export const InvTabsDetalleEquipo = () => {
 
             <Tabs.Panel value="general">
                 <InvTabGeneralEquipo />
+                {/* <InvTabUbicacionEquipo /> */}
             </Tabs.Panel>
-            <Tabs.Panel value="ubicacion">
-                <InvTabUbicacionEquipo />
-            </Tabs.Panel>
+            {activateInvEquipo?.categoria_id === 1 && (
+                <Tabs.Panel value="componentes">
+                    <InvTabComponentesEquipos />
+                </Tabs.Panel>
+            )}
             <Tabs.Panel value="responsable">
-                <InvEquipoResponsablesTable />
+                <InvTabResponsableEquipo />
             </Tabs.Panel>
             <Tabs.Panel value="documentos">
                 <InvTabDocumentoEquipo />

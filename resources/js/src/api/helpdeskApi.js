@@ -32,6 +32,28 @@ helpdeskApi.interceptors.request.use(async (config) => {
     return Promise.reject(error);
 });
 
+// Interceptor para manejar errores de respuesta
+helpdeskApi.interceptors.response.use(
+    (response) => {
+        // Si la respuesta es exitosa, devolver los datos normalmente
+        return response;
+    },
+    async (error) => {
+        // Si recibimos un error 401 (No autorizado)
+        if (error.response && error.response.status === 401) {
+            // Aquí podrías redirigir al usuario al login, limpiar el token o realizar otras acciones
+            console.log("Error 401: No autorizado, redirigiendo al login...");
+            localStorage.removeItem("auth_token"); // Limpiar el token almacenado
+
+            // Redirigir a la página de inicio de sesión
+            window.location.href = window.location.href;
+        }
+
+        // Si el error es otro, simplemente lo rechazas
+        return Promise.reject(error);
+    }
+);
+
 export default helpdeskApi;
 
 

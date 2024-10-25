@@ -4,14 +4,19 @@ export const invEquipoSlice = createSlice({
     name: "invEquipo",
     initialState: {
         isLoading: false,
+        isExport: false,
         invEquipos: [],
         activateInvEquipo: null,
+        activateEquipoFromTransfer: null,
         message: undefined,
         errores: undefined,
     },
     reducers: {
         onLoading: (state, { payload }) => {
             state.isLoading = payload;
+        },
+        onExport: (state, { payload }) => {
+            state.isExport = payload;
         },
         onLoadInvEquipos: (state, { payload }) => {
             state.invEquipos = payload;
@@ -40,16 +45,40 @@ export const invEquipoSlice = createSlice({
             state.activateInvEquipo = null;
             state.errores = undefined;
         },
-        onRemoveUserFromEquipo: (state) => {
+        onRemoveUserFromEquipo: (state, { payload }) => {
             if (state.activateInvEquipo) {
-                state.activateInvEquipo.usuarios = state.activateInvEquipo.usuarios.filter(
-                    pivot => pivot.id === state.activateInvEquipo.usuarios.id
-                );
+                const userIdToRemove = payload; // El id del usuario a remover viene en el payload
+                state.activateInvEquipo.usuarios =
+                    state.activateInvEquipo.usuarios.filter(
+                        (pivot) => pivot.id !== userIdToRemove
+                    );
             }
-
+        },
+        onRemoveDocumentoFromEquipo: (state, { payload }) => {
+            if (state.activateInvEquipo) {
+                const documentoIdToRemove = payload;
+                state.activateInvEquipo.documentos =
+                    state.activateInvEquipo.documentos.filter(
+                        (pivot) => pivot.id !== documentoIdToRemove
+                    );
+            }
+        },
+        onTransferirComponenteFromEquipo: (state, { payload }) => {
+            if (state.activateInvEquipo) {
+                const perifericoId = payload;
+                state.activateInvEquipo.perifericos =
+                    state.activateInvEquipo.perifericos.filter(
+                        (pivot) => pivot.id !== perifericoId
+                    );
+            }
         },
         onSetActivateInvEquipo: (state, { payload }) => {
             state.activateInvEquipo = payload;
+            state.isLoading = false;
+            state.errores = undefined;
+        },
+        onSetActivateEquipoFromTransfer: (state, { payload }) => {
+            state.activateEquipoFromTransfer = payload;
             state.isLoading = false;
             state.errores = undefined;
         },
@@ -71,12 +100,16 @@ export const invEquipoSlice = createSlice({
 
 export const {
     onLoading,
+    onExport,
     onLoadInvEquipos,
     onAddInvEquipo,
     onUpdateInvEquipo,
     onDeleteInvEquipo,
     onRemoveUserFromEquipo,
+    onRemoveDocumentoFromEquipo,
+    onTransferirComponenteFromEquipo,
     onSetActivateInvEquipo,
+    onSetActivateEquipoFromTransfer,
     onClearInvEquipos,
     onLoadMessage,
     onLoadErrores,

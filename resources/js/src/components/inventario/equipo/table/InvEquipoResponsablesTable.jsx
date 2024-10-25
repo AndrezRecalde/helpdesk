@@ -2,16 +2,18 @@ import { useCallback, useMemo } from "react";
 import { useMantineReactTable } from "mantine-react-table";
 import {
     AlertSection,
+    BtnSection,
     MenuTable_D,
     TableContent,
 } from "../../../../components";
 import { Text } from "@mantine/core";
-import { useInvEquipoStore } from "../../../../hooks";
+import { useInvEquipoStore, useInvUiEquipo } from "../../../../hooks";
+import { IconCopyPlus, IconInfoCircle } from "@tabler/icons-react";
 import Swal from "sweetalert2";
-import { IconInfoCircle } from "@tabler/icons-react";
 
 export const InvEquipoResponsablesTable = () => {
     const { activateInvEquipo, startRemoveUsuarioEquipo } = useInvEquipoStore();
+    const { modalActionAssignEquipo } = useInvUiEquipo();
     const { usuarios: responsables = [] } = activateInvEquipo || {};
 
     const columns = useMemo(
@@ -37,7 +39,7 @@ export const InvEquipoResponsablesTable = () => {
     const handleDelete = useCallback(
         (selected) => {
             const { pivot = {} } = selected;
-            console.log(pivot);
+            //console.log(pivot);
 
             Swal.fire({
                 text: `¿Deseas remover el responsable? ${selected.responsable}`,
@@ -52,6 +54,15 @@ export const InvEquipoResponsablesTable = () => {
                     //console.log(message.idper_permisos)
                 }
             });
+        },
+        [responsables]
+    );
+
+    const handleAssign = useCallback(
+        () => {
+            //console.log(selected);
+            //setActivateInvEquipo(selected);
+            modalActionAssignEquipo(true);
         },
         [responsables]
     );
@@ -75,6 +86,16 @@ export const InvEquipoResponsablesTable = () => {
         ),
         renderRowActionMenuItems: ({ row }) => (
             <MenuTable_D row={row} handleDelete={handleDelete} />
+        ),
+        renderTopToolbarCustomActions: ({ table }) => (
+            <BtnSection
+                heigh={30}
+                fontSize={12}
+                IconSection={IconCopyPlus}
+                handleAction={handleAssign}
+            >
+                Agregar
+            </BtnSection>
         ),
     });
 
