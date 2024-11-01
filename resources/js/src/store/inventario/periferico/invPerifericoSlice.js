@@ -4,6 +4,7 @@ export const invPerifericoSlice = createSlice({
     name: "invPeriferico",
     initialState: {
         isLoading: false,
+        isExport: false,
         invPerifericos: [],
         activatePeriferico: null,
         message: undefined,
@@ -12,6 +13,9 @@ export const invPerifericoSlice = createSlice({
     reducers: {
         onLoading: (state, { payload }) => {
             state.isLoading = payload;
+        },
+        onExport: (state, { payload }) => {
+            state.isExport = payload;
         },
         onLoadInvPerifericos: (state, { payload }) => {
             state.invPerifericos = payload;
@@ -64,6 +68,7 @@ export const invPerifericoSlice = createSlice({
 
 export const {
     onLoading,
+    onExport,
     onLoadInvPerifericos,
     onAddInvPeriferico,
     onUpdateInvPeriferico,

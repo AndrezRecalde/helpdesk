@@ -1,15 +1,22 @@
 import { useEffect } from "react";
 import { Modal } from "@mantine/core";
-import { TextSection } from "../../../../components";
+import { InvPerifericoForm, TextSection } from "../../../../components";
 import { isNotEmpty, useForm } from "@mantine/form";
-import { useInvEstadoStore, useInvMarcaStore, useInvPerifericoStore, useInvTipocategoriaStore, useInvUiPeriferico } from "../../../../hooks";
+import {
+    useInvEstadoStore,
+    useInvMarcaStore,
+    useInvPerifericoStore,
+    useInvTipocategoriaStore,
+    useInvUiPeriferico,
+} from "../../../../hooks";
 
 export const InvPerifericoModal = () => {
     const { activatePeriferico, setActivateInvPeriferico } =
         useInvPerifericoStore();
     const { isOpenModalPeriferico, modalActionPeriferico } =
         useInvUiPeriferico();
-    const { startLoadTiposcategorias, startClearTiposcategorias } = useInvTipocategoriaStore();
+    const { startLoadTiposcategorias, startClearTiposcategorias } =
+        useInvTipocategoriaStore();
     const { startLoadInvMarcas, startClearInvMarcas } = useInvMarcaStore();
     const { startLoadInvEstados, startClearInvEstados } = useInvEstadoStore();
 
@@ -25,7 +32,7 @@ export const InvPerifericoModal = () => {
             es_donado: false,
             es_usado: false,
             estado_id: null,
-            equipo_id: null,
+            //equipo_id: null,
         },
         validate: {
             modelo: isNotEmpty("Por favor ingrese la modelo"),
@@ -39,26 +46,29 @@ export const InvPerifericoModal = () => {
             marca_id: Number(values.marca_id) || null,
             categoria_id: Number(values.categoria_id) || null,
             estado_id: Number(values.estado_id) || null,
+            fecha_adquisicion: new Date(values.fecha_adquisicion)
         }),
     });
 
     useEffect(() => {
-        startLoadInvMarcas();
-        startLoadTiposcategorias();
-        startLoadInvEstados();
+        if (isOpenModalPeriferico) {
+            startLoadInvMarcas();
+            startLoadTiposcategorias();
+            startLoadInvEstados();
+        }
 
-      return () => {
-        startClearInvMarcas();
-        startClearTiposcategorias();
-        startClearInvEstados();
-      }
-    }, [])
-
+        return () => {
+            startClearInvMarcas();
+            startClearTiposcategorias();
+            startClearInvEstados();
+        };
+    }, [isOpenModalPeriferico]);
 
     const handleCloseModal = () => {
         if (activatePeriferico !== null) {
             setActivateInvPeriferico(null);
         }
+        form.reset();
         modalActionPeriferico(false);
     };
 
@@ -70,13 +80,15 @@ export const InvPerifericoModal = () => {
             size="lg"
             title={
                 <TextSection fz={18} fw={700} tt="capitalize">
-                    Perifericos/Componentes
+                    Perifericos - Componentes
                 </TextSection>
             }
             overlayProps={{
                 backgroundOpacity: 0.55,
                 blur: 3,
             }}
-        ></Modal>
+        >
+            <InvPerifericoForm form={form} />
+        </Modal>
     );
 };

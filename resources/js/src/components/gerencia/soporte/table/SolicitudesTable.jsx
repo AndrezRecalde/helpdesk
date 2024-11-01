@@ -1,10 +1,6 @@
 import { useCallback, useMemo } from "react";
 import { useMantineReactTable } from "mantine-react-table";
-import {
-    MenuSolicitudTable,
-    MenuTable_T,
-    TableContent,
-} from "../../..";
+import { MenuSolicitudTable, MenuTable_T, TableContent } from "../../..";
 import { Badge, Table, Text, useMantineColorScheme } from "@mantine/core";
 import { useSoporteStore, useUiSoporte } from "../../../../hooks";
 import dayjs from "dayjs";
@@ -144,6 +140,21 @@ export const SolicitudesTable = ({ menu, isLoading }) => {
                 </Table>
             </Table.ScrollContainer>
         ),
+        mantineTableProps: {
+            withColumnBorders: true,
+            withTableBorder: true,
+            sx: {
+                "thead > tr": {
+                    backgroundColor: "inherit",
+                },
+                "thead > tr > th": {
+                    backgroundColor: "inherit",
+                },
+                "tbody > tr > td": {
+                    backgroundColor: "inherit",
+                },
+            },
+        },
     });
 
     return <TableContent table={table} />;

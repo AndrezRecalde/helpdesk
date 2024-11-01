@@ -5,13 +5,14 @@ import {
     UnstyledButton,
     useMantineTheme,
 } from "@mantine/core";
+import { useNavigate } from "react-router-dom";
+import { TextSection } from "../../../components";
 import {
     IconPencilPlus,
     IconDeviceImac,
     IconLicense,
     IconFingerprintScan,
 } from "@tabler/icons-react";
-import { useNavigate } from "react-router-dom";
 import classes from "../../../assets/styles/modules/menu/MenuGrid.module.css";
 
 
@@ -29,15 +30,15 @@ export const MenuSeleccion = () => {
     const items = mockdata.map((item) => (
         <UnstyledButton key={item.title} className={classes.item} onClick={() => navigate(item.link)}>
             <item.icon color={theme.colors[item.color][6]} size="2rem" />
-            <Text size="xs" mt={7}>
+            <TextSection tt="" fz={12} mt={7}>
                 {item.title}
-            </Text>
+            </TextSection>
         </UnstyledButton>
     ));
 
     return (
         <Card radius="md" className={classes.card}>
-            <Text className={classes.title}>Servicios</Text>
+            <TextSection tt="" fz={16} fw={700}>Servicios</TextSection>
             <SimpleGrid cols={2} mt="md">
                 {items}
             </SimpleGrid>

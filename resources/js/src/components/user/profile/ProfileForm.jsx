@@ -15,33 +15,53 @@ export const ProfileForm = () => {
                 <Grid>
                     <Grid.Col span={{ base: 12 }}>
                         <TextSection tt="" fw={700}>
-                            {profile?.empresa}
+                            {profile.empresa || "Sin datos..."}
                         </TextSection>
-                        <TextSection tt="uppercase" fz={12} fw={600} color="dimmed">
+                        <TextSection
+                            tt="uppercase"
+                            fz={12}
+                            fw={600}
+                            color="dimmed"
+                        >
                             Institución
                         </TextSection>
                     </Grid.Col>
                     <Grid.Col span={{ base: 12 }}>
                         <TextSection tt="" fw={700}>
-                            {profile?.direccion}
+                            {profile.direccion || "Sin datos..."}
                         </TextSection>
-                        <TextSection tt="uppercase" fz={12} fw={600} color="dimmed">
+                        <TextSection
+                            tt="uppercase"
+                            fz={12}
+                            fw={600}
+                            color="dimmed"
+                        >
                             Dirección/Gestión
                         </TextSection>
                     </Grid.Col>
-                    <Grid.Col span={{ base: 12, md: 6, lg: 6 }}>
+                    <Grid.Col span={{ base: 12, md: 12, lg: 12 }}>
                         <TextSection tt="" fw={700}>
-                            {profile?.nmbre_usrio}
+                            {profile.nmbre_usrio || "Sin datos..."}
                         </TextSection>
-                        <TextSection tt="uppercase" fz={12} fw={600} color="dimmed">
+                        <TextSection
+                            tt="uppercase"
+                            fz={12}
+                            fw={600}
+                            color="dimmed"
+                        >
                             Apellidos y Nombres
                         </TextSection>
                     </Grid.Col>
-                    <Grid.Col span={{ base: 12, md: 6, lg: 6 }}>
+                    <Grid.Col span={{ base: 12, md: 12, lg: 12 }}>
                         <TextSection tt="" fw={700}>
-                            {profile?.cargo}
+                            {profile.cargo || "Sin datos..."}
                         </TextSection>
-                        <TextSection tt="uppercase" fz={12} fw={600} color="dimmed">
+                        <TextSection
+                            tt="uppercase"
+                            fz={12}
+                            fw={600}
+                            color="dimmed"
+                        >
                             Cargo
                         </TextSection>
                     </Grid.Col>

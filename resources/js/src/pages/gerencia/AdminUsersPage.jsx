@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Card, Container, Group } from "@mantine/core";
+import { Container, Divider, Group } from "@mantine/core";
 import {
     BtnSection,
     FilterFormUsers,
@@ -9,7 +9,16 @@ import {
     TitlePage,
     UsersTable,
 } from "../../components";
-import { useTitlePage, useUiUser, useUsersStore } from "../../hooks";
+import {
+    useCargoStore,
+    useEmpresaStore,
+    useSexoStore,
+    useTipoContratoStore,
+    useTipoUsuarioStore,
+    useTitlePage,
+    useUiUser,
+    useUsersStore,
+} from "../../hooks";
 import { IconPencilPlus } from "@tabler/icons-react";
 import Swal from "sweetalert2";
 
@@ -17,6 +26,13 @@ export const AdminUsersPage = () => {
     useTitlePage("Helpdesk | Usuarios");
     const { users, errores, message } = useUsersStore();
     const { modalActionUser } = useUiUser();
+
+    const { clearEmpresas } = useEmpresaStore();
+    const { clearTipoSexo } = useSexoStore();
+    const { clearCargos } = useCargoStore();
+    const { clearTiposUsuarios } = useTipoUsuarioStore();
+    const { clearTiposContratos } = useTipoContratoStore();
+    const { clearUsers } = useUsersStore();
 
     useEffect(() => {
         if (message !== undefined) {
@@ -37,23 +53,32 @@ export const AdminUsersPage = () => {
                 title: "Opps...",
                 text: errores,
                 confirmButtonColor: "#094293",
-                footer: "Intenta con otros filtros de búsqueda",
             });
             return;
         }
     }, [errores]);
 
+    useEffect(() => {
+        return () => {
+            clearEmpresas();
+            clearTipoSexo();
+            //clearDirecciones();
+            clearUsers();
+            clearCargos();
+            clearTiposUsuarios();
+            clearTiposContratos();
+        };
+    }, []);
+
     const handleOpenModal = (e) => {
         e.preventDefault();
-        modalActionUser(1);
+        modalActionUser(true);
     };
 
     return (
         <Container size="xxl">
-            <TitlePage order={2}>
-                Administrar usuarios
-            </TitlePage>
-            <Group justify="flex-end">
+            <Group justify="space-between">
+                <TitlePage order={2}>Administrar usuarios</TitlePage>
                 <BtnSection
                     heigh={45}
                     handleAction={handleOpenModal}
@@ -62,15 +87,10 @@ export const AdminUsersPage = () => {
                     Agregar usuario
                 </BtnSection>
             </Group>
+            <Divider my="md" />
             <FilterFormUsers />
-            {users.length !== 0 ? (
-                <Card shadow="md" radius="md" mt={20} mb={20}>
-                    <Card.Section>
-                        <UsersTable />
-                    </Card.Section>
-                </Card>
-            ) : null}
-            <ModalUser title="Agregar usuario" />
+            {users.length !== 0 ? <UsersTable /> : null}
+            <ModalUser />
             <ModalActivateUser />
             <ModalResetPwdUser />
         </Container>

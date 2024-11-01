@@ -12,25 +12,25 @@ import {
 import { StepperUser, TextSection } from "../../..";
 import { hasLength, isEmail, isNotEmpty, useForm } from "@mantine/form";
 
-export const ModalUser = ({ title }) => {
+export const ModalUser = () => {
     const usuario = JSON.parse(localStorage.getItem("service_user"));
     const { isOpenModalAddUser, modalActionUser } = useUiUser();
-    const { startLoadEmpresas, clearEmpresas } = useEmpresaStore();
-    const { startLoadTipoSexo, clearTipoSexo } = useSexoStore();
+    const { startLoadEmpresas } = useEmpresaStore();
+    const { startLoadTipoSexo } = useSexoStore();
     //const { startLoadDirecciones, clearDirecciones } = useDireccionStore();
-    const { startLoadCargos, clearCargos } = useCargoStore();
-    const { startLoadTiposUsuarios, clearTiposUsuarios } =
-        useTipoUsuarioStore();
-    const { startLoadTiposContratos, clearTiposContratos } =
-        useTipoContratoStore();
-    const { startFindUserResponsable, clearUsers, setClearActivateUser } =
-        useUsersStore();
+    const { startLoadCargos } = useCargoStore();
+    const { startLoadTiposUsuarios } = useTipoUsuarioStore();
+    const { startLoadTiposContratos } = useTipoContratoStore();
+    const { startFindUserResponsable, setClearActivateUser } = useUsersStore();
 
     const form = useForm({
         initialValues: {
             usu_ci: "",
             titulo: "",
-            nmbre_usrio: "",
+            //nmbre_usrio: "",
+            usu_ape_pat: "",
+            usu_ape_mat: "",
+            usu_nombres: "",
             nombre_formateado: "",
             email: "",
             sexo: null,
@@ -39,6 +39,7 @@ export const ModalUser = ({ title }) => {
 
             usu_id_empresa: null,
             cdgo_direccion: null,
+            cdgo_dprtmnto: null,
             crgo_id: null,
             id_tipo_usuario: null,
             usu_ult_tipo_contrato: null,
@@ -62,11 +63,17 @@ export const ModalUser = ({ title }) => {
                 { min: 2, max: 5 },
                 "Por favor ingrese titulo del usuario"
             ),
-            nmbre_usrio: isNotEmpty(
+            /*  nmbre_usrio: isNotEmpty(
+                "Por favor ingrese los nombres del usuario"
+            ), */
+            usu_ape_pat: isNotEmpty(
                 "Por favor ingrese los nombres del usuario"
             ),
-            nombre_formateado: isNotEmpty(
-                "Por favor digite el nombre formateado"
+            usu_ape_mat: isNotEmpty(
+                "Por favor ingrese los nombres del usuario"
+            ),
+            usu_nombres: isNotEmpty(
+                "Por favor ingrese los nombres del usuario"
             ),
             email: isEmail("Dígite un email valido"),
             sexo: isNotEmpty("Por favor seleccione una opción"),
@@ -75,41 +82,65 @@ export const ModalUser = ({ title }) => {
 
             usu_id_empresa: isNotEmpty("Por favor seleccione una opción"),
             cdgo_direccion: isNotEmpty("Por favor seleccione una opción"),
+            //cdgo_dprtmnto: isNotEmpty("Por favor seleccione una opción"),
             crgo_id: isNotEmpty("Por favor seleccione una opción"),
             id_tipo_usuario: isNotEmpty("Por favor seleccione una opción"),
             usu_ult_tipo_contrato: isNotEmpty(
                 "Por favor seleccione una opción"
             ),
             finaliza_contrato: isNotEmpty("Por favor seleccione una opción"),
-            //usu_f_f_contrato: isNotEmpty("Por favor ingrese la fecha"),
-
             tecnico: isNotEmpty("Por favor seleccione una opción"),
             secretaria_tic: isNotEmpty("Por favor selecciona una opción"),
             super_user: isNotEmpty("Por favor selecciona una opción"),
             interno: isNotEmpty("Por favor selecciona una opción"),
             usu_estado: isNotEmpty("Por favor selecciona una opción"),
-            usu_alias: isNotEmpty("Por favor ingrese el alias del usuario"),
-            //usu_ing: isNotEmpty("Por favor ingrese el alias del usuario"),
         },
         transformValues: (values) => ({
             ...values,
             sexo: Number(values.sexo) || null,
-            actvo: Number(values.actvo) || null,
+            //actvo: Number(values.actvo) || null,
             usu_id_empresa: Number(values.usu_id_empresa) || null,
             cdgo_direccion: Number(values.cdgo_direccion),
+            cdgo_dprtmnto: Number(values.cdgo_dprtmnto),
             crgo_id: Number(values.crgo_id) || null,
             id_tipo_usuario: Number(values.id_tipo_usuario) || null,
             usu_ult_tipo_contrato: Number(values.usu_ult_tipo_contrato) || null,
             finaliza_contrato: Number(values.finaliza_contrato),
-
+            usu_f_f_contrato: new Date(values.usu_f_f_contrato) || null,
             tecnico: Number(values.tecnico),
             secretaria_tic: Number(values.secretaria_tic),
             super_user: Number(values.super_user),
             interno: Number(values.interno),
             usu_estado: Number(values.usu_estado) || null,
             usu_ing: Number(values.usu_ing) || null,
+            cdgo_lrgo: obtenerIniciales(values.usu_ape_pat, values.usu_ape_mat, values.usu_nombres)
+            /* nombre_formateado: formatName(values.nmbre_usrio),
+            usu_alias: formatName(values.nmbre_usrio), */
         }),
     });
+
+    /* const formatName = (fullName) => {
+        // Separar el nombre completo en palabras
+        const nameParts = fullName.trim().split(" ");
+
+        // Tomar el primer nombre y el primer apellido si están disponibles
+        const firstName = nameParts[0];
+        const firstLastName = nameParts.length > 1 ? nameParts[1] : "";
+
+        // Retornar el nombre formateado
+        return `${firstName} ${firstLastName}`;
+    }; */
+
+    function obtenerIniciales(apellido_paterno, apellido_materno, nombres) {
+        // Obtiene las iniciales de cada nombre en el string 'nombres'
+        const inicialesNombres = nombres
+            .split(' ')                    // Divide los nombres
+            .map(nombre => nombre[0].toUpperCase())  // Toma la primera letra de cada nombre y la convierte en mayúscula
+            .join('');                     // Une las iniciales de los nombres
+
+        // Combina las iniciales del apellido paterno, apellido materno y nombres
+        return `${inicialesNombres}${apellido_paterno[0].toUpperCase()}${apellido_materno[0].toUpperCase()}`;
+    }
 
     useEffect(() => {
         if (isOpenModalAddUser) {
@@ -121,33 +152,10 @@ export const ModalUser = ({ title }) => {
             startLoadTiposUsuarios();
             startLoadTiposContratos();
         }
-        return () => {
-            //clearEmpresas();
-            //clearTipoSexo();
-            //clearDirecciones();
-            //clearUsers();
-            //clearCargos();
-            //clearTiposUsuarios();
-            //clearTiposContratos();
-        };
     }, [isOpenModalAddUser]);
 
-    useEffect(() => {
-
-      return () => {
-        clearEmpresas();
-        clearTipoSexo();
-        //clearDirecciones();
-        clearUsers();
-        clearCargos();
-        clearTiposUsuarios();
-        clearTiposContratos();
-      }
-    }, [])
-
-
     const handleCloseModal = () => {
-        modalActionUser(0);
+        modalActionUser(false);
         setClearActivateUser();
         form.reset();
     };
@@ -155,7 +163,11 @@ export const ModalUser = ({ title }) => {
         <Modal
             opened={isOpenModalAddUser}
             onClose={handleCloseModal}
-            title={<TextSection tt="" fz={16} fw={700}>{title}</TextSection>}
+            title={
+                <TextSection tt="" fz={16} fw={700}>
+                    Usuario
+                </TextSection>
+            }
             size="xl"
             closeOnClickOutside={false}
             overlayProps={{

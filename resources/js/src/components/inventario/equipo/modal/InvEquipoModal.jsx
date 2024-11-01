@@ -4,7 +4,6 @@ import {
     useInvConceptoStore,
     //useInvCategoriaStore,
     useInvEquipoStore,
-    useInvEstadoStore,
     useInvMarcaStore,
     useInvTipocategoriaStore,
     useInvUbicacionStore,
@@ -23,9 +22,10 @@ export const InvEquipoModal = () => {
         useInvTipocategoriaStore();
     /* const { startLoadInvCategorias, startClearInvCategorias } =
         useInvCategoriaStore(); */
-    const { startLoadInvEstados, startClearInvEstados } = useInvEstadoStore();
+    //const { startLoadInvEstados, startClearInvEstados } = useInvEstadoStore();
     const { startLoadInvMarcas, startClearInvMarcas } = useInvMarcaStore();
-    const { startLoadInvConceptos, startClearInvConceptos } = useInvConceptoStore();
+    const { startLoadInvConceptos, startClearInvConceptos } =
+        useInvConceptoStore();
 
     const form = useForm({
         initialValues: {
@@ -51,11 +51,11 @@ export const InvEquipoModal = () => {
             direccion_id: null,
             concepto_id: null,
             observacion: "" */
-
         },
         validate: {
             //nombre_equipo: isNotEmpty("Por favor ingrese la marca"),
             modelo: isNotEmpty("Por favor ingrese el modelo"),
+            codigo_nuevo: isNotEmpty("Por favor ingrese el código nuevo"),
             numero_serie: isNotEmpty("Por favor ingrese el número de serie"),
             vida_util: isNotEmpty("Por favor ingrese la vida útil"),
             descripcion: hasLength(
@@ -68,19 +68,19 @@ export const InvEquipoModal = () => {
             categoria_id: isNotEmpty("Por favor seleccione una categoría"),
             estado_id: isNotEmpty("Por favor seleccione el estado del equipo"),
             marca_id: isNotEmpty("Por favor seleccione una marca"),
-
         },
         transformValues: (values) => ({
             ...values,
+            fecha_adquisicion: new Date(values.fecha_adquisicion),
+            fecha_amortizacion: new Date(values.fecha_amortizacion),
             ubicacion_id: Number(values.ubicacion_id) || null,
             categoria_id: Number(values.categoria_id) || null,
             estado_id: Number(values.estado_id) || null,
             marca_id: Number(values.marca_id) || null,
 
-           /*  usuario_id: Number(values.usuario_id) || null,
+            /*  usuario_id: Number(values.usuario_id) || null,
             direccion_id: Number(values.direccion_id),
             concepto_id: Number(values.concepto_id) || null, */
-
         }),
     });
 
@@ -89,7 +89,7 @@ export const InvEquipoModal = () => {
             startLoadInvUbicaciones();
             startLoadTiposcategorias();
             //startLoadInvCategorias();
-            startLoadInvEstados();
+            //startLoadInvEstados();
             startLoadInvMarcas();
             startLoadInvConceptos();
         }
@@ -98,7 +98,7 @@ export const InvEquipoModal = () => {
             startClearInvUbicaciones();
             startClearTiposcategorias();
             //startClearInvCategorias();
-            startClearInvEstados();
+            //startClearInvEstados();
             startClearInvMarcas();
             startClearInvConceptos();
         };

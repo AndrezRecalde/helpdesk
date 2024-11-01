@@ -1,6 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useErrorException } from "../../hooks";
-import { onClearDepartamentos, onLoadDepartamentos, onLoadErrores, onLoading } from "../../store/departamento/departamentoSlice";
+import {
+    onClearDepartamentos,
+    onLoadDepartamentos,
+    onLoadErrores,
+    onLoading,
+} from "../../store/departamento/departamentoSlice";
 import helpdeskApi from "../../api/helpdeskApi";
 
 export const useDepartamentoStore = () => {
@@ -11,21 +16,23 @@ export const useDepartamentoStore = () => {
     const dispatch = useDispatch();
 
     /* Gerencia */
-    const startLoadDepartamentos = async(id_direccion) => {
+    const startLoadDepartamentos = async (id_direccion) => {
         try {
             dispatch(onLoading());
-            const { data } = await helpdeskApi.post("/gerencia/departamentos", { id_direccion });
+            const { data } = await helpdeskApi.post("/gerencia/departamentos", {
+                id_direccion,
+            });
             const { departamentos } = data;
-            dispatch(onLoadDepartamentos(departamentos))
+            dispatch(onLoadDepartamentos(departamentos));
         } catch (error) {
-            //console.log(error);
+            console.log(error);
             ExceptionMessageError(error);
         }
-    }
+    };
 
     const clearDepartamentos = () => {
         dispatch(onClearDepartamentos());
-    }
+    };
 
     return {
         isLoading,
@@ -33,6 +40,6 @@ export const useDepartamentoStore = () => {
         errores,
 
         startLoadDepartamentos,
-        clearDepartamentos
+        clearDepartamentos,
     };
 };

@@ -32,8 +32,8 @@ class DireccionAdminController extends Controller
     {
         $departamentos = Departamento::from('dprtmntos as d')
             ->selectRaw('d.cdgo_dprtmnto, d.nmbre_dprtmnto, d.cdgo_lrgo')
-            ->where('d.interna', 1)
-            ->where('d.cdgo_dprtmnto', $request->cdgo_dprtmnto)
+            ->where('d.es_direccion', 0)
+            ->where('d.id_direccion', $request->id_direccion)
             ->get();
         return response()->json(['status' => MsgStatus::Success, 'departamentos' => $departamentos], 200);
     }
@@ -65,7 +65,7 @@ class DireccionAdminController extends Controller
                     'id_tipo_soporte' => 3,
                     'id_usu_tecnico_asig' => auth()->id(),
                     'incidente'     =>  'SOLICITUD DE ENCARGO DE DIRECCIÓN',
-                    'solucion'      => 'SE REALIZA EL RESPECTIVO CAMBIO DE DIRECTOR ENCARGADO SOLICITADO'
+                    'solucion'      =>  'SE REALIZA EL RESPECTIVO CAMBIO DE DIRECTOR ENCARGADO SOLICITADO'
 
                 ]);
                 return response()->json(['status' => MsgStatus::Success, 'msg' => MsgStatus::Updated, 'directores' => $directores], 201);

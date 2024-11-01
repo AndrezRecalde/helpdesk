@@ -1,21 +1,19 @@
-import { useCallback, useMemo } from 'react'
-import { useMantineReactTable } from 'mantine-react-table';
-import { MenuTable_E, TableContent } from '../../../../components';
-import { useDirectorStore, useUiDirector } from '../../../../hooks';
-
+import { useCallback, useMemo } from "react";
+import { useMantineReactTable } from "mantine-react-table";
+import { MenuTable_E, TableContent } from "../../../../components";
+import { useDirectorStore, useUiDirector } from "../../../../hooks";
 
 export const DireccionesTable = () => {
     const { directores, setActivateDirectores } = useDirectorStore();
     const { modalActionDirector } = useUiDirector();
 
     const handleEdit = useCallback(
-      (selected) => {
-        setActivateDirectores(selected);
-        modalActionDirector(1);
-      },
-      [directores],
-    )
-
+        (selected) => {
+            setActivateDirectores(selected);
+            modalActionDirector(1);
+        },
+        [directores]
+    );
 
     const columns = useMemo(
         () => [
@@ -42,14 +40,24 @@ export const DireccionesTable = () => {
         enableFacetedValues: true,
         enableRowActions: true,
         renderRowActionMenuItems: ({ row }) => (
-            <MenuTable_E
-            row={row}
-            handleEdit={handleEdit}
-            />
+            <MenuTable_E row={row} handleEdit={handleEdit} />
         ),
+        mantineTableProps: {
+            withColumnBorders: true,
+            withTableBorder: true,
+            sx: {
+                "thead > tr": {
+                    backgroundColor: "inherit",
+                },
+                "thead > tr > th": {
+                    backgroundColor: "inherit",
+                },
+                "tbody > tr > td": {
+                    backgroundColor: "inherit",
+                },
+            },
+        },
     });
 
-  return (
-    <TableContent table={table} />
-  )
-}
+    return <TableContent table={table} />;
+};

@@ -41,7 +41,7 @@ class Soporte extends Model
     ];
 
     protected $casts = [
-        "fecha_ini" => "datetime",
+        "fecha_ini"  => "datetime",
         "fecha_fin"  => 'datetime'
     ];
 

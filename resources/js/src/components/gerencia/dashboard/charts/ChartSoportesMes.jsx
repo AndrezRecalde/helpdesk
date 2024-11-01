@@ -1,4 +1,6 @@
 import { Card } from "@mantine/core";
+import { TextSection } from "../../../../components";
+import { useDashGerenciaStore } from "../../../../hooks";
 import {
     Chart as ChartJS,
     CategoryScale,
@@ -11,7 +13,6 @@ import {
     Legend,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
-import { useDashGerenciaStore } from "../../../../hooks";
 
 ChartJS.register(
     CategoryScale,
@@ -23,8 +24,6 @@ ChartJS.register(
     Filler,
     Legend
 );
-
-
 
 export const ChartSoportesMes = () => {
     const { soportesPorMes } = useDashGerenciaStore();
@@ -71,7 +70,7 @@ export const ChartSoportesMes = () => {
         },
     };
 
-    const labels = soportesPorMes?.map(soporte => soporte.nombre_mes);
+    const labels = soportesPorMes?.map((soporte) => soporte.nombre_mes);
 
     const data = {
         labels,
@@ -79,7 +78,7 @@ export const ChartSoportesMes = () => {
             {
                 fill: true,
                 label: "Total Soportes",
-                data: soportesPorMes?.map(soporte => soporte.total_soportes),
+                data: soportesPorMes?.map((soporte) => soporte.total_soportes),
                 borderColor: "rgba(24, 248, 166, 1)",
                 backgroundColor: "rgba(24, 248, 166, 0.55)",
                 datalabels: {
@@ -98,11 +97,12 @@ export const ChartSoportesMes = () => {
         ],
     };
 
-
     return (
         <Card withBorder shadow="sm" radius="md">
-            <Card.Section withBorder inheritPadding py="xs">
-                Soportes por mes
+            <Card.Section withBorder inheritPadding py="md">
+                <TextSection fz={16} fw={700} color="dimmed">
+                    Soportes por mes
+                </TextSection>
             </Card.Section>
             <Card.Section withBorder inheritPadding py="xs">
                 <Line options={options} data={data} />

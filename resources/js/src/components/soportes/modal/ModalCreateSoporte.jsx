@@ -76,12 +76,8 @@ export const ModalCreateSoporte = ({ role }) => {
         transformValues: (values) => ({
             ...values,
             id_estado: Number(values.id_estado) || null,
-            fecha_ini: values.fecha_ini.toLocaleString("sv-SE", {
-                timeZone: "America/Guayaquil",
-            }),
-            fecha_fin: values.fecha_fin.toLocaleString("sv-SE", {
-                timeZone: "America/Guayaquil",
-            }),
+            fecha_ini: new Date(values.fecha_ini),
+            fecha_fin: new Date(values.fecha_fin) || null,
             id_tipo_solicitud: Number(values.id_tipo_solicitud) || null,
             id_usu_tecnico_asig: Number(values.id_usu_tecnico_asig) || null,
             id_direccion: Number(values.id_direccion),

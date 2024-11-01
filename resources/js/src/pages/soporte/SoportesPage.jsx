@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Container, Group } from "@mantine/core";
+import { Container, Divider, Group } from "@mantine/core";
 import {
     FilterFormSoportes,
     TextSection,
@@ -108,13 +108,13 @@ export const SoportesPage = () => {
 
     return (
         <Container size="xxl">
-            <TitlePage order={2}>
-                Gestión De Soportes
-            </TitlePage>
             <Group justify="space-between">
-                <TextSection fw={700} tt="" fz={16}>
-                    Tienes {soportes.length ?? 0} soportes
-                </TextSection>
+                <div>
+                    <TitlePage order={2}>Gestión De Soportes</TitlePage>
+                    <TextSection fw={700} tt="" fz={16}>
+                        Tienes {soportes.length ?? 0} soportes
+                    </TextSection>
+                </div>
                 {usuario.role_id === 1 ? (
                     <BtnAddActions
                         handleOpenModalSolicitud={handleOpenModalSolicitud}
@@ -124,6 +124,7 @@ export const SoportesPage = () => {
                     </BtnAddActions>
                 ) : null}
             </Group>
+            <Divider my="md" />
             <FilterFormSoportes form={form} />
             {soportes.length !== 0 ? <SoportesTable /> : null}
             <ModalSolicitudAdminSoporte />

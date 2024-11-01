@@ -1,43 +1,37 @@
 import { useDispatch, useSelector } from "react-redux";
 import {
-    onCloseModalActiveUser,
-    onCloseModalAddUser,
-    onCloseModalResetPwd,
     onOpenModalActiveUser,
     onOpenModalAddUser,
+    onOpenModalEditUser,
     onOpenModalResetPwd,
 } from "../../store/user/uiUserSlice";
 
 export const useUiUser = () => {
-    const { isOpenModalAddUser, isOpenModalResetPwd, isOpenModalActiveUser } =
+    const { isOpenModalAddUser, isModalEditUser, isOpenModalResetPwd, isOpenModalActiveUser } =
         useSelector((state) => state.uiUser);
     const dispatch = useDispatch();
 
-    const modalActionUser = (behavior) => {
-        behavior === 1
-            ? dispatch(onOpenModalAddUser())
-            : dispatch(onCloseModalAddUser());
+    const modalActionUser = (behavior, action = false) => {
+        dispatch(onOpenModalAddUser(behavior));
+        dispatch(onOpenModalEditUser(action));
     };
 
     const modalActionResetPwd = (behavior) => {
-        behavior === 1
-            ? dispatch(onOpenModalResetPwd())
-            : dispatch(onCloseModalResetPwd());
+        dispatch(onOpenModalResetPwd(behavior));
     };
 
     const modalActionActiveUser = (behavior) => {
-        behavior === 1
-            ? dispatch(onOpenModalActiveUser())
-            : dispatch(onCloseModalActiveUser());
-    }
+        dispatch(onOpenModalActiveUser(behavior));
+    };
 
     return {
         isOpenModalAddUser,
+        isModalEditUser,
         isOpenModalResetPwd,
         isOpenModalActiveUser,
 
         modalActionUser,
         modalActionResetPwd,
-        modalActionActiveUser
+        modalActionActiveUser,
     };
 };

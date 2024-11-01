@@ -4,17 +4,23 @@ import {
     BtnSection,
     InvInfoGeneralEquipo,
     InvTabsDetalleEquipo,
+    TextSection,
     TitlePage,
 } from "../../../../components";
 import { IconDeviceDesktopDown } from "@tabler/icons-react";
 
 export const InvShowEquipoModal = () => {
-    const { isLoading, activateInvEquipo, setActivateInvEquipo } = useInvEquipoStore();
-    const { isOpenModalViewEquipo, modalActionViewEquipo, modalActionBajaEquipo } = useInvUiEquipo();
+    const { isLoading, activateInvEquipo, setActivateInvEquipo } =
+        useInvEquipoStore();
+    const {
+        isOpenModalViewEquipo,
+        modalActionViewEquipo,
+        modalActionBajaEquipo,
+    } = useInvUiEquipo();
 
     const handleBajaEquipo = () => {
         modalActionBajaEquipo(true);
-    }
+    };
 
     const handleCloseModal = () => {
         modalActionViewEquipo(false);
@@ -30,9 +36,9 @@ export const InvShowEquipoModal = () => {
             opened={isOpenModalViewEquipo}
             onClose={handleCloseModal}
             title={
-                <TitlePage order={3} ta="left">
+                <TextSection tt="" fw={700} fz={18}>
                     Detalles del Equipo
-                </TitlePage>
+                </TextSection>
             }
         >
             <Divider my="md" />

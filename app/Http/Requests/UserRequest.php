@@ -29,8 +29,11 @@ class UserRequest extends FormRequest
         return [
             'usu_ci'                => 'required',
             'titulo'                => 'required',
-            'nmbre_usrio'           => 'required',
-            'nombre_formateado'     => 'required',
+            //'nmbre_usrio'           => 'required',
+            'usu_ape_pat'           => 'required',
+            'usu_ape_mat'           => 'required',
+            'usu_nombres'           => 'required',
+            //'nombre_formateado'     => 'required',
             'usu_id_empresa'        => 'required',
             //'usu_id_sub_empresa'    => 'required',
             'crgo_id'               => 'required',
@@ -38,7 +41,7 @@ class UserRequest extends FormRequest
             'lgin'                  => ['required', Rule::unique('usrios_sstma')->ignore($cdgo_usrio, 'cdgo_usrio')],
             'email'                 => ['required', Rule::unique('usrios_sstma')->ignore($cdgo_usrio, 'cdgo_usrio')],
             'cdgo_direccion'        => 'required',
-            //'cdgo_dprtmnto'         => 'required',
+            'cdgo_dprtmnto'         => '',
             'sexo'                  => 'required',
             'tecnico'               => 'required',
             'secretaria_tic'        => 'required',
@@ -49,8 +52,9 @@ class UserRequest extends FormRequest
             'usu_estado'            => 'required',
             'id_tipo_usuario'       => 'required',
             'usu_ult_tipo_contrato' => 'required',
-            'usu_alias'             => 'required',
+            //'usu_alias'             => 'required',
             'usu_ing'               => 'required',
+            'cdgo_lrgo'             => 'required'
         ];
     }
 

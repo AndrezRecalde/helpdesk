@@ -2,9 +2,10 @@ import { useEffect, useRef } from "react";
 import {
     ActionIcon,
     Box,
-    Grid,
     LoadingOverlay,
     Select,
+    SimpleGrid,
+    Stack,
     Textarea,
     rem,
 } from "@mantine/core";
@@ -141,91 +142,85 @@ export const FormSolicitudPermiso = ({ form, disabled }) => {
                 zIndex={1000}
                 overlayProps={{ radius: "sm", blur: 2 }}
             />
-            <Grid>
-                <Grid.Col span={{ base: 12, md: 12, lg: 12 }}>
-                    <Select
-                        withAsterisk
-                        clearable
-                        searchable
-                        disabled={disabled}
-                        label="Departamento del solicitante"
-                        placeholder="Seleccione el departamento del solicitante"
-                        nothingFoundMessage="Nothing found..."
-                        {...form.getInputProps("id_direccion_pide")}
-                        data={direcciones.map((direccion) => {
-                            return {
-                                label: direccion.nmbre_dprtmnto,
-                                value: direccion.cdgo_dprtmnto.toString(),
-                            };
-                        })}
-                    />
-                </Grid.Col>
-                <Grid.Col span={{ base: 12, md: 12, lg: 12 }}>
-                    <Select
-                        withAsterisk
-                        clearable
-                        searchable
-                        disabled={disabled}
-                        label="Solicitante"
-                        placeholder="Seleccione el usuario solicitante"
-                        nothingFoundMessage="Nothing found..."
-                        {...form.getInputProps("id_usu_pide")}
-                        data={users.map((user) => {
-                            return {
-                                label: user.nmbre_usrio,
-                                value: user.cdgo_usrio.toString(),
-                            };
-                        })}
-                    />
-                </Grid.Col>
-                <Grid.Col span={{ base: 12, md: 12, lg: 12 }}>
-                    <Select
-                        withAsterisk
-                        searchable
-                        label="Jefe inmediato"
-                        placeholder="Seleccione el jefe inmediato del solicitante"
-                        {...form.getInputProps("id_jefe_inmediato")}
-                        nothingFoundMessage="Nothing found..."
-                        data={users.map((director) => {
-                            return {
-                                label: director.nmbre_usrio,
-                                value: director.cdgo_usrio.toString(),
-                            };
-                        })}
-                    />
-                </Grid.Col>
-                <Grid.Col span={{ base: 12, md: 12, lg: 12 }}>
-                    <Select
-                        withAsterisk
-                        label="Motivo"
-                        placeholder="Seleccione el motivo"
-                        {...form.getInputProps("id_tipo_motivo")}
-                        data={[
-                            {
-                                value: "1",
-                                label: "PERSONAL",
-                            },
-                            {
-                                value: "2",
-                                label: "ENFERMEDAD",
-                            },
-                            { value: "3", label: "OFICIAL" },
-                            { value: "4", label: "CAL. DOMESTICA" },
-                        ]}
-                    />
-                </Grid.Col>
-                <Grid.Col span={{ base: 12, md: 12, lg: 12 }}>
-                    <DateInput
-                        withAsterisk
-                        minDate={dayjs(new Date()).add(-12, "day").toDate()}
-                        maxDate={dayjs(new Date()).add(1, "month").toDate()}
-                        valueFormat="YYYY-MM-DD"
-                        label="Fecha del permiso"
-                        placeholder="Registra la fecha"
-                        {...form.getInputProps("fecha")}
-                    />
-                </Grid.Col>
-                <Grid.Col span={{ base: 6, md: 6, lg: 6 }}>
+            <Stack
+                align="stretch"
+                justify="center"
+                gap="md"
+            >
+                <Select
+                    withAsterisk
+                    clearable
+                    searchable
+                    disabled={disabled}
+                    label="Departamento del solicitante"
+                    placeholder="Seleccione el departamento del solicitante"
+                    nothingFoundMessage="Nothing found..."
+                    {...form.getInputProps("id_direccion_pide")}
+                    data={direcciones.map((direccion) => {
+                        return {
+                            label: direccion.nmbre_dprtmnto,
+                            value: direccion.cdgo_dprtmnto.toString(),
+                        };
+                    })}
+                />
+                <Select
+                    withAsterisk
+                    clearable
+                    searchable
+                    disabled={disabled}
+                    label="Solicitante"
+                    placeholder="Seleccione el usuario solicitante"
+                    nothingFoundMessage="Nothing found..."
+                    {...form.getInputProps("id_usu_pide")}
+                    data={users.map((user) => {
+                        return {
+                            label: user.nmbre_usrio,
+                            value: user.cdgo_usrio.toString(),
+                        };
+                    })}
+                />
+                <Select
+                    withAsterisk
+                    searchable
+                    label="Jefe inmediato"
+                    placeholder="Seleccione el jefe inmediato del solicitante"
+                    {...form.getInputProps("id_jefe_inmediato")}
+                    nothingFoundMessage="Nothing found..."
+                    data={users.map((director) => {
+                        return {
+                            label: director.nmbre_usrio,
+                            value: director.cdgo_usrio.toString(),
+                        };
+                    })}
+                />
+                <Select
+                    withAsterisk
+                    label="Motivo"
+                    placeholder="Seleccione el motivo"
+                    {...form.getInputProps("id_tipo_motivo")}
+                    data={[
+                        {
+                            value: "1",
+                            label: "PERSONAL",
+                        },
+                        {
+                            value: "2",
+                            label: "ENFERMEDAD",
+                        },
+                        { value: "3", label: "OFICIAL" },
+                        { value: "4", label: "CAL. DOMESTICA" },
+                    ]}
+                />
+                <DateInput
+                    withAsterisk
+                    minDate={dayjs(new Date()).add(-12, "day").toDate()}
+                    maxDate={dayjs(new Date()).add(1, "month").toDate()}
+                    valueFormat="YYYY-MM-DD"
+                    label="Fecha del permiso"
+                    placeholder="Registra la fecha"
+                    {...form.getInputProps("fecha")}
+                />
+                <SimpleGrid cols={2}>
                     <TimeInput
                         withAsterisk
                         label="Hora desde:"
@@ -233,8 +228,6 @@ export const FormSolicitudPermiso = ({ form, disabled }) => {
                         rightSection={pickerControl_1}
                         {...form.getInputProps("hora_1")}
                     />
-                </Grid.Col>
-                <Grid.Col span={{ base: 6, md: 6, lg: 6 }}>
                     <TimeInput
                         withAsterisk
                         label="Hora hasta:"
@@ -242,25 +235,23 @@ export const FormSolicitudPermiso = ({ form, disabled }) => {
                         rightSection={pickerControl_2}
                         {...form.getInputProps("hora_2")}
                     />
-                </Grid.Col>
-                <Grid.Col span={{ base: 12, md: 12, lg: 12 }}>
-                    <Textarea
-                        label="Observación"
-                        description="Si el permiso es personal no es necesario registrar tu observación"
-                        autosize
-                        minRows={6}
-                        maxRows={8}
-                        {...form.getInputProps("per_observaciones")}
-                    />
-                </Grid.Col>
-            </Grid>
-            <BtnSubmit
-                fontSize={16}
-                IconSection={IconChecks}
-                //loading={isLoading}
-            >
-                Registrar permiso
-            </BtnSubmit>
+                </SimpleGrid>
+                <Textarea
+                    label="Observación"
+                    description="Si el permiso es personal no es necesario registrar tu observación"
+                    autosize
+                    minRows={6}
+                    maxRows={8}
+                    {...form.getInputProps("per_observaciones")}
+                />
+                <BtnSubmit
+                    fontSize={16}
+                    IconSection={IconChecks}
+                    //loading={isLoading}
+                >
+                    Registrar permiso
+                </BtnSubmit>
+            </Stack>
         </Box>
     );
 };

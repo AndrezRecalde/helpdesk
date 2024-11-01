@@ -1,7 +1,9 @@
-import { Grid, Select } from "@mantine/core";
+import { useEffect } from "react";
+import { Select, SimpleGrid, Stack } from "@mantine/core";
 import { DateInput } from "@mantine/dates";
 import {
     useCargoStore,
+    useDepartamentoStore,
     useDireccionStore,
     useEmpresaStore,
     useTipoContratoStore,
@@ -9,32 +11,46 @@ import {
 } from "../../../../hooks";
 
 export const FormTrabajoUser = ({ form }) => {
-    const { finaliza_contrato } = form.values;
+    const { finaliza_contrato, cdgo_direccion } = form.values;
     const { empresas } = useEmpresaStore();
     const { direcciones } = useDireccionStore();
     const { cargos } = useCargoStore();
     const { tiposUsuarios } = useTipoUsuarioStore();
     const { tiposContratos } = useTipoContratoStore();
+    const { startLoadDepartamentos, departamentos, clearDepartamentos } =
+        useDepartamentoStore();
+
+    useEffect(() => {
+        if (cdgo_direccion !== null) {
+            startLoadDepartamentos(cdgo_direccion);
+        } else {
+            form.setFieldValue("cdgo_dprtmnto", null);
+            clearDepartamentos();
+        }
+    }, [cdgo_direccion]);
 
     return (
-        <Grid>
-            <Grid.Col span={{ base: 6, sm: 6, md: 6, lg: 6 }}>
-                <Select
-                    required
-                    searchable
-                    clearable
-                    label="Empresa"
-                    placeholder="Elige la empresa"
-                    {...form.getInputProps("usu_id_empresa")}
-                    data={empresas.map((empresa) => {
-                        return {
-                            value: empresa.idnom_empresa.toString(),
-                            label: empresa.nom_empresa,
-                        };
-                    })}
-                />
-            </Grid.Col>
-            <Grid.Col span={{ base: 6, sm: 6, md: 6, lg: 6 }}>
+        <Stack
+            bg="var(--mantine-color-body)"
+            align="stretch"
+            justify="center"
+            gap="lg"
+        >
+            <Select
+                required
+                searchable
+                clearable
+                label="Empresa"
+                placeholder="Elige la empresa"
+                {...form.getInputProps("usu_id_empresa")}
+                data={empresas.map((empresa) => {
+                    return {
+                        value: empresa.idnom_empresa.toString(),
+                        label: empresa.nom_empresa,
+                    };
+                })}
+            />
+            <SimpleGrid cols={{ base: 1, xs: 1, sm: 1, md: 2, lg: 2 }}>
                 <Select
                     required
                     searchable
@@ -49,8 +65,22 @@ export const FormTrabajoUser = ({ form }) => {
                         };
                     })}
                 />
-            </Grid.Col>
-            <Grid.Col span={{ base: 6, sm: 6, md: 6, lg: 6 }}>
+                {departamentos.length > 0 ? (
+                    <Select
+                        required
+                        searchable
+                        clearable
+                        label="Departamento"
+                        placeholder="Seleccione el departamento o subproceso"
+                        {...form.getInputProps("cdgo_dprtmnto")}
+                        data={departamentos.map((departamento) => {
+                            return {
+                                value: departamento.cdgo_dprtmnto.toString(),
+                                label: departamento.nmbre_dprtmnto,
+                            };
+                        })}
+                    />
+                ) : null}
                 <Select
                     required
                     searchable
@@ -65,8 +95,6 @@ export const FormTrabajoUser = ({ form }) => {
                         };
                     })}
                 />
-            </Grid.Col>
-            <Grid.Col span={{ base: 6, sm: 6, md: 6, lg: 6 }}>
                 <Select
                     required
                     searchable
@@ -81,8 +109,6 @@ export const FormTrabajoUser = ({ form }) => {
                         };
                     })}
                 />
-            </Grid.Col>
-            <Grid.Col span={{ base: 6, sm: 6, md: 6, lg: 6 }}>
                 <Select
                     required
                     searchable
@@ -97,8 +123,7 @@ export const FormTrabajoUser = ({ form }) => {
                         };
                     })}
                 />
-            </Grid.Col>
-            <Grid.Col span={{ base: 6, sm: 6, md: 6, lg: 6 }}>
+
                 <Select
                     required
                     searchable
@@ -111,19 +136,16 @@ export const FormTrabajoUser = ({ form }) => {
                         { value: "0", label: "No" },
                     ]}
                 />
-            </Grid.Col>
 
-            {finaliza_contrato === "1" ? (
-                <Grid.Col span={{ base: 12, sm: 12, md: 12, lg: 12 }}>
+                {finaliza_contrato === "1" ? (
                     <DateInput
                         label="Fecha de finalización"
-                        description="Vacía si no la sabe"
-                        placeholder="Digite la fecha"
+                        placeholder="Digite la fecha (Vacía si no la sabe)"
                         valueFormat="YYYY-MM-DD"
                         {...form.getInputProps("usu_f_f_contrato")}
                     />
-                </Grid.Col>
-            ) : null}
-        </Grid>
+                ) : null}
+            </SimpleGrid>
+        </Stack>
     );
 };

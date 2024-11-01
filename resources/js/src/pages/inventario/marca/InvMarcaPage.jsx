@@ -1,11 +1,12 @@
 import { useEffect } from "react";
-import { InvMarcaModal, InvMarcaTable, TitlePage } from "../../../components";
-import { useInvMarcaStore } from "../../../hooks";
-import Swal from "sweetalert2";
 import { Divider } from "@mantine/core";
+import { InvMarcaModal, InvMarcaTable, TitlePage } from "../../../components";
+import { useInvMarcaStore, useTitlePage } from "../../../hooks";
+import Swal from "sweetalert2";
 
 export const InvMarcaPage = ({ tabValue }) => {
-    const { startLoadInvMarcas, startClearInvMarcas, message, errores } =
+    useTitlePage("Helpdesk | Inv. Marcas");
+    const { startLoadInvMarcas, /* startClearInvMarcas, */ message, errores } =
         useInvMarcaStore();
 
     useEffect(() => {

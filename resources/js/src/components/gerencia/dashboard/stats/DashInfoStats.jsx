@@ -1,11 +1,12 @@
-import { Group, Paper, SimpleGrid, Text } from "@mantine/core";
+import { Group, Paper, SimpleGrid } from "@mantine/core";
+import { TextSection } from "../../../../components";
+import { useDashGerenciaStore } from "../../../../hooks";
 import {
     IconUserScan,
     IconBuildingBank,
     IconUserShield,
     IconListDetails,
 } from "@tabler/icons-react";
-import { useDashGerenciaStore } from "../../../../hooks";
 import classes from "../../../../assets/styles/modules/stats/StatsGrid.module.css";
 
 export const DashInfoStats = () => {
@@ -36,13 +37,13 @@ export const DashInfoStats = () => {
         return (
             <Paper withBorder p="md" radius="md" key={stat.title}>
                 <Group justify="space-between">
-                    <Text size="xs" c="dimmed" className={classes.title}>
+                    <TextSection fw={700} color="dimmed">
                         {stat.title}
-                    </Text>
+                    </TextSection>
                     <Icon className={classes.icon} size="1.8rem" stroke={1.5} />
                 </Group>
                 <Group align="flex-end" gap="xs" mt={10}>
-                    <Text className={classes.value}>{stat.value}</Text>
+                    <TextSection fz={26} fw={700}>{stat.value}</TextSection>
                 </Group>
             </Paper>
         );

@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react";
 import { Button, Code, Group, Stepper } from "@mantine/core";
 import {
-    //AlertSection,
     BtnSection,
-    //InvAsignacionForm,
     InvEquipoComplementaria,
     InvEquipoGeneralForm,
 } from "./../../../../components";
@@ -15,17 +13,29 @@ import {
 import { useInvEquipoStore, useInvUiEquipo } from "../../../../hooks";
 
 export const InvEquipoForm = ({ form }) => {
-    const { startAddInvEquipo, activateInvEquipo } = useInvEquipoStore();
+    const { startAddInvEquipo, activateInvEquipo, setActivateInvEquipo } = useInvEquipoStore();
     const { modalActionEquipo } = useInvUiEquipo();
     const [active, setActive] = useState(0);
 
     useEffect(() => {
         if (activateInvEquipo !== null) {
             form.setValues({
-                ...activateInvEquipo,
+                //...activateInvEquipo,
+                id: activateInvEquipo.id,
+                modelo: activateInvEquipo.modelo,
+                numero_serie: activateInvEquipo.numero_serie,
+                codigo_antiguo: activateInvEquipo.codigo_antiguo,
+                codigo_nuevo: activateInvEquipo.codigo_nuevo,
+                fecha_adquisicion: new Date(activateInvEquipo.fecha_adquisicion),
+                fecha_amortizacion: new Date(activateInvEquipo.fecha_amortizacion),
+                vida_util: activateInvEquipo.vida_util,
+                descripcion: activateInvEquipo.descripcion,
+                bien_adquirido:activateInvEquipo.bien_adquirido ? 1 : 0,
+                bien_donado: activateInvEquipo.bien_donado ? 1 : 0,
+                bien_usado: activateInvEquipo.bien_usado ? 1 : 0,
                 ubicacion_id: activateInvEquipo.ubicacion_id.toString(),
-                categoria_id: activateInvEquipo.categoria_id.toString(),
                 tipocategoria_id: activateInvEquipo.tipocategoria_id.toString(),
+                categoria_id: activateInvEquipo.categoria_id.toString(),
                 estado_id: activateInvEquipo.estado_id.toString(),
                 marca_id: activateInvEquipo.marca_id.toString(),
                 //fechas
@@ -90,6 +100,7 @@ export const InvEquipoForm = ({ form }) => {
         startAddInvEquipo(form.getTransformedValues());
         console.log(form.getTransformedValues());
         modalActionEquipo(false);
+        setActivateInvEquipo(null);
         form.reset();
     };
 
@@ -112,21 +123,6 @@ export const InvEquipoForm = ({ form }) => {
                 >
                     <InvEquipoComplementaria form={form} />
                 </Stepper.Step>
-                {/* <Stepper.Step
-                    label="Responsables"
-                    description="Designación de responsables"
-                >
-                    <InvAsignacionForm form={form} />
-                    <AlertSection
-                        variant="light"
-                        color="indigo"
-                        title="Información"
-                        icon={IconInfoCircle}
-                    >
-                        Por favor, si lo considera necesario, puede reasignar el
-                        responsable en cualquier otro momento.
-                    </AlertSection>
-                </Stepper.Step> */}
                 <Stepper.Completed>
                     <Code>
                         {JSON.stringify(form.getTransformedValues(), null, 2)}

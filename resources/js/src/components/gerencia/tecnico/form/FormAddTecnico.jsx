@@ -1,8 +1,8 @@
+import { useEffect } from "react";
 import { Box, Select, Stack } from "@mantine/core";
 import { IconUserBolt } from "@tabler/icons-react";
 import { useTecnicoStore, useUiTecnico, useUsersStore } from "../../../../hooks";
 import { BtnSubmit } from "../../..";
-import { useEffect } from "react";
 
 export const FormAddTecnico = ({ form }) => {
     const { disabledInput, modalActionTecnico } = useUiTecnico();
@@ -57,7 +57,7 @@ export const FormAddTecnico = ({ form }) => {
                     data={[
                         { value: "1", label: "GERENTE" },
                         { value: "2", label: "TÉCNICO" },
-                        { value: "", label: "USUARIO" },
+                        { value: "",  label: "USUARIO" },
                     ]}
                 />
                 <BtnSubmit

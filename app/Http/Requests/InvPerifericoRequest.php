@@ -31,11 +31,11 @@ class InvPerifericoRequest extends FormRequest
             'marca_id'      =>      'required',
             'categoria_id'  =>      'required',
             'numero_serie'  =>      ['', Rule::unique('inv_equipos')->ignore($perifericoId)],
-            'fecha_adquision' =>    '',
+            'fecha_adquisicion' =>    '',
             'es_adquirido'    =>    'required',
             'es_donado'       =>    'required',
             'es_usado'        =>    'required',
-            'equipo_id'       =>    'required',
+            'estado_id'       =>    'required',
         ];
     }
 
@@ -49,7 +49,7 @@ class InvPerifericoRequest extends FormRequest
             'es_adquirido.required' =>  'Seleccione si es adquirido',
             'es_donado.required'    =>  'Seleccione si es donado',
             'es_usado.required'     =>  'Seleccione si es usado',
-            'equipo_id.required'    =>  'Seleccione un equipo'
+            'estado_id.required'    =>  'Seleccione un estado'
         ];
     }
 

@@ -5,6 +5,7 @@ import {
     IconTransferIn,
     IconListCheck,
     IconChartPie,
+    IconDevicesShare,
 } from "@tabler/icons-react";
 
 export const Roles = {
@@ -60,6 +61,16 @@ export const lGerente = [
                 label: "Reporte de Soportes",
                 link: "/gerencia/reporte-soportes",
             },
+        ],
+    },
+    {
+        label: "Inventario",
+        icon: IconDevicesShare,
+        initiallyOpened: true,
+        links: [
+            { label: "Config. Inventario", link: "/gerencia/configuracion-inventario/*" },
+            { label: "Equipos", link: "/gerencia/inventario/equipos" },
+            { label: "Componentes", link: "/gerencia/inventario/componentes" },
         ],
     },
     {

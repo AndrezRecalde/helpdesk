@@ -1,18 +1,27 @@
 import { useMantineReactTable } from "mantine-react-table";
-import { MenuTable_VE, TableContent } from "../../../../components";
+import {
+    ActionReportPDF,
+    MenuTable_VE,
+    TableContent,
+} from "../../../../components";
 import { useCallback, useMemo } from "react";
 import { useInvEquipoStore, useInvUiEquipo } from "../../../../hooks";
 
 export const InvEquipoTable = () => {
-    const { isLoading, invEquipos, startShowInvEquipo, setActivateInvEquipo } = useInvEquipoStore();
-    const { modalActionEquipo, modalActionViewEquipo, modalActionDeleteEquipo } = useInvUiEquipo();
+    const { isLoading, invEquipos, startShowInvEquipo, setActivateInvEquipo, startExportEquipos } =
+        useInvEquipoStore();
+    const {
+        modalActionEquipo,
+        modalActionViewEquipo,
+        modalActionDeleteEquipo,
+    } = useInvUiEquipo();
 
     const columns = useMemo(
         () => [
             {
                 header: "Código",
                 accessorFn: (row) =>
-                    row.codigo_antiguo + " || " + row.codigo_nuevo, //normal accessorKey
+                    row.codigo_antiguo + " :::: " + row.codigo_nuevo, //normal accessorKey
                 filterVariant: "autocomplete",
             },
             {
@@ -23,6 +32,7 @@ export const InvEquipoTable = () => {
             {
                 header: "Número de serie",
                 accessorKey: "numero_serie",
+                filterVariant: "autocomplete",
             },
             {
                 header: "Categoría",
@@ -40,8 +50,8 @@ export const InvEquipoTable = () => {
         (selected) => {
             console.log("editar");
             modalActionEquipo(true);
-            //startShowInvEquipo(selected);
-            setActivateInvEquipo(selected);
+            startShowInvEquipo(selected);
+            //setActivateInvEquipo(selected);
         },
         [invEquipos]
     );
@@ -73,6 +83,12 @@ export const InvEquipoTable = () => {
         [invEquipos]
     );
 
+    const handleExportDataPDF = (e) => {
+        e.preventDefault();
+        console.log("export");
+        startExportEquipos(invEquipos);
+    };
+
     const table = useMantineReactTable({
         columns,
         data: invEquipos, //must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
@@ -80,6 +96,10 @@ export const InvEquipoTable = () => {
         enableFacetedValues: true,
         enableDensityToggle: false,
         enableRowActions: true,
+        renderTopToolbarCustomActions: ({ table }) =>
+            invEquipos.length !== 0 ? (
+                <ActionReportPDF handleExportDataPDF={handleExportDataPDF} />
+            ) : null,
         renderRowActionMenuItems: ({ row }) => (
             <MenuTable_VE
                 row={row}

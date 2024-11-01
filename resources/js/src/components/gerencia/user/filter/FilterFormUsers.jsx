@@ -1,16 +1,13 @@
 import { useEffect } from "react";
-import {
-    Box,
-    Fieldset,
-    Select,
-    SimpleGrid,
-    Text,
-    TextInput,
-} from "@mantine/core";
-import { BtnSubmit } from "../../..";
-import { IconSearch } from "@tabler/icons-react";
-import { useDireccionStore, useStorageField, useUsersStore } from "../../../../hooks";
+import { Box, Fieldset, Select, SimpleGrid, TextInput } from "@mantine/core";
 import { useForm } from "@mantine/form";
+import { BtnSubmit, TextSection } from "../../../../components";
+import {
+    useDireccionStore,
+    useStorageField,
+    useUsersStore,
+} from "../../../../hooks";
+import { IconSearch } from "@tabler/icons-react";
 
 export const FilterFormUsers = () => {
     const { startLoadUsers, clearUsers } = useUsersStore();
@@ -20,14 +17,14 @@ export const FilterFormUsers = () => {
 
     const form = useForm({
         initialValues: {
-            cdgo_direccion: null,
+            cdgo_direccion: "",
             nmbre_usrio: "",
             lgin: "",
         },
         transformValues: (values) => ({
             cdgo_direccion: Number(values.cdgo_direccion) || null,
             nmbre_usrio: values.nmbre_usrio,
-            lgin: values.lgin
+            lgin: values.lgin,
         }),
     });
 
@@ -48,7 +45,11 @@ export const FilterFormUsers = () => {
     };
 
     return (
-        <Fieldset mt={20} legend={<Text>Filtrar usuarios</Text>}>
+        <Fieldset
+            mt={20}
+            mb={20}
+            legend={<TextSection tt="" fw={500} fz={16}>Filtrar usuarios</TextSection>}
+        >
             <Box
                 component="form"
                 onSubmit={form.onSubmit((_, e) => handleSubmit(e))}

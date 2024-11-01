@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Card, Container, Group, LoadingOverlay } from "@mantine/core";
+import { Container, Divider, Group, LoadingOverlay } from "@mantine/core";
 import {
     BtnSection,
     ModalAnularSoporte,
@@ -16,7 +16,6 @@ import { onLoadSoportes } from "../../store/soporte/soporteSlice";
 import useSWR, { mutate } from "swr";
 import Swal from "sweetalert2";
 import { IconBrandTelegram } from "@tabler/icons-react";
-
 
 export const SolicitudesActualesPage = () => {
     useTitlePage("Helpdesk | Solicitudes");
@@ -87,16 +86,17 @@ export const SolicitudesActualesPage = () => {
     return (
         <Container size="xxl">
             <Group justify="space-between">
-                <TitlePage order={2}>
-                    Solicitudes Actuales
-                </TitlePage>
+                <TitlePage order={2}>Solicitudes Actuales</TitlePage>
                 {usuario.role_id === 1 ? (
-                    <BtnSection handleAction={handleOpenModal} IconSection={IconBrandTelegram}>
+                    <BtnSection
+                        handleAction={handleOpenModal}
+                        IconSection={IconBrandTelegram}
+                    >
                         Nueva solicitud
                     </BtnSection>
                 ) : null}
             </Group>
-            <Group justify="space-between">
+            <Group justify="space-between" mb={20}>
                 <TextSection fw={700} tt="" fz={16}>
                     Tienes {soportes?.length} solicitudes
                 </TextSection>
@@ -105,15 +105,17 @@ export const SolicitudesActualesPage = () => {
                 </TextSection>
             </Group>
             {/*  {soportes.length !== 0 ? ( */}
-            <Card withBorder shadow="sm" radius="md" mt={20} mb={20}>
-                <Card.Section>
-                <LoadingOverlay visible={loadPDF} zIndex={1000} overlayProps={{ radius: "sm", blur: 2 }} />
-                    <SolicitudesTable
-                        menu={usuario.role_id === 1 ? 1 : 2}
-                        isLoading={isLoading}
-                    />
-                </Card.Section>
-            </Card>
+            <Divider my="md" />
+            <LoadingOverlay
+                visible={loadPDF}
+                zIndex={1000}
+                overlayProps={{ radius: "sm", blur: 2 }}
+            />
+            <SolicitudesTable
+                menu={usuario.role_id === 1 ? 1 : 2}
+                isLoading={isLoading}
+            />
+
             {/* ) : null} */}
             <ModalSolicitudAdminSoporte />
             <ModalAsignarSoporte />

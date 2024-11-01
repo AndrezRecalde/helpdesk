@@ -34,9 +34,9 @@ export const SoportesCalificacionTable = () => {
     );
 
     const handleCalificar = (rows, table) => {
-        rows.map(row => startUpdateCalificacion(row.original.id_sop));
+        rows.map((row) => startUpdateCalificacion(row.original.id_sop));
         //console.log(table.resetRowSelection())
-    }
+    };
 
     const table = useMantineReactTable({
         columns,
@@ -71,6 +71,21 @@ export const SoportesCalificacionTable = () => {
                 </Button>
             </Box>
         ),
+        mantineTableProps: {
+            withColumnBorders: true,
+            withTableBorder: true,
+            sx: {
+                "thead > tr": {
+                    backgroundColor: "inherit",
+                },
+                "thead > tr > th": {
+                    backgroundColor: "inherit",
+                },
+                "tbody > tr > td": {
+                    backgroundColor: "inherit",
+                },
+            },
+        },
     });
 
     return <TableContent table={table} />;

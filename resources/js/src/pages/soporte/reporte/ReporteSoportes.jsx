@@ -1,5 +1,5 @@
 import { useEffect, useMemo } from "react";
-import { Container, LoadingOverlay } from "@mantine/core";
+import { Container, Divider, LoadingOverlay } from "@mantine/core";
 import {
     ActionReportPDF,
     FilterFormSearchDates,
@@ -37,7 +37,7 @@ export const ReporteSoportes = () => {
         transformValues: (values) => ({
             fecha_inicio: dayjs(values.fecha_inicio) || "",
             fecha_fin: dayjs(values.fecha_fin).add(1, "day") || "",
-        })
+        }),
     });
 
     const { fecha_inicio, fecha_fin } = form.values;
@@ -49,7 +49,8 @@ export const ReporteSoportes = () => {
                 header: "No. Soporte",
             },
             {
-                accessorFn: (row) => dayjs(row.fecha_ini).format("YYYY-MM-DD HH:mm"),
+                accessorFn: (row) =>
+                    dayjs(row.fecha_ini).format("YYYY-MM-DD HH:mm"),
                 header: "Fecha",
             },
             {
@@ -57,7 +58,9 @@ export const ReporteSoportes = () => {
                 header: "Actividad realizada",
             },
             {
-                accessorFn: (row) => <div dangerouslySetInnerHTML={{ __html: row.solucion }} />,
+                accessorFn: (row) => (
+                    <div dangerouslySetInnerHTML={{ __html: row.solucion }} />
+                ),
                 header: "Solucion de la actividad",
             },
             {
@@ -122,19 +125,32 @@ export const ReporteSoportes = () => {
         renderTopToolbarCustomActions: ({ table }) => (
             <ActionReportPDF handleExportDataPDF={handleExportDataPDF} />
         ),
+        mantineTableProps: {
+            withColumnBorders: true,
+            withTableBorder: true,
+            sx: {
+                "thead > tr": {
+                    backgroundColor: "inherit",
+                },
+                "thead > tr > th": {
+                    backgroundColor: "inherit",
+                },
+                "tbody > tr > td": {
+                    backgroundColor: "inherit",
+                },
+            },
+        },
     });
 
     return (
         <Container size="xxl">
-            <TitlePage order={2}>
-                Reporte de soportes
-            </TitlePage>
+            <TitlePage order={2}>Reporte de soportes</TitlePage>
             <LoadingOverlay
                 visible={loadPDF} //loadPDF
                 zIndex={1000}
                 overlayProps={{ radius: "sm", blur: 2 }}
             />
-
+            <Divider my="md" />
             <FilterFormSearchDates
                 title="Filtrar lista de mis soportes"
                 form={form}

@@ -1,12 +1,12 @@
 import { useCallback, useMemo } from "react";
 import { useMantineReactTable } from "mantine-react-table";
-import { BtnSection, MenuTable_E, TableContent } from "../../../../components"
+import { BtnSection, MenuTable_E, TableContent } from "../../../../components";
 import { IconCopyPlus } from "@tabler/icons-react";
 import { useInvConceptoStore, useInvUiConcepto } from "../../../../hooks";
 
 export const InvConceptoTable = () => {
-
-    const { isLoading, invConceptos, setActivateInvConceptos } = useInvConceptoStore();
+    const { isLoading, invConceptos, setActivateInvConceptos } =
+        useInvConceptoStore();
     const { modalActionConcepto } = useInvUiConcepto();
 
     const columns = useMemo(
@@ -53,9 +53,22 @@ export const InvConceptoTable = () => {
                 Agregar
             </BtnSection>
         ),
+        mantineTableProps: {
+            withColumnBorders: true,
+            withTableBorder: true,
+            sx: {
+                "thead > tr": {
+                    backgroundColor: "inherit",
+                },
+                "thead > tr > th": {
+                    backgroundColor: "inherit",
+                },
+                "tbody > tr > td": {
+                    backgroundColor: "inherit",
+                },
+            },
+        },
     });
 
-  return (
-    <TableContent table={table} />
-  )
-}
+    return <TableContent table={table} />;
+};

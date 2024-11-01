@@ -1,8 +1,19 @@
 import { useCallback, useMemo } from "react";
-import { Badge, Table, Text, useMantineColorScheme } from "@mantine/core";
+import { Badge, Table, useMantineColorScheme } from "@mantine/core";
 import { useMantineReactTable } from "mantine-react-table";
-import { MenuSolicitudTable, MenuTable_T, TableContent } from "../..";
-import { useDireccionStore, useSoporteStore, useTecnicoStore, useUiSoporte, useUsersStore } from "../../../hooks";
+import {
+    MenuSolicitudTable,
+    MenuTable_T,
+    TableContent,
+    TextSection,
+} from "../../../components";
+import {
+    useDireccionStore,
+    useSoporteStore,
+    useTecnicoStore,
+    useUiSoporte,
+    useUsersStore,
+} from "../../../hooks";
 import dayjs from "dayjs";
 //import { useNavigate } from "react-router-dom";
 
@@ -50,7 +61,7 @@ export const SoportesTable = () => {
                 filterVariant: "autocomplete",
                 mantineEditSelectProps: {
                     data: users,
-                  },
+                },
             },
             {
                 accessorKey: "direccion", //normal accessorKey
@@ -58,7 +69,7 @@ export const SoportesTable = () => {
                 filterVariant: "autocomplete",
                 mantineEditSelectProps: {
                     data: direcciones,
-                  },
+                },
             },
             {
                 accessorFn: (row) => row.tecnico_asignado ?? "No asignado", //normal accessorKey
@@ -66,7 +77,7 @@ export const SoportesTable = () => {
                 filterVariant: "autocomplete",
                 mantineEditSelectProps: {
                     data: tecnicos,
-                  },
+                },
             },
         ],
         [soportes]
@@ -114,20 +125,26 @@ export const SoportesTable = () => {
                         ? "#71c7f5"
                         : cell.row.original.id_estado == 4
                         ? "#9af5b8"
-                        : cell.row.original.id_estado == 5 && (dayjs(cell.row.original.fecha_ini).isBefore(dayjs().subtract(2, 'day'), 'day'))
+                        : cell.row.original.id_estado == 5 &&
+                          dayjs(cell.row.original.fecha_ini).isBefore(
+                              dayjs().subtract(2, "day"),
+                              "day"
+                          )
                         ? "#cf001c" //#fcb281
-                        :"",
+                        : "",
                 color:
                     cell.row.original.tecnico_asignado === null ||
                     cell.row.original.id_estado == 3
                         ? "white"
                         : cell.row.original.id_estado == 4
                         ? "black"
-                        : cell.row.original.id_estado == 5 && colorScheme === "dark"
+                        : cell.row.original.id_estado == 5 &&
+                          colorScheme === "dark"
                         ? "white"
-                        : cell.row.original.id_estado == 5 && colorScheme === "light"
+                        : cell.row.original.id_estado == 5 &&
+                          colorScheme === "light"
                         ? "black"
-                        :"",
+                        : "",
             },
         }),
         renderRowActionMenuItems: ({ row }) =>
@@ -158,26 +175,33 @@ export const SoportesTable = () => {
                     <Table.Tbody>
                         <Table.Tr>
                             <Table.Td>
-                                <Text fz="sm">{row.original.incidente}</Text>
-                                <Text fz="xs" c="dimmed">
+                                <TextSection fz="sm" fw={300} tt="">
+                                    {row.original.incidente}
+                                </TextSection>
+                                <TextSection fz="xs" c="dimmed" tt="" fw={700}>
                                     Incidencia
-                                </Text>
+                                </TextSection>
                             </Table.Td>
                             <Table.Td>
-                                <Text fz="sm">
-                                    <div dangerouslySetInnerHTML={{ __html: row.original.solucion ?? "Sin solución" }} />
-                                </Text>
-                                <Text fz="xs" c="dimmed">
+                                <div
+                                    dangerouslySetInnerHTML={{
+                                        __html:
+                                            row.original.solucion ??
+                                            "Sin solución",
+                                    }}
+                                />
+
+                                <TextSection fz="xs" c="dimmed" tt="" fw={700}>
                                     Retrospectiva del técnico
-                                </Text>
+                                </TextSection>
                             </Table.Td>
                             <Table.Td>
                                 <Badge radius="sm">
                                     {row.original.tipo_soporte}
                                 </Badge>
-                                <Text fz="xs" c="dimmed">
+                                <TextSection fz="xs" c="dimmed" tt="" fw={700}>
                                     Tipo soporte
-                                </Text>
+                                </TextSection>
                             </Table.Td>
                         </Table.Tr>
                     </Table.Tbody>

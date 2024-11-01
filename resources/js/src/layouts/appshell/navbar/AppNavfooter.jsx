@@ -1,15 +1,14 @@
-import { IconLogout } from "@tabler/icons-react";
-import { useAuthStore } from "../../../hooks";
+//import { IconLogout } from "@tabler/icons-react";
+//import { useAuthStore } from "../../../hooks";
 import classes from "../../../assets/styles/modules/layout/navbar/AppNav.module.css";
+import { UserBtnHeader } from "../../../components";
+import classess from "../../../assets/styles/modules/layout/navbar/AppHeader.module.css"
 
-export const AppNavfooter = () => {
-    const { startLogout } = useAuthStore();
+export const AppNavfooter = ({ toggleMobile }) => {
+    //const { startLogout } = useAuthStore();
     return (
         <div className={classes.footer}>
-            <a className={classes.link} onClick={startLogout}>
-                <IconLogout color="red" className={classes.linkIcon} stroke={1.5} />
-                <span>Cerrar sesión</span>
-            </a>
+            <UserBtnHeader classes={classess} toggleMobile={toggleMobile} />
         </div>
     );
 };

@@ -11,8 +11,8 @@ export const soporteSlice = createSlice({
         errores: undefined,
     },
     reducers: {
-        onLoading: (state) => {
-            state.isLoading = true;
+        onLoading: (state, { payload }) => {
+            state.isLoading = payload;
         },
         onLoadPDF: (state, { payload }) => {
             state.loadPDF = payload;
@@ -55,6 +55,7 @@ export const soporteSlice = createSlice({
             state.isLoading = false;
         },
         onClearSoportes: (state) => {
+            state.isLoading = false;
             state.soportes = [];
             state.activateSoporte = null;
             state.errores = undefined;
@@ -63,14 +64,8 @@ export const soporteSlice = createSlice({
             state.message = payload;
             state.isLoading = false;
         },
-        onClearMessage: (state) => {
-            state.message = undefined;
-        },
         onLoadErrores: (state, { payload }) => {
             state.errores = payload;
-        },
-        onClearErrores: (state) => {
-            state.errores = undefined;
         },
     },
 });
@@ -85,7 +80,5 @@ export const {
     onSetActivateSoporte,
     onClearSoportes,
     onLoadMessage,
-    onClearMessage,
     onLoadErrores,
-    onClearErrores,
 } = soporteSlice.actions;

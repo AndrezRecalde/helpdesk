@@ -19,6 +19,7 @@ import helpdeskApi from "../../../api/helpdeskApi";
 export const useInvEquipoStore = () => {
     const {
         isLoading,
+        isExport,
         invEquipos,
         activateInvEquipo,
         activateEquipoFromTransfer,
@@ -265,7 +266,41 @@ export const useInvEquipoStore = () => {
         try {
             dispatch(onExport(true));
             const response = await helpdeskApi.get(
-                `/gerencia/equipo/descargar-documento/${documento.id}`
+                `/gerencia/equipo/descargar-documento/${documento.id}`,
+                { responseType: "blob" } // Esto es importante para manejar el archivo correctamente
+            );
+
+            // Crear un blob del PDF y asignarlo a una URL
+            const pdfBlob = new Blob([response.data], {
+                type: "application/pdf",
+            });
+            const url = window.URL.createObjectURL(pdfBlob);
+
+            // Crear un enlace temporal para descargar el archivo
+            const link = document.createElement("a");
+            link.href = url;
+            link.setAttribute("download", `${documento.nombre_documento}.pdf`); // Asigna el nombre del archivo
+            document.body.appendChild(link);
+            link.click();
+
+            // Limpiar
+            link.parentNode.removeChild(link);
+            window.URL.revokeObjectURL(url); // Revoca el objeto después de la descarga
+
+            dispatch(onExport(false));
+        } catch (error) {
+            console.log(error);
+            ExceptionMessageError(error);
+        }
+    };
+
+    const startExportEquipos = async (equipos) => {
+        try {
+            dispatch(onExport(true));
+            const response = await helpdeskApi.post(
+                "/gerencia/inventario/export/equipos",
+                { equipos },
+                { responseType: "blob" }
             );
             const pdfBlob = new Blob([response.data], {
                 type: "application/pdf",
@@ -281,6 +316,7 @@ export const useInvEquipoStore = () => {
 
     return {
         isLoading,
+        isExport,
         invEquipos,
         activateInvEquipo,
         activateEquipoFromTransfer,
@@ -301,6 +337,7 @@ export const useInvEquipoStore = () => {
         startTransferComponente,
         startGuardarArchivo,
         startEliminarArchivo,
-        startDescargarArchivo
+        startDescargarArchivo,
+        startExportEquipos,
     };
 };

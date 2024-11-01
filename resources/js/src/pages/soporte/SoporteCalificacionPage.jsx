@@ -1,4 +1,4 @@
-import { Card, Container } from "@mantine/core";
+import { Card, Container, Divider } from "@mantine/core";
 import { SoportesCalificacionTable, TitlePage } from "../../components";
 import { useSoporteStore, useTitlePage } from "../../hooks";
 import { useEffect } from "react";
@@ -6,7 +6,8 @@ import Swal from "sweetalert2";
 
 export const SoporteCalificacionPage = () => {
     useTitlePage("Helpdesk | Calificar Soportes");
-    const { startLoadSoportesSinCalificar, clearSoportes, message, errores } = useSoporteStore();
+    const { startLoadSoportesSinCalificar, clearSoportes, message, errores } =
+        useSoporteStore();
 
     useEffect(() => {
         startLoadSoportesSinCalificar();
@@ -40,17 +41,13 @@ export const SoporteCalificacionPage = () => {
         }
     }, [errores]);
 
-
     return (
         <Container size="xxl">
             <TitlePage order={2}>
                 Cerrar Soportes - {new Date().getFullYear()}
             </TitlePage>
-            <Card withBorder shadow="sm" radius="md" mt={20} mb={20}>
-                <Card.Section>
-                    <SoportesCalificacionTable />
-                </Card.Section>
-            </Card>
+            <Divider my="md" />
+            <SoportesCalificacionTable />
         </Container>
     );
 };

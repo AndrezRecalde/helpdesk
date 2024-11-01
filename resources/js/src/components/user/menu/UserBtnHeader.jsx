@@ -18,9 +18,8 @@ import {
 } from "@tabler/icons-react";
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "../../../hooks";
-import classes from "../../../assets/styles/modules/user/UserHeader.module.css";
 
-export const UserBtnHeader = () => {
+export const UserBtnHeader = ({ classes, toggleMobile = null }) => {
     const theme = useMantineTheme();
     const { startLogout } = useAuthStore();
     const navigate = useNavigate();
@@ -39,6 +38,13 @@ export const UserBtnHeader = () => {
         const [firstName, lastName] = alias?.split(" ") || [];
         return `${firstName?.[0] || ""}${lastName?.[0] || ""}`;
     }, []);
+
+    const navigateUserMenu = (linked) => {
+        navigate(linked);
+        if (toggleMobile) {
+            toggleMobile(true);
+        }
+    };
 
     return (
         <Menu
@@ -81,7 +87,7 @@ export const UserBtnHeader = () => {
             </Menu.Target>
             <Menu.Dropdown>
                 <Menu.Item
-                    onClick={() => navigate("/u/profile")}
+                    onClick={() => navigateUserMenu("/u/profile")}
                     leftSection={
                         <IconUserHexagon
                             style={{ width: rem(16), height: rem(16) }}
@@ -93,7 +99,7 @@ export const UserBtnHeader = () => {
                     Ver perfil
                 </Menu.Item>
                 <Menu.Item
-                    onClick={() => navigate("/u/change-password")}
+                    onClick={() => navigateUserMenu("/u/change-password")}
                     leftSection={
                         <IconSettings
                             style={{ width: rem(16), height: rem(16) }}
@@ -104,7 +110,7 @@ export const UserBtnHeader = () => {
                     Cambiar contraseña
                 </Menu.Item>
                 <Menu.Item
-                    onClick={() => navigate("/u/ver-marcaciones")}
+                    onClick={() => navigateUserMenu("/u/ver-marcaciones")}
                     leftSection={
                         <IconFingerprint
                             style={{ width: rem(16), height: rem(16) }}

@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Card, Container } from "@mantine/core";
+import { Card, Container, Divider } from "@mantine/core";
 import { isNotEmpty, useForm } from "@mantine/form";
 import {
     FilterFormSearchDates,
@@ -64,21 +64,15 @@ export const SolicitudesAnuladasPage = () => {
 
     return (
         <Container size="xxl">
-            <TitlePage order={2}>
-                Solicitudes Anuladas
-            </TitlePage>
+            <TitlePage order={2}>Solicitudes Anuladas</TitlePage>
+            <Divider my="md" />
             <FilterFormSearchDates
                 form={form}
                 handleSubmit={handleSubmit}
                 isLoading={isLoading}
+                title="Filtrar por fechas"
             />
-            {soportes.length !== 0 ? (
-                <Card withBorder shadow="sm" radius="md" mt={20} mb={20}>
-                    <Card.Section>
-                        <SolicitudesAnuladasTable />
-                    </Card.Section>
-                </Card>
-            ) : null}
+            {soportes.length !== 0 ? <SolicitudesAnuladasTable /> : null}
         </Container>
     );
 };

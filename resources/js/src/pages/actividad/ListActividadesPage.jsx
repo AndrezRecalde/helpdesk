@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo } from "react";
-import { Box, Container, LoadingOverlay } from "@mantine/core";
+import { Box, Container, Divider, LoadingOverlay } from "@mantine/core";
 import { isNotEmpty, useForm } from "@mantine/form";
 import { useMantineReactTable } from "mantine-react-table";
 import {
@@ -144,13 +144,27 @@ export const ListActividadesPage = () => {
         renderRowActionMenuItems: ({ row }) => (
             <MenuTable_E row={row} handleEdit={handleEditActividad} />
         ),
+        mantineTableProps: {
+            withColumnBorders: true,
+            withTableBorder: true,
+            sx: {
+                "thead > tr": {
+                    backgroundColor: "inherit",
+                },
+                "thead > tr > th": {
+                    backgroundColor: "inherit",
+                },
+                "tbody > tr > td": {
+                    backgroundColor: "inherit",
+                },
+            },
+        },
     });
 
     return (
-        <Container size="xl" my="md">
-            <TitlePage order={2}>
-                Lista de actividades
-            </TitlePage>
+        <Container size="xxl" my="md">
+            <TitlePage order={2}>Lista de actividades</TitlePage>
+            <Divider my="md" />
             <LoadingOverlay
                 visible={loadPDF}
                 zIndex={1000}

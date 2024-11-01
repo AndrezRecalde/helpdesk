@@ -9,6 +9,7 @@ import {
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
 import { Card } from "@mantine/core";
+import { TextSection } from "../../../../components";
 import { useIndicadorStore } from "../../../../hooks";
 import ChartDataLabels from "chartjs-plugin-datalabels";
 
@@ -68,7 +69,7 @@ export const ChartDesempTecnicos = () => {
                 display: true,
                 text: "Desempeño de Técnicos",
                 font: {
-                    size: 20,
+                    size: 22,
                     weight: "italic",
                 },
             },
@@ -196,8 +197,10 @@ export const ChartDesempTecnicos = () => {
 
     return (
         <Card withBorder shadow="sm" radius="md" mt="sm" mb="sm">
-            <Card.Section withBorder inheritPadding py="xs">
-                Soportes por técnicos
+            <Card.Section withBorder inheritPadding py="md">
+                <TextSection fz={16} fw={700} color="dimmed">
+                    Soportes por técnicos
+                </TextSection>
             </Card.Section>
             <Card.Section withBorder inheritPadding py="xs">
                 <Bar options={options} data={data} />

@@ -13,7 +13,13 @@ import { IconChecks, IconTrash } from "@tabler/icons-react";
 import { BtnSubmit, TextSection } from "../../../../components";
 import { randomId } from "@mantine/hooks";
 import { DateInput } from "@mantine/dates";
-import { useInvCategoriaStore, useInvEquipoStore, useInvEstadoStore, useInvMarcaStore, useInvUiEquipo } from "../../../../hooks";
+import {
+    useInvCategoriaStore,
+    useInvEquipoStore,
+    useInvEstadoStore,
+    useInvMarcaStore,
+    useInvUiEquipo,
+} from "../../../../hooks";
 
 export const InvEquipoComponenteForm = ({ form }) => {
     const { invMarcas } = useInvMarcaStore();
@@ -39,7 +45,7 @@ export const InvEquipoComponenteForm = ({ form }) => {
             key={item.key}
         >
             <Group justify="space-between" mt={20}>
-                <TextSection fw={500}>Componente {index}</TextSection>
+                <TextSection fw={500}>Componente {index + 1}</TextSection>
                 <ActionIcon
                     color="red"
                     onClick={() => form.removeListItem("perifericos", index)}
@@ -150,15 +156,19 @@ export const InvEquipoComponenteForm = ({ form }) => {
             component="form"
             onSubmit={form.onSubmit((_, e) => handleSubmit(e))}
         >
-            {fields.length <= 0 ?? (
-                <Text c="dimmed" ta="center">
+            {fields.length > 0 ? (
+                <TextSection color="dimmed" ta="center" fz={12} tt="">
+                    Se agregaran los componentes
+                </TextSection>
+            ) : (
+                <TextSection color="dimmed" ta="center" fz={18} tt="">
                     No one here...
-                </Text>
+                </TextSection>
             )}
 
             {fields}
 
-            <Group justify="center" mt="md">
+            <Group justify="center" mt="sm">
                 <Button
                     onClick={() =>
                         form.insertListItem("perifericos", {

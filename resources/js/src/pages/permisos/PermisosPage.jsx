@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Card, Container, Group, LoadingOverlay } from "@mantine/core";
+import { Card, Container, Divider, Group, LoadingOverlay } from "@mantine/core";
 import { BtnSection, FormSolicitudPermiso, TitlePage } from "../../components";
 import { hasLength, isNotEmpty, useForm } from "@mantine/form";
 import {
@@ -122,6 +122,7 @@ export const PermisosPage = () => {
                     Ver permisos
                 </BtnSection>
             </Group>
+            <Divider my="md" />
             <Card withBorder shadow="sm" radius="sm" mt={20} mb={20}>
                 <LoadingOverlay
                     visible={

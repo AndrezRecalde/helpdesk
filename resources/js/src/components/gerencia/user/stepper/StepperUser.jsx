@@ -1,52 +1,49 @@
 import { Button, Group, Stepper, Text, Title } from "@mantine/core";
 import { useEffect, useState } from "react";
-import {
-    FormInfoUser,
-    FormTipoUser,
-    FormTrabajoUser,
-} from "../../..";
+import { FormInfoUser, FormTipoUser, FormTrabajoUser } from "../../..";
 import { IconSend } from "@tabler/icons-react";
-import { useUiUser, useUsersStore } from "../../../../hooks";
+import { useStorageField, useUiUser, useUsersStore } from "../../../../hooks";
 
 export const StepperUser = ({ form }) => {
     const [active, setActive] = useState(0);
-    const { activateUser } = useUsersStore();
+    const { activateUser, setClearActivateUser } = useUsersStore();
     const { modalActionUser } = useUiUser();
     const { startAddUser } = useUsersStore();
+    const { storageUserFields } = useStorageField();
     const usuario = JSON.parse(localStorage.getItem("service_user"));
 
     useEffect(() => {
-      if (activateUser !== null) {
-        //console.log('hola')
-        form.setValues({
-            ...activateUser,
-            sexo: activateUser.sexo.toString(),
-            usu_id_empresa: activateUser.usu_id_empresa?.toString(),
-            cdgo_direccion: activateUser.cdgo_direccion?.toString(),
-            crgo_id: activateUser.crgo_id?.toString(),
-            id_tipo_usuario: activateUser.id_tipo_usuario?.toString(),
-            usu_ult_tipo_contrato: activateUser.usu_ult_tipo_contrato?.toString(),
-            finaliza_contrato: activateUser.finaliza_contrato?.toString(),
-            usu_f_f_contrato: activateUser.usu_f_f_contrato?.toString(),
+        if (activateUser !== null) {
+            //console.log('hola')
+            form.setValues({
+                ...activateUser,
+                sexo: activateUser.sexo.toString(),
+                usu_id_empresa: activateUser.usu_id_empresa?.toString(),
+                cdgo_direccion: activateUser.cdgo_direccion?.toString(),
+                cdgo_dprtmnto: activateUser.cdgo_dprtmnto?.toString() || null,
+                crgo_id: activateUser.crgo_id?.toString(),
+                id_tipo_usuario: activateUser.id_tipo_usuario?.toString(),
+                usu_ult_tipo_contrato:
+                    activateUser.usu_ult_tipo_contrato?.toString(),
+                finaliza_contrato:
+                    activateUser.finaliza_contrato?.toString() ?? "0",
+                usu_f_f_contrato: activateUser.usu_f_f_contrato
+                    ? new Date(activateUser.usu_f_f_contrato)
+                    : null,
 
-            tecnico: activateUser.tecnico?.toString(),
-            secretaria_tic: activateUser.secretaria_tic?.toString(),
-            super_user: activateUser.super_user?.toString(),
-            interno: activateUser.interno?.toString(),
-            usu_estado: activateUser.usu_estado?.toString(),
-        })
-        return;
-      }
-
+                tecnico: activateUser.tecnico?.toString() ?? "0",
+                secretaria_tic: activateUser.secretaria_tic?.toString() ?? "0",
+                super_user: activateUser.super_user?.toString() ?? "0",
+                interno: activateUser.interno?.toString() ?? "0",
+                usu_estado: activateUser.usu_estado?.toString() ?? "0",
+            });
+            return;
+        }
     }, [activateUser]);
 
     useEffect(() => {
-      form.setFieldValue("usu_ing", usuario.cdgo_usrio.toString());
-
+        form.setFieldValue("usu_ing", usuario.cdgo_usrio.toString());
     }, []);
-
-
-
 
     const prevStep = () =>
         setActive((current) => (current > 0 ? current - 1 : current));
@@ -59,8 +56,9 @@ export const StepperUser = ({ form }) => {
                 if (
                     errors.hasOwnProperty("usu_ci") ||
                     errors.hasOwnProperty("titulo") ||
-                    errors.hasOwnProperty("nmbre_usrio") ||
-                    errors.hasOwnProperty("nombre_formateado") ||
+                    errors.hasOwnProperty("usu_ape_pat") ||
+                    errors.hasOwnProperty("usu_ape_mat") ||
+                    errors.hasOwnProperty("usu_nombres") ||
                     errors.hasOwnProperty("email") ||
                     errors.hasOwnProperty("sexo") ||
                     errors.hasOwnProperty("lgin") ||
@@ -68,7 +66,9 @@ export const StepperUser = ({ form }) => {
                 ) {
                     setActive((current) => current * 1);
                 } else {
-                    setActive((current) => current < 3 ? current + 1 : current);
+                    setActive((current) =>
+                        current < 3 ? current + 1 : current
+                    );
                     form.clearErrors();
                 }
                 break;
@@ -80,12 +80,14 @@ export const StepperUser = ({ form }) => {
                     errors.hasOwnProperty("crgo_id") ||
                     errors.hasOwnProperty("id_tipo_usuario") ||
                     errors.hasOwnProperty("usu_ult_tipo_contrato") ||
-                    errors.hasOwnProperty("finaliza_contrato") ||
-                    errors.hasOwnProperty("usu_f_f_contrato")
+                    errors.hasOwnProperty("finaliza_contrato")
+                    //errors.hasOwnProperty("usu_f_f_contrato")
                 ) {
                     setActive((current) => current * 1);
                 } else {
-                    setActive((current) => current < 3 ? current + 1 : current);
+                    setActive((current) =>
+                        current < 3 ? current + 1 : current
+                    );
                     form.clearErrors();
                 }
                 break;
@@ -96,13 +98,13 @@ export const StepperUser = ({ form }) => {
                     errors.hasOwnProperty("secretaria_tic") ||
                     errors.hasOwnProperty("super_user") ||
                     errors.hasOwnProperty("interno") ||
-                    errors.hasOwnProperty("usu_estado") ||
-                    errors.hasOwnProperty("usu_alias")
-                    //errors.hasOwnProperty("usu_ing")
+                    errors.hasOwnProperty("usu_estado")
                 ) {
                     setActive((current) => current * 1);
                 } else {
-                    setActive((current) => current < 3 ? current + 1 : current);
+                    setActive((current) =>
+                        current < 3 ? current + 1 : current
+                    );
                     form.clearErrors();
                 }
                 break;
@@ -111,7 +113,6 @@ export const StepperUser = ({ form }) => {
                 break;
         }
         /* } */
-
     };
 
     const handleSubmit = (e) => {
@@ -120,15 +121,14 @@ export const StepperUser = ({ form }) => {
             //console.log(form.getTransformedValues());
             startAddUser(form.getTransformedValues());
         } */
-        //console.log(form.getTransformedValues());
-        startAddUser(form.getTransformedValues());
-        modalActionUser(0);
+        console.log(form.getTransformedValues());
+        startAddUser(form.getTransformedValues(), storageUserFields);
+        setClearActivateUser();
+        modalActionUser(false);
         form.reset();
-    }
+    };
 
-    const { nmbre_usrio } = form.values;
-
-
+    const { usu_ape_pat, usu_ape_mat, usu_nombres } = form.values;
 
     return (
         <>
@@ -164,7 +164,7 @@ export const StepperUser = ({ form }) => {
                         <Text span c="blue" inherit>
                             usuario:{" "}
                         </Text>
-                        {nmbre_usrio} ?
+                        {usu_ape_pat + " " + usu_ape_mat + " " + usu_nombres} ?
                     </Title>
                 </Stepper.Completed>
             </Stepper>
@@ -172,10 +172,7 @@ export const StepperUser = ({ form }) => {
             <Group justify="center" mt="xl">
                 {active === 3 ? (
                     <Group justify="center" mt="xl">
-                        <Button
-                            variant="default"
-                            onClick={prevStep}
-                        >
+                        <Button variant="default" onClick={prevStep}>
                             Regresar
                         </Button>
                         <Button
@@ -191,15 +188,10 @@ export const StepperUser = ({ form }) => {
                     </Group>
                 ) : (
                     <Group justify="center" mt="xl">
-                        <Button
-                            variant="default"
-                            onClick={prevStep}
-                        >
+                        <Button variant="default" onClick={prevStep}>
                             Regresar
                         </Button>
-                        <Button onClick={handleStepChange}>
-                            Siguiente
-                        </Button>
+                        <Button onClick={handleStepChange}>Siguiente</Button>
                     </Group>
                 )}
             </Group>

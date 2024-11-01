@@ -1,6 +1,6 @@
-import { Box, Fieldset, Select, SimpleGrid, Text } from "@mantine/core";
+import { Box, Fieldset, Select } from "@mantine/core";
 import { IconSearch } from "@tabler/icons-react";
-import { BtnSubmit } from "../../..";
+import { BtnSubmit, TextSection } from "../../..";
 import { useDireccionStore, useDirectorStore } from "../../../../hooks";
 import { useEffect } from "react";
 import { useForm } from "@mantine/form";
@@ -34,26 +34,32 @@ export const FilterFormDirecciones = () => {
     };
 
     return (
-        <Fieldset mt={20} legend={<Text>Filtrar dirección</Text>}>
+        <Fieldset
+            mt={20}
+            mb={20}
+            legend={
+                <TextSection tt="" fw={500} fz={16}>
+                    Filtrar dirección
+                </TextSection>
+            }
+        >
             <Box
                 component="form"
                 onSubmit={form.onSubmit((_, e) => handleSubmit(e))}
             >
-                <SimpleGrid cols={{ base: 1 }} mt={10}>
-                    <Select
-                        searchable
-                        clearable
-                        label="Dirección"
-                        placeholder="Elige la dirección"
-                        {...form.getInputProps("cdgo_dprtmnto")}
-                        data={direcciones.map((direccion) => {
-                            return {
-                                value: direccion.cdgo_dprtmnto.toString(),
-                                label: direccion.nmbre_dprtmnto,
-                            };
-                        })}
-                    />
-                </SimpleGrid>
+                <Select
+                    searchable
+                    clearable
+                    label="Dirección"
+                    placeholder="Elige la dirección"
+                    {...form.getInputProps("cdgo_dprtmnto")}
+                    data={direcciones.map((direccion) => {
+                        return {
+                            value: direccion.cdgo_dprtmnto.toString(),
+                            label: direccion.nmbre_dprtmnto,
+                        };
+                    })}
+                />
                 <BtnSubmit IconSection={IconSearch} fontSize={16}>
                     Buscar
                 </BtnSubmit>

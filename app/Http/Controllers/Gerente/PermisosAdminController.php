@@ -10,6 +10,7 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PermisosAdminController extends Controller
 {
@@ -23,16 +24,17 @@ class PermisosAdminController extends Controller
                             pp.id_tipo_motivo, ptp.tip_per_nombre as motivo,
                             pp.per_fecha_salida, pp.per_fecha_llegada,
                             pp.id_jefe_inmediato, u.nmbre_usrio as jefe_inmediato,
-                            pp.per_observaciones')
+                            pp.per_observaciones, pp.id_estado, pep.per_est_nombre as estado')
             ->join('usrios_sstma as us', 'us.cdgo_usrio', 'pp.id_usu_pide')
             ->join('dprtmntos as d', 'd.cdgo_dprtmnto', 'pp.id_direccion_pide')
             ->join('per_tipo_permiso as ptp', 'ptp.idper_tipo_permiso', 'pp.id_tipo_motivo')
             ->join('usrios_sstma as u', 'u.cdgo_usrio', 'pp.id_jefe_inmediato')
+            ->join('per_estado_permiso as pep', 'pep.idper_estado_permiso', 'pp.id_estado')
             ->direccion($request->id_direccion_pide)
             ->usuario($request->id_usu_pide)
             ->codigo($request->idper_permisos)
             ->where('pp.per_fecha_salida', 'LIKE', '%' . Carbon::now()->format('Y') . '%')
-            ->whereNotIn('pp.id_estado', [6, 8])
+            ->whereNotIn('pp.id_estado', [6])
             ->orderBy('pp.per_fecha_salida', 'DESC')
             ->get();
 
@@ -125,5 +127,11 @@ class PermisosAdminController extends Controller
         ];
         $pdf = Pdf::loadView('pdf.permisos.gerencia.permiso', $data);
         return $pdf->setPaper('a4', 'portrait')->download('permiso.pdf');
+    }
+
+    function getInfoPermisosForUser(Request $request) : JsonResponse {
+        $info_permisos = DB::select('CALL per_permisos_info_user(?)', [$request->usuario_id]);
+
+        return response()->json(['status' => MsgStatus::Success, 'info_permisos' => $info_permisos], 200);
     }
 }

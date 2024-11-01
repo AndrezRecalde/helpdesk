@@ -62,7 +62,7 @@ export const useSoporteStore = () => {
     /* GERENTE */
     const startAsignarSoporte = async (soporte, role_id) => {
         try {
-            dispatch(onLoading());
+            //dispatch(onLoading());
             const { data } = await helpdeskApi.put(
                 `/gerencia/asignar-soporte/${soporte.id_sop}`,
                 soporte
@@ -108,7 +108,7 @@ export const useSoporteStore = () => {
     /* GERENTE  */
     const startLoadSoportesAnulados = async (fecha_inicio, fecha_fin) => {
         try {
-            dispatch(onLoading());
+            dispatch(onLoading(true));
             const { data } = await helpdeskApi.post(
                 "/gerencia/soportes-anulados",
                 { fecha_inicio, fecha_fin }
@@ -161,7 +161,7 @@ export const useSoporteStore = () => {
     };
 
     /* GERENTE O TECNICO */
-    const startCreateSoporte = async (soporte, storageFields) => {
+    const startCreateSoporte = async (soporte, storageFields = {}) => {
         try {
             /* GERENCIA */
             if (soporte.id_sop) {
@@ -174,7 +174,7 @@ export const useSoporteStore = () => {
                 setTimeout(() => {
                     dispatch(onLoadMessage(undefined));
                 }, 40);
-                startSearchSoporte(storageFields);
+                if (storageFields) startSearchSoporte(storageFields);
                 return;
             }
 
@@ -187,7 +187,7 @@ export const useSoporteStore = () => {
             setTimeout(() => {
                 dispatch(onLoadMessage(undefined));
             }, 40);
-            startSearchSoporte(storageFields);
+            if (storageFields) startSearchSoporte(storageFields);
         } catch (error) {
             //console.log(error);
             ExceptionMessageError(error);
@@ -205,7 +205,7 @@ export const useSoporteStore = () => {
         id_estado,
     }) => {
         try {
-            dispatch(onLoading());
+            dispatch(onLoading(true));
             const { data } = await helpdeskApi.post(
                 "/general/buscar-soportes",
                 {
@@ -241,7 +241,7 @@ export const useSoporteStore = () => {
     /* USUARIO SOLICITANTE */
     const startSendSolicitud = async (solicitud) => {
         try {
-            dispatch(onLoading());
+            dispatch(onLoading(true));
             const { data } = await helpdeskApi.post(
                 "/usuario/enviar-solicitud",
                 solicitud
@@ -319,7 +319,7 @@ export const useSoporteStore = () => {
         cdgo_usrio
     ) => {
         try {
-            dispatch(onLoading());
+            dispatch(onLoading(true));
             const { data } = await helpdeskApi.post(
                 "/general/reporte-actividades",
                 { fecha_inicio, fecha_fin, cdgo_usrio }
@@ -402,7 +402,7 @@ export const useSoporteStore = () => {
     /* PARA USUARIOS */
     const startLoadSoportesActualesUsuarios = async (cdgo_usrio) => {
         try {
-            dispatch(onLoading());
+            dispatch(onLoading(true));
             const { data } = await helpdeskApi.post(
                 "/usuario/soportes-actuales",
                 { cdgo_usrio }
@@ -417,7 +417,7 @@ export const useSoporteStore = () => {
 
     const startLoadSoportesAnualesUsuarios = async (cdgo_usrio) => {
         try {
-            dispatch(onLoading());
+            dispatch(onLoading(true));
             const { data } = await helpdeskApi.post(
                 "/usuario/soportes-anuales",
                 { cdgo_usrio }
@@ -432,7 +432,7 @@ export const useSoporteStore = () => {
 
     const startLoadSoportesSinCalificar = async () => {
         try {
-            dispatch(onLoading());
+            dispatch(onLoading(true));
             const { data } = await helpdeskApi.get(
                 "/gerencia/soportes-sin-calificar"
             );

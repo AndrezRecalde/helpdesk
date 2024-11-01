@@ -1,7 +1,7 @@
-import { Container } from "@mantine/core";
+import { Container, Divider } from "@mantine/core";
 import { isNotEmpty, useForm } from "@mantine/form";
 import {
-    FilterFormMarcaciones,
+    FilterFormSearchDates,
     TableMarcacion,
     TitlePage,
 } from "../../components";
@@ -37,10 +37,9 @@ export const MarcacionPage = () => {
 
     return (
         <Container size="xxl">
-            <TitlePage order={1}>
-                Mis marcaciones
-            </TitlePage>
-            <FilterFormMarcaciones form={form} handleSubmit={handleSubmit} />
+            <TitlePage order={1}>Mis marcaciones</TitlePage>
+            <Divider my="md" />
+            <FilterFormSearchDates form={form} handleSubmit={handleSubmit} title="Filtrar marcaciones" />
 
             <TableMarcacion />
         </Container>

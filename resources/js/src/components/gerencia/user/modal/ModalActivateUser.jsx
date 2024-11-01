@@ -1,5 +1,5 @@
 import { Modal } from "@mantine/core";
-import { FormActiveUser, ModalActivateElement, TextSection } from "../../../../components";
+import { FormActiveUser, TextSection } from "../../../../components";
 import { useUiUser, useUsersStore } from "../../../../hooks";
 import { isNotEmpty, useForm } from "@mantine/form";
 
@@ -17,7 +17,7 @@ export const ModalActivateUser = () => {
     });
 
     const handleCloseModal = () => {
-        modalActionActiveUser(0);
+        modalActionActiveUser(false);
         setClearActivateUser();
     };
 
@@ -26,7 +26,11 @@ export const ModalActivateUser = () => {
             centered
             opened={isOpenModalActiveUser}
             onClose={handleCloseModal}
-            title={<TextSection tt="" fw={700} fz={16}>Activar/Desactivar Usuario</TextSection>}
+            title={
+                <TextSection tt="" fw={700} fz={16}>
+                    Activar - Desactivar Usuario
+                </TextSection>
+            }
             size="md"
             overlayProps={{
                 backgroundOpacity: 0.55,
@@ -34,8 +38,6 @@ export const ModalActivateUser = () => {
             }}
         >
             <FormActiveUser form={form} />
-
-            <ModalActivateElement />
         </Modal>
     );
 };

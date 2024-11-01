@@ -2,16 +2,20 @@ import { useEffect } from "react";
 import { ActionIcon, Box, Group, Select, Stack } from "@mantine/core";
 import { IconArrowsUpDown, IconRotate } from "@tabler/icons-react";
 import { BtnSubmit } from "../../..";
-import { useDirectorStore, useUiDirector, useUsersStore } from "../../../../hooks";
+import {
+    useDirectorStore,
+    useUiDirector,
+    useUsersStore,
+} from "../../../../hooks";
 
 export const FormDirector = ({ form }) => {
-    const { startLoadUsersGeneral, users } = useUsersStore();
-    const { isLoading, activateDirector, startUpdateDirector } = useDirectorStore();
+    const { users } = useUsersStore();
+    const { isLoading, activateDirector, startUpdateDirector } =
+        useDirectorStore();
     const { modalActionDirector } = useUiDirector();
 
     useEffect(() => {
         if (activateDirector !== null) {
-            startLoadUsersGeneral({ cdgo_direccion: null });
             form.setValues({
                 ...activateDirector,
                 id_jefe:
@@ -92,7 +96,11 @@ export const FormDirector = ({ form }) => {
                         };
                     })}
                 />
-                <BtnSubmit fontSize={16} IconSection={IconRotate} loading={isLoading}>
+                <BtnSubmit
+                    fontSize={16}
+                    IconSection={IconRotate}
+                    loading={isLoading}
+                >
                     Realizar Cambio
                 </BtnSubmit>
             </Stack>

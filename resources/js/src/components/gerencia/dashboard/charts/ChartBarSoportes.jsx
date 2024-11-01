@@ -9,6 +9,7 @@ import {
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
 import { Card } from "@mantine/core";
+import { TextSection } from "../../../../components";
 import { useDashGerenciaStore } from "../../../../hooks";
 
 ChartJS.register(
@@ -20,9 +21,7 @@ ChartJS.register(
     Legend
 );
 
-
 export const ChartBarSoportes = () => {
-
     const { soportesForAreas } = useDashGerenciaStore();
 
     const options = {
@@ -73,12 +72,12 @@ export const ChartBarSoportes = () => {
         },
     };
 
-    const labels = soportesForAreas?.map(soporte => soporte.area_tic);
+    const labels = soportesForAreas?.map((soporte) => soporte.area_tic);
 
     const data = {
         labels,
         datasets: [
-           /*{
+            /*{
                 label: "Total pendientes",
                 data: soportesForAreas?.map(soporte => soporte.total_pendientes),
                 backgroundColor: "rgba(239, 233, 49, 0.66)",
@@ -86,7 +85,9 @@ export const ChartBarSoportes = () => {
             }, */
             {
                 label: "Total asignados",
-                data: soportesForAreas?.map(soporte => soporte.total_asignados),
+                data: soportesForAreas?.map(
+                    (soporte) => soporte.total_asignados
+                ),
                 backgroundColor: "rgba(248, 123, 3, 0.66)",
                 borderColor: "rgba(245, 147, 55, 1)",
                 datalabels: {
@@ -103,7 +104,9 @@ export const ChartBarSoportes = () => {
             },
             {
                 label: "Sin cerrar",
-                data: soportesForAreas?.map(soporte => soporte.total_atendidos),
+                data: soportesForAreas?.map(
+                    (soporte) => soporte.total_atendidos
+                ),
                 backgroundColor: "rgba(4, 115, 253, 0.66)",
                 borderColor: "rgba(30, 166, 238, 1)",
                 datalabels: {
@@ -120,7 +123,9 @@ export const ChartBarSoportes = () => {
             },
             {
                 label: "Total finalizadas",
-                data: soportesForAreas?.map(soporte => soporte.total_finalizados),
+                data: soportesForAreas?.map(
+                    (soporte) => soporte.total_finalizados
+                ),
                 backgroundColor: "rgba(1, 250, 82, 0.66)",
                 borderColor: "rgba(47, 239, 111, 1)",
                 datalabels: {
@@ -137,7 +142,9 @@ export const ChartBarSoportes = () => {
             },
             {
                 label: "Total anuladas",
-                data: soportesForAreas?.map(soporte => soporte.total_anuladas),
+                data: soportesForAreas?.map(
+                    (soporte) => soporte.total_anuladas
+                ),
                 backgroundColor: "rgba(250, 9, 9, 0.66)",
                 borderColor: "rgba(228, 65, 65, 1)",
                 datalabels: {
@@ -157,8 +164,10 @@ export const ChartBarSoportes = () => {
 
     return (
         <Card withBorder shadow="sm" radius="md">
-            <Card.Section withBorder inheritPadding py="xs">
-                Soportes por subprocesos
+            <Card.Section withBorder inheritPadding py="md">
+                <TextSection fz={16} fw={700} color="dimmed">
+                    Soportes por subprocesos
+                </TextSection>
             </Card.Section>
             <Card.Section withBorder inheritPadding py="xs">
                 <Bar options={options} data={data} />

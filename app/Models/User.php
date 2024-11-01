@@ -28,12 +28,15 @@ class User extends Authenticatable
         'usu_ci',
         'titulo',
         'nmbre_usrio',
+        'usu_ape_pat',
+        'usu_ape_mat',
+        'usu_nombres',
         'nombre_formateado',
         'email',
         'sexo',
         'lgin',
         'actvo',
-
+        'cdgo_lrgo',
         'usu_id_empresa',
         'cdgo_direccion',
         'crgo_id',
@@ -74,6 +77,7 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
         //'paswrd' => 'string',
+        'usu_f_f_contrato' => 'date'
     ];
 
     function equipos(): BelongsToMany

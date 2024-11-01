@@ -1,4 +1,4 @@
-import { Card, Container } from "@mantine/core";
+import { Container, Divider } from "@mantine/core";
 import {
     DireccionesTable,
     FilterFormDirecciones,
@@ -11,11 +11,13 @@ import Swal from "sweetalert2";
 
 export const AdminDireccionesPage = () => {
     useTitlePage("Helpdesk | Direcciones");
-    const { clearUsers } = useUsersStore();
+    const { startLoadUsers, clearUsers } = useUsersStore();
     const { directores, clearDirectores, message, errores } =
         useDirectorStore();
 
     useEffect(() => {
+        startLoadUsers({});
+
         return () => {
             clearDirectores();
             clearUsers();
@@ -41,7 +43,7 @@ export const AdminDireccionesPage = () => {
                 title: "Opps...",
                 text: errores,
                 showConfirmButton: false,
-                timer: 1500,
+                timer: 2500,
             });
             return;
         }
@@ -49,18 +51,11 @@ export const AdminDireccionesPage = () => {
 
     return (
         <Container size="xxl">
-            <TitlePage order={2}>
-                Administrar Direcciones
-            </TitlePage>
+            <TitlePage order={2}>Administrar Direcciones</TitlePage>
+            <Divider my="md" />
             <FilterFormDirecciones />
 
-            {directores.length !== 0 ? (
-                <Card withBorder shadow="sm" radius="md" mt={20} mb={20}>
-                    <Card.Section>
-                        <DireccionesTable />
-                    </Card.Section>
-                </Card>
-            ) : null}
+            {directores.length !== 0 ? <DireccionesTable /> : null}
             <ModalDireccion />
         </Container>
     );

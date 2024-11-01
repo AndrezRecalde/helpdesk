@@ -4,6 +4,8 @@ import { AuthForm } from "./auth/AuthForm";
 /* Usuario : Perfil */
 import { CardProfile } from "./user/profile/CardProfile";
 import { ProfileForm } from "./user/profile/ProfileForm";
+import { CardInfoStatsUser } from "./user/profile/CardInfoStatsUser";
+import { TableMarcacionRelojOnline } from "./user/profile/TableMarcacionRelojOnline";
 import { UserBtnHeader } from "./user/menu/UserBtnHeader";
 
 /* Usuario: Contraseña */
@@ -103,7 +105,6 @@ import { ActividadForm } from "./actividad/form/ActividadForm";
 import { ModalActividad } from "./actividad/modal/ModalActividad";
 
 /* Marcaciones */
-import { FilterFormMarcaciones } from "./marcacion/form/FilterFormMarcaciones";
 import { TableMarcacion } from "./marcacion/table/TableMarcacion";
 
 /* Inventario: Tipos Categorias */
@@ -174,6 +175,12 @@ import { BtnDownloadDocumento } from "./inventario/equipo/form/elements/btn/BtnD
 /* Perifericos */
 import { InvTransferirPerifericoModal } from "./inventario/periferico/modal/InvTransferirPerifericoModal";
 import { InvTransferirPerifericoForm } from "./inventario/periferico/form/InvTransferirPerifericoForm";
+import { InvPerifericoTable } from "./inventario/periferico/table/InvPerifericoTable";
+import { InvPerifericoModal } from "./inventario/periferico/modal/InvPerifericoModal";
+import { InvPerifericoForm } from "./inventario/periferico/form/InvPerifericoForm";
+import { FilterFormPeriferico } from "./inventario/periferico/filter/FilterFormPeriferico";
+
+
 
 
 /* Elementos */
@@ -218,6 +225,8 @@ export {
     /* Usuario: Perfil */
     ProfileForm,
     CardProfile,
+    CardInfoStatsUser,
+    TableMarcacionRelojOnline,
     UserBtnHeader,
 
     /* Usuario: Contraseña */
@@ -310,7 +319,6 @@ export {
     ModalActividad,
 
     /* Marcaciones */
-    FilterFormMarcaciones,
     TableMarcacion,
 
     /* Inventario: Tipos de categorias */
@@ -379,6 +387,10 @@ export {
     /* Perifericos */
     InvTransferirPerifericoModal,
     InvTransferirPerifericoForm,
+    InvPerifericoTable,
+    InvPerifericoModal,
+    InvPerifericoForm,
+    FilterFormPeriferico,
 
 
     /* Elements */

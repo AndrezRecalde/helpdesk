@@ -1,6 +1,6 @@
 import { useCallback, useMemo } from "react";
 import { useMantineReactTable } from "mantine-react-table";
-import { ActivateUserBtn, TableContent } from "../../.."
+import { ActivateUserBtn, TableContent } from "../../..";
 import { useTecnicoStore, useUiTecnico } from "../../../../hooks";
 
 export const TecnicosTable = () => {
@@ -49,9 +49,22 @@ export const TecnicosTable = () => {
         data: tecnicos, //must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
         enableFacetedValues: true,
         state: { showProgressBars: isLoading },
+        mantineTableProps: {
+            withColumnBorders: true,
+            withTableBorder: true,
+            sx: {
+                "thead > tr": {
+                    backgroundColor: "inherit",
+                },
+                "thead > tr > th": {
+                    backgroundColor: "inherit",
+                },
+                "tbody > tr > td": {
+                    backgroundColor: "inherit",
+                },
+            },
+        },
     });
 
-  return (
-    <TableContent table={table} />
-  )
-}
+    return <TableContent table={table} />;
+};

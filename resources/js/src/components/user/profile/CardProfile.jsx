@@ -93,7 +93,7 @@ export const CardProfile = ({ usuario, handleAction }) => {
     ));
 
     return (
-        <Card withBorder shadow="sm" radius="md" p="lg" mt={20} mb={20}>
+        <Card withBorder shadow="sm" radius="md" p="lg" mt={20} mb={20} sx={{ position: "static", height: "50" }}>
             <Card.Section withBorder inheritPadding py="xs">
                 <Group justify="space-between">
                     <TextSection fw={700} tt="" fz={16} color="dimmed">

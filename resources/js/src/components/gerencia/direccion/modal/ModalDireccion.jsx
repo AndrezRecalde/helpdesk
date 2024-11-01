@@ -19,6 +19,7 @@ export const ModalDireccion = () => {
     });
 
     const handleCloseModal = () => {
+        form.reset();
         modalActionDirector(0);
         setClearActivateDirectores();
     };

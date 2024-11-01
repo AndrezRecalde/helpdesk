@@ -6,34 +6,27 @@ export const uiUserSlice = createSlice({
         isOpenModalAddUser: false,
         isOpenModalResetPwd: false,
         isOpenModalActiveUser: false,
+        isModalEditUser: false,
     },
     reducers: {
-        onOpenModalAddUser: (state) => {
-            state.isOpenModalAddUser = true;
+        onOpenModalAddUser: (state, { payload }) => {
+            state.isOpenModalAddUser = payload;
         },
-        onCloseModalAddUser: (state) => {
-            state.isOpenModalAddUser = false;
+        onOpenModalResetPwd: (state, { payload }) => {
+            state.isOpenModalResetPwd = payload;
         },
-        onOpenModalResetPwd: (state) => {
-            state.isOpenModalResetPwd = true;
+        onOpenModalActiveUser: (state, { payload }) => {
+            state.isOpenModalActiveUser = payload;
         },
-        onCloseModalResetPwd: (state) => {
-            state.isOpenModalResetPwd = false;
-        },
-        onOpenModalActiveUser: (state) => {
-            state.isOpenModalActiveUser = true;
-        },
-        onCloseModalActiveUser: (state) => {
-            state.isOpenModalActiveUser = false;
+        onOpenModalEditUser: (state, { payload }) => {
+            state.isModalEditUser = payload;
         }
     },
 });
 
 export const {
     onOpenModalAddUser,
-    onCloseModalAddUser,
     onOpenModalResetPwd,
-    onCloseModalResetPwd,
     onOpenModalActiveUser,
-    onCloseModalActiveUser
+    onOpenModalEditUser
 } = uiUserSlice.actions;

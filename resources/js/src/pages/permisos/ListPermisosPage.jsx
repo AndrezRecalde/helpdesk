@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Container, Group } from "@mantine/core";
+import { Container, Divider, Group } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import {
     BtnSection,
@@ -80,7 +80,7 @@ export const ListPermisosPage = () => {
     };
 
     return (
-        <Container size="xl">
+        <Container size="xxl">
             <Group justify="space-between">
                 <TitlePage order={2}>
                     Lista de permisos - {new Date().getFullYear()}
@@ -92,6 +92,7 @@ export const ListPermisosPage = () => {
                     Crear permiso
                 </BtnSection>
             </Group>
+            <Divider my="md" />
             <FilterPermiso
                 form={form}
                 handleSubmit={handleSubmit}

@@ -1,6 +1,7 @@
 import { Card } from "@mantine/core";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Pie } from "react-chartjs-2";
+import { TextSection } from "../../../../components";
 import { useDashGerenciaStore } from "../../../../hooks";
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 
@@ -63,8 +64,8 @@ export const ChartPieSoportes = () => {
 
     return (
         <Card withBorder shadow="sm" radius="md" mb="sm">
-            <Card.Section withBorder inheritPadding py="xs">
-                Estados de los soportes - {new Date().getFullYear()}
+            <Card.Section withBorder inheritPadding py="md">
+                <TextSection fz={16} fw={700} color="dimmed">Estados de los soportes - {new Date().getFullYear()}</TextSection>
             </Card.Section>
             <Card.Section withBorder inheritPadding py="xs">
                 <Pie

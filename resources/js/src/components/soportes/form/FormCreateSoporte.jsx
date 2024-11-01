@@ -2,8 +2,8 @@ import { useEffect } from "react";
 import {
     Box,
     Checkbox,
-    Grid,
     Select,
+    SimpleGrid,
     Stack,
     TextInput,
     Textarea,
@@ -35,11 +35,15 @@ export const FormCreateSoporte = ({ form }) => {
     const { equipos } = useEquipoStore();
     const { startCreateSoporte, activateSoporte } = useSoporteStore();
     const { modalActionCreateSoporte } = useUiSoporte();
-    const { storageFields } = useStorageField();
-
+    const { storageFields = {} } = useStorageField();
 
     useEffect(() => {
-        if (id_tipo_soporte == 1 || id_tipo_soporte == 4 || id_tipo_soporte == 5 || id_tipo_soporte == 6) {
+        if (
+            id_tipo_soporte == 1 ||
+            id_tipo_soporte == 4 ||
+            id_tipo_soporte == 5 ||
+            id_tipo_soporte == 6
+        ) {
             //console.log(id_tipo_soporte)
             form.setFieldValue("activo_informatico", true);
             form.setFieldValue(
@@ -73,14 +77,9 @@ export const FormCreateSoporte = ({ form }) => {
 
     useEffect(() => {
         if (!activo_informatico) {
-            form.setFieldValue(
-                "id_equipo",
-                null
-            );
+            form.setFieldValue("id_equipo", null);
         }
-
     }, [activo_informatico]);
-
 
     useEffect(() => {
         if (id_tipo_solicitud == 7) {
@@ -124,8 +123,13 @@ export const FormCreateSoporte = ({ form }) => {
             component="form"
             onSubmit={form.onSubmit((_, e) => handleSubmit(e))}
         >
-            <Grid>
-                <Grid.Col span={6}>
+            <Stack
+                bg="var(--mantine-color-body)"
+                align="stretch"
+                justify="center"
+                gap="xs"
+            >
+                <SimpleGrid cols={{ base: 1, sm: 1, md: 2, lg: 2 }}>
                     <Select
                         withAsterisk
                         disabled
@@ -139,17 +143,13 @@ export const FormCreateSoporte = ({ form }) => {
                             };
                         })}
                     />
-                </Grid.Col>
-                <Grid.Col span={6}>
                     <DateTimePicker
                         withAsterisk
-                        valueFormat="YYYY-MM-DD hh:mm"
+                        valueFormat="YYYY-MM-DD HH:mm"
                         label="Fecha de solicitud"
                         placeholder="Seleccione fecha de solicitud"
                         {...form.getInputProps("fecha_ini")}
                     />
-                </Grid.Col>
-                <Grid.Col span={6}>
                     <Select
                         withAsterisk
                         label="Tipo de solicitud"
@@ -162,64 +162,57 @@ export const FormCreateSoporte = ({ form }) => {
                             };
                         })}
                     />
-                </Grid.Col>
-                <Grid.Col span={6}>
                     <TextInput
                         label="Escrito: "
                         placeholder="Digite el escrito del documento (Opcional)"
                         {...form.getInputProps("numero_escrito")}
                     />
-                </Grid.Col>
+                </SimpleGrid>
+                <Select
+                    withAsterisk
+                    searchable
+                    clearable
+                    label="Técnico"
+                    placeholder="Seleccione técnico"
+                    {...form.getInputProps("id_usu_tecnico_asig")}
+                    disabled={usuario?.role_id == 2 ? true : false}
+                    data={tecnicos.map((tecnico) => {
+                        return {
+                            value: tecnico.cdgo_usrio.toString(),
+                            label: tecnico.nmbre_usrio,
+                        };
+                    })}
+                />
 
-                <Grid.Col span={12}>
-                    <Select
-                        withAsterisk
-                        searchable
-                        clearable
-                        label="Técnico"
-                        placeholder="Seleccione técnico"
-                        {...form.getInputProps("id_usu_tecnico_asig")}
-                        disabled={usuario?.role_id == 2 ? true : false}
-                        data={tecnicos.map((tecnico) => {
-                            return {
-                                value: tecnico.cdgo_usrio.toString(),
-                                label: tecnico.nmbre_usrio,
-                            };
-                        })}
-                    />
-                </Grid.Col>
-                <Grid.Col span={{ base: 12, sm: 12, md: 12, lg: 12 }}>
-                    <Select
-                        withAsterisk
-                        searchable
-                        clearable
-                        label="Usuario solicitante"
-                        placeholder="Seleccione el solicitante"
-                        {...form.getInputProps("id_usu_recibe")}
-                        data={users.map((user) => {
-                            return {
-                                value: user.cdgo_usrio.toString(),
-                                label: user.nmbre_usrio,
-                            };
-                        })}
-                    />
-                </Grid.Col>
-                <Grid.Col span={{ base: 12, sm: 12, md: 12, lg: 12 }}>
-                    <Select
-                        withAsterisk
-                        disabled
-                        label="Dirección"
-                        placeholder="Seleccione la dirección/gestión"
-                        {...form.getInputProps("id_direccion")}
-                        data={direcciones.map((direccion) => {
-                            return {
-                                value: direccion.cdgo_dprtmnto.toString(),
-                                label: direccion.nmbre_dprtmnto,
-                            };
-                        })}
-                    />
-                </Grid.Col>
-                <Grid.Col span={{ base: 12, md: 6, lg: 6 }}>
+                <Select
+                    withAsterisk
+                    searchable
+                    clearable
+                    label="Usuario solicitante"
+                    placeholder="Seleccione el solicitante"
+                    {...form.getInputProps("id_usu_recibe")}
+                    data={users.map((user) => {
+                        return {
+                            value: user.cdgo_usrio.toString(),
+                            label: user.nmbre_usrio,
+                        };
+                    })}
+                />
+
+                <Select
+                    withAsterisk
+                    disabled
+                    label="Dirección"
+                    placeholder="Seleccione la dirección/gestión"
+                    {...form.getInputProps("id_direccion")}
+                    data={direcciones.map((direccion) => {
+                        return {
+                            value: direccion.cdgo_dprtmnto.toString(),
+                            label: direccion.nmbre_dprtmnto,
+                        };
+                    })}
+                />
+                <SimpleGrid cols={{ base: 1, sm: 1, md: 2, lg: 2 }}>
                     <Select
                         withAsterisk
                         label="Área del soporte"
@@ -234,8 +227,7 @@ export const FormCreateSoporte = ({ form }) => {
                             { value: "5", label: "SOPORTE TÉCNICO" },
                         ]}
                     />
-                </Grid.Col>
-                <Grid.Col span={{ base: 12, md: 6, lg: 6 }}>
+
                     <Select
                         withAsterisk
                         label="Tipo Soporte"
@@ -250,21 +242,17 @@ export const FormCreateSoporte = ({ form }) => {
                             { value: "6", label: "MANTENIMIENTO CORRECTIVO" },
                         ]}
                     />
-                </Grid.Col>
-                <Grid.Col span={{ base: 12, md: 12, lg: 12 }}>
-                    <Textarea
-                        withAsterisk
-                        //disabled={activateSoporte !== null ? true : false}
-                        label="Incidente"
-                        description="Digite la incidencia del usuario"
-                        autosize
-                        minRows={3}
-                        maxRows={3}
-                        {...form.getInputProps("incidente")}
-                    />
-                </Grid.Col>
-            </Grid>
-            <Stack mt={20}>
+                </SimpleGrid>
+                <Textarea
+                    withAsterisk
+                    //disabled={activateSoporte !== null ? true : false}
+                    label="Incidente"
+                    description="Digite la incidencia del usuario"
+                    autosize
+                    minRows={3}
+                    maxRows={3}
+                    {...form.getInputProps("incidente")}
+                />
                 <Textarea
                     withAsterisk
                     label="Solución"
@@ -284,19 +272,6 @@ export const FormCreateSoporte = ({ form }) => {
                         type: "checkbox",
                     })}
                 />
-                {/* <MultiSelect
-                        searchable
-                        label="Diagnostico"
-                        placeholder="Seleccione el/los diagnosticos"
-                        maxValues={4}
-                        //{...form.getInputProps("")}
-                        data={diagnosticos.map((diagnostico) => {
-                            return {
-                                value: diagnostico.id_diagnostico.toString(),
-                                label: diagnostico.diagnostico,
-                            };
-                        })}
-                    /> */}
                 {activo_informatico ? (
                     <Select
                         searchable
@@ -321,16 +296,15 @@ export const FormCreateSoporte = ({ form }) => {
                 ) : null}
                 <DateTimePicker
                     withAsterisk
-                    valueFormat="YYYY-MM-DD hh:mm"
+                    valueFormat="YYYY-MM-DD HH:mm"
                     label="Fecha de finalización"
                     placeholder="Seleccione fecha de finalización"
                     {...form.getInputProps("fecha_fin")}
                 />
+                <BtnSubmit fontSize={16} IconSection={IconBrandTelegram}>
+                    Crear el soporte
+                </BtnSubmit>
             </Stack>
-
-            <BtnSubmit fontSize={16} IconSection={IconBrandTelegram}>
-                Crear el soporte
-            </BtnSubmit>
         </Box>
     );
 };

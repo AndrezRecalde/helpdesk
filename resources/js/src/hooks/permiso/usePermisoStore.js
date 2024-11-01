@@ -130,6 +130,17 @@ export const usePermisoStore = () => {
         }
     }
 
+    const startLoadInfoPermisos = async(usuario_id) => {
+        try {
+            dispatch(onLoading(true));
+            const { data } = await helpdeskApi.post('/general/info-permisos', { usuario_id });
+            const { info_permisos } = data;
+            dispatch(onSetActivatePermiso(info_permisos));
+        } catch (error) {
+            ExceptionMessageError(error);
+        }
+    }
+
     const setActivatePermiso = (permiso) => {
         dispatch(onSetActivatePermiso(permiso));
     };
@@ -150,6 +161,7 @@ export const usePermisoStore = () => {
         startExportPermiso,
         startAnularPermiso,
         startLoadPermisos,
+        startLoadInfoPermisos,
         setActivatePermiso,
         clearPermisos
     };

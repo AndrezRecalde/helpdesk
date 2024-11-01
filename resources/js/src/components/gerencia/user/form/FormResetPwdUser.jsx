@@ -12,7 +12,7 @@ import {
 import {
     IconAlertCircle,
     IconCheck,
-    IconSend,
+    IconRestore,
     IconUserScan,
 } from "@tabler/icons-react";
 import { useUiUser, useUsersStore } from "../../../../hooks";
@@ -44,7 +44,7 @@ export const FormResetPwdUser = ({ form }) => {
     const handleSubmit = () => {
         startUpdatePassword(form.values);
         //console.log(form.values);
-        modalActionResetPwd(0);
+        modalActionResetPwd(false);
     };
 
     return (
@@ -111,7 +111,7 @@ export const FormResetPwdUser = ({ form }) => {
                 <BtnSubmit
                     disabled={btnDisabled}
                     fontSize={16}
-                    IconSection={IconSend}
+                    IconSection={IconRestore}
                 >
                     Resetear contraseña
                 </BtnSubmit>

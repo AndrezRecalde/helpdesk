@@ -49,7 +49,7 @@ export const UsersTable = () => {
         (selected) => {
             //console.log(selected)
             setActivateUser(selected);
-            modalActionUser(1);
+            modalActionUser(true, true);
         },
         [users]
     );
@@ -57,7 +57,7 @@ export const UsersTable = () => {
     const handleActive = useCallback(
         (selected) => {
             setActivateUser(selected);
-            modalActionActiveUser(1);
+            modalActionActiveUser(true);
         },
         [users]
     );
@@ -65,7 +65,7 @@ export const UsersTable = () => {
     const handleResetPassword = useCallback(
         (selected) => {
             setActivateUser(selected);
-            modalActionResetPwd(1);
+            modalActionResetPwd(true);
         },
         [users]
     );
@@ -83,6 +83,21 @@ export const UsersTable = () => {
                 handleResetPassword={handleResetPassword}
             />
         ),
+        mantineTableProps: {
+            withColumnBorders: true,
+            withTableBorder: true,
+            sx: {
+                'thead > tr': {
+                  backgroundColor: 'inherit',
+                },
+                'thead > tr > th': {
+                  backgroundColor: 'inherit',
+                },
+                'tbody > tr > td': {
+                  backgroundColor: 'inherit',
+                },
+            }
+        },
     });
 
     return <TableContent table={table} />;

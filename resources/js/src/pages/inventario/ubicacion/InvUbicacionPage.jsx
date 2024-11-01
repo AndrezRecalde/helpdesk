@@ -7,7 +7,7 @@ import { Divider } from "@mantine/core";
 export const InvUbicacionPage = ({ tabValue }) => {
     const {
         startLoadInvUbicaciones,
-        startClearInvUbicaciones,
+        //startClearInvUbicaciones,
         message,
         errores,
     } = useInvUbicacionStore();

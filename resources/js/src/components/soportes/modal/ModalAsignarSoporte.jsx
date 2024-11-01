@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 import { Modal } from "@mantine/core";
-import { FormAsignarSoporte } from "../../../components";
+import { FormAsignarSoporte, TextSection } from "../../../components";
 import { useSoporteStore, useTecnicoStore, useUiSoporte } from "../../../hooks";
 import { isNotEmpty, useForm } from "@mantine/form";
-import dayjs from "dayjs";
+//import dayjs from "dayjs";
 
 export const ModalAsignarSoporte = () => {
     const { startLoadTecnicos, clearTecnicos } = useTecnicoStore();
@@ -54,7 +54,7 @@ export const ModalAsignarSoporte = () => {
         <Modal
             opened={isOpenModalAsignarSoporte}
             onClose={handleCloseModal}
-            title="Asignar soporte"
+            title={<TextSection tt="" fw={500} fz={16}>Asignar soporte</TextSection>}
             size="xl"
             overlayProps={{
                 backgroundOpacity: 0.55,

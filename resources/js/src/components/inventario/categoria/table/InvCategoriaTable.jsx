@@ -6,9 +6,10 @@ import { useInvCategoriaStore, useInvUiCategoria } from "../../../../hooks";
 import { IconCopyPlus } from "@tabler/icons-react";
 
 export const InvCategoriaTable = () => {
-
-    const { isLoading, categorias, setActivateInvCategoria } = useInvCategoriaStore();
-    const { modalActionCategoria, modalActionStockCategoria } = useInvUiCategoria();
+    const { isLoading, categorias, setActivateInvCategoria } =
+        useInvCategoriaStore();
+    const { modalActionCategoria, modalActionStockCategoria } =
+        useInvUiCategoria();
 
     const columns = useMemo(
         () => [
@@ -28,7 +29,7 @@ export const InvCategoriaTable = () => {
                         onClick={() => handleStock(cell.row.original)}
                         label={cell.getValue()}
                     />
-                )
+                ),
             },
         ],
         [categorias]
@@ -47,11 +48,14 @@ export const InvCategoriaTable = () => {
         modalActionCategoria(true);
     }, [categorias]);
 
-    const handleEditar = useCallback((selected) => {
-        console.log("editar");
-        setActivateInvCategoria(selected);
-        modalActionCategoria(true);
-    }, [categorias]);
+    const handleEditar = useCallback(
+        (selected) => {
+            console.log("editar");
+            setActivateInvCategoria(selected);
+            modalActionCategoria(true);
+        },
+        [categorias]
+    );
 
     const table = useMantineReactTable({
         columns,
@@ -73,6 +77,21 @@ export const InvCategoriaTable = () => {
                 Agregar
             </BtnSection>
         ),
+        mantineTableProps: {
+            withColumnBorders: true,
+            withTableBorder: true,
+            sx: {
+                "thead > tr": {
+                    backgroundColor: "inherit",
+                },
+                "thead > tr > th": {
+                    backgroundColor: "inherit",
+                },
+                "tbody > tr > td": {
+                    backgroundColor: "inherit",
+                },
+            },
+        },
     });
 
     return <TableContent table={table} />;

@@ -1,5 +1,8 @@
 import { useCallback, useMemo } from "react";
-import { useInvTipocategoriaStore, useInvUiTipocategoria } from "../../../../hooks";
+import {
+    useInvTipocategoriaStore,
+    useInvUiTipocategoria,
+} from "../../../../hooks";
 import { BtnSection, MenuTable_E, TableContent } from "../../../../components";
 import { useMantineReactTable } from "mantine-react-table";
 import { IconCopyPlus } from "@tabler/icons-react";
@@ -53,6 +56,21 @@ export const InvTipocategoriaTable = () => {
                 Agregar
             </BtnSection>
         ),
+        mantineTableProps: {
+            withColumnBorders: true,
+            withTableBorder: true,
+            sx: {
+                "thead > tr": {
+                    backgroundColor: "inherit",
+                },
+                "thead > tr > th": {
+                    backgroundColor: "inherit",
+                },
+                "tbody > tr > td": {
+                    backgroundColor: "inherit",
+                },
+            },
+        },
     });
 
     return <TableContent table={table} />;

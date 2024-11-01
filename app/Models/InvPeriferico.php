@@ -51,10 +51,10 @@ class InvPeriferico extends Model
     return $this->belongsTo(InvCategoria::class, 'categoria_id');
 }
 
-    function scopeByEquipoId(Builder $query, $equipo_id)
+    function scopeByCodigoEquipo(Builder $query, $codigo_equipo)
     {
-        if ($equipo_id) {
-            return $query->where('invper.equipo_id', $equipo_id);
+        if ($codigo_equipo) {
+            return $query->where('inve.codigo_nuevo', $codigo_equipo);
         }
     }
 

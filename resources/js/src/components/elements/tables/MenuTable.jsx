@@ -3,6 +3,7 @@ import {
     IconEditCircle,
     IconEyeCheck,
     IconPrinter,
+    IconRestore,
     IconSortAscending,
     IconTrash,
     IconUserShare,
@@ -23,7 +24,7 @@ export const MenuUsersTable = ({ row, handleEdit, handleResetPassword }) => {
             </Menu.Item>
             <Menu.Item
                 leftSection={
-                    <IconTrash style={{ width: rem(15), height: rem(15) }} />
+                    <IconRestore style={{ width: rem(15), height: rem(15) }} />
                 }
                 onClick={() => handleResetPassword(row.original)}
             >

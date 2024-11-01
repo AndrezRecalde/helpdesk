@@ -1,7 +1,9 @@
 import { useDispatch, useSelector } from "react-redux";
 import {
     onClearInvPerifericos,
+    onExport,
     onLoadErrores,
+    onLoading,
     onLoadInvPerifericos,
     onLoadMessage,
     onSetActivateInvPeriferico,
@@ -10,8 +12,14 @@ import { useErrorException } from "../../../hooks";
 import helpdeskApi from "../../../api/helpdeskApi";
 
 export const useInvPerifericoStore = () => {
-    const { isLoading, invPerifericos, activatePeriferico, message, errores } =
-        useSelector((state) => state.invPeriferico);
+    const {
+        isLoading,
+        isExport,
+        invPerifericos,
+        activatePeriferico,
+        message,
+        errores,
+    } = useSelector((state) => state.invPeriferico);
 
     const { ExceptionMessageError } = useErrorException(onLoadErrores);
 
@@ -20,15 +28,16 @@ export const useInvPerifericoStore = () => {
     const startLoadInvPerifericos = async ({
         numero_serie,
         estado_id,
-        equipo_id,
+        codigo_equipo,
     }) => {
         try {
+            dispatch(onLoading(true));
             const { data } = await helpdeskApi.post(
                 "/gerencia/inventario/perifericos",
                 {
                     numero_serie,
                     estado_id,
-                    equipo_id,
+                    codigo_equipo,
                 }
             );
             const { perifericos } = data;
@@ -39,16 +48,37 @@ export const useInvPerifericoStore = () => {
         }
     };
 
-    const startUpdateInvPeriferico = async (periferico) => {
+    const startUpdateInvPeriferico = async (periferico, storageFields) => {
         try {
             const { data } = await helpdeskApi.put(
-                `/inventario/transferir/periferico/${periferico.id}`,
+                `/gerencia/inventario/update/periferico/${periferico.id}`,
                 periferico
             );
+            startLoadInvPerifericos(storageFields);
             dispatch(onLoadMessage(data));
             setTimeout(() => {
                 dispatch(onLoadMessage(undefined));
             }, 40);
+        } catch (error) {
+            console.log(error);
+            ExceptionMessageError(error);
+        }
+    };
+
+    const startExportComponentes = async (componentes) => {
+        try {
+            dispatch(onExport(true));
+            const response = await helpdeskApi.post(
+                "/gerencia/inventario/export/perifericos",
+                { componentes },
+                { responseType: "blob" }
+            );
+            const pdfBlob = new Blob([response.data], {
+                type: "application/pdf",
+            });
+            const url = window.open(URL.createObjectURL(pdfBlob));
+            window.URL.revokeObjectURL(url);
+            dispatch(onExport(false));
         } catch (error) {
             console.log(error);
             ExceptionMessageError(error);
@@ -65,6 +95,7 @@ export const useInvPerifericoStore = () => {
 
     return {
         isLoading,
+        isExport,
         invPerifericos,
         activatePeriferico,
         message,
@@ -74,5 +105,6 @@ export const useInvPerifericoStore = () => {
         startUpdateInvPeriferico,
         setActivateInvPeriferico,
         startClearInvPerifericos,
+        startExportComponentes,
     };
 };

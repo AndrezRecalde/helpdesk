@@ -1,11 +1,5 @@
 import { useEffect } from "react";
-import {
-    Box,
-    Divider,
-    Flex,
-    Select,
-    Stack,
-} from "@mantine/core";
+import { Box, Flex, Select, Stack } from "@mantine/core";
 import { IconChecks, IconUserScan } from "@tabler/icons-react";
 import { useUiUser, useUsersStore } from "../../../../hooks";
 import { BtnSubmit, TextSection } from "../../../../components";
@@ -28,7 +22,7 @@ export const FormActiveUser = ({ form }) => {
         e.preventDefault();
         //console.log(form.values);
         startUpdateActivoUser(form.values);
-        modalActionActiveUser(0);
+        modalActionActiveUser(false);
     };
 
     return (
@@ -46,7 +40,9 @@ export const FormActiveUser = ({ form }) => {
                     wrap="wrap"
                 >
                     <IconUserScan size={50} stroke={1.2} />
-                    <TextSection tt="" fz={16}>{activateUser?.nmbre_usrio}</TextSection>
+                    <TextSection tt="" fz={16}>
+                        {activateUser?.nmbre_usrio}
+                    </TextSection>
                 </Flex>
                 <Select
                     required
@@ -56,11 +52,9 @@ export const FormActiveUser = ({ form }) => {
                     ]}
                     placeholder="¿Desea activar el usuario?"
                     label="Activar"
-                    radius="md"
                     withAsterisk
                     {...form.getInputProps("actvo")}
                 />
-                <Divider />
                 <BtnSubmit IconSection={IconChecks} fontSize={16}>
                     Guardar
                 </BtnSubmit>

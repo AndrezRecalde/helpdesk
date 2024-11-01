@@ -3,9 +3,9 @@ import { useMantineReactTable } from "mantine-react-table";
 import { BtnSection, MenuTable_E, TableContent } from "../../../../components";
 import { useInvEstadoStore, useInvUiEstado } from "../../../../hooks";
 import { IconCopyPlus } from "@tabler/icons-react";
+import { ColorSwatch } from "@mantine/core";
 
 export const InvEstadoTable = () => {
-
     const { isLoading, invEstados, setActivateInvEstado } = useInvEstadoStore();
     const { modalActionEstado } = useInvUiEstado();
 
@@ -18,6 +18,9 @@ export const InvEstadoTable = () => {
             {
                 header: "Color",
                 accessorKey: "color",
+                Cell: ({ cell }) => (
+                    <ColorSwatch color={cell.row.original.color} />
+                )
             },
         ],
         [invEstados]
@@ -57,6 +60,21 @@ export const InvEstadoTable = () => {
                 Agregar
             </BtnSection>
         ),
+        mantineTableProps: {
+            withColumnBorders: true,
+            withTableBorder: true,
+            sx: {
+                "thead > tr": {
+                    backgroundColor: "inherit",
+                },
+                "thead > tr > th": {
+                    backgroundColor: "inherit",
+                },
+                "tbody > tr > td": {
+                    backgroundColor: "inherit",
+                },
+            },
+        },
     });
 
     return <TableContent table={table} />;

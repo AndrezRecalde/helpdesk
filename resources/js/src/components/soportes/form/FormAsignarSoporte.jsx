@@ -1,8 +1,15 @@
 import { useEffect } from "react";
-import { Box, Divider, Grid, Select, Text } from "@mantine/core";
+import {
+    Box,
+    Divider,
+    Select,
+    SimpleGrid,
+    Stack,
+    Text,
+} from "@mantine/core";
 import { useSoporteStore, useTecnicoStore, useUiSoporte } from "../../../hooks";
 import { BtnSubmit } from "../../../components";
-import { IconSend } from "@tabler/icons-react";
+import { IconBrandTelegram } from "@tabler/icons-react";
 
 export const FormAsignarSoporte = ({ form }) => {
     const usuario = JSON.parse(localStorage.getItem("service_user"));
@@ -41,27 +48,28 @@ export const FormAsignarSoporte = ({ form }) => {
             component="form"
             onSubmit={form.onSubmit((_, e) => handleSubmit(e))}
         >
-            <Grid>
-                <Grid.Col span={6}>
-                    <Text fz="md" fw={500}>
-                        {activateSoporte?.usuario_recibe}
-                    </Text>
-                    <Text fz="xs" tt="uppercase" fw={700} c="dimmed">
-                        Usuario Solicitante
-                    </Text>
-                </Grid.Col>
-                <Grid.Col span={6}>
-                    <Text fz="md" fw={500}>
-                        {activateSoporte?.incidente}
-                    </Text>
-                    <Text fz="xs" tt="uppercase" fw={700} c="dimmed">
-                        Incidente
-                    </Text>
-                </Grid.Col>
-                <Grid.Col span={12}>
-                    <Divider size="md" my="md" label="Asignar Técnico" />
-                </Grid.Col>
-                <Grid.Col span={{ base: 12, md: 6, lg: 6 }}>
+            <Stack>
+                <Divider size="md" label="Incidencia Soporte" />
+                <SimpleGrid cols={{ base: 1, sm: 1, md: 2, lg: 2 }}>
+                    <div>
+                        <Text fz="md" fw={500}>
+                            {activateSoporte?.usuario_recibe}
+                        </Text>
+                        <Text fz="xs" tt="uppercase" fw={700} c="dimmed">
+                            Usuario Solicitante
+                        </Text>
+                    </div>
+                    <div>
+                        <Text fz="md" fw={500}>
+                            {activateSoporte?.incidente}
+                        </Text>
+                        <Text fz="xs" tt="uppercase" fw={700} c="dimmed">
+                            Incidente
+                        </Text>
+                    </div>
+                </SimpleGrid>
+                <Divider size="md" my="md" label="Asignar Técnico" />
+                <SimpleGrid cols={{ base: 1, sm: 1, md: 2, lg: 2 }}>
                     <Select
                         label="Área del soporte"
                         placeholder="Seleccione el área"
@@ -75,8 +83,7 @@ export const FormAsignarSoporte = ({ form }) => {
                             { value: "5", label: "SOPORTE TÉCNICO" },
                         ]}
                     />
-                </Grid.Col>
-                <Grid.Col span={{ base: 12, md: 6, lg: 6 }}>
+
                     <Select
                         label="Tipo Soporte"
                         placeholder="Seleccione Tipo Soporte"
@@ -93,30 +100,28 @@ export const FormAsignarSoporte = ({ form }) => {
                             { value: "6", label: "MANTENIMIENTO CORRECTIVO" },
                         ]}
                     />
-                </Grid.Col>
-                <Grid.Col span={{ base: 12, md: 12, lg: 12 }}>
-                    <Select
-                        searchable
-                        label="Seleccione Técnico"
-                        placeholder="Seleccione el técnico"
-                        {...form.getInputProps("id_usu_tecnico_asig")}
-                        data={tecnicos.map((tecnico) => {
-                            return {
-                                value: tecnico.cdgo_usrio.toString(),
-                                label: tecnico.nmbre_usrio,
-                            };
-                        })}
-                    />
-                </Grid.Col>
-            </Grid>
-            <BtnSubmit
-                fontSize={16}
-                IconSection={IconSend}
-                loading={isLoading}
-                disabled={isLoading}
-            >
-                Asignar Técnico
-            </BtnSubmit>
+                </SimpleGrid>
+                <Select
+                    searchable
+                    label="Seleccione Técnico"
+                    placeholder="Seleccione el técnico"
+                    {...form.getInputProps("id_usu_tecnico_asig")}
+                    data={tecnicos.map((tecnico) => {
+                        return {
+                            value: tecnico.cdgo_usrio.toString(),
+                            label: tecnico.nmbre_usrio,
+                        };
+                    })}
+                />
+                <BtnSubmit
+                    fontSize={16}
+                    IconSection={IconBrandTelegram}
+                    loading={isLoading}
+                    disabled={isLoading}
+                >
+                    Asignar Técnico
+                </BtnSubmit>
+            </Stack>
         </Box>
     );
 };

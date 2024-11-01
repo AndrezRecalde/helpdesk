@@ -171,12 +171,14 @@ Route::group(['prefix' => 'gerencia', 'middleware' => ['auth:sanctum']], functio
     Route::post('/equipo/{id}/documento/guardar', [InvEquipoController::class, 'guardarDocumento']);
     Route::delete('/equipo/documento/{id}/eliminar', [InvEquipoController::class, 'eliminarDocumento']);
     Route::get('/equipo/descargar-documento/{id}', [InvEquipoController::class, 'descargarDocumento']);
+    Route::post('/inventario/export/equipos', [InvEquipoController::class, 'exportPDFEquipos']);
 
 
     /* PERIFERICOS */
     Route::post('/inventario/perifericos', [InvPerifericoController::class, 'getInvPerifericos']);
     Route::put('/inventario/transferir/periferico/{id}', [InvPerifericoController::class, 'transferPeriferico']);
     Route::put('/inventario/update/periferico/{id}', [InvPerifericoController::class, 'update']);
+    Route::post('/inventario/export/perifericos', [InvPerifericoController::class, 'exportPDFPerifericos']);
 
 
 });
@@ -224,6 +226,8 @@ Route::group(['prefix' => 'general', 'middleware' => ['auth:sanctum']], function
     Route::post('/permisos', [PermisosAdminController::class, 'getPermisosAdmin']);
     Route::put('/anular-permiso/{idper_permisos}', [PermisosAdminController::class, 'anularPermisos']);
     Route::post('/export-permiso-pdf', [PermisosAdminController::class, 'exportCardPDFPermiso']);
+    Route::post('/info-permisos', [PermisosAdminController::class, 'getInfoPermisosForUser']);
+
 });
 
 
@@ -238,7 +242,7 @@ Route::group(['prefix' => 'usuario', 'middleware' => ['auth:sanctum']], function
     /* ACTIVIDADES */
     Route::post('/listar-actividades', [ActividadController::class, 'getActivForUserForDates']);
     Route::post('/create/actividad', [ActividadController::class, 'store']);
-    Route::put('/update/actividad/{id}', [ActividadController::class, 'update']);
+    Route::post('/update/actividad/{id}', [ActividadController::class, 'update']);
     Route::post('/export/pdf/actividades', [ActividadController::class, 'exportPDFActividadesForUser']);
 
     /* SOPORTES */

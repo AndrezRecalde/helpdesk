@@ -50,9 +50,12 @@ export const useUsersStore = () => {
     const startLoadUsersExtrict = async (cdgo_direccion) => {
         try {
             dispatch(onLoading());
-            const { data } = await helpdeskApi.post("/general/usuarios-extrict", {
-                cdgo_direccion,
-            });
+            const { data } = await helpdeskApi.post(
+                "/general/usuarios-extrict",
+                {
+                    cdgo_direccion,
+                }
+            );
             const { usuarios } = data;
             dispatch(onLoadUsers(usuarios));
         } catch (error) {
@@ -62,7 +65,11 @@ export const useUsersStore = () => {
     };
 
     /* GERENCIA */
-    const startLoadUsers = async ({ cdgo_direccion, nmbre_usrio, lgin }) => {
+    const startLoadUsers = async ({
+        cdgo_direccion = null,
+        nmbre_usrio = "",
+        lgin = "",
+    }) => {
         try {
             dispatch(onLoading());
             const { data } = await helpdeskApi.post(
@@ -119,19 +126,25 @@ export const useUsersStore = () => {
 
     const startFindUserResponsable = async (cdgo_usrio) => {
         try {
-            const { data } = await helpdeskApi.post("/gerencia/admin/show-user", { cdgo_usrio });
+            const { data } = await helpdeskApi.post(
+                "/gerencia/admin/show-user",
+                { cdgo_usrio }
+            );
             const { usuario } = data;
             //console.log(usuario)
             dispatch(onSetActivateResponsable(usuario));
         } catch (error) {
             ExceptionMessageError(error);
         }
-    }
+    };
 
     /* GERENTE */
     const startUpdatePassword = async (user) => {
         try {
-            const { data } = await helpdeskApi.put(`/gerencia/usuario/reset-password/${user.cdgo_usrio}`, user);
+            const { data } = await helpdeskApi.put(
+                `/gerencia/usuario/reset-password/${user.cdgo_usrio}`,
+                user
+            );
             dispatch(onLoadMessage(data));
             dispatch(onSetActivateUser(null));
             setTimeout(() => {
@@ -141,9 +154,9 @@ export const useUsersStore = () => {
             //console.log(error);
             ExceptionMessageError(error);
         }
-    }
+    };
 
-    const startAddUser = async (user) => {
+    const startAddUser = async (user, storageFields) => {
         try {
             if (user.cdgo_usrio) {
                 const { data } = await helpdeskApi.put(
@@ -154,6 +167,7 @@ export const useUsersStore = () => {
                 setTimeout(() => {
                     dispatch(onLoadMessage(undefined));
                 }, 40);
+                if (storageFields) startLoadUsers(storageFields);
                 return;
             }
 
@@ -165,6 +179,7 @@ export const useUsersStore = () => {
             setTimeout(() => {
                 dispatch(onLoadMessage(undefined));
             }, 40);
+            if (storageFields) startLoadUsers(storageFields);
         } catch (error) {
             //console.log(error);
             ExceptionMessageError(error);
@@ -192,7 +207,10 @@ export const useUsersStore = () => {
 
     const startChangePwdUser = async (cdgo_usrio, paswrd) => {
         try {
-            const { data } = await helpdeskApi.put(`/change-password/${cdgo_usrio}`, { paswrd });
+            const { data } = await helpdeskApi.put(
+                `/change-password/${cdgo_usrio}`,
+                { paswrd }
+            );
             dispatch(onLoadMessage(data));
             setTimeout(() => {
                 dispatch(onLoadMessage(undefined));
@@ -201,23 +219,25 @@ export const useUsersStore = () => {
             //console.log(error);
             ExceptionMessageError(error);
         }
-    }
+    };
 
     const startLoadInfoUsersSoporte = async (user_id) => {
         try {
             dispatch(onLoading());
-            const { data } = await helpdeskApi.post("/usuario/info-soportes", { user_id });
+            const { data } = await helpdeskApi.post("/usuario/info-soportes", {
+                user_id,
+            });
             const { info } = data;
             dispatch(onSetInfoSoportes(info));
         } catch (error) {
             //console.log(error);
             ExceptionMessageError(error);
         }
-    }
+    };
 
     const clearInfoSoportes = () => {
         dispatch(onSetInfoSoportes(undefined));
-    }
+    };
 
     const clearUsers = () => {
         dispatch(onClearUsers());

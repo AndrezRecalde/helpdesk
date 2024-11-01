@@ -1,16 +1,25 @@
-import { Box, Fieldset, SimpleGrid, Text } from "@mantine/core";
-import { BtnSubmit } from "../../..";
+import { Box, Fieldset, SimpleGrid } from "@mantine/core";
+import { BtnSubmit, TextSection } from "../../..";
 import { DateInput } from "@mantine/dates";
 import { IconSearch } from "@tabler/icons-react";
 
 export const FilterFormSearchDates = ({
-    title= "",
+    title = "",
     form,
     handleSubmit,
     isLoading = false,
 }) => {
+    const { fecha_inicio } = form.values;
     return (
-        <Fieldset mt={20} mb={10} legend={<Text>{title}</Text>}>
+        <Fieldset
+            mt={20}
+            mb={20}
+            legend={
+                <TextSection tt="" fw={500} fz={16}>
+                    {title}
+                </TextSection>
+            }
+        >
             <Box
                 component="form"
                 onSubmit={form.onSubmit((_, e) => handleSubmit(e))}
@@ -26,6 +35,7 @@ export const FilterFormSearchDates = ({
                     />
                     <DateInput
                         //dateParser={dateParser}
+                        minDate={new Date(fecha_inicio)}
                         withAsterisk
                         valueFormat="YYYY-MM-DD"
                         label="Fecha final"
@@ -34,7 +44,11 @@ export const FilterFormSearchDates = ({
                     />
                 </SimpleGrid>
 
-                <BtnSubmit IconSection={IconSearch} fontSize={18} loading={isLoading}>
+                <BtnSubmit
+                    IconSection={IconSearch}
+                    fontSize={18}
+                    loading={isLoading}
+                >
                     Buscar
                 </BtnSubmit>
             </Box>

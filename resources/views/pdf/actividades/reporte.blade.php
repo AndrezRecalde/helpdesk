@@ -1,13 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <title>Informe de Actividades Mensual</title>
     <style>
         @page {
             size: 21cm 29.7cm;
@@ -15,174 +12,172 @@
         }
 
         body {
+            font-family: Arial, sans-serif;
             background-image: url("http://prefecturadeesmeraldas.gob.ec/wp-content/uploads/2023/11/FondoArchivo7.png");
             background-repeat: no-repeat;
             background-size: cover;
         }
 
-        .margines {
-            margin-top: 30px;
+        .header {
+            text-align: center;
+            margin-top: 20px;
         }
 
-        .marginFooter {
-            position: static;
-            bottom: -80px;
-            left: 0px;
-            right: 0px;
-            height: 400px;
+        /* .header img{
+            width: 100px;
+        } */
+
+        .title {
+            text-align: center;
+            font-weight: bold;
+            font-size: 1em;
+            margin: 20px 0;
+        }
+
+        .membrete,
+        .content,
+        .anexos,
+        .signatures {
+            margin: 20px 0;
         }
 
         table {
-            font-family: arial, sans-serif;
-            border-collapse: collapse;
             width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
         }
 
-        td,
-        th {
-            /* border: 1px solid #dddddd; */
-            /* width: 30px; */
-            text-align: left;
+        table,
+        th,
+        td {
+            border: 1px solid black;
+        }
+
+        th,
+        td {
             padding: 8px;
+            text-align: left;
         }
 
-        .firma {
-            width: 50px;
-        }
-
-        /* tr:nth-child(even) {
-            background-color: #dddddd;
-        } */
-        hr {
-            border: 0.5px solid gray;
-            height: 0.3px;
+        .footer {
+            display: flex;
+            justify-content: space-between;
             margin-top: 30px;
-            margin-bottom: 0%;
+        }
+
+        .signature {
+            text-align: center;
+            margin-top: 80px;
+            /* Centra el texto en cada firma */
         }
     </style>
-
-    <title>{{ $title }}</title>
 </head>
 
 <body>
 
-    {{-- <footer>
-        <div style="line-height: normal;">
-            <p style="font-size: 14px;">Dirección: 10 de Agosto entre Bolívar y Pedro Vicente Maldonado</p>
-            <p style="font-size: 14px;">Telefono: 06-2721433</p>
-        </div>
-    </footer> --}}
+    <div class="header">
+        @if ($actividades[0]->id_empresa === 2)
+            <img class="img-fluid" alt="Logo del GAD Esmeraldas"
+                src="{{ public_path('/assets/images/LogoTransparente.png') }}" height="100" width="320">
+            <h4>GOBIERNO AUTÓNOMO DESCENTRALIZADO DE LA PROVINCIA DE ESMERALDAS</h4>
+        @else
+            <img class="img-fluid" alt="logo" src="{{ public_path('/assets/images/logo_unamydesc.png') }}"
+                height="100" width="320">
+            <h4>UNIDAD DE ASISTENCIA MÉDICA Y DESARROLLO SOCIAL Y CULTURAL</h4>
+        @endif
+    </div>
+
+    <div class="title">INFORME DE ACTIVIDADES LABORALES</div>
+
+    <div class="membrete">
+        <p><strong>DE:</strong> {{ $actividades[0]->usuario }}</p>
 
 
-    <main class="mb-5">
-        <div class="text-center mb-3">
-            @if ($actividades[0]->id_empresa === 2)
-                <div class="text-center mb-3">
-                    <img class="img-fluid" alt="logo" src={{ public_path('/assets/images/LogoTransparente.png') }}
-                        height="380" width="320">
-                </div>
-                <div class="text-center mb-5">
-                    <b>GOBIERNO AUTÓNOMO DESCENTRALIZADO DE LA PROVINCIA DE ESMERALDAS</b>
-                </div>
-            @else
-                <div class="text-center mb-3">
-                    <img class="img-fluid" alt="logo" src={{ public_path('/assets/images/logo_unamydesc.png') }}
-                        height="380" width="320">
-                </div>
-                <div class="text-center mb-5">
-                    <b>UNIDAD DE ASISTENCIA MÉDICA Y DESARROLLO SOCIAL Y CULTURAL</b>
-                </div>
-            @endif
-        </div>
-        <table style="width:100%">
-            <tr>
-                <td width="80px"><b>DE:</b></td>
-                <td>{{ $actividades[0]->usuario }}</td>
-            </tr>
-
+        <p>
+            <strong>PARA:</strong>
             @if ($actividades[0]->crgo_id !== 5)
-                <tr>
-                    <td width="80px"><b>PARA:</b></td>
-                    <td>
-                        {{ $actividades[0]->director }}
+                {{ $actividades[0]->director }}
 
-                        @if (strcasecmp($actividades[0]->cargo_director, 'PREFECTO/A' === 0))
-                            <sub><i> {{ $actividades[0]->cargo_director . ' PROVINCIAL' }}</i></sub>
-                        @else
-                            <sub><i>{{ $actividades[0]->cargo_director . ' DE ' . $actividades[0]->departamento }}</i></sub>
-                        @endif
-                    </td>
-
-                </tr>
+                @if (strcasecmp($actividades[0]->cargo_director, 'PREFECTO/A') === 0)
+                    <sub><i>{{ $actividades[0]->cargo_director . ' PROVINCIAL' }}</i></sub>
+                @else
+                    <sub><i>{{ $actividades[0]->cargo_director . ' DE ' . $actividades[0]->departamento }}</i></sub>
+                @endif
             @endif
-            <tr>
-                <td width="80px"><b>ASUNTO:</b></td>
-                <td>{{ $title }}</td>
-            </tr>
-            <tr>
-                <td width="80px"><b>FECHA:</b></td>
-                <td>{{ $current_fecha }}</td>
-            </tr>
-        </table>
-
-        <p class="mt-3" style="text-align: justify;">El presente informe redacta un detalle de las actividades
-            realizadas durante el período {{ $fecha_inicio }} hasta {{ $fecha_fin }}.
-            Estas actividades, en las cuales me desempeñé en el marco de mis responsabilidades laborales, están
-            alineadas con los objetivos establecidos del departamento de {{ $actividades[0]->departamento }}.
         </p>
-        <p>A continuación, detallo las siguientes actividades realizadas: </p>
-        <div class="mt-3 mb-3">
-            <table class="table table-bordered">
-                <tr>
-                    <th><b>FECHA:</b></th>
-                    <th><b>ACTIVIDAD</b></th>
-                </tr>
-                @foreach ($actividades as $actividad)
-                    <tr>
-                        <td width="150px" style="font-size: 11px">{{ $actividad->current_fecha }}</td>
-                        <td style="text-align: justify; font-size: 11px;">{!! $actividad->actividad !!}</td>
-                    </tr>
-                @endforeach
-            </table>
-        </div>
-    </main>
+        <p><strong>FECHA:</strong> {{ $current_fecha }}</p>
+    </div>
 
-    <div class="marginFooter">
+    <div class="content">
+        <h3>Asunto: {{ $title }}</h3>
+        <p style="text-align: justify;">
+            Por medio de este informe, presento un resumen de las actividades realizadas durante el periodo de tiempo
+            {{ $fecha_inicio }} hasta {{ $fecha_fin }} en el área de {{ $actividades[0]->departamento }}.
+            Este documento tiene como propósito brindar un registro detallado de las gestiones efectuadas, los logros
+            alcanzados y las tareas que contribuyen al cumplimiento de los objetivos institucionales.
+        </p>
+
+        <h3>Detalle de Actividades Realizadas</h3>
+
         <table>
             <tr>
-                <td class="firma">
-                    <p class="mb-5" style="font-size: 11px">Generado por:</p>
-                </td>
-                <td class="firma">
-                    <p class="mb-5" style="font-size: 11px">Aprobado por:</p>
-                </td>
+                <th>Fecha</th>
+                <th>Descripción de la Actividad</th>
             </tr>
-            <tr>
-                <td class="firma">
-                    <hr>
-                </td>
-                <td class="firma">
-                    <hr>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <p style="font-size: 12px">{{ $actividades[0]->usuario }}</p>
-                    <p style="font-size: 12px; margin-top: 5px">{{ $actividades[0]->cargo_usuario }}</p>
-                </td>
-                <td>
-                    <p style="font-size: 12px">
-                        {{ $actividades[0]->crgo_id === 5 ? 'González Cervantes Mónica Alexandra' : $actividades[0]->director }}
-                    </p>
-                    <p style="font-size: 12px; margin-top: 5px">
-                        {{ $actividades[0]->crgo_id === 5 ? 'DIRECTOR/A' : $actividades[0]->cargo_director }}
-                    </p>
-                </td>
-            </tr>
+            @foreach ($actividades as $actividad)
+                <tr>
+                    <td>{{ $actividad->current_fecha }}</td>
+                    <td style="text-align: justify;">{!! $actividad->actividad !!}</td>
+                </tr>
+            @endforeach
+            <!-- Agregar más filas según sea necesario -->
         </table>
     </div>
 
+    <div class="anexos">
+        <h3>Anexos</h3>
+        <p>Se adjuntan evidencias fotográficas de las actividades más relevantes realizadas durante el mes:</p>
+        <ul>
+            @foreach ($actividades as $actividad)
+                @foreach ($actividad->imagenes as $imagen)
+                    <li><strong>{!! $actividad->actividad !!}</strong><br>
+                        <img src="{{ asset('storage/' . $imagen->ruta_imagen) }}"
+                             alt="Imagen de {{ $actividad->nombre }}" width="100" height="100">
+                    </li>
+                @endforeach
+            @endforeach
+        </ul>
+    </div>
 
+
+    <div class="content">
+        <h3>Conclusión</h3>
+        <p style="text-align: justify;">
+            Durante el periodo {{ $fecha_inicio }} hasta {{ $fecha_fin }}, se llevaron a cabo las actividades
+            programadas, contribuyendo significativamente al
+            desarrollo de los proyectos en curso y al cumplimiento de los objetivos establecidos por el área. Las
+            acciones implementadas han permitido mejorar la eficiencia y fortalecer la colaboración dentro del equipo.
+            Estoy disponible para discutir cualquier aspecto de este informe o para proporcionar información adicional
+            que sea necesaria.
+        </p>
+    </div>
+
+    <div class="signatures">
+        <div class="footer">
+            <div class="signature">
+                <p><strong>{{ $actividades[0]->usuario }}</strong><br>
+                    {{ $actividades[0]->cargo_usuario }}<br></p>
+            </div>
+
+            <div class="signature">
+                <p><strong>
+                        {{ $actividades[0]->crgo_id === 5 ? 'González Cervantes Mónica Alexandra' : $actividades[0]->director }}
+                    </strong><br>
+                    {{ $actividades[0]->crgo_id === 5 ? 'DIRECTOR/A' : $actividades[0]->cargo_director }}<br>
+                </p>
+            </div>
+        </div>
+    </div>
 
 </body>
 

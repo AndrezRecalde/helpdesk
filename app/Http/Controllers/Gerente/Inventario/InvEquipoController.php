@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Gerente\Inventario;
 
+use Carbon\Carbon;
 use App\Enums\MsgStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AssignComponenteRequest;
@@ -15,7 +16,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
-
+use Barryvdh\DomPDF\Facade\Pdf;
 
 
 class InvEquipoController extends Controller
@@ -28,15 +29,9 @@ class InvEquipoController extends Controller
                                      inve.categoria_id, invc.nombre_categoria,
                                      inve.estado_id, inves.nombre_estado, inves.color,
                                      inve.marca_id, invm.nombre_marca')
-            /* invt.id as tipocategoria_id,
-                                     inve.ubicacion_id, invu.nombre_edificio' */
             ->join('inv_categorias as invc', 'invc.id', 'inve.categoria_id')
             ->join('inv_estados as inves', 'inves.id', 'inve.estado_id')
             ->join('inv_marcas as invm', 'invm.id', 'inve.marca_id')
-            //->join('inv_ubicaciones as invu', 'invu.id', 'inve.ubicacion_id')
-            //->join('inv_tipocategorias as invt', 'invt.id', 'invc.tipocategoria_id')
-            //->byCodigoAntiguo($request->codigo_antiguo)
-            //->byCodigoNuevo($request->codigo_nuevo)
             ->byUsuarioId($request->usuario_id)
             ->byDireccionId($request->direccion_id)
             ->byNumeroSerie($request->numero_serie)
@@ -138,7 +133,7 @@ class InvEquipoController extends Controller
                     ]]);
                 }
 
-                if ($categoria != $equipo->categoria_id) {
+                if ($categoria->id != $equipo->categoria_id) {
                     $categoria->reducirStock(1);
                 }
 
@@ -294,7 +289,7 @@ class InvEquipoController extends Controller
         $documentoEquipo = InvDocumentoEquipo::find($id);
 
         if (!$documentoEquipo || !Storage::disk('public')->exists($documentoEquipo->documento)) {
-            return response()->json(['status' => 'error', 'msg' => 'Documento no encontrado.'], 404);
+            return response()->json(['status' => MsgStatus::Error, 'msg' => 'Documento no encontrado.'], 404);
         }
 
         // Devolver el archivo para que se descargue
@@ -349,6 +344,22 @@ class InvEquipoController extends Controller
                 'status' => 'error',
                 'message' => $th->getMessage(),
             ], 500);
+        }
+    }
+
+
+    function exportPDFEquipos(Request $request)
+    {
+        if (sizeof($request->equipos) >= 1) {
+            $data = [
+                'title' => 'Informe de reporte de Equipos',
+                'equipos' => $request->equipos,
+                'current_fecha' => Carbon::now()->format('Y-m-d')
+            ];
+            $pdf = Pdf::loadView('pdf.equipos.reporte', $data);
+            return $pdf->setPaper('a4', 'landscape')->download('equipos.pdf');
+        } else {
+            return response()->json(['status' => MsgStatus::Error, 'msg' => MsgStatus::NotFound], 404);
         }
     }
 }

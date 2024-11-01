@@ -1,27 +1,45 @@
 import { useCallback, useMemo } from "react";
 import { useMantineReactTable } from "mantine-react-table";
-import { MenuTable_E, BtnSection, TableContent } from "../../../../components";
+import {
+    MenuTable_E,
+    TableContent,
+    ActionReportPDF,
+} from "../../../../components";
 import { useInvPerifericoStore, useInvUiPeriferico } from "../../../../hooks";
-import { IconCopyPlus } from "@tabler/icons-react";
 
 export const InvPerifericoTable = () => {
-    const { isLoading, invPerifericos, setActivateInvPeriferico } =
-        useInvPerifericoStore();
+    const {
+        isLoading,
+        invPerifericos,
+        setActivateInvPeriferico,
+        startExportComponentes,
+    } = useInvPerifericoStore();
     const { modalActionPeriferico } = useInvUiPeriferico();
 
     const columns = useMemo(
         () => [
             {
-                header: "Modelo - Serie",
-                accessorFn: (row) => row.modelo + " " + row.numero_serie,
+                header: "Modelo",
+                accessorKey: "modelo",
+                filterVariant: "autocomplete",
             },
             {
                 header: "Marca",
                 accessorKey: "nombre_marca",
+                filterVariant: "autocomplete",
+            },
+            {
+                header: "Nro. serie",
+                accessorKey: "numero_serie",
+                filterVariant: "autocomplete",
             },
             {
                 header: "Estado",
                 accessorKey: "nombre_estado",
+            },
+            {
+                header: "Equipo al que pertenece",
+                accessorFn: (row) => row.equipo.codigo_nuevo,
             },
         ],
         [invPerifericos]
@@ -36,10 +54,11 @@ export const InvPerifericoTable = () => {
         [invPerifericos]
     );
 
-    const handleAgregar = useCallback(() => {
-        //console.log("agregar");
-        modalActionPeriferico(true);
-    }, [invPerifericos]);
+    const handleExportDataPDF = (e) => {
+        e.preventDefault();
+        startExportComponentes(invPerifericos);
+        //console.log("export");
+    };
 
     const table = useMantineReactTable({
         columns,
@@ -51,16 +70,25 @@ export const InvPerifericoTable = () => {
         renderRowActionMenuItems: ({ row }) => (
             <MenuTable_E row={row} handleEdit={handleEditar} />
         ),
-        renderTopToolbarCustomActions: ({ table }) => (
-            <BtnSection
-                heigh={30}
-                fontSize={12}
-                IconSection={IconCopyPlus}
-                handleAction={handleAgregar}
-            >
-                Agregar
-            </BtnSection>
-        ),
+        renderTopToolbarCustomActions: ({ table }) =>
+            invPerifericos.length !== 0 ? (
+                <ActionReportPDF handleExportDataPDF={handleExportDataPDF} />
+            ) : null,
+        mantineTableProps: {
+            withColumnBorders: true,
+            withTableBorder: true,
+            sx: {
+                "thead > tr": {
+                    backgroundColor: "inherit",
+                },
+                "thead > tr > th": {
+                    backgroundColor: "inherit",
+                },
+                "tbody > tr > td": {
+                    backgroundColor: "inherit",
+                },
+            },
+        },
     });
 
     return <TableContent table={table} />;

@@ -63,7 +63,7 @@ export const AppLayout = () => {
                     />
                 </AppShell.Section>
                 <AppShell.Section>
-                    <AppNavfooter />
+                    <AppNavfooter toggleMobile={toggleMobile} />
                 </AppShell.Section>
             </AppShell.Navbar>
             <AppShell.Main>

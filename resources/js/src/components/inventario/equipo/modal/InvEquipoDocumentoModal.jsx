@@ -17,7 +17,7 @@ export const InvEquipoDocumentoModal = () => {
                 "Debe especificar el código nuevo del equipo"
             ),
             documento: isNotEmpty(
-                "Debe especificar el número de serie del equipo"
+                "Debe adjuntar el archivo en formato PDF"
             ),
         },
     });

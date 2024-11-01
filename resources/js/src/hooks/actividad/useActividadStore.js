@@ -48,9 +48,14 @@ export const useActividadStore = () => {
     const startAddActividad = async (actividad, fecha_inicio, fecha_fin) => {
         try {
             if (actividad.id) {
-                const { data } = await helpdeskApi.put(
+                const { data } = await helpdeskApi.post(
                     `/usuario/update/actividad/${actividad.id}`,
-                    actividad
+                    actividad,
+                    {
+                        headers: {
+                            "Content-Type": "multipart/form-data",
+                        },
+                    }
                 );
                 dispatch(onLoadMessage(data));
                 setTimeout(() => {
@@ -66,7 +71,12 @@ export const useActividadStore = () => {
             }
             const { data } = await helpdeskApi.post(
                 "/usuario/create/actividad",
-                actividad
+                actividad,
+                {
+                    headers: {
+                        "Content-Type": "multipart/form-data",
+                    },
+                }
             );
             dispatch(onLoadMessage(data));
             setTimeout(() => {
@@ -99,7 +109,7 @@ export const useActividadStore = () => {
             });
             const url = window.open(URL.createObjectURL(pdfBlob));
             //console.log(url);
-           /*  const tempLink = document.createElement("a");
+            /*  const tempLink = document.createElement("a");
             tempLink.href = url;
             tempLink.setAttribute("download", "actividades.pdf");
             document.body.appendChild(tempLink);

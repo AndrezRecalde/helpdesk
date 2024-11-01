@@ -9,7 +9,7 @@ export const departamentoSlice = createSlice({
     },
     reducers: {
         onLoading: (state) => {
-            state.counter = true;
+            state.isLoading = true;
         },
         onLoadDepartamentos: (state, { payload }) => {
             state.departamentos = payload;

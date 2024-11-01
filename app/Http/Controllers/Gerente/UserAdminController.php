@@ -19,15 +19,20 @@ class UserAdminController extends Controller
     {
         $usuarios = User::from('usrios_sstma as us')
             ->selectRaw('us.cdgo_usrio, us.usu_ci, us.titulo,
-                        us.nmbre_usrio, us.nombre_formateado,
-                        us.email, ns.idnom_sexo, us.sexo, us.lgin, us.actvo,
+                        us.nmbre_usrio,
+                        us.usu_ape_pat,
+                        us.usu_ape_mat,
+                        us.usu_nombres,
+                        us.nombre_formateado, us.email,
+                        us.lgin, us.actvo,
+                        us.sexo, ns.idnom_sexo,
                         us.usu_id_empresa,
-                        d.cdgo_dprtmnto as cdgo_direccion, d.nmbre_dprtmnto as direccion,
-                        nc.idnom_cargo as crgo_id, nc.nom_cargo,
+                        us.cdgo_direccion, d.nmbre_dprtmnto as direccion,
+                        us.cdgo_dprtmnto, de.nmbre_dprtmnto as departamento,
+                        us.crgo_id, nc.nom_cargo,
                         us.id_tipo_usuario, us.usu_ult_tipo_contrato,
                         us.finaliza_contrato, us.tecnico, us.secretaria_tic,
-                        us.super_user, us.interno, us.usu_estado, us.usu_alias, us.usu_ing,
-                        de.nmbre_dprtmnto as departamento')
+                        us.super_user, us.interno, us.usu_estado, us.usu_alias, us.usu_ing')
             ->leftJoin('nom_cargo as nc', 'nc.idnom_cargo', 'us.crgo_id')
             ->leftJoin('dprtmntos as d', 'd.cdgo_dprtmnto', 'us.cdgo_direccion')
             ->leftJoin('dprtmntos as de', 'de.cdgo_dprtmnto', 'us.cdgo_dprtmnto')
@@ -47,9 +52,9 @@ class UserAdminController extends Controller
     function findUser(Request $request): JsonResponse
     {
         $usuario = User::from('usrios_sstma as us')
-                    ->selectRaw('us.cdgo_usrio, us.nmbre_usrio, us.nombre_formateado, us.email')
-                    ->where('us.cdgo_usrio', $request->cdgo_usrio)
-                    ->get();
+            ->selectRaw('us.cdgo_usrio, us.nmbre_usrio, us.nombre_formateado, us.email')
+            ->where('us.cdgo_usrio', $request->cdgo_usrio)
+            ->get();
 
         return response()->json(['status' => MsgStatus::Success, 'usuario' => $usuario], 200);
     }

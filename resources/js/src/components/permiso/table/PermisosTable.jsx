@@ -34,6 +34,10 @@ export const PermisosTable = () => {
                 header: "Hora de llegada",
             },
             {
+                accessorKey: "estado", //access nested data with dot notation
+                header: "Estado",
+            },
+            {
                 accessorKey: "per_observaciones", //access nested data with dot notation
                 header: "Observaciones",
             },

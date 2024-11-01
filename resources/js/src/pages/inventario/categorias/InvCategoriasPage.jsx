@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useInvCategoriaStore } from "../../../hooks";
+import { useInvCategoriaStore, useTitlePage } from "../../../hooks";
 import {
     InvCategoriaModal,
     InvCategoriaTable,
@@ -10,9 +10,10 @@ import Swal from "sweetalert2";
 import { Divider } from "@mantine/core";
 
 export const InvCategoriasPage = ({ tabValue }) => {
+    useTitlePage("Helpdesk | Inv. Categorias");
     const {
         startLoadInvCategorias,
-        startClearInvCategorias,
+        //startClearInvCategorias,
         message,
         errores,
     } = useInvCategoriaStore();

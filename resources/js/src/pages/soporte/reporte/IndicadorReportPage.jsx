@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Container } from "@mantine/core";
+import { Container, Divider } from "@mantine/core";
 import { isNotEmpty, useForm } from "@mantine/form";
 import {
     CardIndicadores,
@@ -75,10 +75,12 @@ export const IndicadorReportPage = () => {
             <TitlePage order={2}>
                 Reporte de indicadores
             </TitlePage>
+            <Divider my="md" />
             <FilterFormSearchDates
                 form={form}
                 handleSubmit={handleSubmit}
                 isLoading={isLoading}
+                title="Filtrar por fechas"
             />
 
             {pageLoad ? (

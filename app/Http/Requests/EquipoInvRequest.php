@@ -24,14 +24,12 @@ class EquipoInvRequest extends FormRequest
      */
     public function rules(): array
     {
-        $equipoId = $this->route('id');  // Obtener el ID del equipo que se está actualizando
-        //$perifericos = $this->request->get('perifericos', []);  // Obtener periféricos de la solicitud, por defecto es un array vacío
 
         return [
-            'codigo_antiguo'    =>  ['', Rule::unique('inv_equipos')->ignore($equipoId)],
-            'codigo_nuevo'      =>  ['required', Rule::unique('inv_equipos')->ignore($equipoId)],
+            'codigo_antiguo'    =>  ['', Rule::unique('inv_equipos')->ignore($this->request->get('id'))],
+            'codigo_nuevo'      =>  ['required', Rule::unique('inv_equipos')->ignore($this->request->get('id'))],
             'modelo'            =>  'required',
-            'numero_serie'      =>  ['', Rule::unique('inv_equipos')->ignore($equipoId)],
+            'numero_serie'      =>  ['', Rule::unique('inv_equipos')->ignore($this->request->get('id'))],
             'fecha_adquisicion' =>  'required',
             'fecha_amortizacion' => '',
             'vida_util'         =>  'required',

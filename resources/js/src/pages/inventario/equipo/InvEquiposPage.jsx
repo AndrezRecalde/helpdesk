@@ -21,17 +21,19 @@ import {
     useInvEquipoStore,
     useInvEstadoStore,
     useInvUiEquipo,
+    useTitlePage,
     useUsersStore,
 } from "../../../hooks";
 import Swal from "sweetalert2";
 
 export const InvEquiposPage = () => {
+    useTitlePage("Helpdesk | Inv. Equipos");
     const { startLoadDirecciones, clearDirecciones } = useDireccionStore();
     const { startLoadUsersGeneral, clearUsers } = useUsersStore();
     const { startLoadInvCategorias, startClearInvCategorias } =
         useInvCategoriaStore();
     const { startLoadInvEstados, startClearInvEstados } = useInvEstadoStore();
-    const { message, errores } = useInvEquipoStore();
+    const { isExport, message, errores } = useInvEquipoStore();
     const { modalActionEquipo } = useInvUiEquipo();
 
     useEffect(() => {
@@ -71,6 +73,21 @@ export const InvEquiposPage = () => {
             return;
         }
     }, [errores]);
+
+    useEffect(() => {
+        if (isExport === true) {
+            Swal.fire({
+                icon: "warning",
+                text: "Un momento porfavor, se está exportando",
+                showConfirmButton: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                },
+            });
+        } else {
+            Swal.close(); // Cierra el modal cuando isExport es false
+        }
+    }, [isExport]);
 
     const handleAgregar = () => {
         modalActionEquipo(true);

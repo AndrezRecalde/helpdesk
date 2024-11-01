@@ -21,6 +21,11 @@ class Actividad extends Model
         'fecha_actividad' => 'date',
     ];
 
+    public function imagenes()
+    {
+        return $this->hasMany(SrvActImagen::class, 'actividad_id', 'id');
+    }
+
     static function create(array $attributes = [])
     {
         $attributes['user_id'] = auth()->id();
