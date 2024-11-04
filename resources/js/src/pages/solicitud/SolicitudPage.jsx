@@ -12,7 +12,7 @@ import Swal from "sweetalert2";
 import useSWR from "swr";
 import { useDispatch } from "react-redux";
 
-export const SolicitudPage = () => {
+const SolicitudPage = () => {
     useTitlePage("Helpdesk | Solicitud");
     const dispatch = useDispatch();
     const usuario = JSON.parse(localStorage.getItem("service_user"));
@@ -140,3 +140,5 @@ export const SolicitudPage = () => {
         </Container>
     );
 };
+
+export default SolicitudPage;

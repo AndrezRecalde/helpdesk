@@ -15,7 +15,7 @@ import {
     DashInfoStats,
 } from "../../../components";
 
-export const DashGerenciaPage = () => {
+const DashGerenciaPage = () => {
     useTitlePage("Helpdesk | Dashboard");
     const { isLoading, startLoadDashboard, clearDashboard } =
         useDashGerenciaStore();
@@ -59,3 +59,5 @@ export const DashGerenciaPage = () => {
         </Container>
     );
 };
+
+export default DashGerenciaPage;

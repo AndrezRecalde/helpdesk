@@ -26,7 +26,7 @@ import {
 } from "../../../hooks";
 import Swal from "sweetalert2";
 
-export const InvEquiposPage = () => {
+const InvEquiposPage = () => {
     useTitlePage("Helpdesk | Inv. Equipos");
     const { startLoadDirecciones, clearDirecciones } = useDireccionStore();
     const { startLoadUsersGeneral, clearUsers } = useUsersStore();
@@ -118,3 +118,5 @@ export const InvEquiposPage = () => {
         </Container>
     );
 };
+
+export default InvEquiposPage;

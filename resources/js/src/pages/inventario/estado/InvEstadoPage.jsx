@@ -1,10 +1,10 @@
 import { useEffect } from "react";
+import { Divider } from "@mantine/core";
 import { InvEstadoModal, InvEstadoTable, TitlePage } from "../../../components";
 import { useInvEstadoStore } from "../../../hooks";
 import Swal from "sweetalert2";
-import { Divider } from "@mantine/core";
 
-export const InvEstadoPage = ({ tabValue }) => {
+const InvEstadoPage = ({ tabValue }) => {
     const { startLoadInvEstados, startClearInvEstados, message, errores } =
         useInvEstadoStore();
 
@@ -52,3 +52,5 @@ export const InvEstadoPage = ({ tabValue }) => {
         </div>
     );
 };
+
+export default InvEstadoPage;

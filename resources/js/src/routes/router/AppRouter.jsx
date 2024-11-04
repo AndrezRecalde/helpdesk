@@ -29,7 +29,7 @@ export const AppRouter = () => {
 
     // Helper para renderizar rutas de acuerdo a la estructura dinámica
     const renderRoutes = (routeConfig, role) => {
-        return routeConfig.map(({ path, link, Component, roles }) => (
+        return routeConfig.map(({ path, Component, roles }) => (
             <Route
                 key={path}
                 path={path}

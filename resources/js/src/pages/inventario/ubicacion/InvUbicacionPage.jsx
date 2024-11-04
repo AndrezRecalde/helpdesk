@@ -1,10 +1,10 @@
 import { useEffect } from "react";
+import { Divider } from "@mantine/core";
 import { useInvUbicacionStore } from "../../../hooks";
 import { InvUbicacionModal, InvUbicacionTable, TitlePage } from "../../../components";
 import Swal from "sweetalert2";
-import { Divider } from "@mantine/core";
 
-export const InvUbicacionPage = ({ tabValue }) => {
+const InvUbicacionPage = ({ tabValue }) => {
     const {
         startLoadInvUbicaciones,
         //startClearInvUbicaciones,
@@ -56,3 +56,5 @@ export const InvUbicacionPage = ({ tabValue }) => {
         </div>
     );
 };
+
+export default InvUbicacionPage;

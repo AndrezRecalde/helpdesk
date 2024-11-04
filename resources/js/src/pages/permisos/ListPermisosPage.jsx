@@ -14,7 +14,7 @@ import { IconChevronsRight } from "@tabler/icons-react";
 import { Roles } from "../../layouts/appshell/navbar/navlinks/navLinks";
 import { useNavigate } from "react-router-dom";
 
-export const ListPermisosPage = () => {
+const ListPermisosPage = () => {
     useTitlePage("Helpdesk | Lista Permisos");
     const usuario = JSON.parse(localStorage.getItem("service_user"));
     const { startLoadPermisos, clearPermisos, permisos, message, errores } =
@@ -103,3 +103,5 @@ export const ListPermisosPage = () => {
         </Container>
     );
 };
+
+export default ListPermisosPage;

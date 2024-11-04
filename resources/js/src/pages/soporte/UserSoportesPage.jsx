@@ -7,7 +7,7 @@ import {
 import { useNavigate, useParams } from "react-router-dom";
 import { useTitlePage } from "../../hooks";
 
-export const UserSoportesPage = () => {
+const UserSoportesPage = () => {
     useTitlePage("Helpdesk | Mis Soportes");
     const navigate = useNavigate();
     const { soporteValue } = useParams();
@@ -47,3 +47,5 @@ export const UserSoportesPage = () => {
         </Container>
     );
 };
+
+export default UserSoportesPage;

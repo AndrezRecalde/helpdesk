@@ -11,7 +11,8 @@ export const PrivateRoutes = ({
     //const { token } = useAuthStore();
     const user = JSON.parse(localStorage.getItem("service_user"));
 
-    const userHasRequiredRole = token && requiredRole === user.role ? true : false;
+    const userHasRequiredRole =
+        token && requiredRole === user.role ? true : false;
 
     if (!token) {
         return <Navigate to={redirectPath} state={{ from: location }} />;

@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import classes from "../../assets/styles/modules/error/NotFound.module.css";
 import { IconUserCircle } from "@tabler/icons-react";
 
-export const ErrorNotFound = () => {
+const ErrorNotFound = () => {
     const navigate = useNavigate();
 
     const handleAction = () => {
@@ -39,3 +39,5 @@ export const ErrorNotFound = () => {
         </Container>
     );
 };
+
+export default ErrorNotFound;

@@ -1,10 +1,10 @@
 import { Title, Text, Container, Group } from "@mantine/core";
 import { BtnSection } from "../../components";
 import { useNavigate } from "react-router-dom";
-import classes from "../../assets/styles/modules/error/Forbidden.module.css";
 import { IconUserCircle } from "@tabler/icons-react";
+import classes from "../../assets/styles/modules/error/Forbidden.module.css";
 
-export const ErrorAccessDenied = () => {
+const ErrorAccessDenied = () => {
     const navigate = useNavigate();
     const handleAction = () => {
         navigate("/staff/d/profile");
@@ -35,3 +35,5 @@ export const ErrorAccessDenied = () => {
         </div>
     );
 };
+
+export default ErrorAccessDenied;

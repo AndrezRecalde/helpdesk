@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo } from "react";
-import { Box, Container, Divider, LoadingOverlay } from "@mantine/core";
+import { Container, Divider, LoadingOverlay } from "@mantine/core";
 import { isNotEmpty, useForm } from "@mantine/form";
 import { useMantineReactTable } from "mantine-react-table";
 import {
@@ -14,7 +14,7 @@ import { useActividadStore, useTitlePage, useUiActividad } from "../../hooks";
 import dayjs from "dayjs";
 import Swal from "sweetalert2";
 
-export const ListActividadesPage = () => {
+const ListActividadesPage = () => {
     useTitlePage("Helpdesk | Mis Actividades");
     const srv_user = JSON.parse(localStorage.getItem("service_user"));
     const { modalActionActividad } = useUiActividad();
@@ -182,3 +182,5 @@ export const ListActividadesPage = () => {
         </Container>
     );
 };
+
+export default ListActividadesPage;

@@ -5,7 +5,7 @@ import { ChangePwdForm, TextSection, TitlePage } from "../../components";
 import { useTitlePage, useUsersStore } from "../../hooks";
 import Swal from "sweetalert2";
 
-export const ChangePwdPage = () => {
+const ChangePwdPage = () => {
     useTitlePage("Helpdesk | Cambio contrasena");
     const { message, errores } = useUsersStore();
 
@@ -58,3 +58,5 @@ export const ChangePwdPage = () => {
         </Container>
     );
 };
+
+export default ChangePwdPage;

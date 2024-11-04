@@ -16,7 +16,7 @@ import {
 import { Roles, lGerente, lTecnico } from "../../layouts";
 import { useNavigate } from "react-router-dom";
 
-export const ProfilePage = () => {
+const ProfilePage = () => {
     useTitlePage("Helpdesk | Perfil");
     const usuario = JSON.parse(localStorage.getItem("service_user"));
     const token = JSON.stringify(localStorage.getItem("auth_token"));
@@ -79,3 +79,5 @@ export const ProfilePage = () => {
         </Container>
     );
 };
+
+export default ProfilePage;

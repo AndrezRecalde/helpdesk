@@ -14,7 +14,7 @@ import {
 } from "../../../hooks";
 import Swal from "sweetalert2";
 
-export const InvComponentesPage = () => {
+const InvComponentesPage = () => {
     useTitlePage("Helpdesk | Inv. Componentes");
     const { startLoadInvEstados, startClearInvEstados } = useInvEstadoStore();
     const { isExport, message, errores } = useInvPerifericoStore();
@@ -81,3 +81,5 @@ export const InvComponentesPage = () => {
         </Container>
     );
 };
+
+export default InvComponentesPage;

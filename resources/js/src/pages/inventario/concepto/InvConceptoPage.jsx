@@ -1,10 +1,10 @@
 import { useEffect } from "react";
+import { Divider } from "@mantine/core";
 import { InvConceptoModal, InvConceptoTable, TitlePage } from "../../../components";
 import { useInvConceptoStore } from "../../../hooks";
 import Swal from "sweetalert2";
-import { Divider } from "@mantine/core";
 
-export const InvConceptoPage = ({ tabValue }) => {
+const InvConceptoPage = ({ tabValue }) => {
     const { startLoadInvConceptos, startClearInvConceptos, message, errores } =
         useInvConceptoStore();
 
@@ -52,3 +52,5 @@ export const InvConceptoPage = ({ tabValue }) => {
         </div>
     );
 };
+
+export default InvConceptoPage;

@@ -10,7 +10,7 @@ import { useIndicadorStore, useTitlePage } from "../../../hooks";
 import dayjs from "dayjs";
 import Swal from "sweetalert2";
 
-export const IndicadorReportPage = () => {
+const IndicadorReportPage = () => {
     useTitlePage("Helpdesk | Indicadores");
     const {
         isLoading,
@@ -89,3 +89,5 @@ export const IndicadorReportPage = () => {
         </Container>
     );
 };
+
+export default IndicadorReportPage;

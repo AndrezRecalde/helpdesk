@@ -3,7 +3,7 @@ import { useTitlePage } from "../../hooks";
 import { AuthForm, BtnServicesApps, Logo, TextSection, TitlePage } from "../../components";
 import classes from "../../assets/styles/modules/auth/AuthPageBackground.module.css";
 
-export const AuthPage = () => {
+const AuthPage = () => {
     useTitlePage("Helpdesk | Login");
 
     return (
@@ -29,3 +29,5 @@ export const AuthPage = () => {
         </div>
     );
 };
+
+export default AuthPage;

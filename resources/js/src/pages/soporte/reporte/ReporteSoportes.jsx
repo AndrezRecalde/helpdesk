@@ -12,7 +12,7 @@ import { useMantineReactTable } from "mantine-react-table";
 import dayjs from "dayjs";
 import Swal from "sweetalert2";
 
-export const ReporteSoportes = () => {
+const ReporteSoportes = () => {
     useTitlePage("Helpdesk | Reporte");
     const usuario = JSON.parse(localStorage.getItem("service_user"));
     const {
@@ -161,3 +161,5 @@ export const ReporteSoportes = () => {
         </Container>
     );
 };
+
+export default ReporteSoportes;

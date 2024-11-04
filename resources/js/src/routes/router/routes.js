@@ -1,3 +1,4 @@
+//import { lazy } from "react";
 import {
     IconCategory,
     IconChartPie,
@@ -11,12 +12,12 @@ import {
     IconUserHexagon,
 } from "@tabler/icons-react";
 import {
+    AuthPage,
     DashGerenciaPage,
     ActividadPage,
     AdminDireccionesPage,
     AdminTecnicosPage,
     AdminUsersPage,
-    AuthPage,
     ChangePwdPage,
     ConfigInventarioPage,
     ErrorNotFound,
@@ -38,7 +39,7 @@ import {
 } from "../../pages";
 
 
-
+//const Lazy1 = lazy(() => import(/* webpackChunkName: "LazyPage1" */ '../01-lazyload/pages/LazyPage1'));
 
 
 const generateRoutes = (basePath, components, roles) =>

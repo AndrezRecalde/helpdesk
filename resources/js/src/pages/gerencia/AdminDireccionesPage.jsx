@@ -9,7 +9,7 @@ import { useDirectorStore, useTitlePage, useUsersStore } from "../../hooks";
 import { useEffect } from "react";
 import Swal from "sweetalert2";
 
-export const AdminDireccionesPage = () => {
+const AdminDireccionesPage = () => {
     useTitlePage("Helpdesk | Direcciones");
     const { startLoadUsers, clearUsers } = useUsersStore();
     const { directores, clearDirectores, message, errores } =
@@ -60,3 +60,5 @@ export const AdminDireccionesPage = () => {
         </Container>
     );
 };
+
+export default AdminDireccionesPage;

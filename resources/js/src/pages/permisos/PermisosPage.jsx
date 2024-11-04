@@ -12,7 +12,7 @@ import { IconChevronsRight } from "@tabler/icons-react";
 import { useNavigate } from "react-router-dom";
 import { Roles } from "../../layouts/appshell/navbar/navlinks/navLinks";
 
-export const PermisosPage = () => {
+const PermisosPage = () => {
     useTitlePage("Helpdesk | Permisos");
     const usuario = JSON.parse(localStorage.getItem("service_user"));
     const { startLoadDirecciones, clearDirecciones } = useDireccionStore();
@@ -139,3 +139,6 @@ export const PermisosPage = () => {
         </Container>
     );
 };
+
+
+export default PermisosPage;

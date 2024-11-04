@@ -19,7 +19,7 @@ import Swal from "sweetalert2";
 import { IconChevronsRight } from "@tabler/icons-react";
 import { useNavigate } from "react-router-dom";
 
-export const ListPermisosAdminPage = () => {
+const ListPermisosAdminPage = () => {
     useTitlePage("Helpdesk | Lista Permisos");
     const { startLoadDirecciones, clearDirecciones } = useDireccionStore();
     const { startLoadUsersExtrict, clearUsers } = useUsersStore();
@@ -119,3 +119,5 @@ export const ListPermisosAdminPage = () => {
         </Container>
     );
 };
+
+export default ListPermisosAdminPage;

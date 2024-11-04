@@ -6,7 +6,7 @@ import { IconInfoCircle } from "@tabler/icons-react";
 import Swal from "sweetalert2";
 
 
-export const ActividadPage = () => {
+const ActividadPage = () => {
     useTitlePage("Helpdesk | Actividad");
     const { message, errores } = useActividadStore();
 
@@ -57,3 +57,5 @@ export const ActividadPage = () => {
         </Container>
     );
 };
+
+export default ActividadPage;

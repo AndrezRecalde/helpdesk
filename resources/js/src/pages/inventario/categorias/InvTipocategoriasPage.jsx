@@ -8,7 +8,7 @@ import {
 import Swal from "sweetalert2";
 import { Divider } from "@mantine/core";
 
-export const InvTipocategoriasPage = ({ tabValue }) => {
+const InvTipocategoriasPage = ({ tabValue }) => {
     const {
         startLoadTiposcategorias,
         startClearTiposcategorias,
@@ -63,3 +63,6 @@ export const InvTipocategoriasPage = ({ tabValue }) => {
         </div>
     );
 };
+
+
+export default InvTipocategoriasPage;

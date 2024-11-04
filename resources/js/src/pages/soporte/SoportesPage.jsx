@@ -24,7 +24,7 @@ import { isNotEmpty, useForm } from "@mantine/form";
 import Swal from "sweetalert2";
 import dayjs from "dayjs";
 
-export const SoportesPage = () => {
+const SoportesPage = () => {
     useTitlePage("Helpdesk | Soportes");
     const usuario = JSON.parse(localStorage.getItem("service_user"));
     const { startLoadDirecciones, clearDirecciones } = useDireccionStore();
@@ -135,3 +135,5 @@ export const SoportesPage = () => {
         </Container>
     );
 };
+
+export default SoportesPage;

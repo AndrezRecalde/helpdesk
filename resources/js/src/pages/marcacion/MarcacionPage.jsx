@@ -8,7 +8,7 @@ import {
 import dayjs from "dayjs";
 import { useMarcacionStore } from "../../hooks";
 
-export const MarcacionPage = () => {
+const MarcacionPage = () => {
     const usuario = JSON.parse(localStorage.getItem("service_user"));
     const { startLoadMarcaciones } = useMarcacionStore();
 
@@ -45,3 +45,5 @@ export const MarcacionPage = () => {
         </Container>
     );
 };
+
+export default MarcacionPage;

@@ -4,7 +4,7 @@ import { InvMarcaModal, InvMarcaTable, TitlePage } from "../../../components";
 import { useInvMarcaStore, useTitlePage } from "../../../hooks";
 import Swal from "sweetalert2";
 
-export const InvMarcaPage = ({ tabValue }) => {
+const InvMarcaPage = ({ tabValue }) => {
     useTitlePage("Helpdesk | Inv. Marcas");
     const { startLoadInvMarcas, /* startClearInvMarcas, */ message, errores } =
         useInvMarcaStore();
@@ -53,3 +53,5 @@ export const InvMarcaPage = ({ tabValue }) => {
         </div>
     );
 };
+
+export default InvMarcaPage;

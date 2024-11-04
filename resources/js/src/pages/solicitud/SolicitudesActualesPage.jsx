@@ -17,7 +17,7 @@ import useSWR, { mutate } from "swr";
 import Swal from "sweetalert2";
 import { IconBrandTelegram } from "@tabler/icons-react";
 
-export const SolicitudesActualesPage = () => {
+const SolicitudesActualesPage = () => {
     useTitlePage("Helpdesk | Solicitudes");
     const usuario = JSON.parse(localStorage.getItem("service_user"));
     const dispatch = useDispatch();
@@ -124,3 +124,5 @@ export const SolicitudesActualesPage = () => {
         </Container>
     );
 };
+
+export default SolicitudesActualesPage;

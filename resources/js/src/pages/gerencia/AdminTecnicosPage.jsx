@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Card, Container, Group } from "@mantine/core";
+import { Container, Group } from "@mantine/core";
 import {
     BtnSection,
     ModalAddTecnico,
@@ -10,7 +10,7 @@ import {
 import { useTecnicoStore, useTitlePage, useUiTecnico } from "../../hooks";
 import { IconPencilPlus } from "@tabler/icons-react";
 
-export const AdminTecnicosPage = () => {
+const AdminTecnicosPage = () => {
     useTitlePage("Helpdesk | Técnicos");
     const { tecnicos, startLoadTecnicosAdmin, clearTecnicos } =
         useTecnicoStore();
@@ -52,3 +52,5 @@ export const AdminTecnicosPage = () => {
         </Container>
     );
 };
+
+export default AdminTecnicosPage;

@@ -22,7 +22,7 @@ import {
 import { IconPencilPlus } from "@tabler/icons-react";
 import Swal from "sweetalert2";
 
-export const AdminUsersPage = () => {
+const AdminUsersPage = () => {
     useTitlePage("Helpdesk | Usuarios");
     const { users, errores, message } = useUsersStore();
     const { modalActionUser } = useUiUser();
@@ -96,3 +96,5 @@ export const AdminUsersPage = () => {
         </Container>
     );
 };
+
+export default AdminUsersPage;
