@@ -31,7 +31,7 @@ export const CardInfoStatsUser = ({ usuario }) => {
         const [hours, minutes, seconds] = time.split(":").map(Number); // Separar y convertir cada parte a número
         const totalHours = hours + minutes / 60 + seconds / 3600; // Convertir todo a horas
         const days = totalHours / 24; // Dividir horas entre 24 para obtener los días
-        return days;
+        return parseFloat(days.toFixed(2));
     }
 
     const icons = {

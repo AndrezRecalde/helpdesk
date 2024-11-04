@@ -18,7 +18,7 @@ const UserSoportesPage = () => {
         <Container size="xxl">
             <Tabs
                 value={soporteValue}
-                onChange={(value) => navigate(`/gad/d/soportes/${value}`)}
+                onChange={(value) => navigate(`/staff/soportes/${value}`)}
                 defaultValue="actuales"
             >
                 <Tabs.List grow>

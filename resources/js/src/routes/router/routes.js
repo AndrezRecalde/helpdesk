@@ -1,4 +1,4 @@
-//import { lazy } from "react";
+import { lazy } from "react";
 import {
     IconCategory,
     IconChartPie,
@@ -11,35 +11,36 @@ import {
     IconSettings,
     IconUserHexagon,
 } from "@tabler/icons-react";
-import {
-    AuthPage,
-    DashGerenciaPage,
-    ActividadPage,
-    AdminDireccionesPage,
-    AdminTecnicosPage,
-    AdminUsersPage,
-    ChangePwdPage,
-    ConfigInventarioPage,
-    ErrorNotFound,
-    IndicadorReportPage,
-    InvComponentesPage,
-    InvEquiposPage,
-    ListActividadesPage,
-    ListPermisosAdminPage,
-    ListPermisosPage,
-    MarcacionPage,
-    PermisosPage,
-    ProfilePage,
-    ReporteSoportes,
-    SolicitudesActualesPage,
-    SolicitudPage,
-    SoporteCalificacionPage,
-    SoportesPage,
-    UserSoportesPage,
-} from "../../pages";
+
+const AuthPage = lazy(() => import(/* webpackChunkName: "AuthPage" */ '../../pages/auth/AuthPage'));
+
+const DashGerenciaPage = lazy(() => import(/* webpackChunkName: "DashGerenciaPage" */ '../../pages/dashboard/gerencia/DashGerenciaPage'));
+const AdminUsersPage = lazy(() => import(/* webpackChunkName: "AdminUsersPage" */ '../../pages/gerencia/AdminUsersPage'));
+const AdminDireccionesPage = lazy(() => import(/* webpackChunkName: "AdminDireccionesPage" */ '../../pages/gerencia/AdminDireccionesPage'));
+const AdminTecnicosPage = lazy(() => import(/* webpackChunkName: "AdminTecnicosPage" */ '../../pages/gerencia/AdminTecnicosPage'));
+const SolicitudesActualesPage = lazy(() => import(/* webpackChunkName: "SolicitudesActualesPage" */ '../../pages/solicitud/SolicitudesActualesPage'));
+const SoportesPage = lazy(() => import(/* webpackChunkName: "SoportesPage" */ '../../pages/soporte/SoportesPage'));
+const SoporteCalificacionPage = lazy(() => import(/* webpackChunkName: "SoporteCalificacionPage" */ '../../pages/soporte/SoporteCalificacionPage'));
+const IndicadorReportPage = lazy(() => import(/* webpackChunkName: "IndicadorReportPage" */ '../../pages/soporte/reporte/IndicadorReportPage'));
+const ReporteSoportes = lazy(() => import(/* webpackChunkName: "ReporteSoportes" */ '../../pages/soporte/reporte/ReporteSoportes'));
+const ConfigInventarioPage = lazy(() => import(/* webpackChunkName: "ConfigInventarioPage" */ '../../pages/inventario/ConfigInventarioPage'));
+const InvEquiposPage = lazy(() => import(/* webpackChunkName: "InvEquiposPage" */ '../../pages/inventario/equipo/InvEquiposPage'));
+const InvComponentesPage = lazy(() => import(/* webpackChunkName: "InvComponentesPage" */ '../../pages/inventario/componentes/InvComponentesPage'));
+const ActividadPage = lazy(() => import(/* webpackChunkName: "ActividadPage" */ '../../pages/actividad/ActividadPage'));
+const ListActividadesPage = lazy(() => import(/* webpackChunkName: "ListActividadesPage" */ '../../pages/actividad/ListActividadesPage'));
+const PermisosPage = lazy(() => import(/* webpackChunkName: "PermisosPage" */ '../../pages/permisos/PermisosPage'));
+const ListPermisosAdminPage = lazy(() => import(/* webpackChunkName: "ListPermisosAdminPage" */ '../../pages/permisos/ListPermisosAdminPage'));
+const ListPermisosPage = lazy(() => import(/* webpackChunkName: "ListPermisosPage" */ '../../pages/permisos/ListPermisosPage'));
+const SolicitudPage = lazy(() => import(/* webpackChunkName: "SolicitudPage" */ '../../pages/solicitud/SolicitudPage'));
+const UserSoportesPage = lazy(() => import(/* webpackChunkName: "UserSoportesPage" */ '../../pages/soporte/UserSoportesPage'));
+
+const ProfilePage = lazy(() => import(/* webpackChunkName: "ProfilePage" */ '../../pages/user/ProfilePage'));
+const ChangePwdPage = lazy(() => import(/* webpackChunkName: "ProfilePage" */ '../../pages/user/ChangePwdPage'));
+const MarcacionPage = lazy(() => import(/* webpackChunkName: "MarcacionPage" */ '../../pages/marcacion/MarcacionPage'));
 
 
-//const Lazy1 = lazy(() => import(/* webpackChunkName: "LazyPage1" */ '../01-lazyload/pages/LazyPage1'));
+const ErrorNotFound = lazy(() => import(/* webpackChunkName: "ErrorNotFound" */ '../../pages/error/ErrorNotFound'));
+//const ErrorAccessDenied = lazy(() => import(/* webpackChunkName: "ErrorNotFound" */ '../../pages/error/ErrorAccessDenied'));
 
 
 const generateRoutes = (basePath, components, roles) =>
@@ -138,8 +139,6 @@ export const errorRoutes = [
         Component: ErrorNotFound,
     },
 ];
-
-
 
 
 
