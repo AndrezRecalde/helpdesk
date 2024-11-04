@@ -1,7 +1,7 @@
 import { Modal } from "@mantine/core";
+import { isNotEmpty, useForm } from "@mantine/form";
 import { InvBajaEquipoForm, TextSection } from "../../../../components";
 import { useInvUiEquipo, useSoporteStore } from "../../../../hooks";
-import { isNotEmpty, useForm } from "@mantine/form";
 
 export const InvBajaEquipoModal = () => {
     //const { setActivateInvEquipo } = useInvEquipoStore();

@@ -99,7 +99,7 @@ class PermisosAdminController extends Controller
                 'titulo'   =>  'CONCESIÓN DE PERMISO HASTA 4 HORAS',
                 'permisos' => $permisos
             ];
-        $pdf = Pdf::loadView('pdf.permisos.gerencia.permiso', $data);
+        $pdf = Pdf::loadView('pdf.permisos.general.new', $data);
         return $pdf->setPaper('a4', 'portrait')->download('permiso.pdf');
     }
 
@@ -129,8 +129,8 @@ class PermisosAdminController extends Controller
         return $pdf->setPaper('a4', 'portrait')->download('permiso.pdf');
     }
 
-    function getInfoPermisosForUser(Request $request) : JsonResponse {
-        $info_permisos = DB::select('CALL per_permisos_info_user(?)', [$request->usuario_id]);
+    function getInfoPermisosForUser(Request $request): JsonResponse {
+        $info_permisos = collect(DB::select('CALL per_permisos_info_user(?)', [$request->usuario_id]))->first();
 
         return response()->json(['status' => MsgStatus::Success, 'info_permisos' => $info_permisos], 200);
     }

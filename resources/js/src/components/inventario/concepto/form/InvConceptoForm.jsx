@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { Box, Stack, TextInput } from "@mantine/core";
 import { BtnSubmit } from "../../../../components";
-import { IconChecks } from "@tabler/icons-react";
 import { useInvConceptoStore, useInvUiConcepto } from "../../../../hooks";
 
 export const InvConceptoForm = ({ form }) => {
@@ -44,7 +43,7 @@ export const InvConceptoForm = ({ form }) => {
                     placeholder="Digite el nombre el nombre del estado"
                     {...form.getInputProps("nombre_concepto")}
                 />
-                <BtnSubmit fontSize={16} IconSection={IconChecks}>
+                <BtnSubmit>
                     Guardar
                 </BtnSubmit>
             </Stack>

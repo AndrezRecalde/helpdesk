@@ -1,6 +1,6 @@
 import { Modal } from "@mantine/core";
-import { InvDeleteEquipoForm, TextSection } from "../../../../components";
 import { isNotEmpty, useForm } from "@mantine/form";
+import { InvDeleteEquipoForm, TextSection } from "../../../../components";
 import { useInvEquipoStore, useInvUiEquipo } from "../../../../hooks";
 
 export const InvDeleteEquipoModal = () => {

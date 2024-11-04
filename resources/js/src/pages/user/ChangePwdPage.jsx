@@ -48,7 +48,7 @@ export const ChangePwdPage = () => {
 
     return (
         <Container size={560} my={30}>
-            <TitlePage order={2} ta="center">
+            <TitlePage fw={900} order={2} ta="center">
                 Cambiar Contraseña
             </TitlePage>
             <TextSection color="dimmed" tt="" fz={16} ta="center">

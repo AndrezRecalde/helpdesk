@@ -301,7 +301,7 @@ export const FormCreateSoporte = ({ form }) => {
                     placeholder="Seleccione fecha de finalización"
                     {...form.getInputProps("fecha_fin")}
                 />
-                <BtnSubmit fontSize={16} IconSection={IconBrandTelegram}>
+                <BtnSubmit IconSection={IconBrandTelegram}>
                     Crear el soporte
                 </BtnSubmit>
             </Stack>

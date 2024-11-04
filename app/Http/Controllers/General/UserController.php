@@ -67,4 +67,10 @@ class UserController extends Controller
 
         return response()->json(['status' => MsgStatus::Success, 'info' => $info], 200);
     }
+
+    function getInfoSoporteForUser(Request $request): JsonResponse {
+        $info = collect(DB::select('CALL per_soporte_user_total(?)', [$request->usuario_id]))->first();
+
+        return response()->json(['status' => MsgStatus::Success, 'info' => $info], 200);
+    }
 }

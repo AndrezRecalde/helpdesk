@@ -55,10 +55,10 @@ export const PagesGerente = () => {
                     element={<SoporteCalificacionPage />}
                 />
 
-                <Route path="/permiso" element={<PermisosPage />} />
+                <Route path="permiso" element={<PermisosPage />} />
 
                 <Route
-                    path="/ver-permisos"
+                    path="ver-permisos"
                     element={<ListPermisosAdminPage />}
                 />
 
@@ -69,13 +69,13 @@ export const PagesGerente = () => {
                 />
 
                 <Route
-                    path="/configuracion-inventario/:tabValue/*"
+                    path="configuracion-inventario/:tabValue/*"
                     element={<ConfigInventarioPage />}
                 />
 
-                <Route path="/inventario/equipos" element={<InvEquiposPage />} />
+                <Route path="inventario/equipos" element={<InvEquiposPage />} />
 
-                <Route path="/inventario/componentes" element={<InvComponentesPage />} />
+                <Route path="inventario/componentes" element={<InvComponentesPage />} />
                 <Route path="dashboard" element={<DashGerenciaPage />} />
             </RoutesNotFound>
         </>

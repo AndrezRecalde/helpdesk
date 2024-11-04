@@ -48,14 +48,9 @@ export const useActividadStore = () => {
     const startAddActividad = async (actividad, fecha_inicio, fecha_fin) => {
         try {
             if (actividad.id) {
-                const { data } = await helpdeskApi.post(
+                const { data } = await helpdeskApi.put(
                     `/usuario/update/actividad/${actividad.id}`,
                     actividad,
-                    {
-                        headers: {
-                            "Content-Type": "multipart/form-data",
-                        },
-                    }
                 );
                 dispatch(onLoadMessage(data));
                 setTimeout(() => {
@@ -72,11 +67,6 @@ export const useActividadStore = () => {
             const { data } = await helpdeskApi.post(
                 "/usuario/create/actividad",
                 actividad,
-                {
-                    headers: {
-                        "Content-Type": "multipart/form-data",
-                    },
-                }
             );
             dispatch(onLoadMessage(data));
             setTimeout(() => {

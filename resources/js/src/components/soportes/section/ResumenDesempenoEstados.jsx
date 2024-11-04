@@ -4,7 +4,7 @@ import {
     TableDesempenoEstados,
     TextSection,
     TitlePage,
-} from "../..";
+} from "../../../components";
 import { useIndicadorStore } from "../../../hooks";
 
 export const ResumenDesempenoEstados = () => {

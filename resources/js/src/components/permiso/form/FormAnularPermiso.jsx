@@ -26,11 +26,7 @@ export const FormAnularPermiso = ({ form }) => {
                     placeholder="Describa su motivo"
                     {...form.getInputProps("per_observacion_anulado")}
                 />
-                <BtnSubmit
-                    fontSize={16}
-                    IconSection={IconBan}
-                    loading={isLoading}
-                >
+                <BtnSubmit IconSection={IconBan} loading={isLoading}>
                     Anular permiso
                 </BtnSubmit>
             </Stack>

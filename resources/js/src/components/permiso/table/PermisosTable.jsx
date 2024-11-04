@@ -1,11 +1,11 @@
 import { useCallback, useMemo } from "react";
 import { useMantineReactTable } from "mantine-react-table";
 import { MenuTable_Per, TableContent } from "../../../components";
-import dayjs from "dayjs";
 import { usePermisoStore, useUiPermiso } from "../../../hooks";
+import dayjs from "dayjs";
 
 export const PermisosTable = () => {
-    const { isLoading, permisos, startExportPermiso, setActivatePermiso } =
+    const { isLoading, permisos, startCardPermiso, setActivatePermiso } =
         usePermisoStore();
     const { modalActionAnularPermiso } = useUiPermiso();
     const columns = useMemo(
@@ -47,7 +47,7 @@ export const PermisosTable = () => {
 
     const handleExport = useCallback((selected) => {
         setActivatePermiso(selected);
-        startExportPermiso(selected);
+        startCardPermiso(selected.idper_permisos);
     }, []);
 
     const handleAnular = useCallback((selected) => {

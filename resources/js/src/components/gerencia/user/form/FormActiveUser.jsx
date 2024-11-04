@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { Box, Flex, Select, Stack } from "@mantine/core";
-import { IconChecks, IconUserScan } from "@tabler/icons-react";
+import { IconUserScan } from "@tabler/icons-react";
 import { useUiUser, useUsersStore } from "../../../../hooks";
 import { BtnSubmit, TextSection } from "../../../../components";
 
@@ -55,7 +55,7 @@ export const FormActiveUser = ({ form }) => {
                     withAsterisk
                     {...form.getInputProps("actvo")}
                 />
-                <BtnSubmit IconSection={IconChecks} fontSize={16}>
+                <BtnSubmit>
                     Guardar
                 </BtnSubmit>
             </Stack>

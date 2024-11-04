@@ -134,7 +134,7 @@
         </table>
     </div>
 
-    <div class="anexos">
+    {{-- <div class="anexos">
         <h3>Anexos</h3>
         <p>Se adjuntan evidencias fotográficas de las actividades más relevantes realizadas durante el mes:</p>
         <ul>
@@ -147,7 +147,7 @@
                 @endforeach
             @endforeach
         </ul>
-    </div>
+    </div> --}}
 
 
     <div class="content">

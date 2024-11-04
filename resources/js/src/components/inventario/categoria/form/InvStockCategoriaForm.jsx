@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { Box, NumberInput, Stack } from "@mantine/core";
 import { BtnSubmit } from "../../../../components";
-import { IconChecks } from "@tabler/icons-react";
 import { useInvCategoriaStore, useInvUiCategoria } from "../../../../hooks";
 
 export const InvStockCategoriaForm = ({ form }) => {
@@ -46,7 +45,7 @@ export const InvStockCategoriaForm = ({ form }) => {
                     allowNegative={false}
                     {...form.getInputProps("stock")}
                 />
-                <BtnSubmit fontSize={16} IconSection={IconChecks}>
+                <BtnSubmit>
                     Guardar
                 </BtnSubmit>
             </Stack>

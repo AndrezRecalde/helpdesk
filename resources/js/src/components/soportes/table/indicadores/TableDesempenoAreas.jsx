@@ -1,5 +1,4 @@
 import { Table } from "@mantine/core";
-import { TitlePage } from "../../../../components";
 import { useIndicadorStore } from "../../../../hooks";
 
 export const TableDesempenoAreas = () => {

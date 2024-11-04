@@ -1,45 +1,29 @@
 import cx from "clsx";
-import { useCallback, useEffect, useState } from "react";
-import {
-    Avatar,
-    Group,
-    Menu,
-    Text,
-    UnstyledButton,
-    rem,
-    useMantineTheme,
-} from "@mantine/core";
-import {
-    IconChevronRight,
-    IconFingerprint,
-    IconLogout,
-    IconSettings,
-    IconUserHexagon,
-} from "@tabler/icons-react";
+import { useMemo, useState } from "react";
+import { Avatar, Group, Menu, Text, UnstyledButton, rem } from "@mantine/core";
+import { IconChevronRight, IconLogout } from "@tabler/icons-react";
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "../../../hooks";
+import { menuRoutes } from "../../../routes/router/routes";
 
 export const UserBtnHeader = ({ classes, toggleMobile = null }) => {
-    const theme = useMantineTheme();
     const { startLogout } = useAuthStore();
     const navigate = useNavigate();
     const [userMenuOpened, setUserMenuOpened] = useState(false);
-    const [nombres, setNombres] = useState("");
+    //const [nombres, setNombres] = useState("G");
 
-    const usuario = JSON.parse(localStorage.getItem("service_user"));
-
-    useEffect(() => {
-        if (usuario) {
-            setNombres(getInitials(usuario.usu_alias));
-        }
-    }, [usuario]);
-
-    const getInitials = useCallback((alias) => {
-        const [firstName, lastName] = alias?.split(" ") || [];
-        return `${firstName?.[0] || ""}${lastName?.[0] || ""}`;
+    const usuario = useMemo(() => {
+        const storedUser = localStorage.getItem("service_user");
+        return storedUser ? JSON.parse(storedUser) : null;
     }, []);
 
-    const navigateUserMenu = (linked) => {
+    const nombres = useMemo(() => {
+        if (!usuario || !usuario.usu_alias) return "G"; // Valor predeterminado si `usuario` no tiene alias
+        const [firstName = "", lastName = ""] = usuario.usu_alias.split(" ");
+        return `${firstName[0] || ""}${lastName[0] || ""}`;
+    }, [usuario]);
+
+    const handleMenuClick  = (linked) => {
         navigate(linked);
         if (toggleMobile) {
             toggleMobile(true);
@@ -72,10 +56,10 @@ export const UserBtnHeader = ({ classes, toggleMobile = null }) => {
                         />
                         <div style={{ flex: 1 }}>
                             <Text fw={500} size="sm">
-                                {usuario?.usu_alias}
+                                {usuario?.usu_alias || "Sin datos"}
                             </Text>
                             <Text size="xs" c="dimmed">
-                                {usuario?.email}
+                                {usuario?.email || "Sin datos"}
                             </Text>
                         </div>
                         <IconChevronRight
@@ -86,52 +70,36 @@ export const UserBtnHeader = ({ classes, toggleMobile = null }) => {
                 </UnstyledButton>
             </Menu.Target>
             <Menu.Dropdown>
-                <Menu.Item
-                    onClick={() => navigateUserMenu("/u/profile")}
-                    leftSection={
-                        <IconUserHexagon
-                            style={{ width: rem(16), height: rem(16) }}
-                            color={theme.colors.teal[6]}
-                            stroke={1.5}
-                        />
-                    }
-                >
-                    Ver perfil
-                </Menu.Item>
-                <Menu.Item
-                    onClick={() => navigateUserMenu("/u/change-password")}
-                    leftSection={
-                        <IconSettings
-                            style={{ width: rem(16), height: rem(16) }}
-                            stroke={1.5}
-                        />
-                    }
-                >
-                    Cambiar contraseña
-                </Menu.Item>
-                <Menu.Item
-                    onClick={() => navigateUserMenu("/u/ver-marcaciones")}
-                    leftSection={
-                        <IconFingerprint
-                            style={{ width: rem(16), height: rem(16) }}
-                            stroke={1.5}
-                        />
-                    }
-                >
-                    Ver marcaciones
-                </Menu.Item>
+                {menuRoutes
+                    .slice(0, -1)
+                    .map(({ label, path, link, icon: Icon, color }) => (
+                        <Menu.Item
+                            key={path}
+                            onClick={() => handleMenuClick(link)}
+                            leftSection={
+                                <Icon
+                                    style={{ width: rem(18), height: rem(18) }}
+                                    color={color}
+                                    stroke={1.5}
+                                />
+                            }
+                        >
+                            {label}
+                        </Menu.Item>
+                    ))}
+
                 <Menu.Label>Sesión</Menu.Label>
                 <Menu.Item
                     onClick={startLogout}
-                    color="red"
+                    color={menuRoutes.at(-1).color}
                     leftSection={
                         <IconLogout
-                            style={{ width: rem(16), height: rem(16) }}
+                            style={{ width: rem(18), height: rem(18) }}
                             stroke={1.5}
                         />
                     }
                 >
-                    Cerrar sesión
+                    {menuRoutes.at(-1).label}
                 </Menu.Item>
             </Menu.Dropdown>
         </Menu>

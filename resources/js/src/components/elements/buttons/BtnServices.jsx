@@ -1,7 +1,8 @@
-import { ActionIcon, Button, Group, Menu, Tooltip, rem, useMantineTheme } from "@mantine/core";
+import { ActionIcon, Button, Group, Menu, rem, useMantineTheme } from "@mantine/core";
 import {
     IconBuildingBank,
     IconCategory,
+    IconChecks,
     IconChevronDown,
     IconDeviceDesktopExclamation,
     IconDeviceImacUp,
@@ -17,7 +18,7 @@ export const BtnSubmit = ({
     fullwidth = true,
     heigh = 45,
     fontSize = 18,
-    IconSection,
+    IconSection = IconChecks,
     loading = false,
     disabled = false,
 }) => {

@@ -8,12 +8,14 @@ import {
     Select,
     SimpleGrid,
     Checkbox,
-    Grid,
     Box,
     Stack,
 } from "@mantine/core";
 import { DateTimePicker } from "@mantine/dates";
-import { IconCalendarMonth, IconPinEnd } from "@tabler/icons-react";
+import {
+    IconCalendarMonth,
+    IconRosetteDiscountCheck,
+} from "@tabler/icons-react";
 import { BtnSubmit } from "../../../components";
 import {
     useEquipoStore,
@@ -103,7 +105,10 @@ export const FormDiagnosticar = ({ form, option }) => {
                 {activateSoporte?.incidente}
             </Text>
             <Card.Section withBorder inheritPadding py="xs">
-                <SimpleGrid cols={{ base: 1, sm: 1, md: 3, lg: 3 }} spacing={{ base: 10, md: 'xl' }}>
+                <SimpleGrid
+                    cols={{ base: 1, sm: 1, md: 3, lg: 3 }}
+                    spacing={{ base: 10, md: "xl" }}
+                >
                     <div>
                         <Text size="xs" c="dimmed">
                             Direccion
@@ -229,7 +234,7 @@ export const FormDiagnosticar = ({ form, option }) => {
                                 })}
                             />
                         ) : null}
-                        <BtnSubmit fontSize={16} IconSection={IconPinEnd}>
+                        <BtnSubmit IconSection={IconRosetteDiscountCheck}>
                             Finalizar soporte
                         </BtnSubmit>
                     </Stack>

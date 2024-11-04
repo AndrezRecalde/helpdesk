@@ -7,7 +7,7 @@ export const PublicRoutes = ({ children }) => {
     //const { token } = useAuthStore();
     const { state } = useLocation();
 
-    const pathname = state?.from?.pathname ?? '/u/profile';
+    const pathname = state?.from?.pathname ?? '/staff/d/profile';
     //console.log(pathname)
 
   return !token ? children : <Navigate to={pathname} />

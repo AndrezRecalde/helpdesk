@@ -206,7 +206,6 @@ Route::group(['prefix' => 'general', 'middleware' => ['auth:sanctum']], function
     Route::post('/reporte-soporte-pdf', [SoporteController::class, 'exportPDFCardSoporte']);
     Route::post('/reporte-actividades-pdf', [SoporteController::class, 'exportActividadesSoportes']);
 
-
     /* TIPOS DE SOLICITUDES DE SOPORTE */
     Route::get('/tipos-solicitudes', [TipoSolicitudController::class, 'getTiposSolicitudesSoporte']);
 
@@ -237,12 +236,12 @@ Route::group(['prefix' => 'usuario', 'middleware' => ['auth:sanctum']], function
     Route::post('/enviar-solicitud', [SoporteController::class, 'enviarSolicitud']);
 
     /* INFO DE LOS SOPORTES PERFIL */
-    Route::post("/info-soportes", [UserController::class, 'getInfoUsersSoportes']);
+    Route::post("/info-soportes", [UserController::class, 'getInfoSoporteForUser']);
 
     /* ACTIVIDADES */
     Route::post('/listar-actividades', [ActividadController::class, 'getActivForUserForDates']);
     Route::post('/create/actividad', [ActividadController::class, 'store']);
-    Route::post('/update/actividad/{id}', [ActividadController::class, 'update']);
+    Route::put('/update/actividad/{id}', [ActividadController::class, 'update']);
     Route::post('/export/pdf/actividades', [ActividadController::class, 'exportPDFActividadesForUser']);
 
     /* SOPORTES */

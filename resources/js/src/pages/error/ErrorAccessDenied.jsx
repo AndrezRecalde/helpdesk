@@ -7,7 +7,7 @@ import { IconUserCircle } from "@tabler/icons-react";
 export const ErrorAccessDenied = () => {
     const navigate = useNavigate();
     const handleAction = () => {
-        navigate("/u/profile");
+        navigate("/staff/d/profile");
     };
 
     return (

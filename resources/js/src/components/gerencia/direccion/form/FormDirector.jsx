@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { ActionIcon, Box, Group, Select, Stack } from "@mantine/core";
-import { IconArrowsUpDown, IconRotate } from "@tabler/icons-react";
+import { IconArrowsDiff, IconRotate } from "@tabler/icons-react";
 import { BtnSubmit } from "../../..";
 import {
     useDirectorStore,
@@ -61,12 +61,13 @@ export const FormDirector = ({ form }) => {
             <Stack>
                 <Group justify="center">
                     <ActionIcon
-                        size={42}
-                        variant="default"
+                        size={50}
+                        variant="light"
+                        radius="xl"
                         aria-label="Cambio de roles"
                         onClick={(e) => handleChangePositionDownUp(e)}
                     >
-                        <IconArrowsUpDown
+                        <IconArrowsDiff
                             style={{ width: "70%", height: "70%" }}
                             stroke={1.5}
                         />

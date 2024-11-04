@@ -11,11 +11,11 @@ import {
 import {
     useInvEquipoStore,
     useInvPerifericoStore,
-    useInvUiEquipo,
+    //useInvUiEquipo,
     useInvUiPeriferico,
 } from "../../../../hooks";
 import { BtnSubmit } from "../../../../components";
-import { IconChecks, IconCircleDashedCheck } from "@tabler/icons-react";
+import { IconCircleDashedCheck } from "@tabler/icons-react";
 import Swal from "sweetalert2";
 
 export const InvTransferirPerifericoForm = ({ form }) => {
@@ -114,13 +114,7 @@ export const InvTransferirPerifericoForm = ({ form }) => {
                         2
                     )}
                 </Code>
-                <BtnSubmit
-                    fontSize={16}
-                    IconSection={IconChecks}
-                    disabled={btnDisabled}
-                >
-                    Transferir
-                </BtnSubmit>
+                <BtnSubmit disabled={btnDisabled}>Transferir</BtnSubmit>
             </Stack>
         </Box>
     );

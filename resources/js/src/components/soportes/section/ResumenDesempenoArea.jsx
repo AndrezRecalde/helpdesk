@@ -3,7 +3,7 @@ import {
     ChartBarDesempAreas,
     TableDesempenoAreas,
     TitlePage,
-} from "../..";
+} from "../../../components";
 
 export const ResumenDesempenoArea = () => {
     return (

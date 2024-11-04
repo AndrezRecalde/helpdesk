@@ -2,7 +2,7 @@ import { useMantineReactTable } from "mantine-react-table";
 import { useMemo } from "react";
 import { useSoporteStore } from "../../../hooks";
 import { Box, Button } from "@mantine/core";
-import { IconChecks, IconStars } from "@tabler/icons-react";
+import { IconChecks } from "@tabler/icons-react";
 import { TableContent } from "../../../components";
 
 export const SoportesCalificacionTable = () => {
@@ -35,7 +35,7 @@ export const SoportesCalificacionTable = () => {
 
     const handleCalificar = (rows, table) => {
         rows.map((row) => startUpdateCalificacion(row.original.id_sop));
-        //console.log(table.resetRowSelection())
+        table.resetRowSelection();
     };
 
     const table = useMantineReactTable({

@@ -1,5 +1,5 @@
-import { useCallback, useEffect, useState } from "react";
-import { Box, FileInput, Group, Image, Stack } from "@mantine/core";
+import { useEffect } from "react";
+import { Box, Stack } from "@mantine/core";
 import { DateInput } from "@mantine/dates";
 import { Link } from "@mantine/tiptap";
 import { useEditor } from "@tiptap/react";
@@ -16,19 +16,22 @@ import dayjs from "dayjs";
 export const ActividadForm = ({ fecha_inicio, fecha_fin }) => {
     const { activateActividad, startAddActividad } = useActividadStore();
     const { modalActionActividad } = useUiActividad();
-    const [previews, setPreviews] = useState([]); // Arreglo para múltiples previews
 
     const form = useForm({
         initialValues: {
             actividad: "",
             fecha_actividad: new Date(),
-            imagenes: [],
+            //imagenes: [],
         },
 
         validate: {
             actividad: isNotEmpty("Por favor ingresa la actividad"),
             fecha_actividad: isNotEmpty("Por favor ingresa la fecha de la actividad"),
         },
+        transformValues: (values) => ({
+            ...values,
+            fecha_actividad: dayjs(values.fecha_actividad).format("YYYY-MM-DD") || null
+        })
     });
 
     let content = "";
@@ -54,34 +57,16 @@ export const ActividadForm = ({ fecha_inicio, fecha_fin }) => {
                 ...activateActividad,
                 fecha_actividad: dt,
             });
-
-            // Obtener imágenes previas si las hay
-            const imageUrls = activateActividad.imagenes || [];
-            const initialPreviews = imageUrls.map((img) => `/storage/${img.ruta_imagen}`);
-            setPreviews(initialPreviews);
-
-            // Si necesitas enviar estas URLs como datos de formulario
-            form.setFieldValue("imagenes", imageUrls);
+            return;
         }
     }, [activateActividad]);
 
-    const handleImageChange = useCallback((files) => {
-        if (files.length) {
-            const previewUrls = Array.from(files).map((file) => URL.createObjectURL(file));
-            setPreviews(previewUrls);
-            form.setFieldValue("imagenes", files);
-        } else {
-            setPreviews([]);
-            form.setFieldValue("imagenes", []);
-        }
-    }, [form]);
-
     const handleSubmit = (e) => {
         e.preventDefault();
-        startAddActividad(form.values, fecha_inicio, fecha_fin);
+        console.log(form.getTransformedValues())
+        startAddActividad(form.getTransformedValues(), fecha_inicio, fecha_fin);
         modalActionActividad(0);
         editor.commands.clearContent();
-        setPreviews([]); // Limpiar previews tras el envío
         form.reset();
     };
 
@@ -97,26 +82,6 @@ export const ActividadForm = ({ fecha_inicio, fecha_fin }) => {
                     {...form.getInputProps("fecha_actividad")}
                 />
                 <FormRichText form={form} nameInput="actividad" editor={editor} />
-                <FileInput
-                    multiple
-                    label="Agregar Anexo"
-                    placeholder="Puedes seleccionar imágenes .jpg, .jpeg, .png"
-                    accept="image/png, image/jpeg, image/jpg"
-                    onChange={(files) => handleImageChange(files)}
-                />
-                {previews.length > 0 && (
-                    <Group position="center">
-                        {previews.map((preview, index) => (
-                            <Image
-                                key={index}
-                                src={preview}
-                                alt={`Vista previa ${index + 1}`}
-                                fit="contain"
-                                maw={100}
-                            />
-                        ))}
-                    </Group>
-                )}
                 <BtnSubmit IconSection={IconDatabase}>
                     Guardar actividad
                 </BtnSubmit>

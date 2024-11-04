@@ -26,7 +26,7 @@ class ActividadRequest extends FormRequest
         return [
             'actividad'  => 'required',
             'fecha_actividad'   => 'required',
-            'imagenes'      => ''
+            //'imagenes'      => ''
         ];
     }
 

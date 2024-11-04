@@ -1,15 +1,20 @@
 import { useEffect } from "react";
 import { Container, SimpleGrid } from "@mantine/core";
-import { TitlePage, CardProfile, CardInfoStatsUser, TableMarcacionRelojOnline } from "../../components";
+import {
+    TitlePage,
+    CardProfile,
+    CardInfoStatsUser,
+    TableMarcacionRelojOnline,
+} from "../../components";
 import {
     useAuthStore,
+    usePermisoStore,
     useTecnicoStore,
     useTitlePage,
     useUsersStore,
 } from "../../hooks";
 import { Roles, lGerente, lTecnico } from "../../layouts";
 import { useNavigate } from "react-router-dom";
-
 
 export const ProfilePage = () => {
     useTitlePage("Helpdesk | Perfil");
@@ -21,6 +26,7 @@ export const ProfilePage = () => {
     const { startLoadInfoUsersSoporte, clearInfoSoportes } = useUsersStore();
     const { startLoadInfoTecnicosSoporte, clearInfoSoportesTecnico } =
         useTecnicoStore();
+    const { startLoadInfoPermisos, setActivatePermiso } = usePermisoStore();
 
     useEffect(() => {
         if (token) {
@@ -40,12 +46,21 @@ export const ProfilePage = () => {
             return;
         }
         startLoadInfoUsersSoporte(usuario.cdgo_usrio);
-
         return () => {
             clearInfoSoportes();
             clearInfoSoportesTecnico();
         };
     }, []);
+
+    useEffect(() => {
+        startLoadInfoPermisos(usuario.cdgo_usrio);
+
+      return () => {
+        setActivatePermiso(null);
+
+      }
+    }, [])
+
 
     const handleAction = () => {
         usuario?.role_id === 1

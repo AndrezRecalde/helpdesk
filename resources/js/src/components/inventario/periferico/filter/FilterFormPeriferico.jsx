@@ -69,7 +69,7 @@ export const FilterFormPeriferico = () => {
                         {...form.getInputProps("codigo_equipo")}
                     />
                 </SimpleGrid>
-                <BtnSubmit IconSection={IconSearch} fontSize={16}>
+                <BtnSubmit IconSection={IconSearch}>
                     Buscar
                 </BtnSubmit>
             </Box>

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Box, Stack, TextInput } from "@mantine/core";
 import { AlertSection, BtnSubmit, TextSection } from "../../../../components";
 import { useInvEquipoStore, useInvUiEquipo } from "../../../../hooks";
-import { IconChecks, IconTrashOff } from "@tabler/icons-react";
+import { IconTrashOff } from "@tabler/icons-react";
 
 export const InvDeleteEquipoForm = ({ form }) => {
     const { codigo, serie } = form.values;
@@ -77,13 +77,7 @@ export const InvDeleteEquipoForm = ({ form }) => {
                     placeholder="Digite el número de serie"
                     {...form.getInputProps("serie")}
                 />
-                <BtnSubmit
-                    fontSize={16}
-                    IconSection={IconChecks}
-                    disabled={btnDisabled}
-                >
-                    Guardar
-                </BtnSubmit>
+                <BtnSubmit disabled={btnDisabled}>Guardar</BtnSubmit>
             </Stack>
         </Box>
     );

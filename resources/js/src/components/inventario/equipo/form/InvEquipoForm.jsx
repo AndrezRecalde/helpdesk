@@ -5,12 +5,12 @@ import {
     InvEquipoComplementaria,
     InvEquipoGeneralForm,
 } from "./../../../../components";
+import { useInvEquipoStore, useInvUiEquipo } from "../../../../hooks";
 import {
     IconChevronsLeft,
     IconChevronsRight,
     IconSend,
 } from "@tabler/icons-react";
-import { useInvEquipoStore, useInvUiEquipo } from "../../../../hooks";
 
 export const InvEquipoForm = ({ form }) => {
     const { startAddInvEquipo, activateInvEquipo, setActivateInvEquipo } = useInvEquipoStore();

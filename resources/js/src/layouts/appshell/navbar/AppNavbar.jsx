@@ -1,18 +1,18 @@
 import { LinksGroup } from "./NavbarLinksGroup";
-import {
-    Roles,
-    lGerente,
-    lTecnico,
-    lUsuario,
-} from "./navlinks/navLinks";
 import classes from "../../../assets/styles/modules/layout/navbar/AppNavbar.module.css";
+import { navRoutes } from "../../../routes/router/routes";
 
 export const AppNavbar = ({ role, toggleMobile }) => {
-    const mockdata =
-        role === Roles.GERENTE ? lGerente : role === Roles.TECNICO ? lTecnico : role === Roles.USUARIO ? lUsuario : [];
+    // Filtra las secciones y enlaces en función del rol del usuario
+    const filteredLinks = navRoutes
+        .filter((section) => section.roles.includes(role))
+        .map((section) => ({
+            ...section,
+            links: section.links.filter((link) => link.roles.includes(role))
+        }));
 
-    const links = mockdata.map((item) => (
-        <LinksGroup {...item} key={item.label} toggleMobile={toggleMobile} />
+    const links = filteredLinks.map((item) => (
+        <LinksGroup {...item} key={item.label} role={role} toggleMobile={toggleMobile} />
     ));
 
     return (

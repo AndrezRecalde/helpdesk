@@ -136,6 +136,7 @@ export const usePermisoStore = () => {
             const { data } = await helpdeskApi.post('/general/info-permisos', { usuario_id });
             const { info_permisos } = data;
             dispatch(onSetActivatePermiso(info_permisos));
+            dispatch(onLoading(false));
         } catch (error) {
             ExceptionMessageError(error);
         }

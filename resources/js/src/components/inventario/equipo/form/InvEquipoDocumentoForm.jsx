@@ -1,7 +1,6 @@
 import { Box, FileInput, Stack, TextInput } from "@mantine/core";
 import { useInvEquipoStore, useInvUiEquipo } from "../../../../hooks";
 import { BtnSubmit } from "../../../../components";
-import { IconChecks } from "@tabler/icons-react";
 
 export const InvEquipoDocumentoForm = ({ form }) => {
     const { activateInvEquipo, startGuardarArchivo } = useInvEquipoStore();
@@ -9,7 +8,7 @@ export const InvEquipoDocumentoForm = ({ form }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(form.getValues())
+        console.log(form.getValues());
         startGuardarArchivo(activateInvEquipo, form.getValues());
         form.reset();
         modalActionAddDocumento(false);
@@ -36,12 +35,7 @@ export const InvEquipoDocumentoForm = ({ form }) => {
                     placeholder="Agregar documento"
                     {...form.getInputProps("documento")}
                 />
-                <BtnSubmit
-                    fontSize={16}
-                    IconSection={IconChecks}
-                >
-                    Guardar
-                </BtnSubmit>
+                <BtnSubmit>Guardar</BtnSubmit>
             </Stack>
         </Box>
     );

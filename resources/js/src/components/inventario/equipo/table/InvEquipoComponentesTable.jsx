@@ -3,7 +3,6 @@ import { useMantineReactTable } from "mantine-react-table";
 import { IconCopyPlus } from "@tabler/icons-react";
 import {
     BtnSection,
-    MenuTable_D,
     MenuTable_Perif,
     TableContent,
 } from "../../../../components";

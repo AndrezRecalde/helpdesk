@@ -180,7 +180,6 @@ export const FormSolicitudAdminSoporte = ({ form }) => {
                     {...form.getInputProps("incidente")}
                 />
                 <BtnSubmit
-                    fontSize={16}
                     IconSection={IconBrandTelegram}
                     loading={isLoading}
                     disabled={isLoading}

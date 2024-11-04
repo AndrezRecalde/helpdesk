@@ -54,7 +54,7 @@ export const FormAnularSoporte = ({ form }) => {
                     required
                     {...form.getInputProps("obs_anulado")}
                 />
-                <BtnSubmit fontSize={16} IconSection={IconProgressX}>
+                <BtnSubmit IconSection={IconProgressX}>
                     Anular solicitud
                 </BtnSubmit>
             </Stack>

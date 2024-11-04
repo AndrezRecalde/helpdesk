@@ -221,11 +221,11 @@ export const useUsersStore = () => {
         }
     };
 
-    const startLoadInfoUsersSoporte = async (user_id) => {
+    const startLoadInfoUsersSoporte = async (usuario_id) => {
         try {
             dispatch(onLoading());
             const { data } = await helpdeskApi.post("/usuario/info-soportes", {
-                user_id,
+                usuario_id,
             });
             const { info } = data;
             dispatch(onSetInfoSoportes(info));

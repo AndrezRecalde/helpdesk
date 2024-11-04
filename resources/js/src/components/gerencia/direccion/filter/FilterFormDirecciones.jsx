@@ -60,7 +60,7 @@ export const FilterFormDirecciones = () => {
                         };
                     })}
                 />
-                <BtnSubmit IconSection={IconSearch} fontSize={16}>
+                <BtnSubmit IconSection={IconSearch}>
                     Buscar
                 </BtnSubmit>
             </Box>

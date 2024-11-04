@@ -110,7 +110,6 @@ export const FormResetPwdUser = ({ form }) => {
                 <Divider />
                 <BtnSubmit
                     disabled={btnDisabled}
-                    fontSize={16}
                     IconSection={IconRestore}
                 >
                     Resetear contraseña

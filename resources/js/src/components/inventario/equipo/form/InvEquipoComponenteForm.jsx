@@ -9,7 +9,6 @@ import {
     Stack,
     TextInput,
 } from "@mantine/core";
-import { IconChecks, IconTrash } from "@tabler/icons-react";
 import { BtnSubmit, TextSection } from "../../../../components";
 import { randomId } from "@mantine/hooks";
 import { DateInput } from "@mantine/dates";
@@ -20,6 +19,7 @@ import {
     useInvMarcaStore,
     useInvUiEquipo,
 } from "../../../../hooks";
+import { IconTrash } from "@tabler/icons-react";
 
 export const InvEquipoComponenteForm = ({ form }) => {
     const { invMarcas } = useInvMarcaStore();
@@ -187,7 +187,7 @@ export const InvEquipoComponenteForm = ({ form }) => {
                     Agregar componente
                 </Button>
             </Group>
-            <BtnSubmit IconSection={IconChecks}>
+            <BtnSubmit>
                 Agregar Componente(s)
             </BtnSubmit>
         </Box>

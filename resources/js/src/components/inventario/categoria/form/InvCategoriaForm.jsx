@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import { Box, Select, Stack, TextInput } from "@mantine/core";
 import { BtnSubmit } from "../../../../components";
 import { useInvCategoriaStore, useInvTipocategoriaStore, useInvUiCategoria } from "../../../../hooks";
-import { IconChecks } from "@tabler/icons-react";
 
 export const InvCategoriaForm = ({ form }) => {
     const { tiposcategorias } = useInvTipocategoriaStore();
@@ -59,7 +58,7 @@ export const InvCategoriaForm = ({ form }) => {
                     placeholder="Digite el nombre de la Categoría"
                     {...form.getInputProps("nombre_categoria")}
                 />
-                <BtnSubmit fontSize={16} IconSection={IconChecks}>
+                <BtnSubmit>
                     Guardar
                 </BtnSubmit>
             </Stack>

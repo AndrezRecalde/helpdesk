@@ -12,26 +12,39 @@ import { IconChevronRight } from "@tabler/icons-react";
 import { Link, useLocation } from "react-router-dom";
 import classes from "../../../assets/styles/modules/layout/navbar/NavbarLinksGroup.module.css";
 
-export const LinksGroup = ({ icon: Icon, label, initiallyOpened, links, toggleMobile }) => {
-    const hasLinks = Array.isArray(links);
+export const LinksGroup = ({ icon: Icon, label, initiallyOpened, links, role, toggleMobile }) => {
+    const hasLinks = Array.isArray(links) && links.length > 0;
     const [opened, setOpened] = useState(initiallyOpened || false);
     const location = useLocation();
 
+    const getBasePath = (role) => {
+        switch (role) {
+            case "GERENTE":
+                return "/gerencia";
+            case "TECNICO":
+                return "/tecnico";
+            default:
+                return "/staff";
+        }
+    };
+
+    const basePath = getBasePath(role);
+
     const isActive = (link) => {
         return location.pathname === link;
-    }
+    };
 
-    const items = (hasLinks ? links : []).map((link) => (
+    const items = hasLinks ? links.map((link) => (
         <Text
             component={Link}
-            className={`${classes.link} ${isActive(link.link) ? classes.linkActive : ''}`}
-            to={link.link}
+            className={`${classes.link} ${isActive(`${basePath}${link.link}`) ? classes.linkActive : ''}`}
+            to={`${basePath}${link.link}`} // Ruta completa con prefijo
             key={link.label}
             onClick={toggleMobile}
         >
             {link.label}
         </Text>
-    ));
+    )) : null;
 
     return (
         <>
@@ -68,21 +81,3 @@ export const LinksGroup = ({ icon: Icon, label, initiallyOpened, links, toggleMo
         </>
     );
 };
-
-/* const mockdata = {
-    label: "Releases",
-    icon: IconCalendarStats,
-    links: [
-        { label: "Upcoming releases", link: "/" },
-        { label: "Previous releases", link: "/" },
-        { label: "Releases schedule", link: "/" },
-    ],
-};
-
-export function NavbarLinksGroup() {
-    return (
-        <Box mih={220} p="md">
-            <LinksGroup {...mockdata} />
-        </Box>
-    );
-} */

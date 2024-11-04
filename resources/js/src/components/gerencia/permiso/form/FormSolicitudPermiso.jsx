@@ -11,11 +11,11 @@ import {
 } from "@mantine/core";
 import { DateInput, TimeInput } from "@mantine/dates";
 import { BtnSubmit } from "../../..";
-import { IconChecks, IconClock } from "@tabler/icons-react";
+import { IconClock } from "@tabler/icons-react";
 import {
     useDireccionStore,
     usePermisoStore,
-    useStorageField,
+    //useStorageField,
     useUsersStore,
 } from "../../../../hooks";
 import dayjs from "dayjs";
@@ -29,7 +29,7 @@ export const FormSolicitudPermiso = ({ form, disabled }) => {
     const { users } = useUsersStore();
     const { isLoading, message, errores, startAddPermiso, startCardPermiso } =
         usePermisoStore();
-    const { setStoragePermisoFields } = useStorageField();
+    //const { setStoragePermisoFields } = useStorageField();
 
     const pickerControl_1 = (
         <ActionIcon
@@ -59,7 +59,7 @@ export const FormSolicitudPermiso = ({ form, disabled }) => {
 
     useEffect(() => {
         if (message !== undefined) {
-            setStoragePermisoFields(message);
+            //setStoragePermisoFields(message);
             Swal.fire({
                 text: `${message.msg}, ¿Deseas imprimir el permiso?`,
                 icon: "success",
@@ -142,11 +142,7 @@ export const FormSolicitudPermiso = ({ form, disabled }) => {
                 zIndex={1000}
                 overlayProps={{ radius: "sm", blur: 2 }}
             />
-            <Stack
-                align="stretch"
-                justify="center"
-                gap="md"
-            >
+            <Stack align="stretch" justify="center" gap="md">
                 <Select
                     withAsterisk
                     clearable
@@ -237,17 +233,15 @@ export const FormSolicitudPermiso = ({ form, disabled }) => {
                     />
                 </SimpleGrid>
                 <Textarea
-                    label="Observación"
-                    description="Si el permiso es personal no es necesario registrar tu observación"
+                    label="Observación (200 caracteres MAX)"
+                    description="Si el permiso es PERSONAL no es necesario registrar tu observación"
                     autosize
                     minRows={6}
                     maxRows={8}
                     {...form.getInputProps("per_observaciones")}
                 />
                 <BtnSubmit
-                    fontSize={16}
-                    IconSection={IconChecks}
-                    //loading={isLoading}
+                //loading={isLoading}
                 >
                     Registrar permiso
                 </BtnSubmit>

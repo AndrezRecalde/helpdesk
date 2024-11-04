@@ -11,7 +11,7 @@ import {
 } from "../../../../hooks";
 
 export const InvEquipoAsignacionModal = () => {
-    const { activateInvEquipo, setActivateInvEquipo } = useInvEquipoStore();
+    //const { activateInvEquipo, setActivateInvEquipo } = useInvEquipoStore();
     const { isOpenModalAssignEquipo, modalActionAssignEquipo } =
         useInvUiEquipo();
     const { startLoadUsersGeneral, clearUsers } = useUsersStore();

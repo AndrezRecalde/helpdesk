@@ -136,7 +136,7 @@ export const CardProfile = ({ usuario, handleAction }) => {
                 {usuario.role === Roles.GERENTE ||
                 usuario.role === Roles.TECNICO ? (
                     <Box component="form" onSubmit={handleAction}>
-                        <BtnSubmit fontSize={16} IconSection={IconDeviceImacUp}>
+                        <BtnSubmit IconSection={IconDeviceImacUp}>
                             Gestionar soportes
                         </BtnSubmit>
                     </Box>

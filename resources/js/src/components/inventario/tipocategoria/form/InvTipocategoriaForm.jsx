@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { Box, Stack, TextInput } from "@mantine/core";
 import { BtnSubmit } from "../../../../components";
-import { IconChecks } from "@tabler/icons-react";
 import {
     useInvTipocategoriaStore,
     useInvUiTipocategoria,
@@ -47,9 +46,7 @@ export const InvTipocategoriaForm = ({ form }) => {
                     placeholder="Digite el tipo de categoría"
                     {...form.getInputProps("nombre_tipocategoria")}
                 />
-                <BtnSubmit fontSize={16} IconSection={IconChecks}>
-                    Guardar
-                </BtnSubmit>
+                <BtnSubmit>Guardar</BtnSubmit>
             </Stack>
         </Box>
     );

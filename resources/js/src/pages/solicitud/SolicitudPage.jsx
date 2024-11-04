@@ -127,7 +127,7 @@ export const SolicitudPage = () => {
                             />
 
                             <Group justify="center" mt="md">
-                                <BtnSubmit loading={isLoading} fontSize={16} IconSection={IconBrandTelegram}>
+                                <BtnSubmit loading={isLoading} IconSection={IconBrandTelegram}>
                                     Solicitar soporte
                                 </BtnSubmit>
                             </Group>

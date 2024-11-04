@@ -1,4 +1,4 @@
-import { Box, Fieldset, SimpleGrid, Stack, TextInput } from "@mantine/core";
+import { Box, Fieldset, Stack, TextInput } from "@mantine/core";
 import { BtnSubmit, TextSection } from "../../../components";
 import { IconSearch } from "@tabler/icons-react";
 
@@ -33,12 +33,7 @@ export const FilterPermiso = ({
                         placeholder="Digita el número de soporte"
                         {...form.getInputProps("idper_permisos")}
                     />
-                    <BtnSubmit
-                        IconSection={IconSearch}
-                        heigh={40}
-                        fontSize={16}
-                        loading={isLoading}
-                    >
+                    <BtnSubmit IconSection={IconSearch} loading={isLoading}>
                         Buscar
                     </BtnSubmit>
                 </Stack>

@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { Box, ColorInput, Stack, TextInput } from "@mantine/core";
 import { BtnSubmit } from "../../../../components";
-import { IconChecks } from "@tabler/icons-react";
 import { useInvEstadoStore, useInvUiEstado } from "../../../../hooks";
 
 export const InvEstadoForm = ({ form }) => {
@@ -48,9 +47,7 @@ export const InvEstadoForm = ({ form }) => {
                     placeholder="Seleccione un color para el estado"
                     {...form.getInputProps("color")}
                 />
-                <BtnSubmit fontSize={16} IconSection={IconChecks}>
-                    Guardar
-                </BtnSubmit>
+                <BtnSubmit>Guardar</BtnSubmit>
             </Stack>
         </Box>
     );

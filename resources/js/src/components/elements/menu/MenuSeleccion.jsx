@@ -1,6 +1,5 @@
 import {
     Card,
-    Text,
     SimpleGrid,
     UnstyledButton,
     useMantineTheme,

@@ -1,12 +1,5 @@
 import { useEffect } from "react";
-import {
-    Box,
-    Divider,
-    Select,
-    SimpleGrid,
-    Stack,
-    Text,
-} from "@mantine/core";
+import { Box, Divider, Select, SimpleGrid, Stack, Text } from "@mantine/core";
 import { useSoporteStore, useTecnicoStore, useUiSoporte } from "../../../hooks";
 import { BtnSubmit } from "../../../components";
 import { IconBrandTelegram } from "@tabler/icons-react";
@@ -114,7 +107,6 @@ export const FormAsignarSoporte = ({ form }) => {
                     })}
                 />
                 <BtnSubmit
-                    fontSize={16}
                     IconSection={IconBrandTelegram}
                     loading={isLoading}
                     disabled={isLoading}

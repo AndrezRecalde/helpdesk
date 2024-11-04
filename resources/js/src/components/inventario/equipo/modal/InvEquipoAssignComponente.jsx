@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Modal } from "@mantine/core";
 import { InvEquipoComponenteForm, TextSection } from "../../../../components";
 import {
@@ -7,7 +8,6 @@ import {
 } from "../../../../hooks";
 import { isNotEmpty, useForm } from "@mantine/form";
 import { randomId } from "@mantine/hooks";
-import { useEffect } from "react";
 
 export const InvEquipoAssignComponente = () => {
     const { isOpenModalAssignPeriferico, modalActionAssignPeriferico } =

@@ -33,7 +33,7 @@ export const AdminTecnicosPage = () => {
         <Container size="xxl">
             <Group justify="space-between" mb={20}>
                 <div>
-                    <TitlePage order={2}>Gestión De Técnicos</TitlePage>
+                    <TitlePage order={2}>Gestión de técnicos</TitlePage>
                     <TextSection fw={700} tt="" fz={16}>
                         {`Tienes ${tecnicos.length} técnicos activados`}
                     </TextSection>

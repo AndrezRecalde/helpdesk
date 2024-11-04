@@ -7,7 +7,7 @@ import classes from "../../assets/styles/modules/layout/Layout.module.css";
 
 export const AppLayout = () => {
     const usuario = JSON.parse(localStorage.getItem("service_user"));
-    const [mobileOpened, { toggle: toggleMobile }] = useDisclosure();
+    const [mobileOpened, { toggle: toggleMobile }] = useDisclosure(false);
     const [desktopOpened, { toggle: toggleDesktop }] = useDisclosure(true);
 
     return (

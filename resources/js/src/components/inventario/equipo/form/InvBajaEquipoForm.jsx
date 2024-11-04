@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import {
     ActionIcon,
     Box,
@@ -11,13 +12,11 @@ import {
 } from "@mantine/core";
 import { AlertSection, BtnSubmit, TextSection } from "../../../../components";
 import {
-    IconChecks,
     IconCircleDashedCheck,
     IconDevicesDown,
     IconFile3d,
 } from "@tabler/icons-react";
 import { useInvEquipoStore, useSoporteStore } from "../../../../hooks";
-import { useEffect, useState } from "react";
 import { DateInput } from "@mantine/dates";
 
 export const InvBajaEquipoForm = ({ form }) => {
@@ -149,13 +148,7 @@ export const InvBajaEquipoForm = ({ form }) => {
                               )
                             : null}
                     </Code>
-                    <BtnSubmit
-                        fontSize={16}
-                        IconSection={IconChecks}
-                        disabled={btnDisabled}
-                    >
-                        Dar baja
-                    </BtnSubmit>
+                    <BtnSubmit disabled={btnDisabled}>Dar baja</BtnSubmit>
                 </Fieldset>
             </Box>
         </Stack>

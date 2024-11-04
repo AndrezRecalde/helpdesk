@@ -8,7 +8,6 @@ import {
     TextInput,
 } from "@mantine/core";
 import { BtnSubmit, TextSection } from "../../../../components";
-import { IconChecks } from "@tabler/icons-react";
 import { DateInput } from "@mantine/dates";
 import {
     useInvCategoriaStore,
@@ -213,9 +212,7 @@ export const InvPerifericoForm = ({ form }) => {
                         />
                     </Group>
                 </div>
-                <BtnSubmit fontSize={16} IconSection={IconChecks}>
-                    Guardar
-                </BtnSubmit>
+                <BtnSubmit>Guardar</BtnSubmit>
             </Stack>
         </Box>
     );

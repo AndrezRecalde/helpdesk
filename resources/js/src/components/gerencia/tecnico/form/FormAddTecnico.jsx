@@ -61,7 +61,6 @@ export const FormAddTecnico = ({ form }) => {
                     ]}
                 />
                 <BtnSubmit
-                    fontSize={16}
                     IconSection={IconUserBolt}
                     loading={isLoading}
                 >

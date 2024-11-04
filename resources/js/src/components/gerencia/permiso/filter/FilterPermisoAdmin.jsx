@@ -80,12 +80,7 @@ export const FilterPermisoAdmin = ({
                             {...form.getInputProps("idper_permisos")}
                         />
                     </SimpleGrid>
-                    <BtnSubmit
-                        IconSection={IconSearch}
-                        heigh={40}
-                        fontSize={16}
-                        loading={isLoading}
-                    >
+                    <BtnSubmit IconSection={IconSearch} loading={isLoading}>
                         Buscar
                     </BtnSubmit>
                 </Stack>

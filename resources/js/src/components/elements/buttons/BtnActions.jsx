@@ -2,7 +2,6 @@ import cx from "clsx";
 import {
     ActionIcon,
     TextInput,
-    Tooltip,
     UnstyledButton,
     rem,
     useComputedColorScheme,
@@ -10,7 +9,6 @@ import {
 } from "@mantine/core";
 import {
     IconDashboard,
-    IconDeviceDesktopExclamation,
     IconFileText,
     IconFileTypePdf,
     IconHome,

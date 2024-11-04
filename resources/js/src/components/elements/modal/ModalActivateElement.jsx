@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { Box, Modal, Select, Stack } from "@mantine/core";
 import { BtnSubmit, TextSection } from "../../../components";
-import { IconChecks } from "@tabler/icons-react";
 import { isNotEmpty, useForm } from "@mantine/form";
 
 export const ModalActivateElement = ({
@@ -95,7 +94,7 @@ export const ModalActivateElement = ({
                         key={form.key("activo")}
                         {...form.getInputProps("activo")}
                     />
-                    <BtnSubmit IconSection={IconChecks}>Guardar</BtnSubmit>
+                    <BtnSubmit>Guardar</BtnSubmit>
                 </Stack>
             </Box>
         </Modal>

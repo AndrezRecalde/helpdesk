@@ -1,12 +1,11 @@
 import { Box, Stack, TextInput } from "@mantine/core";
 import { BtnSubmit } from "../../../../components";
-import { IconChecks } from "@tabler/icons-react";
 import { useEffect } from "react";
 import { useInvUbicacionStore, useInvUiUbicacion } from "../../../../hooks";
 
 export const InvUbicacionForm = ({ form }) => {
-
-    const { startAddInvUbicacion, activateUbicacion, setActivateInvUbicacion } = useInvUbicacionStore();
+    const { startAddInvUbicacion, activateUbicacion, setActivateInvUbicacion } =
+        useInvUbicacionStore();
     const { modalActionUbicacion } = useInvUiUbicacion();
 
     useEffect(() => {
@@ -43,14 +42,12 @@ export const InvUbicacionForm = ({ form }) => {
                     placeholder="Digite el nombre del edificio o entidad"
                     {...form.getInputProps("nombre_edificio")}
                 />
-                 <TextInput
+                <TextInput
                     label="Ubicación física"
                     placeholder="Digite la ubicación física"
                     {...form.getInputProps("nombre_ubicacion")}
                 />
-                <BtnSubmit fontSize={16} IconSection={IconChecks}>
-                    Guardar
-                </BtnSubmit>
+                <BtnSubmit>Guardar</BtnSubmit>
             </Stack>
         </Box>
     );

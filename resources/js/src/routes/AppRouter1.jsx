@@ -18,12 +18,12 @@ const AuthRoutes = () => (
     <PublicRoutes>
         <Routes>
             <Route path="auth/login/*" element={<AuthPage />} />
-            <Route path="/*" element={<Navigate replace to="/auth/login" />} />
+            <Route path="/*" element={<Navigate replace to="auth/login" />} />
         </Routes>
     </PublicRoutes>
 );
 
-export const AppRouter = () => {
+export const AppRouter1 = () => {
     const { checkAuthToken } = useAuthStore();
 
     useEffect(() => {
@@ -43,7 +43,6 @@ export const AppRouter = () => {
                         </PrivateRoutes>
                     }
                 />
-
                 <Route
                     path="/tecnico/*"
                     element={
@@ -52,18 +51,16 @@ export const AppRouter = () => {
                         </PrivateRoutes>
                     }
                 />
-
                 <Route
-                    path="/gad/d/*"
+                    path="/staff/*"
                     element={
                         <PrivateRoutes requiredRole={Roles.USUARIO}>
                             <PagesUsuario />
                         </PrivateRoutes>
                     }
                 />
-
                 <Route
-                    path="/u/*"
+                    path="/staff/d/*"
                     element={
                         <AuthGuard>
                             <PrivatePages />

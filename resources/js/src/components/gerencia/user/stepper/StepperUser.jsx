@@ -1,8 +1,8 @@
 import { Button, Group, Stepper, Text, Title } from "@mantine/core";
 import { useEffect, useState } from "react";
-import { FormInfoUser, FormTipoUser, FormTrabajoUser } from "../../..";
-import { IconSend } from "@tabler/icons-react";
+import { FormInfoUser, FormTipoUser, FormTrabajoUser } from "../../../../components";
 import { useStorageField, useUiUser, useUsersStore } from "../../../../hooks";
+import { IconSend } from "@tabler/icons-react";
 
 export const StepperUser = ({ form }) => {
     const [active, setActive] = useState(0);

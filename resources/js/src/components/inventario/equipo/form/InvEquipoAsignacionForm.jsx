@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { Box } from "@mantine/core";
 import { BtnSubmit, InvAsignacionForm } from "../../../../components";
-import { IconChecks } from "@tabler/icons-react";
 import {
     useInvEquipoStore,
     useInvUiEquipo,
@@ -37,7 +36,7 @@ export const InvEquipoAsignacionForm = ({ form }) => {
             onSubmit={form.onSubmit((_, e) => handleSubmit(e))}
         >
             <InvAsignacionForm form={form} />
-            <BtnSubmit fontSize={16} IconSection={IconChecks}>
+            <BtnSubmit>
                 Guardar
             </BtnSubmit>
         </Box>
