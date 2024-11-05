@@ -23,8 +23,14 @@ const ListPermisosAdminPage = () => {
     useTitlePage("Helpdesk | Lista Permisos");
     const { startLoadDirecciones, clearDirecciones } = useDireccionStore();
     const { startLoadUsersExtrict, clearUsers } = useUsersStore();
-    const { startLoadPermisos, permisos, clearPermisos, message, errores } =
-        usePermisoStore();
+    const {
+        startLoadPermisos,
+        permisos,
+        clearPermisos,
+        message,
+        errores,
+        isExport,
+    } = usePermisoStore();
     const navigate = useNavigate();
     const form = useForm({
         initialValues: {
@@ -65,6 +71,21 @@ const ListPermisosAdminPage = () => {
     }, [id_direccion_pide]);
 
     useEffect(() => {
+        if (isExport === true) {
+            Swal.fire({
+                icon: "warning",
+                text: "Un momento porfavor, se está exportando",
+                showConfirmButton: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                },
+            });
+        } else {
+            Swal.close(); // Cierra el modal cuando isExport es false
+        }
+    }, [isExport]);
+
+    useEffect(() => {
         if (message !== undefined) {
             Swal.fire({
                 icon: message.status,
@@ -88,7 +109,7 @@ const ListPermisosAdminPage = () => {
 
     const handleNavigate = () => {
         navigate("/gerencia/permiso");
-    }
+    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -98,9 +119,7 @@ const ListPermisosAdminPage = () => {
     return (
         <Container size="xxl">
             <Group justify="space-between">
-                <TitlePage order={2}>
-                    Lista de permisos
-                </TitlePage>
+                <TitlePage order={2}>Lista de permisos</TitlePage>
                 <BtnSection
                     IconSection={IconChevronsRight}
                     handleAction={handleNavigate}

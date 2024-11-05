@@ -228,7 +228,7 @@ class SoporteController extends Controller
         if (sizeof($soportes) > 0) {
             $data = [
                 'direccion'    => 'Dirección de Técnologias de la Información y Comunicación',
-                'titulo'       => 'Informe de Actividades por Técnico',
+                'titulo'       => 'Informe de Actividades por Servidor',
                 'fecha_inicio' => $request->fecha_inicio,
                 'fecha_fin'    => (new Carbon($request->fecha_fin))->addDays(-1)->format('Y-m-d'),
                 'soportes'     => $soportes,

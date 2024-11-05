@@ -20,7 +20,12 @@
 
         .header {
             text-align: center;
-            margin-top: 20px;
+        }
+
+        .header h4,
+        .header h5 {
+            margin: 15px 0;
+            /* Reduce márgenes */
         }
 
         /* .header img{
@@ -44,19 +49,32 @@
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 20px;
+            border: 0.5px solid gray;
+            /* Corrige el borde */
+            table-layout: auto;
+            /* Cambia a 'auto' para ajustar el ancho según el contenido */
+            margin-bottom: 25px;
+            margin-top: 25px;
         }
 
-        table,
         th,
         td {
+            padding: 3px;
+            vertical-align: top;
             border: 1px solid black;
+            font-size: 13px;
+            /* Borde para celdas */
         }
 
-        th,
-        td {
-            padding: 8px;
-            text-align: left;
+        input {
+            width: 98%;
+            /* Ancho casi completo */
+            box-sizing: border-box;
+            /* Incluye padding y border en el ancho total */
+            font-size: 14px;
+            /* Tamaño de fuente */
+            border: none;
+            outline: none;
         }
 
         .footer {
@@ -91,8 +109,6 @@
 
     <div class="membrete">
         <p><strong>DE:</strong> {{ $actividades[0]->usuario }}</p>
-
-
         <p>
             <strong>PARA:</strong>
             @if ($actividades[0]->crgo_id !== 5)
@@ -106,10 +122,10 @@
             @endif
         </p>
         <p><strong>FECHA:</strong> {{ $current_fecha }}</p>
+        <p><strong>ASUNTO:</strong> {{ $title }}</p>
     </div>
 
     <div class="content">
-        <h3>Asunto: {{ $title }}</h3>
         <p style="text-align: justify;">
             Por medio de este informe, presento un resumen de las actividades realizadas durante el periodo de tiempo
             {{ $fecha_inicio }} hasta {{ $fecha_fin }} en el área de {{ $actividades[0]->departamento }}.
@@ -117,7 +133,7 @@
             alcanzados y las tareas que contribuyen al cumplimiento de los objetivos institucionales.
         </p>
 
-        <h3>Detalle de Actividades Realizadas</h3>
+        <h4>DETALLE DE ACTIVIDADES REALIZADAS</h4>
 
         <table>
             <tr>
@@ -126,7 +142,7 @@
             </tr>
             @foreach ($actividades as $actividad)
                 <tr>
-                    <td>{{ $actividad->current_fecha }}</td>
+                    <td style="width: 80px;">{{ $actividad->current_fecha }}</td>
                     <td style="text-align: justify;">{!! $actividad->actividad !!}</td>
                 </tr>
             @endforeach
@@ -151,33 +167,36 @@
 
 
     <div class="content">
-        <h3>Conclusión</h3>
+        <h4>CONCLUSIÓN</h4>
         <p style="text-align: justify;">
             Durante el periodo {{ $fecha_inicio }} hasta {{ $fecha_fin }}, se llevaron a cabo las actividades
             programadas, contribuyendo significativamente al
             desarrollo de los proyectos en curso y al cumplimiento de los objetivos establecidos por el área. Las
             acciones implementadas han permitido mejorar la eficiencia y fortalecer la colaboración dentro del equipo.
-            Estoy disponible para discutir cualquier aspecto de este informe o para proporcionar información adicional
-            que sea necesaria.
         </p>
     </div>
 
-    <div class="signatures">
-        <div class="footer">
-            <div class="signature">
-                <p><strong>{{ $actividades[0]->usuario }}</strong><br>
-                    {{ $actividades[0]->cargo_usuario }}<br></p>
-            </div>
-
-            <div class="signature">
-                <p><strong>
-                        {{ $actividades[0]->crgo_id === 5 ? 'González Cervantes Mónica Alexandra' : $actividades[0]->director }}
-                    </strong><br>
-                    {{ $actividades[0]->crgo_id === 5 ? 'DIRECTOR/A' : $actividades[0]->cargo_director }}<br>
-                </p>
-            </div>
-        </div>
-    </div>
+    <table>
+        <tr>
+            <td colspan="2">Generado por:</td>
+            <td colspan="2">Aprobado por:</td>
+        </tr>
+        <tr>
+            <td colspan="2"><input type="text" style="height: 50px;"></td>
+            <td colspan="2"><input type="text" style="height: 50px;"></td>
+        </tr>
+        <tr>
+            <td colspan="2" class="header">
+                {{ $actividades[0]->usuario }} <br>
+                <strong>{{ $actividades[0]->cargo_usuario }}</strong>
+            </td>
+            <td colspan="2" class="header">
+                {{ $actividades[0]->crgo_id === 5 ? 'González Cervantes Mónica Alexandra' : $actividades[0]->director }}
+                <br>
+                <strong>{{ $actividades[0]->crgo_id === 5 ? 'DIRECTOR/A' : $actividades[0]->cargo_director }}</strong>
+            </td>
+        </tr>
+    </table>
 
 </body>
 

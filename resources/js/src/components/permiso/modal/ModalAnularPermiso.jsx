@@ -5,7 +5,7 @@ import { isNotEmpty, useForm } from "@mantine/form";
 import { FormAnularPermiso } from "../../../components";
 
 export const ModalAnularPermiso = () => {
-    const { activatePermiso } = usePermisoStore();
+    const { activatePermiso, setActivatePermiso } = usePermisoStore();
     const { isOpenModalAnularPermiso, modalActionAnularPermiso } = useUiPermiso();
 
     const form = useForm({
@@ -27,6 +27,9 @@ export const ModalAnularPermiso = () => {
 
     const handleCloseModal = () => {
         modalActionAnularPermiso(0);
+        if (activatePermiso !== null) {
+            setActivatePermiso(null);
+        }
         form.reset();
     }
 

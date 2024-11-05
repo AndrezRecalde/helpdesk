@@ -46,7 +46,7 @@ export const PermisosTable = () => {
     );
 
     const handleExport = useCallback((selected) => {
-        setActivatePermiso(selected);
+        //setActivatePermiso(selected);
         startCardPermiso(selected.idper_permisos);
     }, []);
 

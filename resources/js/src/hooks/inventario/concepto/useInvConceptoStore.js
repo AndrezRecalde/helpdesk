@@ -34,7 +34,7 @@ export const useInvConceptoStore = () => {
     const startAddInvConcepto = async (concepto) => {
         try {
             if (concepto.id) {
-                const { data } = helpdeskApi.put(
+                const { data } = await helpdeskApi.put(
                     `/gerencia/inventario/concepto/update/${concepto.id}`,
                     concepto
                 );

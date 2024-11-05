@@ -3,6 +3,7 @@ import { useErrorException } from "../../hooks";
 import {
     onAnularPermiso,
     onClearPermisos,
+    onExport,
     onLoadErrores,
     onLoadMessage,
     onLoadPermisos,
@@ -12,7 +13,7 @@ import {
 import helpdeskApi from "../../api/helpdeskApi";
 
 export const usePermisoStore = () => {
-    const { isLoading, permisos, activatePermiso, message, errores } = useSelector(
+    const { isLoading, permisos, activatePermiso, isExport, message, errores } = useSelector(
         (state) => state.permiso
     );
     const { ExceptionMessageError } = useErrorException(onLoadErrores);
@@ -40,7 +41,7 @@ export const usePermisoStore = () => {
 
     const startCardPermiso = async (idper_permisos) => {
         try {
-            dispatch(onLoading(true));
+            dispatch(onExport(true));
             const response = await helpdeskApi.post(
                 "/general/export-permiso-pdf",
                 {idper_permisos},
@@ -60,7 +61,8 @@ export const usePermisoStore = () => {
             document.body.removeChild(tempLink); */
             window.URL.revokeObjectURL(url);
             //dispatch(onLoadMessage(data));
-            dispatch(onLoading(false));
+            dispatch(onExport(false));
+            dispatch(onSetActivatePermiso(null));
         } catch (error) {
             //console.log(error);
             ExceptionMessageError(error);
@@ -69,7 +71,7 @@ export const usePermisoStore = () => {
 
     const startExportPermiso = async ({ idper_permisos }) => {
         try {
-            dispatch(onLoading(true));
+            dispatch(onExport(true));
             const response = await helpdeskApi.post(
                 "/general/permiso-pdf",
                 { idper_permisos },
@@ -88,7 +90,7 @@ export const usePermisoStore = () => {
 
             document.body.removeChild(tempLink); */
             window.URL.revokeObjectURL(url);
-            dispatch(onLoading(false));
+            dispatch(onExport(false));
             dispatch(onSetActivatePermiso(null));
         } catch (error) {
             //console.log(error);
@@ -152,6 +154,7 @@ export const usePermisoStore = () => {
 
     return {
         isLoading,
+        isExport,
         permisos,
         activatePermiso,
         message,

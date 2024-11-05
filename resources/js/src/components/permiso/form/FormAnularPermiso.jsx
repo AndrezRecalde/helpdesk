@@ -4,7 +4,7 @@ import { IconBan } from "@tabler/icons-react";
 import { usePermisoStore, useUiPermiso } from "../../../hooks";
 
 export const FormAnularPermiso = ({ form }) => {
-    const { isLoading, startAnularPermiso } = usePermisoStore();
+    const { isLoading, startAnularPermiso, setActivatePermiso } = usePermisoStore();
     const { modalActionAnularPermiso } = useUiPermiso();
 
     const handleSubmit = (e) => {
@@ -12,6 +12,7 @@ export const FormAnularPermiso = ({ form }) => {
         modalActionAnularPermiso(0);
         startAnularPermiso(form.values);
         //console.log(form.values);
+        setActivatePermiso(null);
         form.reset();
     };
 

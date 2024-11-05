@@ -94,6 +94,21 @@ const ReporteSoportes = () => {
     }, [errores]);
 
     useEffect(() => {
+        if (loadPDF === true) {
+            Swal.fire({
+                icon: "warning",
+                text: "Un momento porfavor, se está exportando",
+                showConfirmButton: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                },
+            });
+        } else {
+            Swal.close(); // Cierra el modal cuando isExport es false
+        }
+    }, [loadPDF]);
+
+    useEffect(() => {
         return () => {
             clearSoportes();
         };
@@ -145,11 +160,6 @@ const ReporteSoportes = () => {
     return (
         <Container size="xxl">
             <TitlePage order={2}>Reporte de soportes</TitlePage>
-            <LoadingOverlay
-                visible={loadPDF} //loadPDF
-                zIndex={1000}
-                overlayProps={{ radius: "sm", blur: 2 }}
-            />
             <Divider my="md" />
             <FilterFormSearchDates
                 title="Filtrar lista de mis soportes"

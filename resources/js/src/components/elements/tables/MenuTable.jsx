@@ -56,9 +56,7 @@ export const MenuTable_D = ({ row, handleDelete }) => {
         <>
             <Menu.Item
                 leftSection={
-                    <IconTrash
-                        style={{ width: rem(15), height: rem(15) }}
-                    />
+                    <IconTrash style={{ width: rem(15), height: rem(15) }} />
                 }
                 onClick={() => handleDelete(row.original)}
             >
@@ -73,9 +71,7 @@ export const MenuTable_Perif = ({ row, handleTrasnferir }) => {
         <>
             <Menu.Item
                 leftSection={
-                    <IconTrash
-                        style={{ width: rem(15), height: rem(15) }}
-                    />
+                    <IconTrash style={{ width: rem(15), height: rem(15) }} />
                 }
                 onClick={() => handleTrasnferir(row.original)}
             >
@@ -85,12 +81,7 @@ export const MenuTable_Perif = ({ row, handleTrasnferir }) => {
     );
 };
 
-export const MenuTable_VE = ({
-    row,
-    handleShow,
-    handleEdit,
-    handleDelete,
-}) => {
+export const MenuTable_VE = ({ row, handleShow, handleEdit, handleDelete }) => {
     return (
         <>
             <Menu.Item
@@ -252,6 +243,13 @@ export const MenuTable_Per = ({ row, handleExport, handleAnular }) => {
     return (
         <>
             <Menu.Item
+                disabled={
+                    row.original.id_estado === 8 ||
+                    row.original.id_estado === 7 ||
+                    row.original.id_estado === 6
+                        ? true
+                        : false
+                }
                 leftSection={
                     <IconPrinter style={{ width: rem(15), height: rem(15) }} />
                 }

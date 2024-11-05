@@ -17,8 +17,14 @@ import { useNavigate } from "react-router-dom";
 const ListPermisosPage = () => {
     useTitlePage("Helpdesk | Lista Permisos");
     const usuario = JSON.parse(localStorage.getItem("service_user"));
-    const { startLoadPermisos, clearPermisos, permisos, message, errores } =
-        usePermisoStore();
+    const {
+        startLoadPermisos,
+        clearPermisos,
+        permisos,
+        message,
+        errores,
+        isExport,
+    } = usePermisoStore();
     const navigate = useNavigate();
 
     const form = useForm({
@@ -62,6 +68,21 @@ const ListPermisosPage = () => {
             return;
         }
     }, [errores]);
+
+    useEffect(() => {
+        if (isExport === true) {
+            Swal.fire({
+                icon: "warning",
+                text: "Un momento porfavor, se está exportando",
+                showConfirmButton: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                },
+            });
+        } else {
+            Swal.close(); // Cierra el modal cuando isExport es false
+        }
+    }, [isExport]);
 
     const handleNavigate = () => {
         usuario.role === Roles.GERENTE

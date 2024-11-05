@@ -11,13 +11,13 @@ import {
 } from "@mantine/core";
 import { DateInput, TimeInput } from "@mantine/dates";
 import { BtnSubmit } from "../../..";
-import { IconClock } from "@tabler/icons-react";
 import {
     useDireccionStore,
     usePermisoStore,
     //useStorageField,
     useUsersStore,
 } from "../../../../hooks";
+import { IconClock } from "@tabler/icons-react";
 import dayjs from "dayjs";
 import Swal from "sweetalert2";
 
@@ -27,8 +27,14 @@ export const FormSolicitudPermiso = ({ form, disabled }) => {
     const ref_2 = useRef(null);
     const { direcciones } = useDireccionStore();
     const { users } = useUsersStore();
-    const { isLoading, message, errores, startAddPermiso, startCardPermiso } =
-        usePermisoStore();
+    const {
+        isLoading,
+        message,
+        errores,
+        isExport,
+        startAddPermiso,
+        startCardPermiso,
+    } = usePermisoStore();
     //const { setStoragePermisoFields } = useStorageField();
 
     const pickerControl_1 = (
@@ -87,6 +93,21 @@ export const FormSolicitudPermiso = ({ form, disabled }) => {
             return;
         }
     }, [errores]);
+
+    useEffect(() => {
+        if (isExport === true) {
+            Swal.fire({
+                icon: "warning",
+                text: "Un momento porfavor, se está exportando",
+                showConfirmButton: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                },
+            });
+        } else {
+            Swal.close(); // Cierra el modal cuando isExport es false
+        }
+    }, [isExport]);
 
     const handleSubmit = (e) => {
         e.preventDefault();

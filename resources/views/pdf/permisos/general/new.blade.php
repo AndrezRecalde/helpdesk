@@ -147,15 +147,15 @@
             <td colspan="2"><input type="text" style="height: 40px;"></td>
         </tr>
         <tr>
-            <td colspan="2"><strong>Jefe inmediato: </strong></td>
-            <td colspan="2"><strong>Solicitante:</strong></td>
+            <td colspan="2" class="header">Jefe inmediato:</td>
+            <td colspan="2" class="header">Solicitante:</td>
         </tr>
         <tr>
             <td colspan="2" class="header">
                 <input type="text" style="height: 40px;">
                 Recibido por:
             </td>
-            <td colspan="2" class="qr-code">
+            <td colspan="2" class="header">
                 <div class="barcode">
                     {!! DNS1D::getBarcodeHTML($permisos->idper_permisos, 'C39+', 1.4, 44, 'green') !!}
                     <p>{{ $permisos->idper_permisos }}</p>
@@ -205,15 +205,15 @@
             <td colspan="2"><input type="text" style="height: 40px;"></td>
         </tr>
         <tr>
-            <td colspan="2"><strong>Jefe inmediato: </strong></td>
-            <td colspan="2"><strong>Solicitante:</strong></td>
+            <td colspan="2" class="header">Jefe inmediato:</td>
+            <td colspan="2" class="header">Solicitante:</td>
         </tr>
         <tr>
             <td colspan="2" class="header">
                 <input type="text" style="height: 40px;">
                 Recibido por:
             </td>
-            <td colspan="2" class="qr-code">
+            <td colspan="2" class="header">
                 <div class="barcode">
                     {!! DNS1D::getBarcodeHTML($permisos->idper_permisos, 'C39+', 1.4, 44, 'green') !!}
                     <p>{{ $permisos->idper_permisos }}</p>

@@ -4,6 +4,7 @@ export const permisoSlice = createSlice({
     name: "permiso",
     initialState: {
         isLoading: false,
+        isExport: false,
         permisos: [],
         activatePermiso: null,
         message: undefined,
@@ -12,6 +13,9 @@ export const permisoSlice = createSlice({
     reducers: {
         onLoading: (state, { payload }) => {
             state.isLoading = payload;
+        },
+        onExport: (state, { payload }) => {
+            state.isExport = payload;
         },
         onLoadPermisos: (state, { payload }) => {
             state.permisos = payload;
@@ -46,6 +50,7 @@ export const permisoSlice = createSlice({
 
 export const {
     onLoading,
+    onExport,
     onLoadPermisos,
     onSetActivatePermiso,
     onAnularPermiso,

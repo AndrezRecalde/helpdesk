@@ -123,6 +123,21 @@ const ListActividadesPage = () => {
     }, [errores]);
 
     useEffect(() => {
+        if (loadPDF === true) {
+            Swal.fire({
+                icon: "warning",
+                text: "Un momento porfavor, se está exportando",
+                showConfirmButton: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                },
+            });
+        } else {
+            Swal.close(); // Cierra el modal cuando isExport es false
+        }
+    }, [loadPDF]);
+
+    useEffect(() => {
         return () => {
             startClearActividades();
         };
@@ -165,12 +180,6 @@ const ListActividadesPage = () => {
         <Container size="xxl" my="md">
             <TitlePage order={2}>Lista de actividades</TitlePage>
             <Divider my="md" />
-            <LoadingOverlay
-                visible={loadPDF}
-                zIndex={1000}
-                overlayProps={{ radius: "sm", blur: 2 }}
-            />
-
             <FilterFormSearchDates
                 form={form}
                 handleSubmit={handleSubmit}
