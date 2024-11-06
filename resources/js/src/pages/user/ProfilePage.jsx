@@ -4,10 +4,11 @@ import {
     TitlePage,
     CardProfile,
     CardInfoStatsUser,
-    TableMarcacionRelojOnline,
+    //TableMarcacionRelojOnline,
 } from "../../components";
 import {
     useAuthStore,
+    //useMarcacionStore,
     usePermisoStore,
     useTecnicoStore,
     useTitlePage,
@@ -27,6 +28,8 @@ const ProfilePage = () => {
     const { startLoadInfoTecnicosSoporte, clearInfoSoportesTecnico } =
         useTecnicoStore();
     const { startLoadInfoPermisos, setActivatePermiso } = usePermisoStore();
+    /* const { startLoadMarcacionesBiometricos, marcaciones, clearMarcaciones } =
+        useMarcacionStore(); */
 
     useEffect(() => {
         if (token) {
@@ -54,13 +57,13 @@ const ProfilePage = () => {
 
     useEffect(() => {
         startLoadInfoPermisos(usuario.cdgo_usrio);
+        //startLoadMarcacionesBiometricos(usuario.asi_id_reloj);
 
-      return () => {
-        setActivatePermiso(null);
-
-      }
-    }, [])
-
+        return () => {
+            setActivatePermiso(null);
+            //clearMarcaciones();
+        };
+    }, []);
 
     const handleAction = () => {
         usuario?.role_id === 1
@@ -75,7 +78,9 @@ const ProfilePage = () => {
                 <CardProfile usuario={usuario} handleAction={handleAction} />
                 <CardInfoStatsUser usuario={usuario} />
             </SimpleGrid>
-            <TableMarcacionRelojOnline usuario={usuario} />
+            {/* {marcaciones.length > 0 ? (
+                <TableMarcacionRelojOnline usuario={usuario} />
+            ) : null} */}
         </Container>
     );
 };

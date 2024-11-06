@@ -17,7 +17,7 @@ import Swal from "sweetalert2";
 const InvComponentesPage = () => {
     useTitlePage("Helpdesk | Inv. Componentes");
     const { startLoadInvEstados, startClearInvEstados } = useInvEstadoStore();
-    const { isExport, message, errores } = useInvPerifericoStore();
+    const { isExport, message, errores, startClearInvPerifericos } = useInvPerifericoStore();
     const { setStorageFields } = useStorageField();
 
     useEffect(() => {
@@ -26,6 +26,7 @@ const InvComponentesPage = () => {
         return () => {
             startClearInvEstados();
             setStorageFields(null);
+            startClearInvPerifericos();
         };
     }, []);
 

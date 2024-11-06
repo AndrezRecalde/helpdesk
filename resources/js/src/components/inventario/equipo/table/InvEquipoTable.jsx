@@ -1,10 +1,10 @@
+import { useCallback, useMemo } from "react";
 import { useMantineReactTable } from "mantine-react-table";
 import {
     ActionReportPDF,
     MenuTable_VE,
     TableContent,
 } from "../../../../components";
-import { useCallback, useMemo } from "react";
 import { useInvEquipoStore, useInvUiEquipo } from "../../../../hooks";
 
 export const InvEquipoTable = () => {
@@ -112,25 +112,9 @@ export const InvEquipoTable = () => {
         mantineTableBodyCellProps: ({ cell }) => ({
             style: {
                 backgroundColor:
-                    cell.row.original.estado_id == 1
-                        ? "#08c2a6"
-                        : cell.row.original.estado_id == 2
-                        ? "#9af5b8"
-                        : cell.row.original.estado_id == 3
-                        ? "#cf001c" //#fcb281
-                        : "",
+                    cell.row.original.color,
                 color:
-                    cell.row.original.estado_id == 1
-                        ? "white"
-                        : cell.row.original.estado_id == 2
-                        ? "black"
-                        : cell.row.original.estado_id == 3 &&
-                          colorScheme === "dark"
-                        ? "white"
-                        : cell.row.original.estado_id == 3 &&
-                          colorScheme === "light"
-                        ? "black"
-                        : "",
+                    "black",
             },
         }),
         mantineTableProps: {

@@ -27,7 +27,12 @@ export const InvTabsDetalleEquipo = () => {
                 >
                     General
                 </Tabs.Tab>
-                {activateInvEquipo?.categoria_id === 1 && (
+                {(activateInvEquipo?.nombre_categoria
+                    ?.toUpperCase()
+                    .includes("COMPUTADORAS") ||
+                    activateInvEquipo?.nombre_categoria
+                        ?.toUpperCase()
+                        .includes("LAPTOPS")) && (
                     <Tabs.Tab
                         value="componentes"
                         leftSection={<IconDevices2 style={iconStyle} />}

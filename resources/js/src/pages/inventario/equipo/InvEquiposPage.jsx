@@ -33,7 +33,7 @@ const InvEquiposPage = () => {
     const { startLoadInvCategorias, startClearInvCategorias } =
         useInvCategoriaStore();
     const { startLoadInvEstados, startClearInvEstados } = useInvEstadoStore();
-    const { isExport, message, errores } = useInvEquipoStore();
+    const { isExport, message, errores, startClearInvEquipos } = useInvEquipoStore();
     const { modalActionEquipo } = useInvUiEquipo();
 
     useEffect(() => {
@@ -46,6 +46,7 @@ const InvEquiposPage = () => {
             clearUsers();
             startClearInvCategorias();
             startClearInvEstados();
+            startClearInvEquipos();
         };
     }, []);
 

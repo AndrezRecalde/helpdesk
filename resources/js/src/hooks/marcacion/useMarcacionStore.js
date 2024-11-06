@@ -36,6 +36,21 @@ export const useMarcacionStore = () => {
         }
     };
 
+    const startLoadMarcacionesBiometricos = async (UserCi) => {
+        try {
+            dispatch(onLoading(true));
+            const { data } = await helpdeskApi.post(
+                "/usuario/marcaciones-biometricos",
+                { UserCi }
+            );
+            const { marcaciones } = data;
+            dispatch(onLoadMarcaciones(marcaciones));
+        } catch (error) {
+            console.log(error);
+            ExceptionMessageError(error);
+        }
+    };
+
     const clearMarcaciones = () => {
         dispatch(onClearMarcaciones());
     };
@@ -48,6 +63,7 @@ export const useMarcacionStore = () => {
         errores,
 
         startLoadMarcaciones,
+        startLoadMarcacionesBiometricos,
         clearMarcaciones,
     };
 };

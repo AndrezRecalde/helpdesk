@@ -5,14 +5,95 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
     <title>Soporte - Tecnico</title>
     <style>
         @page {
-            size: 21cm 29.7cm;
-            margin: 20px;
+            margin: 15;
+            /* Elimina márgenes para impresión */
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            border: 1px solid black;
+            /* Borde para la tabla */
+            /* border-radius: 10px; Suaviza los bordes */
+            overflow: hidden;
+            /* Oculta bordes redondeados */
+            table-layout: fixed;
+            /* Fija el ancho de las columnas */
+            margin-bottom: 30px;
+            /* Margen inferior entre tablas */
+        }
+
+        th,
+        td {
+            padding: 3px;
+            vertical-align: top;
+            border: 1px solid black;
+            font-size: 12px;
+            /* Borde para celdas */
+        }
+
+        .header {
+            text-align: center;
+        }
+
+        .header h4,
+        .header h5 {
+            margin: 15px 0;
+            /* Reduce márgenes */
+        }
+
+        .img-container {
+            text-align: center;
+        }
+
+        .img-fluid {
+            display: block;
+            margin: 15 auto;
+            width: 150px;
+            height: auto;
+        }
+
+        .qr-code {
+            text-align: center;
+        }
+
+        .note {
+            margin-top: 10px;
+            /* Espacio superior */
+            font-size: 0.8em;
+            color: #555;
+        }
+
+        .barcode {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            text-align: center;
+        }
+
+        input[type="text"],
+        input[type="date"],
+        input[type="time"],
+        textarea {
+            width: 98%;
+            /* Ancho casi completo */
+            box-sizing: border-box;
+            /* Incluye padding y border en el ancho total */
+            font-family: Arial, sans-serif;
+            font-size: 12px;
+            /* Tamaño de fuente */
+            border: none;
+            outline: none;
         }
 
         hr {
@@ -21,225 +102,148 @@
             margin-top: 1%;
             margin-bottom: 0%;
         }
-
-        tr {
-            font-size: 12px;
-            margin-bottom: 20px;
-        }
-
-        td {
-            width: 30px;
-            padding: 5px;
-
-        }
-
-        .marginLineaFirma {
-            margin-top: 5px;
-        }
-
-        .corte {
-            width: 100%;
-            height: 1px;
-            background-color: black;
-            border: medium none;
-            border-top: 1px dashed white !important;
-            margin-top: 3%;
-            margin-bottom: 3%;
-        }
     </style>
 </head>
 
 <body>
-    <main class="mb-3">
-        <div>
-            <!-- ENCABEZADO -->
-            <table style="width:100%">
-                <tr>
-                    <td>
-                        <img class="img-fluid" alt="logo"
-                            src={{ public_path('/assets/images/LogoTransparente.png') }} height="130" width="130">
-                    </td>
-                    <td>
-                        <div class="text-center">
-                            <strong>{{ Str::upper($institucion) }}</strong>
-                            <hr>
-                            {{ Str::upper($direccion) }} <br>
-                            {{ Str::upper($titulo) }}
+    <table>
+        <tr>
+            <td class="img-container">
+                <img class="img-fluid" alt="logo" src={{ public_path('/assets/images/LogoCompleto.png') }}>
+            </td>
+            <td colspan="3" class="header">
+                <h4>{{ Str::upper($institucion) }}</h4>
+                <hr>
+                <h5>{{ Str::upper($direccion) }} <br>
+                    {{ Str::upper($titulo) }}
+                </h5>
+            </td>
+        </tr>
+        <tr>
+            <td>Departamento:</td>
+            <td colspan="3">{{ $soporte->direccion }}</td>
+        </tr>
+        <tr>
+            <td>Forma de solicitud: </td>
+            <td>{{ $soporte->tipo_solicitud }}</td>
+            <td colspan="2">Escrito N°: {{ $soporte->numero_escrito }}</td>
+        </tr>
+        <tr>
+            <td>Fecha de Inicio: </td>
+            <td>{{ $soporte->fecha_ini }}</td>
+            <td>Fecha Finalización:</td>
+            <td>{{ $soporte->fecha_fin }}</td>
+        </tr>
+        <tr>
+            <td>Tipo de Soporte: </td>
+            <td>{{ $soporte->tipo_soporte }}</td>
+            <td>Código/Serie Activo: </td>
+            <td>{{ $soporte->codigo_equipo }}</td>
+        </tr>
+        <tr>
+            <td colspan="4">Incidente: </td>
+        </tr>
+        <tr>
+            <td colspan="4">
+                <textarea style="height: 60px;">{{ $soporte->incidente }}</textarea>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="4">Diagnóstico:</td>
+        </tr>
+        <tr>
+            <td colspan="4">
+                <textarea style="height: 80px;">{{ $soporte->solucion }}</textarea>
+            </td>
+        </tr>
+        <!-- FIRMA -->
+        <tr>
+            <td class="header">Técnico:</td>
+            <td class="header">Usuario:</td>
+            <td colspan="2" class="header">Código QR:</td>
+        </tr>
+        <tr>
+            <td><input type="text" style="height: 50px;"></td>
+            <td><input type="text" style="height: 50px;"></td>
+            <td colspan="2">
+                {!! DNS1D::getBarcodeHTML($soporte->cod_barra, 'C128', 1, 33, 'green') !!}
+                <strong>{{ $soporte->numero_sop }}</strong>
+            </td>
+        </tr>
+        <!-- FIN FIRMA -->
 
-                        </div>
-                    </td>
-                </tr>
-            </table>
-            <!-- FIN ENCABEZADO -->
-
-            <!-- CUERPO DEL SOPORTE -->
-            <table style="width:100% ;border: 1px solid black;">
-                <tr>
-                    <td>Dirección solicitante: </td>
-                    <td colspan="2">{{ $soporte->direccion }}</td>
-                    <td>
-                        ORDEN N°: {{ $soporte->numero_sop }}
-                        {!! DNS1D::getBarcodeHTML($soporte->cod_barra, 'C128', 1, 33, 'green') !!}
-                    </td>
-                </tr>
-                <tr>
-                    <td>Forma de solicitud: </td>
-                    <td>{{ $soporte->tipo_solicitud }}</td>
-                    <td colspan="2">Escrito N°: {{ $soporte->numero_escrito }}</td>
-                </tr>
-                <tr>
-                    <td>Fecha de Inicio: </td>
-                    <td>{{ $soporte->fecha_ini }}</td>
-                    <td>Fecha Finalización:</td>
-                    <td>{{ $soporte->fecha_fin }}</td>
-                </tr>
-                <tr>
-                    <td>Tipo de Soporte: </td>
-                    <td>{{ $soporte->tipo_soporte }}</td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>Incidente: </td>
-                    <td></td>
-                    <td>Código/Serie Activo: </td>
-                    <td>{{ $soporte->codigo_equipo }}</td>
-                </tr>
-                <tr>
-                    <td colspan="3">{{ $soporte->incidente }}</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>Diagnóstico: </td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td colspan="4" style="font-size: 11px">{{ $soporte->solucion }}</td>
-                </tr>
-                <!-- FIRMA -->
-                <tr>
-                    <td colspan="2">
-                        <p style="font-size: 12px">Tecnico:</p>
-                    </td>
-                    <td colspan="2">
-                        <p style="font-size: 12px">Usuario:</p>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="2">
-                        <hr class="marginLineaFirma">
-                        <p style="font-size: 14px">{{ $soporte->tecnico_asignado }}</p>
-                    </td>
-                    <td colspan="2">
-                        <hr class="marginLineaFirma">
-                        <p style="font-size: 14px">{{ $soporte->usuario_recibe }}</p>
-                    </td>
-                </tr>
-                <!-- FIN FIRMA -->
-            </table>
-            <!-- FIN CUERPO DEL SOPORTE -->
+    </table>
 
 
 
-        </div>
 
-        <hr class="corte">
+    <table>
+        <tr>
+            <td class="img-container">
+                <img class="img-fluid" alt="logo" src={{ public_path('/assets/images/LogoCompleto.png') }}>
+            </td>
+            <td colspan="3" class="header">
+                <h4>{{ Str::upper($institucion) }}</h4>
+                <hr>
+                <h5>{{ Str::upper($direccion) }} <br>
+                    {{ Str::upper($titulo) }}
+                </h5>
+            </td>
+        </tr>
+        <tr>
+            <td>Departamento:</td>
+            <td colspan="3">{{ $soporte->direccion }}</td>
+        </tr>
+        <tr>
+            <td>Forma de solicitud: </td>
+            <td>{{ $soporte->tipo_solicitud }}</td>
+            <td colspan="2">Escrito N°: {{ $soporte->numero_escrito }}</td>
+        </tr>
+        <tr>
+            <td>Fecha de Inicio: </td>
+            <td>{{ $soporte->fecha_ini }}</td>
+            <td>Fecha Finalización:</td>
+            <td>{{ $soporte->fecha_fin }}</td>
+        </tr>
+        <tr>
+            <td>Tipo de Soporte: </td>
+            <td>{{ $soporte->tipo_soporte }}</td>
+            <td>Código/Serie Activo: </td>
+            <td>{{ $soporte->codigo_equipo }}</td>
+        </tr>
+        <tr>
+            <td colspan="4">Incidente: </td>
+        </tr>
+        <tr>
+            <td colspan="4">
+                <textarea style="height: 60px;">{{ $soporte->incidente }}</textarea>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="4">Diagnóstico:</td>
+        </tr>
+        <tr>
+            <td colspan="4">
+                <textarea style="height: 80px;">{{ $soporte->solucion }}</textarea>
+            </td>
+        </tr>
+        <!-- FIRMA -->
+        <tr>
+            <td class="header">Técnico:</td>
+            <td class="header">Usuario:</td>
+            <td colspan="2" class="header">Código QR:</td>
+        </tr>
+        <tr>
+            <td><input type="text" style="height: 50px;"></td>
+            <td><input type="text" style="height: 50px;"></td>
+            <td colspan="2">
+                {!! DNS1D::getBarcodeHTML($soporte->cod_barra, 'C128', 1, 33, 'green') !!}
+                <strong>{{ $soporte->numero_sop }}</strong>
+            </td>
+        </tr>
+        <!-- FIN FIRMA -->
 
-        <div>
-            <!-- ENCABEZADO -->
-            <table style="width:100%">
-                <tr>
-                    <td>
-                        <img class="img-fluid" alt="logo"
-                            src={{ public_path('/assets/images/LogoTransparente.png') }} height="150" width="150">
-                    </td>
-                    <td>
-                        <div class="text-center">
-                            <strong>{{ Str::upper($institucion) }}</strong>
-                            <hr>
-                            {{ Str::upper($direccion) }} <br>
-                            {{ Str::upper($titulo) }}
-
-                        </div>
-                    </td>
-                </tr>
-            </table>
-            <!-- FIN ENCABEZADO -->
-
-            <!-- CUERPO DEL SOPORTE -->
-            <table style="width:100% ;border: 1px solid black;">
-                <tr>
-                    <td>Dirección solicitante: </td>
-                    <td colspan="2">{{ $soporte->direccion }}</td>
-                    <td>
-                        ORDEN N°: {{ $soporte->numero_sop }}
-                        {!! DNS1D::getBarcodeHTML($soporte->cod_barra, 'C128', 1, 33, 'green') !!}
-                    </td>
-                </tr>
-                <tr>
-                    <td>Forma de solicitud: </td>
-                    <td>{{ $soporte->tipo_solicitud }}</td>
-                    <td colspan="2">Escrito N°: {{ $soporte->numero_escrito }}</td>
-                </tr>
-
-                <tr>
-                    <td>Fecha de Inicio: </td>
-                    <td>{{ $soporte->fecha_ini }}</td>
-                    <td>Fecha Finalización:</td>
-                    <td>{{ $soporte->fecha_fin }}</td>
-                </tr>
-                <tr>
-                    <td>Tipo de Soporte: </td>
-                    <td>{{ $soporte->tipo_soporte }}</td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>Incidente: </td>
-                    <td></td>
-                    <td>Código/Serie Activo: </td>
-                    <td>{{ $soporte->codigo_equipo }}</td>
-                </tr>
-                <tr>
-                    <td colspan="3">{{ $soporte->incidente }}</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>Diagnóstico: </td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td colspan="4" style="font-size: 11px">{{ $soporte->solucion }}</td>
-                </tr>
-                <!-- FIRMA -->
-                <tr>
-                    <td colspan="2">
-                        <p style="font-size: 12px">Tecnico:</p>
-                    </td>
-                    <td colspan="2">
-                        <p style="font-size: 12px">Usuario:</p>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="2">
-                        <hr class="marginLineaFirma">
-                        <p style="font-size: 14px">{{ $soporte->tecnico_asignado }}</p>
-                    </td>
-                    <td colspan="2">
-                        <hr class="marginLineaFirma">
-                        <p style="font-size: 14px">{{ $soporte->usuario_recibe }}</p>
-                    </td>
-                </tr>
-                <!-- FIN FIRMA -->
-            </table>
-            <!-- FIN CUERPO DEL SOPORTE -->
-        </div>
-    </main>
-
+    </table>
 </body>
 
 </html>

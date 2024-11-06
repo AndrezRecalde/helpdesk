@@ -74,6 +74,12 @@ export const InvPerifericoTable = () => {
             invPerifericos.length !== 0 ? (
                 <ActionReportPDF handleExportDataPDF={handleExportDataPDF} />
             ) : null,
+        mantineTableBodyCellProps: ({ cell }) => ({
+            style: {
+                backgroundColor: cell.row.original.color,
+                color: "black",
+            },
+        }),
         mantineTableProps: {
             withColumnBorders: true,
             withTableBorder: true,

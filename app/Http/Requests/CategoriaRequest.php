@@ -26,7 +26,7 @@ class CategoriaRequest extends FormRequest
         return [
             'nombre_categoria' => 'required',
             'tipocategoria_id' => 'required',
-            'stock'            =>  'required'
+            //'stock'            =>  'required'
         ];
     }
 

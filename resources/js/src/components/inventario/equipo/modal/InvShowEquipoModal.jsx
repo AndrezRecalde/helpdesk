@@ -5,7 +5,6 @@ import {
     InvInfoGeneralEquipo,
     InvTabsDetalleEquipo,
     TextSection,
-    TitlePage,
 } from "../../../../components";
 import { IconDeviceDesktopDown } from "@tabler/icons-react";
 
@@ -48,7 +47,7 @@ export const InvShowEquipoModal = () => {
                 overlayProps={{ radius: "sm", blur: 2 }}
             />
             <InvInfoGeneralEquipo />
-            <Group justify="right">
+            {/* <Group justify="right">
                 <BtnSection
                     heigh={30}
                     fontSize={12}
@@ -57,7 +56,7 @@ export const InvShowEquipoModal = () => {
                 >
                     DAR DE BAJA
                 </BtnSection>
-            </Group>
+            </Group> */}
             <InvTabsDetalleEquipo />
         </Drawer>
     );

@@ -25,7 +25,7 @@ class InvPerifericoController extends Controller
                                      invc.tipocategoria_id,
                                      invper.categoria_id, invc.nombre_categoria,
                                      invper.equipo_id, inve.codigo_nuevo,
-                                     invper.estado_id, inves.nombre_estado')
+                                     invper.estado_id, inves.nombre_estado, inves.color')
             ->with([
                 'equipo:id,codigo_nuevo,numero_serie'
             ])

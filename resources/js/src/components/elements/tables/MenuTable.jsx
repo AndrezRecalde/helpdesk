@@ -5,6 +5,7 @@ import {
     IconPrinter,
     IconRestore,
     IconSortAscending,
+    IconTransfer,
     IconTrash,
     IconUserShare,
 } from "@tabler/icons-react";
@@ -71,7 +72,7 @@ export const MenuTable_Perif = ({ row, handleTrasnferir }) => {
         <>
             <Menu.Item
                 leftSection={
-                    <IconTrash style={{ width: rem(15), height: rem(15) }} />
+                    <IconTransfer style={{ width: rem(15), height: rem(15) }} />
                 }
                 onClick={() => handleTrasnferir(row.original)}
             >

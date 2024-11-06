@@ -1,5 +1,6 @@
 <?php
 
+use Laravel\Sanctum\Sanctum;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\General\ActividadController;
 use App\Http\Controllers\General\DiagnosticoController;
@@ -46,6 +47,10 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
+
+Route::get('/sanctum/csrf-cookie', function () {
+    return response()->json(['csrfToken' => csrf_token()]);
+});
 
 Route::post('/auth/login', [AuthController::class, 'login']);
 
@@ -253,4 +258,6 @@ Route::group(['prefix' => 'usuario', 'middleware' => ['auth:sanctum']], function
 
     /* MARCACIONES */
     Route::post('/marcaciones', [MarcacionController::class, 'getMarcaciones']);
+    Route::post('/marcaciones-biometricos', [MarcacionController::class, 'getMarcacionesBiometrico']);
+
 });
