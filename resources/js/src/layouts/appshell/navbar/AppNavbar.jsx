@@ -1,6 +1,6 @@
 import { LinksGroup } from "./NavbarLinksGroup";
-import classes from "../../../assets/styles/modules/layout/navbar/AppNavbar.module.css";
 import { navRoutes } from "../../../routes/router/routes";
+import classes from "../../../assets/styles/modules/layout/navbar/AppNavbar.module.css";
 
 export const AppNavbar = ({ role, toggleMobile }) => {
     // Filtra las secciones y enlaces en función del rol del usuario
