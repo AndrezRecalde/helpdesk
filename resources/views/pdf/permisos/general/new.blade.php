@@ -27,7 +27,7 @@
             /* Oculta bordes redondeados */
             table-layout: fixed;
             /* Fija el ancho de las columnas */
-            margin-bottom: 25px;
+            margin-bottom: 50px;
             /* Margen inferior entre tablas */
         }
 
@@ -36,6 +36,7 @@
             padding: 3px;
             vertical-align: top;
             border: 1px solid black;
+            font-size: 13px;
             /* Borde para celdas */
         }
 
@@ -71,14 +72,6 @@
             color: #555;
         }
 
-        .barcode {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-            text-align: center;
-        }
-
         input[type="text"],
         input[type="date"],
         input[type="time"],
@@ -87,7 +80,7 @@
             /* Ancho casi completo */
             box-sizing: border-box;
             /* Incluye padding y border en el ancho total */
-            font-size: 13px;
+            font-size: 12px;
             /* Tamaño de fuente */
             border: none;
             outline: none;
@@ -98,6 +91,18 @@
             height: 0.3px;
             margin-top: 1%;
             margin-bottom: 0%;
+        }
+
+        .deadcode {
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        .barcode {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
     </style>
 </head>
@@ -110,56 +115,63 @@
                 <img class="img-fluid" alt="logo" src={{ public_path('/assets/images/LogoCompleto.png') }}>
             </td>
             <td colspan="3" class="header">
-                <h4>Gobierno Autónomo Descentralizado de la Provincia de Esmeraldas</h4>
+                <h4>{{ Str::upper('Gobierno Autónomo Descentralizado de la Provincia de Esmeraldas') }}</h4>
                 <hr>
-                <h5>CONCESIÓN DE PERMISO HASTA 4 HORAS</h5>
+                <h4>CONCESIÓN DE PERMISO HASTA 4 HORAS</h4>
             </td>
         </tr>
         <tr>
-            <td>Departamento:</td>
+            <td><strong>DEPARTAMENTO:</strong></td>
             <td colspan="3">{{ $permisos->direccion_pide }}</td>
         </tr>
         <tr>
-            <td>Servidor:</td>
+            <td><strong>SERVIDOR:</strong></td>
             <td colspan="3">{{ $permisos->usuario_pide }}</td>
         </tr>
         <tr>
-            <td>Motivo del permiso:</td>
+            <td><strong>MOTIVO DEL PERMISO:</strong></td>
             <td>{{ $permisos->motivo }}</td>
-            <td>Fecha:</td>
-            <td>{{ \Carbon\Carbon::parse($permisos->fecha_ing) }}</td>
+            <td><strong>FECHA DEL PERMISO:</strong></td>
+            <td style="font-size:15px;">{{ \Carbon\Carbon::parse($permisos->per_fecha_salida)->format('Y-m-d') }}</td>
         </tr>
         <tr>
-            <td>Hora de inicio:</td>
-            <td><strong>{{ \Carbon\Carbon::parse($permisos->per_fecha_salida)->toTimeString() }}
+            <td><strong>HORA DE INICIO:</strong></td>
+            <td style="font-size:15px;"><strong>{{ \Carbon\Carbon::parse($permisos->per_fecha_salida)->toTimeString() }}
                 </strong></td>
-            <td>Hora de finalización:</td>
-            <td><strong>{{ \Carbon\Carbon::parse($permisos->per_fecha_llegada)->toTimeString() }}
-                </strong></td>
+            <td><strong>HORA DE FINALIZACIÓN:</strong></td>
+            <td style="font-size:15px;">
+                <strong>{{ \Carbon\Carbon::parse($permisos->per_fecha_llegada)->toTimeString() }}
+                </strong>
+            </td>
         </tr>
         <tr>
             <td colspan="4">
-                <textarea style="height: 80px;">{{ $permisos->per_observaciones ?? 'Sin Observación' }}</textarea>
+                <textarea style="height: 80px;">{{ $permisos->per_observaciones ?? 'SIN OBSERVACIÓN' }}</textarea>
             </td>
         </tr>
         <tr>
-            <td colspan="2"><input type="text" style="height: 40px;"></td>
-            <td colspan="2"><input type="text" style="height: 40px;"></td>
+            <td colspan="2"><input type="text" style="height: 60px;"></td>
+            <td colspan="2"><input type="text" style="height: 60px;"></td>
         </tr>
         <tr>
-            <td colspan="2" class="header">Jefe inmediato:</td>
-            <td colspan="2" class="header">Solicitante:</td>
+            <td colspan="2" class="header">JEFE INMEDIATO:</td>
+            <td colspan="2" class="header">SOLICITANTE:</td>
         </tr>
         <tr>
             <td colspan="2" class="header">
-                <input type="text" style="height: 40px;">
-                Recibido por:
+                <input type="text" style="height: 60px;">
+                RECIBIDO POR:
             </td>
-            <td colspan="2" class="header">
-                <div class="barcode">
-                    {!! DNS1D::getBarcodeHTML($permisos->idper_permisos, 'C39+', 1.4, 44, 'green') !!}
-                    <p>{{ $permisos->idper_permisos }}</p>
-                    <div class="barcode">
+            <td colspan="2" class="deadcode" style="text-align: center; vertical-align: middle;">
+                <div class="barcode"
+                    style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                    <div style="text-align: center;">
+                        <div style="display: inline-block; margin: 0 auto;">
+                            {!! DNS1D::getBarcodeHTML($permisos->idper_permisos, 'C128', 1, 33, 'green') !!}
+                        </div>
+                    </div>
+                    <p> <strong>Nro. {{ $permisos->idper_permisos }}</strong></p>
+                </div>
             </td>
         </tr>
     </table>
@@ -170,53 +182,63 @@
                 <img class="img-fluid" alt="logo" src={{ public_path('/assets/images/LogoCompleto.png') }}>
             </td>
             <td colspan="3" class="header">
-                <h4>Gobierno Autónomo Descentralizado de la Provincia de Esmeraldas</h4>
+                <h4>{{ Str::upper('Gobierno Autónomo Descentralizado de la Provincia de Esmeraldas') }}</h4>
                 <hr>
-                <h5>CONCESIÓN DE PERMISO HASTA 4 HORAS</h5>
+                <h4>CONCESIÓN DE PERMISO HASTA 4 HORAS</h4>
             </td>
         </tr>
         <tr>
-            <td>Departamento:</td>
+            <td><strong>DEPARTAMENTO:</strong></td>
             <td colspan="3">{{ $permisos->direccion_pide }}</td>
         </tr>
         <tr>
-            <td>Servidor:</td>
+            <td><strong>SERVIDOR:</strong></td>
             <td colspan="3">{{ $permisos->usuario_pide }}</td>
         </tr>
         <tr>
-            <td>Motivo del permiso:</td>
+            <td><strong>MOTIVO DEL PERMISO:</strong></td>
             <td>{{ $permisos->motivo }}</td>
-            <td>Fecha:</td>
-            <td>{{ \Carbon\Carbon::parse($permisos->fecha_ing) }}</td>
+            <td><strong>FECHA DEL PERMISO:</strong></td>
+            <td style="font-size:15px;">{{ \Carbon\Carbon::parse($permisos->per_fecha_salida)->format('Y-m-d') }}</td>
         </tr>
         <tr>
-            <td>Hora de inicio:</td>
-            <td><strong>{{ \Carbon\Carbon::parse($permisos->per_fecha_salida)->toTimeString() }}</strong></td>
-            <td>Hora de finalización:</td>
-            <td><strong>{{ \Carbon\Carbon::parse($permisos->per_fecha_llegada)->toTimeString() }}</strong></td>
+            <td><strong>HORA DE INICIO:</strong></td>
+            <td style="font-size:15px;">
+                <strong>{{ \Carbon\Carbon::parse($permisos->per_fecha_salida)->toTimeString() }}
+                </strong></td>
+            <td><strong>HORA DE FINALIZACIÓN:</strong></td>
+            <td style="font-size:15px;">
+                <strong>{{ \Carbon\Carbon::parse($permisos->per_fecha_llegada)->toTimeString() }}
+                </strong>
+            </td>
         </tr>
         <tr>
             <td colspan="4">
-                <textarea style="height: 80px;">{{ $permisos->per_observaciones ?? 'Sin Observación' }}</textarea>
+                <textarea style="height: 80px;">{{ $permisos->per_observaciones ?? 'SIN OBSERVACIÓN' }}</textarea>
             </td>
         </tr>
         <tr>
-            <td colspan="2"><input type="text" style="height: 40px;"></td>
-            <td colspan="2"><input type="text" style="height: 40px;"></td>
+            <td colspan="2"><input type="text" style="height: 60px;"></td>
+            <td colspan="2"><input type="text" style="height: 60px;"></td>
         </tr>
         <tr>
-            <td colspan="2" class="header">Jefe inmediato:</td>
-            <td colspan="2" class="header">Solicitante:</td>
+            <td colspan="2" class="header">JEFE INMEDIATO:</td>
+            <td colspan="2" class="header">SOLICITANTE:</td>
         </tr>
         <tr>
             <td colspan="2" class="header">
-                <input type="text" style="height: 40px;">
-                Recibido por:
+                <input type="text" style="height: 60px;">
+                RECIBIDO POR:
             </td>
-            <td colspan="2" class="header">
-                <div class="barcode">
-                    {!! DNS1D::getBarcodeHTML($permisos->idper_permisos, 'C39+', 1.4, 44, 'green') !!}
-                    <p>{{ $permisos->idper_permisos }}</p>
+            <td colspan="2" class="deadcode" style="text-align: center; vertical-align: middle;">
+                <div class="barcode"
+                    style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                    <div style="text-align: center;">
+                        <div style="display: inline-block; margin: 0 auto;">
+                            {!! DNS1D::getBarcodeHTML($permisos->idper_permisos, 'C128', 1, 33, 'green') !!}
+                        </div>
+                    </div>
+                    <p> <strong>Nro. {{ $permisos->idper_permisos }}</strong></p>
                 </div>
             </td>
         </tr>

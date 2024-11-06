@@ -37,7 +37,7 @@
             padding: 3px;
             vertical-align: top;
             border: 1px solid black;
-            font-size: 12px;
+            font-size: 13px;
             /* Borde para celdas */
         }
 
@@ -72,15 +72,6 @@
             font-size: 0.8em;
             color: #555;
         }
-
-        .barcode {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-            text-align: center;
-        }
-
         input[type="text"],
         input[type="date"],
         input[type="time"],
@@ -102,6 +93,18 @@
             margin-top: 1%;
             margin-bottom: 0%;
         }
+
+        .deadcode {
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        .barcode {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
     </style>
 </head>
 
@@ -120,28 +123,28 @@
             </td>
         </tr>
         <tr>
-            <td>Departamento:</td>
+            <td><strong>DEPARTAMENTO: </strong></td>
             <td colspan="3">{{ $soporte->direccion }}</td>
         </tr>
         <tr>
-            <td>Forma de solicitud: </td>
+            <td><strong>FORMA DE SOLICITUD: </strong></td>
             <td>{{ $soporte->tipo_solicitud }}</td>
-            <td colspan="2">Escrito N°: {{ $soporte->numero_escrito }}</td>
+            <td colspan="2"><strong>ESCRITO N°: </strong> {{ $soporte->numero_escrito }}</td>
         </tr>
         <tr>
-            <td>Fecha de Inicio: </td>
+            <td><strong>FECHA DE INICIO: </strong></td>
             <td>{{ $soporte->fecha_ini }}</td>
-            <td>Fecha Finalización:</td>
+            <td><strong>FECHA DE FINALIZACIÓN: </strong></td>
             <td>{{ $soporte->fecha_fin }}</td>
         </tr>
         <tr>
-            <td>Tipo de Soporte: </td>
+            <td><strong>TIPO DE SOPORTE: </strong></td>
             <td>{{ $soporte->tipo_soporte }}</td>
-            <td>Código/Serie Activo: </td>
+            <td><strong>CÓDIGO/SERIE ACTIVO: </strong></td>
             <td>{{ $soporte->codigo_equipo }}</td>
         </tr>
         <tr>
-            <td colspan="4">Incidente: </td>
+            <td colspan="4"><strong>INCIDENTE: </strong></td>
         </tr>
         <tr>
             <td colspan="4">
@@ -149,7 +152,7 @@
             </td>
         </tr>
         <tr>
-            <td colspan="4">Diagnóstico:</td>
+            <td colspan="4"><strong>DIAGNÓSTICO: </strong></td>
         </tr>
         <tr>
             <td colspan="4">
@@ -158,16 +161,23 @@
         </tr>
         <!-- FIRMA -->
         <tr>
-            <td class="header">Técnico:</td>
-            <td class="header">Usuario:</td>
-            <td colspan="2" class="header">Código QR:</td>
+            <td class="header"><strong>TÉCNICO: </strong></td>
+            <td class="header"><strong>USUARIO: </strong></td>
+            <td colspan="2" class="header"><strong>CÓDIGO DE BARRA: </strong></td>
         </tr>
         <tr>
             <td><input type="text" style="height: 50px;"></td>
             <td><input type="text" style="height: 50px;"></td>
-            <td colspan="2">
-                {!! DNS1D::getBarcodeHTML($soporte->cod_barra, 'C128', 1, 33, 'green') !!}
-                <strong>{{ $soporte->numero_sop }}</strong>
+            <td colspan="2" class="deadcode" style="text-align: center; vertical-align: middle;">
+                <div class="barcode"
+                    style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                    <div style="text-align: center;">
+                        <div style="display: inline-block; margin: 0 auto;">
+                            {!! DNS1D::getBarcodeHTML($soporte->cod_barra, 'C128', 1, 33, 'green') !!}
+                        </div>
+                    </div>
+                    <strong>Nro. {{ $soporte->numero_sop }}</strong>
+                </div>
             </td>
         </tr>
         <!-- FIN FIRMA -->
@@ -191,28 +201,28 @@
             </td>
         </tr>
         <tr>
-            <td>Departamento:</td>
+            <td><strong>DEPARTAMENTO: </strong></td>
             <td colspan="3">{{ $soporte->direccion }}</td>
         </tr>
         <tr>
-            <td>Forma de solicitud: </td>
+            <td><strong>FORMA DE SOLICITUD: </strong></td>
             <td>{{ $soporte->tipo_solicitud }}</td>
-            <td colspan="2">Escrito N°: {{ $soporte->numero_escrito }}</td>
+            <td colspan="2"><strong>ESCRITO N°: </strong> {{ $soporte->numero_escrito }}</td>
         </tr>
         <tr>
-            <td>Fecha de Inicio: </td>
+            <td><strong>FECHA DE INICIO: </strong></td>
             <td>{{ $soporte->fecha_ini }}</td>
-            <td>Fecha Finalización:</td>
+            <td><strong>FECHA DE FINALIZACIÓN: </strong></td>
             <td>{{ $soporte->fecha_fin }}</td>
         </tr>
         <tr>
-            <td>Tipo de Soporte: </td>
+            <td><strong>TIPO DE SOPORTE: </strong></td>
             <td>{{ $soporte->tipo_soporte }}</td>
-            <td>Código/Serie Activo: </td>
+            <td><strong>CÓDIGO/SERIE ACTIVO: </strong></td>
             <td>{{ $soporte->codigo_equipo }}</td>
         </tr>
         <tr>
-            <td colspan="4">Incidente: </td>
+            <td colspan="4"><strong>INCIDENTE: </strong></td>
         </tr>
         <tr>
             <td colspan="4">
@@ -220,7 +230,7 @@
             </td>
         </tr>
         <tr>
-            <td colspan="4">Diagnóstico:</td>
+            <td colspan="4"><strong>DIAGNÓSTICO: </strong></td>
         </tr>
         <tr>
             <td colspan="4">
@@ -229,21 +239,29 @@
         </tr>
         <!-- FIRMA -->
         <tr>
-            <td class="header">Técnico:</td>
-            <td class="header">Usuario:</td>
-            <td colspan="2" class="header">Código QR:</td>
+            <td class="header"><strong>TÉCNICO: </strong></td>
+            <td class="header"><strong>USUARIO: </strong></td>
+            <td colspan="2" class="header"><strong>CÓDIGO DE BARRA: </strong></td>
         </tr>
         <tr>
             <td><input type="text" style="height: 50px;"></td>
             <td><input type="text" style="height: 50px;"></td>
-            <td colspan="2">
-                {!! DNS1D::getBarcodeHTML($soporte->cod_barra, 'C128', 1, 33, 'green') !!}
-                <strong>{{ $soporte->numero_sop }}</strong>
+            <td colspan="2" class="deadcode" style="text-align: center; vertical-align: middle;">
+                <div class="barcode"
+                    style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                    <div style="text-align: center;">
+                        <div style="display: inline-block; margin: 0 auto;">
+                            {!! DNS1D::getBarcodeHTML($soporte->cod_barra, 'C128', 1, 33, 'green') !!}
+                        </div>
+                    </div>
+                    <strong>Nro. {{ $soporte->numero_sop }}</strong>
+                </div>
             </td>
         </tr>
         <!-- FIN FIRMA -->
 
     </table>
+
 </body>
 
 </html>
