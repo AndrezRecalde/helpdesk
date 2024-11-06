@@ -35,7 +35,7 @@ const SolicitudPage = lazy(() => import(/* webpackChunkName: "SolicitudPage" */ 
 const UserSoportesPage = lazy(() => import(/* webpackChunkName: "UserSoportesPage" */ '../../pages/soporte/UserSoportesPage'));
 
 const ProfilePage = lazy(() => import(/* webpackChunkName: "ProfilePage" */ '../../pages/user/ProfilePage'));
-const ChangePwdPage = lazy(() => import(/* webpackChunkName: "ProfilePage" */ '../../pages/user/ChangePwdPage'));
+const ChangePwdPage = lazy(() => import(/* webpackChunkName: "ChangePwdPage" */ '../../pages/user/ChangePwdPage'));
 const MarcacionPage = lazy(() => import(/* webpackChunkName: "MarcacionPage" */ '../../pages/marcacion/MarcacionPage'));
 
 
