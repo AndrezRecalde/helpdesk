@@ -19,22 +19,22 @@ export default defineConfig({
             output: {
                 manualChunks(id) {
                     if (id.includes('node_modules')) {
+                        // Agrupa React y React-DOM juntos
                         if (id.includes('react') || id.includes('react-dom')) {
                             return 'react-vendor';
                         }
+                        // Agrupa Mantine y sus dependencias relacionadas
                         if (id.includes('@mantine') || id.includes('@emotion')) {
                             return 'mantine-vendor';
                         }
-                        if (id.includes('axios')) {
-                            return 'axios-vendor';
-                        }
+                        // Mantén el resto de las dependencias de terceros en su propio chunk
                         return 'vendor';
                     }
                     // Agrupa todos los hooks en un chunk separado
                     if (id.includes('src/hooks')) {
                         return 'hooks';
                     }
-                    // Agrupa todos los componentes en un chunk separado
+                    // Agrupa todos los components en un chunk separado
                     if (id.includes('src/components')) {
                         return 'components';
                     }
@@ -46,8 +46,6 @@ export default defineConfig({
                     if (id.includes('src/store')) {
                         return 'store';
                     }
-                    // Deja otros archivos como están (sin chunk específico)
-                    return null;
                 },
             },
         },
