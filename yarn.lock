@@ -575,36 +575,36 @@
   resolved "https://registry.yarnpkg.com/@tabler/icons/-/icons-3.21.0.tgz#d48b5d96d56736d4bd7d32b4a77b1c3e8df12908"
   integrity sha512-5+GkkmWCr1wgMor5cOF1/YYflTQdc15y10FUikJ3HW8hDiFjfbuoAHJi17FT1vwsr1sA78rkJMn+fDoOOjnnPA==
 
-"@tanstack/match-sorter-utils@8.15.1":
-  version "8.15.1"
-  resolved "https://registry.yarnpkg.com/@tanstack/match-sorter-utils/-/match-sorter-utils-8.15.1.tgz#715e028ff43cf79ece10bd5a757047a1016c3bba"
-  integrity sha512-PnVV3d2poenUM31ZbZi/yXkBu3J7kd5k2u51CGwwNojag451AjTH9N6n41yjXz2fpLeewleyLBmNS6+HcGDlXw==
+"@tanstack/match-sorter-utils@8.19.4":
+  version "8.19.4"
+  resolved "https://registry.yarnpkg.com/@tanstack/match-sorter-utils/-/match-sorter-utils-8.19.4.tgz#dacf772b5d94f4684f10dbeb2518cf72dccab8a5"
+  integrity sha512-Wo1iKt2b9OT7d+YGhvEPD3DXvPv2etTusIMhMUoG7fbhmxcXCtIjJDEygy91Y2JFlwGyjqiBPRozme7UD8hoqg==
   dependencies:
     remove-accents "0.5.0"
 
-"@tanstack/react-table@8.19.3":
-  version "8.19.3"
-  resolved "https://registry.yarnpkg.com/@tanstack/react-table/-/react-table-8.19.3.tgz#be1d9ee991ac06b7d4d17cc5c66469ac157bfd8a"
-  integrity sha512-MtgPZc4y+cCRtU16y1vh1myuyZ2OdkWgMEBzyjYsoMWMicKZGZvcDnub3Zwb6XF2pj9iRMvm1SO1n57lS0vXLw==
+"@tanstack/react-table@8.20.5":
+  version "8.20.5"
+  resolved "https://registry.yarnpkg.com/@tanstack/react-table/-/react-table-8.20.5.tgz#19987d101e1ea25ef5406dce4352cab3932449d8"
+  integrity sha512-WEHopKw3znbUZ61s9i0+i9g8drmDo6asTWbrQh8Us63DAk/M0FkmIqERew6P71HI75ksZ2Pxyuf4vvKh9rAkiA==
   dependencies:
-    "@tanstack/table-core" "8.19.3"
+    "@tanstack/table-core" "8.20.5"
 
-"@tanstack/react-virtual@3.8.3":
-  version "3.8.3"
-  resolved "https://registry.yarnpkg.com/@tanstack/react-virtual/-/react-virtual-3.8.3.tgz#3455fd7e259655ab555ac130b5ac59c3eeae98bc"
-  integrity sha512-9ICwbDUUzN99CJIGc373i8NLoj6zFTKI2Hlcmo0+lCSAhPQ5mxq4dGOMKmLYoEFyHcGQ64Bd6ZVbnPpM6lNK5w==
+"@tanstack/react-virtual@3.10.8":
+  version "3.10.8"
+  resolved "https://registry.yarnpkg.com/@tanstack/react-virtual/-/react-virtual-3.10.8.tgz#bf4b06f157ed298644a96ab7efc1a2b01ab36e3c"
+  integrity sha512-VbzbVGSsZlQktyLrP5nxE+vE1ZR+U0NFAWPbJLoG2+DKPwd2D7dVICTVIIaYlJqX1ZCEnYDbaOpmMwbsyhBoIA==
   dependencies:
-    "@tanstack/virtual-core" "3.8.3"
+    "@tanstack/virtual-core" "3.10.8"
 
-"@tanstack/table-core@8.19.3":
-  version "8.19.3"
-  resolved "https://registry.yarnpkg.com/@tanstack/table-core/-/table-core-8.19.3.tgz#669e3eca2179ee3456fc068fed8683df01607c43"
-  integrity sha512-IqREj9ADoml9zCAouIG/5kCGoyIxPFdqdyoxis9FisXFi5vT+iYfEfLosq4xkU/iDbMcEuAj+X8dWRLvKYDNoQ==
+"@tanstack/table-core@8.20.5":
+  version "8.20.5"
+  resolved "https://registry.yarnpkg.com/@tanstack/table-core/-/table-core-8.20.5.tgz#3974f0b090bed11243d4107283824167a395cf1d"
+  integrity sha512-P9dF7XbibHph2PFRz8gfBKEXEY/HJPOhym8CHmjF8y3q5mWpKx9xtZapXQUWCgkqvsK0R46Azuz+VaxD4Xl+Tg==
 
-"@tanstack/virtual-core@3.8.3":
-  version "3.8.3"
-  resolved "https://registry.yarnpkg.com/@tanstack/virtual-core/-/virtual-core-3.8.3.tgz#9db61ab2a96e43d9e035b1cfd82eeede6d52f171"
-  integrity sha512-vd2A2TnM5lbnWZnHi9B+L2gPtkSeOtJOAw358JqokIH1+v2J7vUAzFVPwB/wrye12RFOurffXu33plm4uQ+JBQ==
+"@tanstack/virtual-core@3.10.8":
+  version "3.10.8"
+  resolved "https://registry.yarnpkg.com/@tanstack/virtual-core/-/virtual-core-3.10.8.tgz#975446a667755222f62884c19e5c3c66d959b8b4"
+  integrity sha512-PBu00mtt95jbKFi6Llk9aik8bnR3tR/oQP1o3TSi+iG//+Q2RTIzCEgKkHG8BB86kxMNW6O8wku+Lmi+QFR6jA==
 
 "@tiptap/core@^2.9.1":
   version "2.9.1"
@@ -717,25 +717,20 @@
   resolved "https://registry.yarnpkg.com/@tiptap/extension-strike/-/extension-strike-2.9.1.tgz#8c8553e81696e6c30a6801a1cae6afaa4c37f002"
   integrity sha512-V5aEXdML+YojlPhastcu7w4biDPwmzy/fWq0T2qjfu5Te/THcqDmGYVBKESBm5x6nBy5OLkanw2O+KHu2quDdg==
 
-"@tiptap/extension-subscript@^2.8.0":
-  version "2.8.0"
-  resolved "https://registry.yarnpkg.com/@tiptap/extension-subscript/-/extension-subscript-2.8.0.tgz#bcda756cbd672943471d39c1c62f270bb6ab802d"
-  integrity sha512-m14K5M7E+SqqrBul+B9t5sjN4zqTddV+Q+vd+RIm+OHG6AQhwewNoFyghZz5dGZ2Xj7HqiEyusBN+iHwfgJpmg==
+"@tiptap/extension-subscript@^2.9.1":
+  version "2.9.1"
+  resolved "https://registry.yarnpkg.com/@tiptap/extension-subscript/-/extension-subscript-2.9.1.tgz#06efe3a15cf6cc731ef57f82f0fdcf01e7224bad"
+  integrity sha512-jjfuHmF2dCUAtHmJH2K/7HhOCleM3aPVOI/UsBBYa8xM4mDU4xuW1O5sLAr2JWcB1xxyk9YKcBWwyRq+b1ENFA==
 
-"@tiptap/extension-superscript@^2.8.0":
-  version "2.8.0"
-  resolved "https://registry.yarnpkg.com/@tiptap/extension-superscript/-/extension-superscript-2.8.0.tgz#a740da5c029fa2d8d6d4f0209bc46458121957de"
-  integrity sha512-3rAVyRvzhoM51vaeIAEXmr2PkucIwv7ptgyxg6zx6STxcyzMchafGee0LJL7Kcn9uE/n7Yt7ek6bDqo8jU8CtA==
+"@tiptap/extension-superscript@^2.9.1":
+  version "2.9.1"
+  resolved "https://registry.yarnpkg.com/@tiptap/extension-superscript/-/extension-superscript-2.9.1.tgz#8ee220f9065d9b4f4028f77ff083ee1b98bbbfaf"
+  integrity sha512-7cgAPpUNgO/3QdvCN9/6dWP6JQC641o8dSgkyv0XzVv0nxISck4SU+2eADRYQLyP2s4M3xuSEFhCCiKZleK2yA==
 
-"@tiptap/extension-text-align@^2.8.0":
-  version "2.8.0"
-  resolved "https://registry.yarnpkg.com/@tiptap/extension-text-align/-/extension-text-align-2.8.0.tgz#831f0e1adf14f48be35a57b40e6e680ca69c53d3"
-  integrity sha512-Y6s/DF+P4lxpAnvSrnmt4xGwQT/AJJJm0aA1wu5GuPKpAQ+K4C7K6rE6uGNAXtR39GlewC7KdmcvA+CYhL8xlw==
-
-"@tiptap/extension-text-style@^2.8.0":
-  version "2.8.0"
-  resolved "https://registry.yarnpkg.com/@tiptap/extension-text-style/-/extension-text-style-2.8.0.tgz#32e30ccf3853202eba2169ba5db30b9470df9644"
-  integrity sha512-jJp0vcZ2Ty7RvIL0VU6dm1y+fTfXq1lN2GwtYzYM0ueFuESa+Qo8ticYOImyWZ3wGJGVrjn7OV9r0ReW0/NYkQ==
+"@tiptap/extension-text-align@^2.9.1":
+  version "2.9.1"
+  resolved "https://registry.yarnpkg.com/@tiptap/extension-text-align/-/extension-text-align-2.9.1.tgz#5f7920a16c95b283c961cf1e22357bdc355c1626"
+  integrity sha512-oUp0XnwJpAImcOVV68vsY2CpkHpRZ3gzWfIRTuy+aYitQim3xDKis/qfWQUWZsANp9/TZ0VyjtkZxNMwOfcu1g==
 
 "@tiptap/extension-text-style@^2.9.1":
   version "2.9.1"
@@ -1309,14 +1304,14 @@ lru-cache@^5.1.1:
   dependencies:
     yallist "^3.0.2"
 
-mantine-react-table@^2.0.0-beta.6:
-  version "2.0.0-beta.6"
-  resolved "https://registry.yarnpkg.com/mantine-react-table/-/mantine-react-table-2.0.0-beta.6.tgz#89e48aa4dde0c8c7b72cb0f9aea268b2313ed9d7"
-  integrity sha512-eaHdVjJWFLIAGS0PwdMisvs1U9IUanEzL+vm1+YcoDtUNFVGms1jw7neK43YH+CmA2YsFLfwRqHrtFnfI12Rag==
+mantine-react-table@^2.0.0-beta.7:
+  version "2.0.0-beta.7"
+  resolved "https://registry.yarnpkg.com/mantine-react-table/-/mantine-react-table-2.0.0-beta.7.tgz#9b077591810c107b5ed2cc6982c56b8400b0d134"
+  integrity sha512-jpM3hXLL+DHURmm1AJ2uOyxu3xiZvlzS7NOtDh5qHo2AIv9zEEkXK/mrvKmRvXJ0O8pVPHLuYKAel9RBY5NfUA==
   dependencies:
-    "@tanstack/match-sorter-utils" "8.15.1"
-    "@tanstack/react-table" "8.19.3"
-    "@tanstack/react-virtual" "3.8.3"
+    "@tanstack/match-sorter-utils" "8.19.4"
+    "@tanstack/react-table" "8.20.5"
+    "@tanstack/react-virtual" "3.10.8"
 
 markdown-it@^14.0.0:
   version "14.1.0"
@@ -1899,10 +1894,10 @@ supports-color@^5.3.0:
   dependencies:
     has-flag "^3.0.0"
 
-sweetalert2@^11.14.1:
-  version "11.14.1"
-  resolved "https://registry.yarnpkg.com/sweetalert2/-/sweetalert2-11.14.1.tgz#aa066422e1045aa6923ae5d0ef8cad7067b23097"
-  integrity sha512-xadhfcA4STGMh8nC5zHFFWURhRpWc4zyI3GdMDFH/m3hGWZeQQNWhX9xcG4lI9gZYsi/IlazKbwvvje3juL3Xg==
+sweetalert2@^11.14.5:
+  version "11.14.5"
+  resolved "https://registry.yarnpkg.com/sweetalert2/-/sweetalert2-11.14.5.tgz#a3adf9d8c6c8eb8eacfd57e2261503f2181abb8d"
+  integrity sha512-8MWk5uc/r6bWhiJWkUXyEuApfXAhSCZT8FFX7pZXL7YwaPxq+9Ynhi2dUzWkOFn9jvLjKj22CXuccZ+IHcnjvQ==
 
 swr@^2.2.5:
   version "2.2.5"
