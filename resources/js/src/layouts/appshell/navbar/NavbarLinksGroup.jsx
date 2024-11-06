@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import {
     Group,
     Box,
@@ -9,7 +10,6 @@ import {
     rem,
 } from "@mantine/core";
 import { IconChevronRight } from "@tabler/icons-react";
-import { Link, useLocation } from "react-router-dom";
 import classes from "../../../assets/styles/modules/layout/navbar/NavbarLinksGroup.module.css";
 
 export const LinksGroup = ({ icon: Icon, label, initiallyOpened, links, role, toggleMobile }) => {
