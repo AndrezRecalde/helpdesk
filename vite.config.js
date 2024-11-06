@@ -19,22 +19,22 @@ export default defineConfig({
             output: {
                 manualChunks(id) {
                     if (id.includes('node_modules')) {
-                        // Agrupa React y React-DOM juntos
                         if (id.includes('react') || id.includes('react-dom')) {
-                            return 'react-vendor';
+                            return 'react-vendor'; // Asegura que React y React-DOM estén juntos
                         }
-                        // Agrupa Mantine y sus dependencias relacionadas
-                        if (id.includes('@mantine') || id.includes('@emotion')) {
-                            return 'mantine-vendor';
-                        }
-                        // Mantén el resto de las dependencias de terceros en su propio chunk
-                        return 'vendor';
+                        /* if (id.includes('@mantine') || id.includes('@emotion')) {
+                            return 'mantine-vendor'; // Mantine y su dependencia
+                        } */
+                        /* if (id.includes('axios')) {
+                            return 'axios-vendor'; // Axios en su propio chunk
+                        } */
+                        return 'vendor'; // Módulos adicionales
                     }
                     // Agrupa todos los hooks en un chunk separado
                     if (id.includes('src/hooks')) {
                         return 'hooks';
                     }
-                    // Agrupa todos los components en un chunk separado
+                    // Agrupa todos los componentes en un chunk separado
                     if (id.includes('src/components')) {
                         return 'components';
                     }
@@ -46,6 +46,7 @@ export default defineConfig({
                     if (id.includes('src/store')) {
                         return 'store';
                     }
+                    return null;
                 },
             },
         },
