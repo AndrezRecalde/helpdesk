@@ -19,9 +19,9 @@ export default defineConfig({
             output: {
                 manualChunks(id) {
                     if (id.includes('node_modules')) {
-                        if (id.includes('react') || id.includes('react-dom')) {
+                        /* if (id.includes('react') || id.includes('react-dom')) {
                             return 'react-vendor'; // Asegura que React y React-DOM estén juntos
-                        }
+                        } */
                         /* if (id.includes('@mantine') || id.includes('@emotion')) {
                             return 'mantine-vendor'; // Mantine y su dependencia
                         } */
