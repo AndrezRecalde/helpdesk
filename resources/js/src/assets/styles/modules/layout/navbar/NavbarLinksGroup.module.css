@@ -16,7 +16,7 @@
     font-weight: 500;
     display: block;
     text-decoration: none;
-    padding: var(--mantine-spacing-xs) var(--mantine-spacing-md);
+    padding: var(--mantine-spacing-xs) var(--mantine-spacing-md) !important;
     padding-left: var(--mantine-spacing-md) !important;
     margin-left: var(--mantine-spacing-xl)  !important;
     font-size: var(--mantine-font-size-md);
