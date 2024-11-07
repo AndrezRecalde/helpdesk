@@ -27,7 +27,7 @@
             /* Oculta bordes redondeados */
             table-layout: fixed;
             /* Fija el ancho de las columnas */
-            margin-bottom: 50px;
+            /* margin-bottom: 50px; */
             /* Margen inferior entre tablas */
         }
 
@@ -80,6 +80,7 @@
             /* Ancho casi completo */
             box-sizing: border-box;
             /* Incluye padding y border en el ancho total */
+            font-family: Arial, sans-serif;
             font-size: 12px;
             /* Tamaño de fuente */
             border: none;
@@ -103,6 +104,21 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
+        }
+
+        .firma-table {
+            width: 100%;
+            margin-top: 0px;
+            margin-bottom: 50px;
+            border-top: none;
+            /* Elimina el borde superior */
+            border-collapse: collapse;
+            /* Asegura que los bordes no se dupliquen */
+            /* Espacio entre la tabla principal y la tabla de firma */
+        }
+
+        .firma-table tr:first-child td {
+            border-top: none;
         }
     </style>
 </head>
@@ -146,23 +162,33 @@
         </tr>
         <tr>
             <td colspan="4">
-                <textarea style="height: 80px;">{{ $permisos->per_observaciones ?? 'SIN OBSERVACIÓN' }}</textarea>
+                <textarea style="height: 150px;">{{ $permisos->per_observaciones ?? 'SIN OBSERVACIÓN' }}</textarea>
             </td>
         </tr>
+    </table>
+    <table class="firma-table">
         <tr>
-            <td colspan="2"><input type="text" style="height: 60px;"></td>
-            <td colspan="2"><input type="text" style="height: 60px;"></td>
-        </tr>
-        <tr>
-            <td colspan="2" class="header">JEFE INMEDIATO:</td>
-            <td colspan="2" class="header">SOLICITANTE:</td>
-        </tr>
-        <tr>
-            <td colspan="2" class="header">
-                <input type="text" style="height: 60px;">
-                RECIBIDO POR:
+            <td style="width: 35%;">
+                <strong style="font-size: 10px">ƒ: JEFE INMEDIATO</strong>
             </td>
-            <td colspan="2" class="deadcode" style="text-align: center; vertical-align: middle;">
+            <td style="width: 35%;">
+                <strong style="font-size: 10px">ƒ: SERVIDOR</strong>
+            </td>
+            <td style="width: 30%; text-align: center; vertical-align: middle;">
+                <strong style="font-size: 10px">CÓDIGO DE BARRA</strong>
+            </td>
+            <td></td>
+        </tr>
+        <tr>
+            <td style="width: 35%;">
+                <input type="text" style="height: 60px; width: 100%;">
+                <strong style="font-size: 12px">{{ $permisos->jefe_inmediato }}</strong>
+            </td>
+            <td style="width: 35%;">
+                <input type="text" style="height: 60px; width: 100%;">
+                <strong style="font-size: 12px">{{ $permisos->usuario_pide }}</strong>
+            </td>
+            <td style="width: 30%; text-align: center; vertical-align: middle;">
                 <div class="barcode"
                     style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
                     <div style="text-align: center;">
@@ -170,9 +196,10 @@
                             {!! DNS1D::getBarcodeHTML($permisos->idper_permisos, 'C128', 1, 33, 'green') !!}
                         </div>
                     </div>
-                    <p> <strong>Nro. {{ $permisos->idper_permisos }}</strong></p>
+                    <strong>Nro. {{ $permisos->idper_permisos }}</strong>
                 </div>
             </td>
+            <td></td>
         </tr>
     </table>
 
@@ -205,7 +232,8 @@
             <td><strong>HORA DE INICIO:</strong></td>
             <td style="font-size:15px;">
                 <strong>{{ \Carbon\Carbon::parse($permisos->per_fecha_salida)->toTimeString() }}
-                </strong></td>
+                </strong>
+            </td>
             <td><strong>HORA DE FINALIZACIÓN:</strong></td>
             <td style="font-size:15px;">
                 <strong>{{ \Carbon\Carbon::parse($permisos->per_fecha_llegada)->toTimeString() }}
@@ -214,23 +242,34 @@
         </tr>
         <tr>
             <td colspan="4">
-                <textarea style="height: 80px;">{{ $permisos->per_observaciones ?? 'SIN OBSERVACIÓN' }}</textarea>
+                <textarea style="height: 150px;">{{ $permisos->per_observaciones ?? 'SIN OBSERVACIÓN' }}</textarea>
             </td>
         </tr>
+    </table>
+
+    <table class="firma-table">
         <tr>
-            <td colspan="2"><input type="text" style="height: 60px;"></td>
-            <td colspan="2"><input type="text" style="height: 60px;"></td>
-        </tr>
-        <tr>
-            <td colspan="2" class="header">JEFE INMEDIATO:</td>
-            <td colspan="2" class="header">SOLICITANTE:</td>
-        </tr>
-        <tr>
-            <td colspan="2" class="header">
-                <input type="text" style="height: 60px;">
-                RECIBIDO POR:
+            <td style="width: 35%;">
+                <strong style="font-size: 10px">ƒ: JEFE INMEDIATO</strong>
             </td>
-            <td colspan="2" class="deadcode" style="text-align: center; vertical-align: middle;">
+            <td style="width: 35%;">
+                <strong style="font-size: 10px">ƒ: SERVIDOR</strong>
+            </td>
+            <td style="width: 30%; text-align: center; vertical-align: middle;">
+                <strong style="font-size: 10px">CÓDIGO DE BARRA</strong>
+            </td>
+            <td></td>
+        </tr>
+        <tr>
+            <td style="width: 35%;">
+                <input type="text" style="height: 60px; width: 100%;">
+                <strong style="font-size: 12px">{{ $permisos->jefe_inmediato }}</strong>
+            </td>
+            <td style="width: 35%;">
+                <input type="text" style="height: 60px; width: 100%;">
+                <strong style="font-size: 12px">{{ $permisos->usuario_pide }}</strong>
+            </td>
+            <td style="width: 30%; text-align: center; vertical-align: middle;">
                 <div class="barcode"
                     style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
                     <div style="text-align: center;">
@@ -238,9 +277,10 @@
                             {!! DNS1D::getBarcodeHTML($permisos->idper_permisos, 'C128', 1, 33, 'green') !!}
                         </div>
                     </div>
-                    <p> <strong>Nro. {{ $permisos->idper_permisos }}</strong></p>
+                    <strong>Nro. {{ $permisos->idper_permisos }}</strong>
                 </div>
             </td>
+            <td></td>
         </tr>
     </table>
 

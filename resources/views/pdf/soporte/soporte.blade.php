@@ -8,7 +8,7 @@
     <title>Soporte - Tecnico</title>
     <style>
         @page {
-            margin: 15;
+            margin: 12;
             /* Elimina márgenes para impresión */
         }
 
@@ -21,14 +21,14 @@
         table {
             width: 100%;
             border-collapse: collapse;
-            border: 1px solid black;
+            border: 1px solid rgb(214, 210, 210);
             /* Borde para la tabla */
             /* border-radius: 10px; Suaviza los bordes */
             overflow: hidden;
             /* Oculta bordes redondeados */
             table-layout: fixed;
             /* Fija el ancho de las columnas */
-            margin-bottom: 30px;
+            /* margin-bottom: 30px; */
             /* Margen inferior entre tablas */
         }
 
@@ -72,6 +72,7 @@
             font-size: 0.8em;
             color: #555;
         }
+
         input[type="text"],
         input[type="date"],
         input[type="time"],
@@ -104,6 +105,21 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
+        }
+
+        .firma-table {
+            width: 100%;
+            margin-top: 0px;
+            margin-bottom: 30px;
+            border-top: none;
+            /* Elimina el borde superior */
+            border-collapse: collapse;
+            /* Asegura que los bordes no se dupliquen */
+            /* Espacio entre la tabla principal y la tabla de firma */
+        }
+
+        .firma-table tr:first-child td {
+            border-top: none;
         }
     </style>
 </head>
@@ -159,16 +175,30 @@
                 <textarea style="height: 80px;">{{ $soporte->solucion }}</textarea>
             </td>
         </tr>
-        <!-- FIRMA -->
+    </table>
+    <table class="firma-table">
         <tr>
-            <td class="header"><strong>TÉCNICO: </strong></td>
-            <td class="header"><strong>USUARIO: </strong></td>
-            <td colspan="2" class="header"><strong>CÓDIGO DE BARRA: </strong></td>
+            <td style="width: 35%;">
+                <strong style="font-size: 10px">ƒ: TÉCNICO</strong>
+            </td>
+            <td style="width: 35%;">
+                <strong style="font-size: 10px">ƒ: USUARIO</strong>
+            </td>
+            <td style="width: 30%; text-align: center; vertical-align: middle;">
+                <strong style="font-size: 10px">CÓDIGO DE BARRA</strong>
+            </td>
+            <td></td>
         </tr>
         <tr>
-            <td><input type="text" style="height: 50px;"></td>
-            <td><input type="text" style="height: 50px;"></td>
-            <td colspan="2" class="deadcode" style="text-align: center; vertical-align: middle;">
+            <td style="width: 35%;">
+                <input type="text" style="height: 35px; width: 100%;">
+                <strong style="font-size: 11px">{{ $soporte->tecnico_asignado }}</strong>
+            </td>
+            <td style="width: 35%;">
+                <input type="text" style="height: 35px; width: 100%;">
+                <strong style="font-size: 11px">{{ $soporte->usuario_recibe }}</strong>
+            </td>
+            <td style="width: 30%; text-align: center; vertical-align: middle;">
                 <div class="barcode"
                     style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
                     <div style="text-align: center;">
@@ -179,9 +209,8 @@
                     <strong>Nro. {{ $soporte->numero_sop }}</strong>
                 </div>
             </td>
+            <td></td>
         </tr>
-        <!-- FIN FIRMA -->
-
     </table>
 
 
@@ -237,16 +266,30 @@
                 <textarea style="height: 80px;">{{ $soporte->solucion }}</textarea>
             </td>
         </tr>
-        <!-- FIRMA -->
+    </table>
+    <table class="firma-table">
         <tr>
-            <td class="header"><strong>TÉCNICO: </strong></td>
-            <td class="header"><strong>USUARIO: </strong></td>
-            <td colspan="2" class="header"><strong>CÓDIGO DE BARRA: </strong></td>
+            <td style="width: 35%;">
+                <strong style="font-size: 10px">ƒ: TÉCNICO</strong>
+            </td>
+            <td style="width: 35%;">
+                <strong style="font-size: 10px">ƒ: USUARIO</strong>
+            </td>
+            <td style="width: 30%; text-align: center; vertical-align: middle;">
+                <strong style="font-size: 10px">CÓDIGO DE BARRA</strong>
+            </td>
+            <td></td>
         </tr>
         <tr>
-            <td><input type="text" style="height: 50px;"></td>
-            <td><input type="text" style="height: 50px;"></td>
-            <td colspan="2" class="deadcode" style="text-align: center; vertical-align: middle;">
+            <td style="width: 35%;">
+                <input type="text" style="height: 35px; width: 100%;">
+                <strong style="font-size: 11px">{{ $soporte->tecnico_asignado }}</strong>
+            </td>
+            <td style="width: 35%;">
+                <input type="text" style="height: 35px; width: 100%;">
+                <strong style="font-size: 11px">{{ $soporte->usuario_recibe }}</strong>
+            </td>
+            <td style="width: 30%; text-align: center; vertical-align: middle;">
                 <div class="barcode"
                     style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
                     <div style="text-align: center;">
@@ -257,9 +300,8 @@
                     <strong>Nro. {{ $soporte->numero_sop }}</strong>
                 </div>
             </td>
+            <td></td>
         </tr>
-        <!-- FIN FIRMA -->
-
     </table>
 
 </body>
