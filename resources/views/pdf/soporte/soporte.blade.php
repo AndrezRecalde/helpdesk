@@ -82,7 +82,7 @@
             box-sizing: border-box;
             /* Incluye padding y border en el ancho total */
             font-family: Arial, sans-serif;
-            font-size: 12px;
+            font-size: 10px;
             /* Tamaño de fuente */
             border: none;
             outline: none;
