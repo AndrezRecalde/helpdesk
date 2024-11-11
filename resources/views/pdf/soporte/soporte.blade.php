@@ -37,7 +37,7 @@
             padding: 3px;
             vertical-align: top;
             border: 1px solid black;
-            font-size: 10px;
+            font-size: 11px;
             /* Borde para celdas */
         }
 
@@ -82,7 +82,7 @@
             box-sizing: border-box;
             /* Incluye padding y border en el ancho total */
             font-family: Arial, sans-serif;
-            font-size: 10px;
+            font-size: 11px;
             /* Tamaño de fuente */
             border: none;
             outline: none;
