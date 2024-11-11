@@ -37,7 +37,7 @@
             padding: 3px;
             vertical-align: top;
             border: 1px solid black;
-            font-size: 13px;
+            font-size: 10px;
             /* Borde para celdas */
         }
 
