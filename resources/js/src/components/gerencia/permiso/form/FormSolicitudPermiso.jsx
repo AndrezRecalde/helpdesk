@@ -36,7 +36,6 @@ export const FormSolicitudPermiso = ({ form, disabled }) => {
         startCardPermiso,
     } = usePermisoStore();
     //const { setStoragePermisoFields } = useStorageField();
-
     const pickerControl_1 = (
         <ActionIcon
             variant="subtle"
@@ -240,6 +239,7 @@ export const FormSolicitudPermiso = ({ form, disabled }) => {
                 <SimpleGrid cols={2}>
                     <TimeInput
                         withAsterisk
+                        pointer
                         label="Hora desde:"
                         ref={ref_1}
                         rightSection={pickerControl_1}
@@ -247,6 +247,7 @@ export const FormSolicitudPermiso = ({ form, disabled }) => {
                     />
                     <TimeInput
                         withAsterisk
+                        pointer
                         label="Hora hasta:"
                         ref={ref_2}
                         rightSection={pickerControl_2}
