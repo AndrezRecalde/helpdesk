@@ -74,6 +74,8 @@ return [
             'charset' => 'utf8',
             'prefix' => '',
             'prefix_indexes' => true,
+            'encrypt' => false,  // Mantén el cifrado activado si es necesario
+            'trust_server_certificate' => false,  // Confía en el certificado autofirmado
             //'encrypt' => 'no',  // Desactivar cifrado
             //'trust_server_certificate' => 'true',  // Ignorar la verificación del certificado
             //'encrypt' => env('DB_ENCRYPT', 'no'),
