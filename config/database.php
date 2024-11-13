@@ -75,7 +75,7 @@ return [
             'prefix' => '',
             'prefix_indexes' => true,
             'encrypt' => 'no',  // Desactivar cifrado
-            'trust_server_certificate' => 'true',  // Ignorar la verificación del certificado
+            //'trust_server_certificate' => 'true',  // Ignorar la verificación del certificado
             //'encrypt' => env('DB_ENCRYPT', 'no'),
             //'trust_server_certificate' => env('DB_TRUST_SERVER_CERTIFICATE', 'false'),
         ],
