@@ -75,8 +75,8 @@ return [
             'prefix' => '',
             'prefix_indexes' => true,
             'options' => [
-                PDO::SQLSRV_ATTR_ENCRYPT => false,  // Activa la encriptación
-                PDO::SQLSRV_ATTR_TRUST_SERVER_CERTIFICATE => true, // Ignora la validación SSL
+                PDO::SQLSRV_ATTR_CONNECTION_POOLING => false,
+                "TrustServerCertificate" => true,
             ],
             // 'encrypt' => env('DB_ENCRYPT', 'yes'),
             // 'trust_server_certificate' => env('DB_TRUST_SERVER_CERTIFICATE', 'false'),
