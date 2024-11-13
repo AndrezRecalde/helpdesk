@@ -41,7 +41,7 @@ class MarcacionController extends Controller
             'UserCi' => 'required'
         ]);
 
-        $marcaciones = DB::connection('sqlsrv')->select('EXEC GetUserCheckinsForCurrentMonth ?', [(string)$request->UserCi]);
+        $marcaciones = DB::connection('sqlsrv')->select('EXEC GetUserCheckinsForCurrentMonth ?', ['802704171']);
 
         return response()->json([
             'status' => MsgStatus::Success,
