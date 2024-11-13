@@ -12,6 +12,7 @@ use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 
 class ActividadController extends Controller
@@ -61,7 +62,7 @@ class ActividadController extends Controller
                     'id_usu_recibe' => 701,
                     'id_tipo_soporte' => '3',
                     'incidente'   => 'SOLICITUD INTERNA DEL ÁREA DE TIC',
-                    'solucion'    => $actividad->actividad,
+                    'solucion'    => Str::upper($actividad->actividad),
                     'id_area_tic' => 5,
                     'id_usu_tecnico_asig' => $user->cdgo_usrio
                 ]);

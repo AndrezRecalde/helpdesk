@@ -135,6 +135,10 @@ class SoporteAdminController extends Controller
 
             if ($request->id_usu_tecnico_asig) {
 
+                $soporte->id_estado = 5;
+
+                $soporte->save();
+
                 $asignacion = Soporte::from('sop_soporte as ss')
                     ->selectRaw('ss.id_sop, ss.numero_sop,
                                 ss.id_direccion, d.nmbre_dprtmnto as direccion,
@@ -151,14 +155,13 @@ class SoporteAdminController extends Controller
                 $tecnico = User::where("cdgo_usrio", $request->id_usu_tecnico_asig)
                     ->first(['cdgo_usrio', 'email']);
 
+
                 /* MAIL PARA EL TÉCNICO */
                 Mail::to($tecnico->email)->send(new TecnicoMail($asignacion));
 
                 /* MAIL PARA EL USUARIO */
                 Mail::to($usuario->email)->send(new UsuarioMail($asignacion));
 
-                $soporte->id_estado = 5;
-                $soporte->save();
                 return response()->json(
                     [
                         'status'     => MsgStatus::Success,
