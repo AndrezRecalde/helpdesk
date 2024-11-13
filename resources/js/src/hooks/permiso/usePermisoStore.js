@@ -34,7 +34,7 @@ export const usePermisoStore = () => {
             }, 8000);
             dispatch(onLoading(false));
         } catch (error) {
-            console.log(error)
+            //console.log(error)
             ExceptionMessageError(error);
         }
     }
@@ -65,7 +65,7 @@ export const usePermisoStore = () => {
             dispatch(onExport(false));
             dispatch(onSetActivatePermiso(null));
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };
