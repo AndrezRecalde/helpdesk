@@ -74,11 +74,8 @@ return [
             'charset' => 'utf8',
             'prefix' => '',
             'prefix_indexes' => true,
-            /* 'options'  => [
-                'TrustServerCertificate' => env('DB_SQLSRV_CONNECTION_OPTIONS', 'TrustServerCertificate=1'),
-            ], */
-            'encrypt' => env('DB_ENCRYPT', 'no'),
-            'trust_server_certificate' => env('DB_TRUST_SERVER_CERTIFICATE', 'false'),
+            //'encrypt' => env('DB_ENCRYPT', 'no'),
+            //'trust_server_certificate' => env('DB_TRUST_SERVER_CERTIFICATE', 'false'),
         ],
 
         'pgsql' => [
