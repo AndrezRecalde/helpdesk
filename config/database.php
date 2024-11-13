@@ -75,7 +75,7 @@ return [
             'prefix' => '',
             'prefix_indexes' => true,
             'options' => [
-                PDO::SQLSRV_ATTR_CONNECTION_POOLING => false,
+                //PDO::SQLSRV_ATTR_CONNECTION_POOLING => false,
                 "TrustServerCertificate" => true,
             ],
             // 'encrypt' => env('DB_ENCRYPT', 'yes'),
