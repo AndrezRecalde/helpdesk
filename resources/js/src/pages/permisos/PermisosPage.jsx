@@ -106,7 +106,7 @@ const PermisosPage = () => {
             ? navigate("/gerencia/ver-permisos")
             : usuario.role === Roles.TECNICO
             ? navigate("/tecnico/ver-permisos")
-            : navigate("/gad/d/ver-permisos");
+            : navigate("/staff/general/ver-permisos");
     };
 
     return (

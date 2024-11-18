@@ -74,8 +74,12 @@ return [
             'charset' => 'utf8',
             'prefix' => '',
             'prefix_indexes' => true,
-            // 'encrypt' => env('DB_ENCRYPT', 'yes'),
-            // 'trust_server_certificate' => env('DB_TRUST_SERVER_CERTIFICATE', 'false'),
+            'encrypt' => 'no',  // Mantén el cifrado activado si es necesario
+            'trust_server_certificate' => false,  // Confía en el certificado autofirmado
+            //'encrypt' => 'no',  // Desactivar cifrado
+            //'trust_server_certificate' => 'true',  // Ignorar la verificación del certificado
+            //'encrypt' => env('DB_ENCRYPT', 'no'),
+            //'trust_server_certificate' => env('DB_TRUST_SERVER_CERTIFICATE', 'false'),
         ],
 
         'pgsql' => [
@@ -125,7 +129,7 @@ return [
 
         'options' => [
             'cluster' => env('REDIS_CLUSTER', 'redis'),
-            'prefix' => env('REDIS_PREFIX', Str::slug(env('APP_NAME', 'laravel'), '_').'_database_'),
+            'prefix' => env('REDIS_PREFIX', Str::slug(env('APP_NAME', 'laravel'), '_') . '_database_'),
         ],
 
         'default' => [
