@@ -26,15 +26,13 @@ export const ModalCreateSoporte = ({ role }) => {
         useEquipoStore();
     const { startLoadEstados, clearEstados } = useEstadoStore();
 
+    const convertToString = (value) => (value !== null && value !== undefined ? value.toString() : null);
+
     const form = useForm({
         initialValues: {
-            id_estado: activateSoporte?.id_estado.toString()
-                ? activateSoporte?.id_estado.toString()
-                : "3",
+            id_estado: activateSoporte?.id_estado.toString() || "3",
             fecha_ini: new Date(),
-            id_tipo_solicitud: activateSoporte?.id_tipo_solicitud
-                ? activateSoporte?.id_tipo_solicitud.toString()
-                : "1",
+            id_tipo_solicitud: activateSoporte?.id_tipo_solicitud || "1",
             numero_escrito: "",
             id_usu_tecnico_asig: null,
             id_direccion: null,
@@ -106,50 +104,41 @@ export const ModalCreateSoporte = ({ role }) => {
     useEffect(() => {
         if (activateSoporte !== null) {
             startLoadTecnicos();
+
+            const {
+                id_estado,
+                id_tipo_solicitud,
+                numero_escrito,
+                id_usu_tecnico_asig,
+                id_direccion,
+                id_usu_recibe,
+                id_tipo_soporte,
+                id_area_tic,
+                incidente,
+                solucion,
+                id_equipo,
+                fecha_ini,
+                fecha_fin
+            } = activateSoporte;
+
             form.setValues({
                 ...activateSoporte,
-                id_estado: activateSoporte?.id_estado
-                    ? activateSoporte?.id_estado?.toString()
-                    : null,
-                id_tipo_solicitud: activateSoporte?.id_tipo_solicitud
-                    ? activateSoporte?.id_tipo_solicitud?.toString()
-                    : null,
-                numero_escrito: activateSoporte?.numero_escrito
-                    ? activateSoporte?.numero_escrito
-                    : "",
-                id_usu_tecnico_asig: activateSoporte?.id_usu_tecnico_asig
-                    ? activateSoporte?.id_usu_tecnico_asig?.toString()
-                    : null,
-                id_direccion:
-                    activateSoporte?.id_direccion ||
-                    activateSoporte?.id_direccion == 0
-                        ? activateSoporte?.id_direccion?.toString()
-                        : null,
-                id_usu_recibe: activateSoporte?.id_usu_recibe
-                    ? activateSoporte?.id_usu_recibe?.toString()
-                    : null
-                    ? activateSoporte?.id_usu_recibe?.toString()
-                    : null,
-                id_tipo_soporte: activateSoporte?.id_tipo_soporte
-                    ? activateSoporte?.id_tipo_soporte?.toString()
-                    : null,
-                id_area_tic: activateSoporte?.id_area_tic
-                    ? activateSoporte?.id_area_tic?.toString()
-                    : null,
-                incidente: activateSoporte?.incidente
-                    ? activateSoporte?.incidente
-                    : "",
-                solucion: activateSoporte?.solucion
-                    ? activateSoporte?.solucion
-                    : "",
-                id_equipo: activateSoporte?.id_equipo
-                    ? activateSoporte?.id_equipo?.toString()
-                    : null,
-                fecha_ini: new Date(activateSoporte?.fecha_ini),
-                fecha_fin: new Date(activateSoporte?.fecha_fin),
-
-                activo_informatico: activateSoporte?.id_equipo ? true : false,
+                id_estado: convertToString(id_estado),
+                id_tipo_solicitud: convertToString(id_tipo_solicitud),
+                numero_escrito: numero_escrito || "",
+                id_usu_tecnico_asig: convertToString(id_usu_tecnico_asig),
+                id_direccion: id_direccion !== undefined && id_direccion !== null ? convertToString(id_direccion) : null,
+                id_usu_recibe: convertToString(id_usu_recibe),
+                id_tipo_soporte: convertToString(id_tipo_soporte),
+                id_area_tic: convertToString(id_area_tic),
+                incidente: incidente || "",
+                solucion: solucion || "",
+                id_equipo: convertToString(id_equipo),
+                fecha_ini: fecha_ini ? new Date(fecha_ini) : null,
+                fecha_fin: fecha_fin ? new Date(fecha_fin) : null,
+                activo_informatico: id_equipo ? true : false,
             });
+
             return;
         }
     }, [activateSoporte]);

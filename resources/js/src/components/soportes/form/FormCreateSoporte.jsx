@@ -37,43 +37,25 @@ export const FormCreateSoporte = ({ form }) => {
     const { modalActionCreateSoporte } = useUiSoporte();
     const { storageFields = {} } = useStorageField();
 
+    // Función para establecer valores comunes en el formulario
+    const setFormValues = (form, activateSoporte) => {
+        form.setFieldValue("id_estado", activateSoporte?.id_estado ? activateSoporte.id_estado.toString() : "3");
+        form.setFieldValue("solucion", activateSoporte?.solucion);
+        form.setFieldValue("fecha_fin", activateSoporte?.fecha_fin ? new Date(activateSoporte.fecha_fin) : new Date());
+    };
+
     useEffect(() => {
-        if (
-            id_tipo_soporte == 1 ||
-            id_tipo_soporte == 4 ||
-            id_tipo_soporte == 5 ||
-            id_tipo_soporte == 6
-        ) {
-            //console.log(id_tipo_soporte)
+        const tipoSoporte = Number(id_tipo_soporte);
+        // Verifica tipo de soporte
+        if ([1, 4, 5, 6].includes(tipoSoporte)) {
             form.setFieldValue("activo_informatico", true);
-            form.setFieldValue(
-                "id_equipo",
-                activateSoporte?.id_equipo
-                    ? activateSoporte?.id_equipo.toString()
-                    : null
-            );
-        }
-        if (id_tipo_soporte == 2 || id_tipo_soporte == 3) {
-            //console.log('aquii')
+            form.setFieldValue("id_equipo", activateSoporte?.id_equipo ? activateSoporte.id_equipo.toString() : null);
+        } else if ([2, 3].includes(tipoSoporte)) {
             form.setFieldValue("activo_informatico", false);
         }
-        form.setFieldValue(
-            "id_estado",
-            activateSoporte?.id_estado
-                ? activateSoporte?.id_estado.toString()
-                : "3"
-        );
-        form.setFieldValue(
-            "solucion",
-            activateSoporte?.solucion ? activateSoporte?.solucion : ""
-        );
-        form.setFieldValue(
-            "fecha_fin",
-            activateSoporte?.fecha_fin
-                ? new Date(activateSoporte?.fecha_fin)
-                : new Date()
-        );
-    }, [id_tipo_soporte]);
+
+        setFormValues(form, activateSoporte);
+    }, [id_tipo_soporte, activateSoporte]);
 
     useEffect(() => {
         if (!activo_informatico) {
@@ -82,34 +64,16 @@ export const FormCreateSoporte = ({ form }) => {
     }, [activo_informatico]);
 
     useEffect(() => {
-        if (id_tipo_solicitud == 7) {
+        const tipoSolicitud = Number(id_tipo_solicitud);
+        if (tipoSolicitud === 7) {
             form.setFieldValue("activo_informatico", false);
             form.setFieldValue("id_estado", "4");
-            form.setFieldValue(
-                "solucion",
-                activateSoporte?.solucion ? activateSoporte?.solucion : ""
-            );
-            form.setFieldValue(
-                "id_equipo",
-                activateSoporte?.id_equipo
-                    ? activateSoporte?.id_equipo.toString()
-                    : null
-            );
-            form.setFieldValue(
-                "fecha_fin",
-                activateSoporte?.fecha_fin
-                    ? new Date(activateSoporte?.fecha_fin)
-                    : new Date()
-            );
-            return;
+            form.setFieldValue("id_equipo", activateSoporte?.id_equipo ? activateSoporte.id_equipo.toString() : null);
+        } else {
+            setFormValues(form, activateSoporte);
         }
-        form.setFieldValue(
-            "id_estado",
-            activateSoporte?.id_estado
-                ? activateSoporte?.id_estado.toString()
-                : "3"
-        );
-    }, [id_tipo_solicitud]);
+    }, [id_tipo_solicitud, activateSoporte]);
+
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -267,7 +231,7 @@ export const FormCreateSoporte = ({ form }) => {
                     iconColor="dark.8"
                     size="md"
                     label="¿Ingresar activo informático?"
-                    disabled={id_tipo_solicitud == 7 ? true : false}
+                    disabled={true}
                     {...form.getInputProps("activo_informatico", {
                         type: "checkbox",
                     })}
