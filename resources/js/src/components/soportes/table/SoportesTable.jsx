@@ -176,7 +176,13 @@ export const SoportesTable = () => {
                         <Table.Tr>
                             <Table.Td>
                                 <TextSection fz="sm" fw={300} tt="">
-                                    {row.original.incidente}
+                                    {row.original.incidente}{" "}
+                                    <TextSection fs="italic" tt="" fz={12}>
+                                        {"- "}
+                                        {dayjs(
+                                            row.original.fecha_ini
+                                        ).fromNow()}{" "}
+                                    </TextSection>
                                 </TextSection>
                                 <TextSection fz="xs" c="dimmed" tt="" fw={700}>
                                     Incidencia
@@ -190,7 +196,14 @@ export const SoportesTable = () => {
                                             "Sin solución",
                                     }}
                                 />
-
+                                <TextSection fs="italic" tt="" fz={12}>
+                                    {row.original.fecha_fin
+                                        ? "- " +
+                                          dayjs(
+                                              row.original.fecha_fin
+                                          ).fromNow()
+                                        : null}{" "}
+                                </TextSection>
                                 <TextSection fz="xs" c="dimmed" tt="" fw={700}>
                                     Retrospectiva del técnico
                                 </TextSection>
