@@ -39,7 +39,7 @@ export const TableMarcacionRelojOnline = () => {
         enableFacetedValues: true,
         mantineTableProps: {
             withColumnBorders: true,
-            withTableBorder: true,
+            //withTableBorder: true,
             sx: {
                 "thead > tr": {
                     backgroundColor: "inherit",
