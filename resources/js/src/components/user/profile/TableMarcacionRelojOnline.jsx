@@ -1,35 +1,58 @@
-import { Card, Table } from "@mantine/core";
-import { TextSection, TitlePage } from "../../../components";
+import { useMemo } from "react";
+import { Card } from "@mantine/core";
+import { TableContent, TitlePage } from "../../../components";
 import { useMarcacionStore } from "../../../hooks";
+import { useMantineReactTable } from "mantine-react-table";
 import dayjs from "dayjs";
 
 export const TableMarcacionRelojOnline = () => {
     const { marcaciones } = useMarcacionStore();
 
-    const rows = marcaciones.map((marcacion) => (
-        <Table.Tr key={marcacion.ID}>
-            <Table.Td>
-                <TextSection fw={300} fz={16}>
-                    {marcacion.NAME}
-                </TextSection>
-            </Table.Td>
-            <Table.Td>
-                <TextSection fw={300} fz={16}>
-                    {dayjs(marcacion.CHECKTIME).format("YYYY-MM-DD")}
-                </TextSection>
-            </Table.Td>
-            <Table.Td>
-                <TextSection fw={300} fz={16}>
-                    {dayjs(marcacion.CHECKTIME).format("HH:mm:ss")}
-                </TextSection>
-            </Table.Td>
-            <Table.Td>
-                <TextSection fw={300} fz={16}>
-                    {marcacion.SENSORID}
-                </TextSection>
-            </Table.Td>
-        </Table.Tr>
-    ));
+    const columns = useMemo(
+        () => [
+            {
+                accessorKey: "NAME", //access nested data with dot notation
+                header: "SERVIDOR",
+            },
+            {
+                accessorFn: (row) => dayjs(row.CHECKTIME).format("YYYY-MM-DD"), //access nested data with dot notation
+                header: "FECHA",
+                filterVariant: "autocomplete",
+            },
+            {
+                accessorFn: (row) => dayjs(row.CHECKTIME).format("HH:mm:ss"), //normal accessorKey
+                header: "HORA",
+                //filterVariant: "autocomplete",
+            },
+            {
+                accessorKey: "SENSORID", //normal accessorKey
+                header: "SENSOR RELOJ",
+                //filterVariant: "autocomplete",
+            },
+        ],
+        [marcaciones]
+    );
+
+    const table = useMantineReactTable({
+        columns,
+        data: marcaciones, //must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
+        enableFacetedValues: true,
+        mantineTableProps: {
+            withColumnBorders: true,
+            withTableBorder: true,
+            sx: {
+                "thead > tr": {
+                    backgroundColor: "inherit",
+                },
+                "thead > tr > th": {
+                    backgroundColor: "inherit",
+                },
+                "tbody > tr > td": {
+                    backgroundColor: "inherit",
+                },
+            },
+        },
+    });
 
     return (
         <Card withBorder shadow="sm" radius="md" mt={5}>
@@ -37,39 +60,7 @@ export const TableMarcacionRelojOnline = () => {
                 <TitlePage order={3}>Marcaciones desde el Biométrico</TitlePage>
             </Card.Section>
             <Card.Section withBorder inheritPadding py="xs">
-                <Table
-                    striped
-                    withColumnBorders
-                    withRowBorders
-                    verticalSpacing="sm"
-                    horizontalSpacing="lg"
-                >
-                    <Table.Thead>
-                        <Table.Tr>
-                            <Table.Th style={{ width: "300px" }}>
-                                <TextSection fw={700} fz={18}>
-                                    Servidor
-                                </TextSection>
-                            </Table.Th>
-                            <Table.Th>
-                                <TextSection fw={700} fz={18}>
-                                    Fecha
-                                </TextSection>
-                            </Table.Th>
-                            <Table.Th>
-                                <TextSection fw={700} fz={18}>
-                                    Hora
-                                </TextSection>
-                            </Table.Th>
-                            <Table.Th style={{ width: "200px" }}>
-                                <TextSection fw={700} fz={18}>
-                                    Sensor Reloj
-                                </TextSection>
-                            </Table.Th>
-                        </Table.Tr>
-                    </Table.Thead>
-                    <Table.Tbody>{rows}</Table.Tbody>
-                </Table>
+                <TableContent table={table} />
             </Card.Section>
         </Card>
     );
