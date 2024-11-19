@@ -148,7 +148,11 @@
             <td><strong>MOTIVO DEL PERMISO:</strong></td>
             <td>{{ $permisos->motivo }}</td>
             <td><strong>FECHA DEL PERMISO:</strong></td>
-            <td style="font-size:15px;">{{ \Carbon\Carbon::parse($permisos->per_fecha_salida)->format('Y-m-d') }}</td>
+            <td style="font-size:15px;">
+                <strong>
+                    {{ \Carbon\Carbon::parse($permisos->per_fecha_salida)->format('Y-m-d') }}
+                </strong>
+            </td>
         </tr>
         <tr>
             <td><strong>HORA DE INICIO:</strong></td>
@@ -168,27 +172,33 @@
     </table>
     <table class="firma-table">
         <tr>
-            <td style="width: 35%;">
+            <td>
                 <strong style="font-size: 10px">ƒ: JEFE INMEDIATO</strong>
             </td>
-            <td style="width: 35%;">
+            <td>
                 <strong style="font-size: 10px">ƒ: SERVIDOR</strong>
             </td>
-            <td style="width: 30%; text-align: center; vertical-align: middle;">
+            <td>
+                <strong style="font-size: 10px">ƒ: RECIBIDO POR</strong>
+            </td>
+            <td style="text-align: center; vertical-align: middle;">
                 <strong style="font-size: 10px">CÓDIGO DE BARRA</strong>
             </td>
-            <td></td>
         </tr>
         <tr>
-            <td style="width: 35%;">
+            <td>
                 <input type="text" style="height: 60px; width: 100%;">
                 <strong style="font-size: 12px">{{ $permisos->jefe_inmediato }}</strong>
             </td>
-            <td style="width: 35%;">
+            <td>
                 <input type="text" style="height: 60px; width: 100%;">
                 <strong style="font-size: 12px">{{ $permisos->usuario_pide }}</strong>
             </td>
-            <td style="width: 30%; text-align: center; vertical-align: middle;">
+            <td>
+                <input type="text" style="height: 60px; width: 100%;">
+                <strong style="font-size: 12px">Personal TTHH</strong>
+            </td>
+            <td style="text-align: center; vertical-align: middle;">
                 <div class="barcode"
                     style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
                     <div style="text-align: center;">
@@ -199,7 +209,6 @@
                     <strong>Nro. {{ $permisos->idper_permisos }}</strong>
                 </div>
             </td>
-            <td></td>
         </tr>
     </table>
 
@@ -226,7 +235,11 @@
             <td><strong>MOTIVO DEL PERMISO:</strong></td>
             <td>{{ $permisos->motivo }}</td>
             <td><strong>FECHA DEL PERMISO:</strong></td>
-            <td style="font-size:15px;">{{ \Carbon\Carbon::parse($permisos->per_fecha_salida)->format('Y-m-d') }}</td>
+            <td style="font-size:15px;">
+                <strong>
+                    {{ \Carbon\Carbon::parse($permisos->per_fecha_salida)->format('Y-m-d') }}
+                </strong>
+            </td>
         </tr>
         <tr>
             <td><strong>HORA DE INICIO:</strong></td>
@@ -249,27 +262,33 @@
 
     <table class="firma-table">
         <tr>
-            <td style="width: 35%;">
+            <td>
                 <strong style="font-size: 10px">ƒ: JEFE INMEDIATO</strong>
             </td>
-            <td style="width: 35%;">
+            <td>
                 <strong style="font-size: 10px">ƒ: SERVIDOR</strong>
             </td>
-            <td style="width: 30%; text-align: center; vertical-align: middle;">
+            <td>
+                <strong style="font-size: 10px">ƒ: RECIBIDO POR</strong>
+            </td>
+            <td style="text-align: center; vertical-align: middle;">
                 <strong style="font-size: 10px">CÓDIGO DE BARRA</strong>
             </td>
-            <td></td>
         </tr>
         <tr>
-            <td style="width: 35%;">
+            <td>
                 <input type="text" style="height: 60px; width: 100%;">
                 <strong style="font-size: 12px">{{ $permisos->jefe_inmediato }}</strong>
             </td>
-            <td style="width: 35%;">
+            <td>
                 <input type="text" style="height: 60px; width: 100%;">
                 <strong style="font-size: 12px">{{ $permisos->usuario_pide }}</strong>
             </td>
-            <td style="width: 30%; text-align: center; vertical-align: middle;">
+            <td>
+                <input type="text" style="height: 60px; width: 100%;">
+                <strong style="font-size: 12px">Personal TTHH</strong>
+            </td>
+            <td style="text-align: center; vertical-align: middle;">
                 <div class="barcode"
                     style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
                     <div style="text-align: center;">
@@ -280,10 +299,8 @@
                     <strong>Nro. {{ $permisos->idper_permisos }}</strong>
                 </div>
             </td>
-            <td></td>
         </tr>
     </table>
-
 </body>
 
 </html>
