@@ -59,7 +59,7 @@ export const TableMarcacionRelojOnline = () => {
             <Card.Section withBorder inheritPadding py="lg">
                 <TitlePage order={3}>Marcaciones desde el Biométrico</TitlePage>
             </Card.Section>
-            <Card.Section withBorder inheritPadding py="xs">
+            <Card.Section inheritPadding py="xs">
                 <TableContent table={table} />
             </Card.Section>
         </Card>
