@@ -1,9 +1,9 @@
 import { useMemo } from "react";
-import { Card } from "@mantine/core";
 import { TableContent, TitlePage } from "../../../components";
 import { useMarcacionStore } from "../../../hooks";
 import { useMantineReactTable } from "mantine-react-table";
 import dayjs from "dayjs";
+
 
 export const TableMarcacionRelojOnline = () => {
     const { marcaciones } = useMarcacionStore();
@@ -13,6 +13,7 @@ export const TableMarcacionRelojOnline = () => {
             {
                 accessorKey: "NAME", //access nested data with dot notation
                 header: "SERVIDOR",
+                enableColumnFilter: false,
             },
             {
                 accessorFn: (row) => dayjs(row.CHECKTIME).format("YYYY-MM-DD"), //access nested data with dot notation
@@ -22,11 +23,13 @@ export const TableMarcacionRelojOnline = () => {
             {
                 accessorFn: (row) => dayjs(row.CHECKTIME).format("HH:mm:ss"), //normal accessorKey
                 header: "HORA",
+                enableColumnFilter: false,
                 //filterVariant: "autocomplete",
             },
             {
                 accessorKey: "SENSORID", //normal accessorKey
                 header: "SENSOR RELOJ",
+                enableColumnFilter: false,
                 //filterVariant: "autocomplete",
             },
         ],
@@ -36,10 +39,15 @@ export const TableMarcacionRelojOnline = () => {
     const table = useMantineReactTable({
         columns,
         data: marcaciones, //must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
+        renderTopToolbarCustomActions: ({ table }) => (
+            <TitlePage order={3}>Marcaciones desde el Biométrico</TitlePage>
+        ),
+        initialState: { showColumnFilters: true, showGlobalFilter: true },
         enableFacetedValues: true,
         mantineTableProps: {
-            withColumnBorders: true,
-            //withTableBorder: true,
+            highlightOnHover: false,
+            withColumnBorders: false,
+            withTableBorder: false,
             sx: {
                 "thead > tr": {
                     backgroundColor: "inherit",
@@ -54,14 +62,5 @@ export const TableMarcacionRelojOnline = () => {
         },
     });
 
-    return (
-        <Card withBorder shadow="sm" radius="md" mt={5}>
-            <Card.Section withBorder inheritPadding py="lg">
-                <TitlePage order={3}>Marcaciones desde el Biométrico</TitlePage>
-            </Card.Section>
-            <Card.Section inheritPadding py="xs">
-                <TableContent table={table} />
-            </Card.Section>
-        </Card>
-    );
+    return <TableContent table={table} />;
 };

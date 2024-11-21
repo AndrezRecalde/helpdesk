@@ -4,6 +4,7 @@ import {
     onClearErrores,
     onLoadErrores,
     onLoadProfile,
+    onLoadToken,
     onLoading,
     onLogout,
     onValidate,
@@ -25,7 +26,7 @@ export const useAuthStore = () => {
 
     const startLogin = async ({ lgin, paswrd }) => {
         try {
-            dispatch(onLoading());
+            dispatch(onLoading(true));
             const { data } = await helpdeskApi.post("/auth/login", {
                 lgin,
                 paswrd,
@@ -34,6 +35,7 @@ export const useAuthStore = () => {
             localStorage.setItem("service_user", JSON.stringify(user));
             localStorage.setItem("auth_token", access_token);
             localStorage.setItem("token_init_date", new Date().getTime());
+            dispatch(onLoadToken(access_token));
             dispatch(onAuthenticate(user));
         } catch (error) {
             //console.log(error);
@@ -59,6 +61,7 @@ export const useAuthStore = () => {
             localStorage.setItem("auth_token", access_token);
             localStorage.setItem("token_init_date", new Date().getTime());
             dispatch(onAuthenticate(user));
+            dispatch(onLoadToken(access_token));
         } catch (error) {
             //console.log(error);
             localStorage.clear();
@@ -68,7 +71,7 @@ export const useAuthStore = () => {
 
     const startProfile = async () => {
         try {
-            dispatch(onLoading());
+            dispatch(onLoading(true));
             //const user = await JSON.parse(localStorage.getItem("service_user"));
             const { data } = await helpdeskApi.get("/profile");
             const { profile } = data;

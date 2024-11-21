@@ -16,10 +16,10 @@ import classes from "../../../assets/styles/modules/menu/MenuGrid.module.css";
 
 
 const mockdata = [
-    { title: "Agregar actividades", icon: IconPencilPlus, color: "violet", link: "/gad/d/agregar-actividad" },
-    { title: "Solicitar Soporte",   icon: IconDeviceImac, color: "teal", link: "/gad/d/solicitud" },
-    { title: "Solicitar Permiso",   icon: IconLicense, color: "blue", link: "/gad/d/permiso" },
-    { title: "Revisar Marcaciones",   icon: IconFingerprintScan, color: "indigo", link: "/u/ver-marcaciones" },
+    { title: "Agregar actividades", icon: IconPencilPlus, color: "violet", link: "/staff/agregar-actividad" },
+    { title: "Solicitar Soporte",   icon: IconDeviceImac, color: "teal", link: "/staff/solicitud" },
+    { title: "Solicitar Permiso",   icon: IconLicense, color: "blue", link: "/staff/permiso" },
+    { title: "Revisar Marcaciones",   icon: IconFingerprintScan, color: "indigo", link: "/staff/d/ver-marcaciones" },
 ];
 
 export const MenuSeleccion = () => {

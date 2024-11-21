@@ -13,21 +13,24 @@ export const authSlice = createSlice({
     name: "auth",
     initialState,
     reducers: {
-        onLoading: (state) => {
-            state.isLoading = true;
+        onLoading: (state, { payload }) => {
+            state.isLoading = payload;
         },
         onAuthenticate: (state, { payload }) => {
             state.user = payload;
             state.isLoading = false;
+        },
+        onLoadToken: (state, { payload }) => {
+            state.token = payload;
         },
         onLoadProfile: (state, { payload }) => {
             state.profile = payload;
             state.isLoading = false;
         },
         onLogout: (state, { payload }) => {
-            state.isLoading = false;
             state.user = {};
             state.errores = payload;
+            state.isLoading = false;
         },
         onValidate: (state, { payload }) => {
             state.isLoading = false;
@@ -49,6 +52,7 @@ export const authSlice = createSlice({
 export const {
     onLoading,
     onAuthenticate,
+    onLoadToken,
     onLoadProfile,
     onLogout,
     onValidate,

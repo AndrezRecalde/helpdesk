@@ -1,16 +1,17 @@
 import { Group, Paper, SimpleGrid, Skeleton } from "@mantine/core";
+import { TextSection } from "../../../components";
+import {
+    usePermisoStore,
+    useTecnicoStore,
+    useUsersStore,
+} from "../../../hooks";
 import {
     IconLicense,
     IconClockHour2,
     IconDeviceImacStar,
 } from "@tabler/icons-react";
 import classes from "../../../assets/styles/modules/user/StatsGrid.module.css";
-import { TextSection } from "../../elements/titles/TextSection";
-import {
-    usePermisoStore,
-    useTecnicoStore,
-    useUsersStore,
-} from "../../../hooks";
+
 
 export const CardInfoStatsUser = ({ usuario }) => {
     const { isLoading, activatePermiso } = usePermisoStore();

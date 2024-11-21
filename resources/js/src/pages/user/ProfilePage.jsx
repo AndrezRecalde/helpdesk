@@ -74,13 +74,12 @@ const ProfilePage = () => {
     return (
         <Container size="lg">
             <TitlePage order={1}>Perfil</TitlePage>
-            <SimpleGrid cols={{ base: 1, sm: 2 }} spacing="md">
+            <SimpleGrid cols={{ base: 1, sm: 2 }} spacing="md" mb={20}>
                 <CardProfile usuario={usuario} handleAction={handleAction} />
                 <CardInfoStatsUser usuario={usuario} />
             </SimpleGrid>
-            {marcaciones.length > 0 ? (
-                <TableMarcacionRelojOnline usuario={usuario} />
-            ) : null}
+            <TableMarcacionRelojOnline usuario={usuario} />
+
         </Container>
     );
 };
