@@ -109,7 +109,7 @@
         .firma-table {
             width: 100%;
             margin-top: 0px;
-            margin-bottom: 50px;
+            margin-bottom: 30px;
             border-top: none;
             /* Elimina el borde superior */
             border-collapse: collapse;
@@ -142,12 +142,20 @@
         </tr>
         <tr>
             <td><strong>SERVIDOR:</strong></td>
-            <td colspan="3">{{ $permisos->usuario_pide }}</td>
+            <td colspan="3">{{ \Str::upper($permisos->usuario_pide) }}</td>
         </tr>
         <tr>
             <td><strong>MOTIVO DEL PERMISO:</strong></td>
-            <td>{{ $permisos->motivo }}</td>
+            <td colspan="3">{{ $permisos->motivo }}</td>
+        </tr>
+        <tr>
             <td><strong>FECHA DEL PERMISO:</strong></td>
+            <td style="font-size:15px;">
+                <strong>
+                    {{ \Carbon\Carbon::parse($permisos->per_fecha_salida)->format('Y-m-d') }}
+                </strong>
+            </td>
+            <td><strong>FECHA DE CREACIÓN:</strong></td>
             <td style="font-size:15px;">
                 <strong>
                     {{ \Carbon\Carbon::parse($permisos->per_fecha_salida)->format('Y-m-d') }}
@@ -166,7 +174,7 @@
         </tr>
         <tr>
             <td colspan="4">
-                <textarea style="height: 150px;">{{ $permisos->per_observaciones ?? 'SIN OBSERVACIÓN' }}</textarea>
+                <textarea style="height: 130px;">{{ $permisos->per_observaciones ?? 'SIN OBSERVACIÓN' }}</textarea>
             </td>
         </tr>
     </table>
@@ -229,12 +237,20 @@
         </tr>
         <tr>
             <td><strong>SERVIDOR:</strong></td>
-            <td colspan="3">{{ $permisos->usuario_pide }}</td>
+            <td colspan="3">{{ \Str::upper($permisos->usuario_pide) }}</td>
         </tr>
         <tr>
             <td><strong>MOTIVO DEL PERMISO:</strong></td>
-            <td>{{ $permisos->motivo }}</td>
+            <td colspan="3">{{ $permisos->motivo }}</td>
+        </tr>
+        <tr>
             <td><strong>FECHA DEL PERMISO:</strong></td>
+            <td style="font-size:15px;">
+                <strong>
+                    {{ \Carbon\Carbon::parse($permisos->per_fecha_salida)->format('Y-m-d') }}
+                </strong>
+            </td>
+            <td><strong>FECHA DE CREACIÓN:</strong></td>
             <td style="font-size:15px;">
                 <strong>
                     {{ \Carbon\Carbon::parse($permisos->per_fecha_salida)->format('Y-m-d') }}
@@ -255,7 +271,7 @@
         </tr>
         <tr>
             <td colspan="4">
-                <textarea style="height: 150px;">{{ $permisos->per_observaciones ?? 'SIN OBSERVACIÓN' }}</textarea>
+                <textarea style="height: 130px;">{{ $permisos->per_observaciones ?? 'SIN OBSERVACIÓN' }}</textarea>
             </td>
         </tr>
     </table>
