@@ -121,11 +121,52 @@
         .firma-table tr:first-child td {
             border-top: none;
         }
+
+        .background-wrapper-1 {
+            position: relative;
+            /* Ajusta el alto */
+            background-image: url('https://prefecturadeesmeraldas.gob.ec/wp-content/uploads/2024/11/usuario.png');
+            background-size: contain;
+            /* Ajusta la imagen al tamaño del contenedor */
+            background-position: center;
+            /* Centra la imagen */
+            background-repeat: no-repeat;
+            /* Evita la repetición */
+        }
+
+        .background-wrapper-2 {
+            position: relative;
+            background-image: url('https://prefecturadeesmeraldas.gob.ec/wp-content/uploads/2024/11/tic.png');
+            background-size: contain;
+            /* Ajusta la imagen al tamaño del contenedor */
+            background-position: center;
+            /* Centra la imagen */
+            background-repeat: no-repeat;
+            /* Evita la repetición */
+        }
+
+        .background-wrapper-1 input,
+        .background-wrapper-1 textarea {
+            position: relative;
+            /* Ocupa todo el alto del contenedor */
+            background: transparent;
+            z-index: 1;
+            /* Coloca los elementos encima del fondo */
+        }
+
+        .background-wrapper-2 input,
+        .background-wrapper-2 textarea {
+            position: relative;
+            /* Ocupa todo el alto del contenedor */
+            background: transparent;
+            z-index: 1;
+            /* Coloca los elementos encima del fondo */
+        }
     </style>
 </head>
 
 <body>
-    <table>
+    <table class="background-wrapper-1">
         <tr>
             <td class="img-container">
                 <img class="img-fluid" alt="logo" src={{ public_path('/assets/images/LogoCompleto.png') }}>
@@ -172,7 +213,7 @@
         </tr>
         <tr>
             <td colspan="4">
-                <textarea style="height: 80px;">{{ $soporte->solucion }}</textarea>
+                <textarea style="height: 90px;">{{ $soporte->solucion }}</textarea>
             </td>
         </tr>
     </table>
@@ -216,7 +257,7 @@
 
 
 
-    <table>
+    <table class="background-wrapper-2">
         <tr>
             <td class="img-container">
                 <img class="img-fluid" alt="logo" src={{ public_path('/assets/images/LogoCompleto.png') }}>
@@ -263,7 +304,7 @@
         </tr>
         <tr>
             <td colspan="4">
-                <textarea style="height: 80px;">{{ $soporte->solucion }}</textarea>
+                <textarea style="height: 90px;">{{ $soporte->solucion }}</textarea>
             </td>
         </tr>
     </table>

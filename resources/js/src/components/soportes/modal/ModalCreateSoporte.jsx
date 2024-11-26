@@ -10,7 +10,7 @@ import {
     useUiSoporte,
     useUsersStore,
 } from "../../../hooks";
-import { isNotEmpty, useForm } from "@mantine/form";
+import { hasLength, isNotEmpty, useForm } from "@mantine/form";
 
 export const ModalCreateSoporte = ({ role }) => {
     const usuario = JSON.parse(localStorage.getItem("service_user"));
@@ -62,10 +62,10 @@ export const ModalCreateSoporte = ({ role }) => {
             id_tipo_soporte: isNotEmpty("Por favor ingrese el tipo de soporte"),
             id_area_tic: isNotEmpty("Por favor seleccione el área"),
             incidente: isNotEmpty("Por favor ingrese la incidencia"),
-           /*  solucion: hasLength(
-                { min: 5, max: 350 },
-                "La solución debe tener entre 10 y 350 caracteres"
-            ), */
+            solucion: hasLength(
+                { min: 10, max: 600 },
+                "La solución debe tener entre 10 y 500 caracteres"
+            ),
             id_equipo: (value, values) =>
                 values.id_tipo_soporte == 1 && value === null
                     ? "En soporte a hardware es obligatorio el código del activo"

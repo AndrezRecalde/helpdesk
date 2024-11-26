@@ -29,7 +29,7 @@ const SoportesPage = () => {
     const usuario = JSON.parse(localStorage.getItem("service_user"));
     const { startLoadDirecciones, clearDirecciones } = useDireccionStore();
     const { startLoadEstados } = useEstadoStore();
-    const { soportes, message, errores, clearSoportes } = useSoporteStore();
+    const { loadPDF, soportes, message, errores, clearSoportes } = useSoporteStore();
     const { modalActionAddSolicitud, modalActionCreateSoporte } =
         useUiSoporte();
     const { clearStorageFields } = useStorageField();
@@ -105,6 +105,21 @@ const SoportesPage = () => {
             return;
         }
     }, [errores]);
+
+    useEffect(() => {
+        if (loadPDF === true) {
+            Swal.fire({
+                icon: "warning",
+                text: "Un momento porfavor, se está exportando",
+                showConfirmButton: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                },
+            });
+        } else {
+            Swal.close(); // Cierra el modal cuando loadPDF es false
+        }
+    }, [loadPDF]);
 
     return (
         <Container size="xxl">

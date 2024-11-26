@@ -166,7 +166,6 @@ export const SoportesTable = () => {
                 />
             ) : null,
         renderDetailPanel: ({ row }) => (
-            <Table.ScrollContainer minWidth={800}>
                 <Table
                     verticalSpacing="md"
                     withColumnBorders
@@ -219,7 +218,6 @@ export const SoportesTable = () => {
                         </Table.Tr>
                     </Table.Tbody>
                 </Table>
-            </Table.ScrollContainer>
         ),
     });
 

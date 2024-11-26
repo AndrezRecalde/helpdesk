@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { Modal } from "@mantine/core";
-import { isNotEmpty, useForm } from "@mantine/form";
+import { hasLength, isNotEmpty, useForm } from "@mantine/form";
 import { TextSection, FormDiagnosticar } from "../../../components";
 import { useEquipoStore, useSoporteStore, useUiSoporte } from "../../../hooks";
 
@@ -25,7 +25,10 @@ export const ModalDiagnostico = ({ option }) => {
         validate: {
             id_area_tic: isNotEmpty("Por favor ingrese el área"),
             id_tipo_soporte: isNotEmpty("Por favor ingrese el tipo"),
-            solucion: isNotEmpty("Por favor ingrese una solución"),
+            solucion: hasLength(
+                { min: 10, max: 600 },
+                "La solución debe tener entre 10 y 500 caracteres"
+            ),
             id_equipo: (value, values) =>
                 values.id_tipo_soporte == 1 && value === null
                     ? "En soporte a hardware es obligatorio el código del activo"
