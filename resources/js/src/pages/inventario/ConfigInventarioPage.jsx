@@ -26,12 +26,11 @@ const ConfigInventarioPage = () => {
 
     return (
         <Container size="xxl">
-            <TitlePage order={2}>
-                Parametros del Inventario
-            </TitlePage>
+            <TitlePage order={2}>Parametros del Inventario</TitlePage>
             <Divider my="md" />
 
             <Tabs
+                defaultValue="categorias"
                 value={tabValue}
                 onChange={(value) =>
                     navigate(`/gerencia/configuracion-inventario/${value}`)
@@ -39,52 +38,52 @@ const ConfigInventarioPage = () => {
             >
                 <Tabs.List grow>
                     <Tabs.Tab
-                        value="categoria"
+                        value="categorias"
                         leftSection={<IconCategoryPlus style={iconStyle} />}
                     >
                         Categorias
                     </Tabs.Tab>
                     <Tabs.Tab
-                        value="marca"
+                        value="marcas"
                         leftSection={<IconBrandDatabricks style={iconStyle} />}
                     >
                         Marcas
                     </Tabs.Tab>
                     <Tabs.Tab
-                        value="estado"
+                        value="estados"
                         leftSection={<IconAdjustments style={iconStyle} />}
                     >
                         Estados
                     </Tabs.Tab>
                     <Tabs.Tab
-                        value="ubicacion"
+                        value="ubicaciones"
                         leftSection={<IconMapPins style={iconStyle} />}
                     >
                         Ubicaciones
                     </Tabs.Tab>
                 </Tabs.List>
 
-                <Tabs.Panel value="categoria">
+                <Tabs.Panel value="categorias">
                     <SimpleGrid cols={{ base: 1, sm: 1, md: 2, lg: 2 }} mt={20}>
                         <InvTipocategoriasPage tabValue={tabValue} />
                         <InvCategoriasPage tabValue={tabValue} />
                     </SimpleGrid>
                 </Tabs.Panel>
 
-                <Tabs.Panel value="marca">
+                <Tabs.Panel value="marcas">
                     <SimpleGrid cols={1} mt={20}>
                         <InvMarcaPage tabValue={tabValue} />
                     </SimpleGrid>
                 </Tabs.Panel>
 
-                <Tabs.Panel value="estado">
+                <Tabs.Panel value="estados">
                     <SimpleGrid cols={{ base: 1, sm: 1, md: 2, lg: 2 }} mt={20}>
                         <InvEstadoPage tabValue={tabValue} />
                         <InvConceptoPage tabValue={tabValue} />
                     </SimpleGrid>
                 </Tabs.Panel>
 
-                <Tabs.Panel value="ubicacion">
+                <Tabs.Panel value="ubicaciones">
                     <SimpleGrid cols={1} mt={20}>
                         <InvUbicacionPage tabValue={tabValue} />
                     </SimpleGrid>

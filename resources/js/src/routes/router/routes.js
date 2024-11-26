@@ -241,7 +241,7 @@ export const navRoutes = [
             {
                 label: "Config. Inventario",
                 path: "configuracion-inventario/:tabValue/*",
-                link: "/configuracion-inventario/*",
+                link: "/configuracion-inventario/categorias",
                 //Component: ConfigInventarioPage,
                 roles: ["GERENTE"],
             },
