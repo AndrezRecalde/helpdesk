@@ -90,7 +90,7 @@
             <td colspan="3" class="header">
                 <h4>{{ Str::upper($direccion) }}</h4>
                 <hr>
-                <h4>{{ Str::upper($titulo) }} <br> DEL 2024-01-01 al 2024-11-30 </h4>
+                <h4>{{ Str::upper($titulo) }} <br> DEL {{ $fecha_inicio }} al {{ $fecha_fin }} </h4>
 
             </td>
         </tr>
