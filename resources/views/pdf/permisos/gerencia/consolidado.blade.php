@@ -45,15 +45,50 @@
             margin-top: 45px;
             margin-bottom: 0%;
         }
+
+        .full-width-table {
+            width: 100%;
+        }
+
+        .img-container {
+            text-align: center;
+        }
+
+        .img-fluid {
+            display: block;
+            margin: 15 auto;
+            width: 180px;
+            height: auto;
+        }
+
+        .header {
+            text-align: center;
+        }
+
+        .header h4,
+        .header h5 {
+            margin: 15px 0;
+            /* Reduce márgenes */
+        }
     </style>
 </head>
 
 <body>
-    <h3>CONSOLIDADO DE PERMISOS: {{ $motivo_id === 1 ? 'PERSONAL' : 'OFICIAL' }}</h3>
-    <p>A continuación se presenta un consolidado de permisos desde {{ $fecha_inicio }} hasta {{ $fecha_fin }} de
-        todos los funcionarios del Gobierno Autónomo Descentralizado de la Provincia de Esmeraldas</p>
-    <hr />
-    <table>
+    <!-- ENCABEZADO -->
+    <table class="full-width-table">
+        <tr>
+            <td class="img-container">
+                <img class="img-fluid" alt="logo" src={{ public_path('/assets/images/LogoCompleto.png') }}>
+            </td>
+            <td colspan="3" class="header">
+                <h3>{{ $institucion }}</h3>
+                <hr>
+                <h4>{{ $titulo }} : {{ $fecha_inicio }} HASTA {{ $fecha_fin }}</h4>
+            </td>
+        </tr>
+    </table>
+    <!-- FIN ENCABEZADO -->
+    <table class="full-width-table">
         <tr>
             <th><b>GESTIÓN</b></th>
             <th><b>SERVIDOR</b></th>

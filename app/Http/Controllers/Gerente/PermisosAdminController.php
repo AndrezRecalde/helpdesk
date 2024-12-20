@@ -148,6 +148,8 @@ class PermisosAdminController extends Controller
         $permisos = DB::select('CALL get_consolidados_permisos(?,?,?)', [$request->fecha_inicio, $request->fecha_fin, $request->motivo_id]);
         $data = [
             'permisos' => $permisos,
+            'institucion' => 'GOBIERNO AUTÓNOMO DESCENTRALIZADO DE LA PROVINCIA DE ESMERALDAS',
+            'titulo' => 'CONSOLIDADO DE PERMISOS',
             'fecha_inicio' => $request->fecha_inicio,
             'fecha_fin' => $request->fecha_fin,
             'motivo_id' => $request->motivo_id

@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Container, Divider, Group } from "@mantine/core";
 import {
     BtnSection,
@@ -11,8 +12,11 @@ import { isNotEmpty, useForm } from "@mantine/form";
 import dayjs from "dayjs";
 
 const ConsolidadoPermisosPage = () => {
-    const { startLoadConsolidadosPermisos, startExportConsolidadosPermisos } =
-        usePermisoStore();
+    const {
+        startLoadConsolidadosPermisos,
+        startExportConsolidadosPermisos,
+        clearPermisos,
+    } = usePermisoStore();
 
     const form = useForm({
         initialValues: {
@@ -32,6 +36,10 @@ const ConsolidadoPermisosPage = () => {
         }),
     });
 
+    useEffect(() => {
+        clearPermisos();
+    }, []);
+
     const handleExport = () => {
         startExportConsolidadosPermisos(form.getTransformedValues());
     };
@@ -40,10 +48,7 @@ const ConsolidadoPermisosPage = () => {
         <Container size="xxl">
             <Group justify="space-between">
                 <TitlePage order={2}>Consolidado de Permisos</TitlePage>
-                <BtnSection
-                    IconSection={IconPdf}
-                    handleAction={handleExport}
-                >
+                <BtnSection IconSection={IconPdf} handleAction={handleExport}>
                     Imprimir
                 </BtnSection>
             </Group>
