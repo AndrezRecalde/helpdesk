@@ -49,7 +49,9 @@
 </head>
 
 <body>
-    <h3>CONSOLIDADO DE PERMISOS: {{ $motivo_id === 1 ? "PERSONAL" : "OFICIAL" }}</h3>
+    <h3>CONSOLIDADO DE PERMISOS: {{ $motivo_id === 1 ? 'PERSONAL' : 'OFICIAL' }}</h3>
+    <p>A continuación se presenta un consolidado de permisos desde {{ $fecha_inicio }} hasta {{ $fecha_fin }} de
+        todos los funcionarios del Gobierno Autónomo Descentralizado de la Provincia de Esmeraldas</p>
     <hr />
     <table>
         <tr>
