@@ -5,9 +5,10 @@ import { Badge, Table, Text, useMantineColorScheme } from "@mantine/core";
 import { useSoporteStore, useUiSoporte } from "../../../../hooks";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
-import es from "dayjs/locale/es";
+import "dayjs/locale/es";
 
-dayjs.extend(relativeTime).locale(es);
+dayjs.extend(relativeTime); // Extiende Day.js con el plugin
+dayjs.locale("es"); // Configura el idioma a español
 
 export const SolicitudesTable = ({ menu, isLoading }) => {
     const { colorScheme } = useMantineColorScheme();

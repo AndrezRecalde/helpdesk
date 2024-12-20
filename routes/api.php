@@ -186,6 +186,12 @@ Route::group(['prefix' => 'gerencia', 'middleware' => ['auth:sanctum']], functio
     Route::post('/inventario/export/perifericos', [InvPerifericoController::class, 'exportPDFPerifericos']);
 
 
+    /* PERMISOS */
+    Route::post('/consolidado-permisos', [PermisosAdminController::class, 'getConsolidadoPermisos']);
+    Route::post('/export/consolidado-permisos', [PermisosAdminController::class, 'getExportConsolidadoPermisos']);
+
+
+
 });
 
 /* RUTAS: GERENTE O TECNICO */

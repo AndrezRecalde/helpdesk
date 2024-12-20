@@ -134,4 +134,25 @@ class PermisosAdminController extends Controller
 
         return response()->json(['status' => MsgStatus::Success, 'info_permisos' => $info_permisos], 200);
     }
+
+
+    //Funcion para Talento Humano
+    function getConsolidadoPermisos(Request $request) : JsonResponse
+    {
+        $permisos = DB::select('CALL get_consolidados_permisos(?,?,?)', [$request->fecha_inicio, $request->fecha_fin, $request->motivo_id]);
+        return response()->json(['status' => MsgStatus::Success, 'permisos' => $permisos], 200);
+    }
+
+    function getExportConsolidadoPermisos(Request $request)
+    {
+        $permisos = DB::select('CALL get_consolidados_permisos(?,?,?)', [$request->fecha_inicio, $request->fecha_fin, $request->motivo_id]);
+        $data = [
+            'permisos' => $permisos,
+            'fecha_inicio' => $request->fecha_inicio,
+            'fecha_fin' => $request->fecha_fin,
+            'motivo_id' => $request->motivo_id
+        ];
+        $pdf = Pdf::loadView('pdf.permisos.gerencia.consolidado', $data);
+        return $pdf->setPaper('a4', 'landscape')->download('consolidado_permisos.pdf');
+    }
 }

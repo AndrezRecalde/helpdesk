@@ -13,9 +13,8 @@ import {
 import helpdeskApi from "../../api/helpdeskApi";
 
 export const usePermisoStore = () => {
-    const { isLoading, permisos, activatePermiso, isExport, message, errores } = useSelector(
-        (state) => state.permiso
-    );
+    const { isLoading, permisos, activatePermiso, isExport, message, errores } =
+        useSelector((state) => state.permiso);
     const { ExceptionMessageError } = useErrorException(onLoadErrores);
 
     const dispatch = useDispatch();
@@ -26,7 +25,10 @@ export const usePermisoStore = () => {
 
     const startAddPermiso = async (permiso) => {
         try {
-            const { data } = await helpdeskApi.post("/general/crear-permiso", permiso);
+            const { data } = await helpdeskApi.post(
+                "/general/crear-permiso",
+                permiso
+            );
             dispatch(onLoadMessage(data));
             //console.log(data)
             setTimeout(() => {
@@ -37,15 +39,14 @@ export const usePermisoStore = () => {
             //console.log(error)
             ExceptionMessageError(error);
         }
-    }
-
+    };
 
     const startCardPermiso = async (idper_permisos) => {
         try {
             dispatch(onExport(true));
             const response = await helpdeskApi.post(
                 "/general/export-permiso-pdf",
-                {idper_permisos},
+                { idper_permisos },
                 { responseType: "blob" }
             );
             const pdfBlob = new Blob([response.data], {
@@ -83,7 +84,7 @@ export const usePermisoStore = () => {
             });
             const url = window.open(URL.createObjectURL(pdfBlob));
             //console.log(url);
-           /*  const tempLink = document.createElement("a");
+            /*  const tempLink = document.createElement("a");
             tempLink.href = url;
             tempLink.setAttribute("download", "permiso.pdf");
             document.body.appendChild(tempLink);
@@ -99,14 +100,19 @@ export const usePermisoStore = () => {
         }
     };
 
-    const startLoadPermisos = async ({ anio, id_direccion_pide, id_usu_pide, idper_permisos }) => {
+    const startLoadPermisos = async ({
+        anio,
+        id_direccion_pide,
+        id_usu_pide,
+        idper_permisos,
+    }) => {
         try {
             dispatch(onLoading(true));
             const { data } = await helpdeskApi.post("/general/permisos", {
                 anio,
                 id_direccion_pide,
                 id_usu_pide,
-                idper_permisos
+                idper_permisos,
             });
             const { permisos } = data;
             dispatch(onLoadPermisos(permisos));
@@ -117,10 +123,12 @@ export const usePermisoStore = () => {
         }
     };
 
-    const startAnularPermiso = async(permiso) => {
+    const startAnularPermiso = async (permiso) => {
         try {
             dispatch(onLoading(true));
-            const { data } = await helpdeskApi.put(`/general/anular-permiso/${permiso.idper_permisos}`);
+            const { data } = await helpdeskApi.put(
+                `/general/anular-permiso/${permiso.idper_permisos}`
+            );
             dispatch(onAnularPermiso(permiso));
             dispatch(onLoadMessage(data));
             setTimeout(() => {
@@ -131,19 +139,58 @@ export const usePermisoStore = () => {
             //console.log(error);
             ExceptionMessageError(error);
         }
-    }
+    };
 
-    const startLoadInfoPermisos = async(usuario_id) => {
+    const startLoadInfoPermisos = async (usuario_id) => {
         try {
             dispatch(onLoading(true));
-            const { data } = await helpdeskApi.post('/general/info-permisos', { usuario_id });
+            const { data } = await helpdeskApi.post("/general/info-permisos", {
+                usuario_id,
+            });
             const { info_permisos } = data;
             dispatch(onSetActivatePermiso(info_permisos));
             dispatch(onLoading(false));
         } catch (error) {
             ExceptionMessageError(error);
         }
-    }
+    };
+
+    const startLoadConsolidadosPermisos = async (seleccion) => {
+        try {
+            dispatch(onLoading(true));
+            const { data } = await helpdeskApi.post(
+                "/gerencia/consolidado-permisos",
+                seleccion
+            );
+            const { permisos } = data;
+            console.log(permisos);
+            dispatch(onLoadPermisos(permisos));
+            dispatch(onLoading(false));
+        } catch (error) {
+            console.log(error);
+            ExceptionMessageError(error);
+        }
+    };
+
+    const startExportConsolidadosPermisos = async (seleccion) => {
+        try {
+            dispatch(onLoading(true));
+            const response = await helpdeskApi.post(
+                "/gerencia/export/consolidado-permisos",
+                seleccion,
+                { responseType: "blob" }
+            );
+            const pdfBlob = new Blob([response.data], {
+                type: "application/pdf",
+            });
+            const url = window.open(URL.createObjectURL(pdfBlob));
+            window.URL.revokeObjectURL(url);
+            dispatch(onLoading(false));
+        } catch (error) {
+            console.log(error);
+            ExceptionMessageError(error);
+        }
+    };
 
     const setActivatePermiso = (permiso) => {
         dispatch(onSetActivatePermiso(permiso));
@@ -151,7 +198,7 @@ export const usePermisoStore = () => {
 
     const clearPermisos = () => {
         dispatch(onClearPermisos());
-    }
+    };
 
     return {
         isLoading,
@@ -167,7 +214,9 @@ export const usePermisoStore = () => {
         startAnularPermiso,
         startLoadPermisos,
         startLoadInfoPermisos,
+        startLoadConsolidadosPermisos,
+        startExportConsolidadosPermisos,
         setActivatePermiso,
-        clearPermisos
+        clearPermisos,
     };
 };

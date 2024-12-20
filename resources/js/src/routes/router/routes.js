@@ -30,6 +30,8 @@ const ActividadPage = lazy(() => import(/* webpackChunkName: "ActividadPage" */ 
 const ListActividadesPage = lazy(() => import(/* webpackChunkName: "ListActividadesPage" */ '../../pages/actividad/ListActividadesPage'));
 const PermisosPage = lazy(() => import(/* webpackChunkName: "PermisosPage" */ '../../pages/permisos/PermisosPage'));
 const ListPermisosAdminPage = lazy(() => import(/* webpackChunkName: "ListPermisosAdminPage" */ '../../pages/permisos/ListPermisosAdminPage'));
+const ConsolidadoPermisosPage = lazy(() => import(/* webpackChunkName: "ListPermisosAdminPage" */ '../../pages/permisos/ConsolidadoPermisosPage'));
+
 const ListPermisosPage = lazy(() => import(/* webpackChunkName: "ListPermisosPage" */ '../../pages/permisos/ListPermisosPage'));
 const SolicitudPage = lazy(() => import(/* webpackChunkName: "SolicitudPage" */ '../../pages/solicitud/SolicitudPage'));
 const UserSoportesPage = lazy(() => import(/* webpackChunkName: "UserSoportesPage" */ '../../pages/soporte/UserSoportesPage'));
@@ -80,6 +82,7 @@ const gerenciaRoutes = generateRoutes(
         { path: "lista-actividades", Component: ListActividadesPage },
         { path: "permiso", Component: PermisosPage },
         { path: "ver-permisos", Component: ListPermisosAdminPage },
+        { path: "consolidado-permisos", Component: ConsolidadoPermisosPage },
     ],
     ["GERENTE"]
 );
@@ -310,6 +313,13 @@ export const navRoutes = [
                 link: "/general/ver-permisos",
                 //Component: ListPermisosPage,
                 roles: ["TECNICO", "USUARIO"],
+            },
+            {
+                label: "Consolidado Permisos", //GERENTE, TECNICO, USUARIO
+                path: "consolidado-permisos",
+                link: "/consolidado-permisos",
+                //Component: ListPermisosPage,
+                roles: ["GERENTE",],
             },
         ],
     },

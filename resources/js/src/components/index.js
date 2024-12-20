@@ -61,6 +61,10 @@ import { FilterPermiso } from "./permiso/filter/FilterPermiso";
 import { FormAnularPermiso } from "./permiso/form/FormAnularPermiso";
 import { ModalAnularPermiso } from "./permiso/modal/ModalAnularPermiso";
 import { PermisosTable } from "./permiso/table/PermisosTable";
+import { FilterDatesPermiso } from "./permiso/filter/FilterDatesPermiso";
+import { PermisosConsolidadosTable } from "./permiso/table/PermisosConsolidadosTable";
+
+
 
 /* Soportes */
 import { CardIndicadores } from "./soportes/card/indicador/CardIndicadores";
@@ -281,6 +285,8 @@ export {
     FormAnularPermiso,
     ModalAnularPermiso,
     PermisosTable,
+    FilterDatesPermiso,
+    PermisosConsolidadosTable,
 
     /* Soportes */
     CardIndicadores,
