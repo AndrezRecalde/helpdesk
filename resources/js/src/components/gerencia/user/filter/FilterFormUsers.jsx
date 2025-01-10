@@ -23,7 +23,7 @@ export const FilterFormUsers = () => {
         },
         transformValues: (values) => ({
             ...values,
-            cdgo_direccion: Number(values.cdgo_direccion),
+            cdgo_direccion: Number(values.cdgo_direccion) || null,
         }),
     });
 
