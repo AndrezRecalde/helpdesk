@@ -35,7 +35,7 @@ export const InvEquipoGeneralForm = ({ form }) => {
                 data={invUbicaciones.map((ubicacion) => {
                     return {
                         value: ubicacion.id.toString(),
-                        label: ubicacion.nombre_ubicacion,
+                        label: ubicacion.nombre_edificio,
                     };
                 })}
             />
