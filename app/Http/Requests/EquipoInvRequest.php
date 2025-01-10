@@ -26,7 +26,7 @@ class EquipoInvRequest extends FormRequest
     {
 
         return [
-            'codigo_antiguo'    =>  ['', Rule::unique('inv_equipos')->ignore($this->request->get('id'))],
+            'codigo_antiguo'    =>  '',
             'codigo_nuevo'      =>  ['required', Rule::unique('inv_equipos')->ignore($this->request->get('id'))],
             'modelo'            =>  'required',
             'numero_serie'      =>  ['', Rule::unique('inv_equipos')->ignore($this->request->get('id'))],
