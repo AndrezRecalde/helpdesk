@@ -207,6 +207,22 @@ export const useInvEquipoStore = () => {
         }
     };
 
+    const startClearEquipoFromEquipo = async (periferico) => {
+        try {
+            const { data } = await helpdeskApi.patch(
+                `/gerencia/inventario/periferico/${periferico.id}/clear-equipo-id`
+            );
+            dispatch(onTransferirComponenteFromEquipo(periferico.id));
+            dispatch(onLoadMessage(data));
+            setTimeout(() => {
+                dispatch(onLoadMessage(undefined));
+            }, 40);
+        } catch (error) {
+            console.log(error);
+            ExceptionMessageError(error);
+        }
+    };
+
     const startRemoveUsuarioEquipo = async (equipo_id, id) => {
         try {
             dispatch(onLoading(true));
@@ -335,6 +351,7 @@ export const useInvEquipoStore = () => {
         startAssignComponente,
         startRemoveUsuarioEquipo,
         startTransferComponente,
+        startClearEquipoFromEquipo,
         startGuardarArchivo,
         startEliminarArchivo,
         startDescargarArchivo,

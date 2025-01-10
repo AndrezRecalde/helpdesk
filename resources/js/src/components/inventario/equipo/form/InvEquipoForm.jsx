@@ -27,7 +27,7 @@ export const InvEquipoForm = ({ form }) => {
                 codigo_antiguo: activateInvEquipo.codigo_antiguo,
                 codigo_nuevo: activateInvEquipo.codigo_nuevo,
                 fecha_adquisicion: new Date(activateInvEquipo.fecha_adquisicion),
-                fecha_amortizacion: new Date(activateInvEquipo.fecha_amortizacion),
+                //fecha_amortizacion: new Date(activateInvEquipo.fecha_amortizacion),
                 vida_util: activateInvEquipo.vida_util,
                 descripcion: activateInvEquipo.descripcion,
                 bien_adquirido:activateInvEquipo.bien_adquirido ? 1 : 0,

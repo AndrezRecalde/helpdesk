@@ -22,7 +22,7 @@ export const InvEquipoAssignComponente = () => {
             perifericos: [
                 {
                     key: randomId(),
-                    modelo: "",
+                    nombre_periferico: "",
                     numero_serie: "",
                     marca_id: null,
                     categoria_id: null,
@@ -36,7 +36,7 @@ export const InvEquipoAssignComponente = () => {
         },
         validate: {
             perifericos: {
-                modelo: isNotEmpty("Por favor ingresar modelo"),
+                nombre_periferico: isNotEmpty("Por favor ingresar componente"),
                 marca_id: isNotEmpty("Por favor seleccione una marca"),
                 categoria_id: isNotEmpty("Por favor seleccione una categoría"),
                 estado_id: isNotEmpty("Por favor seleccione un estado del componente"),

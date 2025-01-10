@@ -23,7 +23,7 @@ class InvEquipo extends Model
         'codigo_antiguo',
         'codigo_nuevo',
         'fecha_adquisicion',
-        'fecha_amortizacion',
+        //'fecha_amortizacion',
         'fecha_baja',
         'vida_util',
         'descripcion',
@@ -41,7 +41,7 @@ class InvEquipo extends Model
         'bien_donado' => 'boolean',
         'bien_usado' => 'boolean',
         'fecha_adquisicion' => 'date',
-        'fecha_amortizacion' => 'date',
+        //'fecha_amortizacion' => 'date',
         'fecha_baja'        => 'date'
     ];
 

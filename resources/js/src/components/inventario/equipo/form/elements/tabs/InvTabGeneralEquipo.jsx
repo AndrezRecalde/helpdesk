@@ -13,7 +13,7 @@ export const InvTabGeneralEquipo = () => {
         { caracteristica: "MODELO", value: activateInvEquipo?.modelo || "Cargando..." },
         { caracteristica: "NÚMERO SERIE", value: activateInvEquipo?.numero_serie || "Cargando..." },
         { caracteristica: "FECHA DE ADQUISICIÓN", value: dayjs(activateInvEquipo?.fecha_adquisicion).format("YYYY-MM-DD") || "Cargando..." },
-        { caracteristica: "FECHA DE AMORTIZACIÓN", value: dayjs(activateInvEquipo?.fecha_amortizacion).format("YYYY-MM-DD") || "No Registra..." },
+        //{ caracteristica: "FECHA DE AMORTIZACIÓN", value: dayjs(activateInvEquipo?.fecha_amortizacion).format("YYYY-MM-DD") || "No Registra..." },
         { caracteristica: "VIDA ÚTIL (EN AÑOS)", value: activateInvEquipo?.vida_util || "Cargando..." },
         { caracteristica: "BIEN ADQUIRIDO", value: activateInvEquipo?.bien_adquirido === true ? "Sí" : "No" || "Cargando..." },
         { caracteristica: "BIEN DONADO", value: activateInvEquipo?.bien_donado === true ? "Sí" : "No" || "Cargando..." },

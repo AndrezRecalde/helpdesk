@@ -35,6 +35,51 @@ export const MenuUsersTable = ({ row, handleEdit, handleResetPassword }) => {
     );
 };
 
+export const MenuTable_Periferico = ({
+    row,
+    handleEdit,
+    handleAsignar,
+    handleClearEquipo,
+}) => {
+    return (
+        <>
+            <Menu.Item
+                leftSection={
+                    <IconEditCircle
+                        style={{ width: rem(15), height: rem(15) }}
+                    />
+                }
+                onClick={() => handleEdit(row.original)}
+            >
+                Editar
+            </Menu.Item>
+            {row.original.equipo === null ? (
+                <Menu.Item
+                    leftSection={
+                        <IconEditCircle
+                            style={{ width: rem(15), height: rem(15) }}
+                        />
+                    }
+                    onClick={() => handleAsignar(row.original)}
+                >
+                    Asignar equipo
+                </Menu.Item>
+            ) : (
+                <Menu.Item
+                    leftSection={
+                        <IconEditCircle
+                            style={{ width: rem(15), height: rem(15) }}
+                        />
+                    }
+                    onClick={() => handleClearEquipo(row.original)}
+                >
+                    Remover equipo
+                </Menu.Item>
+            )}
+        </>
+    );
+};
+
 export const MenuTable_E = ({ row, handleEdit }) => {
     return (
         <>
@@ -67,7 +112,11 @@ export const MenuTable_D = ({ row, handleDelete }) => {
     );
 };
 
-export const MenuTable_Perif = ({ row, handleTrasnferir }) => {
+export const MenuTable_Perif = ({
+    row,
+    handleTrasnferir,
+    handleClearEquipo,
+}) => {
     return (
         <>
             <Menu.Item
@@ -77,6 +126,16 @@ export const MenuTable_Perif = ({ row, handleTrasnferir }) => {
                 onClick={() => handleTrasnferir(row.original)}
             >
                 Transferir
+            </Menu.Item>
+            <Menu.Item
+                leftSection={
+                    <IconEditCircle
+                        style={{ width: rem(15), height: rem(15) }}
+                    />
+                }
+                onClick={() => handleClearEquipo(row.original)}
+            >
+                Remover equipo
             </Menu.Item>
         </>
     );

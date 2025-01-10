@@ -11,6 +11,16 @@ import {
     useUsersStore,
 } from "../../../hooks";
 import { hasLength, isNotEmpty, useForm } from "@mantine/form";
+import dayjs from "dayjs";
+import customParseFormat from "dayjs/plugin/customParseFormat";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
+
+// Extender Day.js con el plugin
+dayjs.extend(customParseFormat);
 
 export const ModalCreateSoporte = ({ role }) => {
     const usuario = JSON.parse(localStorage.getItem("service_user"));
@@ -26,12 +36,13 @@ export const ModalCreateSoporte = ({ role }) => {
         useEquipoStore();
     const { startLoadEstados, clearEstados } = useEstadoStore();
 
-    const convertToString = (value) => (value !== null && value !== undefined ? value.toString() : null);
+    const convertToString = (value) =>
+        value !== null && value !== undefined ? value.toString() : null;
 
     const form = useForm({
         initialValues: {
-            id_estado: activateSoporte?.id_estado.toString() || "3",
-            fecha_ini: new Date(),
+            id_estado: activateSoporte?.id_estado?.toString() || "3",
+            fecha_ini: dayjs().tz("America/Guayaquil").toDate(),
             id_tipo_solicitud: activateSoporte?.id_tipo_solicitud || "1",
             numero_escrito: "",
             id_usu_tecnico_asig: null,
@@ -42,13 +53,36 @@ export const ModalCreateSoporte = ({ role }) => {
             incidente: "",
             solucion: "",
             id_equipo: null,
-            fecha_fin: new Date(),
+            fecha_fin: dayjs().tz("America/Guayaquil").toDate(),
 
             activo_informatico: false,
         },
         validate: {
             id_estado: isNotEmpty("Por favor seleccione una opción"),
-            fecha_ini: isNotEmpty("Por favor ingrese la fecha de solicitud"),
+            fecha_ini: (value) => {
+                const fechaInicio = dayjs(value).tz("America/Guayaquil");
+                const now = dayjs().tz("America/Guayaquil");
+
+                if (!fechaInicio.isValid()) {
+                    return "La fecha de inicio no es válida";
+                }
+                if (fechaInicio.isAfter(now, "minute")) {
+                    return "La fecha de inicio no puede ser anterior a la fecha actual";
+                }
+                return null;
+            },
+            fecha_fin: (value, values) => {
+                const fechaFin = dayjs(value).tz("America/Guayaquil");
+                const fechaInicio = dayjs(values.fecha_ini).tz("America/Guayaquil");
+
+                if (!fechaFin.isValid()) {
+                    return "La fecha de finalización no es válida";
+                }
+                if (fechaFin.isBefore(fechaInicio, "minute")) {
+                    return "La fecha de finalización no puede ser anterior a la fecha de inicio";
+                }
+                return null;
+            },
             id_tipo_solicitud: isNotEmpty(
                 "Por favor debe seleccionar una opción "
             ),
@@ -62,10 +96,10 @@ export const ModalCreateSoporte = ({ role }) => {
             id_tipo_soporte: isNotEmpty("Por favor ingrese el tipo de soporte"),
             id_area_tic: isNotEmpty("Por favor seleccione el área"),
             incidente: isNotEmpty("Por favor ingrese la incidencia"),
-            solucion: hasLength(
+            /* solucion: hasLength(
                 { min: 10, max: 600 },
                 "La solución debe tener entre 10 y 500 caracteres"
-            ),
+            ), */
             id_equipo: (value, values) =>
                 values.id_tipo_soporte == 1 && value === null
                     ? "En soporte a hardware es obligatorio el código del activo"
@@ -74,8 +108,8 @@ export const ModalCreateSoporte = ({ role }) => {
         transformValues: (values) => ({
             ...values,
             id_estado: Number(values.id_estado) || null,
-            //fecha_ini: values.fecha_ini,
-            //fecha_fin: values.fecha_fin || null,
+            fecha_ini: dayjs(values.fecha_ini).tz("America/Guayaquil").format("YYYY-MM-DD HH:mm:ss"),
+            fecha_fin: dayjs(values.fecha_fin).tz("America/Guayaquil").format("YYYY-MM-DD HH:mm:ss"),
             id_tipo_solicitud: Number(values.id_tipo_solicitud) || null,
             id_usu_tecnico_asig: Number(values.id_usu_tecnico_asig) || null,
             id_direccion: Number(values.id_direccion),
@@ -118,7 +152,7 @@ export const ModalCreateSoporte = ({ role }) => {
                 solucion,
                 id_equipo,
                 fecha_ini,
-                fecha_fin
+                fecha_fin,
             } = activateSoporte;
 
             form.setValues({
@@ -127,7 +161,10 @@ export const ModalCreateSoporte = ({ role }) => {
                 id_tipo_solicitud: convertToString(id_tipo_solicitud),
                 numero_escrito: numero_escrito || "",
                 id_usu_tecnico_asig: convertToString(id_usu_tecnico_asig),
-                id_direccion: id_direccion !== undefined && id_direccion !== null ? convertToString(id_direccion) : null,
+                id_direccion:
+                    id_direccion !== undefined && id_direccion !== null
+                        ? convertToString(id_direccion)
+                        : null,
                 id_usu_recibe: convertToString(id_usu_recibe),
                 id_tipo_soporte: convertToString(id_tipo_soporte),
                 id_area_tic: convertToString(id_area_tic),
@@ -222,7 +259,11 @@ export const ModalCreateSoporte = ({ role }) => {
             closeOnEscape={false}
             position="right"
             size="lg"
-            title={<TextSection tt="" fz={16} fw={700}>Crear soporte</TextSection>}
+            title={
+                <TextSection tt="" fz={16} fw={700}>
+                    Crear soporte
+                </TextSection>
+            }
         >
             <FormCreateSoporte form={form} role={role} />
         </Drawer>

@@ -31,7 +31,7 @@ class EquipoInvRequest extends FormRequest
             'modelo'            =>  'required',
             'numero_serie'      =>  ['', Rule::unique('inv_equipos')->ignore($this->request->get('id'))],
             'fecha_adquisicion' =>  'required',
-            'fecha_amortizacion' => '',
+            //'fecha_amortizacion' => '',
             'vida_util'         =>  'required',
             'descripcion'       =>  'required',
             'bien_adquirido'    =>  'required',

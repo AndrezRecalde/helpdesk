@@ -249,14 +249,14 @@ export const navRoutes = [
                 roles: ["GERENTE"],
             },
             {
-                label: "Equipos",
+                label: "Inv. Equipos",
                 path: "inventario/equipos",
                 link: "/inventario/equipos",
                 //Component: InvEquiposPage,
                 roles: ["GERENTE"],
             },
             {
-                label: "Componentes",
+                label: "Inv. Componentes",
                 path: "inventario/componentes",
                 link: "/inventario/componentes",
                 //Component: InvComponentesPage,

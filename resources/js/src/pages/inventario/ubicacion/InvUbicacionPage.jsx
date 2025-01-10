@@ -13,7 +13,7 @@ const InvUbicacionPage = ({ tabValue }) => {
     } = useInvUbicacionStore();
 
     useEffect(() => {
-        if (tabValue === "ubicacion") {
+        if (tabValue === "ubicaciones") {
             startLoadInvUbicaciones();
         }
 

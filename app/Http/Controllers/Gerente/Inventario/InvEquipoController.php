@@ -52,7 +52,7 @@ class InvEquipoController extends Controller
             ->selectRaw('inve.id,
                             inve.codigo_antiguo, inve.codigo_nuevo,
                             inve.modelo, inve.numero_serie,
-                            inve.fecha_adquisicion, inve.fecha_amortizacion, inve.fecha_baja,
+                            inve.fecha_adquisicion, inve.fecha_baja,
                             inve.vida_util, inve.descripcion,
                             inve.bien_adquirido, inve.bien_donado, inve.bien_usado,
                             inve.ubicacion_id, invu.nombre_ubicacion, invu.nombre_edificio,

@@ -10,7 +10,7 @@ const InvMarcaPage = ({ tabValue }) => {
         useInvMarcaStore();
 
     useEffect(() => {
-        if (tabValue === "marca") {
+        if (tabValue === "marcas") {
             startLoadInvMarcas();
         }
 

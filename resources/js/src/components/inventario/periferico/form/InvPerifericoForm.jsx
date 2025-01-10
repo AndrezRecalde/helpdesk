@@ -31,7 +31,7 @@ export const InvPerifericoForm = ({ form }) => {
     const {
         activatePeriferico,
         setActivateInvPeriferico,
-        startUpdateInvPeriferico,
+        startAddInvPeriferico,
     } = useInvPerifericoStore();
     const { modalActionPeriferico } = useInvUiPeriferico();
     const { storageFields } = useStorageField();
@@ -67,7 +67,7 @@ export const InvPerifericoForm = ({ form }) => {
             });
             form.setValues({
                 id: activatePeriferico.id,
-                modelo: activatePeriferico.modelo,
+                nombre_periferico: activatePeriferico.nombre_periferico,
                 marca_id: activatePeriferico.marca_id.toString(),
                 tipocategoria_id:
                     activatePeriferico.tipocategoria_id.toString(),
@@ -88,7 +88,7 @@ export const InvPerifericoForm = ({ form }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log(form.getTransformedValues());
-        startUpdateInvPeriferico(form.getTransformedValues(), storageFields);
+        startAddInvPeriferico(form.getTransformedValues(), storageFields);
         if (activatePeriferico !== null) {
             setActivateInvPeriferico(null);
         }
@@ -110,8 +110,8 @@ export const InvPerifericoForm = ({ form }) => {
                 <SimpleGrid cols={{ base: 1, sm: 2, md: 2, lg: 2 }}>
                     <TextInput
                         label="Modelo"
-                        placeholder="Digite el modelo"
-                        {...form.getInputProps("modelo")}
+                        placeholder="Digite el nombre del periferico"
+                        {...form.getInputProps("nombre_periferico")}
                     />
                     <TextInput
                         label="Número de serie"
@@ -169,7 +169,7 @@ export const InvPerifericoForm = ({ form }) => {
                         {...form.getInputProps("equipo_id")}
                         data={invEquipos.map((equipo) => {
                             return {
-                                label: `${equipo.modelo} ${equipo.numero_serie}`,
+                                label: `${equipo.nombre_periferico} ${equipo.numero_serie}`,
                                 value: equipo.id.toString(),
                             };
                         })}

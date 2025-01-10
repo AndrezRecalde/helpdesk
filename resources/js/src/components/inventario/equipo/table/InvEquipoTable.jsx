@@ -8,8 +8,13 @@ import {
 import { useInvEquipoStore, useInvUiEquipo } from "../../../../hooks";
 
 export const InvEquipoTable = () => {
-    const { isLoading, invEquipos, startShowInvEquipo, setActivateInvEquipo, startExportEquipos } =
-        useInvEquipoStore();
+    const {
+        isLoading,
+        invEquipos,
+        startShowInvEquipo,
+        setActivateInvEquipo,
+        startExportEquipos,
+    } = useInvEquipoStore();
     const {
         modalActionEquipo,
         modalActionViewEquipo,
@@ -21,7 +26,9 @@ export const InvEquipoTable = () => {
             {
                 header: "Código",
                 accessorFn: (row) =>
-                    row.codigo_antiguo + " :::: " + row.codigo_nuevo, //normal accessorKey
+                    (row.codigo_antiguo || "S/C") +
+                    " : : : : " +
+                    (row.codigo_nuevo || "S/C"), //normal accessorKey
                 filterVariant: "autocomplete",
             },
             {
@@ -109,13 +116,14 @@ export const InvEquipoTable = () => {
                 handleDelete={handleDelete}
             />
         ),
-        mantineTableBodyCellProps: ({ cell }) => ({
-            style: {
-                backgroundColor:
-                    cell.row.original.color,
-                color:
-                    "black",
-            },
+        mantineTableBodyCellProps: ({ column, cell }) => ({
+            style:
+                column.id === "nombre_estado"
+                    ? {
+                          backgroundColor: cell.row.original.color,
+                          color: "white",
+                      }
+                    : {},
         }),
         mantineTableProps: {
             withColumnBorders: true,

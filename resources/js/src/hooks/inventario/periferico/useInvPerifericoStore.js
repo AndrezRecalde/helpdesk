@@ -27,6 +27,7 @@ export const useInvPerifericoStore = () => {
 
     const startLoadInvPerifericos = async ({
         numero_serie,
+        marca_id,
         estado_id,
         codigo_equipo,
     }) => {
@@ -36,6 +37,7 @@ export const useInvPerifericoStore = () => {
                 "/gerencia/inventario/perifericos",
                 {
                     numero_serie,
+                    marca_id,
                     estado_id,
                     codigo_equipo,
                 }
@@ -48,11 +50,74 @@ export const useInvPerifericoStore = () => {
         }
     };
 
+    const startAddInvPeriferico = async (periferico, storageFields) => {
+        try {
+            if (periferico.id) {
+                const { data } = await helpdeskApi.put(
+                    `/gerencia/inventario/update/periferico/${periferico.id}`,
+                    periferico
+                );
+                startLoadInvPerifericos(storageFields);
+                dispatch(onLoadMessage(data));
+                setTimeout(() => {
+                    dispatch(onLoadMessage(undefined));
+                }, 40);
+                return;
+            }
+
+            const { data } = await helpdeskApi.post(
+                "/gerencia/inventario/store/periferico",
+                periferico
+            );
+            startLoadInvPerifericos(storageFields);
+            dispatch(onLoadMessage(data));
+            setTimeout(() => {
+                dispatch(onLoadMessage(undefined));
+            }, 40);
+        } catch (error) {
+            console.log(error);
+            ExceptionMessageError(error);
+        }
+    };
+
     const startUpdateInvPeriferico = async (periferico, storageFields) => {
         try {
             const { data } = await helpdeskApi.put(
                 `/gerencia/inventario/update/periferico/${periferico.id}`,
                 periferico
+            );
+            startLoadInvPerifericos(storageFields);
+            dispatch(onLoadMessage(data));
+            setTimeout(() => {
+                dispatch(onLoadMessage(undefined));
+            }, 40);
+        } catch (error) {
+            console.log(error);
+            ExceptionMessageError(error);
+        }
+    };
+
+    const startAssignEquipo = async (periferico, storageFields) => {
+        try {
+            const { data } = await helpdeskApi.put(
+                `/gerencia/inventario/assign/equipo/periferico/${periferico.id}`,
+                periferico
+            );
+            startLoadInvPerifericos(storageFields);
+            dispatch(onLoadMessage(data));
+            setTimeout(() => {
+                dispatch(onLoadMessage(undefined));
+            }, 40);
+        } catch (error) {
+            console.log(error);
+            ExceptionMessageError(error);
+        }
+    };
+
+    const startClearEquipo = async (periferico, storageFields = {}) => {
+        try {
+            const { data } = await helpdeskApi.patch(
+                `/gerencia/inventario/periferico/${periferico.id}/clear-equipo-id`
             );
             startLoadInvPerifericos(storageFields);
             dispatch(onLoadMessage(data));
@@ -102,9 +167,12 @@ export const useInvPerifericoStore = () => {
         errores,
 
         startLoadInvPerifericos,
+        startAddInvPeriferico,
         startUpdateInvPeriferico,
+        startAssignEquipo,
         setActivateInvPeriferico,
         startClearInvPerifericos,
+        startClearEquipo,
         startExportComponentes,
     };
 };

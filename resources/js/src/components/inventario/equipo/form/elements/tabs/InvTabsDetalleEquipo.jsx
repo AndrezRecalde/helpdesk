@@ -29,15 +29,15 @@ export const InvTabsDetalleEquipo = () => {
                 </Tabs.Tab>
                 {(activateInvEquipo?.nombre_categoria
                     ?.toUpperCase()
-                    .includes("COMPUTADORAS") ||
+                    .includes("COMPUTADOR") ||
                     activateInvEquipo?.nombre_categoria
                         ?.toUpperCase()
-                        .includes("LAPTOPS")) && (
+                        .includes("LAPTOP")) && (
                     <Tabs.Tab
                         value="componentes"
                         leftSection={<IconDevices2 style={iconStyle} />}
                     >
-                        Componentes
+                        Periféricos
                     </Tabs.Tab>
                 )}
                 <Tabs.Tab

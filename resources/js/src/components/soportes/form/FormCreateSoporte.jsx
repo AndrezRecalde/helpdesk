@@ -25,8 +25,12 @@ import { IconBrandTelegram } from "@tabler/icons-react";
 
 export const FormCreateSoporte = ({ form }) => {
     const usuario = JSON.parse(localStorage.getItem("service_user"));
-    const { id_tipo_solicitud, activo_informatico, id_tipo_soporte } =
-        form.values;
+    const {
+        id_estado,
+        id_tipo_solicitud,
+        activo_informatico,
+        id_tipo_soporte,
+    } = form.values;
     const { estados } = useEstadoStore();
     const { users } = useUsersStore();
     const { tecnicos } = useTecnicoStore();
@@ -39,9 +43,19 @@ export const FormCreateSoporte = ({ form }) => {
 
     // Función para establecer valores comunes en el formulario
     const setFormValues = (form, activateSoporte) => {
-        form.setFieldValue("id_estado", activateSoporte?.id_estado ? activateSoporte.id_estado.toString() : "3");
+        form.setFieldValue(
+            "id_estado",
+            activateSoporte?.id_estado
+                ? activateSoporte.id_estado.toString()
+                : "3"
+        );
         form.setFieldValue("solucion", activateSoporte?.solucion);
-        form.setFieldValue("fecha_fin", activateSoporte?.fecha_fin ? new Date(activateSoporte.fecha_fin) : new Date());
+        form.setFieldValue(
+            "fecha_fin",
+            activateSoporte?.fecha_fin
+                ? new Date(activateSoporte.fecha_fin)
+                : new Date()
+        );
     };
 
     useEffect(() => {
@@ -49,7 +63,12 @@ export const FormCreateSoporte = ({ form }) => {
         // Verifica tipo de soporte
         if ([1, 4, 5, 6].includes(tipoSoporte)) {
             form.setFieldValue("activo_informatico", true);
-            form.setFieldValue("id_equipo", activateSoporte?.id_equipo ? activateSoporte.id_equipo.toString() : null);
+            form.setFieldValue(
+                "id_equipo",
+                activateSoporte?.id_equipo
+                    ? activateSoporte.id_equipo.toString()
+                    : null
+            );
         } else if ([2, 3].includes(tipoSoporte)) {
             form.setFieldValue("activo_informatico", false);
         }
@@ -68,15 +87,20 @@ export const FormCreateSoporte = ({ form }) => {
         if (tipoSolicitud === 7) {
             form.setFieldValue("activo_informatico", false);
             form.setFieldValue("id_estado", "4");
-            form.setFieldValue("id_equipo", activateSoporte?.id_equipo ? activateSoporte.id_equipo.toString() : null);
+            form.setFieldValue(
+                "id_equipo",
+                activateSoporte?.id_equipo
+                    ? activateSoporte.id_equipo.toString()
+                    : null
+            );
         } else {
             setFormValues(form, activateSoporte);
         }
     }, [id_tipo_solicitud, activateSoporte]);
 
-
     const handleSubmit = (e) => {
         e.preventDefault();
+        console.log(form.getTransformedValues());
         startCreateSoporte(form.getTransformedValues(), storageFields);
         modalActionCreateSoporte(0);
         form.reset();
@@ -96,7 +120,7 @@ export const FormCreateSoporte = ({ form }) => {
                 <SimpleGrid cols={{ base: 1, sm: 1, md: 2, lg: 2 }}>
                     <Select
                         withAsterisk
-                        disabled
+                        //disabled
                         label="Estado de la solicitud"
                         placeholder="Seleccione el estado de la solicitud"
                         {...form.getInputProps("id_estado")}
@@ -217,15 +241,17 @@ export const FormCreateSoporte = ({ form }) => {
                     maxRows={3}
                     {...form.getInputProps("incidente")}
                 />
-                <Textarea
-                    withAsterisk
-                    label="Solución"
-                    description="Digite como solucionó el incidente"
-                    autosize
-                    minRows={3}
-                    maxRows={3}
-                    {...form.getInputProps("solucion")}
-                />
+                {id_estado == 3 || id_estado == 4 ? (
+                    <Textarea
+                        //withAsterisk
+                        label="Solución"
+                        description="Digite como solucionó el incidente"
+                        autosize
+                        minRows={3}
+                        maxRows={3}
+                        {...form.getInputProps("solucion")}
+                    />
+                ) : null}
                 <Checkbox
                     color="teal.4"
                     iconColor="dark.8"

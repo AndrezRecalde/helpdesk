@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('inv_perifericos', function (Blueprint $table) {
             $table->id();
             //$table->string('nombre_periferico'); // Puede ser 'mouse', 'teclado', 'auriculares', etc.
-            $table->string('modelo');
+            $table->string('nombre_periferico');
             $table->unsignedInteger('marca_id');
             $table->unsignedInteger('categoria_id');
             $table->string('numero_serie')->nullable();

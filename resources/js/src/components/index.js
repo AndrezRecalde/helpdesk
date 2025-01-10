@@ -182,8 +182,8 @@ import { InvPerifericoTable } from "./inventario/periferico/table/InvPerifericoT
 import { InvPerifericoModal } from "./inventario/periferico/modal/InvPerifericoModal";
 import { InvPerifericoForm } from "./inventario/periferico/form/InvPerifericoForm";
 import { FilterFormPeriferico } from "./inventario/periferico/filter/FilterFormPeriferico";
-
-
+import { InvPerifericoAsignarEquipoModal } from "./inventario/periferico/modal/InvPerifericoAsignarEquipoModal";
+import { InvPerifericoAsignarEquipoForm } from "./inventario/periferico/form/InvPerifericoAsignarEquipoForm";
 
 
 /* Elementos */
@@ -217,7 +217,8 @@ import {
     MenuTable_T,
     MenuSolicitudTable,
     MenuTable_Per,
-    MenuTable_Perif
+    MenuTable_Perif,
+    MenuTable_Periferico
 } from "./elements/tables/MenuTable";
 import { TableContent } from "./elements/tables/TableContent";
 
@@ -395,7 +396,8 @@ export {
     InvPerifericoModal,
     InvPerifericoForm,
     FilterFormPeriferico,
-
+    InvPerifericoAsignarEquipoModal,
+    InvPerifericoAsignarEquipoForm,
 
     /* Elements */
     Logo,
@@ -424,5 +426,6 @@ export {
     MenuSolicitudTable,
     MenuTable_Per,
     MenuTable_Perif,
+    MenuTable_Periferico,
     TableContent,
 };

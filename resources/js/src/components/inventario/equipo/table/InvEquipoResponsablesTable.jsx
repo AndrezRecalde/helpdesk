@@ -58,21 +58,25 @@ export const InvEquipoResponsablesTable = () => {
         [responsables]
     );
 
-    const handleAssign = useCallback(
-        () => {
-            //console.log(selected);
-            //setActivateInvEquipo(selected);
-            modalActionAssignEquipo(true);
-        },
-        [responsables]
-    );
+    const handleAssign = useCallback(() => {
+        //console.log(selected);
+        //setActivateInvEquipo(selected);
+        modalActionAssignEquipo(true);
+    }, [responsables]);
 
     const table = useMantineReactTable({
         columns,
         data: responsables, //must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
         //state: { showProgressBars: isLoading },
-        enableFacetedValues: true,
+        enableFacetedValues: false,
+        enableColumnActions: false,
+        enableColumnFilters: false,
+        enableFilters: false,
         enableDensityToggle: false,
+        enablePagination: false,
+        enableSorting: false,
+        enableHiding: false,
+        enableFullScreenToggle: false,
         enableRowActions: true,
         renderDetailPanel: ({ row }) => (
             <div>
@@ -97,6 +101,21 @@ export const InvEquipoResponsablesTable = () => {
                 Agregar
             </BtnSection>
         ),
+        mantineTableProps: {
+            highlightOnHover: false,
+            withColumnBorders: true,
+            sx: {
+                "thead > tr": {
+                    backgroundColor: "inherit",
+                },
+                "thead > tr > th": {
+                    backgroundColor: "inherit",
+                },
+                "tbody > tr > td": {
+                    backgroundColor: "inherit",
+                },
+            },
+        },
     });
 
     return (

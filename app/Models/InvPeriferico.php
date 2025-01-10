@@ -14,7 +14,7 @@ class InvPeriferico extends Model
 
     protected $fillable = [
         //'nombre_periferico',
-        'modelo',
+        'nombre_periferico',
         'marca_id',
         'categoria_id',
         'numero_serie',
@@ -47,21 +47,31 @@ class InvPeriferico extends Model
     }
 
     public function categoria()
-{
-    return $this->belongsTo(InvCategoria::class, 'categoria_id');
-}
+    {
+        return $this->belongsTo(InvCategoria::class, 'categoria_id');
+    }
 
     function scopeByCodigoEquipo(Builder $query, $codigo_equipo)
     {
         if ($codigo_equipo) {
-            return $query->where('inve.codigo_nuevo', $codigo_equipo);
+            return $query->where('inve.codigo_nuevo', $codigo_equipo)
+                         ->orWhereNull('inve.codigo_nuevo');
         }
+
+        return $query; // Devuelve la consulta original si no hay $codigo_equipo
     }
 
     function scopeByNumeroSerie(Builder $query, $numero_serie)
     {
         if ($numero_serie) {
             return $query->where('invper.numero_serie', $numero_serie);
+        }
+    }
+
+    function scopeByMarcaId(Builder $query, $marca_id)
+    {
+        if ($marca_id) {
+            return $query->where('invper.marca_id', $marca_id);
         }
     }
 

@@ -56,9 +56,9 @@ export const InvEquipoComponenteForm = ({ form }) => {
             <SimpleGrid cols={{ base: 1, xs: 1, sm: 2, md: 2, lg: 2 }}>
                 <TextInput
                     withAsterisk
-                    placeholder="Digite el modelo del equipo"
-                    key={form.key(`perifericos.${index}.modelo`)}
-                    {...form.getInputProps(`perifericos.${index}.modelo`)}
+                    placeholder="Digite el nombre del periferico"
+                    key={form.key(`perifericos.${index}.nombre_periferico`)}
+                    {...form.getInputProps(`perifericos.${index}.nombre_periferico`)}
                 />
                 <TextInput
                     withAsterisk
@@ -173,7 +173,7 @@ export const InvEquipoComponenteForm = ({ form }) => {
                     onClick={() =>
                         form.insertListItem("perifericos", {
                             key: randomId(),
-                            modelo: "",
+                            nombre_periferico: "",
                             numero_serie: "",
                             marca_id: null,
                             categoria_id: null,

@@ -17,14 +17,13 @@ export const FilterFormUsers = () => {
 
     const form = useForm({
         initialValues: {
-            cdgo_direccion: "",
+            cdgo_direccion: null,
             nmbre_usrio: "",
             lgin: "",
         },
         transformValues: (values) => ({
-            cdgo_direccion: Number(values.cdgo_direccion) || null,
-            nmbre_usrio: values.nmbre_usrio,
-            lgin: values.lgin,
+            ...values,
+            cdgo_direccion: Number(values.cdgo_direccion),
         }),
     });
 

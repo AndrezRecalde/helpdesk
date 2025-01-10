@@ -35,7 +35,7 @@ export const InvEquipoModal = () => {
             codigo_antiguo: "",
             codigo_nuevo: "",
             fecha_adquisicion: new Date(),
-            fecha_amortizacion: new Date(),
+            //fecha_amortizacion: new Date(),
             vida_util: 1,
             descripcion: "",
             bien_adquirido: false,
@@ -72,7 +72,7 @@ export const InvEquipoModal = () => {
         transformValues: (values) => ({
             ...values,
             fecha_adquisicion: new Date(values.fecha_adquisicion),
-            fecha_amortizacion: new Date(values.fecha_amortizacion),
+            //fecha_amortizacion: new Date(values.fecha_amortizacion),
             ubicacion_id: Number(values.ubicacion_id) || null,
             categoria_id: Number(values.categoria_id) || null,
             estado_id: Number(values.estado_id) || null,

@@ -50,14 +50,14 @@ export const InvEquipoComplementaria = ({ form }) => {
                     placeholder="Seleccione fecha de adquisición"
                     {...form.getInputProps("fecha_adquisicion")}
                 />
-                <DateInput
+                {/* <DateInput
                     //dateParser={dateParser}
                     withAsterisk
                     valueFormat="YYYY-MM-DD"
                     label="Fecha amortización"
                     placeholder="Seleccione fecha de amortización"
                     {...form.getInputProps("fecha_amortizacion")}
-                />
+                /> */}
             </SimpleGrid>
             <NumberInput
                 label="Vida útil (En años)"

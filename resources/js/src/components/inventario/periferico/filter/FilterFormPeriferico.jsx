@@ -1,23 +1,26 @@
 import { Box, Fieldset, Select, SimpleGrid, TextInput } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { BtnSubmit, TextSection } from "../../../../components";
-import { useInvEstadoStore, useInvPerifericoStore, useStorageField } from "../../../../hooks";
+import { useInvEstadoStore, useInvMarcaStore, useInvPerifericoStore, useStorageField } from "../../../../hooks";
 import { IconSearch } from "@tabler/icons-react";
 
 export const FilterFormPeriferico = () => {
 
     const { startLoadInvPerifericos } = useInvPerifericoStore();
+    const { invMarcas } = useInvMarcaStore();
     const { invEstados } = useInvEstadoStore();
     const { setStorageFields } = useStorageField();
 
     const form = useForm({
         initialValues: {
             numero_serie: "",
+            marca_id: null,
             estado_id: null,
             codigo_equipo: "",
         },
         transformValues: (values) => ({
             ...values,
+            marca_id: Number(values.marca_id) || null,
             estado_id: Number(values.estado_id) || null,
         }),
     });
@@ -43,11 +46,25 @@ export const FilterFormPeriferico = () => {
                 component="form"
                 onSubmit={form.onSubmit((_, e) => handleSubmit(e))}
             >
-                <SimpleGrid cols={{ base: 1, sm: 1, md: 3, lg: 3 }} mt={10}>
+                <SimpleGrid cols={{ base: 1, sm: 1, md: 4, lg: 4 }} mt={10}>
                     <TextInput
                         label="Número de serie"
                         placeholder="Digite el numero de serie"
                         {...form.getInputProps("numero_serie")}
+                    />
+                    <Select
+                        searchable
+                        clearable
+                        label="Marca"
+                        placeholder="Elige la marca"
+                        {...form.getInputProps("marca_id")}
+                        nothingFoundMessage="Nothing found..."
+                        data={invMarcas.map((marca) => {
+                            return {
+                                value: marca.id.toString(),
+                                label: marca.nombre_marca,
+                            };
+                        })}
                     />
                     <Select
                         searchable

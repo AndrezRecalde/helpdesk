@@ -1,12 +1,10 @@
-import { Divider, Drawer, Group, LoadingOverlay } from "@mantine/core";
+import { Divider, Drawer, LoadingOverlay } from "@mantine/core";
 import { useInvEquipoStore, useInvUiEquipo } from "../../../../hooks";
 import {
-    BtnSection,
     InvInfoGeneralEquipo,
     InvTabsDetalleEquipo,
     TextSection,
 } from "../../../../components";
-import { IconDeviceDesktopDown } from "@tabler/icons-react";
 
 export const InvShowEquipoModal = () => {
     const { isLoading, activateInvEquipo, setActivateInvEquipo } =
@@ -31,7 +29,7 @@ export const InvShowEquipoModal = () => {
     return (
         <Drawer
             position="right"
-            size="50rem"
+            size="55rem"
             opened={isOpenModalViewEquipo}
             onClose={handleCloseModal}
             title={

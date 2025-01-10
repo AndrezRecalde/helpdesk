@@ -19,7 +19,7 @@ const InvCategoriasPage = ({ tabValue }) => {
     } = useInvCategoriaStore();
 
     useEffect(() => {
-        if (tabValue === "categoria") {
+        if (tabValue === "categorias") {
             startLoadInvCategorias({});
         }
 

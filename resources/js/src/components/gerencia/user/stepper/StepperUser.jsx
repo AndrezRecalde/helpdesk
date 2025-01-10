@@ -20,7 +20,7 @@ export const StepperUser = ({ form }) => {
                 sexo: activateUser.sexo.toString(),
                 usu_id_empresa: activateUser.usu_id_empresa?.toString(),
                 cdgo_direccion: activateUser.cdgo_direccion?.toString(),
-                cdgo_dprtmnto: activateUser.cdgo_dprtmnto?.toString() || null,
+                cdgo_dprtmnto: activateUser.cdgo_dprtmnto?.toString(),
                 crgo_id: activateUser.crgo_id?.toString(),
                 id_tipo_usuario: activateUser.id_tipo_usuario?.toString(),
                 usu_ult_tipo_contrato:

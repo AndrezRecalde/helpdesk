@@ -9,7 +9,7 @@ const InvEstadoPage = ({ tabValue }) => {
         useInvEstadoStore();
 
     useEffect(() => {
-        if (tabValue === "estado") {
+        if (tabValue === "estados") {
             startLoadInvEstados();
         }
 

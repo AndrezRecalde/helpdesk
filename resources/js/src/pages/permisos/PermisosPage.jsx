@@ -44,8 +44,27 @@ const PermisosPage = () => {
             id_tipo_motivo: isNotEmpty("Por favor seleccione el motivo"),
             fecha: isNotEmpty("Por favor seleccione la fecha"),
             id_jefe_inmediato: isNotEmpty("Por favor seleccione al jefe"),
-            hora_1: isNotEmpty("Seleccione las horas a solicitar"),
-            hora_2: isNotEmpty("Seleccione las horas a solicitar"),
+            hora_1: (value, values) => {
+                if (!value) return "Seleccione la hora de inicio";
+                const hora1 = parseFloat(value);
+                const hora2 = parseFloat(values.hora_2);
+                if (hora2 && hora1 > hora2) {
+                    return "La hora de inicio no puede ser mayor que la hora de fin";
+                }
+                return null;
+            },
+            hora_2: (value, values) => {
+                if (!value) return "Seleccione la hora de fin";
+                const hora1 = parseFloat(values.hora_1);
+                const hora2 = parseFloat(value);
+                if (hora1 && hora2 < hora1) {
+                    return "La hora de fin no puede ser menor que la hora de inicio";
+                }
+                if (hora1 && (hora2 - hora1) > 4) {
+                    return "El intervalo entre las horas no debe exceder 4 horas";
+                }
+                return null;
+            },
             per_observaciones: hasLength(
                 { min: 0, max: 200 },
                 "La observación admite un minimo de 5 caracteres y máximo 200 caracteres"

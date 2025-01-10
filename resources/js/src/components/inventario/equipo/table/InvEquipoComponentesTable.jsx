@@ -6,11 +6,19 @@ import {
     MenuTable_Perif,
     TableContent,
 } from "../../../../components";
-import { useInvEquipoStore, useInvPerifericoStore, useInvUiEquipo, useInvUiPeriferico } from "../../../../hooks";
+import {
+    useInvEquipoStore,
+    useInvPerifericoStore,
+    useInvUiEquipo,
+    useInvUiPeriferico,
+} from "../../../../hooks";
 import Swal from "sweetalert2";
+import { useMantineTheme } from "@mantine/core";
 
 export const InvEquipoComponentesTable = () => {
-    const { activateInvEquipo } = useInvEquipoStore();
+    const { colorScheme } = useMantineTheme();
+    const { activateInvEquipo, startClearEquipoFromEquipo } =
+        useInvEquipoStore();
     const { modalActionAssignPeriferico } = useInvUiEquipo();
     const { modalActionTransferirPeriferico } = useInvUiPeriferico();
     const { setActivateInvPeriferico } = useInvPerifericoStore();
@@ -20,7 +28,7 @@ export const InvEquipoComponentesTable = () => {
         () => [
             {
                 header: "Modelo",
-                accessorKey: "modelo",
+                accessorKey: "nombre_periferico",
                 filterVariant: "autocomplete",
             },
             {
@@ -36,7 +44,7 @@ export const InvEquipoComponentesTable = () => {
         [perifericos]
     );
 
-    const handleTrasnferir = useCallback(
+    const handleTransferir = useCallback(
         (selected) => {
             //const { pivot = {} } = selected;
             console.log(selected);
@@ -52,15 +60,47 @@ export const InvEquipoComponentesTable = () => {
         modalActionAssignPeriferico(true);
     }, [perifericos]);
 
+    const handleClearEquipo = useCallback(
+        (selected) => {
+            //const { pivot = {} } = selected;
+            //console.log(selected);
+
+            Swal.fire({
+                text: `¿Deseas remover periférico del equipo?`,
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#20c997",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Si, remover!",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    startClearEquipoFromEquipo(selected);
+                }
+            });
+        },
+        [perifericos]
+    );
+
     const table = useMantineReactTable({
         columns,
         data: perifericos, //must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
         //state: { showProgressBars: isLoading },
-        enableFacetedValues: true,
+        enableFacetedValues: false,
+        enableColumnActions: false,
+        enableColumnFilters: false,
+        enableFilters: false,
         enableDensityToggle: false,
+        enablePagination: false,
+        enableSorting: false,
+        enableHiding: false,
+        enableFullScreenToggle: false,
         enableRowActions: true,
         renderRowActionMenuItems: ({ row }) => (
-            <MenuTable_Perif row={row} handleTrasnferir={handleTrasnferir} />
+            <MenuTable_Perif
+                row={row}
+                handleTrasnferir={handleTransferir}
+                handleClearEquipo={handleClearEquipo}
+            />
         ),
         renderTopToolbarCustomActions: ({ table }) => (
             <BtnSection
@@ -96,6 +136,21 @@ export const InvEquipoComponentesTable = () => {
                         : "",
             },
         }),
+        mantineTableProps: {
+            highlightOnHover: false,
+            withColumnBorders: true,
+            sx: {
+                "thead > tr": {
+                    backgroundColor: "inherit",
+                },
+                "thead > tr > th": {
+                    backgroundColor: "inherit",
+                },
+                "tbody > tr > td": {
+                    backgroundColor: "inherit",
+                },
+            },
+        },
     });
 
     return <TableContent table={table} />;

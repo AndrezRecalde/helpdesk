@@ -30,18 +30,21 @@
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 20px;
+            border: 0.5px solid gray;
+            /* Corrige el borde */
+            table-layout: auto;
+            /* Cambia a 'auto' para ajustar el ancho según el contenido */
+            margin-bottom: 25px;
+            margin-top: 25px;
         }
 
         th,
         td {
-            padding: 12px;
-            text-align: left;
-            border: 1px solid #ddd;
-        }
-
-        th {
-            background-color: #f4f4f4;
+            padding: 3px;
+            vertical-align: top;
+            border: 1px solid black;
+            font-size: 12px;
+            /* Borde para celdas */
         }
 
         tr:nth-child(even) {
@@ -68,7 +71,7 @@
 
     <table>
         <tr>
-            <th>Modelo</th>
+            <th>Componente</th>
             <th>Marca</th>
             <th>Número de Serie</th>
             <th>Categoría</th>
@@ -77,12 +80,12 @@
         </tr>
         @foreach ($componentes as $componente)
             <tr>
-                <td>{{ $componente['modelo'] }}</td>
+                <td>{{ $componente['nombre_periferico'] }}</td>
                 <td>{{ $componente['nombre_marca'] }}</td>
                 <td>{{ $componente['numero_serie'] }}</td>
                 <td>{{ $componente['nombre_categoria'] }}</td>
                 <td>{{ $componente['nombre_estado'] }}</td>
-                <td>{{ $componente['equipo']['codigo_nuevo'] }}</td>
+                <td>{{ $componente['equipo']['codigo_nuevo'] ?? 'No pertenece a ningún equipo' }}</td>
             </tr>
         @endforeach
     </table>

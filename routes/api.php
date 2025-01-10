@@ -182,9 +182,11 @@ Route::group(['prefix' => 'gerencia', 'middleware' => ['auth:sanctum']], functio
     /* PERIFERICOS */
     Route::post('/inventario/perifericos', [InvPerifericoController::class, 'getInvPerifericos']);
     Route::put('/inventario/transferir/periferico/{id}', [InvPerifericoController::class, 'transferPeriferico']);
+    Route::post('/inventario/store/periferico', [InvPerifericoController::class, 'store']);
     Route::put('/inventario/update/periferico/{id}', [InvPerifericoController::class, 'update']);
+    Route::put('/inventario/assign/equipo/periferico/{id}', [InvPerifericoController::class, 'assignEquipo']);
     Route::post('/inventario/export/perifericos', [InvPerifericoController::class, 'exportPDFPerifericos']);
-
+    Route::patch('/inventario/periferico/{id}/clear-equipo-id', [InvPerifericoController::class, 'clearEquipoIdById']);
 
     /* PERMISOS */
     Route::post('/consolidado-permisos', [PermisosAdminController::class, 'getConsolidadoPermisos']);

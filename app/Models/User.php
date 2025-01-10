@@ -83,7 +83,7 @@ class User extends Authenticatable
     function equipos(): BelongsToMany
     {
         return $this->belongsToMany(InvEquipo::class, 'usuario_equipo', 'usuario_id', 'equipo_id')
-                    ->withPivot('direccion_id', 'concepto_id');;
+            ->withPivot('direccion_id', 'concepto_id');;
     }
 
     static function create(array $attributes = []): object
@@ -102,9 +102,10 @@ class User extends Authenticatable
 
     function scopeDireccion($query, $cdgo_direccion)
     {
-        if ($cdgo_direccion !== null) {
+        if ($cdgo_direccion !== null) { // Verifica explícitamente si no es nulo
             return $query->where('us.cdgo_direccion', $cdgo_direccion);
         }
+        return $query; // Si es null, no aplica ningún filtro
     }
 
     function scopeNombres($query, $nmbre_usrio)

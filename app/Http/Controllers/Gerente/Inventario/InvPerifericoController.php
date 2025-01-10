@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Gerente\Inventario;
 
+use App\Http\Requests\InvPerifericoEquipoRequest;
 use Carbon\Carbon;
 use App\Enums\MsgStatus;
 use App\Http\Controllers\Controller;
@@ -18,7 +19,7 @@ class InvPerifericoController extends Controller
     function getInvPerifericos(Request $request): JsonResponse
     {
         $perifericos = InvPeriferico::from('inv_perifericos as invper')
-            ->selectRaw('invper.id, invper.modelo, invper.numero_serie,
+            ->selectRaw('invper.id, invper.nombre_periferico, invper.numero_serie,
                                      invper.fecha_adquisicion, invper.es_adquirido,
                                      invper.es_donado, invper.es_usado,
                                      invper.marca_id, invm.nombre_marca,
@@ -36,6 +37,7 @@ class InvPerifericoController extends Controller
             ->leftJoin('inv_equipos as inve', 'inve.id', 'invper.equipo_id')
             ->byCodigoEquipo($request->codigo_equipo)
             ->byNumeroSerie($request->numero_serie)
+            ->byMarcaId($request->marca_id)
             ->byEstadoId($request->estado_id)
             ->get();
 
@@ -61,6 +63,23 @@ class InvPerifericoController extends Controller
         }
     }
 
+    function store(InvPerifericoRequest $request): JsonResponse
+    {
+        try {
+            DB::beginTransaction();  // Iniciar transacción
+            InvPeriferico::create($request->validated());
+            DB::commit();  // Confirmar la transacción si todo sale bien
+
+            return response()->json([
+                'status' => 'success',
+                'msg'    => MsgStatus::Created,
+            ], 200);
+        } catch (\Throwable $th) {
+            DB::rollBack();  // Revertir la transacción en caso de error
+            return response()->json(['status' => MsgStatus::Error, 'message' => $th->getMessage()], 500);
+        }
+    }
+
     function update(InvPerifericoRequest $request, int $id): JsonResponse
     {
         $periferico = InvPeriferico::find($id);
@@ -75,6 +94,45 @@ class InvPerifericoController extends Controller
             DB::rollBack();  // Revertir la transacción en caso de error
             return response()->json(['status' => MsgStatus::Error, 'message' => $th->getMessage()], 500);
         }
+    }
+
+    function assignEquipo(InvPerifericoEquipoRequest $request, int $id): JsonResponse
+    {
+        $periferico = InvPeriferico::find($id);
+        try {
+            if ($periferico) {
+                $periferico->update($request->validated());
+                return response()->json(['status' => MsgStatus::Success, 'msg' => MsgStatus::AssignEquipoSuccess], 201);
+            } else {
+                return response()->json(['status' => MsgStatus::Error, 'msg' => MsgStatus::NotFound], 404);
+            }
+        } catch (\Throwable $th) {
+            DB::rollBack();  // Revertir la transacción en caso de error
+            return response()->json(['status' => MsgStatus::Error, 'message' => $th->getMessage()], 500);
+        }
+    }
+
+    public function clearEquipoIdById($id)
+    {
+        // Buscar el periférico por ID
+        $periferico = InvPeriferico::find($id);
+
+        // Verificar si el periférico existe
+        if (!$periferico) {
+            return response()->json([
+                'status' => MsgStatus::Error,
+                'msg'    => 'El periférico no fue encontrado.'
+            ], 404);
+        }
+
+        // Actualizar el equipo_id a null
+        $periferico->equipo_id = null;
+        $periferico->save();
+
+        return response()->json([
+            'status' => MsgStatus::Success,
+            'msg' => 'El equipo se desvinculó',
+        ]);
     }
 
     function exportPDFPerifericos(Request $request)

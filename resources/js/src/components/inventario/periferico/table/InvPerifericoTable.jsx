@@ -4,8 +4,14 @@ import {
     MenuTable_E,
     TableContent,
     ActionReportPDF,
+    MenuTable_Periferico,
 } from "../../../../components";
-import { useInvPerifericoStore, useInvUiPeriferico } from "../../../../hooks";
+import {
+    useInvPerifericoStore,
+    useInvUiPeriferico,
+    useStorageField,
+} from "../../../../hooks";
+import Swal from "sweetalert2";
 
 export const InvPerifericoTable = () => {
     const {
@@ -13,14 +19,17 @@ export const InvPerifericoTable = () => {
         invPerifericos,
         setActivateInvPeriferico,
         startExportComponentes,
+        startClearEquipo,
     } = useInvPerifericoStore();
-    const { modalActionPeriferico } = useInvUiPeriferico();
+    const { modalActionPeriferico, modalActionAsignarEquipo } =
+        useInvUiPeriferico();
+    const { storageFields } = useStorageField();
 
     const columns = useMemo(
         () => [
             {
-                header: "Modelo",
-                accessorKey: "modelo",
+                header: "Periférico",
+                accessorKey: "nombre_periferico",
                 filterVariant: "autocomplete",
             },
             {
@@ -34,12 +43,13 @@ export const InvPerifericoTable = () => {
                 filterVariant: "autocomplete",
             },
             {
-                header: "Estado",
-                accessorKey: "nombre_estado",
+                header: "Equipo al que pertenece",
+                accessorFn: (row) =>
+                    row?.equipo?.codigo_nuevo || "No pertenece a ningún equipo",
             },
             {
-                header: "Equipo al que pertenece",
-                accessorFn: (row) => row.equipo.codigo_nuevo,
+                header: "Estado",
+                accessorKey: "nombre_estado",
             },
         ],
         [invPerifericos]
@@ -50,6 +60,36 @@ export const InvPerifericoTable = () => {
             //console.log("editar");
             setActivateInvPeriferico(selected);
             modalActionPeriferico(true);
+        },
+        [invPerifericos]
+    );
+
+    const handleAsignar = useCallback(
+        (selected) => {
+            //console.log("editar");
+            setActivateInvPeriferico(selected);
+            modalActionAsignarEquipo(true);
+        },
+        [invPerifericos]
+    );
+
+    const handleClearEquipo = useCallback(
+        (selected) => {
+            //const { pivot = {} } = selected;
+            console.log(selected);
+
+            Swal.fire({
+                text: `¿Deseas remover el equipo a este periférico?`,
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#20c997",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Si, remover!",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    startClearEquipo(selected, storageFields);
+                }
+            });
         },
         [invPerifericos]
     );
@@ -68,17 +108,25 @@ export const InvPerifericoTable = () => {
         enableDensityToggle: false,
         enableRowActions: true,
         renderRowActionMenuItems: ({ row }) => (
-            <MenuTable_E row={row} handleEdit={handleEditar} />
+            <MenuTable_Periferico
+                row={row}
+                handleEdit={handleEditar}
+                handleAsignar={handleAsignar}
+                handleClearEquipo={handleClearEquipo}
+            />
         ),
         renderTopToolbarCustomActions: ({ table }) =>
             invPerifericos.length !== 0 ? (
                 <ActionReportPDF handleExportDataPDF={handleExportDataPDF} />
             ) : null,
-        mantineTableBodyCellProps: ({ cell }) => ({
-            style: {
-                backgroundColor: cell.row.original.color,
-                color: "black",
-            },
+        mantineTableBodyCellProps: ({ column, cell }) => ({
+            style:
+                column.id === "nombre_estado"
+                    ? {
+                          backgroundColor: cell.row.original.color,
+                          color: "white",
+                      }
+                    : {},
         }),
         mantineTableProps: {
             withColumnBorders: true,

@@ -17,7 +17,7 @@ const InvTipocategoriasPage = ({ tabValue }) => {
     } = useInvTipocategoriaStore();
 
     useEffect(() => {
-        if (tabValue === "categoria") {
+        if (tabValue === "categorias") {
             startLoadTiposcategorias();
             return;
         }

@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class AssignComponenteRequest extends FormRequest
+class InvPerifericoEquipoRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,15 +24,7 @@ class AssignComponenteRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'perifericos'               => 'required|array',
-            'perifericos.*.nombre_periferico'      => 'required',
-            'perifericos.*.marca_id'    => 'required',
-            'perifericos.*.categoria_id'    => 'required',
-            'perifericos.*.numero_serie' => 'required|unique:inv_perifericos,numero_serie',
-            'perifericos.*.es_adquirido'    => 'required',
-            'perifericos.*.es_donado'    => 'required',
-            'perifericos.*.es_usado'    => 'required',
-            'perifericos.*.estado_id'    => 'required',
+            'equipo_id' => 'required'
         ];
     }
 

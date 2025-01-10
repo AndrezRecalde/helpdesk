@@ -9,7 +9,7 @@ const InvConceptoPage = ({ tabValue }) => {
         useInvConceptoStore();
 
     useEffect(() => {
-        if (tabValue === "estado") {
+        if (tabValue === "estados") {
         startLoadInvConceptos();
         }
 

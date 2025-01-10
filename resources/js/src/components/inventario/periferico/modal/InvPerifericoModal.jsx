@@ -22,7 +22,7 @@ export const InvPerifericoModal = () => {
 
     const form = useForm({
         initialValues: {
-            modelo: "",
+            nombre_periferico: "",
             marca_id: null,
             tipocategoria_id: null,
             categoria_id: null,
@@ -35,7 +35,7 @@ export const InvPerifericoModal = () => {
             //equipo_id: null,
         },
         validate: {
-            modelo: isNotEmpty("Por favor ingrese la modelo"),
+            nombre_periferico: isNotEmpty("Por favor ingrese el periferico"),
             marca_id: isNotEmpty("Por favor ingrese la marca"),
             categoria_id: isNotEmpty("Por favor seleccione la categoria"),
             numero_serie: isNotEmpty("Por favor ingrese el número serie"),

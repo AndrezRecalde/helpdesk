@@ -27,23 +27,24 @@ class InvPerifericoRequest extends FormRequest
     {
         $perifericoId = $this->route('id');
         return [
-            'modelo'        =>      'required',
+            'nombre_periferico' =>  'required',
             'marca_id'      =>      'required',
             'categoria_id'  =>      'required',
-            'numero_serie'  =>      ['', Rule::unique('inv_equipos')->ignore($perifericoId)],
+            'numero_serie'  =>      ['', Rule::unique('inv_perifericos')->ignore($perifericoId)],
             'fecha_adquisicion' =>    '',
             'es_adquirido'    =>    'required',
             'es_donado'       =>    'required',
             'es_usado'        =>    'required',
             'estado_id'       =>    'required',
+            'equipo_id'       =>    ''
         ];
     }
 
     function messages() : array
     {
         return [
-            'modelo.required'   =>  'Es necesario registrar el modelo del periferico',
-            'marca_id.required' =>  'Debe seleccionar la marca',
+            'nombre_periferico.required'   =>  'Es necesario registrar el nombre del componente',
+            'marca_id.required'     =>  'Debe seleccionar la marca',
             'categoria_id.required' => 'Debe seleccionar la categoria',
             'numero_serie.required' =>  'Debe digitar un número de serie',
             'es_adquirido.required' =>  'Seleccione si es adquirido',
