@@ -87,6 +87,20 @@ const gerenciaRoutes = generateRoutes(
     ["GERENTE"]
 );
 
+const nomPermisoRoutes = generateRoutes(
+    "nom",
+    [
+        { path: "solicitud", Component: SolicitudPage },
+        { path: "soportes/:soporteValue", Component: UserSoportesPage },
+        { path: "agregar-actividad", Component: ActividadPage },
+        { path: "lista-actividades", Component: ListActividadesPage },
+        { path: "permiso", Component: PermisosPage },
+        { path: "ver-permisos", Component: ListPermisosAdminPage },
+        { path: "consolidado-permisos", Component: ConsolidadoPermisosPage },
+    ],
+    ["NOM_PERMISO"]
+);
+
 const tecnicoRoutes = generateRoutes(
     "tecnico",
     [
@@ -129,6 +143,7 @@ export const routes = {
     gerencia: gerenciaRoutes,
     tecnico: tecnicoRoutes,
     usuario: usuarioRoutes,
+    nomPermiso: nomPermisoRoutes
     //peer: peerRoutes,
 };
 
