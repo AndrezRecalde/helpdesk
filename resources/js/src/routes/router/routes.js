@@ -269,21 +269,21 @@ export const navRoutes = [
         label: "Actividades",
         icon: IconListCheck,
         initiallyOpened: true,
-        roles: ["GERENTE", "TECNICO", "USUARIO"],
+        roles: ["GERENTE", "TECNICO", "USUARIO", "NOM_PERMISO"],
         links: [
             {
                 label: "Agregar actividad",
                 path: "agregar-actividad",
                 link: "/agregar-actividad",
                 //Component: ActividadPage,
-                roles: ["GERENTE", "TECNICO", "USUARIO"],
+                roles: ["GERENTE", "TECNICO", "USUARIO", "NOM_PERMISO"],
             },
             {
                 label: "Lista actividades",
                 path: "lista-actividades",
                 link: "/lista-actividades",
                 //Component: ListActividadesPage,
-                roles: ["GERENTE", "TECNICO", "USUARIO"],
+                roles: ["GERENTE", "TECNICO", "USUARIO", "NOM_PERMISO"],
             },
         ],
     },
@@ -291,21 +291,21 @@ export const navRoutes = [
         label: "Permisos 4 horas",
         icon: IconLicense,
         initiallyOpened: true,
-        roles: ["GERENTE", "TECNICO", "USUARIO"],
+        roles: ["GERENTE", "TECNICO", "USUARIO", "NOM_PERMISO"],
         links: [
             {
                 label: "Solicitar Permisos", //GERENTE, TECNICO, USUARIO
                 path: "permiso",
                 link: "/permiso",
                 //Component: PermisosPage,
-                roles: ["GERENTE", "TECNICO", "USUARIO"],
+                roles: ["GERENTE", "TECNICO", "USUARIO", "NOM_PERMISO"],
             },
             {
                 label: "Ver Permisos", //GERENTE
                 path: "ver-permisos",
                 link: "/ver-permisos",
                 //Component: ListPermisosAdminPage,
-                roles: ["GERENTE"],
+                roles: ["GERENTE", "NOM_PERMISO"],
             },
             {
                 label: "Ver Permisos General", //GERENTE, TECNICO, USUARIO
@@ -319,7 +319,7 @@ export const navRoutes = [
                 path: "consolidado-permisos",
                 link: "/consolidado-permisos",
                 //Component: ListPermisosPage,
-                roles: ["GERENTE",],
+                roles: ["GERENTE","NOM_PERMISO"],
             },
         ],
     },
@@ -335,14 +335,14 @@ export const navRoutes = [
                 label: "Solicitar soporte",
                 path: "solicitud",
                 link: "/solicitud",
-                roles: ["USUARIO"],
+                roles: ["USUARIO", "NOM_PERMISO"],
                 //Component: SolicitudPage,
             },
             {
                 label: "Mis soportes",
                 path: "soportes/:soporteValue",
                 link: "/soportes/actuales",
-                roles: ["USUARIO"],
+                roles: ["USUARIO", "NOM_PERMISO"],
                 //Component: UserSoportesPage,
             },
         ],
