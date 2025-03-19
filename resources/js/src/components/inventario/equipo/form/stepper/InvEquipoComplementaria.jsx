@@ -1,15 +1,64 @@
 import {
     Checkbox,
     Group,
+    Loader,
     NumberInput,
+    Select,
     SimpleGrid,
     Stack,
     Textarea,
 } from "@mantine/core";
 import { DateInput } from "@mantine/dates";
 import { TextSection } from "../../../../../components";
+import { useEffect, useState } from "react";
+import { useDireccionStore, useUsersStore } from "../../../../../hooks";
 
 export const InvEquipoComplementaria = ({ form }) => {
+    const { bien_adquirido, bien_donado, is_there_custodio } = form.values;
+
+    const {
+        isLoading: loadingUsers,
+        startLoadUsersGeneral,
+        users,
+        clearUsers,
+    } = useUsersStore();
+    const {
+        isLoading: loadingDirecciones,
+        startLoadDirecciones,
+        direcciones,
+        clearDirecciones,
+    } = useDireccionStore();
+    const [checkDonado, setCheckDonado] = useState(false);
+    const [checkAdq, setCheckAdq] = useState(false);
+
+    useEffect(() => {
+        if (!users.length || !direcciones.length) {
+            startLoadUsersGeneral({});
+            startLoadDirecciones();
+            return;
+        }
+    }, [is_there_custodio]);
+
+    useEffect(() => {
+        return () => {
+            clearUsers();
+            clearDirecciones();
+        };
+    }, []);
+
+    useEffect(() => {
+        if (bien_adquirido) {
+            setCheckDonado(true);
+        } else {
+            setCheckDonado(false);
+        }
+        if (bien_donado) {
+            setCheckAdq(true);
+        } else {
+            setCheckAdq(false);
+        }
+    }, [bien_adquirido, bien_donado]);
+
     return (
         <Stack
             bg="var(--mantine-color-body)"
@@ -22,12 +71,14 @@ export const InvEquipoComplementaria = ({ form }) => {
                 <Group>
                     <Checkbox
                         label="Bien adquirido"
+                        disabled={checkAdq}
                         {...form.getInputProps("bien_adquirido", {
                             type: "checkbox",
                         })}
                     />
                     <Checkbox
                         label="Bien donado"
+                        disabled={checkDonado}
                         {...form.getInputProps("bien_donado", {
                             type: "checkbox",
                         })}
@@ -58,13 +109,60 @@ export const InvEquipoComplementaria = ({ form }) => {
                     placeholder="Seleccione fecha de amortización"
                     {...form.getInputProps("fecha_amortizacion")}
                 /> */}
+                <NumberInput
+                    label="Vida útil (En años)"
+                    placeholder="Digite la vida útil en años"
+                    allowNegative={false}
+                    {...form.getInputProps("vida_util")}
+                />
             </SimpleGrid>
-            <NumberInput
-                label="Vida útil (En años)"
-                placeholder="Digite la vida útil en años"
-                allowNegative={false}
-                {...form.getInputProps("vida_util")}
+
+            <Checkbox
+                label="¿Desea agregar custodio?"
+                {...form.getInputProps("is_there_custodio", {
+                    type: "checkbox",
+                })}
             />
+
+            {is_there_custodio ? (
+                <SimpleGrid cols={{ base: 1, sm: 1, md: 2, lg: 2 }}>
+                    <Select
+                        searchable
+                        label="Usuario"
+                        placeholder="Seleccione el custodio"
+                        {...form.getInputProps("user_id")}
+                        rightSection={
+                            loadingUsers ? <Loader size={18} /> : null
+                        }
+                        data={
+                            users
+                                ? users.map((user) => ({
+                                      value: user.cdgo_usrio.toString(),
+                                      label: user.nmbre_usrio,
+                                  }))
+                                : "Cargando"
+                        }
+                    />
+                    <Select
+                        searchable
+                        label="Dirección"
+                        placeholder="Seleccione la dirección de ubicación"
+                        {...form.getInputProps("direccion_id")}
+                        rightSection={
+                            loadingDirecciones ? <Loader size={18} /> : null
+                        }
+                        data={
+                            direcciones
+                                ? direcciones.map((direccion) => ({
+                                      value: direccion.cdgo_dprtmnto.toString(),
+                                      label: direccion.nmbre_dprtmnto,
+                                  }))
+                                : "Cargando"
+                        }
+                    />
+                </SimpleGrid>
+            ) : null}
+
             <Textarea
                 label="Descripción del equipo"
                 autosize

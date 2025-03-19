@@ -6,6 +6,7 @@ use App\Enums\MsgStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserPasswordRequest;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -68,9 +69,25 @@ class UserController extends Controller
         return response()->json(['status' => MsgStatus::Success, 'info' => $info], 200);
     }
 
-    function getInfoSoporteForUser(Request $request): JsonResponse {
+    function getInfoSoporteForUser(Request $request): JsonResponse
+    {
         $info = collect(DB::select('CALL per_soporte_user_total(?)', [$request->usuario_id]))->first();
 
         return response()->json(['status' => MsgStatus::Success, 'info' => $info], 200);
+    }
+
+    function getBirthdayUsers(): JsonResponse
+    {
+        $today = Carbon::today();
+
+        $birthdays = User::select('cdgo_usrio', 'nmbre_usrio', 'usu_fec_nac')
+            ->whereMonth('usu_fec_nac', $today->month)
+            ->whereDay('usu_fec_nac', $today->day)
+            ->get();
+
+        return response()->json([
+            'status' => MsgStatus::Success,
+            'birthdays' => $birthdays
+        ], 200);
     }
 }

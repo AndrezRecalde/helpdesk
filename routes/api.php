@@ -8,21 +8,22 @@ use App\Http\Controllers\General\DireccionController;
 use App\Http\Controllers\General\EquipoController;
 use App\Http\Controllers\General\EstadoSoporteController;
 use App\Http\Controllers\General\MarcacionController;
-use App\Http\Controllers\General\PisoController;
+//use App\Http\Controllers\General\PisoController;
 use App\Http\Controllers\General\SoporteController;
-use App\Http\Controllers\General\STipoEquipoController;
+//use App\Http\Controllers\General\STipoEquipoController;
 use App\Http\Controllers\General\UserController;
 use App\Http\Controllers\Gerente\CargoController;
 use App\Http\Controllers\Gerente\DashGerenteController;
 use App\Http\Controllers\Gerente\DireccionAdminController;
 use App\Http\Controllers\Gerente\EmpresaController;
+use App\Http\Controllers\Gerente\Inventario\InvBajaController;
 use App\Http\Controllers\Gerente\Inventario\InvCategoriaController;
 use App\Http\Controllers\Gerente\Inventario\InvConceptoController;
+use App\Http\Controllers\Gerente\Inventario\InvConsumibleController;
 use App\Http\Controllers\Gerente\Inventario\InvDocumentoController;
 use App\Http\Controllers\Gerente\Inventario\InvEquipoController;
 use App\Http\Controllers\Gerente\Inventario\InvEstadoController;
 use App\Http\Controllers\Gerente\Inventario\InvMarcaController;
-use App\Http\Controllers\Gerente\Inventario\InvPerifericoController;
 use App\Http\Controllers\Gerente\Inventario\InvTipoCategoriaController;
 use App\Http\Controllers\Gerente\Inventario\InvUbicacionController;
 use App\Http\Controllers\Gerente\PermisosAdminController;
@@ -33,8 +34,8 @@ use App\Http\Controllers\Gerente\TipoContratoController;
 use App\Http\Controllers\Gerente\TipoSolicitudController;
 use App\Http\Controllers\Gerente\TipoUsuarioController;
 use App\Http\Controllers\Gerente\UserAdminController;
-use App\Models\InvDocumentoEquipo;
-use Illuminate\Http\Request;
+//use App\Models\InvDocumentoEquipo;
+//use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -62,7 +63,7 @@ Route::put('/change-password/{cdgo_usrio}', [UserController::class, 'updatePassw
 
 /* RUTAS: GERENTE */
 
-Route::group(['prefix' => 'gerencia', 'middleware' => ['auth:sanctum']], function () {
+Route::group(['prefix' => 'gerencia', 'middleware' => ['auth:sanctum', 'role:TIC_GERENTE']], function () {
 
     /* USUARIOS */
     Route::post('/admin/usuarios', [UserAdminController::class, 'getUsuariosAdmin']);
@@ -73,15 +74,11 @@ Route::group(['prefix' => 'gerencia', 'middleware' => ['auth:sanctum']], functio
     Route::put('/usuario/reset-password/{cdgo_usrio}', [UserAdminController::class, 'resetPasword']);
     Route::post('/admin/show-user', [UserAdminController::class, 'findUser']);
 
-
     /* TECNICOS */
     Route::post('/admin/tecnicos', [TecnicoController::class, 'getTecnicosAdmin']);
     Route::put('/update/tecnico/{cdgo_usrio}', [TecnicoController::class, 'updateTecnico']);
 
-
-
     /* DEPARTAMENTOS Y DIRECCION */
-    Route::post('/directores', [DireccionAdminController::class, 'getDirectores']);
     Route::post('/departamentos', [DireccionAdminController::class, 'getDepartamentos']);
     Route::put('/update/director/departamento/{cdgo_dprtmnto}', [DireccionAdminController::class, 'updateDirectores']);
 
@@ -111,6 +108,7 @@ Route::group(['prefix' => 'gerencia', 'middleware' => ['auth:sanctum']], functio
     Route::post('/reporte-indicador-pdf', [SoporteAdminController::class, 'exportPDFIndicadores']); //TODO
     Route::get('/soportes-sin-calificar', [SoporteAdminController::class, 'getSoportesSinCalificacion']);
     Route::post('/calificacion', [SoporteAdminController::class, 'setCalificacionSoportes']);
+    Route::get('/consulta-soportes', [SoporteController::class, 'buscarSoporteLite']);
     //Route::post('/soporte-acta', [SoporteAdminController::class, 'exportActaBajaEquipo']);
 
 
@@ -130,7 +128,7 @@ Route::group(['prefix' => 'gerencia', 'middleware' => ['auth:sanctum']], functio
     Route::post('/inventario/categorias', [InvCategoriaController::class, 'getCategorias']);
     Route::post('/inventario/categoria/store', [InvCategoriaController::class, 'store']);
     Route::put('/inventario/categoria/update/{id}', [InvCategoriaController::class, 'update']);
-    Route::put('/inventario/categoria/incrementar/{id}', [InvCategoriaController::class, 'incrementarStock']);
+    //Route::put('/inventario/categoria/incrementar/{id}', [InvCategoriaController::class, 'incrementarStock']);
     Route::delete('/inventario/categoria/destroy/{id}', [InvCategoriaController::class, 'update']);
 
     /* ESTADOS */
@@ -172,43 +170,40 @@ Route::group(['prefix' => 'gerencia', 'middleware' => ['auth:sanctum']], functio
     Route::delete('/inventario/equipo/destroy/{id}', [InvEquipoController::class, 'destroy']);
     Route::put('/inventario/asignar/{id}', [InvEquipoController::class, 'assignResponsable']);
     Route::delete('/inventario/equipo/{equipo_id}/{id}', [InvEquipoController::class, 'removeUserFromEquipo']);
-    Route::put('/inventario/asignar/componente/{id}', [InvEquipoController::class, 'assignComponente']);
     Route::post('/equipo/{id}/documento/guardar', [InvEquipoController::class, 'guardarDocumento']);
     Route::delete('/equipo/documento/{id}/eliminar', [InvEquipoController::class, 'eliminarDocumento']);
     Route::get('/equipo/descargar-documento/{id}', [InvEquipoController::class, 'descargarDocumento']);
+    Route::post('/inventario/equipo/remover-custodio/{id}', [InvEquipoController::class, 'removeCustodio']);
+    Route::put('/inventario/equipo/{id}/custodio', [InvEquipoController::class, 'asignarCustodio']);
     Route::post('/inventario/export/equipos', [InvEquipoController::class, 'exportPDFEquipos']);
+    Route::post('/inventario/buscar/equipo', [InvEquipoController::class, 'buscarEquipoxUsuario']);
+
+    /* EQUIPOS DAR DE BAJA */
+    Route::post('/inventario/equipo/baja', [InvBajaController::class, 'darDeBajaEquipos']);
 
 
-    /* PERIFERICOS */
-    Route::post('/inventario/perifericos', [InvPerifericoController::class, 'getInvPerifericos']);
-    Route::put('/inventario/transferir/periferico/{id}', [InvPerifericoController::class, 'transferPeriferico']);
-    Route::post('/inventario/store/periferico', [InvPerifericoController::class, 'store']);
-    Route::put('/inventario/update/periferico/{id}', [InvPerifericoController::class, 'update']);
-    Route::put('/inventario/assign/equipo/periferico/{id}', [InvPerifericoController::class, 'assignEquipo']);
-    Route::post('/inventario/export/perifericos', [InvPerifericoController::class, 'exportPDFPerifericos']);
-    Route::patch('/inventario/periferico/{id}/clear-equipo-id', [InvPerifericoController::class, 'clearEquipoIdById']);
-
-    /* PERMISOS */
-    Route::post('/consolidado-permisos', [PermisosAdminController::class, 'getConsolidadoPermisos']);
-    Route::post('/export/consolidado-permisos', [PermisosAdminController::class, 'getExportConsolidadoPermisos']);
-
-
+    /* CONSUMIBLES */
+    Route::post('/inventario/consumibles', [InvConsumibleController::class, 'getInvConsumibles']);
+    Route::post('/inventario/store/consumible', [InvConsumibleController::class, 'store']);
+    Route::put('/inventario/update/consumible/{id}', [InvConsumibleController::class, 'update']);
+    Route::delete('/inventario/consumible/destroy/{id}', [InvConsumibleController::class, 'destroy']);
+    Route::put('/inventario/consumible/incrementar/{id}', [InvConsumibleController::class, 'incrementarStock']);
+    Route::post('/inventario/solicitar-consumible', [InvConsumibleController::class, 'solicitarConsumible']);
+    Route::post('/inventario/historial-consumible', [InvConsumibleController::class, 'historialConsumible']);
 
 });
 
 /* RUTAS: GERENTE O TECNICO */
-Route::group(['prefix' => 'general', 'middleware' => ['auth:sanctum']], function () {
+Route::group(['prefix' => 'general', 'middleware' => ['auth:sanctum', 'role:TIC_GERENTE|TIC_TECNICO']], function () {
 
     /* USUARIOS */
     Route::post('/usuarios', [UserController::class, 'getUsuarios']);
-    Route::post('/usuarios-extrict', [UserController::class, 'getUsuariosExtrict']);
 
     /* TECNICOS */
     Route::post('/tecnicos', [TecnicoController::class, 'getTecnicos']);
     Route::post("/info-soportes", [TecnicoController::class, 'getInfoTecnicosSoportes']);
 
     /* DIRECCIONES */
-    Route::get('/direcciones', [DireccionController::class, 'getDirecciones']);
 
     /* SOPORTES */
     Route::post('/soportes-actuales', [SoporteController::class, 'getSoportesActuales']);
@@ -218,6 +213,7 @@ Route::group(['prefix' => 'general', 'middleware' => ['auth:sanctum']], function
     Route::post('/reporte-actividades', [SoporteController::class, 'getActividadesSoportes']);
     Route::post('/reporte-soporte-pdf', [SoporteController::class, 'exportPDFCardSoporte']);
     Route::post('/reporte-actividades-pdf', [SoporteController::class, 'exportActividadesSoportes']);
+
 
     /* TIPOS DE SOLICITUDES DE SOPORTE */
     Route::get('/tipos-solicitudes', [TipoSolicitudController::class, 'getTiposSolicitudesSoporte']);
@@ -232,24 +228,26 @@ Route::group(['prefix' => 'general', 'middleware' => ['auth:sanctum']], function
     /* EQUIPOS */
     Route::get("/equipos", [EquipoController::class, 'getEquiposInformaticos']);
 
-    /* PERMISOS */
-    Route::post('/permiso-pdf', [PermisosAdminController::class, 'exportPDFPermiso']);
-    Route::post('/crear-permiso', [PermisosAdminController::class, 'store']);
-    Route::post('/permisos', [PermisosAdminController::class, 'getPermisosAdmin']);
-    Route::put('/anular-permiso/{idper_permisos}', [PermisosAdminController::class, 'anularPermisos']);
-    Route::post('/export-permiso-pdf', [PermisosAdminController::class, 'exportCardPDFPermiso']);
-    Route::post('/info-permisos', [PermisosAdminController::class, 'getInfoPermisosForUser']);
+
 
 });
 
 
 /* RUTAS USUARIO */
 Route::group(['prefix' => 'usuario', 'middleware' => ['auth:sanctum']], function () {
+
+    /* USUARIOS */
+    Route::post('/usuarios-extrict', [UserController::class, 'getUsuariosExtrict']);
+
     /* SOLICIUTD DE SOPORTE */
     Route::post('/enviar-solicitud', [SoporteController::class, 'enviarSolicitud']);
 
     /* INFO DE LOS SOPORTES PERFIL */
     Route::post("/info-soportes", [UserController::class, 'getInfoSoporteForUser']);
+
+    /* INFO DE LOS CUMPLEANIOS DE LOS FUNCIONARIOS */
+    Route::get("/birthdays", [UserController::class, 'getBirthdayUsers']);
+
 
     /* ACTIVIDADES */
     Route::post('/listar-actividades', [ActividadController::class, 'getActivForUserForDates']);
@@ -267,5 +265,36 @@ Route::group(['prefix' => 'usuario', 'middleware' => ['auth:sanctum']], function
     /* MARCACIONES */
     Route::post('/marcaciones', [MarcacionController::class, 'getMarcaciones']);
     Route::post('/marcaciones-biometricos', [MarcacionController::class, 'getMarcacionesBiometrico']);
+
+    /* DIRECCIONES */
+    Route::get('/direcciones', [DireccionController::class, 'getDirecciones']);
+
+    /* DIRECTORES */
+    Route::post('/directores', [DireccionAdminController::class, 'getDirectores']);
+
+    /* PERMISOS */
+    Route::post('/permisos', [PermisosAdminController::class, 'getPermisosAdmin']);
+
+    Route::post('/crear-permiso', [PermisosAdminController::class, 'store']);
+    Route::post('/export-permiso-pdf', [PermisosAdminController::class, 'exportCardPDFPermiso']);
+    Route::post('/permiso-pdf', [PermisosAdminController::class, 'exportPDFPermiso']);
+    Route::put('/anular-permiso/{idper_permisos}', [PermisosAdminController::class, 'anularPermisos']);
+    Route::post('/info-permisos', [PermisosAdminController::class, 'getInfoPermisosForUser']);
+
+
+});
+
+
+
+/* RUTAS NOM_ASISTENCIA */
+Route::group(['prefix' => 'tthh/asistencia', 'middleware' => ['auth:sanctum', 'role:TIC_GERENTE|NOM_ASISTENCIA']], function () {
+
+    /* PERMISOS */
+   // Route::post('/buscar-permiso', [PermisosAdminController::class, 'searchPermiso']);
+    Route::put('/actualizar-permiso/{idper_permisos}', [PermisosAdminController::class, 'updateEstadoPermiso']);
+
+    Route::post('/consolidado-permisos', [PermisosAdminController::class, 'getConsolidadoPermisos']);
+    Route::post('/export/consolidado-permisos', [PermisosAdminController::class, 'getExportConsolidadoPermisos']);
+
 
 });

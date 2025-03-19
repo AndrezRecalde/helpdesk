@@ -1,12 +1,15 @@
 import { Menu, rem } from "@mantine/core";
 import {
+    IconChecks,
     IconEditCircle,
     IconEyeCheck,
+    IconLogs,
+    IconNotesOff,
     IconPrinter,
     IconRestore,
     IconSortAscending,
-    IconTransfer,
     IconTrash,
+    IconUserHexagon,
     IconUserShare,
 } from "@tabler/icons-react";
 
@@ -31,51 +34,6 @@ export const MenuUsersTable = ({ row, handleEdit, handleResetPassword }) => {
             >
                 Resetear contraseña
             </Menu.Item>
-        </>
-    );
-};
-
-export const MenuTable_Periferico = ({
-    row,
-    handleEdit,
-    handleAsignar,
-    handleClearEquipo,
-}) => {
-    return (
-        <>
-            <Menu.Item
-                leftSection={
-                    <IconEditCircle
-                        style={{ width: rem(15), height: rem(15) }}
-                    />
-                }
-                onClick={() => handleEdit(row.original)}
-            >
-                Editar
-            </Menu.Item>
-            {row.original.equipo === null ? (
-                <Menu.Item
-                    leftSection={
-                        <IconEditCircle
-                            style={{ width: rem(15), height: rem(15) }}
-                        />
-                    }
-                    onClick={() => handleAsignar(row.original)}
-                >
-                    Asignar equipo
-                </Menu.Item>
-            ) : (
-                <Menu.Item
-                    leftSection={
-                        <IconEditCircle
-                            style={{ width: rem(15), height: rem(15) }}
-                        />
-                    }
-                    onClick={() => handleClearEquipo(row.original)}
-                >
-                    Remover equipo
-                </Menu.Item>
-            )}
         </>
     );
 };
@@ -112,36 +70,14 @@ export const MenuTable_D = ({ row, handleDelete }) => {
     );
 };
 
-export const MenuTable_Perif = ({
+export const MenuTable_Equipo = ({
     row,
-    handleTrasnferir,
-    handleClearEquipo,
+    handleShow,
+    handleEdit,
+    handleRemoveCustodio,
+    handleAssignCustodio,
+    handleDelete,
 }) => {
-    return (
-        <>
-            <Menu.Item
-                leftSection={
-                    <IconTransfer style={{ width: rem(15), height: rem(15) }} />
-                }
-                onClick={() => handleTrasnferir(row.original)}
-            >
-                Transferir
-            </Menu.Item>
-            <Menu.Item
-                leftSection={
-                    <IconEditCircle
-                        style={{ width: rem(15), height: rem(15) }}
-                    />
-                }
-                onClick={() => handleClearEquipo(row.original)}
-            >
-                Remover equipo
-            </Menu.Item>
-        </>
-    );
-};
-
-export const MenuTable_VE = ({ row, handleShow, handleEdit, handleDelete }) => {
     return (
         <>
             <Menu.Item
@@ -162,6 +98,29 @@ export const MenuTable_VE = ({ row, handleShow, handleEdit, handleDelete }) => {
             >
                 Editar
             </Menu.Item>
+            {row.original.user_id || row.original.direccion_id ? (
+                <Menu.Item
+                    leftSection={
+                        <IconUserShare
+                            style={{ width: rem(15), height: rem(15) }}
+                        />
+                    }
+                    onClick={() => handleRemoveCustodio(row.original)}
+                >
+                    Remover Custodio
+                </Menu.Item>
+            ) : (
+                <Menu.Item
+                    leftSection={
+                        <IconUserHexagon
+                            style={{ width: rem(15), height: rem(15) }}
+                        />
+                    }
+                    onClick={() => handleAssignCustodio(row.original)}
+                >
+                    Asignar Custodio
+                </Menu.Item>
+            )}
             <Menu.Item
                 leftSection={
                     <IconTrash style={{ width: rem(15), height: rem(15) }} />
@@ -169,6 +128,46 @@ export const MenuTable_VE = ({ row, handleShow, handleEdit, handleDelete }) => {
                 onClick={() => handleDelete(row.original)}
             >
                 Eliminar
+            </Menu.Item>
+        </>
+    );
+};
+
+export const MenuTable_Consumible = ({ row, handleEdit, handleHistorial }) => {
+    return (
+        <>
+            <Menu.Item
+                leftSection={
+                    <IconEditCircle
+                        style={{ width: rem(15), height: rem(15) }}
+                    />
+                }
+                onClick={() => handleEdit(row.original)}
+            >
+                Editar
+            </Menu.Item>
+            <Menu.Item
+                leftSection={
+                    <IconLogs style={{ width: rem(15), height: rem(15) }} />
+                }
+                onClick={() => handleHistorial(row.original)}
+            >
+                Historial
+            </Menu.Item>
+        </>
+    );
+};
+
+export const MenuTable_Imprimir = ({ row, handleImprimir }) => {
+    return (
+        <>
+            <Menu.Item
+                leftSection={
+                    <IconPrinter style={{ width: rem(15), height: rem(15) }} />
+                }
+                onClick={() => handleImprimir(row.original)}
+            >
+                (RE)Imprimir
             </Menu.Item>
         </>
     );
@@ -299,6 +298,44 @@ export const MenuSolicitudTable = ({
     );
 };
 
+export const MenuTable_AutorizarPermiso = ({ row, handleAnular, handleAutorizar }) => {
+    return (
+        <>
+            <Menu.Item
+                disabled={
+                    row.original.id_estado === 2 ||
+                    row.original.id_estado === 6 ||
+                    row.original.id_estado === 7 ||
+                    row.original.id_estado === 8
+                        ? true
+                        : false
+                }
+                leftSection={
+                    <IconChecks style={{ width: rem(15), height: rem(15) }} />
+                }
+                onClick={() => handleAutorizar(row.original)}
+            >
+                Autorizar Permiso
+            </Menu.Item>
+            <Menu.Item
+                disabled={
+                    row.original.id_estado === 8 ||
+                    row.original.id_estado === 7 ||
+                    row.original.id_estado === 6
+                        ? true
+                        : false
+                }
+                leftSection={
+                    <IconNotesOff style={{ width: rem(15), height: rem(15) }} />
+                }
+                onClick={() => handleAnular(row.original)}
+            >
+                Anular Permiso
+            </Menu.Item>
+        </>
+    );
+};
+
 export const MenuTable_Per = ({ row, handleExport, handleAnular }) => {
     return (
         <>
@@ -318,6 +355,13 @@ export const MenuTable_Per = ({ row, handleExport, handleAnular }) => {
                 Imprimir
             </Menu.Item>
             <Menu.Item
+                disabled={
+                    row.original.id_estado === 8 ||
+                    row.original.id_estado === 7 ||
+                    row.original.id_estado === 6
+                        ? true
+                        : false
+                }
                 leftSection={
                     <IconTrash style={{ width: rem(15), height: rem(15) }} />
                 }

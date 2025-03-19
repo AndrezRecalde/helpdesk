@@ -8,7 +8,7 @@ export const InvEquipoDocumentoForm = ({ form }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(form.getValues());
+        //console.log(form.getValues());
         startGuardarArchivo(activateInvEquipo, form.getValues());
         form.reset();
         modalActionAddDocumento(false);

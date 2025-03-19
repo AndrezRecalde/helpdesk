@@ -83,31 +83,68 @@ class ActividadController extends Controller
 
 
     function update(ActividadRequest $request, int $id): JsonResponse
-{
-    $actividad = Actividad::find($id);
+    {
+        try {
+            $actividad = Actividad::find($id);
+            if (!$actividad) {
+                return response()->json([
+                    'status' => MsgStatus::Error,
+                    'msg'    => MsgStatus::ActivitiesNotFound
+                ], 404);
+            }
 
-    try {
-        if ($actividad) {
-            // Actualizar la actividad con los datos validados
+            // Actualizar la actividad
             $actividad->update($request->validated());
+
+            // Obtener usuario autenticado y su rol
+            $user = Auth::user();
+            $role = $user->roles->first();
+
+            // Verificar si el rol es 1 o 2
+            if ($role && ($role->id == 1 || $role->id == 2)) {
+                // Buscar si existe un registro en soporte relacionado a la actividad
+                $soporte = Soporte::where('id_tipo_solicitud', 7)
+                    ->where('fecha_ini', $actividad->fecha_actividad)
+                    ->where('id_usu_tecnico_asig', $user->cdgo_usrio)
+                    ->first();
+
+                if ($soporte) {
+                    // Actualizar el soporte existente
+                    $soporte->update([
+                        'fecha_fin'  => $actividad->fecha_actividad,
+                        'fecha_asig' => $actividad->fecha_actividad,
+                        'solucion'   => Str::upper($actividad->actividad),
+                    ]);
+                } else {
+                    // Crear un nuevo registro en soporte si no existe
+                    Soporte::create([
+                        'id_tipo_solicitud' => 7,
+                        'fecha_ini' => $actividad->fecha_actividad,
+                        'fecha_fin' => $actividad->fecha_actividad,
+                        'fecha_asig' => $actividad->fecha_actividad,
+                        'id_direccion' => 22,
+                        'id_usu_recibe' => 701,
+                        'id_tipo_soporte' => '3',
+                        'incidente'   => 'SOLICITUD INTERNA DEL ÁREA DE TIC',
+                        'solucion'    => Str::upper($actividad->actividad),
+                        'id_area_tic' => 5,
+                        'id_usu_tecnico_asig' => $user->cdgo_usrio
+                    ]);
+                }
+            }
 
             return response()->json([
                 'status' => MsgStatus::Success,
                 'msg'    => MsgStatus::ActivityUpdated
             ], 201);
-        } else {
+        } catch (\Throwable $th) {
             return response()->json([
                 'status' => MsgStatus::Error,
-                'msg'    => MsgStatus::ActivitiesNotFound
-            ], 404);
+                'msg'    => $th->getMessage()
+            ], 500);
         }
-    } catch (\Throwable $th) {
-        return response()->json([
-            'status' => MsgStatus::Error,
-            'msg'    => $th->getMessage()
-        ], 500);
     }
-}
+
 
 
 

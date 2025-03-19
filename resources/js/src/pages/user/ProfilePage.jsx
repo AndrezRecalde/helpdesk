@@ -14,8 +14,8 @@ import {
     useTitlePage,
     useUsersStore,
 } from "../../hooks";
-import { Roles, lGerente, lTecnico } from "../../layouts";
 import { useNavigate } from "react-router-dom";
+import { Roles } from "../../helpers/dictionary";
 
 const ProfilePage = () => {
     useTitlePage("Helpdesk | Perfil");
@@ -42,8 +42,8 @@ const ProfilePage = () => {
 
     useEffect(() => {
         if (
-            usuario?.role === Roles.TECNICO ||
-            usuario?.role === Roles.GERENTE
+            usuario?.role === Roles.TIC_TECNICO ||
+            usuario?.role === Roles.TIC_GERENTE
         ) {
             startLoadInfoTecnicosSoporte(usuario.cdgo_usrio);
             return;
@@ -66,20 +66,17 @@ const ProfilePage = () => {
     }, []);
 
     const handleAction = () => {
-        usuario?.role_id === 1
-            ? navigate(lGerente[3].links[0].link)
-            : navigate(lTecnico[1].links[1].link);
+        navigate("/helpdesk/soportes");
     };
 
     return (
-        <Container size="lg">
+        <Container size="xl">
             <TitlePage order={1}>Perfil</TitlePage>
             <SimpleGrid cols={{ base: 1, sm: 2 }} spacing="md" mb={20}>
                 <CardProfile usuario={usuario} handleAction={handleAction} />
                 <CardInfoStatsUser usuario={usuario} />
             </SimpleGrid>
             <TableMarcacionRelojOnline usuario={usuario} />
-
         </Container>
     );
 };

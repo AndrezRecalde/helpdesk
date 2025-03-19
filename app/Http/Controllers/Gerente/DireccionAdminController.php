@@ -24,6 +24,8 @@ class DireccionAdminController extends Controller
             ->direccion($request->cdgo_dprtmnto)
             ->where('d.es_direccion', 1)
             ->where('d.interna', 1)
+            ->where('us.actvo', 1)
+            ->where('usu.actvo', 1)
             ->get();
         return response()->json(['status' => MsgStatus::Success, 'directores' => $directores], 200);
     }

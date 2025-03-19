@@ -21,7 +21,7 @@ export const InvEquipoAsignacionForm = ({ form }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(form.getTransformedValues())
+        //console.log(form.getTransformedValues())
         startAssignEquipo(form.getTransformedValues());
         /* if (activateInvEquipo !== null) {
             setActivateInvEquipo(null);

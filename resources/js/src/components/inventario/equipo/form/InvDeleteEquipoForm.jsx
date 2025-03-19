@@ -53,8 +53,7 @@ export const InvDeleteEquipoForm = ({ form }) => {
                     icon={IconTrashOff}
                 >
                     Para confirmar la eliminación, debe ingresar el código nuevo
-                    y el número de serie del equipo. Si el equipo contiene
-                    componentes, estos también se eliminarán.
+                    y el número de serie del equipo.
                 </AlertSection>
                 <div>
                     <TextSection tt="" ta="center" fw={500}>

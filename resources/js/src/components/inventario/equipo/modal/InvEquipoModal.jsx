@@ -1,19 +1,22 @@
-import { Modal } from "@mantine/core";
+import { LoadingOverlay, Modal } from "@mantine/core";
 import { InvEquipoForm, TextSection } from "../../../../components";
 import {
+    //useInvCategoriaStore,
     useInvConceptoStore,
     //useInvCategoriaStore,
     useInvEquipoStore,
+    useInvEstadoStore,
     useInvMarcaStore,
     useInvTipocategoriaStore,
     useInvUbicacionStore,
     useInvUiEquipo,
 } from "../../../../hooks";
-import { hasLength, isNotEmpty, useForm } from "@mantine/form";
+import { isNotEmpty, useForm } from "@mantine/form";
 import { useEffect } from "react";
 
 export const InvEquipoModal = () => {
-    const { activateInvEquipo, setActivateInvEquipo } = useInvEquipoStore();
+    const { isLoading, activateInvEquipo, setActivateInvEquipo } =
+        useInvEquipoStore();
     const { isOpenModalInvEquipo, modalActionEquipo } = useInvUiEquipo();
 
     const { startLoadInvUbicaciones, startClearInvUbicaciones } =
@@ -22,7 +25,7 @@ export const InvEquipoModal = () => {
         useInvTipocategoriaStore();
     /* const { startLoadInvCategorias, startClearInvCategorias } =
         useInvCategoriaStore(); */
-    //const { startLoadInvEstados, startClearInvEstados } = useInvEstadoStore();
+    const { startLoadInvEstados, startClearInvEstados } = useInvEstadoStore();
     const { startLoadInvMarcas, startClearInvMarcas } = useInvMarcaStore();
     const { startLoadInvConceptos, startClearInvConceptos } =
         useInvConceptoStore();
@@ -46,6 +49,9 @@ export const InvEquipoModal = () => {
             categoria_id: null,
             estado_id: null,
             marca_id: null,
+            is_there_custodio: false,
+            user_id: null,
+            direccion_id: null,
 
             /* usuario_id: null,
             direccion_id: null,
@@ -58,10 +64,10 @@ export const InvEquipoModal = () => {
             codigo_nuevo: isNotEmpty("Por favor ingrese el código nuevo"),
             numero_serie: isNotEmpty("Por favor ingrese el número de serie"),
             vida_util: isNotEmpty("Por favor ingrese la vida útil"),
-            descripcion: hasLength(
+            /* descripcion: hasLength(
                 { min: 5, max: 300 },
                 "La descripción debe tener entre 5 y 200 caracteres"
-            ),
+            ), */
             ubicacion_id: isNotEmpty(
                 "Por favor seleccione la ubicación física"
             ),
@@ -77,6 +83,7 @@ export const InvEquipoModal = () => {
             categoria_id: Number(values.categoria_id) || null,
             estado_id: Number(values.estado_id) || null,
             marca_id: Number(values.marca_id) || null,
+            user_id: Number(values.user_id) || null,
 
             /*  usuario_id: Number(values.usuario_id) || null,
             direccion_id: Number(values.direccion_id),
@@ -89,7 +96,7 @@ export const InvEquipoModal = () => {
             startLoadInvUbicaciones();
             startLoadTiposcategorias();
             //startLoadInvCategorias();
-            //startLoadInvEstados();
+            startLoadInvEstados();
             startLoadInvMarcas();
             startLoadInvConceptos();
         }
@@ -98,7 +105,7 @@ export const InvEquipoModal = () => {
             startClearInvUbicaciones();
             startClearTiposcategorias();
             //startClearInvCategorias();
-            //startClearInvEstados();
+            startClearInvEstados();
             startClearInvMarcas();
             startClearInvConceptos();
         };
@@ -128,7 +135,15 @@ export const InvEquipoModal = () => {
                 blur: 3,
             }}
         >
-            <InvEquipoForm form={form} />
+            {isLoading ? (
+                <LoadingOverlay
+                    visible={isLoading}
+                    zIndex={1000}
+                    overlayProps={{ radius: "sm", blur: 2 }}
+                />
+            ) : (
+                <InvEquipoForm form={form} />
+            )}
         </Modal>
     );
 };

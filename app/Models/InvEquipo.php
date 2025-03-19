@@ -34,6 +34,8 @@ class InvEquipo extends Model
         'categoria_id',
         'estado_id',
         'marca_id',
+        'user_id', //Se agrega usuario custodio
+        'direccion_id'
     ];
 
     protected $casts = [
@@ -68,10 +70,10 @@ class InvEquipo extends Model
         return $this->belongsToMany(Departamento::class, 'departamento_equipo', 'equipo_id', 'cdgo_dprtmnto');
     } */
 
-    public function perifericos()
+    /* public function perifericos(): HasMany
     {
         return $this->hasMany(InvPeriferico::class, 'equipo_id');
-    }
+    } */
 
     function ubicacion(): BelongsTo
     {
@@ -83,7 +85,7 @@ class InvEquipo extends Model
         return $this->belongsTo(InvMarca::class, 'categoria_id');
     }
 
-    function estados(): BelongsTo
+    function estado(): BelongsTo
     {
         return $this->belongsTo(InvEstado::class, 'estado_id');
     }
@@ -91,6 +93,16 @@ class InvEquipo extends Model
     function marca(): BelongsTo
     {
         return $this->belongsTo(InvMarca::class, 'marca_id');
+    }
+
+    function usuario(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'user_id', 'cdgo_usrio');
+    }
+
+    function direccion(): BelongsTo
+    {
+        return $this->belongsTo(Departamento::class, 'direccion_id', 'cdgo_dprtmnto');
     }
 
     function documentos(): HasMany
@@ -129,19 +141,48 @@ class InvEquipo extends Model
     function scopeBuscarPorCodigo(Builder $query, $codigo)
     {
         if ($codigo) {
-            return $query->where('inve.codigo_antiguo', $codigo)
-                ->orWhere('inve.codigo_nuevo', $codigo);
+            return $query->where('inve.codigo_antiguo', 'LIKE', "%{$codigo}%")
+                ->orWhere('inve.codigo_nuevo', 'LIKE', "%{$codigo}%");
         }
     }
 
     function scopeByNumeroSerie(Builder $query, $numero_serie)
     {
         if ($numero_serie) {
-            return $query->where('inve.numero_serie', $numero_serie);
+            return $query->where('inve.numero_serie', 'LIKE', "%{$numero_serie}%");
         }
     }
 
-    public function scopeByUsuarioId(Builder $query, $usuario_id)
+    function scopeByUsuarioId(Builder $query, $user_id)
+    {
+        if ($user_id) {
+            return $query->where('inve.user_id', $user_id);
+        }
+    }
+
+    public function scopeByUserId(Builder $query, $userId)
+    {
+        if ($userId) {
+            return $query->where('user_id', $userId);
+        }
+    }
+
+    function scopeByDireccion(Builder $query, $direccion_id)
+    {
+        if ($direccion_id) {
+            return $query->where('direccion_id', $direccion_id);
+        }
+    }
+
+    function scopeByDireccionId(Builder $query, $direccion_id)
+    {
+        if ($direccion_id) {
+            return $query->where('inve.direccion_id', $direccion_id);
+        }
+    }
+
+    //TODO: POR EL MOMENTO NO SE UTILIZA - CONSULTA PARA MOSTRAR LOS EQUIPOS A LAS PERSONAS QUE EL CUSTODIO PRESTA A OTROS USUARIOS
+    /* public function scopeByHistorialUsuarioId(Builder $query, $usuario_id)
     {
         if ($usuario_id) {
             return $query->whereExists(function ($subquery) use ($usuario_id) {
@@ -152,9 +193,10 @@ class InvEquipo extends Model
                     ->where('ue.usuario_id', $usuario_id); // Filtrar por direccion_id
             });
         }
-    }
+    } */
 
-    public function scopeByDireccionId(Builder $query, $direccion_id)
+    //TODO: POR EL MOMENTO NO SE UTILIZA - CONSULTA PARA MOSTRAR LOS EQUIPOS EN EL DEPARTAMENTO DEL USUARIO QUE LOS TIENE PRESTADO
+    /* public function scopeByDireccionId(Builder $query, $direccion_id)
     {
         if ($direccion_id) {
             return $query->whereExists(function ($subquery) use ($direccion_id) {
@@ -165,13 +207,13 @@ class InvEquipo extends Model
                     ->where('ue.direccion_id', $direccion_id); // Filtrar por direccion_id
             });
         }
-    }
+    } */
 
     protected static function boot()
     {
         parent::boot();
         static::deleting(function ($equipo) {
-            $equipo->perifericos()->detach();
+            $equipo->usuarios()->detach();
         });
     }
 }

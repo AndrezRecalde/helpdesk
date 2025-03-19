@@ -50,7 +50,7 @@ export const ChangePwdForm = ({ form }) => {
                     mt="lg"
                     className={classes.controls}
                 >
-                    <Anchor component="button" onClick={() => navigate("/staff/d/profile")} c="dimmed" size="sm" className={classes.control}>
+                    <Anchor component="button" onClick={() => navigate("/intranet/profile")} c="dimmed" size="sm" className={classes.control}>
                         <Center inline>
                             <IconArrowLeft
                                 style={{ width: rem(12), height: rem(12) }}

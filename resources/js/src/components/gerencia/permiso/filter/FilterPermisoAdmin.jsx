@@ -10,6 +10,7 @@ import { BtnSubmit, TextSection } from "../../..";
 import { IconSearch } from "@tabler/icons-react";
 import { YearPickerInput } from "@mantine/dates";
 import { useDireccionStore, useUsersStore } from "../../../../hooks";
+import classes from '../../../../assets/styles/modules/layout/input/LabelsInputs.module.css'
 
 export const FilterPermisoAdmin = ({
     title = "",
@@ -41,9 +42,10 @@ export const FilterPermisoAdmin = ({
                 >
                     <SimpleGrid cols={{ base: 1 }}>
                         <YearPickerInput
-                            disabled
+                            //disabled
                             label="Año"
                             placeholder="Seleccione el año"
+                            classNames={classes}
                             {...form.getInputProps("anio")}
                         />
                     </SimpleGrid>
@@ -53,6 +55,7 @@ export const FilterPermisoAdmin = ({
                             clearable
                             label="Dirección"
                             placeholder="Elige la dirección"
+                            classNames={classes}
                             {...form.getInputProps("id_direccion_pide")}
                             data={direcciones.map((direccion) => {
                                 return {
@@ -66,6 +69,7 @@ export const FilterPermisoAdmin = ({
                             clearable
                             label="Usuario"
                             placeholder="Elige el usuario"
+                            classNames={classes}
                             {...form.getInputProps("id_usu_pide")}
                             data={users.map((user) => {
                                 return {
@@ -77,6 +81,7 @@ export const FilterPermisoAdmin = ({
                         <TextInput
                             label="Número de permiso"
                             placeholder="Digita el número de soporte"
+                            classNames={classes}
                             {...form.getInputProps("idper_permisos")}
                         />
                     </SimpleGrid>

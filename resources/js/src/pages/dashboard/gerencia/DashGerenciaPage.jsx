@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Box, Container, LoadingOverlay, SimpleGrid } from "@mantine/core";
+import { Box, Container, Divider, LoadingOverlay, SimpleGrid } from "@mantine/core";
 import {
     useDashGerenciaStore,
     useIndicadorStore,
@@ -38,6 +38,7 @@ const DashGerenciaPage = () => {
                 <TitlePage order={2}>
                     Panel de Soporte Técnico
                 </TitlePage>
+                <Divider my="md" />
                 <LoadingOverlay
                     visible={isLoading}
                     zIndex={1000}
@@ -48,7 +49,7 @@ const DashGerenciaPage = () => {
                     <DashInfoStats />
                     <ChartPieSoportes />
                 </SimpleGrid>
-                <SimpleGrid cols={{ base: 1, sm: 2, md: 2, lg: 2 }}>
+                <SimpleGrid cols={{ base: 1, sm: 1, md: 1, lg: 1 }}>
                     <ChartSoportesMes />
                     <ChartBarSoportes />
                 </SimpleGrid>

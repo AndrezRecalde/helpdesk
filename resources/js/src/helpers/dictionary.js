@@ -1,6 +1,6 @@
 
 export const Roles = {
-    GERENTE: "GERENTE",
-    TECNICO: "TECNICO",
+    TIC_GERENTE: "TIC_GERENTE",
+    TIC_TECNICO: "TIC_TECNICO",
     USUARIO: "USUARIO",
 };

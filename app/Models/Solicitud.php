@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\RoleNames;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -49,7 +50,7 @@ class Solicitud extends Model
 
     public function scopeAllowed($query)
     {
-        if (auth()->user()->hasRole('GERENTE'))
+        if (auth()->user()->hasRole(RoleNames::TIC_GERENTE))
         {
             return $query;
         }

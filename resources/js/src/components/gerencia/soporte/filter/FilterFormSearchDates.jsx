@@ -2,6 +2,7 @@ import { Box, Fieldset, SimpleGrid } from "@mantine/core";
 import { BtnSubmit, TextSection } from "../../..";
 import { DateInput } from "@mantine/dates";
 import { IconSearch } from "@tabler/icons-react";
+import classes from '../../../../assets/styles/modules/layout/input/LabelsInputs.module.css'
 
 export const FilterFormSearchDates = ({
     title = "",
@@ -31,6 +32,7 @@ export const FilterFormSearchDates = ({
                         valueFormat="YYYY-MM-DD"
                         label="Fecha inicio"
                         placeholder="Seleccione fecha de inicio"
+                        classNames={classes}
                         {...form.getInputProps("fecha_inicio")}
                     />
                     <DateInput
@@ -40,6 +42,7 @@ export const FilterFormSearchDates = ({
                         valueFormat="YYYY-MM-DD"
                         label="Fecha final"
                         placeholder="Seleccione fecha de fin"
+                        classNames={classes}
                         {...form.getInputProps("fecha_fin")}
                     />
                 </SimpleGrid>

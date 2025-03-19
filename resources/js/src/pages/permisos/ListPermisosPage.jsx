@@ -8,10 +8,9 @@ import {
     PermisosTable,
     TitlePage,
 } from "../../components";
-import { usePermisoStore, useTitlePage } from "../../hooks";
+import { usePermisoStore, useStorageField, useTitlePage } from "../../hooks";
 import Swal from "sweetalert2";
 import { IconChevronsRight } from "@tabler/icons-react";
-import { Roles } from "../../layouts/appshell/navbar/navlinks/navLinks";
 import { useNavigate } from "react-router-dom";
 
 const ListPermisosPage = () => {
@@ -25,6 +24,7 @@ const ListPermisosPage = () => {
         errores,
         isExport,
     } = usePermisoStore();
+    const { setStoragePermisoFields } = useStorageField();
     const navigate = useNavigate();
 
     const form = useForm({
@@ -40,7 +40,10 @@ const ListPermisosPage = () => {
 
     useEffect(() => {
         if (usuario.role_id !== 1) {
-            startLoadPermisos({ id_usu_pide: usuario?.cdgo_usrio });
+            startLoadPermisos({
+                anio: new Date(),
+                id_usu_pide: usuario?.cdgo_usrio,
+            });
         }
         return () => {
             clearPermisos();
@@ -85,26 +88,27 @@ const ListPermisosPage = () => {
     }, [isExport]);
 
     const handleNavigate = () => {
-        usuario.role === Roles.GERENTE
-            ? navigate("/gerencia/permiso")
-            : usuario.role === Roles.TECNICO
-            ? navigate("/tecnico/permiso")
-            : navigate("/gad/d/permiso");
+        navigate("/intranet/permiso");
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        setStoragePermisoFields({
+            id_usu_pide: usuario?.cdgo_usrio,
+            idper_permisos: idper_permisos,
+        });
         startLoadPermisos({
+            anio: new Date(),
             id_usu_pide: usuario?.cdgo_usrio,
             idper_permisos: idper_permisos,
         });
     };
 
     return (
-        <Container size="xxl">
+        <Container size="xl">
             <Group justify="space-between">
                 <TitlePage order={2}>
-                    Lista de permisos - {new Date().getFullYear()}
+                    Mis permisos - {new Date().getFullYear()}
                 </TitlePage>
                 <BtnSection
                     IconSection={IconChevronsRight}

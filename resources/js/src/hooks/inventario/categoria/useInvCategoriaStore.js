@@ -44,7 +44,8 @@ export const useInvCategoriaStore = () => {
         try {
             if (categoria.id) {
                 const { data } = await helpdeskApi.put(
-                    `/gerencia/inventario/categoria/update/${categoria.id}`
+                    `/gerencia/inventario/categoria/update/${categoria.id}`,
+                    categoria
                 );
                 startLoadInvCategorias({});
                 dispatch(onLoadMessage(data));

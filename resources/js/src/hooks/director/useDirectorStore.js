@@ -22,7 +22,7 @@ export const useDirectorStore = () => {
     const startLoadDirectores = async ({ cdgo_dprtmnto }) => {
         try {
             dispatch(onLoading());
-            const { data } = await helpdeskApi.post("/gerencia/directores", {
+            const { data } = await helpdeskApi.post("/usuario/directores", {
                 cdgo_dprtmnto,
             });
             const { directores } = data;

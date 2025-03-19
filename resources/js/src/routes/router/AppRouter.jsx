@@ -5,8 +5,9 @@ import { PrivateRoutes } from "../private";
 import { useAuthStore } from "../../hooks";
 import { useEffect } from "react";
 import { RoutesNotFound } from "../not-found/RoutesNotFound";
-import { AppLayout, Roles } from "../../layouts";
+//import { AppLayout, Roles } from "../../layouts";
 import { AuthGuard } from "../private/guards";
+import { AppHeaderMenu } from "../../layouts/appshell/menu/AppHeaderMenu";
 
 const AuthRoutes = () => (
     <PublicRoutes>
@@ -28,16 +29,16 @@ export const AppRouter = () => {
     }, []);
 
     // Helper para renderizar rutas de acuerdo a la estructura dinámica
-    const renderRoutes = (routeConfig, role) => {
+    const renderRoutes = (routeConfig) => {
         return routeConfig.map(({ path, Component, roles }) => (
             <Route
                 key={path}
                 path={path}
                 element={
-                    <PrivateRoutes
-                        requiredRole={roles.includes(role) ? role : ""}
-                    >
-                        <Component />
+                    <PrivateRoutes requiredRole={roles}>
+                        <AppHeaderMenu>
+                            <Component />
+                        </AppHeaderMenu>
                     </PrivateRoutes>
                 }
             />
@@ -51,7 +52,9 @@ export const AppRouter = () => {
                 path={path}
                 element={
                     <AuthGuard>
-                        <Component />
+                        <AppHeaderMenu>
+                            <Component />
+                        </AppHeaderMenu>
                     </AuthGuard>
                 }
             />
@@ -62,38 +65,39 @@ export const AppRouter = () => {
         <RoutesNotFound>
             <Route path="/*" element={<AuthRoutes />} />
 
-            <Route element={<AppLayout />}>
-                <Route
-                    path="/gerencia/*"
-                    element={
-                        <RoutesNotFound>
-                            {renderRoutes(routes.gerencia, "GERENTE")}
-                        </RoutesNotFound>
-                    }
-                />
-                <Route
-                    path="/tecnico/*"
-                    element={
-                        <RoutesNotFound>
-                            {renderRoutes(routes.tecnico, "TECNICO")}
-                        </RoutesNotFound>
-                    }
-                />
-                <Route
-                    path="/staff/*"
-                    element={
-                        <RoutesNotFound>
-                            {renderRoutes(routes.usuario, "USUARIO")}
-                        </RoutesNotFound>
-                    }
-                />
-                <Route
-                    path="/staff/d/*"
-                    element={
-                        <RoutesNotFound>{renderStaffRoutes(peerLinks.peer)}</RoutesNotFound>
-                    }
-                />
-            </Route>
+            <Route
+                path="/intranet/*"
+                element={
+                    <RoutesNotFound>
+                        {renderStaffRoutes(peerLinks.peer)}
+                    </RoutesNotFound>
+                }
+            />
+            <Route
+                path="/helpdesk/gerencia/*"
+                element={
+                    <RoutesNotFound>
+                        {renderRoutes(routes.HELPDESK_GERENCIA)}
+                    </RoutesNotFound>
+                }
+            />
+            <Route
+                path="/helpdesk/*"
+                element={
+                    <RoutesNotFound>
+                        {renderRoutes(routes.HELPDESK_TECNICO)}
+                    </RoutesNotFound>
+                }
+            />
+            <Route
+                path="/permisos/gerencia/*"
+                element={
+                    <RoutesNotFound>
+                        {renderRoutes(routes.NOM_PERMISOS)}
+                    </RoutesNotFound>
+                }
+            />
+            {/* </Route> */}
         </RoutesNotFound>
     );
 };

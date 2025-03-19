@@ -2,7 +2,7 @@ import { useCallback, useMemo } from "react";
 import { useMantineReactTable } from "mantine-react-table";
 import { BtnSection, MenuTable_E, TableContent } from "../../../../components";
 import { useInvMarcaStore, useInvUiMarca } from "../../../../hooks";
-import { IconCopyPlus } from "@tabler/icons-react";
+import { IconCubePlus } from "@tabler/icons-react";
 
 export const InvMarcaTable = () => {
     const { isLoading, invMarcas, setActivateInvMarca } = useInvMarcaStore();
@@ -46,7 +46,7 @@ export const InvMarcaTable = () => {
             <BtnSection
                 heigh={30}
                 fontSize={12}
-                IconSection={IconCopyPlus}
+                IconSection={IconCubePlus}
                 handleAction={handleAgregar}
             >
                 Agregar

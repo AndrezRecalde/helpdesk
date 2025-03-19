@@ -96,10 +96,12 @@ import { uiInvEquipoSlice } from "./inventario/equipo/uiInvEquipoSlice";
 import { invConceptoSlice } from "./inventario/concepto/invConceptoSlice";
 import { uiInvConceptoSlice } from "./inventario/concepto/uiInvConceptoSlice";
 
-/* Inventario: Perifericos */
-import { invPerifericoSlice } from "./inventario/periferico/invPerifericoSlice";
-import { uiInvPerifericoSlice } from "./inventario/periferico/uiInvPerifericoSlice";
+/* Inventario: Consumibles */
+import { invConsumibleSlice } from "./consumible/invConsumibleSlice";
+import { uiInvConsumibleSlice } from "./consumible/uiInvConsumibleSlice";
 
+/* Inventario: Ui Custodios */
+import { uiInvCustodioSlice } from "./inventario/custodio/uiInvCustodioSlice";
 
 /* Storage Fields */
 import { storageFieldsSlice } from "./fields/storageFieldsSlice";
@@ -210,9 +212,12 @@ export {
     invConceptoSlice,
     uiInvConceptoSlice,
 
-    /* Inventario: Perifericos */
-    invPerifericoSlice,
-    uiInvPerifericoSlice,
+    /* Inventario: Consumibles */
+    invConsumibleSlice,
+    uiInvConsumibleSlice,
+
+    /* Inventario: Ui Custodio */
+    uiInvCustodioSlice,
 
     /* Storage */
     storageFieldsSlice

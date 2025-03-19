@@ -1,209 +1,141 @@
-import {
-    Chart as ChartJS,
-    CategoryScale,
-    LinearScale,
-    BarElement,
-    Title,
-    Tooltip,
-    Legend,
-} from "chart.js";
-import { Bar } from "react-chartjs-2";
+import Highcharts from "highcharts";
+import HighchartsReact from "highcharts-react-official";
 import { Card } from "@mantine/core";
-import { TextSection } from "../../../../components";
 import { useIndicadorStore } from "../../../../hooks";
-import ChartDataLabels from "chartjs-plugin-datalabels";
-
-ChartJS.register(
-    CategoryScale,
-    LinearScale,
-    BarElement,
-    Title,
-    Tooltip,
-    Legend,
-    ChartDataLabels
-);
 
 export const ChartDesempTecnicos = () => {
     const { desempenoForTecnicos } = useIndicadorStore();
 
+    const categories = desempenoForTecnicos?.map((tecnico) => tecnico.tecnico.toUpperCase());
+
     const options = {
-        indexAxis: "y",
-        scales: {
-            y: {
-                beginAtZero: true,
-                ticks: {
-                    padding: 5,
-                    font: {
-                        size: 16, //this change the font size
-                        weight: "italic",
-                    },
-                },
-            },
-            x: {
-                ticks: {
-                    font: {
-                        size: 16, //this change the font size
-                        weight: "italic",
-                    },
-                },
+        chart: {
+            type: "bar",
+            height: 70 * 10,
+            backgroundColor: "transparent",
+        },
+        title: {
+            text: "Desempeño de Técnicos",
+            style: {
+                fontSize: "16px",
+                fontWeight: "bold",
+                fontStyle: "italic",
             },
         },
-        elements: {
-            bar: {
-                borderWidth: 2,
-            },
-        },
-        responsive: true,
-        plugins: {
-            legend: {
-                position: "top",
-
-                labels: {
-                    font: {
-                        size: 14,
-                        weight: "italic",
-                    },
-                },
-            },
+        xAxis: {
+            categories,
             title: {
-                display: true,
-                text: "Desempeño de Técnicos",
-                font: {
-                    size: 22,
-                    weight: "italic",
+                text: "Técnicos",
+                style: {
+                    fontSize: "14px",
+                    fontStyle: "italic",
+                },
+            },
+            labels: {
+                style: {
+                    fontSize: "14px",
+                    fontWeight: "italic",
+                    color: "#333",
+                },
+                margin: 40, // Mayor separación entre categorías y barras
+                step: 1,
+            },
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: "Total de Casos",
+                style: {
+                    fontSize: "14px",
+                    fontStyle: "italic",
+                },
+            },
+            labels: {
+                style: {
+                    fontSize: "14px",
+                    fontWeight: "italic",
+                    color: "#333",
+                },
+            },
+            stackLabels: {
+                enabled: true,
+                style: {
+                    fontSize: "14px", // Aumentado el tamaño del número en la barra
+                    fontWeight: "bold",
+                    color: "black",
                 },
             },
         },
-    };
-
-    const labels = desempenoForTecnicos?.map((tecnico) => tecnico.tecnico);
-
-    const data = {
-        labels,
-        datasets: [
-            /* {
-                label: "Total pendientes",
-                data: desempenoForTecnicos?.map(
-                    (tecnico) => tecnico.total_pendientes
-                ),
-                backgroundColor: "rgba(239, 233, 49, 0.66)",
-                borderColor: "rgba(246, 238, 70, 1)",
-                borderWidth: 2,
-                borderRadius: 2,
-                plugins: [ChartDataLabels],
-                datalabels: {
-                    color: "black",
-                    align: "bottom",
-                    labels: {
-                        title: {
-                            font: {
-                                weight: "italic",
-                                size: 16,
-                            },
-                        },
-                    },
-                },
-            }, */
-            {
-                label: "Total asignados",
-                data: desempenoForTecnicos?.map(
-                    (tecnico) => tecnico.total_asignados
-                ),
-                backgroundColor: "rgba(248, 123, 3, 0.66)",
-                borderColor: "rgba(245, 147, 55, 1)",
-                borderWidth: 2,
-                borderRadius: 2,
-                plugins: [ChartDataLabels],
-                datalabels: {
-                    color: "black",
-                    labels: {
-                        title: {
-                            font: {
-                                weight: "italic",
-                                size: 16,
-                            },
-                        },
+        tooltip: {
+            backgroundColor: "rgba(255, 255, 255, 0.9)",
+            borderColor: "#aaa",
+            borderRadius: 8,
+            shadow: true,
+            useHTML: true,
+            headerFormat: "<b>{point.x}</b><br/>",
+            pointFormat:
+                "<span style='color:{point.color}'>●</span> {series.name}: <b>{point.y}</b><br/>Total: <b>{point.stackTotal}</b>",
+            style: {
+                fontSize: "13px",
+                fontStyle: "italic",
+            },
+        },
+        plotOptions: {
+            bar: {
+                stacking: "normal",
+                borderRadius: 4,
+                pointWidth: 25, // Aumento del ancho de las barras
+                margin: 20,
+                dataLabels: {
+                    enabled: true,
+                    style: {
+                        fontSize: "14px", // Aumento del tamaño de los números en las barras
+                        fontWeight: "bold",
+                        fontStyle: "italic",
+                        color: "black",
                     },
                 },
             },
+        },
+        legend: {
+            align: "center",
+            verticalAlign: "top",
+            layout: "horizontal",
+            itemStyle: {
+                fontSize: "14px",
+                fontStyle: "italic",
+                fontWeight: "bold",
+                color: "#333",
+            },
+        },
+        series: [
             {
-                label: "Sin Cerrar",
-                data: desempenoForTecnicos?.map(
-                    (tecnico) => tecnico.total_atendidos
-                ),
-                backgroundColor: "rgba(4, 115, 253, 0.66)",
-                borderColor: "rgba(30, 166, 238, 1)",
-                borderWidth: 2,
-                borderRadius: 2,
-                plugins: [ChartDataLabels],
-                datalabels: {
-                    color: "black",
-                    labels: {
-                        title: {
-                            font: {
-                                weight: "italic",
-                                size: 16,
-                            },
-                        },
-                    },
-                },
+                name: "Total asignados",
+                data: desempenoForTecnicos?.map((t) => t.total_asignados),
+                color: "rgba(248, 123, 3, 0.66)",
             },
             {
-                label: "Total finalizadas",
-                data: desempenoForTecnicos?.map(
-                    (tecnico) => tecnico.total_finalizados
-                ),
-                backgroundColor: "rgba(1, 250, 82, 0.66)",
-                borderColor: "rgba(47, 239, 111, 1)",
-                borderWidth: 2,
-                borderRadius: 2,
-                plugins: [ChartDataLabels],
-                datalabels: {
-                    color: "black",
-                    labels: {
-                        title: {
-                            font: {
-                                weight: "italic",
-                                size: 16,
-                            },
-                        },
-                    },
-                },
+                name: "Sin Cerrar",
+                data: desempenoForTecnicos?.map((t) => t.total_atendidos),
+                color: "rgba(4, 115, 253, 0.66)",
             },
             {
-                label: "Total anuladas",
-                data: desempenoForTecnicos?.map(
-                    (tecnico) => tecnico.total_anuladas
-                ),
-                backgroundColor: "rgba(250, 9, 9, 0.66)",
-                borderColor: "rgba(228, 65, 65, 1)",
-                borderWidth: 2,
-                borderRadius: 2,
-                plugins: [ChartDataLabels],
-                datalabels: {
-                    color: "black",
-                    labels: {
-                        title: {
-                            font: {
-                                weight: "italic",
-                                size: 16,
-                            },
-                        },
-                    },
-                },
+                name: "Total finalizadas",
+                data: desempenoForTecnicos?.map((t) => t.total_finalizados),
+                color: "rgba(1, 250, 82, 0.66)",
+            },
+            {
+                name: "Total anuladas",
+                data: desempenoForTecnicos?.map((t) => t.total_anuladas),
+                color: "rgba(250, 9, 9, 0.66)",
             },
         ],
     };
 
     return (
-        <Card withBorder shadow="sm" radius="md" mt="sm" mb="sm">
-            <Card.Section withBorder inheritPadding py="md">
-                <TextSection fz={16} fw={700} color="dimmed">
-                    Soportes por técnicos
-                </TextSection>
-            </Card.Section>
+        <Card withBorder shadow="sm" radius="lg" mb="sm" p="md">
             <Card.Section withBorder inheritPadding py="xs">
-                <Bar options={options} data={data} />
+                <HighchartsReact highcharts={Highcharts} options={options} />
             </Card.Section>
         </Card>
     );

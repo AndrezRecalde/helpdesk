@@ -1,6 +1,11 @@
 import { useEffect } from "react";
 import { Card, Container, Divider, Group, LoadingOverlay } from "@mantine/core";
-import { BtnSection, FormSolicitudPermiso, TitlePage } from "../../components";
+import {
+    AlertSection,
+    BtnSection,
+    FormSolicitudPermiso,
+    TitlePage,
+} from "../../components";
 import { hasLength, isNotEmpty, useForm } from "@mantine/form";
 import {
     useDireccionStore,
@@ -8,7 +13,7 @@ import {
     useTitlePage,
     useUsersStore,
 } from "../../hooks";
-import { IconChevronsRight } from "@tabler/icons-react";
+import { IconChevronsRight, IconInfoCircle } from "@tabler/icons-react";
 import { useNavigate } from "react-router-dom";
 import { Roles } from "../../layouts/appshell/navbar/navlinks/navLinks";
 
@@ -60,7 +65,7 @@ const PermisosPage = () => {
                 if (hora1 && hora2 < hora1) {
                     return "La hora de fin no puede ser menor que la hora de inicio";
                 }
-                if (hora1 && (hora2 - hora1) > 4) {
+                if (hora1 && hora2 - hora1 > 4) {
                     return "El intervalo entre las horas no debe exceder 4 horas";
                 }
                 return null;
@@ -121,19 +126,13 @@ const PermisosPage = () => {
     }, [id_direccion_pide, directores]);
 
     const handleNavigate = () => {
-        usuario.role === Roles.GERENTE
-            ? navigate("/gerencia/ver-permisos")
-            : usuario.role === Roles.TECNICO
-            ? navigate("/tecnico/ver-permisos")
-            : navigate("/staff/general/ver-permisos");
+        navigate("/intranet/ver-permisos");
     };
 
     return (
         <Container size="md">
             <Group justify="space-between">
-                <TitlePage order={2}>
-                    Crear Permiso
-                </TitlePage>
+                <TitlePage order={2}>Crear Permiso</TitlePage>
                 <BtnSection
                     IconSection={IconChevronsRight}
                     handleAction={handleNavigate}
@@ -155,9 +154,35 @@ const PermisosPage = () => {
                     disabled={usuario.role_id === 1 ? false : true}
                 />
             </Card>
+            <AlertSection
+                variant="light"
+                color="orange.7"
+                title="Información"
+                mt={5}
+                mb={5}
+                icon={IconInfoCircle}
+            >
+                <p>
+                    <strong>
+                        Si necesita cancelar un permiso, siga estos pasos:
+                    </strong>
+                </p>
+                <p>
+                    <strong>1.</strong> Vaya a la sección{" "}
+                    <strong>"Ver Mis Permisos"</strong>.
+                </p>
+                <p>
+                    <strong>2.</strong> Seleccione el permiso que desea anular y
+                    haga la solicitud de cancelación.
+                </p>
+                <p>
+                    <strong>3.</strong> Luego, diríjase a la oficina de{" "}
+                    <strong>Recursos Humanos</strong> con la ficha impresa del
+                    permiso para finalizar el proceso.
+                </p>
+            </AlertSection>
         </Container>
     );
 };
-
 
 export default PermisosPage;

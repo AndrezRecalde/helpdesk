@@ -158,7 +158,7 @@ const ReporteSoportes = () => {
     });
 
     return (
-        <Container size="xxl">
+        <Container size="xl">
             <TitlePage order={2}>Reporte de soportes</TitlePage>
             <Divider my="md" />
             <FilterFormSearchDates

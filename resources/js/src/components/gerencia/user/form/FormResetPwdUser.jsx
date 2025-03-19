@@ -45,6 +45,7 @@ export const FormResetPwdUser = ({ form }) => {
         startUpdatePassword(form.values);
         //console.log(form.values);
         modalActionResetPwd(false);
+        form.reset();
     };
 
     return (

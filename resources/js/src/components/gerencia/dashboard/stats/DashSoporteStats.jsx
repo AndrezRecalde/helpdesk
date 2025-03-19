@@ -9,9 +9,6 @@ import {
 } from "@tabler/icons-react";
 import classes from "../../../../assets/styles/modules/stats/StatsGrid.module.css";
 
-
-
-
 export const DashSoporteStats = () => {
     const {
         soportesActuales,
@@ -28,17 +25,17 @@ export const DashSoporteStats = () => {
     };
 
     const data = [
-        { title: "Soportes Nuevos", icon: "user", value: soportesActuales },
-        { title: "Soportes No Asignados", icon: "coin", value: soportesNoAsignados },
-        { title: "Soportes Pendientes", icon: "receipt", value: soportesPendientes },
-        { title: "Soportes Cerrados", icon: "discount", value: soportesCerrados },
+        { title: "Nuevos", icon: "user", value: soportesActuales },
+        { title: "No Asignados", icon: "coin", value: soportesNoAsignados },
+        { title: "Pendientes", icon: "receipt", value: soportesPendientes },
+        { title: "Cerrados", icon: "discount", value: soportesCerrados },
     ];
 
     const stats = data.map((stat) => {
         const Icon = icons[stat.icon];
 
         return (
-            <Paper withBorder p="md" radius="md" key={stat.title}>
+            <Paper withBorder p="md" radius="md" shadow="md" key={stat.title}>
                 <Group justify="space-between">
                     <TextSection fw={700} color="dimmed">
                         {stat.title}

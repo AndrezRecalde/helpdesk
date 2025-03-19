@@ -1,7 +1,7 @@
 import { useCallback, useMemo } from "react";
 import { useMantineReactTable } from "mantine-react-table";
 import { BtnSection, MenuTable_E, TableContent } from "../../../../components";
-import { IconCopyPlus } from "@tabler/icons-react";
+import { IconCubePlus } from "@tabler/icons-react";
 import { useInvConceptoStore, useInvUiConcepto } from "../../../../hooks";
 
 export const InvConceptoTable = () => {
@@ -47,7 +47,7 @@ export const InvConceptoTable = () => {
             <BtnSection
                 heigh={30}
                 fontSize={12}
-                IconSection={IconCopyPlus}
+                IconSection={IconCubePlus}
                 handleAction={handleAgregar}
             >
                 Agregar

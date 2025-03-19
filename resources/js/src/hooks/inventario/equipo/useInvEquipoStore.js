@@ -7,12 +7,11 @@ import {
     onLoadErrores,
     onLoading,
     onLoadInvEquipos,
+    onLoadInvEquiposBaja,
     onLoadMessage,
     onRemoveDocumentoFromEquipo,
     onRemoveUserFromEquipo,
-    onSetActivateEquipoFromTransfer,
     onSetActivateInvEquipo,
-    onTransferirComponenteFromEquipo,
 } from "../../../store/inventario/equipo/invEquipoSlice";
 import helpdeskApi from "../../../api/helpdeskApi";
 
@@ -21,8 +20,8 @@ export const useInvEquipoStore = () => {
         isLoading,
         isExport,
         invEquipos,
+        invEquiposBajas,
         activateInvEquipo,
-        activateEquipoFromTransfer,
         message,
         errores,
     } = useSelector((state) => state.invEquipo);
@@ -31,25 +30,14 @@ export const useInvEquipoStore = () => {
 
     const dispatch = useDispatch();
 
-    const startLoadInvEquipos = async ({
-        usuario_id = null,
-        direccion_id = null,
-        codigo = null,
-        estado_id = null,
-        categoria_id = null,
-        numero_serie = null,
-    }) => {
+    const startLoadInvEquipos = async ({ campo, valor = null }) => {
         try {
             dispatch(onLoading(true));
             const { data } = await helpdeskApi.post(
                 "/gerencia/inventario/equipos",
                 {
-                    usuario_id,
-                    direccion_id,
-                    codigo,
-                    estado_id,
-                    categoria_id,
-                    numero_serie,
+                    campo,
+                    valor,
                 }
             );
             const { equipos } = data;
@@ -60,30 +48,22 @@ export const useInvEquipoStore = () => {
         }
     };
 
-    const startLoadInvEquipoFromTransfer = async ({ codigo }) => {
+    const startSearchEquipos = async ({ user_id = null, direccion_id = null }) => {
         try {
             dispatch(onLoading(true));
             const { data } = await helpdeskApi.post(
-                "/gerencia/inventario/equipos",
-                { codigo }
+                "/gerencia/inventario/buscar/equipo",
+                {
+                    user_id,
+                    direccion_id
+                }
             );
             const { equipos } = data;
-            console.log(equipos);
-
-            // Si 'equipos' está vacío, setea null, de lo contrario, usa equipos[0]
-            if (equipos.length === 0) {
-                dispatch(onSetActivateEquipoFromTransfer(null));
-            } else {
-                dispatch(onSetActivateEquipoFromTransfer(equipos[0]));
-            }
+            dispatch(onLoadInvEquiposBaja(equipos));
         } catch (error) {
             console.log(error);
             ExceptionMessageError(error);
         }
-    };
-
-    const startClearEquipoFromTransfer = (equipo) => {
-        dispatch(onSetActivateEquipoFromTransfer(equipo));
     };
 
     const startAddInvEquipo = async (equipo) => {
@@ -169,60 +149,6 @@ export const useInvEquipoStore = () => {
         }
     };
 
-    const startAssignComponente = async (componentes = [], equipo) => {
-        console.log(equipo);
-        try {
-            dispatch(onLoading(true));
-            const { data } = await helpdeskApi.put(
-                `/gerencia/inventario/asignar/componente/${equipo.id}`,
-                componentes
-            );
-            startShowInvEquipo(equipo);
-            dispatch(onLoadMessage(data));
-            setTimeout(() => {
-                dispatch(onLoadMessage(undefined));
-            }, 40);
-        } catch (error) {
-            console.log(error);
-            ExceptionMessageError(error);
-        }
-    };
-
-    const startTransferComponente = async (currentEquipo, equipo_id, id) => {
-        try {
-            dispatch(onLoading(true));
-            const { data } = await helpdeskApi.put(
-                `/gerencia/inventario/transferir/periferico/${id}`,
-                { equipo_id }
-            );
-            dispatch(onTransferirComponenteFromEquipo(id));
-            startShowInvEquipo(currentEquipo);
-            dispatch(onLoadMessage(data));
-            setTimeout(() => {
-                dispatch(onLoadMessage(undefined));
-            }, 40);
-        } catch (error) {
-            console.log(error);
-            ExceptionMessageError(error);
-        }
-    };
-
-    const startClearEquipoFromEquipo = async (periferico) => {
-        try {
-            const { data } = await helpdeskApi.patch(
-                `/gerencia/inventario/periferico/${periferico.id}/clear-equipo-id`
-            );
-            dispatch(onTransferirComponenteFromEquipo(periferico.id));
-            dispatch(onLoadMessage(data));
-            setTimeout(() => {
-                dispatch(onLoadMessage(undefined));
-            }, 40);
-        } catch (error) {
-            console.log(error);
-            ExceptionMessageError(error);
-        }
-    };
-
     const startRemoveUsuarioEquipo = async (equipo_id, id) => {
         try {
             dispatch(onLoading(true));
@@ -268,6 +194,37 @@ export const useInvEquipoStore = () => {
                 `/gerencia/equipo/documento/${documento.id}/eliminar`
             );
             dispatch(onRemoveDocumentoFromEquipo(documento.id));
+            dispatch(onLoadMessage(data));
+            setTimeout(() => {
+                dispatch(onLoadMessage(undefined));
+            }, 40);
+        } catch (error) {
+            console.log(error);
+            ExceptionMessageError(error);
+        }
+    };
+
+    const startRemoverCustodio = async (equipo) => {
+        try {
+            const { data } = await helpdeskApi.post(
+                `/gerencia/inventario/equipo/remover-custodio/${equipo.id}`
+            );
+            dispatch(onLoadMessage(data));
+            setTimeout(() => {
+                dispatch(onLoadMessage(undefined));
+            }, 40);
+        } catch (error) {
+            console.log(error);
+            ExceptionMessageError(error);
+        }
+    };
+
+    const startAsignarCustodio = async (equipo, values) => {
+        try {
+            const { data } = await helpdeskApi.put(
+                `/gerencia/inventario/equipo/${equipo.id}/custodio`,
+                values
+            );
             dispatch(onLoadMessage(data));
             setTimeout(() => {
                 dispatch(onLoadMessage(undefined));
@@ -330,31 +287,50 @@ export const useInvEquipoStore = () => {
         }
     };
 
+    const startBajaEquipos = async (values) => {
+        try {
+            dispatch(onExport(true));
+            const response = await helpdeskApi.post(
+                "/gerencia/inventario/equipo/baja",
+                values,
+                { responseType: "blob" }
+            );
+            const pdfBlob = new Blob([response.data], {
+                type: "application/pdf",
+            });
+            const url = window.open(URL.createObjectURL(pdfBlob));
+            window.URL.revokeObjectURL(url);
+            dispatch(onExport(false));
+        } catch (error) {
+            console.log(error);
+            ExceptionMessageError(error);
+        }
+    };
+
     return {
         isLoading,
         isExport,
         invEquipos,
+        invEquiposBajas,
         activateInvEquipo,
-        activateEquipoFromTransfer,
         message,
         errores,
 
         startLoadInvEquipos,
-        startLoadInvEquipoFromTransfer,
-        startClearEquipoFromTransfer,
+        startSearchEquipos,
         startAddInvEquipo,
         startShowInvEquipo,
         startDeleteInvEquipo,
         setActivateInvEquipo,
         startClearInvEquipos,
         startAssignEquipo,
-        startAssignComponente,
         startRemoveUsuarioEquipo,
-        startTransferComponente,
-        startClearEquipoFromEquipo,
         startGuardarArchivo,
         startEliminarArchivo,
+        startRemoverCustodio,
+        startAsignarCustodio,
         startDescargarArchivo,
         startExportEquipos,
+        startBajaEquipos,
     };
 };

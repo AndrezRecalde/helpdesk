@@ -113,6 +113,20 @@ class SoporteController extends Controller
         }
     }
 
+    function buscarSoporteLite(): JsonResponse
+    {
+        $anioActual = Carbon::now()->year; // Obtiene el año actual
+        $soportes = Soporte::where('anio', $anioActual)
+            ->whereIn('id_estado', [3, 4])
+            ->orderBy(
+                'id_sop',
+                'DESC')
+            ->take(200)
+            ->get(['id_sop', 'numero_sop']);
+
+        return response()->json(['status' => MsgStatus::Success, 'soportes' => $soportes], 200);
+    }
+
     function createSoporte(SoporteRequest $request): JsonResponse
     {
         try {

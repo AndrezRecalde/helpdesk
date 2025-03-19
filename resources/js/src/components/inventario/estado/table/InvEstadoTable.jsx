@@ -2,7 +2,7 @@ import { useCallback, useMemo } from "react";
 import { useMantineReactTable } from "mantine-react-table";
 import { BtnSection, MenuTable_E, TableContent } from "../../../../components";
 import { useInvEstadoStore, useInvUiEstado } from "../../../../hooks";
-import { IconCopyPlus } from "@tabler/icons-react";
+import { IconCubePlus } from "@tabler/icons-react";
 import { ColorSwatch } from "@mantine/core";
 
 export const InvEstadoTable = () => {
@@ -54,7 +54,7 @@ export const InvEstadoTable = () => {
             <BtnSection
                 heigh={30}
                 fontSize={12}
-                IconSection={IconCopyPlus}
+                IconSection={IconCubePlus}
                 handleAction={handleAgregar}
             >
                 Agregar

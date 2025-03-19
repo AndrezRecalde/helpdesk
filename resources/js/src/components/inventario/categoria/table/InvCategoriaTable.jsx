@@ -1,15 +1,14 @@
 import { useCallback, useMemo } from "react";
-import { NavLink } from "@mantine/core";
+//import { NavLink } from "@mantine/core";
 import { useMantineReactTable } from "mantine-react-table";
 import { BtnSection, MenuTable_E, TableContent } from "../../../../components";
 import { useInvCategoriaStore, useInvUiCategoria } from "../../../../hooks";
-import { IconCopyPlus } from "@tabler/icons-react";
+import { IconCubePlus } from "@tabler/icons-react";
 
 export const InvCategoriaTable = () => {
     const { isLoading, categorias, setActivateInvCategoria } =
         useInvCategoriaStore();
-    const { modalActionCategoria, modalActionStockCategoria } =
-        useInvUiCategoria();
+    const { modalActionCategoria } = useInvUiCategoria();
 
     const columns = useMemo(
         () => [
@@ -21,30 +20,20 @@ export const InvCategoriaTable = () => {
                 header: "Tipo Categoria",
                 accessorKey: "nombre_tipocategoria",
             },
-            {
-                header: "Stock",
-                accessorKey: "stock",
-                Cell: ({ cell }) => (
-                    <NavLink
-                        onClick={() => handleStock(cell.row.original)}
-                        label={cell.getValue()}
-                    />
-                ),
-            },
         ],
         [categorias]
     );
 
-    const handleStock = useCallback(
+    /* const handleStock = useCallback(
         (selected) => {
             setActivateInvCategoria(selected);
             modalActionStockCategoria(true);
         },
         [categorias]
-    );
+    ); */
 
     const handleAgregar = useCallback(() => {
-        console.log("agregar");
+        //console.log("agregar");
         modalActionCategoria(true);
     }, [categorias]);
 
@@ -71,7 +60,7 @@ export const InvCategoriaTable = () => {
             <BtnSection
                 heigh={30}
                 fontSize={12}
-                IconSection={IconCopyPlus}
+                IconSection={IconCubePlus}
                 handleAction={handleAgregar}
             >
                 Agregar

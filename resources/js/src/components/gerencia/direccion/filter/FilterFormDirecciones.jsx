@@ -4,6 +4,7 @@ import { BtnSubmit, TextSection } from "../../..";
 import { useDireccionStore, useDirectorStore } from "../../../../hooks";
 import { useEffect } from "react";
 import { useForm } from "@mantine/form";
+import classes from '../../../../assets/styles/modules/layout/input/LabelsInputs.module.css'
 
 export const FilterFormDirecciones = () => {
     const { startLoadDirecciones, direcciones, clearDirecciones } =
@@ -52,6 +53,7 @@ export const FilterFormDirecciones = () => {
                     clearable
                     label="Dirección"
                     placeholder="Elige la dirección"
+                    classNames={classes}
                     {...form.getInputProps("cdgo_dprtmnto")}
                     data={direcciones.map((direccion) => {
                         return {

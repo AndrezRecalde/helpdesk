@@ -33,8 +33,9 @@ class PermisosAdminController extends Controller
             ->direccion($request->id_direccion_pide)
             ->usuario($request->id_usu_pide)
             ->codigo($request->idper_permisos)
-            ->where('pp.per_fecha_salida', 'LIKE', '%' . Carbon::now()->format('Y') . '%')
-            ->whereNotIn('pp.id_estado', [6])
+            ->estado($request->id_estado)
+            ->where('pp.per_fecha_salida', 'LIKE', '%' . Carbon::parse($request->anio)->format('Y') . '%')
+            //->whereNotIn('pp.id_estado', [6])
             ->orderBy('pp.per_fecha_salida', 'DESC')
             ->get();
 
@@ -69,7 +70,7 @@ class PermisosAdminController extends Controller
             return $pdf->setPaper('a4', 'portrait')->download('permiso.pdf'); */
             return response()->json([
                 'status' => MsgStatus::Success,
-                'msg'    => 'Permiso #' .$permiso->idper_permisos. ' creado con éxito',
+                'msg'    => 'Permiso #' . $permiso->idper_permisos . ' creado con éxito',
                 'idper_permisos' => $permiso->idper_permisos
             ], 200);
         } catch (\Throwable $th) {
@@ -80,25 +81,25 @@ class PermisosAdminController extends Controller
     function exportCardPDFPermiso(Request $request)
     {
         $permisos = Permiso::from('per_permisos as pp')
-                ->selectRaw('pp.idper_permisos,
+            ->selectRaw('pp.idper_permisos,
                             pp.id_usu_pide, us.nmbre_usrio as usuario_pide,
                             pp.id_direccion_pide, d.nmbre_dprtmnto as direccion_pide,
                             pp.id_tipo_motivo, ptp.tip_per_nombre as motivo,
                             pp.per_fecha_salida, pp.per_fecha_llegada, pp.fecha_ing,
                             pp.id_jefe_inmediato, u.nmbre_usrio as jefe_inmediato,
                             pp.per_observaciones')
-                ->join('usrios_sstma as us', 'us.cdgo_usrio', 'pp.id_usu_pide')
-                ->join('dprtmntos as d', 'd.cdgo_dprtmnto', 'pp.id_direccion_pide')
-                ->join('per_tipo_permiso as ptp', 'ptp.idper_tipo_permiso', 'pp.id_tipo_motivo')
-                ->join('usrios_sstma as u', 'u.cdgo_usrio', 'pp.id_jefe_inmediato')
-                ->where('pp.idper_permisos', $request->idper_permisos)
-                ->first();
+            ->join('usrios_sstma as us', 'us.cdgo_usrio', 'pp.id_usu_pide')
+            ->join('dprtmntos as d', 'd.cdgo_dprtmnto', 'pp.id_direccion_pide')
+            ->join('per_tipo_permiso as ptp', 'ptp.idper_tipo_permiso', 'pp.id_tipo_motivo')
+            ->join('usrios_sstma as u', 'u.cdgo_usrio', 'pp.id_jefe_inmediato')
+            ->where('pp.idper_permisos', $request->idper_permisos)
+            ->first();
 
-            $data = [
-                'institucion' => 'GOBIERNO AUTÓNOMO DESCENTRALIZADO DE LA PROVINCIA DE ESMERALDAS',
-                'titulo'   =>  'CONCESIÓN DE PERMISO HASTA 4 HORAS',
-                'permisos' => $permisos
-            ];
+        $data = [
+            'institucion' => 'GOBIERNO AUTÓNOMO DESCENTRALIZADO DE LA PROVINCIA DE ESMERALDAS',
+            'titulo'   =>  'CONCESIÓN DE PERMISO HASTA 4 HORAS',
+            'permisos' => $permisos
+        ];
         $pdf = Pdf::loadView('pdf.permisos.general.new', $data);
         return $pdf->setPaper('a4', 'portrait')->download('permiso.pdf');
     }
@@ -129,7 +130,8 @@ class PermisosAdminController extends Controller
         return $pdf->setPaper('a4', 'portrait')->download('permiso.pdf');
     }
 
-    function getInfoPermisosForUser(Request $request): JsonResponse {
+    function getInfoPermisosForUser(Request $request): JsonResponse
+    {
         $info_permisos = collect(DB::select('CALL per_permisos_info_user(?)', [$request->usuario_id]))->first();
 
         return response()->json(['status' => MsgStatus::Success, 'info_permisos' => $info_permisos], 200);
@@ -137,7 +139,7 @@ class PermisosAdminController extends Controller
 
 
     //Funcion para Talento Humano
-    function getConsolidadoPermisos(Request $request) : JsonResponse
+    function getConsolidadoPermisos(Request $request): JsonResponse
     {
         $permisos = DB::select('CALL get_consolidados_permisos(?,?,?)', [$request->fecha_inicio, $request->fecha_fin, $request->motivo_id]);
         return response()->json(['status' => MsgStatus::Success, 'permisos' => $permisos], 200);
@@ -156,5 +158,21 @@ class PermisosAdminController extends Controller
         ];
         $pdf = Pdf::loadView('pdf.permisos.gerencia.consolidado', $data);
         return $pdf->setPaper('a4', 'landscape')->download('consolidado_permisos.pdf');
+    }
+
+    function updateEstadoPermiso(Request $request, int $id): JsonResponse
+    {
+        $permiso = Permiso::find($id);
+
+        try {
+            if (!$permiso->per_observacion_anulado) {
+                $permiso->per_observacion_anulado = "SE ANULA PERMISO A PETICION DEL USUARIO DESDE LA RECEPCION DE TTHH";
+            }
+            $permiso->id_estado = $request->id_estado; //Para anular el permiso
+            $permiso->save();
+            return response()->json(['status' => MsgStatus::Success, 'msg' => 'El permiso cambio de estado'], 200);
+        } catch (\Throwable $th) {
+            return response()->json(['status' => MsgStatus::Error, 'msg' => $th->getMessage()], 500);
+        }
     }
 }

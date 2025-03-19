@@ -7,7 +7,7 @@ import {
     TableContent,
 } from "../../../../components";
 import { useInvEquipoStore, useInvUiEquipo } from "../../../../hooks";
-import { IconCopyPlus } from "@tabler/icons-react";
+import { IconCubePlus } from "@tabler/icons-react";
 import Swal from "sweetalert2";
 
 export const InvEquipoDocumentosTable = () => {
@@ -93,7 +93,7 @@ export const InvEquipoDocumentosTable = () => {
             <BtnSection
                 heigh={30}
                 fontSize={12}
-                IconSection={IconCopyPlus}
+                IconSection={IconCubePlus}
                 handleAction={handleAgregar}
             >
                 Agregar

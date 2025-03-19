@@ -59,4 +59,11 @@ class Permiso extends Model
             return $query->where('pp.idper_permisos', $idper_permisos);
         }
     }
+
+    function scopeEstado($query, $id_estado)
+    {
+        if ($id_estado) {
+            return $query->where('pp.id_estado', $id_estado);
+        }
+    }
 }

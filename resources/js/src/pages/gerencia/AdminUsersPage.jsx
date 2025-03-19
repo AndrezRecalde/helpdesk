@@ -76,7 +76,7 @@ const AdminUsersPage = () => {
     };
 
     return (
-        <Container size="xxl">
+        <Container size="xl">
             <Group justify="space-between">
                 <TitlePage order={2}>Administrar usuarios</TitlePage>
                 <BtnSection

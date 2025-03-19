@@ -30,7 +30,7 @@ const AdminTecnicosPage = () => {
     };
 
     return (
-        <Container size="xxl">
+        <Container size="xl">
             <Group justify="space-between" mb={20}>
                 <div>
                     <TitlePage order={2}>Gestión de técnicos</TitlePage>

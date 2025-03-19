@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { Select, SimpleGrid, Stack, TextInput } from "@mantine/core";
 import {
     useInvCategoriaStore,
@@ -9,16 +8,11 @@ import {
 } from "../../../../../hooks";
 
 export const InvEquipoGeneralForm = ({ form }) => {
-    const { tipocategoria_id } = form.values;
     const { invUbicaciones } = useInvUbicacionStore();
     const { invMarcas } = useInvMarcaStore();
     const { invEstados } = useInvEstadoStore();
     const { tiposcategorias } = useInvTipocategoriaStore();
-    const { startLoadInvCategorias, categorias } = useInvCategoriaStore();
-
-    useEffect(() => {
-        startLoadInvCategorias({ tipocategoria_id: tipocategoria_id, activo: true });
-    }, [tipocategoria_id]);
+    const { categorias } = useInvCategoriaStore();
 
     return (
         <Stack
@@ -29,6 +23,7 @@ export const InvEquipoGeneralForm = ({ form }) => {
         >
             <Select
                 withAsterisk
+                searchable
                 label="Ubicación física"
                 placeholder="Seleccione la ubicación física del equipo"
                 {...form.getInputProps("ubicacion_id")}
@@ -42,6 +37,35 @@ export const InvEquipoGeneralForm = ({ form }) => {
             <SimpleGrid cols={{ base: 1, xs: 1, sm: 2, md: 2, lg: 2 }}>
                 <Select
                     withAsterisk
+                    searchable
+                    label="Tipo Categoría"
+                    placeholder="Seleccione un tipo de categoría"
+                    {...form.getInputProps("tipocategoria_id")}
+                    data={tiposcategorias.map((tipo) => {
+                        return {
+                            value: tipo.id.toString(),
+                            label: tipo.nombre_tipocategoria,
+                        };
+                    })}
+                />
+                <Select
+                    withAsterisk
+                    searchable
+                    label="Categoría"
+                    placeholder="Seleccione la categoría"
+                    {...form.getInputProps("categoria_id")}
+                    data={categorias.map((categoria) => {
+                        return {
+                            value: categoria.id.toString(),
+                            label: categoria.nombre_categoria,
+                        };
+                    })}
+                />
+            </SimpleGrid>
+            <SimpleGrid cols={{ base: 1, xs: 1, sm: 2, md: 2, lg: 2 }}>
+                <Select
+                    withAsterisk
+                    searchable
                     label="Marca del Equipo"
                     placeholder="Seleccione una marca"
                     {...form.getInputProps("marca_id")}
@@ -66,6 +90,7 @@ export const InvEquipoGeneralForm = ({ form }) => {
                     {...form.getInputProps("codigo_antiguo")}
                 />
                 <TextInput
+                    withAsterisk
                     label="Código Nuevo"
                     placeholder="Digite el código nuevo"
                     {...form.getInputProps("codigo_nuevo")}
@@ -88,32 +113,6 @@ export const InvEquipoGeneralForm = ({ form }) => {
                         return {
                             value: estado.id.toString(),
                             label: estado.nombre_estado,
-                        };
-                    })}
-                />
-            </SimpleGrid>
-            <SimpleGrid cols={{ base: 1, xs: 1, sm: 2, md: 2, lg: 2 }}>
-                <Select
-                    withAsterisk
-                    label="Tipo Categoría"
-                    placeholder="Seleccione un tipo de categoría"
-                    {...form.getInputProps("tipocategoria_id")}
-                    data={tiposcategorias.map((tipo) => {
-                        return {
-                            value: tipo.id.toString(),
-                            label: tipo.nombre_tipocategoria,
-                        };
-                    })}
-                />
-                <Select
-                    withAsterisk
-                    label="Categoría"
-                    placeholder="Seleccione la categoría"
-                    {...form.getInputProps("categoria_id")}
-                    data={categorias.map((categoria) => {
-                        return {
-                            value: categoria.id.toString(),
-                            label: categoria.nombre_categoria,
                         };
                     })}
                 />

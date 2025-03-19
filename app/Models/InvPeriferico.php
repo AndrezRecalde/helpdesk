@@ -25,6 +25,8 @@ class InvPeriferico extends Model
         'es_usado',
         'estado_id',
         'equipo_id',
+        'user_id', //Se agrega usuario custodio
+        'direccion_id'
     ];
 
     protected $casts = [
@@ -49,6 +51,13 @@ class InvPeriferico extends Model
     public function categoria()
     {
         return $this->belongsTo(InvCategoria::class, 'categoria_id');
+    }
+
+    function scopeByUsuarioId(Builder $query, $user_id)
+    {
+        if ($user_id) {
+            return $query->where('invper.user_id', $user_id);
+        }
     }
 
     function scopeByCodigoEquipo(Builder $query, $codigo_equipo)

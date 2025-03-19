@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Container, Divider, Group } from "@mantine/core";
 import {
     BtnSection,
@@ -6,7 +6,7 @@ import {
     PermisosConsolidadosTable,
     TitlePage,
 } from "../../components";
-import { IconPdf } from "@tabler/icons-react";
+import { IconPrinter } from "@tabler/icons-react";
 import { usePermisoStore } from "../../hooks";
 import { isNotEmpty, useForm } from "@mantine/form";
 import dayjs from "dayjs";
@@ -17,6 +17,7 @@ const ConsolidadoPermisosPage = () => {
         startExportConsolidadosPermisos,
         clearPermisos,
     } = usePermisoStore();
+    const [disabled, setDisabled] = useState(true);
 
     const form = useForm({
         initialValues: {
@@ -36,8 +37,23 @@ const ConsolidadoPermisosPage = () => {
         }),
     });
 
+    const { fecha_inicio, fecha_fin } = form.values;
+
     useEffect(() => {
-        clearPermisos();
+      if (fecha_inicio && fecha_fin) {
+        setDisabled(false);
+      } else {
+        setDisabled(true);
+      }
+
+      return () => {
+        setDisabled(true);
+      }
+    }, [fecha_inicio, fecha_fin])
+
+
+    useEffect(() => {
+        return () => clearPermisos();
     }, []);
 
     const handleExport = () => {
@@ -45,10 +61,10 @@ const ConsolidadoPermisosPage = () => {
     };
 
     return (
-        <Container size="xxl">
+        <Container size="xl">
             <Group justify="space-between">
                 <TitlePage order={2}>Consolidado de Permisos</TitlePage>
-                <BtnSection IconSection={IconPdf} handleAction={handleExport}>
+                <BtnSection disabled={disabled} IconSection={IconPrinter} handleAction={handleExport}>
                     Imprimir
                 </BtnSection>
             </Group>

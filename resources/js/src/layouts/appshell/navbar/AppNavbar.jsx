@@ -1,5 +1,5 @@
 import { LinksGroup } from "./NavbarLinksGroup";
-import { navRoutes } from "../../../routes/router/routes";
+import { navRoutes } from "../../../routes/router/routes3";
 import classes from "../../../assets/styles/modules/layout/navbar/AppNavbar.module.css";
 
 export const AppNavbar = ({ role, toggleMobile }) => {

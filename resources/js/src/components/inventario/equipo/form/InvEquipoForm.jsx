@@ -1,20 +1,28 @@
 import { useEffect, useState } from "react";
-import { Button, Code, Group, Stepper } from "@mantine/core";
+import { Button, Group, Stepper } from "@mantine/core";
 import {
     BtnSection,
     InvEquipoComplementaria,
     InvEquipoGeneralForm,
+    InvEquipoStepperFinal,
 } from "./../../../../components";
-import { useInvEquipoStore, useInvUiEquipo } from "../../../../hooks";
+import {
+    useInvCategoriaStore,
+    useInvEquipoStore,
+    useInvUiEquipo,
+} from "../../../../hooks";
 import {
     IconChevronsLeft,
     IconChevronsRight,
-    IconSend,
+    IconDevicesShare,
 } from "@tabler/icons-react";
 
 export const InvEquipoForm = ({ form }) => {
-    const { startAddInvEquipo, activateInvEquipo, setActivateInvEquipo } = useInvEquipoStore();
+    const { tipocategoria_id } = form.values;
+    const { startAddInvEquipo, activateInvEquipo, setActivateInvEquipo } =
+        useInvEquipoStore();
     const { modalActionEquipo } = useInvUiEquipo();
+    const { startLoadInvCategorias } = useInvCategoriaStore();
     const [active, setActive] = useState(0);
 
     useEffect(() => {
@@ -24,13 +32,15 @@ export const InvEquipoForm = ({ form }) => {
                 id: activateInvEquipo.id,
                 modelo: activateInvEquipo.modelo,
                 numero_serie: activateInvEquipo.numero_serie,
-                codigo_antiguo: activateInvEquipo.codigo_antiguo,
+                codigo_antiguo: activateInvEquipo.codigo_antiguo ? activateInvEquipo.codigo_antiguo: "",
                 codigo_nuevo: activateInvEquipo.codigo_nuevo,
-                fecha_adquisicion: new Date(activateInvEquipo.fecha_adquisicion),
+                fecha_adquisicion: new Date(
+                    activateInvEquipo.fecha_adquisicion
+                ),
                 //fecha_amortizacion: new Date(activateInvEquipo.fecha_amortizacion),
                 vida_util: activateInvEquipo.vida_util,
-                descripcion: activateInvEquipo.descripcion,
-                bien_adquirido:activateInvEquipo.bien_adquirido ? 1 : 0,
+                descripcion: activateInvEquipo.descripcion ? activateInvEquipo.descripcion : "",
+                bien_adquirido: activateInvEquipo.bien_adquirido ? 1 : 0,
                 bien_donado: activateInvEquipo.bien_donado ? 1 : 0,
                 bien_usado: activateInvEquipo.bien_usado ? 1 : 0,
                 ubicacion_id: activateInvEquipo.ubicacion_id.toString(),
@@ -38,11 +48,30 @@ export const InvEquipoForm = ({ form }) => {
                 categoria_id: activateInvEquipo.categoria_id.toString(),
                 estado_id: activateInvEquipo.estado_id.toString(),
                 marca_id: activateInvEquipo.marca_id.toString(),
-                //fechas
+                is_there_custodio: activateInvEquipo.user_id ? 1 : 0,
+                user_id: activateInvEquipo.user_id
+                    ? activateInvEquipo.user_id.toString()
+                    : null,
+                direccion_id: activateInvEquipo.direccion_id
+                    ? activateInvEquipo.direccion_id.toString()
+                    : null,
             });
             return;
         }
     }, [activateInvEquipo]);
+
+    useEffect(() => {
+        startLoadInvCategorias({
+            tipocategoria_id: tipocategoria_id,
+            activo: true,
+        });
+        form.setFieldValue(
+            "categoria_id",
+            activateInvEquipo?.categoria_id
+                ? activateInvEquipo?.categoria_id.toString()
+                : null
+        );
+    }, [tipocategoria_id]);
 
     const nextStep = () => {
         const { errors } = form.validate();
@@ -98,7 +127,7 @@ export const InvEquipoForm = ({ form }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         startAddInvEquipo(form.getTransformedValues());
-        console.log(form.getTransformedValues());
+        //console.log(form.getTransformedValues());
         modalActionEquipo(false);
         setActivateInvEquipo(null);
         form.reset();
@@ -124,9 +153,9 @@ export const InvEquipoForm = ({ form }) => {
                     <InvEquipoComplementaria form={form} />
                 </Stepper.Step>
                 <Stepper.Completed>
-                    <Code>
-                        {JSON.stringify(form.getTransformedValues(), null, 2)}
-                    </Code>
+                    <InvEquipoStepperFinal
+                        equipo={form.getTransformedValues()}
+                    />
                 </Stepper.Completed>
             </Stepper>
 
@@ -138,16 +167,12 @@ export const InvEquipoForm = ({ form }) => {
                     >
                         Regresar
                     </BtnSection>
-                    <Button
-                        variant="gradient"
-                        gradient={{ from: "teal", to: "blue", deg: 105 }}
-                        color="green"
-                        radius="md"
-                        leftSection={<IconSend />}
-                        onClick={(e) => handleSubmit(e)}
+                    <BtnSection
+                        IconSection={IconDevicesShare}
+                        handleAction={handleSubmit}
                     >
                         Agregar Equipo
-                    </Button>
+                    </BtnSection>
                 </Group>
             ) : (
                 <Group justify="center" mt="xl">

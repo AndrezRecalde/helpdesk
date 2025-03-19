@@ -33,7 +33,7 @@ class EquipoInvRequest extends FormRequest
             'fecha_adquisicion' =>  'required',
             //'fecha_amortizacion' => '',
             'vida_util'         =>  'required',
-            'descripcion'       =>  'required',
+            'descripcion'       =>  '',
             'bien_adquirido'    =>  'required',
             'bien_donado'       =>  'required',
             'bien_usado'        =>  'required',
@@ -41,10 +41,13 @@ class EquipoInvRequest extends FormRequest
             'categoria_id'      =>  'required',
             'estado_id'         =>  'required',
             'marca_id'          =>  'required',
-            'usuario_id'        =>  '',
+            'user_id'           =>  '',
+            'direccion_id'      =>  ''
+
+            /* 'usuario_id'        =>  '',
             'direccion_id'      =>  '',
             'concepto_id'       =>  '',
-            'observacion'       =>  '',
+            'observacion'       =>  '', */
 
             // Validación de periféricos si están presentes
             /* 'perifericos'       =>  'array|nullable',  // Aceptar un array o nulo si no hay periféricos

@@ -1,51 +1,42 @@
 import { useEffect } from "react";
-import { Container, Group } from "@mantine/core";
+import { Container, Divider, Group } from "@mantine/core";
 import {
-    BtnSection,
+    BtnAddActions,
     FilterFormEquipos,
+    InvAsignarCustodioModal,
     InvBajaEquipoModal,
     InvDeleteEquipoModal,
     InvEquipoAsignacionModal,
-    InvEquipoAssignComponente,
     InvEquipoDocumentoModal,
     InvEquipoModal,
     InvEquipoTable,
     InvShowEquipoModal,
-    InvTransferirPerifericoModal,
     TitlePage,
 } from "../../../components";
-import { IconCopyPlus } from "@tabler/icons-react";
+import { IconCubePlus, IconDeviceDesktopDown } from "@tabler/icons-react";
 import {
-    useDireccionStore,
-    useInvCategoriaStore,
     useInvEquipoStore,
-    useInvEstadoStore,
     useInvUiEquipo,
     useTitlePage,
-    useUsersStore,
 } from "../../../hooks";
 import Swal from "sweetalert2";
 
 const InvEquiposPage = () => {
     useTitlePage("Helpdesk | Inv. Equipos");
-    const { startLoadDirecciones, clearDirecciones } = useDireccionStore();
-    const { startLoadUsersGeneral, clearUsers } = useUsersStore();
-    const { startLoadInvCategorias, startClearInvCategorias } =
-        useInvCategoriaStore();
-    const { startLoadInvEstados, startClearInvEstados } = useInvEstadoStore();
-    const { isExport, message, errores, startClearInvEquipos } = useInvEquipoStore();
-    const { modalActionEquipo } = useInvUiEquipo();
+
+    const {
+        isExport,
+        activateInvEquipo,
+        setActivateInvEquipo,
+        message,
+        errores,
+        startClearInvEquipos,
+        startAsignarCustodio,
+    } = useInvEquipoStore();
+    const { modalActionEquipo, modalActionBajaEquipo } = useInvUiEquipo();
 
     useEffect(() => {
-        startLoadDirecciones();
-        startLoadUsersGeneral({});
-        startLoadInvCategorias({});
-        startLoadInvEstados();
         return () => {
-            clearDirecciones();
-            clearUsers();
-            startClearInvCategorias();
-            startClearInvEstados();
             startClearInvEquipos();
         };
     }, []);
@@ -56,7 +47,7 @@ const InvEquiposPage = () => {
                 icon: message.status,
                 text: message.msg,
                 showConfirmButton: false,
-                timer: 1500,
+                timer: 2000,
             });
             return;
         }
@@ -68,8 +59,7 @@ const InvEquiposPage = () => {
                 icon: "error",
                 title: "Opps...",
                 text: errores,
-                showConfirmButton: false,
-                timer: 2000,
+                confirmButtonColor: "#38d17b",
             });
             return;
         }
@@ -94,17 +84,32 @@ const InvEquiposPage = () => {
         modalActionEquipo(true);
     };
 
+    const handleBajaEquipo = () => {
+        modalActionBajaEquipo(true);
+    }
+
+    const menuActions = [
+        {
+            label: "Nuevo Equipo",
+            icon: IconCubePlus,
+            onClick: handleAgregar,
+            color: "teal",
+        },
+        {
+            label: "Dar Baja Equipo",
+            icon: IconDeviceDesktopDown,
+            onClick: handleBajaEquipo,
+            color: "red",
+        },
+    ];
+
     return (
-        <Container size="xxl">
+        <Container size="xl">
             <Group justify="space-between">
                 <TitlePage order={2}>Inventario de Equipos</TitlePage>
-                <BtnSection
-                    IconSection={IconCopyPlus}
-                    handleAction={handleAgregar}
-                >
-                    Agregar
-                </BtnSection>
+                <BtnAddActions actions={menuActions}>Crear nuevo</BtnAddActions>
             </Group>
+            <Divider my="md" />
             <FilterFormEquipos />
             <InvEquipoTable />
 
@@ -113,9 +118,12 @@ const InvEquiposPage = () => {
             <InvEquipoAsignacionModal />
             <InvDeleteEquipoModal />
             <InvBajaEquipoModal />
-            <InvEquipoAssignComponente />
-            <InvTransferirPerifericoModal />
             <InvEquipoDocumentoModal />
+            <InvAsignarCustodioModal
+                setActivateElement={setActivateInvEquipo}
+                activateElement={activateInvEquipo}
+                startAsignarCustodioFn={startAsignarCustodio}
+            />
         </Container>
     );
 };

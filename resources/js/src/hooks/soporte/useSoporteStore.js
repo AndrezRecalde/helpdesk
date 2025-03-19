@@ -227,6 +227,17 @@ export const useSoporteStore = () => {
         }
     };
 
+    const startLoadSoportesLite = async() => {
+        try {
+            dispatch(onLoading(true));
+            const { data } = await helpdeskApi.get("/gerencia/consulta-soportes");
+            const { soportes } = data;
+            dispatch(onLoadSoportes(soportes));
+        } catch (error) {
+            ExceptionMessageError(error);
+        }
+    }
+
     /* const startSearchSoporteForId = async ({ numero_sop, id_usu_tecnico_asig }) => {
         try {
             const { data } = await helpdeskApi.post(`/general/soporte/${numero_sop}`, { id_usu_tecnico_asig });
@@ -486,6 +497,7 @@ export const useSoporteStore = () => {
         startCreateSoporte,
         startSearchSoporte,
         //startSearchSoporteForId,
+        startLoadSoportesLite,
         startSendSolicitud,
         startLoadSoportesAtendidos,
         startCerrarSoporte,

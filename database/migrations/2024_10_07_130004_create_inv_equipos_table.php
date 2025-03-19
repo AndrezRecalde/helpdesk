@@ -30,6 +30,8 @@ return new class extends Migration
             $table->unsignedBigInteger('categoria_id');
             $table->unsignedBigInteger('estado_id');
             $table->unsignedBigInteger('marca_id');
+            $table->unsignedBigInteger('user_id')->nullable(); //Se agrega usuario custodio
+            $table->unsignedBigInteger('direccion_id')->nullable(); //Se agrega usuario custodio
             $table->timestamps();
 
 
@@ -37,11 +39,15 @@ return new class extends Migration
             $table->foreign('categoria_id')->references('id')->on('inv_categorias')->onDelete('cascade');
             $table->foreign('estado_id')->references('id')->on('inv_estados')->onDelete('cascade');
             $table->foreign('marca_id')->references('id')->on('inv_marcas')->onDelete('cascade');
+            $table->foreign('user_id')->references('cdgo_usrio')->on('usrios_sstma')->onDelete('cascade');
+            $table->foreign('direccion_id')->references('cdgo_dprtmnto')->on('dprtmntos')->onDelete('cascade');
 
             $table->index('ubicacion_id');
             $table->index('categoria_id');
             $table->index('estado_id');
             $table->index('marca_id');
+            $table->index('user_id');
+            $table->index('direccion_id');
 
 
         });

@@ -2,7 +2,7 @@ import { useCallback, useMemo } from "react";
 import { useInvUbicacionStore, useInvUiUbicacion } from "../../../../hooks";
 import { useMantineReactTable } from "mantine-react-table";
 import { MenuTable_E, BtnSection, TableContent } from "../../../../components";
-import { IconCopyPlus } from "@tabler/icons-react";
+import { IconCopyPlus, IconCubePlus } from "@tabler/icons-react";
 
 export const InvUbicacionTable = () => {
     const { isLoading, invUbicaciones, setActivateInvUbicacion } =
@@ -51,7 +51,7 @@ export const InvUbicacionTable = () => {
             <BtnSection
                 heigh={30}
                 fontSize={12}
-                IconSection={IconCopyPlus}
+                IconSection={IconCubePlus}
                 handleAction={handleAgregar}
             >
                 Agregar

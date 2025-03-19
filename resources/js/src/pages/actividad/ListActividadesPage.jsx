@@ -177,7 +177,7 @@ const ListActividadesPage = () => {
     });
 
     return (
-        <Container size="xxl" my="md">
+        <Container size="xl" my="md">
             <TitlePage order={2}>Lista de actividades</TitlePage>
             <Divider my="md" />
             <FilterFormSearchDates

@@ -2,6 +2,7 @@ import { Box, Fieldset, Select, SimpleGrid, Stack } from "@mantine/core";
 import { DateInput } from "@mantine/dates";
 import { BtnSubmit, TextSection } from "../../../components";
 import { IconSearch } from "@tabler/icons-react";
+import classes from '../../../assets/styles/modules/layout/input/LabelsInputs.module.css'
 
 export const FilterDatesPermiso = ({ form, fnAction }) => {
 
@@ -38,6 +39,7 @@ export const FilterDatesPermiso = ({ form, fnAction }) => {
                             valueFormat="YYYY-MM-DD"
                             label="Desde"
                             placeholder="Seleccione fecha inicio"
+                            classNames={classes}
                             {...form.getInputProps("fecha_inicio")}
                         />
                         <DateInput
@@ -45,6 +47,7 @@ export const FilterDatesPermiso = ({ form, fnAction }) => {
                             valueFormat="YYYY-MM-DD"
                             label="Hasta"
                             placeholder="Seleccione fecha final"
+                            classNames={classes}
                             {...form.getInputProps("fecha_fin")}
                         />
                         <Select
@@ -56,6 +59,7 @@ export const FilterDatesPermiso = ({ form, fnAction }) => {
                                 { label: "OFICIAL", value: "3" },
                             ]}
                             nothingFoundMessage="Nada encontrado..."
+                            classNames={classes}
                             {...form.getInputProps("motivo_id")}
                         />
                     </SimpleGrid>

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('nombre_categoria');
             $table->unsignedBigInteger('tipocategoria_id');
-            $table->integer('stock')->default(0);
+            //$table->integer('stock')->default(0);
             $table->boolean('activo');
             $table->timestamps();
 

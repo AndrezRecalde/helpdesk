@@ -16,6 +16,7 @@ import {
     useSoporteStore,
     useStorageField,
 } from "../../../../hooks";
+import classes from "../../../../assets/styles/modules/layout/input/LabelsInputs.module.css";
 
 export const FilterFormSoportes = ({ form }) => {
     const usuario = JSON.parse(localStorage.getItem("service_user"));
@@ -61,7 +62,7 @@ export const FilterFormSoportes = ({ form }) => {
                 component="form"
                 onSubmit={form.onSubmit((_, e) => handleSubmit(e))}
             >
-                <Group justify="flex-end">
+                <Group justify="flex-end" spacing="md">
                     <YearPickerInput
                         required
                         placeholder="Seleccione el año"
@@ -75,12 +76,14 @@ export const FilterFormSoportes = ({ form }) => {
                         {...form.getInputProps("switch_role")}
                     />
                 </Group>
-                <SimpleGrid cols={{ base: 2, sm: 2, md: 2, lg: 2 }} mt={10}>
+
+                <SimpleGrid cols={{ base: 2, sm: 1, md: 2, lg: 2 }} mt={10}>
                     <DateInput
                         clearable
                         valueFormat="YYYY-MM-DD"
                         label="Desde"
                         placeholder="Seleccione fecha inicio"
+                        classNames={classes}
                         {...form.getInputProps("fecha_inicio")}
                     />
                     <DateInput
@@ -88,14 +91,16 @@ export const FilterFormSoportes = ({ form }) => {
                         valueFormat="YYYY-MM-DD"
                         label="Hasta"
                         placeholder="Seleccione fecha final"
+                        classNames={classes}
                         {...form.getInputProps("fecha_fin")}
                     />
                 </SimpleGrid>
-                <SimpleGrid cols={{ base: 1, sm: 3, md: 3, lg: 3 }} mt={10}>
+                <SimpleGrid cols={{ base: 3, sm: 1, md: 3, lg: 3 }} mt={10}>
                     <Select
                         searchable
                         label="Dirección"
                         placeholder="Elige la dirección"
+                        classNames={classes}
                         {...form.getInputProps("id_direccion")}
                         data={direcciones.map((direccion) => {
                             return {
@@ -106,6 +111,7 @@ export const FilterFormSoportes = ({ form }) => {
                     />
                     <TextInput
                         label="Número de soporte"
+                        classNames={classes}
                         {...form.getInputProps("numero_sop")}
                         placeholder="Filtrar por soporte"
                     />
@@ -114,6 +120,7 @@ export const FilterFormSoportes = ({ form }) => {
                         clearable
                         label="Estado"
                         placeholder="Elige el estado"
+                        classNames={classes}
                         {...form.getInputProps("id_estado")}
                         data={estados.map((estado) => {
                             return {

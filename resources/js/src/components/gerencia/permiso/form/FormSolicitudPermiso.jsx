@@ -20,6 +20,7 @@ import {
 import { IconClock } from "@tabler/icons-react";
 import dayjs from "dayjs";
 import Swal from "sweetalert2";
+import classes from "../../../../assets/styles/modules/layout/input/LabelsInputs.module.css";
 
 export const FormSolicitudPermiso = ({ form, disabled }) => {
     const { hora_1, hora_2, fecha } = form.values;
@@ -171,6 +172,7 @@ export const FormSolicitudPermiso = ({ form, disabled }) => {
                     label="Departamento del solicitante"
                     placeholder="Seleccione el departamento del solicitante"
                     nothingFoundMessage="Nothing found..."
+                    classNames={classes}
                     {...form.getInputProps("id_direccion_pide")}
                     data={direcciones.map((direccion) => {
                         return {
@@ -187,6 +189,7 @@ export const FormSolicitudPermiso = ({ form, disabled }) => {
                     label="Solicitante"
                     placeholder="Seleccione el usuario solicitante"
                     nothingFoundMessage="Nothing found..."
+                    classNames={classes}
                     {...form.getInputProps("id_usu_pide")}
                     data={users.map((user) => {
                         return {
@@ -202,6 +205,7 @@ export const FormSolicitudPermiso = ({ form, disabled }) => {
                     placeholder="Seleccione el jefe inmediato del solicitante"
                     {...form.getInputProps("id_jefe_inmediato")}
                     nothingFoundMessage="Nothing found..."
+                    classNames={classes}
                     data={users.map((director) => {
                         return {
                             label: director.nmbre_usrio,
@@ -213,6 +217,7 @@ export const FormSolicitudPermiso = ({ form, disabled }) => {
                     withAsterisk
                     label="Motivo"
                     placeholder="Seleccione el motivo"
+                    classNames={classes}
                     {...form.getInputProps("id_tipo_motivo")}
                     data={[
                         {
@@ -229,6 +234,7 @@ export const FormSolicitudPermiso = ({ form, disabled }) => {
                 />
                 <DateInput
                     withAsterisk
+                    classNames={classes}
                     minDate={dayjs(new Date()).add(-12, "day").toDate()}
                     maxDate={dayjs(new Date()).add(1, "month").toDate()}
                     valueFormat="YYYY-MM-DD"
@@ -243,6 +249,7 @@ export const FormSolicitudPermiso = ({ form, disabled }) => {
                         label="Hora desde:"
                         ref={ref_1}
                         rightSection={pickerControl_1}
+                        classNames={classes}
                         {...form.getInputProps("hora_1")}
                     />
                     <TimeInput
@@ -251,6 +258,7 @@ export const FormSolicitudPermiso = ({ form, disabled }) => {
                         label="Hora hasta:"
                         ref={ref_2}
                         rightSection={pickerControl_2}
+                        classNames={classes}
                         {...form.getInputProps("hora_2")}
                     />
                 </SimpleGrid>

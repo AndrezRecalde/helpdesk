@@ -1,4 +1,11 @@
-import { ActionIcon, Button, Group, Menu, rem, useMantineTheme } from "@mantine/core";
+import {
+    ActionIcon,
+    Button,
+    Group,
+    Menu,
+    rem,
+    useMantineTheme,
+} from "@mantine/core";
 import {
     IconBuildingBank,
     IconCategory,
@@ -54,14 +61,16 @@ export const BtnSection = ({
     mt = 0,
     IconSection,
     handleAction,
+    disabled = false,
     children,
 }) => {
     return (
         <Button
             mt={mt}
             mb={mb}
+            disabled={disabled}
             variant="default"
-            leftSection={<IconSection color={"#12b886"} />}
+            leftSection={<IconSection color={"#12b886"} stroke={1.8} />}
             styles={{
                 root: {
                     "--button-height": rem(heigh),
@@ -80,13 +89,11 @@ export const BtnSection = ({
 export const BtnAddActions = ({
     heigh = 40,
     fontSize = 14,
-    mb = 0,
-    mt = 0,
-    handleOpenModalSolicitud,
-    handleOpenModalSoporte,
+    actions = [], // Lista de acciones dinámicas
     children,
 }) => {
     const theme = useMantineTheme();
+
     return (
         <Menu
             transitionProps={{ transition: "pop-top-right" }}
@@ -96,8 +103,6 @@ export const BtnAddActions = ({
         >
             <Menu.Target>
                 <Button
-                    mt={mt}
-                    mb={mb}
                     variant="default"
                     color="teal.5"
                     rightSection={
@@ -120,30 +125,24 @@ export const BtnAddActions = ({
                 </Button>
             </Menu.Target>
             <Menu.Dropdown>
-                <Menu.Item
-                    onClick={handleOpenModalSolicitud}
-                    leftSection={
-                        <IconMessageUp
-                            style={{ width: rem(16), height: rem(16) }}
-                            color={theme.colors.teal[6]}
-                            stroke={1.5}
-                        />
-                    }
-                >
-                    Nueva solicitud
-                </Menu.Item>
-                <Menu.Item
-                    onClick={handleOpenModalSoporte}
-                    leftSection={
-                        <IconDeviceImacUp
-                            style={{ width: rem(16), height: rem(16) }}
-                            color={theme.colors.pink[6]}
-                            stroke={1.5}
-                        />
-                    }
-                >
-                    Nuevo soporte
-                </Menu.Item>
+                {actions.map(({ label, icon: Icon, onClick, color }, index) => (
+                    <Menu.Item
+                        key={index}
+                        onClick={onClick}
+                        leftSection={
+                            <Icon
+                                style={{ width: rem(16), height: rem(16) }}
+                                color={
+                                    theme.colors[color]?.[6] ||
+                                    theme.colors.gray[6]
+                                }
+                                stroke={1.5}
+                            />
+                        }
+                    >
+                        {label}
+                    </Menu.Item>
+                ))}
             </Menu.Dropdown>
         </Menu>
     );
@@ -151,111 +150,109 @@ export const BtnAddActions = ({
 
 export const BtnSolicitarSoporte = ({ theme, linkNavigate }) => {
     return (
-            <Menu
-                transitionProps={{ transition: "pop-top-right" }}
-                position="bottom-end"
-                width={220}
-                withinPortal
-            >
-                <Menu.Target>
-                    <ActionIcon
-                        size={35}
-                        variant="default"
-                        aria-label="ActionIcon soportes"
-                    >
-                        <IconDeviceDesktopExclamation
-                            style={{ width: rem(22), height: rem(22) }}
+        <Menu
+            transitionProps={{ transition: "pop-top-right" }}
+            position="bottom-end"
+            width={220}
+            withinPortal
+        >
+            <Menu.Target>
+                <ActionIcon
+                    size={35}
+                    variant="default"
+                    aria-label="ActionIcon soportes"
+                >
+                    <IconDeviceDesktopExclamation
+                        style={{ width: rem(22), height: rem(22) }}
+                    />
+                </ActionIcon>
+            </Menu.Target>
+            <Menu.Dropdown>
+                <Menu.Item
+                    onClick={() => linkNavigate("/gad/d/solicitud")}
+                    leftSection={
+                        <IconMessageUp
+                            style={{ width: rem(18), height: rem(18) }}
+                            color={theme.colors.teal[8]}
+                            stroke={1.5}
                         />
-                    </ActionIcon>
-                </Menu.Target>
-                <Menu.Dropdown>
-                    <Menu.Item
-                        onClick={() => linkNavigate("/gad/d/solicitud")}
-                        leftSection={
-                            <IconMessageUp
-                                style={{ width: rem(18), height: rem(18) }}
-                                color={theme.colors.teal[8]}
-                                stroke={1.5}
-                            />
-                        }
-                    >
-                        Solicitar Soporte
-                    </Menu.Item>
-                    <Menu.Item
-                        onClick={() => linkNavigate("/gad/d/soportes/actuales")}
-                        leftSection={
-                            <IconDeviceImacUp
-                                style={{ width: rem(18), height: rem(18) }}
-                                color={theme.colors.teal[8]}
-                                stroke={1.5}
-                            />
-                        }
-                    >
-                        Ver mis soportes
-                    </Menu.Item>
-                </Menu.Dropdown>
-            </Menu>
+                    }
+                >
+                    Solicitar Soporte
+                </Menu.Item>
+                <Menu.Item
+                    onClick={() => linkNavigate("/gad/d/soportes/actuales")}
+                    leftSection={
+                        <IconDeviceImacUp
+                            style={{ width: rem(18), height: rem(18) }}
+                            color={theme.colors.teal[8]}
+                            stroke={1.5}
+                        />
+                    }
+                >
+                    Ver mis soportes
+                </Menu.Item>
+            </Menu.Dropdown>
+        </Menu>
     );
 };
 
 export const BtnAdministracion = ({ theme, linkNavigate }) => {
     return (
-            <Menu
-                transitionProps={{ transition: "pop-top-right" }}
-                position="bottom-end"
-                width={220}
-                withinPortal
-            >
-                <Menu.Target>
-                    <ActionIcon
-                        size={35}
-                        variant="default"
-                        aria-label="ActionIcon administracion"
-                    >
-                        <IconSettings
-                            style={{ width: rem(22), height: rem(22) }}
+        <Menu
+            transitionProps={{ transition: "pop-top-right" }}
+            position="bottom-end"
+            width={220}
+            withinPortal
+        >
+            <Menu.Target>
+                <ActionIcon
+                    size={35}
+                    variant="default"
+                    aria-label="ActionIcon administracion"
+                >
+                    <IconSettings style={{ width: rem(22), height: rem(22) }} />
+                </ActionIcon>
+            </Menu.Target>
+            <Menu.Dropdown>
+                <Menu.Item
+                    onClick={() => linkNavigate("/gerencia/usuarios")}
+                    leftSection={
+                        <IconUserSearch
+                            style={{ width: rem(18), height: rem(18) }}
+                            color={theme.colors.teal[8]}
+                            stroke={1.5}
                         />
-                    </ActionIcon>
-                </Menu.Target>
-                <Menu.Dropdown>
-                    <Menu.Item
-                        onClick={() => linkNavigate("/gerencia/usuarios")}
-                        leftSection={
-                            <IconUserSearch
-                                style={{ width: rem(18), height: rem(18) }}
-                                color={theme.colors.teal[8]}
-                                stroke={1.5}
-                            />
-                        }
-                    >
-                        Administrar usuarios
-                    </Menu.Item>
-                    <Menu.Item
-                        onClick={() => linkNavigate("/gerencia/direcciones")}
-                        leftSection={
-                            <IconBuildingBank
-                                style={{ width: rem(18), height: rem(18) }}
-                                color={theme.colors.teal[8]}
-                                stroke={1.5}
-                            />
-                        }
-                    >
-                        Administrar gestiones
-                    </Menu.Item>
-                    <Menu.Item
-                        onClick={() => linkNavigate("/gerencia/tecnicos")}
-                        leftSection={
-                            <IconUsers
-                                style={{ width: rem(18), height: rem(18) }}
-                                color={theme.colors.teal[8]}
-                                stroke={1.5}
-                            />
-                        }
-                    >
-                        Administrar técnicos
-                    </Menu.Item>
-                </Menu.Dropdown>
-            </Menu>
+                    }
+                >
+                    Administrar usuarios
+                </Menu.Item>
+                <Menu.Item
+                    onClick={() => linkNavigate("/gerencia/direcciones")}
+                    leftSection={
+                        <IconBuildingBank
+                            style={{ width: rem(18), height: rem(18) }}
+                            color={theme.colors.teal[8]}
+                            stroke={1.5}
+                        />
+                    }
+                >
+                    Administrar gestiones
+                </Menu.Item>
+                <Menu.Item
+                    onClick={() => linkNavigate("/gerencia/tecnicos")}
+                    leftSection={
+                        <IconUsers
+                            style={{ width: rem(18), height: rem(18) }}
+                            color={theme.colors.teal[8]}
+                            stroke={1.5}
+                        />
+                    }
+                >
+                    Administrar técnicos
+                </Menu.Item>
+            </Menu.Dropdown>
+        </Menu>
     );
 };
 

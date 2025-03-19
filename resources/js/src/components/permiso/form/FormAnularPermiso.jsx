@@ -1,16 +1,17 @@
 import { Box, Stack, Textarea } from "@mantine/core";
 import { BtnSubmit } from "../../../components";
 import { IconBan } from "@tabler/icons-react";
-import { usePermisoStore, useUiPermiso } from "../../../hooks";
+import { usePermisoStore, useStorageField, useUiPermiso } from "../../../hooks";
 
 export const FormAnularPermiso = ({ form }) => {
     const { isLoading, startAnularPermiso, setActivatePermiso } = usePermisoStore();
     const { modalActionAnularPermiso } = useUiPermiso();
+    const { storagePermisoFields } = useStorageField();
 
     const handleSubmit = (e) => {
         e.preventDefault();
         modalActionAnularPermiso(0);
-        startAnularPermiso(form.values);
+        startAnularPermiso(form.values, storagePermisoFields);
         //console.log(form.values);
         setActivatePermiso(null);
         form.reset();

@@ -14,10 +14,10 @@ import {
     indicadorSlice,
     invCategoriaSlice,
     invConceptoSlice,
+    invConsumibleSlice,
     invEquipoSlice,
     invEstadoSlice,
     invMarcaSlice,
-    invPerifericoSlice,
     invTipocategoriaSlice,
     invUbicacionSlice,
     marcacionSlice,
@@ -34,10 +34,11 @@ import {
     uiIndicadorSlice,
     uiInvCategoriaSlice,
     uiInvConceptoSlice,
+    uiInvConsumibleSlice,
+    uiInvCustodioSlice,
     uiInvEquipoSlice,
     uiInvEstadoSlice,
     uiInvMarcaSlice,
-    uiInvPerifericoSlice,
     uiInvTipocategoriaSlice,
     uiInvUbicacionSlice,
     uiPermisoSlice,
@@ -100,8 +101,10 @@ export const store = configureStore({
         invEquipo: invEquipoSlice.reducer,
         uiInvEquipo: uiInvEquipoSlice.reducer,
 
-        invPeriferico: invPerifericoSlice.reducer,
-        uiInvPeriferico: uiInvPerifericoSlice.reducer,
+        invConsumible: invConsumibleSlice.reducer,
+        uiInvConsumible: uiInvConsumibleSlice.reducer,
+
+        uiInvCustodio: uiInvCustodioSlice.reducer,
 
         storageField: storageFieldsSlice.reducer
     },

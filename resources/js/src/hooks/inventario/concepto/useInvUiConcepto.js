@@ -6,7 +6,7 @@ export const useInvUiConcepto = () => {
     const { isOpenModalInvConcepto } = useSelector(state => state.uiInvConcepto);
     const dispatch = useDispatch();
 
-    const modalActionConcepto = (behavior) => {
+    const modalActionConcepto = (behavior = false) => {
         dispatch(onOpenModalInvConcepto(behavior));
     }
 

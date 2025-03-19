@@ -15,40 +15,54 @@
 
         .header {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
         }
 
-        .header img {
-            max-width: 150px;
+        .logo {
+            max-width: 180px;
+            height: auto;
         }
 
-        h2 {
+        h2, h4 {
             text-align: center;
-            margin-top: 10px;
+            margin: 5px 0;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            border: 0.5px solid gray;
-            /* Corrige el borde */
-            table-layout: auto;
-            /* Cambia a 'auto' para ajustar el ancho según el contenido */
-            margin-bottom: 25px;
-            margin-top: 25px;
+            border: 1px solid black;
+            margin: 20px 0;
         }
 
-        th,
-        td {
-            padding: 3px;
-            vertical-align: top;
+        th, td {
+            padding: 6px;
+            text-align: left;
             border: 1px solid black;
             font-size: 12px;
-            /* Borde para celdas */
+        }
+
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+            text-align: center;
         }
 
         tr:nth-child(even) {
             background-color: #f9f9f9;
+        }
+
+          /* Definir anchos proporcionales */
+        th:nth-child(1), td:nth-child(1) { width: 10%; } /* Código Nuevo */
+        th:nth-child(2), td:nth-child(2) { width: 10%; } /* Modelo */
+        th:nth-child(2), td:nth-child(2) { width: 10%; } /* Marca */
+        th:nth-child(4), td:nth-child(4) { width: 15%; } /* Número de Serie */
+        th:nth-child(5), td:nth-child(5) { width: 10%; } /* Estado */
+        th:nth-child(6), td:nth-child(6) { width: 22%; } /* Custodio */
+        th:nth-child(7), td:nth-child(7) { width: 23%; } /* Direccion */
+
+        .right {
+            text-align: right;
         }
     </style>
 </head>
@@ -56,40 +70,41 @@
 <body>
 
     <div class="header">
-        <img src={{ public_path('/assets/images/LogoTransparente.png') }} height="50" width="180"
-            alt="Logo de la Institución"> <!-- Cambia 'logo.png' por la ruta de tu imagen -->
+        @php
+            $logoPath = public_path('/assets/images/LogoTransparente.png');
+            $logoBase64 = 'data:image/png;base64,' . base64_encode(file_get_contents($logoPath));
+        @endphp
+        <img src="{{ $logoBase64 }}" class="logo" alt="Logo de la Institución" />
     </div>
 
     <h2>{{ $title }}</h2>
-    <h6>{{ $current_fecha }}</h6>
-    {{-- <p style="text-align: justify;">Este reporte presenta un resumen de los equipos inventariados en la institución,
-        clasificados según sus
-        características técnicas y estado actual. Los datos incluyen información clave para la identificación y el
-        seguimiento de cada equipo, como el modelo, la marca, el número de serie, los códigos de inventario, la
-        categoría y el estado de uso. Este análisis tiene como objetivo facilitar el control y la optimización de los
-        recursos tecnológicos en la institución.</p> --}}
+    <h4>Fecha de Generación: {{ date('d-m-Y', strtotime($current_fecha)) }}</h4>
 
     <table>
-        <tr>
-            <th>Modelo</th>
-            <th>Marca</th>
-            <th>Número de Serie</th>
-            <th>Código Antiguo</th>
-            <th>Código Nuevo</th>
-            <th>Categoría</th>
-            <th>Estado</th>
-        </tr>
-        @foreach ($equipos as $equipo)
+        <thead>
             <tr>
-                <td>{{ $equipo['modelo'] }}</td>
-                <td>{{ $equipo['nombre_marca'] }}</td>
-                <td>{{ $equipo['numero_serie'] }}</td>
-                <td>{{ $equipo['codigo_antiguo'] }}</td>
-                <td>{{ $equipo['codigo_nuevo'] }}</td>
-                <td>{{ $equipo['nombre_categoria'] }}</td>
-                <td>{{ $equipo['nombre_estado'] }}</td>
+                <th>Código Nuevo</th>
+                <th>Modelo</th>
+                <th>Marca</th>
+                <th>Número de Serie</th>
+                <th>Estado</th>
+                <th>Custodio</th>
+                <th>Dirección</th>
             </tr>
-        @endforeach
+        </thead>
+        <tbody>
+            @foreach ($equipos as $equipo)
+                <tr>
+                    <td>{{ $equipo['codigo_nuevo'] }}</td>
+                    <td>{{ $equipo['modelo'] }}</td>
+                    <td>{{ $equipo['nombre_marca'] }}</td>
+                    <td>{{ $equipo['numero_serie'] }}</td>
+                    <td>{{ $equipo['nombre_estado'] }}</td>
+                    <td>{{ $equipo['responsable'] ?? 'Sin Custodio' }}</td>
+                    <td>{{ $equipo['direccion'] ?? 'Sin Dirección' }}</td>
+                </tr>
+            @endforeach
+        </tbody>
     </table>
 
 </body>

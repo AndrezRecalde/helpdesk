@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Box, Fieldset, Select, SimpleGrid, TextInput } from "@mantine/core";
 import { BtnSubmit, TextSection } from "../../../../components";
 import { IconSearch } from "@tabler/icons-react";
@@ -9,31 +10,115 @@ import {
     useInvEstadoStore,
     useUsersStore,
 } from "../../../../hooks";
+import classes from "../../../../assets/styles/modules/layout/input/LabelsInputs.module.css";
 
 export const FilterFormEquipos = () => {
     const { startLoadInvEquipos } = useInvEquipoStore();
-    const { direcciones } = useDireccionStore();
-    const { users } = useUsersStore();
-    const { categorias } = useInvCategoriaStore();
-    const { invEstados } = useInvEstadoStore();
+    const { startLoadDirecciones, direcciones, clearDirecciones } =
+        useDireccionStore();
+    const { startLoadUsersGeneral, users, clearUsers } = useUsersStore();
+    const { startLoadInvCategorias, categorias, startClearInvCategorias } =
+        useInvCategoriaStore();
+    const { startLoadInvEstados, invEstados, startClearInvEstados } =
+        useInvEstadoStore();
+
+    const [resultados, setResultados] = useState([]);
 
     const form = useForm({
         initialValues: {
-            direccion_id: null,
-            usuario_id: null,
-            codigo: "",
-            categoria_id: null,
-            numero_serie: "",
-            estado_id: null,
+            campo: "codigo",
+            valor: "",
         },
-        transformValues: (values) => ({
-            ...values,
-            direccion_id: Number(values.direccion_id) || null,
-            usuario_id: Number(values.usuario_id) || null,
-            categoria_id: Number(values.categoria_id) || null,
-            estado_id: Number(values.estado_id) || null,
-        }),
+        /* validate: {
+            campo: isNotEmpty("Por favor seleccione un filtro"),
+            valor: isNotEmpty("Por favor ingrese la búsqueda"),
+        }, */
     });
+
+    const { campo } = form.values;
+
+    useEffect(() => {
+        console.log("Campo seleccionado:", campo);
+
+        const loadData = async () => {
+            switch (campo) {
+                case "direccion":
+                    await startLoadDirecciones(); // Cargar datos (pero aún no estarán disponibles aquí)
+                    form.setFieldValue("valor", null);
+                    break;
+                case "usuario":
+                    await startLoadUsersGeneral({});
+                    form.setFieldValue("valor", null);
+                    break;
+                case "categoria":
+                    await startLoadInvCategorias({});
+                    form.setFieldValue("valor", null);
+                    break;
+                case "estado":
+                    await startLoadInvEstados();
+                    form.setFieldValue("valor", null);
+                    break;
+                default:
+                    setResultados([]);
+                    return;
+            }
+        };
+
+        loadData();
+
+        return () => {
+            clearDirecciones();
+            clearUsers();
+            startClearInvCategorias();
+            startClearInvEstados();
+            setResultados([]); // Limpiamos al desmontar
+        };
+    }, [campo]); // Se ejecuta solo cuando `campo` cambia
+
+    // Nuevo useEffect para actualizar resultados cuando los datos estén listos
+    useEffect(() => {
+        let data = [];
+
+        switch (campo) {
+            case "direccion":
+                data =
+                    direcciones?.map((d) => ({
+                        value: d.cdgo_dprtmnto.toString(),
+                        label: d.nmbre_dprtmnto,
+                    })) || [];
+                break;
+            case "usuario":
+                data =
+                    users?.map((u) => ({
+                        value: u.cdgo_usrio.toString(),
+                        label: u.nmbre_usrio,
+                    })) || [];
+                break;
+            case "categoria":
+                data =
+                    categorias?.map((c) => ({
+                        value: c.id.toString(),
+                        label: c.nombre_categoria,
+                    })) || [];
+                break;
+            case "estado":
+                data =
+                    invEstados?.map((e) => ({
+                        value: e.id.toString(),
+                        label: e.nombre_estado,
+                    })) || [];
+                break;
+            default:
+                data = [];
+        }
+
+        setResultados(data);
+        console.log("Resultados actualizados:", data);
+    }, [campo, direcciones, users, categorias, invEstados]); // Se ejecuta cuando los datos cambian
+
+    const handleSearch = (e) => {
+        e.preventDefault();
+    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -55,77 +140,48 @@ export const FilterFormEquipos = () => {
                 component="form"
                 onSubmit={form.onSubmit((_, e) => handleSubmit(e))}
             >
-                <SimpleGrid cols={{ base: 1, sm: 1, md: 3, lg: 3 }} mt={10}>
+                <SimpleGrid cols={{ base: 1, sm: 1, md: 2, lg: 2 }} mt={10}>
                     <Select
                         searchable
                         clearable
-                        label="Dirección"
-                        placeholder="Elige la dirección"
-                        {...form.getInputProps("direccion_id")}
+                        label="Seleccione el filtro"
+                        placeholder="Elige el campo a buscar"
+                        {...form.getInputProps("campo")}
                         nothingFoundMessage="Nothing found..."
-                        data={direcciones.map((direccion) => {
-                            return {
-                                value: direccion.cdgo_dprtmnto.toString(),
-                                label: direccion.nmbre_dprtmnto,
-                            };
-                        })}
+                        classNames={classes}
+                        data={[
+                            { value: "direccion", label: "Dirección" },
+                            { value: "usuario", label: "Usuario" },
+                            { value: "codigo", label: "Código" },
+                            { value: "categoria", label: "Categoría" },
+                            { value: "numero_serie", label: "Número de Serie" },
+                            { value: "estado", label: "Estado" },
+                        ]}
                     />
-                    <Select
-                        searchable
-                        clearable
-                        label="Usuario"
-                        placeholder="Elige el usuario"
-                        {...form.getInputProps("usuario_id")}
-                        nothingFoundMessage="Nothing found..."
-                        data={users.map((usuario) => {
-                            return {
-                                value: usuario.cdgo_usrio.toString(),
-                                label: usuario.nmbre_usrio,
-                            };
-                        })}
-                    />
-                    <TextInput
-                        label="Código"
-                        placeholder="Digite el código (nuevo o antiguo)"
-                        {...form.getInputProps("codigo")}
-                    />
-                    <Select
-                        searchable
-                        clearable
-                        label="Categoria"
-                        placeholder="Elige la categoria"
-                        {...form.getInputProps("categoria_id")}
-                        nothingFoundMessage="Nothing found..."
-                        data={categorias.map((categoria) => {
-                            return {
-                                value: categoria.id.toString(),
-                                label: categoria.nombre_categoria,
-                            };
-                        })}
-                    />
-                    <TextInput
-                        label="Número de serie"
-                        placeholder="Digite el numero de serie"
-                        {...form.getInputProps("numero_serie")}
-                    />
-                    <Select
-                        searchable
-                        clearable
-                        label="Estado"
-                        placeholder="Elige el estado"
-                        {...form.getInputProps("estado_id")}
-                        nothingFoundMessage="Nothing found..."
-                        data={invEstados.map((estado) => {
-                            return {
-                                value: estado.id.toString(),
-                                label: estado.nombre_estado,
-                            };
-                        })}
-                    />
+                    {campo === "codigo" || campo === "numero_serie" ? (
+                        <TextInput
+                            label="Búsqueda"
+                            placeholder="Ingrese búsqueda..."
+                            icon={<IconSearch size={16} />}
+                            classNames={classes}
+                            {...form.getInputProps("valor")}
+                            onKeyDown={(event) => {
+                                if (event.key === "Enter") handleSearch();
+                            }}
+                        />
+                    ) : (
+                        <Select
+                            searchable
+                            clearable
+                            label={`Seleccione ${campo}`}
+                            classNames={classes}
+                            {...form.getInputProps("valor")}
+                            nothingFoundMessage="Nothing found..."
+                            data={resultados}
+                        />
+                    )}
                 </SimpleGrid>
-                <BtnSubmit IconSection={IconSearch}>
-                    Buscar
-                </BtnSubmit>
+                <BtnSubmit IconSection={IconSearch}>Buscar</BtnSubmit>
             </Box>
         </Fieldset>
     );

@@ -5,7 +5,7 @@ import {
 } from "../../../../hooks";
 import { BtnSection, MenuTable_E, TableContent } from "../../../../components";
 import { useMantineReactTable } from "mantine-react-table";
-import { IconCopyPlus } from "@tabler/icons-react";
+import { IconCubePlus } from "@tabler/icons-react";
 
 export const InvTipocategoriaTable = () => {
     const { isLoading, tiposcategorias, setActivateTipocategoria } =
@@ -50,7 +50,7 @@ export const InvTipocategoriaTable = () => {
             <BtnSection
                 heigh={30}
                 fontSize={12}
-                IconSection={IconCopyPlus}
+                IconSection={IconCubePlus}
                 handleAction={handleAgregar}
             >
                 Agregar

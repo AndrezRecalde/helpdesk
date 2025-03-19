@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
     isLoading: false,
     users: [],
+    birthdays: [],
     activateUser: null,
     activateResponsable: null,
     storageField: null,
@@ -17,11 +18,15 @@ export const usersSlice = createSlice({
     name: "users",
     initialState,
     reducers: {
-        onLoading: (state) => {
-            state.isLoading = true;
+        onLoading: (state, { payload }) => {
+            state.isLoading = payload;
         },
         onLoadUsers: (state, { payload }) => {
             state.users = payload;
+            state.isLoading = false;
+        },
+        onLoadBirthdays: (state, { payload }) => {
+            state.birthdays = payload;
             state.isLoading = false;
         },
         onUpdateUsers: (state, { payload }) => {
@@ -85,6 +90,7 @@ export const usersSlice = createSlice({
 export const {
     onLoading,
     onLoadUsers,
+    onLoadBirthdays,
     onUpdateUsers,
     onSetActivateUser,
     onSetActivateResponsable,

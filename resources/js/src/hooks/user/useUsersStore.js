@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useErrorException } from "../../hooks";
 import {
     onClearUsers,
+    onLoadBirthdays,
     onLoadErrores,
     onLoadMessage,
     onLoadUsers,
@@ -18,6 +19,7 @@ export const useUsersStore = () => {
     const {
         isLoading,
         users,
+        birthdays,
         activateUser,
         activateResponsable,
         validate,
@@ -32,9 +34,9 @@ export const useUsersStore = () => {
     const { ExceptionMessageError } = useErrorException(onLoadErrores);
 
     /* GENERAL */
-    const startLoadUsersGeneral = async ({ cdgo_direccion }) => {
+    const startLoadUsersGeneral = async ({ cdgo_direccion = null }) => {
         try {
-            dispatch(onLoading());
+            dispatch(onLoading(true));
             const { data } = await helpdeskApi.post("/general/usuarios", {
                 cdgo_direccion,
             });
@@ -49,9 +51,9 @@ export const useUsersStore = () => {
     /* GENERAL */
     const startLoadUsersExtrict = async (cdgo_direccion) => {
         try {
-            dispatch(onLoading());
+            dispatch(onLoading(true));
             const { data } = await helpdeskApi.post(
-                "/general/usuarios-extrict",
+                "/usuario/usuarios-extrict",
                 {
                     cdgo_direccion,
                 }
@@ -71,7 +73,7 @@ export const useUsersStore = () => {
         lgin = "",
     }) => {
         try {
-            dispatch(onLoading());
+            dispatch(onLoading(true));
             const { data } = await helpdeskApi.post(
                 "/gerencia/admin/usuarios",
                 {
@@ -87,6 +89,18 @@ export const useUsersStore = () => {
             ExceptionMessageError(error);
         }
     };
+
+    const startLoadBirthdays = async() => {
+        try {
+            dispatch(onLoading(true));
+            const { data } = await helpdeskApi.get("/usuario/birthdays");
+            const { birthdays } = data;
+            dispatch(onLoadBirthdays(birthdays));
+        } catch (error) {
+            console.log(error);
+            ExceptionMessageError(error);
+        }
+    }
 
     const startUpdateActivoUser = async (usuario) => {
         try {
@@ -223,7 +237,7 @@ export const useUsersStore = () => {
 
     const startLoadInfoUsersSoporte = async (usuario_id) => {
         try {
-            dispatch(onLoading());
+            dispatch(onLoading(true));
             const { data } = await helpdeskApi.post("/usuario/info-soportes", {
                 usuario_id,
             });
@@ -255,6 +269,7 @@ export const useUsersStore = () => {
     return {
         isLoading,
         users,
+        birthdays,
         activateUser,
         activateResponsable,
         userVerified, //aqui
@@ -267,6 +282,7 @@ export const useUsersStore = () => {
         startLoadUsersGeneral,
         startLoadUsersExtrict,
         startLoadUsers,
+        startLoadBirthdays,
         startUpdateActivoUser,
         verifiedUser,
         startFindUserResponsable,

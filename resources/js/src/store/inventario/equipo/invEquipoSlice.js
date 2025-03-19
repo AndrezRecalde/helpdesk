@@ -6,8 +6,8 @@ export const invEquipoSlice = createSlice({
         isLoading: false,
         isExport: false,
         invEquipos: [],
+        invEquiposBajas: [],
         activateInvEquipo: null,
-        activateEquipoFromTransfer: null,
         message: undefined,
         errores: undefined,
     },
@@ -20,6 +20,10 @@ export const invEquipoSlice = createSlice({
         },
         onLoadInvEquipos: (state, { payload }) => {
             state.invEquipos = payload;
+            state.isLoading = false;
+        },
+        onLoadInvEquiposBaja: (state, { payload }) => {
+            state.invEquiposBajas = payload;
             state.isLoading = false;
         },
         onAddInvEquipo: (state, { payload }) => {
@@ -63,27 +67,14 @@ export const invEquipoSlice = createSlice({
                     );
             }
         },
-        onTransferirComponenteFromEquipo: (state, { payload }) => {
-            if (state.activateInvEquipo) {
-                const perifericoId = payload;
-                state.activateInvEquipo.perifericos =
-                    state.activateInvEquipo.perifericos.filter(
-                        (pivot) => pivot.id !== perifericoId
-                    );
-            }
-        },
         onSetActivateInvEquipo: (state, { payload }) => {
             state.activateInvEquipo = payload;
             state.isLoading = false;
             state.errores = undefined;
         },
-        onSetActivateEquipoFromTransfer: (state, { payload }) => {
-            state.activateEquipoFromTransfer = payload;
-            state.isLoading = false;
-            state.errores = undefined;
-        },
-        onClearInvEquipos: (state, { payload }) => {
+        onClearInvEquipos: (state) => {
             state.invEquipos = [];
+            state.invEquiposBajas = [];
             state.activateInvEquipo = null;
             state.isLoading = false;
         },
@@ -102,12 +93,12 @@ export const {
     onLoading,
     onExport,
     onLoadInvEquipos,
+    onLoadInvEquiposBaja,
     onAddInvEquipo,
     onUpdateInvEquipo,
     onDeleteInvEquipo,
     onRemoveUserFromEquipo,
     onRemoveDocumentoFromEquipo,
-    onTransferirComponenteFromEquipo,
     onSetActivateInvEquipo,
     onSetActivateEquipoFromTransfer,
     onClearInvEquipos,

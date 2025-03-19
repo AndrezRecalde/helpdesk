@@ -11,8 +11,8 @@ export const direccionSlice = createSlice({
     name: "direccion",
     initialState,
     reducers: {
-        onLoading: (state) => {
-            state.isLoading = true;
+        onLoading: (state, { payload }) => {
+            state.isLoading = payload;
         },
         onLoadDirecciones: (state, { payload }) => {
             state.direcciones = payload;

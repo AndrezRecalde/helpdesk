@@ -63,8 +63,6 @@ import InvUbicacionPage from "./inventario/ubicacion/InvUbicacionPage";
 /* Inventario: Equipos */
 import InvEquiposPage from "./inventario/equipo/InvEquiposPage";
 
-/* Inventario: Periferico */
-import InvComponentesPage from "./inventario/componentes/InvComponentesPage";
 
 /* Error */
 import ErrorNotFound from "./error/ErrorNotFound";
@@ -116,8 +114,6 @@ export {
     InvUbicacionPage,
 
     InvEquiposPage,
-
-    InvComponentesPage,
 
     ErrorNotFound,
     ErrorAccessDenied

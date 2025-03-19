@@ -35,7 +35,7 @@ export const DashInfoStats = () => {
         const Icon = icons[stat.icon];
 
         return (
-            <Paper withBorder p="md" radius="md" key={stat.title}>
+            <Paper withBorder p="md" radius="md" shadow="md" key={stat.title}>
                 <Group justify="space-between">
                     <TextSection fw={700} color="dimmed">
                         {stat.title}

@@ -8,7 +8,7 @@ const ErrorNotFound = () => {
     const navigate = useNavigate();
 
     const handleAction = () => {
-        navigate("/staff/d/profile");
+        navigate("/intranet/profile");
     };
 
     return (

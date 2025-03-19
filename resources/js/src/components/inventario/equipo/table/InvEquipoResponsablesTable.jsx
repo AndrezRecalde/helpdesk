@@ -8,7 +8,7 @@ import {
 } from "../../../../components";
 import { Text } from "@mantine/core";
 import { useInvEquipoStore, useInvUiEquipo } from "../../../../hooks";
-import { IconCopyPlus, IconInfoCircle } from "@tabler/icons-react";
+import { IconCubePlus, IconInfoCircle } from "@tabler/icons-react";
 import Swal from "sweetalert2";
 
 export const InvEquipoResponsablesTable = () => {
@@ -95,7 +95,7 @@ export const InvEquipoResponsablesTable = () => {
             <BtnSection
                 heigh={30}
                 fontSize={12}
-                IconSection={IconCopyPlus}
+                IconSection={IconCubePlus}
                 handleAction={handleAssign}
             >
                 Agregar
@@ -128,8 +128,8 @@ export const InvEquipoResponsablesTable = () => {
                         title="Información"
                         icon={IconInfoCircle}
                     >
-                        El equipo se ha dado de baja, no mantiene un responsable
-                        activo actualmente. El equipo reposa en las
+                        El equipo se ha dado de baja, no mantiene prestaciones
+                        ni custodio activo actualmente. El equipo reposa en las
                         instalaciones de Bodega de la Gestión Administrativa
                     </AlertSection>
                 ) : null}

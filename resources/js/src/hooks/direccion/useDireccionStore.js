@@ -5,6 +5,7 @@ import {
     onClearDirecciones,
     onLoadDirecciones,
     onLoadErrores,
+    onLoading,
     onSetActivateDireccion,
 } from "../../store/direccion/direccionSlice";
 
@@ -23,7 +24,8 @@ export const useDireccionStore = () => {
     /* ENDPOINTS GENERAL */
     const startLoadDirecciones = async () => {
         try {
-            const { data } = await helpdeskApi.get("/general/direcciones");
+            dispatch(onLoading(true));
+            const { data } = await helpdeskApi.get("/usuario/direcciones");
             const { direcciones } = data;
             dispatch(onLoadDirecciones(direcciones));
         } catch (error) {

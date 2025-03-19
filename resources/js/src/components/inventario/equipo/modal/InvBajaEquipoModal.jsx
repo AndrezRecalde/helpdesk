@@ -1,40 +1,59 @@
+import { useEffect } from "react";
 import { Modal } from "@mantine/core";
 import { isNotEmpty, useForm } from "@mantine/form";
 import { InvBajaEquipoForm, TextSection } from "../../../../components";
-import { useInvUiEquipo, useSoporteStore } from "../../../../hooks";
+import { useInvEquipoStore, useInvUiEquipo, useSoporteStore, useUsersStore } from "../../../../hooks";
 
 export const InvBajaEquipoModal = () => {
-    //const { setActivateInvEquipo } = useInvEquipoStore();
-    const { setActivateSoporte } = useSoporteStore();
+    const { startClearInvEquipos } = useInvEquipoStore();
+    const { startLoadUsersGeneral } = useUsersStore();
+    const { startLoadSoportesLite, clearSoportes } = useSoporteStore();
     const { isOpenModalBajaEquipo, modalActionBajaEquipo } = useInvUiEquipo();
 
     const form = useForm({
         initialValues: {
+            user_id: null,
+            equipos: [],
             numero_sop: "",
-            fecha_baja: new Date(),
-            perifericos: [],
+            numero_memorando: "",
+            //motivo: "",
             //documento: null,
         },
         validate: {
-            numero_sop: isNotEmpty(
+            user_id: isNotEmpty(
                 "Por favor ingresa la fecha de baja del equipo"
             ),
-            fecha_baja: isNotEmpty(
-                "Por favor ingresa la fecha de baja del equipo"
+            equipos: isNotEmpty(
+                "Por favor seleccione el/los equipos para dar de baja"
             ),
+            numero_memorando: isNotEmpty("Por favor ingrese número de memo"),
         },
+        transformValues: (values) => ({
+            ...values,
+            user_id: Number(values.user_id) || null,
+            equipos: values.equipos.map(Number), // Convertir todos los valores a enteros
+        })
     });
+
+    useEffect(() => {
+        if (isOpenModalBajaEquipo) {
+            startLoadUsersGeneral({});
+            startLoadSoportesLite();
+        }
+
+        return () => {
+            //startClearInvEquipos();
+            //clearSoportes();
+        };
+    }, [isOpenModalBajaEquipo]);
 
     const handleCloseModal = () => {
         modalActionBajaEquipo(false);
-        //setActivateInvEquipo(null);
-        setActivateSoporte(null);
         form.reset();
     };
 
     return (
         <Modal
-            centered
             opened={isOpenModalBajaEquipo}
             onClose={handleCloseModal}
             size="lg"
@@ -48,9 +67,7 @@ export const InvBajaEquipoModal = () => {
                 blur: 3,
             }}
         >
-            <InvBajaEquipoForm
-                form={form}
-            />
+            <InvBajaEquipoForm form={form} />
         </Modal>
     );
 };

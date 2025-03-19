@@ -84,7 +84,7 @@ const SolicitudesActualesPage = () => {
     };
 
     return (
-        <Container size="xxl">
+        <Container size="xl">
             <Group justify="space-between">
                 <TitlePage order={2}>Solicitudes Actuales</TitlePage>
                 {usuario.role_id === 1 ? (

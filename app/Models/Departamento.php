@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Departamento extends Model
@@ -19,6 +20,18 @@ class Departamento extends Model
         "id_jefe",
         "id_encargado"
     ];
+
+    public function consumibles()
+    {
+        return $this->belongsToMany(InvConsumible::class, 'departamento_consumible', 'departamento_id', 'consumible_id')
+            ->withPivot('cantidad_solicitada')
+            ->withTimestamps();
+    }
+
+    public function jefe(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'id_jefe', 'cdgo_usrio');
+    }
 
     function equipos(): BelongsToMany
     {

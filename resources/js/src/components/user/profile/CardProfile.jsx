@@ -7,7 +7,7 @@ import {
 } from "../../../components";
 import { IconDeviceImacUp } from "@tabler/icons-react";
 import { useAuthStore, useTecnicoStore } from "../../../hooks";
-import { Roles } from "../../../layouts/appshell/navbar/navlinks/navLinks";
+import { Roles } from "../../../helpers/dictionary";
 
 export const CardProfile = ({ usuario, handleAction }) => {
     const year = new Date();
@@ -133,8 +133,8 @@ export const CardProfile = ({ usuario, handleAction }) => {
                     </div>
                 ) : null}
 
-                {usuario.role === Roles.GERENTE ||
-                usuario.role === Roles.TECNICO ? (
+                {usuario.role === Roles.TIC_GERENTE ||
+                usuario.role === Roles.TIC_TECNICO ? (
                     <Box component="form" onSubmit={handleAction}>
                         <BtnSubmit IconSection={IconDeviceImacUp}>
                             Gestionar soportes

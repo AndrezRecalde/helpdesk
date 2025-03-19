@@ -1,7 +1,21 @@
 import cx from "clsx";
 import { useMemo, useState } from "react";
-import { Avatar, Group, Menu, Text, UnstyledButton, rem } from "@mantine/core";
-import { IconChevronRight, IconLogout } from "@tabler/icons-react";
+import {
+    Avatar,
+    Group,
+    Menu,
+    Switch,
+    Text,
+    UnstyledButton,
+    rem,
+    useMantineColorScheme,
+} from "@mantine/core";
+import {
+    IconChevronRight,
+    IconLogout,
+    IconMoonStars,
+    IconSun,
+} from "@tabler/icons-react";
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "../../../hooks";
 import { menuRoutes } from "../../../routes/router/routes";
@@ -11,6 +25,7 @@ export const UserBtnHeader = ({ classes, toggleMobile = null }) => {
     const navigate = useNavigate();
     const [userMenuOpened, setUserMenuOpened] = useState(false);
     //const [nombres, setNombres] = useState("G");
+    const { colorScheme, toggleColorScheme } = useMantineColorScheme();
 
     const usuario = useMemo(() => {
         const storedUser = localStorage.getItem("service_user");
@@ -23,7 +38,7 @@ export const UserBtnHeader = ({ classes, toggleMobile = null }) => {
         return `${firstName[0] || ""}${lastName[0] || ""}`;
     }, [usuario]);
 
-    const handleMenuClick  = (linked) => {
+    const handleMenuClick = (linked) => {
         navigate(linked);
         if (toggleMobile) {
             toggleMobile(true);
@@ -89,6 +104,29 @@ export const UserBtnHeader = ({ classes, toggleMobile = null }) => {
                     ))}
 
                 <Menu.Label>Sesión</Menu.Label>
+
+                <Switch
+                    label="Modo Nocturno"
+                    size="md"
+                    p="md"
+                    color="dark.4"
+                    onChange={() => toggleColorScheme()}
+                    onLabel={
+                        <IconSun
+                            size={16}
+                            stroke={2.5}
+                            color="var(--mantine-color-yellow-4)"
+                        />
+                    }
+                    offLabel={
+                        <IconMoonStars
+                            size={16}
+                            stroke={2.5}
+                            color="var(--mantine-color-blue-6)"
+                        />
+                    }
+                />
+
                 <Menu.Item
                     onClick={startLogout}
                     color={menuRoutes.at(-1).color}

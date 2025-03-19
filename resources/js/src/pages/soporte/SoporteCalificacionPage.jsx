@@ -42,7 +42,7 @@ const SoporteCalificacionPage = () => {
     }, [errores]);
 
     return (
-        <Container size="xxl">
+        <Container size="xl">
             <TitlePage order={2}>
                 Cerrar Soportes - {new Date().getFullYear()}
             </TitlePage>

@@ -17,7 +17,7 @@ class InvCategoriaController extends Controller
         $categorias = InvCategoria::from('inv_categorias as invc')
             ->selectRaw('invc.id, invc.nombre_categoria,
                         invt.nombre_tipocategoria, invc.tipocategoria_id,
-                        invc.stock, invc.activo')
+                        invc.activo')
             ->join('inv_tipocategorias as invt', 'invt.id', 'invc.tipocategoria_id')
             ->byTipocategoriaId($request->tipocategoria_id)
             ->activo($request->activo)
@@ -26,7 +26,7 @@ class InvCategoriaController extends Controller
         return response()->json([
             'status' => MsgStatus::Success,
             'categorias' => $categorias
-        ]);
+        ], 200);
     }
 
     function store(CategoriaRequest $request): JsonResponse
@@ -36,7 +36,7 @@ class InvCategoriaController extends Controller
             return response()->json([
                 'status' => 'success',
                 'msg' => MsgStatus::Created,
-            ], 200);
+            ], 201);
         } catch (\Throwable $th) {
             return response()->json(['status' => 'error', 'message' => $th->getMessage()], 500);
         }
@@ -72,13 +72,13 @@ class InvCategoriaController extends Controller
         }
     }
 
-    public function incrementarStock(Request $request, int $id)
+    /* public function incrementarStock(Request $request, int $id)
     {
         $categoria = InvCategoria::find($id);
         $categoria->agregarStock($request->stock);
 
         return response()->json(['status' => MsgStatus::Success, 'msg' => MsgStatus::Updated], 201);
-    }
+    } */
 
     function destroy(int $id): JsonResponse
     {
@@ -86,7 +86,7 @@ class InvCategoriaController extends Controller
         try {
             if ($categoria) {
                 $categoria->delete();
-                return response()->json(['status' => MsgStatus::Success, 'msg' => MsgStatus::Updated], 201);
+                return response()->json(['status' => MsgStatus::Success, 'msg' => MsgStatus::Deleted], 201);
             } else {
                 return response()->json(['status' => MsgStatus::Error, 'msg' => MsgStatus::NotFound], 404);
             }

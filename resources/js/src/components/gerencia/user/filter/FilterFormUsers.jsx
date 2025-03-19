@@ -8,6 +8,7 @@ import {
     useUsersStore,
 } from "../../../../hooks";
 import { IconSearch } from "@tabler/icons-react";
+import classes from '../../../../assets/styles/modules/layout/input/LabelsInputs.module.css'
 
 export const FilterFormUsers = () => {
     const { startLoadUsers, clearUsers } = useUsersStore();
@@ -59,6 +60,7 @@ export const FilterFormUsers = () => {
                         clearable
                         label="Dirección"
                         placeholder="Elige la dirección"
+                        classNames={classes}
                         {...form.getInputProps("cdgo_direccion")}
                         data={direcciones.map((direccion) => {
                             return {
@@ -70,11 +72,13 @@ export const FilterFormUsers = () => {
                     <TextInput
                         label="Nombres"
                         placeholder="Filtrar por nombres"
+                        classNames={classes}
                         {...form.getInputProps("nmbre_usrio")}
                     />
                     <TextInput
                         label="Usuario"
                         placeholder="Filtrar por usuario"
+                        classNames={classes}
                         {...form.getInputProps("lgin")}
                     />
                 </SimpleGrid>

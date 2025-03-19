@@ -1,21 +1,16 @@
-import { rem, Tabs } from "@mantine/core";
+import { Box, rem, Tabs } from "@mantine/core";
 import {
     IconAdjustments,
-    IconDevices2,
     IconFiles,
-    //IconMapPin,
     IconUserCheck,
 } from "@tabler/icons-react";
 import {
-    InvTabComponentesEquipos,
-    InvTabDocumentoEquipo,
+    InvEquipoDocumentosTable,
+    InvEquipoResponsablesTable,
     InvTabGeneralEquipo,
-    InvTabResponsableEquipo,
 } from "../../../../../../components";
-import { useInvEquipoStore } from "../../../../../../hooks";
 
 export const InvTabsDetalleEquipo = () => {
-    const { activateInvEquipo } = useInvEquipoStore();
     const iconStyle = { width: rem(18), height: rem(18) };
 
     return (
@@ -27,24 +22,11 @@ export const InvTabsDetalleEquipo = () => {
                 >
                     General
                 </Tabs.Tab>
-                {(activateInvEquipo?.nombre_categoria
-                    ?.toUpperCase()
-                    .includes("COMPUTADOR") ||
-                    activateInvEquipo?.nombre_categoria
-                        ?.toUpperCase()
-                        .includes("LAPTOP")) && (
-                    <Tabs.Tab
-                        value="componentes"
-                        leftSection={<IconDevices2 style={iconStyle} />}
-                    >
-                        Periféricos
-                    </Tabs.Tab>
-                )}
                 <Tabs.Tab
                     value="responsable"
                     leftSection={<IconUserCheck style={iconStyle} />}
                 >
-                    Responsable
+                    Prestaciones
                 </Tabs.Tab>
                 <Tabs.Tab
                     value="documentos"
@@ -58,16 +40,18 @@ export const InvTabsDetalleEquipo = () => {
                 <InvTabGeneralEquipo />
                 {/* <InvTabUbicacionEquipo /> */}
             </Tabs.Panel>
-            {activateInvEquipo?.categoria_id === 1 && (
-                <Tabs.Panel value="componentes">
-                    <InvTabComponentesEquipos />
-                </Tabs.Panel>
-            )}
+
             <Tabs.Panel value="responsable">
-                <InvTabResponsableEquipo />
+                {/* <InvTabResponsableEquipo /> */}
+                <Box mt={20}>
+                    <InvEquipoResponsablesTable />
+                </Box>
             </Tabs.Panel>
             <Tabs.Panel value="documentos">
-                <InvTabDocumentoEquipo />
+                {/* <InvTabDocumentoEquipo /> */}
+                <Box mt={20}>
+                    <InvEquipoDocumentosTable />
+                </Box>
             </Tabs.Panel>
         </Tabs>
     );

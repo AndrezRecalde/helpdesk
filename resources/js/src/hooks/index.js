@@ -101,10 +101,12 @@ import { useInvUiEquipo } from "./inventario/equipo/useInvUiEquipo";
 import { useInvUbicacionStore } from "./inventario/ubicacion/useInvUbicacionStore";
 import { useInvUiUbicacion } from "./inventario/ubicacion/useInvUiUbicacion";
 
-/* Inventario: Perifericos */
-import { useInvPerifericoStore } from "./inventario/periferico/useInvPerifericoStore";
-import { useInvUiPeriferico } from "./inventario/periferico/useInvUiPeriferico";
+/* Inventario: Consumibles */
+import { useInvConsumibleStore } from "./inventario/consumible/useInvConsumibleStore";
+import { useUiInvConsumible } from "./inventario/consumible/useUiInvConsumible";
 
+/* Inventario: UI Custodio */
+import { useUiInvCustodio } from "./inventario/custodio/useUiInvCustodio";
 
 /* Storage */
 import { useStorageField } from "./storage/useStorageField";
@@ -184,8 +186,10 @@ export {
     useInvUbicacionStore,
     useInvUiUbicacion,
 
-    useInvPerifericoStore,
-    useInvUiPeriferico,
+    useInvConsumibleStore,
+    useUiInvConsumible,
+
+    useUiInvCustodio,
 
     useStorageField
 }

@@ -11,6 +11,7 @@ import {
 import {
     useDireccionStore,
     usePermisoStore,
+    useStorageField,
     useTitlePage,
     useUsersStore,
 } from "../../hooks";
@@ -31,6 +32,7 @@ const ListPermisosAdminPage = () => {
         errores,
         isExport,
     } = usePermisoStore();
+    const { setStoragePermisoFields } = useStorageField();
     const navigate = useNavigate();
     const form = useForm({
         initialValues: {
@@ -108,16 +110,17 @@ const ListPermisosAdminPage = () => {
     }, [errores]);
 
     const handleNavigate = () => {
-        navigate("/gerencia/permiso");
+        navigate("/intranet/permiso");
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        setStoragePermisoFields(form.getTransformedValues());
         startLoadPermisos(form.getTransformedValues());
     };
 
     return (
-        <Container size="xxl">
+        <Container size="xl">
             <Group justify="space-between">
                 <TitlePage order={2}>Lista de permisos</TitlePage>
                 <BtnSection

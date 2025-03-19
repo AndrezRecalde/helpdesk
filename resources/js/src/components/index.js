@@ -27,9 +27,13 @@ import { FilterFormDirecciones } from "./gerencia/direccion/filter/FilterFormDir
 import { FormDirector } from "./gerencia/direccion/form/FormDirector";
 import { ModalDireccion } from "./gerencia/direccion/modal/ModalDireccion";
 import { DireccionesTable } from "./gerencia/direccion/table/DireccionesTable";
+
 /* PERMISO */
 import { FilterPermisoAdmin } from "./gerencia/permiso/filter/FilterPermisoAdmin";
 import { FormSolicitudPermiso } from "./gerencia/permiso/form/FormSolicitudPermiso";
+import { FilterAutorizarPermiso } from "./gerencia/permiso/filter/FilterAutorizarPermiso";
+import { AutorizarPermisoTable } from "./gerencia/permiso/table/AutorizarPermisoTable";
+
 /* SOPORTE */
 import { FilterFormSearchDates } from "./gerencia/soporte/filter/FilterFormSearchDates";
 import { FilterFormSoportes } from "./gerencia/soporte/filter/FilterFormSoportes";
@@ -155,6 +159,7 @@ import { InvEquipoForm } from "./inventario/equipo/form/InvEquipoForm";
 import { InvEquipoAsignacionForm } from "./inventario/equipo/form/InvEquipoAsignacionForm";
 import { InvAsignacionForm } from "./inventario/equipo/form/InvAsignacionForm";
 import { InvEquipoGeneralForm } from "./inventario/equipo/form/stepper/InvEquipoGeneralForm";
+import { InvEquipoStepperFinal } from "./inventario/equipo/form/stepper/InvEquipoStepperFinal";
 import { InvEquipoComplementaria } from "./inventario/equipo/form/stepper/InvEquipoComplementaria";
 import { InvInfoGeneralEquipo } from "./inventario/equipo/form/elements/InvInfoGeneralEquipo";
 import { InvTabsDetalleEquipo } from "./inventario/equipo/form/elements/tabs/InvTabsDetalleEquipo";
@@ -165,25 +170,25 @@ import { InvDeleteEquipoModal } from "./inventario/equipo/modal/InvDeleteEquipoM
 import { InvDeleteEquipoForm } from "./inventario/equipo/form/InvDeleteEquipoForm";
 import { InvBajaEquipoModal } from "./inventario/equipo/modal/InvBajaEquipoModal";
 import { InvBajaEquipoForm } from "./inventario/equipo/form/InvBajaEquipoForm";
-import { InvTabComponentesEquipos } from "./inventario/equipo/form/elements/tabs/InvTabComponentesEquipos";
 import { InvTabResponsableEquipo } from "./inventario/equipo/form/elements/tabs/InvTabResponsableEquipo";
-import { InvEquipoComponentesTable } from "./inventario/equipo/table/InvEquipoComponentesTable";
-import { InvEquipoComponenteForm } from "./inventario/equipo/form/InvEquipoComponenteForm";
-import { InvEquipoAssignComponente } from "./inventario/equipo/modal/InvEquipoAssignComponente";
 import { InvEquipoDocumentosTable } from "./inventario/equipo/table/InvEquipoDocumentosTable";
 import { InvEquipoDocumentoModal } from "./inventario/equipo/modal/InvEquipoDocumentoModal";
 import { InvEquipoDocumentoForm } from "./inventario/equipo/form/InvEquipoDocumentoForm";
 import { BtnDownloadDocumento } from "./inventario/equipo/form/elements/btn/BtnDownloadDocumento";
+import { InvAsignarCustodioModal } from "./inventario/custodio/modal/InvAsignarCustodioModal";
+import { InvAsignarCustodioForm } from "./inventario/custodio/form/InvAsignarCustodioForm";
 
-/* Perifericos */
-import { InvTransferirPerifericoModal } from "./inventario/periferico/modal/InvTransferirPerifericoModal";
-import { InvTransferirPerifericoForm } from "./inventario/periferico/form/InvTransferirPerifericoForm";
-import { InvPerifericoTable } from "./inventario/periferico/table/InvPerifericoTable";
-import { InvPerifericoModal } from "./inventario/periferico/modal/InvPerifericoModal";
-import { InvPerifericoForm } from "./inventario/periferico/form/InvPerifericoForm";
-import { FilterFormPeriferico } from "./inventario/periferico/filter/FilterFormPeriferico";
-import { InvPerifericoAsignarEquipoModal } from "./inventario/periferico/modal/InvPerifericoAsignarEquipoModal";
-import { InvPerifericoAsignarEquipoForm } from "./inventario/periferico/form/InvPerifericoAsignarEquipoForm";
+/* Inventario: Consumibles */
+import { InvConsumibleModal } from "./inventario/consumible/modal/InvConsumibleModal";
+import { InvConsumibleTable } from "./inventario/consumible/table/InvConsumibleTable";
+import { ConsumibleForm } from "./inventario/consumible/form/ConsumibleForm";
+import { ConsumibleStockModal } from "./inventario/consumible/modal/ConsumibleStockModal";
+import { InvStockConsumibleForm } from "./inventario/consumible/form/InvStockConsumibleForm";
+import { InvSolicitudConsumibleModal } from "./inventario/consumible/modal/InvSolicitudConsumibleModal";
+import { InvConsumibleSolicitudForm } from "./inventario/consumible/form/InvConsumibleSolicitudForm";
+import { InvConsumibleHistorialModal } from "./inventario/consumible/modal/InvConsumibleHistorialModal";
+import { InvConsumibleBusqueda } from "./inventario/consumible/form/InvConsumibleBusqueda";
+import { InvConsumibleHistorialTable } from "./inventario/consumible/table/InvConsumibleHistorialTable";
 
 
 /* Elementos */
@@ -213,12 +218,13 @@ import {
     MenuUsersTable,
     MenuTable_E,
     MenuTable_D,
-    MenuTable_VE,
+    MenuTable_Equipo,
+    MenuTable_Consumible,
     MenuTable_T,
     MenuSolicitudTable,
     MenuTable_Per,
-    MenuTable_Perif,
-    MenuTable_Periferico
+    MenuTable_AutorizarPermiso,
+    MenuTable_Imprimir
 } from "./elements/tables/MenuTable";
 import { TableContent } from "./elements/tables/TableContent";
 
@@ -255,6 +261,9 @@ export {
     /* PERMISO */
     FilterPermisoAdmin,
     FormSolicitudPermiso,
+    FilterAutorizarPermiso,
+    AutorizarPermisoTable,
+
     /* SOPORTE */
     FilterFormSearchDates,
     FilterFormSoportes,
@@ -369,6 +378,7 @@ export {
     InvAsignacionForm,
     InvEquipoAsignacionForm,
     InvEquipoGeneralForm,
+    InvEquipoStepperFinal,
     InvEquipoComplementaria,
     InvInfoGeneralEquipo,
     InvTabsDetalleEquipo,
@@ -379,25 +389,25 @@ export {
     InvDeleteEquipoForm,
     InvBajaEquipoModal,
     InvBajaEquipoForm,
-    InvTabComponentesEquipos,
     InvTabResponsableEquipo,
-    InvEquipoComponentesTable,
-    InvEquipoComponenteForm,
-    InvEquipoAssignComponente,
     InvEquipoDocumentosTable,
     InvEquipoDocumentoModal,
     InvEquipoDocumentoForm,
     BtnDownloadDocumento,
+    InvAsignarCustodioModal,
+    InvAsignarCustodioForm,
 
-    /* Perifericos */
-    InvTransferirPerifericoModal,
-    InvTransferirPerifericoForm,
-    InvPerifericoTable,
-    InvPerifericoModal,
-    InvPerifericoForm,
-    FilterFormPeriferico,
-    InvPerifericoAsignarEquipoModal,
-    InvPerifericoAsignarEquipoForm,
+    /* Inventario: Consumible */
+    InvConsumibleModal,
+    InvConsumibleTable,
+    ConsumibleForm,
+    ConsumibleStockModal,
+    InvStockConsumibleForm,
+    InvSolicitudConsumibleModal,
+    InvConsumibleSolicitudForm,
+    InvConsumibleHistorialModal,
+    InvConsumibleBusqueda,
+    InvConsumibleHistorialTable,
 
     /* Elements */
     Logo,
@@ -421,11 +431,12 @@ export {
     MenuUsersTable,
     MenuTable_E,
     MenuTable_D,
-    MenuTable_VE,
+    MenuTable_Equipo,
+    MenuTable_Consumible,
+    MenuTable_Imprimir,
     MenuTable_T,
     MenuSolicitudTable,
     MenuTable_Per,
-    MenuTable_Perif,
-    MenuTable_Periferico,
+    MenuTable_AutorizarPermiso,
     TableContent,
 };

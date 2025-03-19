@@ -1,156 +1,120 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import {
-    ActionIcon,
     Box,
-    Code,
-    Fieldset,
-    Grid,
     MultiSelect,
-    rem,
+    Select,
     Stack,
     TextInput,
 } from "@mantine/core";
-import { AlertSection, BtnSubmit, TextSection } from "../../../../components";
+import { BtnSubmit } from "../../../../components";
+import { IconArrowDownToArc } from "@tabler/icons-react";
 import {
-    IconCircleDashedCheck,
-    IconDevicesDown,
-    IconFile3d,
-} from "@tabler/icons-react";
-import { useInvEquipoStore, useSoporteStore } from "../../../../hooks";
-import { DateInput } from "@mantine/dates";
+    useInvEquipoStore,
+    useInvUiEquipo,
+    useSoporteStore,
+    useUsersStore,
+} from "../../../../hooks";
 
 export const InvBajaEquipoForm = ({ form }) => {
-    const { numero_sop } = form.values;
-    const { activateInvEquipo } = useInvEquipoStore();
-    const { startLoadSoporte, startExportActaPDF, activateSoporte } =
-        useSoporteStore();
-    const [btnDisabled, setBtnDisabled] = useState(true);
-
-    const { perifericos = [] } = activateInvEquipo || {};
-
-    const icon = (
-        <IconFile3d style={{ width: rem(18), height: rem(18) }} stroke={1.5} />
-    );
+    const { user_id } = form.values;
+    const { users } = useUsersStore();
+    const { invEquiposBajas, startSearchEquipos, startBajaEquipos } =
+        useInvEquipoStore();
+    const { soportes } = useSoporteStore();
+    const { modalActionBajaEquipo } = useInvUiEquipo();
 
     useEffect(() => {
-        if (activateSoporte !== null && activateInvEquipo?.solucion === null) {
-            setBtnDisabled(false);
-        } else {
-            setBtnDisabled(true);
+        if (user_id !== null) {
+            startSearchEquipos({ user_id });
+            form.setFieldValue("equipos", []);
         }
-    }, [activateSoporte]);
+    }, [user_id]);
 
-    const handleSubmitCheckSoporte = (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
-        startLoadSoporte({ numero_sop });
-    };
-
-    const handleGenerarActa = (e) => {
-        e.preventDefault();
-        startExportActaPDF(activateInvEquipo);
+        console.log(form.getTransformedValues());
+        startBajaEquipos(form.getTransformedValues());
+        modalActionBajaEquipo(false);
+        form.reset();
     };
 
     return (
-        <Stack
-            bg="var(--mantine-color-body)"
-            align="stretch"
-            justify="center"
-            gap="lg"
+        <Box
+            component="form"
+            onSubmit={form.onSubmit((_, e) => handleSubmit(e))}
         >
-            <AlertSection
-                variant="light"
-                color="teal.5"
-                title="Información"
-                icon={IconDevicesDown}
+            <Stack
+                bg="var(--mantine-color-body)"
+                align="stretch"
+                justify="center"
+                gap="lg"
             >
-                Para confirmar la baja del equipo, debe primero generar un
-                soporte técnico y comprobar su activación.
-            </AlertSection>
-            <div>
-                <TextSection tt="" ta="center" fw={500}>
-                    Usted dará de baja al equipo:{" "}
-                    {activateInvEquipo?.nombre_marca +
-                        " " +
-                        activateInvEquipo?.modelo}
-                </TextSection>
-                <TextSection tt="" ta="center" fw={500} fs="italic">
-                    {activateInvEquipo?.numero_serie}
-                </TextSection>
-            </div>
-            <Box
-                component="form"
-                onSubmit={form.onSubmit((_, e) => handleGenerarActa(e))}
-            >
-                <Fieldset legend="Información adicional">
-                    <Grid>
-                        <Grid.Col span={12}>
-                            <DateInput
-                                clearable
-                                valueFormat="YYYY-MM-DD"
-                                label="Fecha de baja"
-                                placeholder="Seleccione fecha de baja"
-                                {...form.getInputProps("fecha_baja")}
-                            />
-                        </Grid.Col>
-                        <Grid.Col span={12}>
-                            <MultiSelect
-                                label="Perifericos/Componentes"
-                                placeholder="Selecciona perifericos u componentes"
-                                data={perifericos.map((periferico) => {
-                                    return {
-                                        label: `${periferico.modelo} ${periferico.numero_serie}`,
-                                        value: periferico.id.toString(),
-                                    };
-                                })}
-                                {...form.getInputProps("perifericos")}
-                            />
-                        </Grid.Col>
-                        <Grid.Col span={10}>
-                            <TextInput
-                                placeholder="Digite el número de soporte"
-                                {...form.getInputProps("numero_sop")}
-                            />
-                        </Grid.Col>
-                        <Grid.Col span={2}>
-                            <ActionIcon
-                                variant="filled"
-                                color="teal.5"
-                                size="input-sm"
-                                //aria-label="Check soporte"
-                                onClick={(e) => handleSubmitCheckSoporte(e)}
-                            >
-                                <IconCircleDashedCheck
-                                    style={{ width: "70%", height: "70%" }}
-                                    stroke={1.5}
-                                />
-                            </ActionIcon>
-                        </Grid.Col>
-                    </Grid>
-                    <Code>
-                        {activateSoporte !== null
-                            ? JSON.stringify(
-                                  {
-                                      numero_sop:
-                                          activateSoporte.numero_sop ||
-                                          "Sin carga...",
-                                      solicitante:
-                                          activateSoporte.solicitante ||
-                                          "Sin solicitante...",
-                                      tecnico:
-                                          activateSoporte.tecnico ||
-                                          "Sin técnico...",
-                                      solucion:
-                                          activateSoporte.solucion ||
-                                          "Sin solución...",
-                                  },
-                                  4,
-                                  "\t"
-                              )
-                            : null}
-                    </Code>
-                    <BtnSubmit disabled={btnDisabled}>Dar baja</BtnSubmit>
-                </Fieldset>
-            </Box>
-        </Stack>
+                <Select
+                    required
+                    searchable
+                    label="Custodio"
+                    placeholder="Seleccione custodio"
+                    nothingFoundMessage="Nothing found..."
+                    {...form.getInputProps("user_id")}
+                    data={users.map((user) => {
+                        return {
+                            value: user.cdgo_usrio.toString(),
+                            label: user.nmbre_usrio,
+                        };
+                    })}
+                />
+                <MultiSelect
+                    required
+                    searchable
+                    clearable
+                    checkIconPosition="right"
+                    label="Activo(s) Informatico"
+                    placeholder="Seleccione el activo(s) informatico(s)"
+                    nothingFoundMessage="Nothing found..."
+                    {...form.getInputProps("equipos")}
+                    data={invEquiposBajas.map((equipo) => {
+                        return {
+                            group: equipo.nombre_categoria,
+                            items: equipo.equipos.map((eq) => {
+                                return {
+                                    value: eq.id.toString(),
+                                    label: `${eq.codigo_nuevo}`,
+                                };
+                            }),
+                        };
+                    })}
+                />
+                <Select
+                    required
+                    searchable
+                    label="No. SOPORTE"
+                    placeholder="Seleccione el No. de soporte"
+                    nothingFoundMessage="Nothing found..."
+                    {...form.getInputProps("numero_sop")}
+                    data={soportes.map((soporte) => {
+                        return {
+                            value: soporte.numero_sop.toString(),
+                            label: soporte.numero_sop.toString(),
+                        };
+                    })}
+                />
+                <TextInput
+                    required
+                    description="Ingrese el No. MEMO de la Dirección de TIC"
+                    label="No. MEMORANDO"
+                    placeholder="Ingrese Número de MEMO"
+                    {...form.getInputProps("numero_memorando")}
+                />
+
+                <BtnSubmit
+                    IconSection={IconArrowDownToArc}
+                    heigh={50}
+                    //loading={isLoading}
+                    //disabled={isLoading}
+                >
+                    Dar de baja
+                </BtnSubmit>
+            </Stack>
+        </Box>
     );
 };

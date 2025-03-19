@@ -12,12 +12,7 @@ export const InvShowEquipoModal = () => {
     const {
         isOpenModalViewEquipo,
         modalActionViewEquipo,
-        modalActionBajaEquipo,
     } = useInvUiEquipo();
-
-    const handleBajaEquipo = () => {
-        modalActionBajaEquipo(true);
-    };
 
     const handleCloseModal = () => {
         modalActionViewEquipo(false);
@@ -29,7 +24,7 @@ export const InvShowEquipoModal = () => {
     return (
         <Drawer
             position="right"
-            size="55rem"
+            size="60rem"
             opened={isOpenModalViewEquipo}
             onClose={handleCloseModal}
             title={

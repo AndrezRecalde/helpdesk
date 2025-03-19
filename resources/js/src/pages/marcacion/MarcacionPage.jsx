@@ -36,7 +36,7 @@ const MarcacionPage = () => {
     };
 
     return (
-        <Container size="xxl">
+        <Container size="xl">
             <TitlePage order={1}>Mis marcaciones</TitlePage>
             <Divider my="md" />
             <FilterFormSearchDates form={form} handleSubmit={handleSubmit} title="Filtrar marcaciones" />

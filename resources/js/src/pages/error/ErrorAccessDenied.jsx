@@ -7,7 +7,7 @@ import classes from "../../assets/styles/modules/error/Forbidden.module.css";
 const ErrorAccessDenied = () => {
     const navigate = useNavigate();
     const handleAction = () => {
-        navigate("/staff/d/profile");
+        navigate("/intranet/profile");
     };
 
     return (

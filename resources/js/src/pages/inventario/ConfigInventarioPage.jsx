@@ -25,7 +25,7 @@ const ConfigInventarioPage = () => {
     const { tabValue } = useParams();
 
     return (
-        <Container size="xxl">
+        <Container size="xl">
             <TitlePage order={2}>Parametros del Inventario</TitlePage>
             <Divider my="md" />
 
@@ -33,7 +33,7 @@ const ConfigInventarioPage = () => {
                 defaultValue="categorias"
                 value={tabValue}
                 onChange={(value) =>
-                    navigate(`/gerencia/configuracion-inventario/${value}`)
+                    navigate(`/helpdesk/gerencia/configuracion-inventario/${value}`)
                 }
             >
                 <Tabs.List grow>

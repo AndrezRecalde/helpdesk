@@ -23,13 +23,15 @@ import {
 import { isNotEmpty, useForm } from "@mantine/form";
 import Swal from "sweetalert2";
 import dayjs from "dayjs";
+import { IconDeviceImacUp, IconMessageUp } from "@tabler/icons-react";
 
 const SoportesPage = () => {
     useTitlePage("Helpdesk | Soportes");
     const usuario = JSON.parse(localStorage.getItem("service_user"));
     const { startLoadDirecciones, clearDirecciones } = useDireccionStore();
     const { startLoadEstados } = useEstadoStore();
-    const { loadPDF, soportes, message, errores, clearSoportes } = useSoporteStore();
+    const { loadPDF, soportes, message, errores, clearSoportes } =
+        useSoporteStore();
     const { modalActionAddSolicitud, modalActionCreateSoporte } =
         useUiSoporte();
     const { clearStorageFields } = useStorageField();
@@ -121,8 +123,23 @@ const SoportesPage = () => {
         }
     }, [loadPDF]);
 
+    const menuActions = [
+        {
+            label: "Nueva Solicitud",
+            icon: IconMessageUp,
+            onClick: handleOpenModalSolicitud,
+            color: "teal",
+        },
+        {
+            label: "Nuevo Soporte",
+            icon: IconDeviceImacUp,
+            onClick: handleOpenModalSoporte,
+            color: "pink",
+        },
+    ];
+
     return (
-        <Container size="xxl">
+        <Container size="xl">
             <Group justify="space-between">
                 <div>
                     <TitlePage order={2}>Gestión De Soportes</TitlePage>
@@ -131,10 +148,7 @@ const SoportesPage = () => {
                     </TextSection>
                 </div>
                 {usuario.role_id === 1 ? (
-                    <BtnAddActions
-                        handleOpenModalSolicitud={handleOpenModalSolicitud}
-                        handleOpenModalSoporte={handleOpenModalSoporte}
-                    >
+                    <BtnAddActions actions={menuActions}>
                         Crear nuevo
                     </BtnAddActions>
                 ) : null}

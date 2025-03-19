@@ -8,6 +8,8 @@ export const InvTabGeneralEquipo = () => {
     const { activateInvEquipo } = useInvEquipoStore();
 
     const elements = [
+        { caracteristica: "CUSTODIO", value: activateInvEquipo?.responsable ? activateInvEquipo?.responsable.toUpperCase() : "SIN CUSTODIO" },
+        { caracteristica: "DIRECCIÓN", value: activateInvEquipo?.direccion ? activateInvEquipo?.direccion.toUpperCase() : "SIN DIRECCIÓN" },
         { caracteristica: "ESTADO", value: activateInvEquipo?.nombre_estado || "Cargando..." },
         { caracteristica: "MARCA", value: activateInvEquipo?.nombre_marca || "Cargando..." },
         { caracteristica: "MODELO", value: activateInvEquipo?.modelo || "Cargando..." },
@@ -15,10 +17,10 @@ export const InvTabGeneralEquipo = () => {
         { caracteristica: "FECHA DE ADQUISICIÓN", value: dayjs(activateInvEquipo?.fecha_adquisicion).format("YYYY-MM-DD") || "Cargando..." },
         //{ caracteristica: "FECHA DE AMORTIZACIÓN", value: dayjs(activateInvEquipo?.fecha_amortizacion).format("YYYY-MM-DD") || "No Registra..." },
         { caracteristica: "VIDA ÚTIL (EN AÑOS)", value: activateInvEquipo?.vida_util || "Cargando..." },
-        { caracteristica: "BIEN ADQUIRIDO", value: activateInvEquipo?.bien_adquirido === true ? "Sí" : "No" || "Cargando..." },
-        { caracteristica: "BIEN DONADO", value: activateInvEquipo?.bien_donado === true ? "Sí" : "No" || "Cargando..." },
-        { caracteristica: "BIEN USADO", value: activateInvEquipo?.bien_usado === true ? "Sí" : "No" || "Cargando..." },
-        { caracteristica: "UBICACIÓN FÍSICA", value: activateInvEquipo?.nombre_ubicacion || "Cargando..." },
+        { caracteristica: "BIEN ADQUIRIDO", value: activateInvEquipo?.bien_adquirido === true ? "SI" : "NO" || "Cargando..." },
+        { caracteristica: "BIEN DONADO", value: activateInvEquipo?.bien_donado === true ? "SI" : "NO" || "Cargando..." },
+        { caracteristica: "BIEN USADO", value: activateInvEquipo?.bien_usado === true ? "SI" : "NO" || "Cargando..." },
+        { caracteristica: "UBICACIÓN FÍSICA", value: activateInvEquipo?.nombre_ubicacion ? activateInvEquipo?.nombre_ubicacion : "En Bodega"},
         { caracteristica: "NOMBRE DE EDIFICIO", value: activateInvEquipo?.nombre_edificio || "Cargando..." },
 
     ];

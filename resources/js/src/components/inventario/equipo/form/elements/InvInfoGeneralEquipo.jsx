@@ -6,11 +6,30 @@ export const InvInfoGeneralEquipo = () => {
     const { activateInvEquipo } = useInvEquipoStore();
 
     const infoItems = [
-        { label: "Codigo Nuevo", value: activateInvEquipo?.codigo_nuevo || "Cargando..." },
-        { label: "Codigo Antiguo", value: activateInvEquipo?.codigo_antiguo || "Cargando..." },
-        { label: "Tipo de Categoría", value: activateInvEquipo?.nombre_tipocategoria || "Cargando..." },
-        { label: "Categoria", value: activateInvEquipo?.nombre_categoria || "Cargando..." },
-        { label: "Descripcion", value: activateInvEquipo?.descripcion || "Cargando..." }
+        {
+            label: "Codigo Nuevo",
+            value: activateInvEquipo?.codigo_nuevo || "Cargando...",
+        },
+        {
+            label: "Codigo Antiguo",
+            value: activateInvEquipo?.codigo_antiguo
+                ? activateInvEquipo.codigo_antiguo
+                : "SIN CODIGO",
+        },
+        {
+            label: "Tipo de Categoría",
+            value: activateInvEquipo?.nombre_tipocategoria || "Cargando...",
+        },
+        {
+            label: "Categoria",
+            value: activateInvEquipo?.nombre_categoria || "Cargando...",
+        },
+        {
+            label: "Descripcion",
+            value: activateInvEquipo?.descripcion
+                ? activateInvEquipo.descripcion
+                : "SIN DESCRIPCION",
+        },
     ];
 
     return (

@@ -18,7 +18,7 @@ export const InvStockCategoriaForm = ({ form }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(form.getTransformedValues());
+        //console.log(form.getTransformedValues());
         startAddIncrementarStock(form.getTransformedValues());
         if (activateCategoria !== null) {
             setActivateInvCategoria(null);

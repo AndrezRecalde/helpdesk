@@ -1,11 +1,13 @@
 import { useCallback, useMemo } from "react";
+import { Table } from "@mantine/core";
 import { useMantineReactTable } from "mantine-react-table";
 import {
     ActionReportPDF,
-    MenuTable_VE,
+    MenuTable_Equipo,
     TableContent,
 } from "../../../../components";
-import { useInvEquipoStore, useInvUiEquipo } from "../../../../hooks";
+import { useInvEquipoStore, useInvUiEquipo, useUiInvCustodio } from "../../../../hooks";
+import Swal from "sweetalert2";
 
 export const InvEquipoTable = () => {
     const {
@@ -13,6 +15,7 @@ export const InvEquipoTable = () => {
         invEquipos,
         startShowInvEquipo,
         setActivateInvEquipo,
+        startRemoverCustodio,
         startExportEquipos,
     } = useInvEquipoStore();
     const {
@@ -20,6 +23,7 @@ export const InvEquipoTable = () => {
         modalActionViewEquipo,
         modalActionDeleteEquipo,
     } = useInvUiEquipo();
+    const { modalActionCustodio } = useUiInvCustodio();
 
     const columns = useMemo(
         () => [
@@ -32,18 +36,23 @@ export const InvEquipoTable = () => {
                 filterVariant: "autocomplete",
             },
             {
+                header: "Categoría",
+                accessorKey: "nombre_categoria",
+            },
+            {
                 header: "Equipo",
                 accessorFn: (row) => row.nombre_marca + " " + row.modelo,
                 filterVariant: "autocomplete",
             },
             {
-                header: "Número de serie",
-                accessorKey: "numero_serie",
+                header: "Departamento",
+                accessorFn: (row) => row.direccion || "Sin Dirección",
                 filterVariant: "autocomplete",
             },
             {
-                header: "Categoría",
-                accessorKey: "nombre_categoria",
+                header: "Custodio",
+                accessorFn: (row) => row.responsable || "Sin Custodio",
+                filterVariant: "autocomplete",
             },
             {
                 header: "Estado",
@@ -90,6 +99,34 @@ export const InvEquipoTable = () => {
         [invEquipos]
     );
 
+    const handleRemoveCustodio = useCallback(
+        (selected) => {
+            Swal.fire({
+                title: "¿Estas seguro?",
+                text: `¿Confirmas en remover ${selected.responsable} como custodio?`,
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#20c997",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Si, confirmo!",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    startRemoverCustodio(selected);
+                }
+            });
+        },
+        [invEquipos]
+    );
+
+    const handleAssignCustodio = useCallback(
+        (selected) => {
+            console.log(selected);
+            setActivateInvEquipo(selected);
+            modalActionCustodio(true);
+        },
+        [invEquipos]
+    );
+
     const handleExportDataPDF = (e) => {
         e.preventDefault();
         console.log("export");
@@ -108,12 +145,14 @@ export const InvEquipoTable = () => {
                 <ActionReportPDF handleExportDataPDF={handleExportDataPDF} />
             ) : null,
         renderRowActionMenuItems: ({ row }) => (
-            <MenuTable_VE
+            <MenuTable_Equipo
                 row={row}
                 handleEdit={handleEditar}
                 handleShow={handleShow}
                 //handleAssign={handleAssign}
                 handleDelete={handleDelete}
+                handleRemoveCustodio={handleRemoveCustodio}
+                handleAssignCustodio={handleAssignCustodio} //TODO: REALIZAR FUNCIONES Y MODAL
             />
         ),
         mantineTableBodyCellProps: ({ column, cell }) => ({
@@ -125,9 +164,27 @@ export const InvEquipoTable = () => {
                       }
                     : {},
         }),
+        renderDetailPanel: ({ row }) => (
+            <Table variant="vertical" layout="fixed" withTableBorder>
+                <Table.Tbody>
+                    <Table.Tr>
+                        <Table.Th w={160}>No. Serie</Table.Th>
+                        <Table.Td>{row.original.numero_serie}</Table.Td>
+                    </Table.Tr>
+
+                    <Table.Tr>
+                        <Table.Th w={160}>Descripción</Table.Th>
+                        <Table.Td>
+                            {row.original.descripcion || "Sin Descripción"}
+                        </Table.Td>
+                    </Table.Tr>
+                </Table.Tbody>
+            </Table>
+        ),
         mantineTableProps: {
             withColumnBorders: true,
             striped: true,
+            withTableBorder: true,
             //withTableBorder: colorScheme === "light",
             sx: {
                 "thead > tr": {

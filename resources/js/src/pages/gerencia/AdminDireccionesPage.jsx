@@ -50,7 +50,7 @@ const AdminDireccionesPage = () => {
     }, [errores]);
 
     return (
-        <Container size="xxl">
+        <Container size="xl">
             <TitlePage order={2}>Administrar Direcciones</TitlePage>
             <Divider my="md" />
             <FilterFormDirecciones />

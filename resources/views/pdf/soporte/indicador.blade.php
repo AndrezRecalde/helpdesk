@@ -5,9 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
     <title>GTIC - Indicadores</title>
     <style>
         @page {
@@ -15,61 +12,75 @@
             margin: 20px;
         }
 
-        hr {
-            height: 1.5px;
-            background-color: black;
-            margin-top: 1%;
-            margin-bottom: 0%;
+        body {
+            font-family: Arial, sans-serif;
+            color: #333;
         }
 
-
-        /* p {
-            font-size: 14px;
-            margin-bottom: 0%;
-
-        } */
-
-        tr {
-            font-size: 12px;
-            margin-bottom: 20px;
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            border: 0.5px solid gray;
+            /* Corrige el borde */
+            table-layout: auto;
+            /* Cambia a 'auto' para ajustar el ancho según el contenido */
+            margin-bottom: 25px;
+            margin-top: 25px;
         }
 
+        th,
         td {
-            width: 30px;
-            padding: 5px;
-
+            padding: 3px;
+            vertical-align: top;
+            border: 1px solid black;
+            font-size: 12px;
+            /* Borde para celdas */
         }
 
-        .marginFooter {
-            position: static;
-            bottom: -80px;
-            left: 0px;
-            right: 0px;
-            height: 400px;
+        th {
+            background-color: #ddd;
         }
 
-        .marginEficacia {
-            margin-top: 100px;
+        input {
+            width: 98%;
+            /* Ancho casi completo */
+            box-sizing: border-box;
+            /* Incluye padding y border en el ancho total */
+            font-size: 14px;
+            /* Tamaño de fuente */
+            border: none;
+            outline: none;
         }
 
-        .marginTop {
-            margin-top: 150px;
+        .header-logo {
+            max-width: 150px;
         }
 
-        .marginBottom {
-            margin-bottom: 10px;
+        .header {
+            text-align: center;
         }
 
-        .firma {
-            width: 50px;
+        .header h4,
+        .header h5 {
+            margin: 15px 0;
+            /* Reduce márgenes */
         }
 
-        .marginLineaFirma {
-            margin-top: 80px;
+        .title {
+            font-size: 18px;
+            font-weight: bold;
+            text-transform: uppercase;
         }
 
-        img {
-            max-width: 100%;
+        .img-container {
+            text-align: center;
+        }
+
+        .img-fluid {
+            display: block;
+            margin: 15 auto;
+            width: 170px;
+            height: auto;
         }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
@@ -77,73 +88,72 @@
 </head>
 
 <body>
-    <main class="mb-5">
+    <main>
         <!-- ENCABEZADO -->
-        <table style="width:100%">
-            <tr class="border">
-                <td class="mt-0">
-                    <img class="img-fluid" alt="logo" src={{ public_path('/assets/images/LogoTransparente.png') }}
-                        height="200" width="200">
+        <table>
+            <tr>
+                <td class="img-container">
+                    <img class="img-fluid" alt="logo" src={{ public_path('/assets/images/LogoCompleto.png') }}>
                 </td>
-                <td class="mt-0">
-                    <div class="text-center">
-                        <p>{{ Str::upper($direccion) }}</p>
-                        <hr>
-                        <p>{{ Str::upper($titulo) }}</p>
-                        <p>del {{ $fecha_inicio }} al {{ $fecha_fin }}</p>
+                <td colspan="3" class="header">
+                    <h4>{{ Str::upper($direccion) }}</h4>
+                    <hr>
+                    <h4>{{ Str::upper($titulo) }} <br> DEL {{ $fecha_inicio }} al {{ $fecha_fin }} </h4>
 
-                    </div>
                 </td>
             </tr>
         </table>
         <!-- FIN ENCABEZADO -->
         <hr>
-
         <!-- A. EFICIENCIA -->
         <div>
-            <p class="text-left marginBottom">A. EFICIENCIA DE DESEMPEÑO DE ACTIVIDADES</p>
-            <p class="text-left marginBottom">{{ $sumaDesempenoForEstados }} casos corresponden al 100%</p>
-            <table class="table table-bordered">
-               <thead>
-                <tr>
-                    <th>DETALLE DE LOS CASOS</th>
-                    <th>TOTAL DE LOS CASOS/ TOTAL DE CASOS FINALIZADOS</th>
-                    <th>PORCENTAJE</th>
-                </tr>
+            <p>A. EFICIENCIA DE DESEMPEÑO DE ACTIVIDADES</p>
+            <p>{{ $sumaDesempenoForEstados }} casos corresponden al 100%</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>DETALLE DE LOS CASOS</th>
+                        <th>TOTAL DE LOS CASOS/ TOTAL DE CASOS FINALIZADOS</th>
+                        <th>PORCENTAJE</th>
+                    </tr>
                 <tbody>
                     <tr>
                         <td>A.1 Casos {{ $desempenoForEstados[3]->estado }}/Casos Totales</td>
                         <td>{{ $desempenoForEstados[3]->total_estados }}/{{ $sumaDesempenoForEstados }}</td>
-                        <td>{{ round(($desempenoForEstados[3]->total_estados / $sumaDesempenoForEstados) * 100, 2) }}%</td>
+                        <td>{{ round(($desempenoForEstados[3]->total_estados / $sumaDesempenoForEstados) * 100, 2) }}%
+                        </td>
                     </tr>
                     <tr>
                         <td>A.2 Casos Sin Cerrar/Casos Totales</td>
                         <td>{{ $desempenoForEstados[2]->total_estados }}/{{ $sumaDesempenoForEstados }}</td>
-                        <td>{{ round(($desempenoForEstados[2]->total_estados / $sumaDesempenoForEstados) * 100, 2) }}%</td>
+                        <td>{{ round(($desempenoForEstados[2]->total_estados / $sumaDesempenoForEstados) * 100, 2) }}%
+                        </td>
                     </tr>
                     <tr>
                         <td>A.3 Casos {{ $desempenoForEstados[1]->estado }}/Casos Totales</td>
                         <td>{{ $desempenoForEstados[1]->total_estados }}/{{ $sumaDesempenoForEstados }}</td>
-                        <td>{{ round(($desempenoForEstados[1]->total_estados / $sumaDesempenoForEstados) * 100, 2) }}%</td>
+                        <td>{{ round(($desempenoForEstados[1]->total_estados / $sumaDesempenoForEstados) * 100, 2) }}%
+                        </td>
                     </tr>
                     <tr>
                         <td>A.4 Casos {{ $desempenoForEstados[4]->estado }}/Casos Totales</td>
                         <td>{{ $desempenoForEstados[4]->total_estados }}/{{ $sumaDesempenoForEstados }}</td>
-                        <td>{{ round(($desempenoForEstados[4]->total_estados / $sumaDesempenoForEstados) * 100, 2) }}%</td>
+                        <td>{{ round(($desempenoForEstados[4]->total_estados / $sumaDesempenoForEstados) * 100, 2) }}%
+                        </td>
                     </tr>
                     <tr>
                         <td>A.5 Casos {{ $desempenoForEstados[0]->estado }}/Casos Totales</td>
                         <td>{{ $desempenoForEstados[0]->total_estados }}/{{ $sumaDesempenoForEstados }}</td>
-                        <td>{{ round(($desempenoForEstados[0]->total_estados / $sumaDesempenoForEstados) * 100, 2) }}%</td>
+                        <td>{{ round(($desempenoForEstados[0]->total_estados / $sumaDesempenoForEstados) * 100, 2) }}%
+                        </td>
                     </tr>
                 </tbody>
-               </thead>
+                </thead>
             </table>
         </div>
-
         <div>
-            <p class="text-left marginBottom">CASOS POR ÁREA</p>
-            <table class="table table-bordered">
+            <p>CASOS POR ÁREA</p>
+            <table>
                 <thead>
                     <tr>
                         <th>AREA</th>
@@ -168,14 +178,13 @@
                 </tbody>
             </table>
         </div>
-
-        <div class="d-flex justify-content-center">
-            <img src="{{ url($chartUrl) }}" alt="Chart">
+        <div style="text-align: center;">
+            <img src="{{ url($chartUrl) }}" alt="Chart" style="width: 50%; max-width: 400px;">
         </div>
 
-        <div class="marginTop">
-            <p class="text-left">CASOS POR TÉCNICO</p>
-            <table class="table table-bordered">
+        <div>
+            <p>CASOS POR TÉCNICO</p>
+            <table>
                 <thead>
                     <tr>
                         <th>NOMBRE DEL TECNICO</th>
@@ -199,16 +208,15 @@
             </table>
         </div>
         <!-- A. FIN EFICIENCIA -->
-
-        <div class="d-flex justify-content-center">
-            <img src="{{ $chartUrl2 }}" alt="Chart2">
+        <div style="text-align: center;">
+            <img src="{{ url($chartUrl2) }}" alt="Chart2" style="width: 70%; max-width: 700px;">
         </div>
 
         <!-- B. EFECTIVIDAD -->
-        <div class="marginTop">
-            <p class="text-left marginBottom">B. CALIDAD DE LA EFECTIVIDAD EN LA ATENCIÓN A USUARIOS</p>
-            <p class="text-left marginBottom">B1. POR AREAS</p>
-            <table class="table table-bordered">
+        <div>
+            <p>B. CALIDAD DE LA EFECTIVIDAD EN LA ATENCIÓN A USUARIOS</p>
+            <p>B1. POR AREAS</p>
+            <table>
                 <thead>
                     <tr>
                         <th>AREA</th>
@@ -229,8 +237,8 @@
             </table>
         </div>
         <div>
-            <p class="text-left marginBottom">B2. POR TECNICOS</p>
-            <table class="table table-bordered">
+            <p>B2. POR TECNICOS</p>
+            <table>
                 <thead>
                     <tr>
                         <th>NOMBRE DE TECNICOS</th>
@@ -252,15 +260,14 @@
             </table>
         </div>
         <!-- B. FIN EFECTIVIDAD -->
-
         <!-- C. EFICACIA -->
-        <div class="marginEficacia">
-            <p class="text-left marginBottom">C. EFICACIA</p>
-            <p class="text-left marginBottom">
+        <div>
+            <p>C. EFICACIA</p>
+            <p>
                 C1. CASOS FINALIZADOS/META(30 X DIA, EN {{ $sumaDiasHabiles[0]->dias_habiles }} DIAS):
                 {{ round(($desempenoForEstados[3]->total_estados / 30 / $sumaDiasHabiles[0]->dias_habiles) * 100, 2) }}%
             </p>
-            <table class="table table-bordered">
+            <table>
                 <thead>
                     <tr>
                         <th>DETALLE</th>
@@ -284,38 +291,27 @@
             </table>
         </div>
         <!-- C. FIN EFICACIA -->
-
-
-        <div>
-            <table class="table table-bordered">
-                <tr>
-                    <td class="firma">
-                        Generado por:
-                    </td>
-                    <td class="firma">
-                        Aprobado por:
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <hr class="marginLineaFirma">
-                        <p style="font-size: 14px">{{ $usuarioGenerador->generador }}</p>
-                        <p style="font-size: 14px; margin-top: 5px">{{ $usuarioGenerador->cargo_generador }}</p>
-                    </td>
-                    <td>
-                        <hr class="marginLineaFirma">
-                        <p style="font-size: 14px">{{ $usuarioGenerador->director }}</p>
-                        <p style="font-size: 14px; margin-top: 5px">{{ $usuarioGenerador->cargo_director }}</p>
-                    </td>
-                </tr>
-            </table>
-        </div>
-
+        <table>
+            <tr>
+                <td colspan="2">Generado por:</td>
+                <td colspan="2">Aprobado por:</td>
+            </tr>
+            <tr>
+                <td colspan="2"><input type="text" style="height: 30px;"></td>
+                <td colspan="2"><input type="text" style="height: 30px;"></td>
+            </tr>
+            <tr>
+                <td colspan="2" class="header">
+                    {{ $usuarioGenerador->generador }} <br>
+                    <strong>{{ $usuarioGenerador->cargo_generador }}</strong>
+                </td>
+                <td colspan="2" class="header">
+                    {{ $usuarioGenerador->director }} <br>
+                    <strong>{{ $usuarioGenerador->cargo_director }}</strong>
+                </td>
+            </tr>
+        </table>
     </main>
-
-
-
-
 </body>
 
 </html>

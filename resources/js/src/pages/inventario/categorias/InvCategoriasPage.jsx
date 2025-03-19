@@ -4,7 +4,7 @@ import { useInvCategoriaStore, useTitlePage } from "../../../hooks";
 import {
     InvCategoriaModal,
     InvCategoriaTable,
-    InvStockCategoriaModal,
+    //InvStockCategoriaModal,
     TitlePage,
 } from "../../../components";
 import Swal from "sweetalert2";
@@ -59,7 +59,7 @@ const InvCategoriasPage = ({ tabValue }) => {
             <Divider my="sm" />
             <InvCategoriaTable />
             <InvCategoriaModal />
-            <InvStockCategoriaModal />
+            {/* <InvStockCategoriaModal /> */}
         </div>
     );
 };

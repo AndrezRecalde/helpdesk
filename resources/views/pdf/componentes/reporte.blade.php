@@ -15,40 +15,58 @@
 
         .header {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
         }
 
-        .header img {
-            max-width: 150px;
+        .logo {
+            max-width: 180px;
+            height: auto;
         }
 
-        h2 {
+        h2,
+        h4 {
             text-align: center;
-            margin-top: 10px;
+            margin: 5px 0;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            border: 0.5px solid gray;
-            /* Corrige el borde */
-            table-layout: auto;
-            /* Cambia a 'auto' para ajustar el ancho según el contenido */
-            margin-bottom: 25px;
-            margin-top: 25px;
+            border: 1px solid black;
+            margin: 20px 0;
+            table-layout: fixed; /* Fuerza que todas las columnas tengan el mismo ancho */
         }
 
         th,
         td {
-            padding: 3px;
-            vertical-align: top;
+            padding: 6px;
+            text-align: left;
             border: 1px solid black;
             font-size: 12px;
-            /* Borde para celdas */
+            word-wrap: break-word; /* Evita que el texto desborde */
+        }
+
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+            text-align: center;
         }
 
         tr:nth-child(even) {
             background-color: #f9f9f9;
+        }
+         /* Definir anchos proporcionales */
+        th:nth-child(1), td:nth-child(1) { width: 12%; } /* Nombre Categoria */
+        th:nth-child(2), td:nth-child(2) { width: 10%; } /* Marca */
+        th:nth-child(3), td:nth-child(3) { width: 12%; } /* Componente */
+        th:nth-child(4), td:nth-child(4) { width: 12%; } /* Número de Serie */
+        th:nth-child(5), td:nth-child(5) { width: 10%; } /* Estado */
+        th:nth-child(6), td:nth-child(6) { width: 15%; } /* Custodio */
+        th:nth-child(7), td:nth-child(7) { width: 19%; } /* Direccion */
+        th:nth-child(8), td:nth-child(8) { width: 10%; }  /* Equipo */
+
+        .right {
+            text-align: right;
         }
     </style>
 </head>
@@ -56,35 +74,36 @@
 <body>
 
     <div class="header">
-        <img src={{ public_path('/assets/images/LogoTransparente.png') }} height="50" width="180"
-            alt="Logo de la Institución"> <!-- Cambia 'logo.png' por la ruta de tu imagen -->
+        @php
+            $logoPath = public_path('/assets/images/LogoTransparente.png');
+            $logoBase64 = 'data:image/png;base64,' . base64_encode(file_get_contents($logoPath));
+        @endphp
+        <img src="{{ $logoBase64 }}" class="logo" alt="Logo de la Institución" />
     </div>
 
     <h2>{{ $title }}</h2>
-    <h6>{{ $current_fecha }}</h6>
-    {{-- <p style="text-align: justify;">Este reporte presenta un resumen de los equipos inventariados en la institución,
-        clasificados según sus
-        características técnicas y estado actual. Los datos incluyen información clave para la identificación y el
-        seguimiento de cada equipo, como el modelo, la marca, el número de serie, los códigos de inventario, la
-        categoría y el estado de uso. Este análisis tiene como objetivo facilitar el control y la optimización de los
-        recursos tecnológicos en la institución.</p> --}}
+    <h4>Fecha de Generación: {{ date('d-m-Y', strtotime($current_fecha)) }}</h4>
 
     <table>
         <tr>
-            <th>Componente</th>
-            <th>Marca</th>
-            <th>Número de Serie</th>
             <th>Categoría</th>
+            <th>Marca</th>
+            <th>Componente</th>
+            <th>Número de Serie</th>
             <th>Estado</th>
+            <th>Custodio</th>
+            <th>Dirección</th>
             <th>Equipo</th>
         </tr>
         @foreach ($componentes as $componente)
             <tr>
-                <td>{{ $componente['nombre_periferico'] }}</td>
-                <td>{{ $componente['nombre_marca'] }}</td>
-                <td>{{ $componente['numero_serie'] }}</td>
                 <td>{{ $componente['nombre_categoria'] }}</td>
+                <td>{{ $componente['nombre_marca'] }}</td>
+                <td>{{ $componente['nombre_periferico'] }}</td>
+                <td>{{ $componente['numero_serie'] }}</td>
                 <td>{{ $componente['nombre_estado'] }}</td>
+                <td>{{ $componente['responsable'] ?? 'Sin Custodio' }}</td>
+                <td>{{ $componente['direccion'] ?? 'Sin Dirección' }}</td>
                 <td>{{ $componente['equipo']['codigo_nuevo'] ?? 'No pertenece a ningún equipo' }}</td>
             </tr>
         @endforeach

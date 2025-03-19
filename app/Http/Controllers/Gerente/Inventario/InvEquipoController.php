@@ -5,11 +5,12 @@ namespace App\Http\Controllers\Gerente\Inventario;
 use Carbon\Carbon;
 use App\Enums\MsgStatus;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\AssignComponenteRequest;
 use App\Http\Requests\EquipoDocumentoRequest;
 use App\Http\Requests\EquipoInvRequest;
 use App\Http\Requests\EquipoResponsableInvRequest;
+use App\Http\Requests\InvAsignarCustodio;
 use App\Models\InvCategoria;
+//use App\Models\InvCategoria;
 use App\Models\InvDocumentoEquipo;
 use App\Models\InvEquipo;
 use Illuminate\Http\JsonResponse;
@@ -21,28 +22,83 @@ use Barryvdh\DomPDF\Facade\Pdf;
 
 class InvEquipoController extends Controller
 {
-    function getEquiposInv(Request $request): JsonResponse
+
+    function buscarEquipoxUsuario(Request $request): JsonResponse
     {
-        $equipos = InvEquipo::from('inv_equipos as inve')
-            ->selectRaw('inve.id, inve.modelo, inve.numero_serie,
-                                     inve.codigo_antiguo, inve.codigo_nuevo,
-                                     inve.categoria_id, invc.nombre_categoria,
-                                     inve.estado_id, inves.nombre_estado, inves.color,
-                                     inve.marca_id, invm.nombre_marca')
-            ->join('inv_categorias as invc', 'invc.id', 'inve.categoria_id')
-            ->join('inv_estados as inves', 'inves.id', 'inve.estado_id')
-            ->join('inv_marcas as invm', 'invm.id', 'inve.marca_id')
-            ->byUsuarioId($request->usuario_id)
-            ->byDireccionId($request->direccion_id)
-            ->byNumeroSerie($request->numero_serie)
-            ->buscarPorCodigo($request->codigo)
-            ->byEstadoId($request->estado_id)
-            ->byCategoriaId($request->categoria_id)
+        $userId = $request->input('user_id');
+        $direccionId = $request->input('direccion_id');
+
+        $equipos = InvCategoria::from('inv_categorias as invc')
+            ->with([
+                'equipos' => function ($query) use ($userId, $direccionId) {
+                    $query->byUserId($userId)->byDireccion($direccionId);
+                }
+            ])
+            ->selectRaw('invc.id, invc.nombre_categoria')
             ->get();
 
         return response()->json([
             'status' => MsgStatus::Success,
-            'equipos' =>  $equipos
+            'equipos' => $equipos
+        ], 200);
+    }
+
+    public function getEquiposInv(Request $request): JsonResponse
+    {
+        $campo = $request->input('campo', 'codigo'); // Campo por defecto
+        $valor = $request->input('valor', '');
+
+        // Mapear los nombres de campo con sus relaciones
+        $mapaCampos = [
+            'direccion'     => 'inve.direccion_id',
+            'usuario'       => 'inve.user_id',
+            'codigo'        => ['inve.codigo_nuevo', 'inve.codigo_antiguo'], // Buscar en ambos códigos
+            'categoria'     => 'inve.categoria_id',
+            'numero_serie'  => 'inve.numero_serie',
+            'estado'        => 'inve.estado_id',
+        ];
+
+        if (!array_key_exists($campo, $mapaCampos)) {
+            return response()->json([
+                'status' => MsgStatus::Success,
+                'msg'    => 'Campo no valido'
+            ], 400);
+        }
+
+        // Construimos la consulta con selectRaw y joins
+        $query = InvEquipo::from('inv_equipos as inve')
+            ->selectRaw('inve.id, inve.modelo, inve.numero_serie,
+                     inve.codigo_antiguo, inve.codigo_nuevo,
+                     inve.categoria_id, invc.nombre_categoria, inve.descripcion,
+                     inve.estado_id, inves.nombre_estado, inves.color,
+                     inve.marca_id, invm.nombre_marca,
+                     inve.user_id, us.nmbre_usrio as responsable,
+                     inve.direccion_id, d.nmbre_dprtmnto as direccion')
+            ->join('inv_categorias as invc', 'invc.id', '=', 'inve.categoria_id')
+            ->join('inv_estados as inves', 'inves.id', '=', 'inve.estado_id')
+            ->join('inv_marcas as invm', 'invm.id', '=', 'inve.marca_id')
+            ->leftJoin('usrios_sstma as us', 'inve.user_id', '=', 'us.cdgo_usrio')
+            ->leftJoin('dprtmntos as d', 'inve.direccion_id', '=', 'd.cdgo_dprtmnto');
+
+        // Aplicar filtros si el valor no está vacío
+        if (!empty($valor)) {
+            if (is_array($mapaCampos[$campo])) {
+                // Si el campo es un array (ej. código antiguo/nuevo), buscar en ambos con LIKE
+                $query->where(function ($q) use ($mapaCampos, $campo, $valor) {
+                    foreach ($mapaCampos[$campo] as $columna) {
+                        $q->orWhere($columna, 'LIKE', "%{$valor}%");
+                    }
+                });
+            } else {
+                $query->where($mapaCampos[$campo], 'LIKE', "%{$valor}%");
+            }
+        }
+
+        $equipos = $query->orderBy('inve.id', 'DESC')->get();
+
+        return response()->json([
+            'status' => MsgStatus::Success,
+            'equipos' => $equipos
         ], 200);
     }
 
@@ -59,10 +115,11 @@ class InvEquipoController extends Controller
                             inve.categoria_id, invc.nombre_categoria,
                             invt.id as tipocategoria_id, invt.nombre_tipocategoria,
                             inve.estado_id, inves.nombre_estado, inves.color,
-                            inve.marca_id, invm.nombre_marca')
+                            inve.marca_id, invm.nombre_marca,
+                            inve.user_id, us.nmbre_usrio as responsable,
+                            inve.direccion_id, d.nmbre_dprtmnto as direccion')
             ->with([
                 'usuarios',
-                'perifericos.categoria',
                 'documentos'
             ])
             ->join('inv_ubicaciones as invu', 'invu.id', 'inve.ubicacion_id')
@@ -70,6 +127,8 @@ class InvEquipoController extends Controller
             ->join('inv_tipocategorias as invt', 'invt.id', 'invc.tipocategoria_id')
             ->join('inv_estados as inves', 'inves.id', 'inve.estado_id')
             ->join('inv_marcas as invm', 'invm.id', 'inve.marca_id')
+            ->leftJoin('usrios_sstma as us', 'inve.user_id', 'us.cdgo_usrio')
+            ->leftJoin('dprtmntos as d', 'inve.direccion_id', 'd.cdgo_dprtmnto')
             //->byCodigoAntiguo($request->codigo_antiguo)
             //->byCodigoNuevo($request->codigo_nuevo)
             ->where('inve.id', $id)
@@ -86,7 +145,7 @@ class InvEquipoController extends Controller
         try {
             DB::beginTransaction();  // Iniciar transacción
             $equipo = InvEquipo::create($request->validated());
-            $categoria = InvCategoria::find($request->categoria_id);
+            //$categoria = InvCategoria::find($request->categoria_id);
 
             // Registrar la relación con un usuario, si los campos correspondientes están presentes
             if ($request->filled('usuario_id') && $request->filled('direccion_id')) {
@@ -98,7 +157,7 @@ class InvEquipoController extends Controller
             }
 
             // Reducir el stock de la categoría relacionada
-            $categoria->reducirStock(1);
+            //$categoria->agregarStock(1);
 
             DB::commit();  // Confirmar la transacción si todo sale bien
 
@@ -115,7 +174,7 @@ class InvEquipoController extends Controller
     function update(EquipoInvRequest $request, int $id): JsonResponse
     {
         $equipo = InvEquipo::find($id);
-        $categoria = InvCategoria::find($request->categoria_id);
+        //$categoria = InvCategoria::find($request->categoria_id);
 
         try {
             if ($equipo) {
@@ -133,14 +192,15 @@ class InvEquipoController extends Controller
                     ]]);
                 }
 
-                if ($categoria->id != $equipo->categoria_id) {
-                    $categoria->reducirStock(1);
-                }
+                /* if ($categoria->id != $equipo->categoria_id) {
+                    $categoria->agregarStock(1);
+                } */
 
                 DB::commit();  // Confirmar la transacción si todo sale bien
 
                 return response()->json(['status' => MsgStatus::Success, 'msg' => MsgStatus::Updated], 201);
             } else {
+                DB::rollBack();  // Revertir la transacción en caso de error
                 return response()->json(['status' => MsgStatus::Error, 'msg' => MsgStatus::NotFound], 404);
             }
         } catch (\Throwable $th) {
@@ -149,36 +209,6 @@ class InvEquipoController extends Controller
         }
     }
 
-    function assignComponente(AssignComponenteRequest $request, int $id): JsonResponse
-    {
-        try {
-            // Encuentra el equipo
-            $equipo = InvEquipo::find($id);
-
-            // Verifica si la solicitud tiene periféricos
-            if ($request->filled('perifericos')) {
-                // Limpia los periféricos actuales para evitar duplicados
-                //$equipo->perifericos()->delete();
-
-                // Itera sobre cada periférico del request y los asocia al equipo
-                foreach ($request->perifericos as $perifericoData) {
-                    $equipo->perifericos()->create($perifericoData);
-                }
-
-                return response()->json([
-                    'status' => MsgStatus::Success,
-                    'msg'    => MsgStatus::ComponentesSuccess,
-                ], 200);
-            } else {
-                return response()->json([
-                    'status' => MsgStatus::Error,
-                    'msg'    => MsgStatus::NotFound,
-                ], 400);
-            }
-        } catch (\Throwable $th) {
-            return response()->json(['status' => MsgStatus::Error, 'message' => $th->getMessage()], 500);
-        }
-    }
 
     function assignResponsable(EquipoResponsableInvRequest $request, int $id): JsonResponse
     {
@@ -202,7 +232,7 @@ class InvEquipoController extends Controller
         }
     }
 
-    public function removeUserFromEquipo($equipo_id, $id)
+    public function removeUserFromEquipo($equipo_id, $id): JsonResponse
     {
         // Buscar el equipo
         $equipo = InvEquipo::find($equipo_id);
@@ -211,14 +241,20 @@ class InvEquipoController extends Controller
         $equipo->usuarios()->wherePivot('id', $id)->detach();
 
         // Retornar una respuesta o redireccionar
-        return response()->json(['status' => MsgStatus::Success, 'msg' => MsgStatus::Deleted], 200);
+        return response()->json([
+            'status' => MsgStatus::Success,
+            'msg' => MsgStatus::Deleted
+        ], 200);
     }
 
     function destroy(int $id): JsonResponse
     {
         $equipo = InvEquipo::find($id);
+        //$categoria = InvCategoria::find($equipo->categoria_id);
+
         try {
             if ($equipo) {
+                //$categoria->reducirStock(1);
                 $equipo->delete();
                 return response()->json(['status' => MsgStatus::Success, 'msg' => MsgStatus::Deleted], 200);
             } else {
@@ -296,55 +332,50 @@ class InvEquipoController extends Controller
         return Storage::disk('public')->download($documentoEquipo->documento);
     }
 
-    public function bajaEquipo(Request $request, int $id): JsonResponse
+
+    function removeCustodio(int $id): JsonResponse
     {
-        try {
-            // Encuentra el equipo por ID
-            $equipo = InvEquipo::findOrFail($id);
+        $equipo = InvEquipo::find($id);
 
-            // Verifica si se proporciona una fecha de baja
-            $fechaBaja = $request->input('fecha_baja');
-            if (!$fechaBaja) {
-                return response()->json([
-                    'status' => 'error',
-                    'msg'    => 'La fecha de baja es requerida.',
-                ], 400);
-            }
-
-            // Actualiza el estado del equipo a 4 y la fecha de baja
-            $equipo->update([
-                'estado_id' => 4,
-                'fecha_baja' => $fechaBaja,
-            ]);
-
-            // Verifica si se proporciona un array de periféricos
-            if ($request->filled('perifericos')) {
-                $perifericos = $request->input('perifericos');
-
-                // Cambia el estado de los periféricos especificados a 4 y la fecha de baja
-                $equipo->perifericos()
-                    ->whereIn('id', $perifericos) // Filtra los periféricos a actualizar
-                    ->update([
-                        'estado_id'  => 4,
-                        'fecha_baja' => $fechaBaja,
-                    ]);
-            }
-
+        // Verificar si el equipo existe
+        if (!$equipo) {
             return response()->json([
-                'status' => 'success',
-                'msg'    => 'El equipo y los periféricos han sido dados de baja exitosamente.',
-            ], 200);
-        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
-            return response()->json([
-                'status' => 'error',
-                'message'    => 'El equipo no fue encontrado.',
+                'status' => MsgStatus::Error,
+                'msg'    => 'El equipo no fue encontrado.'
             ], 404);
-        } catch (\Throwable $th) {
-            return response()->json([
-                'status' => 'error',
-                'message' => $th->getMessage(),
-            ], 500);
         }
+
+        // Actualizar el equipo_id a null
+        $equipo->user_id = null;
+        $equipo->direccion_id = null;
+        $equipo->save();
+
+        return response()->json([
+            'status' => MsgStatus::Success,
+            'msg' => 'El custodio se desvinculó',
+        ]);
+    }
+
+    function asignarCustodio(InvAsignarCustodio $request, int $id): JsonResponse
+    {
+        $equipo = InvEquipo::find($id);
+
+        if (!$equipo) {
+            return response()->json([
+                'status' => MsgStatus::Error,
+                'msg' => 'Equipo no encontrado',
+            ], 404);
+        }
+
+        // Asignar los valores del custodio al equipo
+        $equipo->user_id = $request->user_id;
+        $equipo->direccion_id = $request->direccion_id;
+        $equipo->save();
+
+        return response()->json([
+            'status' => MsgStatus::Success,
+            'msg' => 'El custodio se vinculó',
+        ]);
     }
 
 

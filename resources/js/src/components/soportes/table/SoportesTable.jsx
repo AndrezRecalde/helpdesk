@@ -171,26 +171,22 @@ export const SoportesTable = () => {
                 />
             ) : null,
         renderDetailPanel: ({ row }) => (
-            <Table
-                verticalSpacing="md"
-                withColumnBorders
-                withRowBorders={true}
-            >
+            <Table variant="vertical" layout="fixed" withTableBorder>
                 <Table.Tbody>
+                <Table.Tr>
+                        <Table.Th w={300}>Tipo Soporte</Table.Th>
+                        <Table.Td>{row.original.tipo_soporte}</Table.Td>
+                    </Table.Tr>
                     <Table.Tr>
+                        <Table.Th w={300}>Incidencia</Table.Th>
                         <Table.Td>
-                            <TextSection fz="sm" fw={300} tt="">
-                                {row.original.incidente}{" "}
-                            </TextSection>
-
-                            <TextSection fs="italic" tt="" fz={12}>
-                                {"- "}
-                                {dayjs(row.original.fecha_ini).fromNow()}{" "}
-                            </TextSection>
-                            <TextSection fz="xs" c="dimmed" tt="" fw={700}>
-                                Incidencia
-                            </TextSection>
+                            {row.original.incidente} <br />
+                            {"- "} {dayjs(row.original.fecha_ini).fromNow()}{" "}
                         </Table.Td>
+                    </Table.Tr>
+
+                    <Table.Tr>
+                        <Table.Th w={300}>Retrospectiva del técnico</Table.Th>
                         <Table.Td>
                             <div
                                 dangerouslySetInnerHTML={{
@@ -198,23 +194,9 @@ export const SoportesTable = () => {
                                         row.original.solucion ?? "Sin solución",
                                 }}
                             />
-                            <TextSection fs="italic" tt="" fz={12}>
-                                {row.original.fecha_fin
-                                    ? "- " +
-                                      dayjs(row.original.fecha_fin).fromNow()
-                                    : null}{" "}
-                            </TextSection>
-                            <TextSection fz="xs" c="dimmed" tt="" fw={700}>
-                                Retrospectiva del técnico
-                            </TextSection>
-                        </Table.Td>
-                        <Table.Td>
-                            <Badge radius="sm">
-                                {row.original.tipo_soporte}
-                            </Badge>
-                            <TextSection fz="xs" c="dimmed" tt="" fw={700}>
-                                Tipo soporte
-                            </TextSection>
+                            {row.original.fecha_fin
+                                ? "- " + dayjs(row.original.fecha_fin).fromNow()
+                                : null}{" "}
                         </Table.Td>
                     </Table.Tr>
                 </Table.Tbody>

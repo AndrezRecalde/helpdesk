@@ -11,6 +11,7 @@ import {
     IconDeviceImacStar,
 } from "@tabler/icons-react";
 import classes from "../../../assets/styles/modules/user/StatsGrid.module.css";
+import { Roles } from "../../../helpers/dictionary";
 
 
 export const CardInfoStatsUser = ({ usuario }) => {
@@ -68,12 +69,12 @@ export const CardInfoStatsUser = ({ usuario }) => {
         },
         {
             title:
-                usuario.role_id === 3
+                usuario.role === Roles.USUARIO
                     ? "Total Soportes recibidos"
                     : "Total Soportes Brindados",
             icon: "total_soportes",
             value:
-                usuario.role_id === 3
+                usuario.role === Roles.USUARIO
                     ? infoSoportes?.total_soportes
                     : (Array.isArray(totalTecnicosSoportes) && totalTecnicosSoportes.length > 0
                     ? totalTecnicosSoportes[0].total_soportes
