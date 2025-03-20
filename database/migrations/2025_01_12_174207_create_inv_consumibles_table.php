@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('inv_consumibles', function (Blueprint $table) {
             $table->id();
             $table->string('nombre_consumible');
-            $table->unsignedInteger('categoria_id');
+            $table->unsignedBigInteger('categoria_id');
             $table->unsignedInteger('stock')->default(0);
             $table->boolean('activo')->default(false);
             $table->timestamps();

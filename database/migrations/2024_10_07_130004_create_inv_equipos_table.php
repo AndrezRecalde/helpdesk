@@ -30,8 +30,8 @@ return new class extends Migration
             $table->unsignedBigInteger('categoria_id');
             $table->unsignedBigInteger('estado_id');
             $table->unsignedBigInteger('marca_id');
-            $table->unsignedBigInteger('user_id')->nullable(); //Se agrega usuario custodio
-            $table->unsignedBigInteger('direccion_id')->nullable(); //Se agrega usuario custodio
+            $table->integer('user_id')->nullable(); //Se agrega usuario custodio
+            $table->integer('direccion_id')->nullable(); //Se agrega usuario custodio
             $table->timestamps();
 
 
