@@ -7,6 +7,7 @@ import { ProfileForm } from "./user/profile/ProfileForm";
 import { CardInfoStatsUser } from "./user/profile/CardInfoStatsUser";
 import { TableMarcacionRelojOnline } from "./user/profile/TableMarcacionRelojOnline";
 import { UserBtnHeader } from "./user/menu/UserBtnHeader";
+import { NightModeSwitch } from "./user/menu/NightModeSwitch";
 
 /* Usuario: Contraseña */
 import { ChangePwdForm } from "./user/password/ChangePwdForm";
@@ -238,6 +239,7 @@ export {
     CardInfoStatsUser,
     TableMarcacionRelojOnline,
     UserBtnHeader,
+    NightModeSwitch,
 
     /* Usuario: Contraseña */
     ChangePwdForm,

@@ -1,23 +1,27 @@
-import { AppLayout } from "./appshell/AppLayout";
-import { AppHeader } from "./appshell/header/AppHeader";
-import { AppNavbar } from "./appshell/navbar/AppNavbar";
-import { AppNavfooter } from "./appshell/navbar/AppNavfooter";
-import { LinksGroup } from "./appshell/navbar/NavbarLinksGroup";
 import {
-    Roles,
-    lGerente,
-    lTecnico,
-    lUsuario,
-} from "./appshell/navbar/navlinks/navLinks";
+    NavMenuTics,
+    NavMenuAdminTics,
+    NavMenuPermisosAdmin,
+    MenuRapido,
+} from "./appshell/menu/data/menuRoutes";
+import { AppHeader } from "./appshell/header/AppHeader";
+import { MenuList, MenuQuick } from "./appshell/menu/MenuLinks";
+import { StackAside } from "./appshell/menu/StackAside";
+import { SolicitudesMenu } from "./appshell/menu/SolicitudesMenu";
+import { GestionMenu } from "./appshell/menu/GestionMenu";
+import { MenuSection, MenuRapidoSection } from "./appshell/menu/MenuSection";
 
 export {
-    AppLayout,
+    NavMenuTics,
+    NavMenuAdminTics,
+    NavMenuPermisosAdmin,
+    MenuRapido,
     AppHeader,
-    AppNavbar,
-    AppNavfooter,
-    LinksGroup,
-    Roles,
-    lGerente,
-    lTecnico,
-    lUsuario,
+    MenuList,
+    MenuQuick,
+    StackAside,
+    SolicitudesMenu,
+    GestionMenu,
+    MenuSection,
+    MenuRapidoSection
 };

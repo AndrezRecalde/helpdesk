@@ -15,7 +15,7 @@ export const ProfileForm = () => {
                 <Grid>
                     <Grid.Col span={{ base: 12 }}>
                         <TextSection tt="" fw={700}>
-                            {profile.empresa || "Sin datos..."}
+                            {profile?.empresa || "Sin datos..."}
                         </TextSection>
                         <TextSection
                             tt="uppercase"
@@ -28,7 +28,7 @@ export const ProfileForm = () => {
                     </Grid.Col>
                     <Grid.Col span={{ base: 12 }}>
                         <TextSection tt="" fw={700}>
-                            {profile.direccion || "Sin datos..."}
+                            {profile?.direccion || "Sin datos..."}
                         </TextSection>
                         <TextSection
                             tt="uppercase"
@@ -41,7 +41,7 @@ export const ProfileForm = () => {
                     </Grid.Col>
                     <Grid.Col span={{ base: 12, md: 12, lg: 12 }}>
                         <TextSection tt="" fw={700}>
-                            {profile.nmbre_usrio || "Sin datos..."}
+                            {profile?.nmbre_usrio?.toUpperCase() || "Sin datos..."}
                         </TextSection>
                         <TextSection
                             tt="uppercase"
@@ -54,7 +54,7 @@ export const ProfileForm = () => {
                     </Grid.Col>
                     <Grid.Col span={{ base: 12, md: 12, lg: 12 }}>
                         <TextSection tt="" fw={700}>
-                            {profile.cargo || "Sin datos..."}
+                            {profile?.cargo || "Sin datos..."}
                         </TextSection>
                         <TextSection
                             tt="uppercase"

@@ -28,7 +28,7 @@ const ProfilePage = () => {
     const { startLoadInfoTecnicosSoporte, clearInfoSoportesTecnico } =
         useTecnicoStore();
     const { startLoadInfoPermisos, setActivatePermiso } = usePermisoStore();
-    const { startLoadMarcacionesBiometricos, marcaciones, clearMarcaciones } =
+    const { startLoadMarcacionesBiometricos, clearMarcaciones } =
         useMarcacionStore();
 
     useEffect(() => {
@@ -36,7 +36,7 @@ const ProfilePage = () => {
             startProfile();
         }
         return () => {
-            clearProfile();
+            //clearProfile();
         };
     }, []);
 

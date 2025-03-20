@@ -117,7 +117,7 @@ export const CardProfile = ({ usuario, handleAction }) => {
                 <ProfileForm />
             </Card.Section>
             <Card.Section withBorder inheritPadding py="xs">
-                {usuario.role_id === 1 || usuario.role_id === 2 ? (
+                {usuario.role === Roles.TIC_GERENTE || usuario.role === Roles.TIC_TECNICO ? (
                     <div>
                         <Group justify="space-between">
                             <TextSection fw={700} tt="" fz={16} color="dimmed">

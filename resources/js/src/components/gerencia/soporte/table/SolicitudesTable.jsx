@@ -1,7 +1,7 @@
 import { useCallback, useMemo } from "react";
 import { useMantineReactTable } from "mantine-react-table";
 import { MenuSolicitudTable, MenuTable_T, TableContent } from "../../..";
-import { Badge, Table, Text, useMantineColorScheme } from "@mantine/core";
+import { Badge, Table, useMantineColorScheme } from "@mantine/core";
 import { useSoporteStore, useUiSoporte } from "../../../../hooks";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
@@ -114,32 +114,22 @@ export const SolicitudesTable = ({ menu, isLoading }) => {
             },
         }),
         renderDetailPanel: ({ row }) => (
-            <Table.ScrollContainer minWidth={800}>
-                <Table
-                    verticalSpacing="md"
-                    withColumnBorders
-                    withRowBorders={false}
-                >
-                    <Table.Tbody>
-                        <Table.Tr>
-                            <Table.Td>
-                                <Text fz="sm">{row.original.incidente}</Text>
-                                <Text fz="xs" c="dimmed">
-                                    Incidencia
-                                </Text>
-                            </Table.Td>
-                            <Table.Td>
-                                <Badge radius="sm" color={row.original.color}>
-                                    {row.original.estado}
-                                </Badge>
-                                <Text fz="xs" c="dimmed">
-                                    Estado del soporte
-                                </Text>
-                            </Table.Td>
-                        </Table.Tr>
-                    </Table.Tbody>
-                </Table>
-            </Table.ScrollContainer>
+            <Table variant="vertical" layout="fixed" withTableBorder>
+                <Table.Tbody>
+                    <Table.Tr>
+                        <Table.Th w={250}>Incidencia</Table.Th>
+                        <Table.Td>{row.original.incidente}</Table.Td>
+                    </Table.Tr>
+                    <Table.Tr>
+                        <Table.Th w={250}>Estado del Soporte</Table.Th>
+                        <Table.Td>
+                            <Badge radius="sm" color={row.original.color}>
+                                {row.original.estado}
+                            </Badge>
+                        </Table.Td>
+                    </Table.Tr>
+                </Table.Tbody>
+            </Table>
         ),
         mantineTableProps: {
             withColumnBorders: true,
