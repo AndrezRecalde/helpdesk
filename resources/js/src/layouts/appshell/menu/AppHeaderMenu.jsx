@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { AppShell, Button } from "@mantine/core";
+import { AppShell, Button, ScrollArea } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { HeaderMenu } from "./HeaderMenu";
 import { useUsersStore } from "../../../hooks";
@@ -47,7 +47,7 @@ export const AppHeaderMenu = ({ children }) => {
                     ))}
             </AppShell.Navbar> */}
             <AppShell.Main>{children}</AppShell.Main>
-            <AppShell.Aside p="sm">
+            <AppShell.Aside p="sm" component={ScrollArea}>
                 <StackAside btnToggle={toggleAside} />
             </AppShell.Aside>
             {/* <AppShell.Footer p="md">Footer</AppShell.Footer> */}

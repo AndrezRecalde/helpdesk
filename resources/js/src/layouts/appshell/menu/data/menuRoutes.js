@@ -173,7 +173,7 @@ export const MenuRapido = [
         link: "/intranet/ver-permisos",
         roles: [""],
     },
-    {
+    /* {
         icon: IconBeach,
         title: "Solicitar Vacaciones",
         path: "solicitud-soporte",
@@ -186,7 +186,7 @@ export const MenuRapido = [
         path: "soportes/:soporteValue",
         link: "/intranet/soportes/actuales",
         roles: [""],
-    },
+    }, */
     {
         icon: IconEditCircle,
         title: "Agregar Actividad",

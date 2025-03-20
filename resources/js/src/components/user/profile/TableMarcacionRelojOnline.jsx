@@ -4,7 +4,6 @@ import { useMarcacionStore } from "../../../hooks";
 import { useMantineReactTable } from "mantine-react-table";
 import dayjs from "dayjs";
 
-
 export const TableMarcacionRelojOnline = () => {
     const { marcaciones } = useMarcacionStore();
 
@@ -16,19 +15,60 @@ export const TableMarcacionRelojOnline = () => {
                 enableColumnFilter: false,
             },
             {
-                accessorFn: (row) => dayjs(row.CHECKTIME).format("YYYY-MM-DD"), //access nested data with dot notation
-                header: "FECHA",
+                accessorFn: (row) =>
+                    row.CHECKTYPE !== null
+                        ? dayjs(row.EVENTO_FECHA).format("YYYY-MM-DD")
+                        : "SIN MARCACION", //access nested data with dot notation
+                header: "FECHA DE MARCACION",
                 filterVariant: "autocomplete",
             },
             {
-                accessorFn: (row) => dayjs(row.CHECKTIME).format("HH:mm:ss"), //normal accessorKey
-                header: "HORA",
+                accessorFn: (row) =>
+                    row.CHECKTYPE !== null
+                        ? dayjs(row.CHECKTIME).format("HH:mm:ss")
+                        : null, //normal accessorKey
+                header: "HORA DE MARCACION",
                 enableColumnFilter: false,
                 //filterVariant: "autocomplete",
             },
-            {
-                accessorKey: "SENSORID", //normal accessorKey
+            /* {
+                accessorFn: (row) =>
+                    row.SENSORID !== null ? row.SENSORID : null,
                 header: "SENSOR RELOJ",
+                enableColumnFilter: false,
+                //filterVariant: "autocomplete",
+            }, */
+            /* {
+                accessorFn: (row) =>
+                    row.STARTSPECDAY !== null
+                        ? dayjs(row.STARTSPECDAY).format("YYYY-MM-DD")
+                        : mull,
+                header: "FECHA PERMISO",
+                enableColumnFilter: false,
+                //filterVariant: "autocomplete",
+            }, */
+            /* {
+                accessorFn: (row) =>
+                    row.STARTSPECDAY !== null
+                        ? dayjs(row.STARTSPECDAY).format("HH:mm:ss")
+                        : mull,
+                header: "HORA INICIO PERMISO",
+                enableColumnFilter: false,
+                //filterVariant: "autocomplete",
+            }, */
+           /*  {
+                accessorFn: (row) =>
+                    row.STARTSPECDAY !== null
+                        ? dayjs(row.ENDSPECDAY).format("HH:mm:ss")
+                        : mull,
+                header: "HORA FINAL PERMISO",
+                enableColumnFilter: false,
+                //filterVariant: "autocomplete",
+            }, */
+            {
+                accessorFn: (row) =>
+                    row.LeaveName !== null ? row.LeaveName : mull,
+                header: "OBSERVACION",
                 enableColumnFilter: false,
                 //filterVariant: "autocomplete",
             },
@@ -44,6 +84,13 @@ export const TableMarcacionRelojOnline = () => {
         ),
         initialState: { showColumnFilters: true, showGlobalFilter: true },
         enableFacetedValues: true,
+        mantineTableBodyCellProps: ({ cell }) => ({
+            style: {
+                backgroundColor:
+                    cell.row.original.LeaveName !== null ? "#448af2" : null,
+                color: cell.row.original.LeaveName !== null ? "white" : null,
+            },
+        }),
         mantineTableProps: {
             highlightOnHover: false,
             withColumnBorders: false,

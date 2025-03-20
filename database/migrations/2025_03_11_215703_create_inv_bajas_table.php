@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('equipo_id');
             $table->integer('tecnico_id');
             $table->date('fecha_baja');
-            $table->text('motivo');
+            //$table->text('motivo');
             $table->string('numero_memorando');
             $table->unsignedBigInteger('estado_id')->default(4);
             $table->timestamps();

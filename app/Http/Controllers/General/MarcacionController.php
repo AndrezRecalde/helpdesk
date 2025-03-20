@@ -42,7 +42,7 @@ class MarcacionController extends Controller
         ]);
 
         // Ejecutar el procedimiento almacenado utilizando el parámetro como string
-        $sql = "EXEC GetUserCheckinsForCurrentMonth ?";
+        $sql = "EXEC SP_GetUserEventsByBadge ?";
         $marcaciones = DB::connection('sqlsrv')->select($sql, [
             (string) $request->UserCi,  // Asegúrate de enviar un string
         ]);

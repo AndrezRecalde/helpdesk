@@ -1,6 +1,4 @@
-import {
-    IconLayoutSidebarRightCollapseFilled,
-} from "@tabler/icons-react";
+import { IconLayoutSidebarRightCollapseFilled } from "@tabler/icons-react";
 import {
     ActionIcon,
     Box,
@@ -19,9 +17,15 @@ import {
     NavMenuPermisosAdmin,
     NavMenuTics,
 } from "./data/menuRoutes";
-import { SolicitudesMenu, GestionMenu, MenuSection, MenuRapidoSection } from "../../../layouts";
+import {
+    SolicitudesMenu,
+    GestionMenu,
+    MenuSection,
+    MenuRapidoSection,
+} from "../../../layouts";
 import classes from "../../../assets/styles/modules/layout/menu/HeaderMenu.module.css";
 import classess from "../../../assets/styles/modules/user/UserHeader.module.css";
+import { Roles } from "../../../helpers/dictionary";
 
 export function HeaderMenu({ usuario, asideValue, btnToggle }) {
     const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] =
@@ -44,29 +48,40 @@ export function HeaderMenu({ usuario, asideValue, btnToggle }) {
                             <Logo height={50} width={200} />
                             <Group h="100%" gap={0} visibleFrom="md">
                                 {/* MENU DE GESTION DE TICS */}
-                                <GestionMenu
-                                    title="Gestión de TIC"
-                                    menuData={NavMenuTics}
-                                    usuario={usuario}
-                                    classes={classes}
-                                    theme={theme}
-                                />
+                                {usuario.role === Roles.TIC_GERENTE ||
+                                usuario.role === Roles.TIC_TECNICO ? (
+                                    <GestionMenu
+                                        title="Gestión de TIC"
+                                        menuData={NavMenuTics}
+                                        usuario={usuario}
+                                        classes={classes}
+                                        theme={theme}
+                                    />
+                                ) : null}
+
+                                {usuario.role === Roles.TIC_GERENTE ? (
+                                    <GestionMenu
+                                        title="Gestión General"
+                                        menuData={NavMenuAdminTics}
+                                        usuario={usuario}
+                                        classes={classes}
+                                        theme={theme}
+                                    />
+                                ) : null}
+
                                 {/* MENU DE GESTION GENERAL DE TICS */}
-                                <GestionMenu
-                                    title="Gestión General"
-                                    menuData={NavMenuAdminTics}
-                                    usuario={usuario}
-                                    classes={classes}
-                                    theme={theme}
-                                />
+
                                 {/* MENU DE PERMISOS ADMIN */}
-                                <GestionMenu
-                                    title="Permisos Admin"
-                                    menuData={NavMenuPermisosAdmin}
-                                    usuario={usuario}
-                                    classes={classes}
-                                    theme={theme}
-                                />
+                                {usuario.role === Roles.TIC_GERENTE ||
+                                usuario.role === Roles.NOM_ASISTENCIA ? (
+                                    <GestionMenu
+                                        title="Permisos Admin"
+                                        menuData={NavMenuPermisosAdmin}
+                                        usuario={usuario}
+                                        classes={classes}
+                                        theme={theme}
+                                    />
+                                ) : null}
                             </Group>
                         </Group>
 
@@ -111,30 +126,38 @@ export function HeaderMenu({ usuario, asideValue, btnToggle }) {
                     zIndex={1000000}
                 >
                     <ScrollArea h="calc(100vh - 80px" mx="-md">
-                        <MenuSection
-                            title="Gestión de TIC"
-                            menuData={NavMenuTics}
-                            isOpen={linksMenuSoportes}
-                            toggle={toggleSoportes}
-                            classes={classes}
-                            theme={theme}
-                        />
-                        <MenuSection
-                            title="Gestión General"
-                            menuData={NavMenuAdminTics}
-                            isOpen={linksGestionGeneral}
-                            toggle={toggleGestionGeneral}
-                            classes={classes}
-                            theme={theme}
-                        />
-                        <MenuSection
-                            title="Permisos Admin"
-                            menuData={NavMenuPermisosAdmin}
-                            isOpen={linksMenuPermisos}
-                            toggle={togglePermisos}
-                            classes={classes}
-                            theme={theme}
-                        />
+                        {usuario.role === Roles.TIC_GERENTE ? (
+                            <>
+                                <MenuSection
+                                    title="Gestión de TIC"
+                                    menuData={NavMenuTics}
+                                    isOpen={linksMenuSoportes}
+                                    toggle={toggleSoportes}
+                                    classes={classes}
+                                    theme={theme}
+                                />
+                                <MenuSection
+                                    title="Gestión General"
+                                    menuData={NavMenuAdminTics}
+                                    isOpen={linksGestionGeneral}
+                                    toggle={toggleGestionGeneral}
+                                    classes={classes}
+                                    theme={theme}
+                                />
+                            </>
+                        ) : null}
+
+                        {usuario.role === Roles.TIC_GERENTE ||
+                        usuario.role === Roles.NOM_ASISTENCIA ? (
+                            <MenuSection
+                                title="Permisos Admin"
+                                menuData={NavMenuPermisosAdmin}
+                                isOpen={linksMenuPermisos}
+                                toggle={togglePermisos}
+                                classes={classes}
+                                theme={theme}
+                            />
+                        ) : null}
 
                         {/* Menú Rápido en el Drawer */}
                         <MenuRapidoSection
