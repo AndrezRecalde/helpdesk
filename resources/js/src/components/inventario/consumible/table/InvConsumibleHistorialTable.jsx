@@ -45,11 +45,9 @@ export const InvConsumibleHistorialTable = () => {
         enableColumnFilterModes: false,
         enableFullScreenToggle: false,
         enableColumnFilters: true,
-        enableColumnFilterModes: false,
         enableGlobalFilter: false,
         enableRowActions: true,
         enableColumnActions: false,
-        enableRowActions: false,
         renderRowActionMenuItems: ({ row }) => (
             <MenuTable_Imprimir
                 row={row}
