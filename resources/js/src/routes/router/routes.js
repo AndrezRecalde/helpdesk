@@ -189,7 +189,7 @@ const permisosAdminRoutes = generateRoutes(
     [
         { path: "ver-permisos", Component: ListPermisosAdminPage },
         { path: "consolidado-permisos", Component: ConsolidadoPermisosPage },
-        { path: "anular-permisos", Component: AutorizarPermisosPage },
+        { path: "autorizar-permisos", Component: AutorizarPermisosPage },
     ],
     [Roles.TIC_GERENTE]
 );

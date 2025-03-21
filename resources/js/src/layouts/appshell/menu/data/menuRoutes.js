@@ -136,9 +136,9 @@ export const NavMenuPermisosAdmin = {
         },
         {
             icon: IconCopyCheck,
-            title: "Anular Permisos",
-            path: "anular-permisos",
-            link: "/permisos/gerencia/anular-permisos",
+            title: "Autorizar Permisos",
+            path: "autorizar-permisos",
+            link: "/permisos/gerencia/autorizar-permisos",
             roles: [Roles.TIC_GERENTE],
         },
     ],
