@@ -22,7 +22,7 @@ export const TableMarcacionRelojOnline = () => {
             {
                 accessorFn: (row) =>
                     row.CHECKTYPE !== null
-                        ? dayjs(row.CHECKTIME).format("HH:mm:ss")
+                        ? dayjs(row.EVENTO_FECHA).format("HH:mm:ss")
                         : "SIN MARCACION", //normal accessorKey
                 header: "HORA DE MARCACION",
                 enableColumnFilter: false,
