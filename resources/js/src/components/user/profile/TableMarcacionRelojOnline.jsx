@@ -15,10 +15,7 @@ export const TableMarcacionRelojOnline = () => {
                 enableColumnFilter: false,
             },
             {
-                accessorFn: (row) =>
-                    row.CHECKTYPE !== null
-                        ? dayjs(row.EVENTO_FECHA).format("YYYY-MM-DD")
-                        : "SIN MARCACION", //access nested data with dot notation
+                accessorFn: (row) => dayjs(row.EVENTO_FECHA).format("YYYY-MM-DD"), //access nested data with dot notation
                 header: "FECHA DE MARCACION",
                 filterVariant: "autocomplete",
             },
@@ -26,7 +23,7 @@ export const TableMarcacionRelojOnline = () => {
                 accessorFn: (row) =>
                     row.CHECKTYPE !== null
                         ? dayjs(row.CHECKTIME).format("HH:mm:ss")
-                        : null, //normal accessorKey
+                        : "SIN MARCACION", //normal accessorKey
                 header: "HORA DE MARCACION",
                 enableColumnFilter: false,
                 //filterVariant: "autocomplete",
