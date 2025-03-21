@@ -11,7 +11,7 @@
         "axios": "^1.6.4",
         "bootstrap": "^5.2.3",
         "laravel-vite-plugin": "^1.0.0",
-        "postcss": "^8.4.47",
+        "postcss": "^8.5.3",
         "postcss-preset-mantine": "^1.17.0",
         "postcss-simple-vars": "^7.0.1",
         "react": "^18.2.0",
