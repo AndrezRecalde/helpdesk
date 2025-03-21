@@ -90,8 +90,8 @@ export const TableMarcacionRelojOnline = () => {
         }),
         mantineTableProps: {
             highlightOnHover: false,
-            withColumnBorders: false,
-            withTableBorder: false,
+            withColumnBorders: true,
+            withTableBorder: true,
             sx: {
                 "thead > tr": {
                     backgroundColor: "inherit",
