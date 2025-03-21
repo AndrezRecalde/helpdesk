@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { AppShell, Button, ScrollArea } from "@mantine/core";
+import { AppShell, ScrollArea } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { HeaderMenu } from "./HeaderMenu";
 import { useUsersStore } from "../../../hooks";

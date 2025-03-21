@@ -10,7 +10,9 @@ export const MenuList = ({ usuario, menuData, theme }) => {
                 return (
                     <Menu.Item
                         key={item.title}
-                        leftSection={<item.icon size={18} color={theme.colors.teal[7]} />}
+                        leftSection={
+                            <item.icon size={18} color={theme.colors.teal[7]} />
+                        }
                         disabled={!isAllowed}
                         component={isAllowed ? Link : "div"}
                         to={isAllowed ? item.link : "#"}
@@ -25,21 +27,22 @@ export const MenuList = ({ usuario, menuData, theme }) => {
 };
 
 /* Links de Mega Menu */
-export const MenuQuick = ({ menuData, classes, theme }) => {
+export const MenuQuick = ({ menuData, classes, theme, toggleDrawer }) => {
     return menuData.map((item) => (
         <Link
             to={item.link}
             key={item.title}
             className={classes.subLink}
+            onClick={() => toggleDrawer(false)}
             style={{ textDecoration: "none", color: "inherit" }}
         >
             <Group wrap="nowrap" align="flex-start">
                 <ThemeIcon size={35} variant="light" radius="md">
                     <item.icon size={22} color={theme.colors.teal[7]} />
                 </ThemeIcon>
-                    <Text size="sm" fw={500}>
-                        {item.title}
-                    </Text>
+                <Text size="sm" fw={500}>
+                    {item.title}
+                </Text>
             </Group>
         </Link>
     ));

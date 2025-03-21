@@ -10,7 +10,7 @@ import { BtnSubmit, TextSection } from "../../..";
 import { IconSearch } from "@tabler/icons-react";
 import { YearPickerInput } from "@mantine/dates";
 import { useDireccionStore, useUsersStore } from "../../../../hooks";
-import classes from '../../../../assets/styles/modules/layout/input/LabelsInputs.module.css'
+import classes from "../../../../assets/styles/modules/layout/input/LabelsInputs.module.css";
 
 export const FilterPermisoAdmin = ({
     title = "",
@@ -40,16 +40,14 @@ export const FilterPermisoAdmin = ({
                     justify="center"
                     gap="md"
                 >
-                    <SimpleGrid cols={{ base: 1 }}>
-                        <YearPickerInput
-                            //disabled
-                            label="Año"
-                            placeholder="Seleccione el año"
-                            classNames={classes}
-                            {...form.getInputProps("anio")}
-                        />
-                    </SimpleGrid>
-                    <SimpleGrid cols={{ base: 3 }}>
+                    <YearPickerInput
+                        //disabled
+                        label="Año"
+                        placeholder="Seleccione el año"
+                        classNames={classes}
+                        {...form.getInputProps("anio")}
+                    />
+                    <SimpleGrid cols={{ base: 1, sm: 1, md: 3, lg: 3 }}>
                         <Select
                             searchable
                             clearable

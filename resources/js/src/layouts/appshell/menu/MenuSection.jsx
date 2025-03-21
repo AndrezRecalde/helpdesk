@@ -10,8 +10,9 @@ import {
 } from "@mantine/core";
 import { IconChevronDown } from "@tabler/icons-react";
 import { MenuQuick } from "./MenuLinks";
+import { Link } from "react-router-dom";
 
-export const MenuSection = ({ title, menuData, isOpen, toggle, classes, theme }) => (
+export const MenuSection = ({ title, menuData, isOpen, toggle, classes, theme, toggleDrawer }) => (
     <>
         <UnstyledButton className={classes.link} onClick={toggle}>
             <Center inline>
@@ -28,9 +29,12 @@ export const MenuSection = ({ title, menuData, isOpen, toggle, classes, theme })
                         {category}
                     </Text>
                     {items.map((item) => (
-                        <UnstyledButton
+                        <Link
                             key={item.title}
+                            to={item.link}
                             className={classes.subLink}
+                            onClick={() => toggleDrawer(false)}
+                            style={{ textDecoration: "none", color: "inherit" }}
                         >
                             <Group wrap="nowrap" align="center">
                                 <ThemeIcon
@@ -42,7 +46,7 @@ export const MenuSection = ({ title, menuData, isOpen, toggle, classes, theme })
                                 </ThemeIcon>
                                 <Text size="sm">{item.title}</Text>
                             </Group>
-                        </UnstyledButton>
+                        </Link>
                     ))}
                     <Divider my="sm" />
                 </div>
@@ -52,7 +56,7 @@ export const MenuSection = ({ title, menuData, isOpen, toggle, classes, theme })
     </>
 );
 
-export const MenuRapidoSection = ({ title, menuData, isOpen, toggle, classes, theme  }) => (
+export const MenuRapidoSection = ({ title, menuData, isOpen, toggle, classes, theme, toggleDrawer  }) => (
     <>
         <UnstyledButton className={classes.link} onClick={toggle}>
             <Center inline>
@@ -63,7 +67,7 @@ export const MenuRapidoSection = ({ title, menuData, isOpen, toggle, classes, th
             </Center>
         </UnstyledButton>
         <Collapse in={isOpen}>
-            <MenuQuick menuData={menuData} classes={classes} theme={theme} />
+            <MenuQuick menuData={menuData} classes={classes} theme={theme} toggleDrawer={toggleDrawer} />
         </Collapse>
     </>
 );

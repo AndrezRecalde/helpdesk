@@ -23,9 +23,11 @@ import {
     MenuSection,
     MenuRapidoSection,
 } from "../../../layouts";
+import { Roles } from "../../../helpers/dictionary";
+import { UserBtnMobile } from "../../../components/user/menu/UserBtnMobile";
 import classes from "../../../assets/styles/modules/layout/menu/HeaderMenu.module.css";
 import classess from "../../../assets/styles/modules/user/UserHeader.module.css";
-import { Roles } from "../../../helpers/dictionary";
+
 
 export function HeaderMenu({ usuario, asideValue, btnToggle }) {
     const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] =
@@ -59,6 +61,7 @@ export function HeaderMenu({ usuario, asideValue, btnToggle }) {
                                     />
                                 ) : null}
 
+                                {/* MENU DE GESTION GENERAL DE TICS */}
                                 {usuario.role === Roles.TIC_GERENTE ? (
                                     <GestionMenu
                                         title="Gestión General"
@@ -68,8 +71,6 @@ export function HeaderMenu({ usuario, asideValue, btnToggle }) {
                                         theme={theme}
                                     />
                                 ) : null}
-
-                                {/* MENU DE GESTION GENERAL DE TICS */}
 
                                 {/* MENU DE PERMISOS ADMIN */}
                                 {usuario.role === Roles.TIC_GERENTE ||
@@ -122,29 +123,33 @@ export function HeaderMenu({ usuario, asideValue, btnToggle }) {
                     size="100%"
                     padding="md"
                     title="Menú"
-                    hiddenFrom="md"
+                    hiddenFrom="sm"
                     zIndex={1000000}
                 >
                     <ScrollArea h="calc(100vh - 80px" mx="-md">
+                        {usuario.role === Roles.TIC_GERENTE ||
+                        usuario.role === Roles.TIC_TECNICO ? (
+                            <MenuSection
+                                title="Gestión de TIC"
+                                menuData={NavMenuTics}
+                                isOpen={linksMenuSoportes}
+                                toggle={toggleSoportes}
+                                classes={classes}
+                                theme={theme}
+                                toggleDrawer={toggleDrawer}
+                            />
+                        ) : null}
+
                         {usuario.role === Roles.TIC_GERENTE ? (
-                            <>
-                                <MenuSection
-                                    title="Gestión de TIC"
-                                    menuData={NavMenuTics}
-                                    isOpen={linksMenuSoportes}
-                                    toggle={toggleSoportes}
-                                    classes={classes}
-                                    theme={theme}
-                                />
-                                <MenuSection
-                                    title="Gestión General"
-                                    menuData={NavMenuAdminTics}
-                                    isOpen={linksGestionGeneral}
-                                    toggle={toggleGestionGeneral}
-                                    classes={classes}
-                                    theme={theme}
-                                />
-                            </>
+                            <MenuSection
+                                title="Gestión General"
+                                menuData={NavMenuAdminTics}
+                                isOpen={linksGestionGeneral}
+                                toggle={toggleGestionGeneral}
+                                classes={classes}
+                                theme={theme}
+                                toggleDrawer={toggleDrawer}
+                            />
                         ) : null}
 
                         {usuario.role === Roles.TIC_GERENTE ||
@@ -156,6 +161,7 @@ export function HeaderMenu({ usuario, asideValue, btnToggle }) {
                                 toggle={togglePermisos}
                                 classes={classes}
                                 theme={theme}
+                                toggleDrawer={toggleDrawer}
                             />
                         ) : null}
 
@@ -167,11 +173,12 @@ export function HeaderMenu({ usuario, asideValue, btnToggle }) {
                             toggle={toggleMenuQuick}
                             classes={classes}
                             theme={theme}
+                            toggleDrawer={toggleDrawer}
                         />
 
                         <Divider my="sm" />
                         <Group justify="center" grow pb="xl" px="md">
-                            <UserBtnHeader classes={classess} />
+                            <UserBtnMobile />
                         </Group>
                     </ScrollArea>
                 </Drawer>
