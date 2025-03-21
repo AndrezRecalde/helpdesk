@@ -42,7 +42,7 @@ export const TableMarcacionRelojOnline = () => {
                 accessorFn: (row) =>
                     row.STARTSPECDAY !== null
                         ? dayjs(row.STARTSPECDAY).format("YYYY-MM-DD")
-                        : mull,
+                        : null,
                 header: "FECHA PERMISO",
                 enableColumnFilter: false,
                 //filterVariant: "autocomplete",
@@ -51,7 +51,7 @@ export const TableMarcacionRelojOnline = () => {
                 accessorFn: (row) =>
                     row.STARTSPECDAY !== null
                         ? dayjs(row.STARTSPECDAY).format("HH:mm:ss")
-                        : mull,
+                        : null,
                 header: "HORA INICIO PERMISO",
                 enableColumnFilter: false,
                 //filterVariant: "autocomplete",
@@ -60,14 +60,14 @@ export const TableMarcacionRelojOnline = () => {
                 accessorFn: (row) =>
                     row.STARTSPECDAY !== null
                         ? dayjs(row.ENDSPECDAY).format("HH:mm:ss")
-                        : mull,
+                        : null,
                 header: "HORA FINAL PERMISO",
                 enableColumnFilter: false,
                 //filterVariant: "autocomplete",
             }, */
             {
                 accessorFn: (row) =>
-                    row.LeaveName !== null ? row.LeaveName : mull,
+                    row.LeaveName !== null ? row.LeaveName : null,
                 header: "OBSERVACION",
                 enableColumnFilter: false,
                 //filterVariant: "autocomplete",
