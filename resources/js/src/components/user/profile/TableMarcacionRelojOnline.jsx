@@ -64,7 +64,7 @@ export const TableMarcacionRelojOnline = () => {
             }, */
             {
                 accessorFn: (row) =>
-                    row.LeaveName !== null ? row.LeaveName : null,
+                    row.LeaveName !== null ? `JUSTIFICADO - ${row.LeaveName}` : null,
                 header: "OBSERVACION",
                 enableColumnFilter: false,
                 //filterVariant: "autocomplete",
