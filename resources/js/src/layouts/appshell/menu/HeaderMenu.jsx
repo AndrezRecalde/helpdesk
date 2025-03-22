@@ -48,7 +48,7 @@ export function HeaderMenu({ usuario, asideValue, btnToggle }) {
                     <Group justify="space-between" h="100%">
                         <Group>
                             <Logo height={50} width={200} />
-                            <Group h="100%" gap={0} visibleFrom="md">
+                            <Group h="100%" gap={0} visibleFrom="sm">
                                 {/* MENU DE GESTION DE TICS */}
                                 {usuario.role === Roles.TIC_GERENTE ||
                                 usuario.role === Roles.TIC_TECNICO ? (
@@ -86,7 +86,7 @@ export function HeaderMenu({ usuario, asideValue, btnToggle }) {
                             </Group>
                         </Group>
 
-                        <Group visibleFrom="md">
+                        <Group visibleFrom="sm">
                             {!asideValue ? (
                                 <ActionIcon
                                     size={42}
@@ -112,7 +112,7 @@ export function HeaderMenu({ usuario, asideValue, btnToggle }) {
                         <Burger
                             opened={drawerOpened}
                             onClick={toggleDrawer}
-                            hiddenFrom="md"
+                            hiddenFrom="sm"
                         />
                     </Group>
                 </header>
