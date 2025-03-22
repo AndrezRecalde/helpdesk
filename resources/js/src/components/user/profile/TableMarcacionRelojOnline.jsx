@@ -41,7 +41,7 @@ export const TableMarcacionRelojOnline = () => {
                     }
                     return "";
                 },
-                header: "HORA DE MARCACION",
+                header: "TIPO DE MARCACION",
                 filterVariant: "autocomplete",
             },
             /* {
