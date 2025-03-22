@@ -15,7 +15,8 @@ export const TableMarcacionRelojOnline = () => {
                 enableColumnFilter: false,
             },
             {
-                accessorFn: (row) => dayjs(row.EVENTO_FECHA).format("YYYY-MM-DD"), //access nested data with dot notation
+                accessorFn: (row) =>
+                    dayjs(row.EVENTO_FECHA).format("YYYY-MM-DD"), //access nested data with dot notation
                 header: "FECHA DE MARCACION",
                 filterVariant: "autocomplete",
             },
@@ -53,7 +54,7 @@ export const TableMarcacionRelojOnline = () => {
                 enableColumnFilter: false,
                 //filterVariant: "autocomplete",
             }, */
-           /*  {
+            /*  {
                 accessorFn: (row) =>
                     row.STARTSPECDAY !== null
                         ? dayjs(row.ENDSPECDAY).format("HH:mm:ss")
@@ -64,7 +65,13 @@ export const TableMarcacionRelojOnline = () => {
             }, */
             {
                 accessorFn: (row) =>
-                    row.LeaveName !== null ? `JUSTIFICADO - ${row.LeaveName}` : null,
+                    row.LeaveName !== null
+                        ? `JUSTIFICADO - ${row.LeaveName} - CON HORAS: ${dayjs(
+                              row.STARTSPECDAY
+                          ).format("HH:mm:ss")} - ${dayjs(
+                              row.ENDSPECDAY
+                          ).format("HH:mm:ss")}`
+                        : null,
                 header: "OBSERVACION",
                 enableColumnFilter: false,
                 //filterVariant: "autocomplete",
