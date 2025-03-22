@@ -104,6 +104,7 @@ export function HeaderMenu({ usuario, asideValue, btnToggle }) {
                                 menuData={MenuRapido}
                                 classes={classes}
                                 theme={theme}
+                                toggleDrawer={toggleMenuQuick}
                             />
 
                             <UserBtnHeader classes={classess} />
