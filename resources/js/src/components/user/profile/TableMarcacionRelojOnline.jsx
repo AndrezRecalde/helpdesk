@@ -32,14 +32,14 @@ export const TableMarcacionRelojOnline = () => {
             {
                 accessorFn: (row) => {
                     const checkType = row.CHECKTYPE;
-                    const checkTime = dayjs(row.CHECKTIME); // Convierte la fecha con dayjs
+                    const checkTime = dayjs(row.EVENTO_FECHA); // Convierte la fecha con dayjs
 
                     if (checkType === "I") {
                         return checkTime.hour() < 12 ? "ENTRADA" : "SALIDA";
                     } else if (checkType === "O" && checkTime.isBefore(dayjs().hour(13).minute(30))) {
                         return "ALMUERZO";
                     }
-                    return "OTRO";
+                    return "";
                 },
                 header: "HORA DE MARCACION",
                 filterVariant: "autocomplete",
