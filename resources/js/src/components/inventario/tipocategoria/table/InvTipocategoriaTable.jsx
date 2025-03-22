@@ -24,7 +24,7 @@ export const InvTipocategoriaTable = () => {
 
     const handleEditar = useCallback(
         (selected) => {
-            console.log("editar");
+            //console.log("editar");
             setActivateTipocategoria(selected);
             modalActionTipocategoria(true);
         },
@@ -32,7 +32,7 @@ export const InvTipocategoriaTable = () => {
     );
 
     const handleAgregar = useCallback(() => {
-        console.log("agregar");
+        //console.log("agregar");
         modalActionTipocategoria(true);
     }, [tiposcategorias]);
 

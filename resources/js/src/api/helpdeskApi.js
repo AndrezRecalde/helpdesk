@@ -46,7 +46,7 @@ helpdeskApi.interceptors.response.use(
             localStorage.removeItem("auth_token"); // Limpiar el token almacenado
 
             // Redirigir a la página de inicio de sesión
-            window.location.href = window.location.href;
+            //window.location.href = window.location.href;
         }
 
         // Si el error es otro, simplemente lo rechazas

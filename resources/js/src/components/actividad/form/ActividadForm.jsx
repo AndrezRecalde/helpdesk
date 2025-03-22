@@ -63,7 +63,7 @@ export const ActividadForm = ({ fecha_inicio, fecha_fin }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(form.getTransformedValues())
+        //console.log(form.getTransformedValues())
         startAddActividad(form.getTransformedValues(), fecha_inicio, fecha_fin);
         modalActionActividad(0);
         editor.commands.clearContent();

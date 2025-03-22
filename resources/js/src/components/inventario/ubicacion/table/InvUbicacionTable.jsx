@@ -25,7 +25,7 @@ export const InvUbicacionTable = () => {
 
     const handleEditar = useCallback(
         (selected) => {
-            console.log("editar");
+            //console.log("editar");
             setActivateInvUbicacion(selected);
             modalActionUbicacion(true);
         },
@@ -33,7 +33,7 @@ export const InvUbicacionTable = () => {
     );
 
     const handleAgregar = useCallback(() => {
-        console.log("agregar");
+        //console.log("agregar");
         modalActionUbicacion(true);
     }, [invUbicaciones]);
 

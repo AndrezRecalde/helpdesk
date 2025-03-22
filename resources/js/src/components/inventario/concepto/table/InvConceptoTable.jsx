@@ -21,7 +21,7 @@ export const InvConceptoTable = () => {
 
     const handleEditar = useCallback(
         (selected) => {
-            console.log("editar");
+            //console.log("editar");
             setActivateInvConceptos(selected);
             modalActionConcepto(true);
         },
@@ -29,7 +29,7 @@ export const InvConceptoTable = () => {
     );
 
     const handleAgregar = useCallback(() => {
-        console.log("agregar");
+        //console.log("agregar");
         modalActionConcepto(true);
     }, [invConceptos]);
 

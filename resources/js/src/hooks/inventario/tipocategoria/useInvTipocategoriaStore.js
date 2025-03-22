@@ -33,7 +33,7 @@ export const useInvTipocategoriaStore = () => {
             const { tipos_categorias } = data;
             dispatch(onLoadInvTiposcategorias(tipos_categorias));
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };
@@ -62,7 +62,7 @@ export const useInvTipocategoriaStore = () => {
                 dispatch(onLoadMessage(undefined));
             }, 40);
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };
@@ -78,7 +78,7 @@ export const useInvTipocategoriaStore = () => {
                 dispatch(onLoadMessage(undefined));
             }, 40);
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };

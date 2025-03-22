@@ -26,7 +26,7 @@ export const useInvEstadoStore = () => {
             const { estados } = data;
             dispatch(onLoadInvEstados(estados));
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };
@@ -55,7 +55,7 @@ export const useInvEstadoStore = () => {
                 dispatch(onLoadMessage(undefined));
             }, 40);
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };
@@ -71,7 +71,7 @@ export const useInvEstadoStore = () => {
                 dispatch(onLoadMessage(undefined));
             }, 40);
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };

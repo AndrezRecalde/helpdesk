@@ -28,7 +28,7 @@ export const InvMarcaTable = () => {
     );
 
     const handleAgregar = useCallback(() => {
-        console.log("agregar");
+        //console.log("agregar");
         modalActionMarca(true);
     }, [invMarcas]);
 

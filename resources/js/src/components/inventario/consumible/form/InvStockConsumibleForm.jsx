@@ -13,7 +13,7 @@ export const InvStockConsumibleForm = ({ form }) => {
 
     useEffect(() => {
         if (activateConsumible !== null) {
-            console.log(activateConsumible);
+            //console.log(activateConsumible);
             form.setValues({
                 id: activateConsumible.id,
                 ...activateConsumible,
@@ -23,7 +23,7 @@ export const InvStockConsumibleForm = ({ form }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(form.getTransformedValues());
+        //console.log(form.getTransformedValues());
         startAddConsumible(form.getTransformedValues());
         if (activateConsumible !== null) {
             setActivateInvConsumible(null);

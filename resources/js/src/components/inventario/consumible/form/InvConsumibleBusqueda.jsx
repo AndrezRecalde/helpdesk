@@ -25,7 +25,7 @@ export const InvConsumibleBusqueda = ({ isOpenModal }) => {
 
     useEffect(() => {
         if (isOpenModal) {
-            console.log(anio);
+            //console.log(anio);
             startLoadHistorialConsumible({
                 consumible_id: activateConsumible.id,
                 anio: anio.getFullYear(),

@@ -26,7 +26,7 @@ export const useInvUbicacionStore = () => {
             const { ubicaciones } = data;
             dispatch(onLoadInvUbicaciones(ubicaciones));
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };
@@ -55,7 +55,7 @@ export const useInvUbicacionStore = () => {
                 dispatch(onLoadMessage(undefined));
             }, 40);
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };
@@ -71,7 +71,7 @@ export const useInvUbicacionStore = () => {
                 dispatch(onLoadMessage(undefined));
             }, 40);
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };

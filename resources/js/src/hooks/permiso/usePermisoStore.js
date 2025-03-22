@@ -162,11 +162,11 @@ export const usePermisoStore = () => {
                 seleccion
             );
             const { permisos } = data;
-            console.log(permisos);
+            //console.log(permisos);
             dispatch(onLoadPermisos(permisos));
             dispatch(onLoading(false));
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };
@@ -186,7 +186,7 @@ export const usePermisoStore = () => {
             window.URL.revokeObjectURL(url);
             dispatch(onLoading(false));
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             dispatch(onLoading(false));
             ExceptionMessageError(error);
         }
@@ -211,7 +211,7 @@ export const usePermisoStore = () => {
             }, 40);
             dispatch(onLoading(false));
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             dispatch(onLoading(false));
             ExceptionMessageError(error);
         }

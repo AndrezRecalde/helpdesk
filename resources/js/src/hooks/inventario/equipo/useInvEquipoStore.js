@@ -43,7 +43,7 @@ export const useInvEquipoStore = () => {
             const { equipos } = data;
             dispatch(onLoadInvEquipos(equipos));
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };
@@ -61,7 +61,7 @@ export const useInvEquipoStore = () => {
             const { equipos } = data;
             dispatch(onLoadInvEquiposBaja(equipos));
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };
@@ -88,7 +88,7 @@ export const useInvEquipoStore = () => {
                 dispatch(onLoadMessage(undefined));
             }, 40);
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };
@@ -102,7 +102,7 @@ export const useInvEquipoStore = () => {
             const { equipo: invEquipo } = data;
             dispatch(onSetActivateInvEquipo(invEquipo));
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };
@@ -118,7 +118,7 @@ export const useInvEquipoStore = () => {
                 dispatch(onLoadMessage(undefined));
             }, 40);
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };
@@ -144,7 +144,7 @@ export const useInvEquipoStore = () => {
                 dispatch(onLoadMessage(undefined));
             }, 40);
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };
@@ -161,7 +161,7 @@ export const useInvEquipoStore = () => {
                 dispatch(onLoadMessage(undefined));
             }, 40);
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };
@@ -183,7 +183,7 @@ export const useInvEquipoStore = () => {
                 dispatch(onLoadMessage(undefined));
             }, 40);
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };
@@ -199,7 +199,7 @@ export const useInvEquipoStore = () => {
                 dispatch(onLoadMessage(undefined));
             }, 40);
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };
@@ -214,7 +214,7 @@ export const useInvEquipoStore = () => {
                 dispatch(onLoadMessage(undefined));
             }, 40);
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };
@@ -230,7 +230,7 @@ export const useInvEquipoStore = () => {
                 dispatch(onLoadMessage(undefined));
             }, 40);
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };
@@ -262,7 +262,7 @@ export const useInvEquipoStore = () => {
 
             dispatch(onExport(false));
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };
@@ -282,7 +282,7 @@ export const useInvEquipoStore = () => {
             window.URL.revokeObjectURL(url);
             dispatch(onExport(false));
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };
@@ -302,7 +302,7 @@ export const useInvEquipoStore = () => {
             window.URL.revokeObjectURL(url);
             dispatch(onExport(false));
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };

@@ -42,7 +42,7 @@ export const useInvConsumibleStore = () => {
             const { consumibles } = data;
             dispatch(onLoadInvConsumibles(consumibles));
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };
@@ -60,7 +60,7 @@ export const useInvConsumibleStore = () => {
             const { historial } = data;
             dispatch(onLoadInvHistorial(historial));
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     }
@@ -77,7 +77,7 @@ export const useInvConsumibleStore = () => {
             const { consumibles } = data;
             dispatch(onLoadInvConsumiblesSelects(consumibles));
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     }; */
@@ -106,7 +106,7 @@ export const useInvConsumibleStore = () => {
                 dispatch(onLoadMessage(undefined));
             }, 40);
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };
@@ -122,7 +122,7 @@ export const useInvConsumibleStore = () => {
                 dispatch(onLoadMessage(undefined));
             }, 40);
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };
@@ -139,7 +139,7 @@ export const useInvConsumibleStore = () => {
                 dispatch(onLoadMessage(undefined));
             }, 40);
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };
@@ -159,7 +159,7 @@ export const useInvConsumibleStore = () => {
             window.URL.revokeObjectURL(url);
             dispatch(onExport(false));
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };

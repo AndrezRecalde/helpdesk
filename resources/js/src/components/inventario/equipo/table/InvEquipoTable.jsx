@@ -64,7 +64,7 @@ export const InvEquipoTable = () => {
 
     const handleEditar = useCallback(
         (selected) => {
-            console.log("editar");
+            //console.log("editar");
             modalActionEquipo(true);
             startShowInvEquipo(selected);
             //setActivateInvEquipo(selected);
@@ -74,7 +74,7 @@ export const InvEquipoTable = () => {
 
     const handleShow = useCallback(
         (selected) => {
-            console.log(selected);
+            //console.log(selected);
             modalActionViewEquipo(true);
             startShowInvEquipo(selected);
         },
@@ -83,7 +83,7 @@ export const InvEquipoTable = () => {
 
     /* const handleAssign = useCallback(
         (selected) => {
-            console.log(selected);
+            //console.log(selected);
             setActivateInvEquipo(selected);
             modalActionAssignEquipo(true);
         },
@@ -92,7 +92,7 @@ export const InvEquipoTable = () => {
 
     const handleDelete = useCallback(
         (selected) => {
-            console.log(selected);
+            //console.log(selected);
             setActivateInvEquipo(selected);
             modalActionDeleteEquipo(true);
         },
@@ -120,7 +120,7 @@ export const InvEquipoTable = () => {
 
     const handleAssignCustodio = useCallback(
         (selected) => {
-            console.log(selected);
+            //console.log(selected);
             setActivateInvEquipo(selected);
             modalActionCustodio(true);
         },
@@ -129,7 +129,7 @@ export const InvEquipoTable = () => {
 
     const handleExportDataPDF = (e) => {
         e.preventDefault();
-        console.log("export");
+        //console.log("export");
         startExportEquipos(invEquipos);
     };
 

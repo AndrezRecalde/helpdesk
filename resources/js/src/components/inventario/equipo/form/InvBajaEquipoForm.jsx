@@ -32,7 +32,7 @@ export const InvBajaEquipoForm = ({ form }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(form.getTransformedValues());
+        //console.log(form.getTransformedValues());
         startBajaEquipos(form.getTransformedValues());
         modalActionBajaEquipo(false);
         form.reset();

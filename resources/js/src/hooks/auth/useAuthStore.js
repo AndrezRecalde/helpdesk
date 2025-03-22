@@ -55,7 +55,7 @@ export const useAuthStore = () => {
         if (!token) return dispatch(onLogout());
 
         try {
-            const { data } = await helpdeskApi.get("/refresh");
+            const { data } = await helpdeskApi.post("/refresh",{});
             const { user, access_token } = data;
             localStorage.setItem("service_user", JSON.stringify(user));
             localStorage.setItem("auth_token", access_token);

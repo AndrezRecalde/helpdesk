@@ -39,7 +39,7 @@ export const InvEquipoDocumentosTable = () => {
 
     const handleDownload = useCallback(
         (selected) => {
-            console.log(selected);
+            //console.log(selected);
             startDescargarArchivo(selected);
         },
         [documentos]
@@ -52,7 +52,7 @@ export const InvEquipoDocumentosTable = () => {
     const handleDelete = useCallback(
         (selected) => {
             //const { pivot = {} } = selected;
-            console.log(selected);
+            //console.log(selected);
 
             Swal.fire({
                 text: `¿Deseas remover el documento?`,

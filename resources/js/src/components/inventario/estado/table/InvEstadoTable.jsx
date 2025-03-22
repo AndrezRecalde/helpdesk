@@ -28,7 +28,7 @@ export const InvEstadoTable = () => {
 
     const handleEditar = useCallback(
         (selected) => {
-            console.log("editar");
+            //console.log("editar");
             setActivateInvEstado(selected);
             modalActionEstado(true);
         },
@@ -36,7 +36,7 @@ export const InvEstadoTable = () => {
     );
 
     const handleAgregar = useCallback(() => {
-        console.log("agregar");
+        //console.log("agregar");
         modalActionEstado(true);
     }, [invEstados]);
 

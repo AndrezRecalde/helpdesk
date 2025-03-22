@@ -38,7 +38,7 @@ export const FilterFormEquipos = () => {
     const { campo } = form.values;
 
     useEffect(() => {
-        console.log("Campo seleccionado:", campo);
+        //console.log("Campo seleccionado:", campo);
 
         const loadData = async () => {
             switch (campo) {
@@ -113,7 +113,7 @@ export const FilterFormEquipos = () => {
         }
 
         setResultados(data);
-        console.log("Resultados actualizados:", data);
+        //console.log("Resultados actualizados:", data);
     }, [campo, direcciones, users, categorias, invEstados]); // Se ejecuta cuando los datos cambian
 
     const handleSearch = (e) => {
@@ -122,7 +122,7 @@ export const FilterFormEquipos = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(form.getTransformedValues());
+        //console.log(form.getTransformedValues());
         startLoadInvEquipos(form.getTransformedValues());
     };
 

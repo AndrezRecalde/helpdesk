@@ -55,7 +55,7 @@ Route::get('/sanctum/csrf-cookie', function () {
 
 Route::post('/auth/login', [AuthController::class, 'login']);
 
-Route::get('/refresh', [AuthController::class, 'refresh'])->middleware('auth:sanctum');
+Route::post('/refresh', [AuthController::class, 'refresh'])->middleware('auth:sanctum');
 Route::get('/profile', [AuthController::class, 'profile'])->middleware('auth:sanctum');
 Route::post('/auth/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 Route::put('/change-password/{cdgo_usrio}', [UserController::class, 'updatePassword'])->middleware('auth:sanctum');

@@ -168,7 +168,11 @@ class PermisosAdminController extends Controller
             if (!$permiso->per_observacion_anulado) {
                 $permiso->per_observacion_anulado = "SE ANULA PERMISO A PETICION DEL USUARIO DESDE LA RECEPCION DE TTHH";
             }
-            $permiso->id_estado = $request->id_estado; //Para anular el permiso
+            $permiso->id_estado = $request->id_estado; //Para anular o autorizar el permiso
+            if ($request->id_estado == 6) {
+                $permiso->fecha_anulado = Carbon::now();
+            }
+            $permiso->id_usu_recepcionista = auth()->user()->cdgo_usrio;
             $permiso->save();
             return response()->json(['status' => MsgStatus::Success, 'msg' => 'El permiso cambio de estado'], 200);
         } catch (\Throwable $th) {

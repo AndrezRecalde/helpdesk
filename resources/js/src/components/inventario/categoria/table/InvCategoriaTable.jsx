@@ -39,7 +39,7 @@ export const InvCategoriaTable = () => {
 
     const handleEditar = useCallback(
         (selected) => {
-            console.log("editar");
+            //console.log("editar");
             setActivateInvCategoria(selected);
             modalActionCategoria(true);
         },

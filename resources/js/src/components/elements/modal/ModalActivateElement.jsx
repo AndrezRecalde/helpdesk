@@ -44,7 +44,7 @@ export const ModalActivateElement = ({
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(form.getValues())
+        //console.log(form.getValues())
         startAction(form.getValues());
         form.reset();
         modalAction(false);

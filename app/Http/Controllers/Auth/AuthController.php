@@ -27,7 +27,12 @@ class AuthController extends Controller
                 ->where('u.actvo', 1)
                 ->first();
             if ($user) {
-                $token = $user->createToken(name: 'auth_token')->plainTextToken;
+                // Generar un nuevo token con un nombre único por dispositivo
+               // $token = $user->createToken($request->userAgent())->plainTextToken;
+                $token = $user->createToken($request->userAgent())->plainTextToken;
+                $user->tokens()->latest()->first()->update([
+                    'expires_at' => now()->addDays(3)
+                ]);
                 return response()->json([
                     'status'        =>  MsgStatus::Success,
                     'token_type'    =>  MsgStatus::TokenBearer,
@@ -42,14 +47,14 @@ class AuthController extends Controller
         }
     }
 
-    function refresh(): JsonResponse
+    function refresh(Request $request): JsonResponse
     {
         $authUserId = Auth::id();
         $user = User::from('usrios_sstma as u')
             ->selectRaw('u.cdgo_usrio, u.lgin, u.nmbre_usrio, u.asi_id_reloj, u.usu_alias, u.email, u.crgo_id,
-                        d.cdgo_dprtmnto, d.nmbre_dprtmnto as direccion, d.cdgo_lrgo, d.id_empresa,
-                        CAST((IFNULL(r.id, 3)) AS UNSIGNED) as role_id,
-                        CAST((IFNULL(r.name, "USUARIO")) AS NCHAR) as role')
+                    d.cdgo_dprtmnto, d.nmbre_dprtmnto as direccion, d.cdgo_lrgo, d.id_empresa,
+                    CAST((IFNULL(r.id, 3)) AS UNSIGNED) as role_id,
+                    CAST((IFNULL(r.name, "USUARIO")) AS NCHAR) as role')
             ->join('dprtmntos as d', 'd.cdgo_dprtmnto', 'u.cdgo_direccion')
             ->leftJoin('model_has_roles as mh', 'mh.model_id', 'u.cdgo_usrio')
             ->leftJoin('roles as r', 'r.id', 'mh.role_id')
@@ -57,18 +62,36 @@ class AuthController extends Controller
             ->where('u.actvo', 1)
             ->first();
 
-        if ($user) {
-            $user->tokens()->delete();
-            $token = $user->createToken(name: 'auth_token')->plainTextToken;
-            return response()->json([
-                'status'        =>  MsgStatus::Success,
-                'token_type'    =>  MsgStatus::TokenBearer,
-                'access_token'  =>  $token,
-                'user'          =>  $user
-            ]);
-        } else {
-            return response()->json(['status' => MsgStatus::Error, 'msg' => MsgStatus::UserNotActive], 401);
+        if (!$user) {
+            return response()->json(['status' => MsgStatus::Error, 'msg' => MsgStatus::UserNotActive], 404);
         }
+
+        // Obtener el token actual
+        $currentToken = $user->currentAccessToken();
+
+        // 🔥 Verificar si el token ha expirado
+        if ($currentToken && $currentToken->expires_at < now()) {
+            $currentToken->delete();
+            return response()->json(['status' => MsgStatus::Error, 'msg' => 'El token ha expirado. Inicia sesión nuevamente.'], 401);
+        }
+
+        // 🔹 Eliminar el token actual y generar uno nuevo con nueva expiración
+        $currentToken->delete();
+       // $newToken = $user->createToken($request->userAgent())->plainTextToken;
+        $newToken = $user->createToken($request->userAgent())->plainTextToken;
+
+
+        // 🔹 Guardar la nueva fecha de expiración
+        $user->tokens()->latest()->first()->update([
+            'expires_at' => now()->addDays(3)
+        ]);
+
+        return response()->json([
+            'status'        => MsgStatus::Success,
+            'token_type'    => MsgStatus::TokenBearer,
+            'access_token'  => $newToken,
+            'user'          => $user
+        ], 201);
     }
 
     function profile(): JsonResponse
@@ -92,7 +115,7 @@ class AuthController extends Controller
 
     public function logout()
     {
-        auth()->user()->tokens()->delete();
+        auth()->user()->currentAccessToken()->delete();
 
         return response()->json([
             'status' => MsgStatus::Success,

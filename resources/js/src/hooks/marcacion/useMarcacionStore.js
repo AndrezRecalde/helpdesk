@@ -46,7 +46,7 @@ export const useMarcacionStore = () => {
             const { marcaciones } = data;
             dispatch(onLoadMarcaciones(marcaciones));
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };

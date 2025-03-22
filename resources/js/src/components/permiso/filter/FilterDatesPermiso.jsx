@@ -9,7 +9,7 @@ export const FilterDatesPermiso = ({ form, fnAction }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(form.getTransformedValues());
+        //console.log(form.getTransformedValues());
         fnAction(form.getTransformedValues());
     };
 

@@ -97,7 +97,7 @@ export const useUsersStore = () => {
             const { birthdays } = data;
             dispatch(onLoadBirthdays(birthdays));
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     }
