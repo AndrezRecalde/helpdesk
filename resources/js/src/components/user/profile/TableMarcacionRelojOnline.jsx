@@ -29,6 +29,21 @@ export const TableMarcacionRelojOnline = () => {
                 enableColumnFilter: false,
                 //filterVariant: "autocomplete",
             },
+            {
+                accessorFn: (row) => {
+                    const checkType = row.CHECKTYPE;
+                    const checkTime = dayjs(row.CHECKTIME); // Convierte la fecha con dayjs
+
+                    if (checkType === "I") {
+                        return checkTime.hour() < 12 ? "ENTRADA" : "SALIDA";
+                    } else if (checkType === "O" && checkTime.isBefore(dayjs().hour(13).minute(30))) {
+                        return "ALMUERZO";
+                    }
+                    return "OTRO";
+                },
+                header: "HORA DE MARCACION",
+                filterVariant: "autocomplete",
+            },
             /* {
                 accessorFn: (row) =>
                     row.SENSORID !== null ? row.SENSORID : null,

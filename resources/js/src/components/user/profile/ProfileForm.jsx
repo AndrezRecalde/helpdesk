@@ -54,7 +54,7 @@ export const ProfileForm = () => {
                     </Grid.Col>
                     <Grid.Col span={{ base: 12, md: 12, lg: 12 }}>
                         <TextSection tt="" fw={700}>
-                            {profile?.cargo || "Sin datos..."}
+                            {profile?.cargo || "Sin datos, por favor comunicarse con Recursos Humanos..."}
                         </TextSection>
                         <TextSection
                             tt="uppercase"

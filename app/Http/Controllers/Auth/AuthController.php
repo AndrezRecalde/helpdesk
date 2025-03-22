@@ -104,7 +104,7 @@ class AuthController extends Controller
                     CAST((IFNULL(r.name, "USUARIO")) AS NCHAR) as role')
             ->join('dprtmntos as d', 'd.cdgo_dprtmnto', 'u.cdgo_direccion')
             ->join('nom_empresa as ne', 'ne.idnom_empresa', 'd.id_empresa')
-            ->join('nom_cargo as nc', 'nc.idnom_cargo', 'u.crgo_id')
+            ->leftJoin('nom_cargo as nc', 'nc.idnom_cargo', 'u.crgo_id')
             ->leftJoin('model_has_roles as mh', 'mh.model_id', 'u.cdgo_usrio')
             ->leftJoin('roles as r', 'r.id', 'mh.role_id')
             ->where('u.cdgo_usrio', Auth::user()->cdgo_usrio)
