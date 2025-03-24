@@ -137,7 +137,7 @@ export function HeaderMenu({ usuario, asideValue, btnToggle }) {
                                 toggle={toggleSoportes}
                                 classes={classes}
                                 theme={theme}
-                                toggleDrawer={toggleDrawer}
+                                toggleDrawer={toggleSoportes}
                             />
                         ) : null}
 
@@ -149,7 +149,7 @@ export function HeaderMenu({ usuario, asideValue, btnToggle }) {
                                 toggle={toggleGestionGeneral}
                                 classes={classes}
                                 theme={theme}
-                                toggleDrawer={toggleDrawer}
+                                toggleDrawer={toggleGestionGeneral}
                             />
                         ) : null}
 
@@ -162,7 +162,7 @@ export function HeaderMenu({ usuario, asideValue, btnToggle }) {
                                 toggle={togglePermisos}
                                 classes={classes}
                                 theme={theme}
-                                toggleDrawer={toggleDrawer}
+                                toggleDrawer={togglePermisos}
                             />
                         ) : null}
 
@@ -174,7 +174,7 @@ export function HeaderMenu({ usuario, asideValue, btnToggle }) {
                             toggle={toggleMenuQuick}
                             classes={classes}
                             theme={theme}
-                            toggleDrawer={toggleDrawer}
+                            toggleDrawer={toggleMenuQuick}
                         />
 
                         <Divider my="sm" />

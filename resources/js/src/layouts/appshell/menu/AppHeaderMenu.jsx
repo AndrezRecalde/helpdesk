@@ -7,8 +7,8 @@ import { StackAside } from "./StackAside";
 
 export const AppHeaderMenu = ({ children }) => {
     const usuario = JSON.parse(localStorage.getItem("service_user"));
-    const [opened, { toggle }] = useDisclosure();
-    const [asideOpened, { toggle: toggleAside }] = useDisclosure();
+    //const [opened, { toggle }] = useDisclosure();
+    const [asideOpened, { toggle: toggleAside }] = useDisclosure(true);
     const { startLoadBirthdays } = useUsersStore();
 
     useEffect(() => {

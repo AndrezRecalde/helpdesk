@@ -17,7 +17,7 @@ import { useAuthStore } from "../../../hooks";
 import { menuRoutes } from "../../../routes/router/routes";
 import { NightModeSwitch } from "./NightModeSwitch";
 
-export const UserBtnHeader = ({ classes, toggleMobile = null }) => {
+export const UserBtnHeader = ({ classes }) => {
     const { startLogout } = useAuthStore();
     const navigate = useNavigate();
     const [userMenuOpened, setUserMenuOpened] = useState(false);
@@ -35,9 +35,9 @@ export const UserBtnHeader = ({ classes, toggleMobile = null }) => {
 
     const handleMenuClick = (linked) => {
         navigate(linked);
-        if (toggleMobile) {
+        /* if (toggleMobile) {
             toggleMobile(true);
-        }
+        } */
     };
 
     return (

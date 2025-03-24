@@ -62,7 +62,7 @@ export const AppRouter = () => {
     };
 
     return (
-        <RoutesNotFound>
+        <Routes>
             <Route path="/*" element={<AuthRoutes />} />
 
             <Route
@@ -98,6 +98,6 @@ export const AppRouter = () => {
                 }
             />
             {/* </Route> */}
-        </RoutesNotFound>
+        </Routes>
     );
 };
