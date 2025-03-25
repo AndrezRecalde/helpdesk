@@ -16,6 +16,11 @@ export const InvConsumibleTable = () => {
     const columns = useMemo(
         () => [
             {
+                header: "Codigo",
+                accessorKey: "codigo",
+                filterVariant: "autocomplete",
+            },
+            {
                 header: "Consumible",
                 accessorKey: "nombre_consumible",
                 filterVariant: "autocomplete",

@@ -7,11 +7,8 @@
     <title>Solicitud de Materiales de Bodega</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: Montserrat, Arial, sans-serif;
             font-size: 12px;
-            background-image: url("https://prefecturadeesmeraldas.gob.ec/wp-content/uploads/2023/11/FondoArchivo7.png");
-            background-repeat: no-repeat;
-            background-size: cover;
         }
 
         .container {
@@ -19,6 +16,9 @@
             //border: 1px solid black;
             padding: 5px;
             margin: 0 auto;
+            background-image: url("https://prefecturadeesmeraldas.gob.ec/wp-content/uploads/2023/11/FondoArchivo7.png");
+            background-repeat: no-repeat;
+            background-size: cover;
         }
 
         .header {
@@ -52,7 +52,7 @@
         }
 
         .corte {
-            margin-top: 15px;
+            margin-top: 20px;
         }
 
         input[type="text"],
@@ -63,7 +63,7 @@
             /* Ancho casi completo */
             box-sizing: border-box;
             /* Incluye padding y border en el ancho total */
-            font-family: Arial, sans-serif;
+            font-family: Montserrat, Arial, sans-serif;
             font-size: 10px;
             /* Tamaño de fuente */
             border: none;
@@ -110,7 +110,7 @@
                 @foreach ($pdfData['consumibles'] as $index => $consumible)
                     <tr>
                         <td>{{ $index + 1 }}</td>
-                        <td>________</td>
+                        <td>{{ $consumible['codigo'] }}</td>
                         <td>{{ $consumible['nombre_consumible'] }}</td>
                         <td>{{ $consumible['cantidad_solicitada'] }}</td>
                         <td>________</td>
@@ -192,7 +192,7 @@
                 @foreach ($pdfData['consumibles'] as $index => $consumible)
                     <tr>
                         <td>{{ $index + 1 }}</td>
-                        <td>________</td>
+                        <td>{{ $consumible['codigo'] }}</td>
                         <td>{{ $consumible['nombre_consumible'] }}</td>
                         <td>{{ $consumible['cantidad_solicitada'] }}</td>
                         <td>________</td>

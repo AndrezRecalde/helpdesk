@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Validation\Rule;
 
 class InvConsumibleRequest extends FormRequest
 {
@@ -25,6 +26,7 @@ class InvConsumibleRequest extends FormRequest
     {
         return [
             'nombre_consumible' => 'required',
+            'codigo'            => ['required', Rule::unique('inv_consumibles')->ignore($this->request->get('id'))],
             'categoria_id'      => 'required',
             'stock'             => ''
         ];
@@ -34,6 +36,8 @@ class InvConsumibleRequest extends FormRequest
     {
         return [
             'nombre_consumible.required' => 'El nombre del consumible es requerido',
+            'codigo.required'            => 'El codigo del consumible es requerido',
+            'codigo.unique'              => 'El codigo del consumible es requerido',
             'categoria_id.required'      => 'La categoria es requerida'
         ];
     }

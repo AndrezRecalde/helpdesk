@@ -12,6 +12,7 @@ class InvConsumible extends Model
 
     protected $fillable = [
         'nombre_consumible',
+        'codigo',
         'categoria_id',
         'stock',
         'estado'

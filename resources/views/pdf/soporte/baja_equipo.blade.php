@@ -10,7 +10,7 @@
         }
 
         body {
-            font-family: Poppins, Arial, sans-serif;
+            font-family: Montserrat, Arial, sans-serif;
             font-size: 14px;
             background-image: url("http://prefecturadeesmeraldas.gob.ec/wp-content/uploads/2023/11/FondoArchivo7.png");
             background-repeat: no-repeat;
@@ -43,7 +43,7 @@
         }
 
         p {
-            font-size: 14px;
+            font-size: 13px;
             line-height: 1.5;
             margin-bottom: 5px;
         }
@@ -60,6 +60,7 @@
             border: 1px solid black;
             padding: 6px;
             text-align: left;
+            font-size: 12px;
         }
 
         .signature {
@@ -75,6 +76,21 @@
         .small-text {
             font-size: 12px;
         }
+
+        .signature p {
+            margin: 2px 0;
+            /* Reduce el espacio arriba y abajo */
+            line-height: 1.2;
+            /* Ajusta la altura de línea si es necesario */
+        }
+
+        .info p {
+            margin: 2px 0;
+            /* Reduce el espacio arriba y abajo */
+            line-height: 1.2;
+            /* Ajusta la altura de línea si es necesario */
+            font-size: 11px;
+        }
     </style>
 </head>
 
@@ -89,16 +105,24 @@
     <p><strong>PARA:</strong> {{ strtoupper($directores[0]->jefe->nmbre_usrio) }}
         <sub><strong><i>DIRECTOR ADMINISTRATIVO</i></strong></sub>
     </p>
-    <p><strong>ASUNTO:</strong> EQUIPO(S) INFORMÁTICOS EN MAL ESTADO</p>
+    <p><strong>ASUNTO:</strong> BIEN INFORMÁTICO EN MAL ESTADO</p>
 
-    <p>Por medio de la presente, informo que los siguientes equipos han sido dados de baja debido a:
-        <strong>{{ $motivo }}</strong>.
+    <p>
+        Por medio del presente informe, se comunica que los bienes informáticos detallados a continuación presentan
+        fallas que afectan su operatividad, conforme al análisis técnico realizado por el Ing. {{ $tecnico }}.
+        Dicho informe señala que los equipos presenta: {{ $motivo }}.
+        En cumplimiento del principio de vigencia tecnológica, según lo dispuesto en la Resolución No.
+        <strong><i>RE-SERCOP-2016-000657, Capítulo III</i></strong>, Artículo 6 - Vida Útil de Equipos Informáticos y
+        Proyectores, se procede con la entrega de los bienes informáticos, cuya vida útil de cada equipo se detalla en
+        la siguiente tabla:
+
     </p>
 
     <table class="table">
         <thead>
             <tr>
-                <th>#</th>
+                <th>No.</th>
+                <th>Detalle</th>
                 <th>Marca</th>
                 <th>Serie</th>
                 <th>Fecha Adquisición</th>
@@ -111,9 +135,13 @@
             @foreach ($equipos as $index => $equipo)
                 <tr>
                     <td>{{ $index + 1 }}</td>
+                    <td>{{ $equipo->modelo }}</td>
                     <td>{{ $equipo->nombre_marca }}</td>
                     <td>{{ $equipo->numero_serie }}</td>
-                    <td>{{ $equipo->fecha_adquisicion }}</td>
+                    <td>
+                        {{ \Carbon\Carbon::parse($equipo->fecha_adquisicion)->format('Y-m-d') }} - <br>
+                        <i>{{ \Carbon\Carbon::parse($equipo->fecha_adquisicion)->diffInYears(now()) }} años de uso</i>
+                    </td>
                     <td>{{ $equipo->codigo_antiguo ?? 'Sin Código' }}</td>
                     <td>{{ $equipo->codigo_nuevo }}</td>
                     <td>{{ $equipo->custodio }}</td>
@@ -122,7 +150,8 @@
         </tbody>
     </table>
 
-    <p>Adjunto la ficha No. <mark>{{ $numero_sop }}</mark> de soporte técnico que indican el detalle del daño del equipo.
+    <p>Adjunto la ficha No. <mark>{{ $numero_sop }}</mark> de soporte técnico que indican el detalle del daño del
+        equipo.
         Particular que pongo en su consideración para los fines pertinentes.</p>
 
     <p>Atentamente,</p>
@@ -139,10 +168,12 @@
     </div>
     <br>
 
-    <p class="small-text"><strong>cc: </strong>Ing. {{ $equipos[0]->custodio }},</p>
-    <p><sub><strong><i>{{ $direccion_solicitante }}</i></strong></sub></p>
-    <p class="small-text">BODEGA</p>
-    <p class="small-text">Archivo/PC</p>
+    <div class="info">
+        <p class="small-text"><strong>cc: </strong>Ing. {{ $equipos[0]->custodio }},</p>
+        <p><sub><strong><i>{{ $direccion_solicitante }}</i></strong></sub></p>
+        <p class="small-text">BODEGA</p>
+        <p class="small-text">Archivo/PC</p>
+    </div>
 
     {{-- <p class="small-text">Fecha y hora de emisión: {{ $fecha }} - {{ $hora }}</p> --}}
 </body>

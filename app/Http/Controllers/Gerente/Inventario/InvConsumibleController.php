@@ -22,7 +22,7 @@ class InvConsumibleController extends Controller
     public function getInvConsumibles(Request $request): JsonResponse
     {
         $consumibles = InvConsumible::from('inv_consumibles as invcon')
-            ->selectRaw('invcon.id, invcon.nombre_consumible,
+            ->selectRaw('invcon.id, invcon.nombre_consumible, invcon.codigo,
                                  invcon.categoria_id, invc.nombre_categoria, invcon.activo, invcon.stock')
             ->join('inv_categorias as invc', 'invc.id', 'invcon.categoria_id')
             ->byCategoriaId($request->categoria_id)
@@ -174,6 +174,7 @@ class InvConsumibleController extends Controller
                     $pdfData['consumibles'][] = [
                         'id'                => $item['id'],
                         'nombre_consumible' => $consumible->nombre_consumible,
+                        'codigo'            => $consumible->codigo,
                         'cantidad_solicitada' => $item['cantidad'],
                     ];
 
