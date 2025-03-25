@@ -97,6 +97,7 @@ export const InvEquipoResponsablesTable = () => {
                 fontSize={12}
                 IconSection={IconCubePlus}
                 handleAction={handleAssign}
+                disabled={activateInvEquipo?.estado_id === 4 || activateInvEquipo?.estado_id === 5}
             >
                 Agregar
             </BtnSection>

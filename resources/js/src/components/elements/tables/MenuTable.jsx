@@ -89,6 +89,11 @@ export const MenuTable_Equipo = ({
                 Ver
             </Menu.Item>
             <Menu.Item
+                disabled={
+                    row.original.estado_id === 4 || row.original.estado_id === 5
+                        ? true
+                        : false
+                }
                 leftSection={
                     <IconEditCircle
                         style={{ width: rem(15), height: rem(15) }}
@@ -100,6 +105,12 @@ export const MenuTable_Equipo = ({
             </Menu.Item>
             {row.original.user_id || row.original.direccion_id ? (
                 <Menu.Item
+                    disabled={
+                        row.original.estado_id === 4 ||
+                        row.original.estado_id === 5
+                            ? true
+                            : false
+                    }
                     leftSection={
                         <IconUserShare
                             style={{ width: rem(15), height: rem(15) }}
@@ -111,6 +122,12 @@ export const MenuTable_Equipo = ({
                 </Menu.Item>
             ) : (
                 <Menu.Item
+                    disabled={
+                        row.original.estado_id === 4 ||
+                        row.original.estado_id === 5
+                            ? true
+                            : false
+                    }
                     leftSection={
                         <IconUserHexagon
                             style={{ width: rem(15), height: rem(15) }}
@@ -122,6 +139,7 @@ export const MenuTable_Equipo = ({
                 </Menu.Item>
             )}
             <Menu.Item
+                disabled={true}
                 leftSection={
                     <IconTrash style={{ width: rem(15), height: rem(15) }} />
                 }
@@ -298,7 +316,11 @@ export const MenuSolicitudTable = ({
     );
 };
 
-export const MenuTable_AutorizarPermiso = ({ row, handleAnular, handleAutorizar }) => {
+export const MenuTable_AutorizarPermiso = ({
+    row,
+    handleAnular,
+    handleAutorizar,
+}) => {
     return (
         <>
             <Menu.Item

@@ -68,7 +68,8 @@ class InvBajaController extends Controller
                   ->first();
 
         foreach ($equipos as $equipo) {
-            $equipo->estado_id = 4;     // Id del estado de baja
+            $equipo->estado_id = 5;     // Id del estado de baja
+            $equipo->fecha_baja = Carbon::now();
             $equipo->user_id = null;
             $equipo->direccion_id = null;
             $equipo->ubicacion_id = null;
