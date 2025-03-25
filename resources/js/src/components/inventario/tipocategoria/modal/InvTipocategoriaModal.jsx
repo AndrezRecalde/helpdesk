@@ -27,6 +27,7 @@ export const InvTipocategoriaModal = () => {
         if (activateTipocategoria !== null) {
             setActivateTipocategoria(null);
         }
+        form.reset();
         modalActionTipocategoria(false);
     };
 

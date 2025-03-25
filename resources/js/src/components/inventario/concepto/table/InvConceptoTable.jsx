@@ -5,7 +5,7 @@ import { IconCubePlus } from "@tabler/icons-react";
 import { useInvConceptoStore, useInvUiConcepto } from "../../../../hooks";
 
 export const InvConceptoTable = () => {
-    const { isLoading, invConceptos, setActivateInvConceptos } =
+    const { isLoading, invConceptos, setActivateInvConcepto } =
         useInvConceptoStore();
     const { modalActionConcepto } = useInvUiConcepto();
 
@@ -22,7 +22,7 @@ export const InvConceptoTable = () => {
     const handleEditar = useCallback(
         (selected) => {
             //console.log("editar");
-            setActivateInvConceptos(selected);
+            setActivateInvConcepto(selected);
             modalActionConcepto(true);
         },
         [invConceptos]

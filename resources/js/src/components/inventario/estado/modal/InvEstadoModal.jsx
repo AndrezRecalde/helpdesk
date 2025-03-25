@@ -23,6 +23,7 @@ export const InvEstadoModal = () => {
         if (activateInvEstado !== null) {
             setActivateInvEstado(null);
         }
+        form.reset();
         modalActionEstado(false);
     };
 

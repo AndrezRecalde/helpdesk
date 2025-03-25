@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Validation\Rule;
 
 class MarcaInvRequest extends FormRequest
 {
@@ -24,7 +25,16 @@ class MarcaInvRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nombre_marca' => 'required'
+            //'nombre_marca' => 'required',
+            'nombre_marca'      =>  ['required', Rule::unique('inv_marcas')->ignore($this->request->get('id'))],
+        ];
+    }
+
+    function message() : array
+    {
+        return [
+            'nombre_marca.required' => 'El nombre de la marca es requerido',
+            'nombre_marca.unique'   => 'El nombre de la marca ya existe',
         ];
     }
 

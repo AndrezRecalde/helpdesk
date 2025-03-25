@@ -5,7 +5,7 @@ import { useInvConceptoStore, useInvUiConcepto } from "../../../../hooks";
 
 export const InvConceptoModal = () => {
 
-    const { activateConcepto, setActivateInvConceptos } = useInvConceptoStore();
+    const { activateConcepto, setActivateInvConcepto } = useInvConceptoStore();
     const { isOpenModalInvConcepto, modalActionConcepto } = useInvUiConcepto();
 
     const form = useForm({
@@ -19,8 +19,9 @@ export const InvConceptoModal = () => {
 
     const handleCloseModal = () => {
         if (activateConcepto !== null) {
-            setActivateInvConceptos(null);
+            setActivateInvConcepto(null);
         }
+        form.reset();
         modalActionConcepto(false);
     }
 

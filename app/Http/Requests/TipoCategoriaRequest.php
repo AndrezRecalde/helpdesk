@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Validation\Rule;
 
 class TipoCategoriaRequest extends FormRequest
 {
@@ -24,7 +25,16 @@ class TipoCategoriaRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nombre_tipocategoria' => 'required'
+            //'nombre_tipocategoria' => 'required',
+            'nombre_tipocategoria'      =>  ['required', Rule::unique('inv_tipocategorias')->ignore($this->request->get('id'))],
+        ];
+    }
+
+    function message() : array
+    {
+        return [
+            'nombre_tipocategoria.required'    => 'El nombre del tipo categoria es requerido',
+            'nombre_tipocategoria.unique'      => 'El nombre del tipo categoria ya existe',
         ];
     }
 

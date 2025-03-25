@@ -20,6 +20,7 @@ export const InvMarcaModal = () => {
         if (activateInvMarca !== null) {
             setActivateInvMarca(null);
         }
+        form.reset();
         modalActionMarca(false);
     };
 

@@ -37,8 +37,7 @@ const InvMarcaPage = ({ tabValue }) => {
                 icon: "error",
                 title: "Opps...",
                 text: errores,
-                showConfirmButton: false,
-                timer: 1500,
+                showConfirmButton: true,
             });
             return;
         }

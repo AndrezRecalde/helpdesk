@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Validation\Rule;
 
 class EstadoInvRequest extends FormRequest
 {
@@ -24,8 +25,18 @@ class EstadoInvRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nombre_estado' =>  'required',
-            'color'         =>  'required'
+            //'nombre_estado' =>  'required',
+            'nombre_estado'      =>  ['required', Rule::unique('inv_estados')->ignore($this->request->get('id'))],
+            'color'              =>  'required'
+        ];
+    }
+
+    function message() : array
+    {
+        return [
+            'nombre_estado.required'    => 'El nombre del estado es requerido',
+            'nombre_estado.unique'      => 'El nombre del estado ya existe',
+            'color.required'            => 'El color del estado es requerido',
         ];
     }
 

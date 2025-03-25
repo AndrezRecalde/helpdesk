@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Validation\Rule;
 
 class UbicacionInvRequest extends FormRequest
 {
@@ -24,8 +25,19 @@ class UbicacionInvRequest extends FormRequest
     public function rules(): array
     {
         return [
-             'nombre_edificio'      => 'required',
-             'nombre_ubicacion'     => 'required'
+             'nombre_edificio'      =>  ['required', Rule::unique('inv_ubicaciones')->ignore($this->request->get('id'))],
+             'nombre_ubicacion'     =>  ['required', Rule::unique('inv_ubicaciones')->ignore($this->request->get('id'))],
+
+        ];
+    }
+
+    function messages(): array
+    {
+        return [
+            'nombre_edificio.required'  => 'El nombre del edificio es obligatorio',
+            'nombre_edificio.unique'    => 'El nombre del edificio ya existe',
+            'nombre_ubicacion.required' => 'El nombre de la ubicacion es obligatorio',
+            'nombre_ubicacion.unique'   => 'El nombre de la ubicacion ya existe',
         ];
     }
 

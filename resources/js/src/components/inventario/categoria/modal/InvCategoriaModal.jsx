@@ -45,6 +45,7 @@ export const InvCategoriaModal = () => {
         if (activateCategoria !== null) {
             setActivateInvCategoria(null);
         }
+        form.reset();
         modalActionCategoria(false);
     };
 

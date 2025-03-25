@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Validation\Rule;
 
 class ConceptoInvRequest extends FormRequest
 {
@@ -24,14 +25,17 @@ class ConceptoInvRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nombre_concepto' => 'required'
+            //'nombre_concepto' => 'required',
+            'nombre_concepto'      =>  ['required', Rule::unique('inv_conceptos')->ignore($this->request->get('id'))],
         ];
     }
 
     function messages(): array
     {
         return [
-            'nombre_concepto.required' => 'El nombre de este elemento es obligatorio'
+            'nombre_concepto.required' => 'El nombre del concepto es obligatorio',
+            'nombre_concepto.unique'   => 'El nombre del concepto ya existe'
+
         ];
     }
 

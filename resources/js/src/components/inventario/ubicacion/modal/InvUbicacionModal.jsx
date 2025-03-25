@@ -24,6 +24,7 @@ export const InvUbicacionModal = () => {
         if (activateUbicacion !== null) {
             setActivateInvUbicacion(null);
         }
+        form.reset();
         modalActionUbicacion(false);
     };
 
