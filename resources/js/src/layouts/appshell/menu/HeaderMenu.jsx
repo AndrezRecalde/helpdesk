@@ -133,11 +133,11 @@ export function HeaderMenu({ usuario, asideValue, btnToggle }) {
                             <MenuSection
                                 title="Gestión de TIC"
                                 menuData={NavMenuTics}
-                                isOpen={linksMenuSoportes}
-                                toggle={toggleSoportes}
                                 classes={classes}
                                 theme={theme}
-                                toggleDrawer={toggleSoportes}
+                                isOpen={linksMenuSoportes}
+                                toggle={toggleSoportes}
+                                toggleDrawer={toggleDrawer}
                             />
                         ) : null}
 
@@ -145,11 +145,11 @@ export function HeaderMenu({ usuario, asideValue, btnToggle }) {
                             <MenuSection
                                 title="Gestión General"
                                 menuData={NavMenuAdminTics}
-                                isOpen={linksGestionGeneral}
-                                toggle={toggleGestionGeneral}
                                 classes={classes}
                                 theme={theme}
-                                toggleDrawer={toggleGestionGeneral}
+                                isOpen={linksGestionGeneral}
+                                toggle={toggleGestionGeneral}
+                                toggleDrawer={toggleDrawer}
                             />
                         ) : null}
 
@@ -158,11 +158,11 @@ export function HeaderMenu({ usuario, asideValue, btnToggle }) {
                             <MenuSection
                                 title="Permisos Admin"
                                 menuData={NavMenuPermisosAdmin}
-                                isOpen={linksMenuPermisos}
-                                toggle={togglePermisos}
                                 classes={classes}
                                 theme={theme}
-                                toggleDrawer={togglePermisos}
+                                isOpen={linksMenuPermisos}
+                                toggle={togglePermisos}
+                                toggleDrawer={toggleDrawer}
                             />
                         ) : null}
 
@@ -170,11 +170,11 @@ export function HeaderMenu({ usuario, asideValue, btnToggle }) {
                         <MenuRapidoSection
                             title="Menú Rápido"
                             menuData={MenuRapido}
-                            isOpen={linksMenuQuick}
-                            toggle={toggleMenuQuick}
                             classes={classes}
                             theme={theme}
-                            toggleDrawer={toggleMenuQuick}
+                            isOpen={linksMenuQuick}
+                            toggle={toggleMenuQuick}
+                            toggleDrawer={toggleDrawer}
                         />
 
                         <Divider my="sm" />
