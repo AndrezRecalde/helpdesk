@@ -1,5 +1,4 @@
 import {
-    IconBeach,
     IconBuilding,
     IconCertificate,
     IconChartBar,
