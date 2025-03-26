@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { useMantineReactTable } from "mantine-react-table";
-import { Table, Text } from "@mantine/core";
-import { TableContent } from "../../../components";
+import { Table } from "@mantine/core";
+import { TableContent, TextSection } from "../../../components";
 import { useSoporteStore } from "../../../hooks";
 import dayjs from "dayjs";
 
@@ -49,34 +49,38 @@ export const SoportesUsersTable = () => {
             },
         }),
         renderDetailPanel: ({ row }) => (
-            <Table.ScrollContainer minWidth={800}>
-                <Table
-                    verticalSpacing="md"
-                    withColumnBorders
-                    withRowBorders={false}
-                >
-                    <Table.Tbody>
-                        <Table.Tr>
-                            <Table.Td>
-                                <Text fz="sm">{row.original.incidente}</Text>
-                                <Text fz="xs" c="dimmed">
-                                    Incidencia
-                                </Text>
-                            </Table.Td>
-                            <Table.Td>
-                                <Text fz="sm">
-                                    {row.original.solucion ??
-                                        "Aun sin solución"}
-                                </Text>
-                                <Text fz="xs" c="dimmed">
-                                    Retrospectiva del técnico
-                                </Text>
-                            </Table.Td>
-                        </Table.Tr>
-                    </Table.Tbody>
-                </Table>
-            </Table.ScrollContainer>
+            <Table variant="vertical" layout="fixed" withTableBorder>
+                <Table.Tbody>
+                    <Table.Tr>
+                        <Table.Th w={250}>Incidencia</Table.Th>
+                        <Table.Td>{row.original.incidente}</Table.Td>
+                    </Table.Tr>
+                    <Table.Tr>
+                        <Table.Th w={250}>Retrospectiva del técnico</Table.Th>
+                        <Table.Td>
+                            <TextSection tt="">
+                                {row.original.solucion ?? "Aun sin solución"}
+                            </TextSection>
+                        </Table.Td>
+                    </Table.Tr>
+                </Table.Tbody>
+            </Table>
         ),
+        mantineTableProps: {
+            withColumnBorders: true,
+            withTableBorder: true,
+            sx: {
+                "thead > tr": {
+                    backgroundColor: "inherit",
+                },
+                "thead > tr > th": {
+                    backgroundColor: "inherit",
+                },
+                "tbody > tr > td": {
+                    backgroundColor: "inherit",
+                },
+            },
+        },
     });
 
     return <TableContent table={table} />;
