@@ -1,12 +1,13 @@
 import { useCallback, useMemo } from "react";
 import { Table } from "@mantine/core";
 import { useMantineReactTable } from "mantine-react-table";
+import { MRT_Localization_ES } from "mantine-react-table/locales/es/index.cjs";
 import {
     ActionReportPDF,
     MenuTable_Equipo,
     TableContent,
 } from "../../../../components";
-import { useInvEquipoStore, useInvUiEquipo, useUiInvCustodio } from "../../../../hooks";
+import { useInvEquipoStore, useInvUiEquipo, useStorageField, useUiInvCustodio } from "../../../../hooks";
 import Swal from "sweetalert2";
 
 export const InvEquipoTable = () => {
@@ -24,6 +25,7 @@ export const InvEquipoTable = () => {
         modalActionDeleteEquipo,
     } = useInvUiEquipo();
     const { modalActionCustodio } = useUiInvCustodio();
+    const { storageFields } = useStorageField();
 
     const columns = useMemo(
         () => [
@@ -111,7 +113,7 @@ export const InvEquipoTable = () => {
                 confirmButtonText: "Si, confirmo!",
             }).then((result) => {
                 if (result.isConfirmed) {
-                    startRemoverCustodio(selected);
+                    startRemoverCustodio(selected, storageFields);
                 }
             });
         },
@@ -138,8 +140,8 @@ export const InvEquipoTable = () => {
         data: invEquipos, //must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
         state: { showProgressBars: isLoading },
         enableFacetedValues: true,
-        enableDensityToggle: false,
         enableRowActions: true,
+        localization: MRT_Localization_ES,
         renderTopToolbarCustomActions: ({ table }) =>
             invEquipos.length !== 0 ? (
                 <ActionReportPDF handleExportDataPDF={handleExportDataPDF} />

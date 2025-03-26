@@ -1,5 +1,6 @@
 import { useMemo } from "react";
 import { useMantineReactTable } from "mantine-react-table";
+import { MRT_Localization_ES } from "mantine-react-table/locales/es/index.cjs";
 import { TableContent } from "../../../components";
 import { usePermisoStore } from "../../../hooks";
 
@@ -60,6 +61,7 @@ export const PermisosConsolidadosTable = () => {
         state: { showProgressBars: isLoading },
         enableFacetedValues: true,
         enableRowActions: false,
+        localization: MRT_Localization_ES,
         mantineTableProps: {
             withColumnBorders: true,
             withTableBorder: true,

@@ -177,6 +177,7 @@ Route::group(['prefix' => 'gerencia', 'middleware' => ['auth:sanctum', 'role:TIC
     Route::put('/inventario/equipo/{id}/custodio', [InvEquipoController::class, 'asignarCustodio']);
     Route::post('/inventario/export/equipos', [InvEquipoController::class, 'exportPDFEquipos']);
     Route::post('/inventario/buscar/equipo', [InvEquipoController::class, 'buscarEquipoxUsuario']);
+    Route::post('/export-equipos-xls', [InvEquipoController::class, 'exportInvEquiposExcel']);
 
     /* EQUIPOS DAR DE BAJA */
     Route::post('/inventario/equipo/baja', [InvBajaController::class, 'darDeBajaEquipos']);

@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useErrorException } from "../../hooks";
 import {
-    onAnularPermiso,
+    //onAnularPermiso,
     onClearPermisos,
     onExport,
     onLoadErrores,
@@ -173,7 +173,7 @@ export const usePermisoStore = () => {
 
     const startExportConsolidadosPermisos = async (seleccion) => {
         try {
-            dispatch(onLoading(true));
+            dispatch(onExport(true));
             const response = await helpdeskApi.post(
                 "/tthh/asistencia/export/consolidado-permisos",
                 seleccion,
@@ -184,10 +184,10 @@ export const usePermisoStore = () => {
             });
             const url = window.open(URL.createObjectURL(pdfBlob));
             window.URL.revokeObjectURL(url);
-            dispatch(onLoading(false));
+            dispatch(onExport(false));
         } catch (error) {
             //console.log(error);
-            dispatch(onLoading(false));
+            dispatch(onExport(false));
             ExceptionMessageError(error);
         }
     };

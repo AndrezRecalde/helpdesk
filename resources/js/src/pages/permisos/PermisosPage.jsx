@@ -15,7 +15,7 @@ import {
 } from "../../hooks";
 import { IconChevronsRight, IconInfoCircle } from "@tabler/icons-react";
 import { useNavigate } from "react-router-dom";
-import { Roles } from "../../layouts/appshell/navbar/navlinks/navLinks";
+import { Roles } from "../../helpers/dictionary";
 
 const PermisosPage = () => {
     useTitlePage("Helpdesk | Permisos");
@@ -115,7 +115,10 @@ const PermisosPage = () => {
     }, [id_direccion_pide]);
 
     useEffect(() => {
-        if (usuario.role_id !== 1) {
+        if (
+            usuario.role !== Roles.TIC_GERENTE ||
+            usuario.role !== Roles.NOM_ASISTENCIA
+        ) {
             form.setValues({
                 id_direccion_pide: usuario.cdgo_dprtmnto.toString(),
                 id_usu_pide: usuario.cdgo_usrio.toString(),
@@ -144,14 +147,23 @@ const PermisosPage = () => {
             <Card withBorder shadow="sm" radius="sm" mt={20} mb={20}>
                 <LoadingOverlay
                     visible={
-                        usuario.role_id !== 1 && loadDirectores ? true : false
+                        (usuario.role !== Roles.TIC_GERENTE ||
+                            usuario.role !== Roles.NOM_ASISTENCIA) &&
+                        loadDirectores
+                            ? true
+                            : false
                     }
                     zIndex={1000}
                     overlayProps={{ radius: "sm", blur: 2 }}
                 />
                 <FormSolicitudPermiso
                     form={form}
-                    disabled={usuario.role_id === 1 ? false : true}
+                    disabled={
+                        usuario.role === Roles.TIC_GERENTE ||
+                        usuario.role === Roles.NOM_ASISTENCIA
+                            ? false
+                            : true
+                    }
                 />
             </Card>
             <AlertSection

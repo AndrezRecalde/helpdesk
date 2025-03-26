@@ -1,5 +1,6 @@
 import { useCallback, useMemo } from "react";
 import { useMantineReactTable } from "mantine-react-table";
+import { MRT_Localization_ES } from "mantine-react-table/locales/es/index.cjs";
 import { MenuTable_AutorizarPermiso, TableContent } from "../../../../components";
 import { usePermisoStore } from "../../../../hooks";
 import Swal from "sweetalert2";
@@ -106,6 +107,7 @@ export const AutorizarPermisoTable = () => {
         state: { showProgressBars: isLoading },
         enableFacetedValues: true,
         enableRowActions: true,
+        localization: MRT_Localization_ES,
         renderRowActionMenuItems: ({ row }) => (
             <MenuTable_AutorizarPermiso
                 row={row}

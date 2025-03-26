@@ -66,7 +66,7 @@ export const useInvEquipoStore = () => {
         }
     };
 
-    const startAddInvEquipo = async (equipo) => {
+    const startAddInvEquipo = async (equipo, storageFields = {}) => {
         try {
             if (equipo.id) {
                 const { data } = await helpdeskApi.put(
@@ -77,6 +77,7 @@ export const useInvEquipoStore = () => {
                 setTimeout(() => {
                     dispatch(onLoadMessage(undefined));
                 }, 40);
+                startLoadInvEquipos(storageFields);
                 return;
             }
             const { data } = await helpdeskApi.post(
@@ -87,6 +88,7 @@ export const useInvEquipoStore = () => {
             setTimeout(() => {
                 dispatch(onLoadMessage(undefined));
             }, 40);
+            startLoadInvEquipos(storageFields);
         } catch (error) {
             //console.log(error);
             ExceptionMessageError(error);
@@ -204,7 +206,7 @@ export const useInvEquipoStore = () => {
         }
     };
 
-    const startRemoverCustodio = async (equipo) => {
+    const startRemoverCustodio = async (equipo, storageFields = {}) => {
         try {
             const { data } = await helpdeskApi.post(
                 `/gerencia/inventario/equipo/remover-custodio/${equipo.id}`
@@ -213,13 +215,14 @@ export const useInvEquipoStore = () => {
             setTimeout(() => {
                 dispatch(onLoadMessage(undefined));
             }, 40);
+            startLoadInvEquipos(storageFields);
         } catch (error) {
             //console.log(error);
             ExceptionMessageError(error);
         }
     };
 
-    const startAsignarCustodio = async (equipo, values) => {
+    const startAsignarCustodio = async (equipo, values, storageFields = {}) => {
         try {
             const { data } = await helpdeskApi.put(
                 `/gerencia/inventario/equipo/${equipo.id}/custodio`,
@@ -229,6 +232,7 @@ export const useInvEquipoStore = () => {
             setTimeout(() => {
                 dispatch(onLoadMessage(undefined));
             }, 40);
+            startLoadInvEquipos(storageFields);
         } catch (error) {
             //console.log(error);
             ExceptionMessageError(error);

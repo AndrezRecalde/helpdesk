@@ -1,5 +1,6 @@
 import { useCallback, useMemo } from "react";
 import { useMantineReactTable } from "mantine-react-table";
+import { MRT_Localization_ES } from "mantine-react-table/locales/es/index.cjs";
 import { MenuTable_Per, TableContent } from "../../../components";
 import { usePermisoStore, useUiPermiso } from "../../../hooks";
 import dayjs from "dayjs";
@@ -61,6 +62,7 @@ export const PermisosTable = () => {
         state: { showProgressBars: isLoading },
         enableFacetedValues: true,
         enableRowActions: true,
+        localization: MRT_Localization_ES,
         renderRowActionMenuItems: ({ row }) => (
             <MenuTable_Per
                 row={row}

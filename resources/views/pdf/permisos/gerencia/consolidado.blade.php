@@ -21,23 +21,28 @@
         table {
             width: 100%;
             border-collapse: collapse;
-            border: 0.5px solid gray;
-            /* Corrige el borde */
-            table-layout: auto;
-            /* Cambia a 'auto' para ajustar el ancho según el contenido */
+            border: 1px solid black;
+            table-layout: fixed;
+            /* Distribuye equitativamente */
             margin-bottom: 25px;
             margin-top: 25px;
         }
 
         th,
         td {
-            padding: 3px;
-            vertical-align: top;
+            width: 16.66%;
+            /* Misma anchura para todas las columnas */
+            padding: 6px;
+            /* Espacio interno para mejor legibilidad */
+            vertical-align: middle;
             border: 1px solid black;
             font-size: 12px;
-            /* Borde para celdas */
+            text-align: center;
+            /* Centra el contenido */
+            word-wrap: break-word;
+            /* Evita desbordes */
+            overflow: hidden;
         }
-
 
         hr {
             border: 0.5px solid gray;
@@ -68,7 +73,6 @@
         .header h4,
         .header h5 {
             margin: 15px 0;
-            /* Reduce márgenes */
         }
     </style>
 </head>
@@ -77,10 +81,10 @@
     <!-- ENCABEZADO -->
     <table class="full-width-table">
         <tr>
-            <td class="img-container">
+            <td colspan="2" class="img-container">
                 <img class="img-fluid" alt="logo" src={{ public_path('/assets/images/LogoCompleto.png') }}>
             </td>
-            <td colspan="3" class="header">
+            <td colspan="2" class="header">
                 <h3>{{ $institucion }}</h3>
                 <hr>
                 <h4>{{ $titulo }} : {{ $fecha_inicio }} HASTA {{ $fecha_fin }}</h4>

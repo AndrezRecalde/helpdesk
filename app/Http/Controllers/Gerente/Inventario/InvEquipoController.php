@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Gerente\Inventario;
 
 use Carbon\Carbon;
 use App\Enums\MsgStatus;
+use App\Exports\InvEquiposExport;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\EquipoDocumentoRequest;
 use App\Http\Requests\EquipoInvRequest;
@@ -18,7 +19,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Barryvdh\DomPDF\Facade\Pdf;
-
+use Maatwebsite\Excel\Facades\Excel;
 
 class InvEquipoController extends Controller
 {
@@ -392,5 +393,13 @@ class InvEquipoController extends Controller
         } else {
             return response()->json(['status' => MsgStatus::Error, 'msg' => MsgStatus::NotFound], 404);
         }
+    }
+
+    public function exportInvEquiposExcel(Request $request)
+    {
+        $campo = $request->campo;
+        $valor = $request->valor;
+
+        return Excel::download(new InvEquiposExport($campo, $valor), 'equipos.xlsx');
     }
 }

@@ -1,11 +1,11 @@
 import { useCallback, useMemo } from "react";
 import { Badge, Table, useMantineColorScheme } from "@mantine/core";
 import { useMantineReactTable } from "mantine-react-table";
+import { MRT_Localization_ES } from "mantine-react-table/locales/es/index.cjs";
 import {
     MenuSolicitudTable,
     MenuTable_T,
     TableContent,
-    TextSection,
 } from "../../../components";
 import {
     useDireccionStore,
@@ -121,6 +121,7 @@ export const SoportesTable = () => {
         state: { showProgressBars: isLoading },
         enableFacetedValues: true,
         enableRowActions: true,
+        localization: MRT_Localization_ES,
         mantineTableBodyCellProps: ({ cell }) => ({
             style: {
                 backgroundColor:
@@ -173,7 +174,7 @@ export const SoportesTable = () => {
         renderDetailPanel: ({ row }) => (
             <Table variant="vertical" layout="fixed" withTableBorder>
                 <Table.Tbody>
-                <Table.Tr>
+                    <Table.Tr>
                         <Table.Th w={300}>Tipo Soporte</Table.Th>
                         <Table.Td>{row.original.tipo_soporte}</Table.Td>
                     </Table.Tr>

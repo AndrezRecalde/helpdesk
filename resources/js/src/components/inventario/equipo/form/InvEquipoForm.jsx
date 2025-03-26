@@ -10,6 +10,7 @@ import {
     useInvCategoriaStore,
     useInvEquipoStore,
     useInvUiEquipo,
+    useStorageField,
 } from "../../../../hooks";
 import {
     IconChevronsLeft,
@@ -23,6 +24,7 @@ export const InvEquipoForm = ({ form }) => {
         useInvEquipoStore();
     const { modalActionEquipo } = useInvUiEquipo();
     const { startLoadInvCategorias } = useInvCategoriaStore();
+    const { storageFields } = useStorageField();
     const [active, setActive] = useState(0);
 
     useEffect(() => {
@@ -126,7 +128,7 @@ export const InvEquipoForm = ({ form }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        startAddInvEquipo(form.getTransformedValues());
+        startAddInvEquipo(form.getTransformedValues(), storageFields);
         //console.log(form.getTransformedValues());
         modalActionEquipo(false);
         setActivateInvEquipo(null);

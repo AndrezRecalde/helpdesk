@@ -8,6 +8,7 @@ import {
     useInvCategoriaStore,
     useInvEquipoStore,
     useInvEstadoStore,
+    useStorageField,
     useUsersStore,
 } from "../../../../hooks";
 import classes from "../../../../assets/styles/modules/layout/input/LabelsInputs.module.css";
@@ -21,6 +22,7 @@ export const FilterFormEquipos = () => {
         useInvCategoriaStore();
     const { startLoadInvEstados, invEstados, startClearInvEstados } =
         useInvEstadoStore();
+    const { setStorageFields } = useStorageField();
 
     const [resultados, setResultados] = useState([]);
 
@@ -116,14 +118,15 @@ export const FilterFormEquipos = () => {
         //console.log("Resultados actualizados:", data);
     }, [campo, direcciones, users, categorias, invEstados]); // Se ejecuta cuando los datos cambian
 
-    const handleSearch = (e) => {
+    /* const handleSearch = (e) => {
         e.preventDefault();
-    };
+    }; */
 
     const handleSubmit = (e) => {
         e.preventDefault();
         //console.log(form.getTransformedValues());
         startLoadInvEquipos(form.getTransformedValues());
+        setStorageFields(form.getTransformedValues())
     };
 
     return (
@@ -165,9 +168,9 @@ export const FilterFormEquipos = () => {
                             icon={<IconSearch size={16} />}
                             classNames={classes}
                             {...form.getInputProps("valor")}
-                            onKeyDown={(event) => {
+                            /* onKeyDown={(event) => {
                                 if (event.key === "Enter") handleSearch();
-                            }}
+                            }} */
                         />
                     ) : (
                         <Select

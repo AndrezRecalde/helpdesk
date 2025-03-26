@@ -1,6 +1,7 @@
 import { useCallback, useMemo } from "react";
 import { useMantineReactTable } from "mantine-react-table";
-import { MenuSolicitudTable, MenuTable_T, TableContent } from "../../..";
+import { MRT_Localization_ES } from "mantine-react-table/locales/es/index.cjs";
+import { MenuSolicitudTable, MenuTable_T, TableContent } from "../../../../components";
 import { Badge, Table, useMantineColorScheme } from "@mantine/core";
 import { useSoporteStore, useUiSoporte } from "../../../../hooks";
 import dayjs from "dayjs";
@@ -31,12 +32,12 @@ export const SolicitudesTable = ({ menu, isLoading }) => {
             },
             {
                 accessorKey: "usuario_recibe", //normal accessorKey
-                header: "Usuario solicitante",
+                header: "Solicitante",
                 filterVariant: "autocomplete",
             },
             {
                 accessorKey: "direccion", //normal accessorKey
-                header: "Departamento del usuario",
+                header: "Departamento del solicitante",
                 filterVariant: "autocomplete",
             },
             {
@@ -73,9 +74,7 @@ export const SolicitudesTable = ({ menu, isLoading }) => {
         state: { showProgressBars: isLoading },
         enableFacetedValues: true,
         enableRowActions: true,
-        localization: {
-            noResultsFound: "Sin Resultados",
-        },
+        localization: MRT_Localization_ES,
         renderRowActionMenuItems: ({ row }) =>
             menu === 1 ? (
                 <MenuSolicitudTable

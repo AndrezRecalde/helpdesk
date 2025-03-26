@@ -11,6 +11,11 @@ const AuthPage = lazy(() =>
     import(/* webpackChunkName: "AuthPage" */ "../../pages/auth/AuthPage")
 );
 
+const HomePage = lazy(() =>
+    import(/* webpackChunkName: "HomePage" */ "../../pages/home/HomePage")
+);
+
+
 const DashGerenciaPage = lazy(() =>
     import(
         /* webpackChunkName: "DashGerenciaPage" */ "../../pages/dashboard/gerencia/DashGerenciaPage"
@@ -197,6 +202,7 @@ const permisosAdminRoutes = generateRoutes(
 const peerRoutes = generateRoutes(
     "intranet",
     [
+        { path: "home", Component: HomePage },
         { path: "profile", Component: ProfilePage },
         { path: "change-password", Component: ChangePwdPage },
         { path: "ver-marcaciones", Component: MarcacionPage },

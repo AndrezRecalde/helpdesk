@@ -10,9 +10,11 @@ import { IconPrinter } from "@tabler/icons-react";
 import { usePermisoStore } from "../../hooks";
 import { isNotEmpty, useForm } from "@mantine/form";
 import dayjs from "dayjs";
+import Swal from "sweetalert2";
 
 const ConsolidadoPermisosPage = () => {
     const {
+        isExport,
         startLoadConsolidadosPermisos,
         startExportConsolidadosPermisos,
         clearPermisos,
@@ -40,21 +42,35 @@ const ConsolidadoPermisosPage = () => {
     const { fecha_inicio, fecha_fin } = form.values;
 
     useEffect(() => {
-      if (fecha_inicio && fecha_fin) {
-        setDisabled(false);
-      } else {
-        setDisabled(true);
-      }
+        if (fecha_inicio && fecha_fin) {
+            setDisabled(false);
+        } else {
+            setDisabled(true);
+        }
 
-      return () => {
-        setDisabled(true);
-      }
-    }, [fecha_inicio, fecha_fin])
-
+        return () => {
+            setDisabled(true);
+        };
+    }, [fecha_inicio, fecha_fin]);
 
     useEffect(() => {
         return () => clearPermisos();
     }, []);
+
+    useEffect(() => {
+        if (isExport === true) {
+            Swal.fire({
+                icon: "warning",
+                text: "Un momento porfavor, se está exportando",
+                showConfirmButton: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                },
+            });
+        } else {
+            Swal.close(); // Cierra el modal cuando isExport es false
+        }
+    }, [isExport]);
 
     const handleExport = () => {
         startExportConsolidadosPermisos(form.getTransformedValues());
@@ -64,7 +80,11 @@ const ConsolidadoPermisosPage = () => {
         <Container size="xl">
             <Group justify="space-between">
                 <TitlePage order={2}>Consolidado de Permisos</TitlePage>
-                <BtnSection disabled={disabled} IconSection={IconPrinter} handleAction={handleExport}>
+                <BtnSection
+                    disabled={disabled}
+                    IconSection={IconPrinter}
+                    handleAction={handleExport}
+                >
                     Imprimir
                 </BtnSection>
             </Group>

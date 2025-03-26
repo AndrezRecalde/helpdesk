@@ -1,21 +1,36 @@
 import { Box, Loader, Select, SimpleGrid, Stack } from "@mantine/core";
 import { BtnSubmit } from "../../../../components";
-import { useDireccionStore, useUiInvCustodio, useUsersStore } from "../../../../hooks";
+import {
+    useDireccionStore,
+    useStorageField,
+    useUiInvCustodio,
+    useUsersStore,
+} from "../../../../hooks";
 
-export const InvAsignarCustodioForm = ({ form, setActivateElement, activateElement, startAsignarCustodioFn }) => {
-    const { isLoading:loadingUsers, users } = useUsersStore();
-    const { isLoading:loadingDirecciones, direcciones } = useDireccionStore();
+export const InvAsignarCustodioForm = ({
+    form,
+    setActivateElement,
+    activateElement,
+    startAsignarCustodioFn,
+}) => {
+    const { isLoading: loadingUsers, users } = useUsersStore();
+    const { isLoading: loadingDirecciones, direcciones } = useDireccionStore();
     const { modalActionCustodio } = useUiInvCustodio();
+    const { storageFields } = useStorageField();
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        startAsignarCustodioFn(activateElement, form.getTransformedValues());
+        startAsignarCustodioFn(
+            activateElement,
+            form.getTransformedValues(),
+            storageFields
+        );
         if (activateElement !== null) {
             setActivateElement(null);
         }
         form.reset();
         modalActionCustodio(false);
-    }
+    };
 
     return (
         <Box

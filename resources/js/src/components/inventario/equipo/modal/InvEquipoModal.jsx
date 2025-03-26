@@ -115,8 +115,8 @@ export const InvEquipoModal = () => {
         if (activateInvEquipo !== null) {
             setActivateInvEquipo(null);
         }
-        modalActionEquipo(false);
         form.reset();
+        modalActionEquipo(false);
     };
 
     return (

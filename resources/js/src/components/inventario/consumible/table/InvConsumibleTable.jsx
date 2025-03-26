@@ -1,6 +1,7 @@
 import { useCallback, useMemo } from "react";
-import { MenuTable_Consumible, MenuTable_E, TableContent } from "../../..";
 import { useMantineReactTable } from "mantine-react-table";
+import { MRT_Localization_ES } from "mantine-react-table/locales/es/index.cjs";
+import { MenuTable_Consumible, TableContent } from "../../../../components";
 import { useInvConsumibleStore, useUiInvConsumible } from "../../../../hooks";
 import { NavLink } from "@mantine/core";
 
@@ -81,6 +82,7 @@ export const InvConsumibleTable = () => {
         enableFacetedValues: true,
         enableDensityToggle: false,
         enableRowActions: true,
+        localization: MRT_Localization_ES,
         renderRowActionMenuItems: ({ row }) => (
             <MenuTable_Consumible
                 row={row}
