@@ -83,6 +83,7 @@ class UserController extends Controller
         $birthdays = User::select('cdgo_usrio', 'nmbre_usrio', 'usu_fec_nac')
             ->whereMonth('usu_fec_nac', $today->month)
             ->whereDay('usu_fec_nac', $today->day)
+            ->where('actvo', 1)
             ->get();
 
         return response()->json([

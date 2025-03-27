@@ -1,14 +1,14 @@
 import { Container, Group, Text, Title } from "@mantine/core";
 import { BtnSection } from "../../components";
 import { useNavigate } from "react-router-dom";
+import { IconHomeCheck } from "@tabler/icons-react";
 import classes from "../../assets/styles/modules/error/NotFound.module.css";
-import { IconUserCircle } from "@tabler/icons-react";
 
 const ErrorNotFound = () => {
     const navigate = useNavigate();
 
     const handleAction = () => {
-        navigate("/intranet/profile");
+        navigate("/intranet/home");
     };
 
     return (
@@ -31,7 +31,7 @@ const ErrorNotFound = () => {
                     heigh={50}
                     fontSize={18}
                     handleAction={handleAction}
-                    IconSection={IconUserCircle}
+                    IconSection={IconHomeCheck}
                 >
                     Ir a mi perfil
                 </BtnSection>

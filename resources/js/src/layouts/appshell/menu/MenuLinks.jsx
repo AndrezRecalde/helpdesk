@@ -48,12 +48,21 @@ export const MenuQuick = ({ menuData, classes, theme }) => {
     ));
 };
 
-export const MenuItems = ({ menuHome, classes, theme }) => {
+export const MenuItems = ({ menuHome, classes, theme, toggleDrawer = null }) => {
+
+    const handleCloseDrawer = () => {
+       if (toggleDrawer !== null) {
+            toggleDrawer(false);
+            return;
+       }
+    }
+
     return menuHome.map((item) => (
         <Link
             key={item.title}
             to={item.link}
             className={classes.item}
+            onClick={handleCloseDrawer}
             style={{ textDecoration: "none", color: "inherit" }}
         >
             <ThemeIcon

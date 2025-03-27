@@ -1,13 +1,13 @@
 import { Title, Text, Container, Group } from "@mantine/core";
 import { BtnSection } from "../../components";
 import { useNavigate } from "react-router-dom";
-import { IconUserCircle } from "@tabler/icons-react";
+import { IconHomeCheck } from "@tabler/icons-react";
 import classes from "../../assets/styles/modules/error/Forbidden.module.css";
 
 const ErrorAccessDenied = () => {
     const navigate = useNavigate();
     const handleAction = () => {
-        navigate("/intranet/profile");
+        navigate("/intranet/home");
     };
 
     return (
@@ -26,7 +26,7 @@ const ErrorAccessDenied = () => {
                         heigh={50}
                         fontSize={18}
                         handleAction={handleAction}
-                        IconSection={IconUserCircle}
+                        IconSection={IconHomeCheck}
                     >
                         Ir a mi perfil
                     </BtnSection>

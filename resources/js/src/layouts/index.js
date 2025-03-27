@@ -10,6 +10,8 @@ import { StackAside } from "./appshell/menu/StackAside";
 import { SolicitudesMenu } from "./appshell/menu/SolicitudesMenu";
 import { GestionMenu } from "./appshell/menu/GestionMenu";
 import { MenuSection, MenuRapidoSection } from "./appshell/menu/MenuSection";
+import { HeaderBtnInicio } from "./appshell/menu/HeaderBtnInicio";
+import { DrawerMenuMobile } from "./appshell/menu/DrawerMenuMobile";
 
 export {
     NavMenuTics,
@@ -24,5 +26,7 @@ export {
     SolicitudesMenu,
     GestionMenu,
     MenuSection,
-    MenuRapidoSection
+    MenuRapidoSection,
+    HeaderBtnInicio,
+    DrawerMenuMobile
 };
