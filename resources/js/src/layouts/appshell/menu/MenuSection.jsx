@@ -12,9 +12,13 @@ import { IconChevronDown } from "@tabler/icons-react";
 import { MenuQuick } from "./MenuLinks";
 import { Link } from "react-router-dom";
 
-export const MenuSection = ({ title, menuData, isOpen, toggle, classes, theme, toggleDrawer }) => (
-    <>
-        <UnstyledButton className={classes.link} onClick={toggle}>
+export const MenuSection = ({ title, menuData, isOpen, toggle, classes, theme, toggleDrawer }) => {
+    const handleActionToggle = () => {
+        isOpen ? toggle(false) : toggle(true);
+    }
+    return (
+        <>
+        <UnstyledButton className={classes.link} onClick={() => handleActionToggle()}>
             <Center inline>
                 <Box component="span" mr={5}>
                     {title}
@@ -54,7 +58,8 @@ export const MenuSection = ({ title, menuData, isOpen, toggle, classes, theme, t
         </Collapse>
         <Divider my="sm" />
     </>
-);
+    )
+}
 
 export const MenuRapidoSection = ({ title, menuData, isOpen, toggle, classes, theme, toggleDrawer  }) => (
     <>

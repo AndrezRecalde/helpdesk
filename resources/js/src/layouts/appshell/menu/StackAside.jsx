@@ -3,7 +3,7 @@ import { IconGiftFilled, IconX } from "@tabler/icons-react";
 import { useUsersStore } from "../../../hooks";
 import { AlertSection, TextSection } from "../../../components";
 
-export const StackAside = ({ btnToggle }) => {
+export const StackAside = ({ modalAside }) => {
     const { birthdays } = useUsersStore();
     return (
         <Stack>
@@ -15,7 +15,7 @@ export const StackAside = ({ btnToggle }) => {
                     variant="default"
                     size="sm"
                     aria-label="Notificaciones"
-                    onClick={btnToggle}
+                    onClick={() => modalAside(false)}
                 >
                     <IconX
                         style={{ width: "60%", height: "60%" }}

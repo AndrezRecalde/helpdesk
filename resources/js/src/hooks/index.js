@@ -4,6 +4,9 @@ import { useErrorException } from "./error/useErrorException";
 /* Authenticacion */
 import { useAuthStore } from "./auth/useAuthStore";
 
+/* Header Menu */
+import { useUiHeaderMenu } from "./layout/useUiHeaderMenu";
+
 /* Usuarios */
 import { useUsersStore } from "./user/useUsersStore";
 import { useUiUser } from "./user/useUiUser";
@@ -116,6 +119,8 @@ export {
     useErrorException,
 
     useAuthStore,
+
+    useUiHeaderMenu,
 
     useUsersStore,
     useUiUser,

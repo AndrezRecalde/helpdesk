@@ -5,6 +5,9 @@ import { authSlice } from "./auth/authSlice";
 import { usersSlice } from "./user/usersSlice";
 import { uiUserSlice } from "./user/uiUserSlice";
 
+/* Header Menu */
+import { uiHeaderMenuSlice } from "./layout/header/uiHeaderMenuSlice";
+
 /* Tecnicos */
 import { tecnicoSlice } from "./tecnico/tecnicoSlice";
 import { uiTecnicoSlice } from "./tecnico/uiTecnicoSlice";
@@ -120,6 +123,9 @@ export {
     /*User */
     usersSlice,
     uiUserSlice,
+
+    /* Header Menu */
+    uiHeaderMenuSlice,
 
     /* Tecnico */
     tecnicoSlice,

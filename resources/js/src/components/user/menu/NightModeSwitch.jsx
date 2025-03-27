@@ -8,7 +8,7 @@ export const NightModeSwitch = () => {
     return (
         <Switch
             label="Modo Nocturno"
-            size="md"
+            size="sm"
             p="md"
             color="dark.4"
             onChange={() => toggleColorScheme()}

@@ -11,10 +11,14 @@ import {
     IconEditCircle,
     IconEyeCheck,
     IconFileDescription,
+    IconFingerprint,
     IconLicense,
     IconList,
     IconListCheck,
+    IconLogout,
+    IconSettings,
     IconTransferIn,
+    IconUserHexagon,
     IconUsers,
 } from "@tabler/icons-react";
 import { Roles } from "../../../../helpers/dictionary";
@@ -200,4 +204,90 @@ export const MenuRapido = [
         link: "/intranet/lista-actividades",
         roles: [""],
     },
+];
+
+/* Menu de Perfil de Usuario */
+export const menuProfile = [
+    /* Menu Header */
+
+    {
+        label: "Ver Perfil",
+        path: "profile",
+        link: "/intranet/profile",
+        icon: IconUserHexagon,
+        color: "#12b561",
+    },
+    {
+        label: "Cambiar contraseña",
+        path: "change-password",
+        link: "/intranet/change-password",
+        icon: IconSettings,
+        color: "#6d7c85",
+    },
+    {
+        label: "Ver marcaciones",
+        path: "ver-marcaciones",
+        link: "/intranet/ver-marcaciones",
+        icon: IconFingerprint,
+        color: "#067ebf",
+    },
+    {
+        label: "Cerrar sesión",
+        path: "cerrar-sesion",
+        link: "",
+        icon: IconLogout,
+        color: "#cc003d",
+    },
+];
+
+export const menuHome = [
+    {
+        title: "Ver mi perfil",
+        icon: IconUserHexagon,
+        color: "indigo",
+        link: "/intranet/profile",
+    },
+    {
+        title: "Cambiar contrasena",
+        icon: IconSettings,
+        color: "indigo",
+        link: "/intranet/change-password",
+    },
+    {
+        title: "Solicitar Soporte",
+        icon: IconDeviceImacBolt,
+        color: "cyan",
+        link: "/intranet/solicitud-soporte",
+    },
+    {
+        title: "Mis Soportes Solicitados",
+        icon: IconList,
+        color: "cyan",
+        link: "/intranet/soportes/actuales",
+    },
+    {
+        title: "Solicitar Permiso",
+        icon: IconLicense,
+        color: "red",
+        link: "/intranet/permiso",
+    },
+    {
+        title: "Ver mis permisos",
+        icon: IconEyeCheck,
+        color: "red",
+        link: "/intranet/ver-permisos",
+    },
+    {
+        title: "Agregar actividad",
+        icon: IconEditCircle,
+        color: "teal",
+        link: "/intranet/agregar-actividad",
+    },
+    {
+        title: "Listar actividades",
+        icon: IconListCheck,
+        color: "teal",
+        link: "/intranet/lista-actividades",
+    },
+    /* { title: "Cashback", icon: IconCashBanknote, color: "orange" }, */
 ];

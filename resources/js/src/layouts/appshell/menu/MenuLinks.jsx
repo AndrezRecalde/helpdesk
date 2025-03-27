@@ -1,4 +1,5 @@
 import { Group, Menu, Text, ThemeIcon } from "@mantine/core";
+import { TextSection } from "../../../components";
 import { Link } from "react-router-dom";
 
 export const MenuList = ({ usuario, menuData, theme }) => {
@@ -27,13 +28,12 @@ export const MenuList = ({ usuario, menuData, theme }) => {
 };
 
 /* Links de Mega Menu */
-export const MenuQuick = ({ menuData, classes, theme, toggleDrawer }) => {
+export const MenuQuick = ({ menuData, classes, theme }) => {
     return menuData.map((item) => (
         <Link
             to={item.link}
             key={item.title}
             className={classes.subLink}
-            onClick={() => toggleDrawer(false)}
             style={{ textDecoration: "none", color: "inherit" }}
         >
             <Group wrap="nowrap" align="flex-start">
@@ -44,6 +44,33 @@ export const MenuQuick = ({ menuData, classes, theme, toggleDrawer }) => {
                     {item.title}
                 </Text>
             </Group>
+        </Link>
+    ));
+};
+
+export const MenuItems = ({ menuHome, classes, theme }) => {
+    return menuHome.map((item) => (
+        <Link
+            key={item.title}
+            to={item.link}
+            className={classes.item}
+            style={{ textDecoration: "none", color: "inherit" }}
+        >
+            <ThemeIcon
+                size={40}
+                variant="light"
+                radius="sm"
+                color={theme.colors[item.color][5]}
+            >
+                <item.icon
+                    color={theme.colors[item.color][5]}
+                    size={30}
+                    stroke={1.7}
+                />
+            </ThemeIcon>
+            <TextSection tt="left" fw={400} fz={14} mt={7}>
+                {item.title}
+            </TextSection>
         </Link>
     ));
 };

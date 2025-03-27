@@ -3,15 +3,15 @@ import {
     ActionIcon,
     Box,
     Burger,
-    Divider,
     Drawer,
     Group,
     ScrollArea,
+    SimpleGrid,
     useMantineTheme,
 } from "@mantine/core";
-import { useDisclosure } from "@mantine/hooks";
 import { Logo, UserBtnHeader } from "../../../components";
 import {
+    menuHome,
     MenuRapido,
     NavMenuAdminTics,
     NavMenuPermisosAdmin,
@@ -21,24 +21,26 @@ import {
     SolicitudesMenu,
     GestionMenu,
     MenuSection,
-    MenuRapidoSection,
+    MenuItems,
 } from "../../../layouts";
 import { Roles } from "../../../helpers/dictionary";
 import { UserBtnMobile } from "../../../components/user/menu/UserBtnMobile";
+import { useUiHeaderMenu } from "../../../hooks";
 import classes from "../../../assets/styles/modules/layout/menu/HeaderMenu.module.css";
-import classess from "../../../assets/styles/modules/user/UserHeader.module.css";
+import classess from "../../../assets/styles/modules/menu/MenuGrid.module.css";
 
+export function HeaderMenu({ usuario, asideValue, modalAside }) {
+    const {
+        isOpenDrawerMobile,
+        isOpenMenuLinksTics,
+        isOpenMenuLinksGestionGeneral,
+        isOpenMenuLinksPermisos,
+        modalActionDrawerMobile,
+        modalMenuLinksTics,
+        modalMenuLinksGestionGeneral,
+        modalMenuLinksPermisos,
+    } = useUiHeaderMenu();
 
-export function HeaderMenu({ usuario, asideValue, btnToggle }) {
-    const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] =
-        useDisclosure(false);
-    const [linksMenuQuick, { toggle: toggleMenuQuick }] = useDisclosure(false);
-    const [linksMenuSoportes, { toggle: toggleSoportes }] =
-        useDisclosure(false);
-    const [linksGestionGeneral, { toggle: toggleGestionGeneral }] =
-        useDisclosure(false);
-    const [linksMenuPermisos, { toggle: togglePermisos }] =
-        useDisclosure(false);
     const theme = useMantineTheme();
 
     return (
@@ -93,7 +95,7 @@ export function HeaderMenu({ usuario, asideValue, btnToggle }) {
                                     variant="light"
                                     color="red.7"
                                     aria-label="Notificacion Menu"
-                                    onClick={btnToggle}
+                                    onClick={() => modalAside(true)}
                                 >
                                     <IconLayoutSidebarRightCollapseFilled
                                         size={24}
@@ -104,28 +106,31 @@ export function HeaderMenu({ usuario, asideValue, btnToggle }) {
                                 menuData={MenuRapido}
                                 classes={classes}
                                 theme={theme}
-                                toggleDrawer={toggleMenuQuick}
                             />
 
-                            <UserBtnHeader classes={classess} />
+                            <UserBtnHeader />
                         </Group>
 
                         <Burger
-                            opened={drawerOpened}
-                            onClick={toggleDrawer}
+                            opened={isOpenDrawerMobile}
+                            onClick={() => modalActionDrawerMobile(true)}
                             hiddenFrom="sm"
                         />
                     </Group>
                 </header>
 
                 <Drawer
-                    opened={drawerOpened}
-                    onClose={closeDrawer}
+                    opened={isOpenDrawerMobile}
+                    onClose={() => modalActionDrawerMobile(false)}
                     size="100%"
                     padding="md"
                     title="Menú"
                     hiddenFrom="sm"
                     zIndex={1000000}
+                    classNames={{
+                        body: classes.drawer,
+                        header: classes.drawer,
+                    }}
                 >
                     <ScrollArea h="calc(100vh - 80px" mx="-md">
                         {usuario.role === Roles.TIC_GERENTE ||
@@ -135,9 +140,9 @@ export function HeaderMenu({ usuario, asideValue, btnToggle }) {
                                 menuData={NavMenuTics}
                                 classes={classes}
                                 theme={theme}
-                                isOpen={linksMenuSoportes}
-                                toggle={toggleSoportes}
-                                toggleDrawer={toggleDrawer}
+                                isOpen={isOpenMenuLinksTics}
+                                toggle={modalMenuLinksTics}
+                                toggleDrawer={modalActionDrawerMobile}
                             />
                         ) : null}
 
@@ -147,9 +152,9 @@ export function HeaderMenu({ usuario, asideValue, btnToggle }) {
                                 menuData={NavMenuAdminTics}
                                 classes={classes}
                                 theme={theme}
-                                isOpen={linksGestionGeneral}
-                                toggle={toggleGestionGeneral}
-                                toggleDrawer={toggleDrawer}
+                                isOpen={isOpenMenuLinksGestionGeneral}
+                                toggle={modalMenuLinksGestionGeneral}
+                                toggleDrawer={modalActionDrawerMobile}
                             />
                         ) : null}
 
@@ -160,14 +165,14 @@ export function HeaderMenu({ usuario, asideValue, btnToggle }) {
                                 menuData={NavMenuPermisosAdmin}
                                 classes={classes}
                                 theme={theme}
-                                isOpen={linksMenuPermisos}
-                                toggle={togglePermisos}
-                                toggleDrawer={toggleDrawer}
+                                isOpen={isOpenMenuLinksPermisos}
+                                toggle={modalMenuLinksPermisos}
+                                toggleDrawer={modalActionDrawerMobile}
                             />
                         ) : null}
 
                         {/* Menú Rápido en el Drawer */}
-                        <MenuRapidoSection
+                        {/* <MenuRapidoSection
                             title="Menú Rápido"
                             menuData={MenuRapido}
                             classes={classes}
@@ -177,8 +182,18 @@ export function HeaderMenu({ usuario, asideValue, btnToggle }) {
                             toggleDrawer={toggleDrawer}
                         />
 
-                        <Divider my="sm" />
-                        <Group justify="center" grow pb="xl" px="md">
+                        <Divider my="sm" /> */}
+                        <SimpleGrid
+                            cols={{ base: 2, xs: 2, sm: 2, md: 2, lg: 2 }}
+                            mt="md"
+                        >
+                            <MenuItems
+                                menuHome={menuHome}
+                                classes={classess}
+                                theme={theme}
+                            />
+                        </SimpleGrid>
+                        <Group justify="center" mt={20} p={20}>
                             <UserBtnMobile />
                         </Group>
                     </ScrollArea>

@@ -33,7 +33,7 @@ export const FilterDatesPermiso = ({ form, fnAction }) => {
                     justify="center"
                     gap="md"
                 >
-                    <SimpleGrid cols={{ base: 3, sm: 3, md: 3, lg: 3 }} mt={10}>
+                    <SimpleGrid cols={{ base: 1, sm: 1, md: 3, lg: 3 }} mt={10}>
                         <DateInput
                             clearable
                             valueFormat="YYYY-MM-DD"

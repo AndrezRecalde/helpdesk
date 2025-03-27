@@ -1,26 +1,33 @@
 .card {
-    background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-6)) !important;
-  }
+    background-color: light-dark(
+        var(--mantine-color-gray-0),
+        var(--mantine-color-dark-8)
+    ) !important;
+    padding: var(--mantine-spacing-lg);
+    box-shadow: var(--mantine-shadow-lg);
+}
 
-  .title {
+.title {
     font-weight: 700 !important;
-  }
+}
 
-  .item {
+.item {
     display: flex !important;
+    padding: var(--mantine-spacing-lg);
     flex-direction: column !important;
-    align-items: center !important;
-    justify-content: center !important;
-    text-align: center !important;
+    align-items: left !important;
+    justify-content: left !important;
+    text-align: left !important;
     border-radius: var(--mantine-radius-md) !important;
-    height: rem(90px) !important;
-    background-color: light-dark(var(--mantine-color-white), var(--mantine-color-dark-7)) !important;
-    transition:
-      box-shadow 150ms ease,
-      transform 100ms ease;
+    height: rem(95px) !important;
+    background-color: light-dark(
+        var(--mantine-color-white),
+        var(--mantine-color-dark-7)
+    ) !important;
+    transition: box-shadow 150ms ease, transform 100ms ease;
 
     @mixin hover {
-      box-shadow: var(--mantine-shadow-lg);
-      transform: scale(1.05);
+        box-shadow: var(--mantine-shadow-lg);
+        transform: scale(1.05);
     }
-  }
+}

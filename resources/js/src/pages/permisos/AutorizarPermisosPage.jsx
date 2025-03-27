@@ -2,13 +2,14 @@ import { useEffect } from "react";
 import { ActionIcon, Container, Divider, Group } from "@mantine/core";
 import {
     AutorizarPermisoTable,
-    FilterAutorizarPermiso,
+    //FilterAutorizarPermiso,
     TitlePage,
 } from "../../components";
-import { usePermisoStore } from "../../hooks";
+import { usePermisoStore, useTitlePage } from "../../hooks";
 import { IconRefresh } from "@tabler/icons-react";
 
 const AutorizarPermisosPage = () => {
+    useTitlePage("Helpdesk | Permisos");
     const { startLoadPermisos, clearPermisos } = usePermisoStore();
 
     useEffect(() => {
@@ -28,7 +29,7 @@ const AutorizarPermisosPage = () => {
             anio: new Date(),
             //id_estado: 8,
         });
-    }
+    };
 
     return (
         <Container size={1500}>
@@ -36,7 +37,12 @@ const AutorizarPermisosPage = () => {
                 <TitlePage order={2}>
                     Autorizar Permisos - {new Date().getFullYear()}
                 </TitlePage>
-                <ActionIcon variant="default" size="lg" aria-label="Refresh" onClick={(e) => handleRefresh(e)}>
+                <ActionIcon
+                    variant="default"
+                    size="lg"
+                    aria-label="Refresh"
+                    onClick={(e) => handleRefresh(e)}
+                >
                     <IconRefresh
                         style={{ width: "70%", height: "70%" }}
                         stroke={1.5}

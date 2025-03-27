@@ -2,7 +2,7 @@ import { Button, HoverCard, SimpleGrid } from "@mantine/core";
 import { IconLicense } from "@tabler/icons-react";
 import { MenuQuick } from "./MenuLinks";
 
-export const SolicitudesMenu = ({ menuData, classes, theme, toggleDrawer }) => {
+export const SolicitudesMenu = ({ menuData, classes, theme }) => {
     return (
         <HoverCard
             width={400}
@@ -27,7 +27,6 @@ export const SolicitudesMenu = ({ menuData, classes, theme, toggleDrawer }) => {
                         menuData={menuData}
                         classes={classes}
                         theme={theme}
-                        toggleDrawer={toggleDrawer}
                     />
                 </SimpleGrid>
             </HoverCard.Dropdown>

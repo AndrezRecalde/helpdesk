@@ -1,9 +1,3 @@
-import {
-    IconFingerprint,
-    IconLogout,
-    IconSettings,
-    IconUserHexagon,
-} from "@tabler/icons-react";
 import { lazy } from "react";
 import { Roles } from "../../helpers/dictionary";
 
@@ -234,39 +228,5 @@ export const errorRoutes = [
     {
         path: "*",
         Component: ErrorNotFound,
-    },
-];
-
-/* Menu de Perfil de Usuario */
-export const menuRoutes = [
-    /* Menu Header */
-
-    {
-        label: "Ver Perfil",
-        path: "profile",
-        link: "/intranet/profile",
-        icon: IconUserHexagon,
-        color: "#12b561",
-    },
-    {
-        label: "Cambiar contraseña",
-        path: "change-password",
-        link: "/intranet/change-password",
-        icon: IconSettings,
-        color: "#6d7c85",
-    },
-    {
-        label: "Ver marcaciones",
-        path: "ver-marcaciones",
-        link: "/intranet/ver-marcaciones",
-        icon: IconFingerprint,
-        color: "#067ebf",
-    },
-    {
-        label: "Cerrar sesión",
-        path: "cerrar-sesion",
-        link: "",
-        icon: IconLogout,
-        color: "#cc003d",
     },
 ];

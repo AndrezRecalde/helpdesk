@@ -77,7 +77,7 @@ export const FilterFormSoportes = ({ form }) => {
                     />
                 </Group>
 
-                <SimpleGrid cols={{ base: 2, sm: 1, md: 2, lg: 2 }} mt={10}>
+                <SimpleGrid cols={{ base: 1, sm: 1, md: 2, lg: 2 }} mt={10}>
                     <DateInput
                         clearable
                         valueFormat="YYYY-MM-DD"
@@ -95,7 +95,7 @@ export const FilterFormSoportes = ({ form }) => {
                         {...form.getInputProps("fecha_fin")}
                     />
                 </SimpleGrid>
-                <SimpleGrid cols={{ base: 3, sm: 1, md: 3, lg: 3 }} mt={10}>
+                <SimpleGrid cols={{ base: 1, sm: 1, md: 3, lg: 3 }} mt={10}>
                     <Select
                         searchable
                         label="Dirección"

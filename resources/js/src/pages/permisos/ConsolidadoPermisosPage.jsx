@@ -7,12 +7,13 @@ import {
     TitlePage,
 } from "../../components";
 import { IconPrinter } from "@tabler/icons-react";
-import { usePermisoStore } from "../../hooks";
+import { usePermisoStore, useTitlePage } from "../../hooks";
 import { isNotEmpty, useForm } from "@mantine/form";
 import dayjs from "dayjs";
 import Swal from "sweetalert2";
 
 const ConsolidadoPermisosPage = () => {
+    useTitlePage("Helpdesk | Consolidados");
     const {
         isExport,
         startLoadConsolidadosPermisos,

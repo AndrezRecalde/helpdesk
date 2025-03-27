@@ -14,10 +14,11 @@ import {
 } from "@tabler/icons-react";
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "../../../hooks";
-import { menuRoutes } from "../../../routes/router/routes";
 import { NightModeSwitch } from "./NightModeSwitch";
+import { menuProfile } from "../../../layouts/appshell/menu/data/menuRoutes";
+import classes from "../../../assets/styles/modules/user/UserHeader.module.css";
 
-export const UserBtnHeader = ({ classes }) => {
+export const UserBtnHeader = () => {
     const { startLogout } = useAuthStore();
     const navigate = useNavigate();
     const [userMenuOpened, setUserMenuOpened] = useState(false);
@@ -42,7 +43,7 @@ export const UserBtnHeader = ({ classes }) => {
 
     return (
         <Menu
-            width={260}
+            width={320}
             shadow="md"
             position="bottom-end"
             transitionProps={{ transition: "pop-top-right" }}
@@ -80,7 +81,7 @@ export const UserBtnHeader = ({ classes }) => {
                 </UnstyledButton>
             </Menu.Target>
             <Menu.Dropdown>
-                {menuRoutes
+                {menuProfile
                     .slice(0, -1)
                     .map(({ label, path, link, icon: Icon, color }) => (
                         <Menu.Item
@@ -102,7 +103,7 @@ export const UserBtnHeader = ({ classes }) => {
                 <NightModeSwitch />
                 <Menu.Item
                     onClick={startLogout}
-                    color={menuRoutes.at(-1).color}
+                    color={menuProfile.at(-1).color}
                     leftSection={
                         <IconLogout
                             style={{ width: rem(18), height: rem(18) }}
@@ -110,7 +111,7 @@ export const UserBtnHeader = ({ classes }) => {
                         />
                     }
                 >
-                    {menuRoutes.at(-1).label}
+                    {menuProfile.at(-1).label}
                 </Menu.Item>
             </Menu.Dropdown>
         </Menu>
