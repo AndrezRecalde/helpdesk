@@ -121,7 +121,7 @@ const PermisosPage = () => {
             form.setValues({
                 id_direccion_pide: usuario.cdgo_dprtmnto.toString(),
                 id_usu_pide: usuario.cdgo_usrio.toString(),
-                id_jefe_inmediato: directores[0]?.id_jefe.toString(),
+                id_jefe_inmediato: directores[0]?.id_jefe?.toString(),
             });
             return;
         }
