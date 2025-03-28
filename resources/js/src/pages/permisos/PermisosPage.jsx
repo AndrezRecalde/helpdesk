@@ -116,8 +116,7 @@ const PermisosPage = () => {
 
     useEffect(() => {
         if (
-            usuario.role !== Roles.TIC_GERENTE ||
-            usuario.role !== Roles.NOM_ASISTENCIA
+        usuario.role !== Roles.TIC_GERENTE && usuario.role !== Roles.NOM_ASISTENCIA
         ) {
             form.setValues({
                 id_direccion_pide: usuario.cdgo_dprtmnto.toString(),
