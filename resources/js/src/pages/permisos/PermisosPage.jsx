@@ -71,8 +71,8 @@ const PermisosPage = () => {
                 return null;
             },
             per_observaciones: hasLength(
-                { min: 0, max: 200 },
-                "La observación admite un minimo de 5 caracteres y máximo 200 caracteres"
+                { min: 0, max: 300 },
+                "La observación admite un minimo de 5 caracteres y máximo 300 caracteres"
             ),
         },
         transformValues: (values) => ({

@@ -263,7 +263,7 @@ export const FormSolicitudPermiso = ({ form, disabled }) => {
                     />
                 </SimpleGrid>
                 <Textarea
-                    label="Observación (200 caracteres MAX)"
+                    label="Observación (300 caracteres MAX)"
                     description="Si el permiso es PERSONAL no es necesario registrar tu observación"
                     autosize
                     minRows={6}
