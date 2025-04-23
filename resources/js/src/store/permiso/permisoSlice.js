@@ -36,6 +36,7 @@ export const permisoSlice = createSlice({
         onClearPermisos: (state) => {
             state.permisos = [];
             state.activatePermiso = null;
+            state.message = undefined;
             state.errores = undefined;
         },
         onLoadMessage: (state, { payload }) => {

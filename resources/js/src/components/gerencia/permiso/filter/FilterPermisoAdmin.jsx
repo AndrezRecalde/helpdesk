@@ -8,7 +8,7 @@ import {
 } from "@mantine/core";
 import { BtnSubmit, TextSection } from "../../..";
 import { IconSearch } from "@tabler/icons-react";
-import { YearPickerInput } from "@mantine/dates";
+import { DateInput, YearPickerInput } from "@mantine/dates";
 import { useDireccionStore, useUsersStore } from "../../../../hooks";
 import classes from "../../../../assets/styles/modules/layout/input/LabelsInputs.module.css";
 
@@ -40,14 +40,30 @@ export const FilterPermisoAdmin = ({
                     justify="center"
                     gap="md"
                 >
-                    <YearPickerInput
-                        //disabled
-                        label="Año"
-                        placeholder="Seleccione el año"
-                        classNames={classes}
-                        {...form.getInputProps("anio")}
-                    />
                     <SimpleGrid cols={{ base: 1, sm: 1, md: 3, lg: 3 }}>
+                        <YearPickerInput
+                            //disabled
+                            label="Año"
+                            placeholder="Seleccione el año"
+                            classNames={classes}
+                            {...form.getInputProps("anio")}
+                        />
+                        <DateInput
+                            clearable
+                            valueFormat="YYYY-MM-DD"
+                            label="Desde"
+                            placeholder="Seleccione fecha inicio"
+                            classNames={classes}
+                            {...form.getInputProps("fecha_inicio")}
+                        />
+                        <DateInput
+                            clearable
+                            valueFormat="YYYY-MM-DD"
+                            label="Hasta"
+                            placeholder="Seleccione fecha final"
+                            classNames={classes}
+                            {...form.getInputProps("fecha_fin")}
+                        />
                         <Select
                             searchable
                             clearable

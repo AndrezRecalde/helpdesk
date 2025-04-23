@@ -37,6 +37,8 @@ const ListPermisosAdminPage = () => {
     const form = useForm({
         initialValues: {
             anio: dayjs(),
+            fecha_inicio: null,
+            fecha_fin: null,
             id_direccion_pide: null,
             id_usu_pide: null,
             idper_permisos: "",
@@ -47,6 +49,9 @@ const ListPermisosAdminPage = () => {
         transformValues: (values) => ({
             ...values,
             //id_direccion_pide: Number(values.id_direccion_pide),
+            fecha_inicio:
+                dayjs(values.fecha_inicio).format("YYYY-MM-DD") || null,
+            fecha_fin: dayjs(values.fecha_fin).format("YYYY-MM-DD") || null,
             id_usu_pide: Number(values.id_usu_pide) || null,
             idper_permisos: Number(values.idper_permisos) || null,
         }),
@@ -115,12 +120,13 @@ const ListPermisosAdminPage = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        console.log(form.getTransformedValues());
         setStoragePermisoFields(form.getTransformedValues());
         startLoadPermisos(form.getTransformedValues());
     };
 
     return (
-        <Container size="xl">
+        <Container size="xxl">
             <Group justify="space-between">
                 <TitlePage order={2}>Lista de permisos</TitlePage>
                 <BtnSection

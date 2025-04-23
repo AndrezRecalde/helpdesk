@@ -4,6 +4,9 @@ import { MRT_Localization_ES } from "mantine-react-table/locales/es/index.cjs";
 import { MenuTable_Per, TableContent } from "../../../components";
 import { usePermisoStore, useUiPermiso } from "../../../hooks";
 import dayjs from "dayjs";
+import { Spoiler } from "@mantine/core";
+/* import duration from 'dayjs/plugin/duration';
+dayjs.extend(duration); */
 
 export const PermisosTable = () => {
     const { isLoading, permisos, startCardPermiso, setActivatePermiso } =
@@ -27,7 +30,7 @@ export const PermisosTable = () => {
             {
                 accessorFn: (row) =>
                     dayjs(row.per_fecha_salida).format("HH:mm:ss"),
-                header: "Hora de Salida",
+                header: "Hora de salida",
             },
             {
                 accessorFn: (row) =>
@@ -35,12 +38,48 @@ export const PermisosTable = () => {
                 header: "Hora de llegada",
             },
             {
+                accessorKey: "tiempo_total", //access nested data with dot notation
+                header: "T. total",
+            },
+            /* {
+                accessorFn: (row) => {
+                    const salida = dayjs(row.per_fecha_salida);
+                    const llegada = dayjs(row.per_fecha_llegada);
+
+                    // Verificamos que ambas fechas existan
+                    if (!salida.isValid() || !llegada.isValid()) return "—";
+
+                    const duration = dayjs.duration(llegada.diff(salida));
+
+                    // Puedes devolver el tiempo en el formato que prefieras:
+                    return `${String(duration.hours()).padStart(2, "0")}:${String(duration.minutes()).padStart(2, "0")}:${String(duration.seconds()).padStart(2, "0")}`;
+                },
+                header: "T. total",
+            }, */
+            {
                 accessorKey: "estado", //access nested data with dot notation
                 header: "Estado",
             },
             {
-                accessorKey: "per_observaciones", //access nested data with dot notation
+                accessorKey: "per_observaciones",
                 header: "Observaciones",
+                Cell: ({ cell }) => {
+                    const value = cell.getValue();
+
+                    if (typeof value !== "string" || value.length <= 60) {
+                        return value;
+                    }
+
+                    return (
+                        <Spoiler
+                            maxHeight={40}
+                            showLabel="Ver más"
+                            hideLabel="Ver menos"
+                        >
+                            {value}
+                        </Spoiler>
+                    );
+                },
             },
         ],
         [permisos]

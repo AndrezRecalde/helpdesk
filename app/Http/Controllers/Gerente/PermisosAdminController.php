@@ -15,6 +15,22 @@ use Illuminate\Support\Facades\DB;
 class PermisosAdminController extends Controller
 {
 
+    function getAprobadoAnulado() : JsonResponse
+    {
+        try {
+            $estados = DB::table('per_estado_permiso')
+                ->select('idper_estado_permiso', 'per_est_nombre')
+                ->whereIn('idper_estado_permiso', [2,6])
+                ->get();
+            return response()->json([
+                'status' => MsgStatus::Success,
+                'estados' => $estados
+            ], 200);
+        } catch (\Throwable $th) {
+            return response()->json(['status' => MsgStatus::Error, 'msg' => 'No existen permisos con esos filtros'], 404);
+        }
+    }
+
     function getPermisosAdmin(Request $request): JsonResponse
     {
         $permisos = Permiso::from('per_permisos as pp')
@@ -24,7 +40,8 @@ class PermisosAdminController extends Controller
                             pp.id_tipo_motivo, ptp.tip_per_nombre as motivo,
                             pp.per_fecha_salida, pp.per_fecha_llegada,
                             pp.id_jefe_inmediato, u.nmbre_usrio as jefe_inmediato,
-                            pp.per_observaciones, pp.id_estado, pep.per_est_nombre as estado')
+                            pp.per_observaciones, pp.id_estado, pep.per_est_nombre as estado,
+                            TIMEDIFF(pp.per_fecha_llegada, pp.per_fecha_salida) as tiempo_total')
             ->join('usrios_sstma as us', 'us.cdgo_usrio', 'pp.id_usu_pide')
             ->join('dprtmntos as d', 'd.cdgo_dprtmnto', 'pp.id_direccion_pide')
             ->join('per_tipo_permiso as ptp', 'ptp.idper_tipo_permiso', 'pp.id_tipo_motivo')
@@ -35,6 +52,7 @@ class PermisosAdminController extends Controller
             ->codigo($request->idper_permisos)
             ->estado($request->id_estado)
             ->where('pp.per_fecha_salida', 'LIKE', '%' . Carbon::parse($request->anio)->format('Y') . '%')
+            ->betweenFechas($request->fecha_inicio, $request->fecha_fin)
             //->whereNotIn('pp.id_estado', [6])
             ->orderBy('pp.per_fecha_salida', 'DESC')
             ->get();

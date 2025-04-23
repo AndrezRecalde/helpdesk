@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -64,6 +65,16 @@ class Permiso extends Model
     {
         if ($id_estado) {
             return $query->where('pp.id_estado', $id_estado);
+        }
+    }
+
+    function scopeBetweenFechas($query, $fecha_inicio, $fecha_fin)
+    {
+        if ($fecha_inicio && $fecha_fin) {
+            return $query->whereBetween('pp.per_fecha_salida', [
+                Carbon::parse($fecha_inicio)->startOfDay(),
+                Carbon::parse($fecha_fin)->endOfDay(),
+            ]);
         }
     }
 }
