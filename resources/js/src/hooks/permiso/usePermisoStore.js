@@ -98,6 +98,8 @@ export const usePermisoStore = () => {
 
     const startLoadPermisos = async ({
         anio = new Date(),
+        fecha_inicio = null,
+        fecha_fin = null,
         id_direccion_pide = null,
         id_usu_pide = null,
         idper_permisos = null,
@@ -107,6 +109,8 @@ export const usePermisoStore = () => {
             dispatch(onLoading(true));
             const { data } = await helpdeskApi.post("/usuario/permisos", {
                 anio,
+                fecha_inicio,
+                fecha_fin,
                 id_direccion_pide,
                 id_usu_pide,
                 idper_permisos,
