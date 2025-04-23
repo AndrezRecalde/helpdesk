@@ -1,4 +1,4 @@
-import { IconLayoutSidebarRightCollapseFilled } from "@tabler/icons-react";
+import { IconBellPlus, IconLayoutSidebarRightCollapseFilled } from "@tabler/icons-react";
 import { ActionIcon, Box, Burger, Group, useMantineTheme } from "@mantine/core";
 import { Logo, UserBtnHeader } from "../../../components";
 import {
@@ -72,14 +72,14 @@ export function HeaderMenu({ usuario, asideValue, modalAside }) {
                         <Group visibleFrom="md">
                             {!asideValue ? (
                                 <ActionIcon
-                                    size={30}
-                                    variant="light"
+                                    size={35}
+                                    variant="default"
                                     color="red.7"
                                     aria-label="Notificacion Menu"
                                     onClick={() => modalAside(true)}
                                 >
-                                    <IconLayoutSidebarRightCollapseFilled
-                                        size={20}
+                                    <IconBellPlus
+                                        size={25}
                                     />
                                 </ActionIcon>
                             ) : null}

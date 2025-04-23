@@ -67,7 +67,7 @@ export const MenuItems = ({ menuHome, classes, theme, toggleDrawer = null }) => 
         >
             <ThemeIcon
                 size={40}
-                variant="light"
+                variant="transparent"
                 radius="sm"
                 color={theme.colors[item.color][5]}
             >
