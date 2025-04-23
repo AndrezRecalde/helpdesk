@@ -16,16 +16,22 @@ export const PermisosTable = () => {
         () => [
             {
                 accessorKey: "idper_permisos", //access nested data with dot notation
-                header: "Código permiso",
+                header: "Código",
+                size: 80,
             },
             {
                 accessorKey: "usuario_pide", //access nested data with dot notation
                 header: "Usuario solicitante",
             },
             {
+                accessorKey: "direccion_pide", //access nested data with dot notation
+                header: "Departamento solicitante",
+            },
+            {
                 accessorFn: (row) =>
                     dayjs(row.per_fecha_salida).format("YYYY-MM-DD"),
                 header: "Fecha",
+                size: 80
             },
             {
                 accessorFn: (row) =>
@@ -36,6 +42,10 @@ export const PermisosTable = () => {
                 accessorFn: (row) =>
                     dayjs(row.per_fecha_llegada).format("HH:mm:ss"),
                 header: "Hora de llegada",
+            },
+            {
+                accessorKey: "motivo", //access nested data with dot notation
+                header: "Motivo",
             },
             {
                 accessorKey: "tiempo_total", //access nested data with dot notation
@@ -59,6 +69,7 @@ export const PermisosTable = () => {
             {
                 accessorKey: "estado", //access nested data with dot notation
                 header: "Estado",
+                size: 80,
             },
             {
                 accessorKey: "per_observaciones",
