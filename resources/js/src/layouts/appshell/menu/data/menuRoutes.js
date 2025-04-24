@@ -228,7 +228,7 @@ export const menuProfile = [
     {
         label: "Ver marcaciones",
         path: "ver-marcaciones",
-        link: "/intranet/ver-marcaciones",
+        link: "/intranet/marcaciones-biometricos",
         icon: IconFingerprint,
         color: "#067ebf",
     },
