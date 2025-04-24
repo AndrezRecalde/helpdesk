@@ -38,13 +38,13 @@ class MarcacionController extends Controller
 
         // Validar que el parámetro UserId esté presente y sea un número entero.
         $request->validate([
-            'UserCi' => 'required'
+            'asi_id_reloj' => 'required'
         ]);
 
         // Ejecutar el procedimiento almacenado utilizando el parámetro como string
         $sql = "EXEC SP_GetUserEventsByBadge ?";
         $marcaciones = DB::connection('sqlsrv')->select($sql, [
-            (string) $request->UserCi,
+            (string) $request->asi_id_reloj,
             $request->fecha_inicio,
             $request->fecha_fin  // Asegúrate de enviar un string
         ]);
