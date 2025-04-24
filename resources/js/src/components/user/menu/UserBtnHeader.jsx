@@ -85,10 +85,10 @@ export const UserBtnHeader = () => {
                         {nombres}
                     </Avatar>
                     <div>
-                        <TextSection tt="" fw={500} size="sm">
+                        <TextSection  tt="" fz={13} fw={500} size="sm">
                             {usuario?.usu_alias || "Sin datos"} <br />
                         </TextSection>
-                        <TextSection tt="" fw={300} size="sm">
+                        <TextSection  tt="" fz={13} fw={300} size="sm">
                             {usuario?.email || "Sin datos"}
                         </TextSection>
                     </div>
