@@ -4,11 +4,9 @@ import {
     TitlePage,
     CardProfile,
     CardInfoStatsUser,
-    TableMarcacionRelojOnline,
 } from "../../components";
 import {
     useAuthStore,
-    useMarcacionStore,
     usePermisoStore,
     useTecnicoStore,
     useTitlePage,
@@ -28,8 +26,6 @@ const ProfilePage = () => {
     const { startLoadInfoTecnicosSoporte, clearInfoSoportesTecnico } =
         useTecnicoStore();
     const { startLoadInfoPermisos, setActivatePermiso } = usePermisoStore();
-    const { startLoadMarcacionesBiometricos, clearMarcaciones } =
-        useMarcacionStore();
 
     useEffect(() => {
         if (token) {
@@ -57,11 +53,8 @@ const ProfilePage = () => {
 
     useEffect(() => {
         startLoadInfoPermisos(usuario.cdgo_usrio);
-        startLoadMarcacionesBiometricos(usuario.asi_id_reloj);
-
         return () => {
             setActivatePermiso(null);
-            clearMarcaciones();
         };
     }, []);
 
@@ -69,14 +62,17 @@ const ProfilePage = () => {
         navigate("/helpdesk/soportes");
     };
 
+    const handleNavigateMarcaciones = () => {
+        navigate("/intranet/marcaciones-biometricos");
+    }
+
     return (
         <Container size="xl">
             <TitlePage order={1}>Perfil</TitlePage>
             <SimpleGrid cols={{ base: 1, sm: 2 }} spacing="md" mb={20}>
-                <CardProfile usuario={usuario} handleAction={handleAction} />
+                <CardProfile usuario={usuario} handleAction={handleAction} handleMarcacion={handleNavigateMarcaciones} />
                 <CardInfoStatsUser usuario={usuario} />
             </SimpleGrid>
-            <TableMarcacionRelojOnline usuario={usuario} />
         </Container>
     );
 };

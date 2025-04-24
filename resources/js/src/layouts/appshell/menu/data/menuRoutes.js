@@ -249,11 +249,17 @@ export const menuHome = [
         link: "/intranet/profile",
     },
     {
+        title: "Marcaciones Biometricos",
+        icon: IconFingerprint,
+        color: "blue",
+        link: "/intranet/marcaciones-biometricos",
+    },
+    /* {
         title: "Cambiar contrasena",
         icon: IconSettings,
         color: "gray",
         link: "/intranet/change-password",
-    },
+    }, */
     {
         title: "Solicitar Soporte",
         icon: IconDeviceImacBolt,

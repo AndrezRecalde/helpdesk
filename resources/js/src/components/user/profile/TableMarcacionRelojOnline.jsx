@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { TableContent, TitlePage } from "../../../components";
+import { TableContent } from "../../../components";
 import { useMarcacionStore } from "../../../hooks";
 import { useMantineReactTable } from "mantine-react-table";
 import dayjs from "dayjs";
@@ -98,9 +98,9 @@ export const TableMarcacionRelojOnline = () => {
     const table = useMantineReactTable({
         columns,
         data: marcaciones, //must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
-        renderTopToolbarCustomActions: ({ table }) => (
+        /* renderTopToolbarCustomActions: ({ table }) => (
             <TitlePage order={3}>Marcaciones desde el Biométrico</TitlePage>
-        ),
+        ), */
         initialState: { showColumnFilters: true, showGlobalFilter: true },
         enableFacetedValues: true,
         mantineTableBodyCellProps: ({ cell }) => ({

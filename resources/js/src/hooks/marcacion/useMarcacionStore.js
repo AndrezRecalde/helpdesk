@@ -36,12 +36,16 @@ export const useMarcacionStore = () => {
         }
     };
 
-    const startLoadMarcacionesBiometricos = async (UserCi) => {
+    const startLoadMarcacionesBiometricos = async ({
+        asi_id_reloj,
+        fecha_inicio,
+        fecha_fin,
+    }) => {
         try {
             dispatch(onLoading(true));
             const { data } = await helpdeskApi.post(
                 "/usuario/marcaciones-biometricos",
-                { UserCi }
+                { asi_id_reloj, fecha_inicio, fecha_fin }
             );
             const { marcaciones } = data;
             dispatch(onLoadMarcaciones(marcaciones));

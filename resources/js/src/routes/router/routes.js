@@ -106,6 +106,13 @@ const MarcacionPage = lazy(() =>
         /* webpackChunkName: "MarcacionPage" */ "../../pages/marcacion/MarcacionPage"
     )
 );
+
+const MarcacionesBiometricos = lazy(() =>
+    import(
+        /* webpackChunkName: "MarcacionesBiometricos" */ "../../pages/marcacion/MarcacionesBiometricos"
+    )
+);
+
 const ActividadPage = lazy(() =>
     import(
         /* webpackChunkName: "ActividadPage" */ "../../pages/actividad/ActividadPage"
@@ -132,6 +139,12 @@ const AutorizarPermisosPage = lazy(() =>
         /* webpackChunkName: "AutorizarPermisosPage" */ "../../pages/permisos/AutorizarPermisosPage"
     )
 );
+
+//const SolicitudVacacionesPage = lazy(() =>
+//    import(
+//        /* webpackChunkName: "SolicitudVacacionesPage" */ "../../pages/vacaciones/SolicitudVacacionesPage"
+//    )
+//);
 
 const ErrorNotFound = lazy(() =>
     import(
@@ -200,9 +213,12 @@ const peerRoutes = generateRoutes(
         { path: "profile", Component: ProfilePage },
         { path: "change-password", Component: ChangePwdPage },
         { path: "ver-marcaciones", Component: MarcacionPage },
+        { path: "marcaciones-biometricos", Component: MarcacionesBiometricos },
 
         { path: "permiso", Component: PermisosPage },
         { path: "ver-permisos", Component: ListPermisosPage },
+
+        //{ path: "vacaciones", Component: SolicitudVacacionesPage },
 
         { path: "agregar-actividad", Component: ActividadPage },
         { path: "lista-actividades", Component: ListActividadesPage },
