@@ -65,6 +65,7 @@ class MarcacionController extends Controller
                 ->where('BADGENUMBER', $request->asi_id_reloj)
                 ->first();
 
+           if ($_user) {
             DB::connection('sqlsrv')->table('CHECKINOUT')->insert([
                 'USERID' => $_user->USERID,
                 'CHECKTIME' => DB::raw("CONVERT(DATETIME, '" . Carbon::now()->format('Y-m-d H:i:s') . "', 120)"),
@@ -85,6 +86,13 @@ class MarcacionController extends Controller
                 'status' => 'success',
                 'msg' => 'Se ha registrado su marcación correctamente'
             ], 201);
+           } else {
+            return response()->json([
+                'status' => 'error',
+                'msg' => 'El usuario no existe en el Reloj Biometrico'
+            ], 404);
+           }
+
         } catch (\Throwable $th) {
             return response()->json(['status' => 'error', 'msg' => $th->getMessage()], 500);
         }
