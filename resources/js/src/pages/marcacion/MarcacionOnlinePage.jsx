@@ -1,14 +1,23 @@
 import { useEffect } from "react";
 import { Container, Divider } from "@mantine/core";
 import { MarcacionSection, TextSection, TitlePage } from "../../components";
-import { useFechaHoraEcuador, useMarcacionStore } from "../../hooks";
+import {
+    useFechaHoraEcuador,
+    useMarcacionStore,
+    useTitlePage,
+} from "../../hooks";
 import Swal from "sweetalert2";
 
 const MarcacionOnlinePage = () => {
     const usuario = JSON.parse(localStorage.getItem("service_user"));
     const { fecha, hora } = useFechaHoraEcuador();
-    const { message, errores, startLoadMarcacionesBiometricos, clearMarcaciones } =
-        useMarcacionStore();
+    const {
+        message,
+        errores,
+        startLoadMarcacionesBiometricos,
+        clearMarcaciones,
+    } = useMarcacionStore();
+    useTitlePage("Intranet | Marcacion");
 
     useEffect(() => {
         //console.log(form.getTransformedValues());

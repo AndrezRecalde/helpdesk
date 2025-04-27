@@ -5,8 +5,6 @@ import { useMarcacionStore } from "../../../hooks";
 export const MarcacionSection = ({ usuario }) => {
     const { startAddMarcacion } = useMarcacionStore();
 
-
-
     const handleMarcacionEntrada = () => {
         startAddMarcacion({ asi_id_reloj: usuario.asi_id_reloj });
     };

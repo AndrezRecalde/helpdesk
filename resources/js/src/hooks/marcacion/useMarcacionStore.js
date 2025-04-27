@@ -39,8 +39,8 @@ export const useMarcacionStore = () => {
 
     const startLoadMarcacionesBiometricos = async ({
         asi_id_reloj,
-        fecha_inicio,
-        fecha_fin,
+        fecha_inicio = null,
+        fecha_fin = null,
     }) => {
         try {
             dispatch(onLoading(true));
@@ -65,6 +65,9 @@ export const useMarcacionStore = () => {
                     asi_id_reloj,
                 }
             );
+            if (data.status === "success") {
+                startLoadMarcacionesBiometricos({ asi_id_reloj });
+            }
             dispatch(onLoadMessage(data));
             setTimeout(() => {
                 dispatch(onLoadMessage(undefined));

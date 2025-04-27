@@ -5,12 +5,13 @@ import {
     TableMarcacion,
     TitlePage,
 } from "../../components";
+import { useMarcacionStore, useTitlePage } from "../../hooks";
 import dayjs from "dayjs";
-import { useMarcacionStore } from "../../hooks";
 
 const MarcacionPage = () => {
     const usuario = JSON.parse(localStorage.getItem("service_user"));
     const { startLoadMarcaciones } = useMarcacionStore();
+    useTitlePage("Intranet | Marcacion");
 
     const form = useForm({
         initialValues: {
@@ -39,7 +40,11 @@ const MarcacionPage = () => {
         <Container size="xl">
             <TitlePage order={1}>Mis marcaciones</TitlePage>
             <Divider my="md" />
-            <FilterFormSearchDates form={form} handleSubmit={handleSubmit} title="Filtrar marcaciones" />
+            <FilterFormSearchDates
+                form={form}
+                handleSubmit={handleSubmit}
+                title="Filtrar marcaciones"
+            />
 
             <TableMarcacion />
         </Container>
