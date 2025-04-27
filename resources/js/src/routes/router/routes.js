@@ -113,6 +113,12 @@ const MarcacionesBiometricos = lazy(() =>
     )
 );
 
+const MarcacionOnlinePage = lazy(() =>
+    import(
+        /* webpackChunkName: "MarcacionOnlinePage" */ "../../pages/marcacion/MarcacionOnlinePage"
+    )
+);
+
 const ActividadPage = lazy(() =>
     import(
         /* webpackChunkName: "ActividadPage" */ "../../pages/actividad/ActividadPage"
@@ -143,6 +149,12 @@ const AutorizarPermisosPage = lazy(() =>
 //const SolicitudVacacionesPage = lazy(() =>
 //    import(
 //        /* webpackChunkName: "SolicitudVacacionesPage" */ "../../pages/vacaciones/SolicitudVacacionesPage"
+//    )
+//);
+
+//const SolicitudesVacacionesPage = lazy(() =>
+//    import(
+//        /* webpackChunkName: "SolicitudesVacacionesPage" */ "../../pages/vacaciones/SolicitudesVacacionesPage"
 //    )
 //);
 
@@ -212,13 +224,17 @@ const peerRoutes = generateRoutes(
         { path: "home", Component: HomePage },
         { path: "profile", Component: ProfilePage },
         { path: "change-password", Component: ChangePwdPage },
+
         { path: "ver-marcaciones", Component: MarcacionPage },
         { path: "marcaciones-biometricos", Component: MarcacionesBiometricos },
+        { path: "marcacion", Component: MarcacionOnlinePage },
+
 
         { path: "permiso", Component: PermisosPage },
         { path: "ver-permisos", Component: ListPermisosPage },
 
-        //{ path: "vacaciones", Component: SolicitudVacacionesPage },
+        /* { path: "vacaciones", Component: SolicitudVacacionesPage },
+        { path: "solicitudes-vacaciones", Component: SolicitudesVacacionesPage }, */
 
         { path: "agregar-actividad", Component: ActividadPage },
         { path: "lista-actividades", Component: ListActividadesPage },

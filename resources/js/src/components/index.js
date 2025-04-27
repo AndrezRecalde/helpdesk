@@ -35,6 +35,14 @@ import { FormSolicitudPermiso } from "./gerencia/permiso/form/FormSolicitudPermi
 import { FilterAutorizarPermiso } from "./gerencia/permiso/filter/FilterAutorizarPermiso";
 import { AutorizarPermisoTable } from "./gerencia/permiso/table/AutorizarPermisoTable";
 
+/* VACACIONES */
+/* import { SolicitudVacacionesForm } from "./vacaciones/form/SolicitudVacacionesForm";
+import { SolicitudesVacacionesTable } from "./vacaciones/table/SolicitudesVacacionesTable";
+import { FechasVacacionesField } from "./vacaciones/form/FechasVacacionesField";
+import { MotivosVacacionesField } from "./vacaciones/form/MotivosVacacionesField";
+import { JefesVacacionesField } from "./vacaciones/form/JefesVacacionesField";
+import { FilterVacacionesForm } from "./vacaciones/form/FilterVacacionesForm"; */
+
 /* SOPORTE */
 import { FilterFormSearchDates } from "./gerencia/soporte/filter/FilterFormSearchDates";
 import { FilterFormSoportes } from "./gerencia/soporte/filter/FilterFormSoportes";
@@ -114,6 +122,14 @@ import { ModalActividad } from "./actividad/modal/ModalActividad";
 
 /* Marcaciones */
 import { TableMarcacion } from "./marcacion/table/TableMarcacion";
+
+/* Marcaciones Online */
+import { MarcacionSection } from "./marcacion/section/MarcacionSection";
+import { MarcacionEntradaCard } from "./marcacion/card/MarcacionEntradaCard";
+import { MarcacionSalidaCard } from "./marcacion/card/MarcacionSalidaCard";
+import { MarcacionCard } from "./marcacion/card/MarcacionCard";
+
+
 
 /* Inventario: Tipos Categorias */
 import { InvTipocategoriaTable } from "./inventario/tipocategoria/table/InvTipocategoriaTable";
@@ -266,6 +282,14 @@ export {
     FilterAutorizarPermiso,
     AutorizarPermisoTable,
 
+    /* VACACIONES */
+    /* SolicitudVacacionesForm,
+    SolicitudesVacacionesTable,
+    FechasVacacionesField,
+    MotivosVacacionesField,
+    JefesVacacionesField,
+    FilterVacacionesForm, */
+
     /* SOPORTE */
     FilterFormSearchDates,
     FilterFormSoportes,
@@ -336,6 +360,12 @@ export {
 
     /* Marcaciones */
     TableMarcacion,
+
+    /* Marcaciones Online */
+    MarcacionSection,
+    MarcacionEntradaCard,
+    MarcacionSalidaCard,
+    MarcacionCard,
 
     /* Inventario: Tipos de categorias */
     InvTipocategoriaTable,

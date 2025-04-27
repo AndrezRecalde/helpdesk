@@ -5,6 +5,7 @@ import {
     onLoadErrores,
     onLoading,
     onLoadMarcaciones,
+    onLoadMessage,
 } from "../../store/marcacion/marcacionSlice";
 import helpdeskApi from "../../api/helpdeskApi";
 
@@ -50,7 +51,26 @@ export const useMarcacionStore = () => {
             const { marcaciones } = data;
             dispatch(onLoadMarcaciones(marcaciones));
         } catch (error) {
-            //console.log(error);
+            console.log(error);
+            ExceptionMessageError(error);
+        }
+    };
+
+    const startAddMarcacion = async ({ asi_id_reloj }) => {
+        try {
+            dispatch(onLoading(true));
+            const { data } = await helpdeskApi.post(
+                "/usuario/store/marcacion",
+                {
+                    asi_id_reloj,
+                }
+            );
+            dispatch(onLoadMessage(data));
+            setTimeout(() => {
+                dispatch(onLoadMessage(undefined));
+            }, 40);
+        } catch (error) {
+            console.log(error);
             ExceptionMessageError(error);
         }
     };
@@ -68,6 +88,7 @@ export const useMarcacionStore = () => {
 
         startLoadMarcaciones,
         startLoadMarcacionesBiometricos,
+        startAddMarcacion,
         clearMarcaciones,
     };
 };

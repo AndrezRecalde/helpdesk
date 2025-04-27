@@ -4,7 +4,9 @@ namespace App\Http\Controllers\General;
 
 use App\Enums\MsgStatus;
 use App\Http\Controllers\Controller;
+use App\Models\Checkinout;
 use App\Models\Marcacion;
+use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -53,5 +55,44 @@ class MarcacionController extends Controller
             'status' => MsgStatus::Success,
             'marcaciones' => $marcaciones
         ], 200);
+    }
+
+    function addMarcacion(Request $request): JsonResponse
+    {
+        try {
+            DB::beginTransaction();
+            $_user = DB::connection('sqlsrv')->table('USERINFO')
+                ->where('BADGENUMBER', $request->asi_id_reloj)
+                ->first();
+            /* $_marcacion = Checkinout::where('USERID', $_user->USERID)
+                ->where('CHECKTIME', Carbon::now()->format('Y-m-d'))
+                ->first(); */
+
+            $marcacion = new Checkinout();
+            $marcacion->USERID = $_user->USERID;
+            $marcacion->CHECKTIME = Carbon::now()->format('Y-m-d H:i:s');
+            $marcacion->CHECKTYPE = 'I';
+            $marcacion->VERIFYCODE = 1;
+            $marcacion->SENSORID = 2;
+            $marcacion->Memoinfo = NULL;
+            $marcacion->WorkCode = 0;
+            $marcacion->sn = NULL;
+            $marcacion->UserExtFmt = 1;
+            $marcacion->VERIFYAPPROVE = NULL;
+            $marcacion->GEOLT = NULL;
+            $marcacion->GEOLG = NULL;
+            $marcacion->MARCTYPE = 'IR';
+            $marcacion->EDITADA = 0;
+
+            $marcacion->save();
+            DB::commit();
+            return response()->json([
+                'status' => 'success',
+                'msg' => 'Se ha registrado su marcación correctamente'
+            ], 201);
+
+        } catch (\Throwable $th) {
+            return response()->json(['status' => 'error', 'msg' => $th->getMessage()], 500);
+        }
     }
 }

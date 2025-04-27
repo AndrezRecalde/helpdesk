@@ -15,10 +15,10 @@ import {
     useTitlePage,
     useUsersStore,
 } from "../../hooks";
-import dayjs from "dayjs";
-import Swal from "sweetalert2";
 import { IconChevronsRight } from "@tabler/icons-react";
 import { useNavigate } from "react-router-dom";
+import dayjs from "dayjs";
+import Swal from "sweetalert2";
 
 const ListPermisosAdminPage = () => {
     useTitlePage("Helpdesk | Lista Permisos");
@@ -49,9 +49,12 @@ const ListPermisosAdminPage = () => {
         transformValues: (values) => ({
             ...values,
             //id_direccion_pide: Number(values.id_direccion_pide),
-            fecha_inicio:
-                dayjs(values.fecha_inicio).format("YYYY-MM-DD") || null,
-            fecha_fin: dayjs(values.fecha_fin).format("YYYY-MM-DD") || null,
+            fecha_inicio: values.fecha_inicio
+                ? dayjs(values.fecha_inicio).format("YYYY-MM-DD")
+                : null,
+            fecha_fin: values.fecha_fin
+                ? dayjs(values.fecha_fin).format("YYYY-MM-DD")
+                : null,
             id_usu_pide: Number(values.id_usu_pide) || null,
             idper_permisos: Number(values.idper_permisos) || null,
         }),
