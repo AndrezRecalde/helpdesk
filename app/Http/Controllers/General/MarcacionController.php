@@ -65,29 +65,26 @@ class MarcacionController extends Controller
                 ->where('BADGENUMBER', $request->asi_id_reloj)
                 ->first();
 
-            $marcacion = new Checkinout();
-            $marcacion->USERID = $_user->USERID;
-            $marcacion->CHECKTIME = DB::raw("CONVERT(DATETIME, ?, 120)", [Carbon::now()->format('Y-m-d H:i:s')]);
-            $marcacion->CHECKTYPE = 'I';
-            $marcacion->VERIFYCODE = 1;
-            $marcacion->SENSORID = 2;
-            $marcacion->Memoinfo = NULL;
-            $marcacion->WorkCode = 0;
-            $marcacion->sn = NULL;
-            $marcacion->UserExtFmt = 1;
-            $marcacion->VERIFYAPPROVE = NULL;
-            $marcacion->GEOLT = NULL;
-            $marcacion->GEOLG = NULL;
-            $marcacion->MARCTYPE = 'IR';
-            $marcacion->EDITADA = 0;
-
-            $marcacion->save();
-            DB::commit();
+            DB::connection('sqlsrv')->table('CHECKINOUT')->insert([
+                'USERID' => $_user->USERID,
+                'CHECKTIME' => DB::raw("CONVERT(DATETIME, '" . Carbon::now()->format('Y-m-d H:i:s') . "', 120)"),
+                'CHECKTYPE' => 'I',
+                'VERIFYCODE' => 1,
+                'SENSORID' => 2,
+                'Memoinfo' => NULL,
+                'WorkCode' => 0,
+                'sn' => NULL,
+                'UserExtFmt' => 1,
+                'VERIFYAPPROVE' => NULL,
+                'GEOLT' => NULL,
+                'GEOLG' => NULL,
+                'MARCTYPE' => 'IR',
+                'EDITADA' => 0,
+            ]);
             return response()->json([
                 'status' => 'success',
                 'msg' => 'Se ha registrado su marcación correctamente'
             ], 201);
-
         } catch (\Throwable $th) {
             return response()->json(['status' => 'error', 'msg' => $th->getMessage()], 500);
         }
