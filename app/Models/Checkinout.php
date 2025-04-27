@@ -34,4 +34,8 @@ class Checkinout extends Model
         'MARCTYPE',
         'EDITADA',
     ];
+
+    protected $casts = [
+        'CHECKTIME' => 'datetime',
+    ];
 }
