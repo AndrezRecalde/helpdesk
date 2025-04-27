@@ -2,124 +2,101 @@ import { Button, Card, useMantineTheme } from "@mantine/core";
 import { TextSection } from "../../../components";
 import { useMarcacionStore } from "../../../hooks";
 import classes from "../../../assets/styles/modules/stats/StatsRingCard.module.css";
-import dayjs from "dayjs";
 
 export const MarcacionCard = ({
-    children,
-    btnColor,
-    handleMarcacion,
-    horaObjetivo = 8, // Hora objetivo en formato 24h (ej: 8 para 8:00 am, 17 para 5:00 pm)
-    textoVerificacion = "Marcación Realizada", // Texto cuando hay marcación
-    textoNoMarcacion = "Marcación no realizada", // Texto cuando NO hay marcación
-    rangoHabilitacion = { desde: 4, hasta: 12 }, // Horas donde se puede habilitar el botón si no hay marcación
+  children,
+  btnColor,
+  handleMarcacion,
+  horaObjetivo = 8, // Ejemplo: 8 para entrada, 17 para salida
+  textoVerificacion = "Marcación Realizada",
+  textoNoMarcacion = "Marcación no realizada",
+  rangoHabilitacion = { desde: 4, hasta: 12 }, // Ej: entradas entre 4am-12pm
 }) => {
-    const theme = useMantineTheme();
-    const { marcaciones } = useMarcacionStore();
+  const theme = useMantineTheme();
+  const { marcaciones } = useMarcacionStore();
 
-    const targetTime = dayjs().startOf("day").add(horaObjetivo, "hour");
+  const ahora = new Date();
+  const horaActual = ahora.getHours();
 
-    // Buscar la marcación más cercana a la hora objetivo
-    const marcacionCercana =
-        marcaciones.length > 0
-            ? marcaciones.reduce((prev, current) => {
-                  const prevDiff = Math.abs(
-                      dayjs(prev.EVENTO_FECHA).diff(targetTime)
-                  );
-                  const currentDiff = Math.abs(
-                      dayjs(current.EVENTO_FECHA).diff(targetTime)
-                  );
+  // 🔵 Filtrar sólo marcaciones que estén en el rango permitido
+  const marcacionesValidas = marcaciones.filter((m) => {
+    const fecha = new Date(m.EVENTO_FECHA);
+    const horaMarcacion = fecha.getHours();
+    return horaMarcacion >= rangoHabilitacion.desde && horaMarcacion <= rangoHabilitacion.hasta;
+  });
 
-                  if (currentDiff < prevDiff) {
-                      return current;
-                  } else if (currentDiff === prevDiff) {
-                      return dayjs(current.EVENTO_FECHA).isBefore(
-                          dayjs(prev.EVENTO_FECHA)
-                      )
-                          ? current
-                          : prev;
-                  } else {
-                      return prev;
-                  }
-              })
-            : null;
+  // 🔵 Encontrar la más cercana a la hora objetivo
+  const marcacionCercana = marcacionesValidas.length > 0
+    ? marcacionesValidas.reduce((cercana, actual) => {
+        const fechaCercana = new Date(cercana.EVENTO_FECHA);
+        const fechaActual = new Date(actual.EVENTO_FECHA);
+        const diffCercana = Math.abs(horaObjetivo - fechaCercana.getHours());
+        const diffActual = Math.abs(horaObjetivo - fechaActual.getHours());
+        return diffActual < diffCercana ? actual : cercana;
+      })
+    : null;
 
-    const horaMarcacion = marcacionCercana
-        ? dayjs(marcacionCercana.EVENTO_FECHA).format("HH:mm:ss")
-        : textoNoMarcacion;
+  const horaMarcacion = marcacionCercana
+    ? new Date(marcacionCercana.EVENTO_FECHA).toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit', second: '2-digit' })
+    : "SIN MARCACION";
 
-    const mostrarVerificacion = !!marcacionCercana;
+  const hayMarcacion = !!marcacionCercana;
 
-    const ahora = dayjs();
-    const estaDentroRango =
-        ahora.isAfter(
-            ahora.startOf("day").add(rangoHabilitacion.desde, "hour")
-        ) &&
-        ahora.isBefore(
-            ahora.startOf("day").add(rangoHabilitacion.hasta, "hour")
-        );
+  // 🔵 Lógica de habilitación del botón
+  const botonDeshabilitado = hayMarcacion || !(horaActual >= rangoHabilitacion.desde && horaActual <= rangoHabilitacion.hasta);
 
-    const botonDeshabilitado = mostrarVerificacion || !estaDentroRango;
+  return (
+    <Card withBorder p="xl" radius="md" shadow="md" className={classes.card}>
+      <div className={classes.inner}>
+        <div>
+          <TextSection fw={900} fz={18}>
+            {children}
+          </TextSection>
+          <div>
+            <TextSection fw={700} fz={18} mt={30}>
+              {horaMarcacion}
+            </TextSection>
+            {hayMarcacion && (
+              <TextSection tt="" color="dimmed">
+                {textoVerificacion}
+              </TextSection>
+            )}
+            {!hayMarcacion && (
+              <TextSection tt="" color="red">
+                {textoNoMarcacion}
+              </TextSection>
+            )}
+          </div>
+        </div>
 
-    return (
-        <Card
-            withBorder
-            p="xl"
-            radius="md"
-            shadow="md"
-            className={classes.card}
-        >
-            <div className={classes.inner}>
-                <div>
-                    <TextSection fw={900} fz={18}>
-                        {children}
-                    </TextSection>
-                    <div>
-                        <TextSection tt="capitalize" fw={700} fz={22} mt={30}>
-                            {horaMarcacion}
-                        </TextSection>
-                        {mostrarVerificacion && (
-                            <TextSection tt="" color="dimmed">
-                                {textoVerificacion}
-                            </TextSection>
-                        )}
-                    </div>
-                </div>
-                <div className={classes.ring}>
-                    <Button
-                        w={150}
-                        h={150}
-                        radius={150}
-                        p={0}
-                        variant="light"
-                        color={
-                            botonDeshabilitado
-                                ? "gray"
-                                : theme.colors[btnColor][5]
-                        } // Cambiar a gris si está deshabilitado
-                        onClick={handleMarcacion}
-                        disabled={botonDeshabilitado}
-                        style={{
-                            borderWidth: 2,
-                            borderColor: botonDeshabilitado
-                                ? theme.colors["gray"][8]
-                                : theme.colors[btnColor][8], // Usar gris para el borde si está deshabilitado
-                            color: botonDeshabilitado
-                                ? theme.colors["gray"][7]
-                                : theme.colors[btnColor][5], // Usar gris para el texto si está deshabilitado
-                            textAlign: "center",
-                            whiteSpace: "normal",
-                            lineHeight: 1.2,
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                        }}
-                    >
-                        Realizar
-                        <br />
-                        marcación
-                    </Button>
-                </div>
-            </div>
-        </Card>
-    );
+        <div className={classes.ring}>
+          <Button
+            w={150}
+            h={150}
+            radius={150}
+            p={0}
+            variant="light"
+            color={botonDeshabilitado ? 'gray' : theme.colors[btnColor][5]}
+            onClick={handleMarcacion}
+            disabled={botonDeshabilitado}
+            style={{
+              borderWidth: 2,
+              borderColor: botonDeshabilitado ? 'gray' : theme.colors[btnColor][8],
+              color: botonDeshabilitado ? 'gray' : theme.colors[btnColor][5],
+              textAlign: "center",
+              whiteSpace: "normal",
+              lineHeight: 1.2,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            Realizar
+            <br />
+            marcación
+          </Button>
+        </div>
+      </div>
+    </Card>
+  );
 };

@@ -1,8 +1,6 @@
-import { useEffect } from "react";
 import { SimpleGrid } from "@mantine/core";
 import { MarcacionCard } from "../../../components";
 import { useMarcacionStore } from "../../../hooks";
-import Swal from "sweetalert2";
 
 export const MarcacionSection = ({ usuario }) => {
     const { startAddMarcacion } = useMarcacionStore();
