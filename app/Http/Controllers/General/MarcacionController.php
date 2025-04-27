@@ -64,13 +64,10 @@ class MarcacionController extends Controller
             $_user = DB::connection('sqlsrv')->table('USERINFO')
                 ->where('BADGENUMBER', $request->asi_id_reloj)
                 ->first();
-            /* $_marcacion = Checkinout::where('USERID', $_user->USERID)
-                ->where('CHECKTIME', Carbon::now()->format('Y-m-d'))
-                ->first(); */
 
             $marcacion = new Checkinout();
             $marcacion->USERID = $_user->USERID;
-            $marcacion->CHECKTIME = Carbon::now()->format('Y-m-d H:i:s');
+            $marcacion->CHECKTIME = Carbon::now();
             $marcacion->CHECKTYPE = 'I';
             $marcacion->VERIFYCODE = 1;
             $marcacion->SENSORID = 2;
