@@ -67,7 +67,7 @@ class MarcacionController extends Controller
 
             $marcacion = new Checkinout();
             $marcacion->USERID = $_user->USERID;
-            $marcacion->CHECKTIME = Carbon::now()->format('Y-m-d H:i:s');
+            $marcacion->CHECKTIME = DB::raw("CONVERT(DATETIME, ?, 120)", [Carbon::now()->format('Y-m-d H:i:s')]);
             $marcacion->CHECKTYPE = 'I';
             $marcacion->VERIFYCODE = 1;
             $marcacion->SENSORID = 2;
