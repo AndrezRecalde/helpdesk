@@ -6,32 +6,37 @@ import { FormAnularPermiso } from "../../../components";
 
 export const ModalAnularPermiso = () => {
     const { activatePermiso, setActivatePermiso } = usePermisoStore();
-    const { isOpenModalAnularPermiso, modalActionAnularPermiso } = useUiPermiso();
+    const { isOpenModalAnularPermiso, modalActionAnularPermiso } =
+        useUiPermiso();
 
     const form = useForm({
         initialValues: {
             idper_permisos: "",
-            per_observacion_anulado: ""
+            per_observacion_anulado: "",
         },
         validate: {
-            per_observacion_anulado: isNotEmpty("Por favor señale el motivo de su anulación")
-        }
+            per_observacion_anulado: isNotEmpty(
+                "Por favor señale el motivo de su anulación"
+            ),
+        },
     });
 
     useEffect(() => {
-      if (activatePermiso !== null) {
-        form.setFieldValue("idper_permisos", activatePermiso?.idper_permisos);
-      }
-    }, [activatePermiso])
-
+        if (activatePermiso !== null) {
+            form.setFieldValue(
+                "idper_permisos",
+                activatePermiso?.idper_permisos
+            );
+        }
+    }, [activatePermiso]);
 
     const handleCloseModal = () => {
-        modalActionAnularPermiso(0);
         if (activatePermiso !== null) {
             setActivatePermiso(null);
         }
         form.reset();
-    }
+        modalActionAnularPermiso(0);
+    };
 
     return (
         <Modal

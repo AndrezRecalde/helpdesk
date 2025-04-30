@@ -77,13 +77,13 @@ export const FormDiagnosticar = ({ form, option }) => {
                 option,
                 storageFields
             );
-            modalActionDiagnosticar(0);
             form.reset();
+            modalActionDiagnosticar(0);
             return;
         }
         startDiagnosticarSoporte(form.getTransformedValues(), option);
-        modalActionDiagnosticar(0);
         form.reset();
+        modalActionDiagnosticar(0);
     };
 
     return (
@@ -143,7 +143,7 @@ export const FormDiagnosticar = ({ form, option }) => {
                     <Stack>
                         <DateTimePicker
                             withAsterisk
-                            valueFormat="YYYY-MM-DD hh:mm"
+                            valueFormat="YYYY-MM-DD HH:mm"
                             label="Fecha de finalización"
                             placeholder="Seleccione fecha de finalización"
                             {...form.getInputProps("fecha_fin")}

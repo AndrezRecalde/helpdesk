@@ -3,6 +3,7 @@ import { Modal } from "@mantine/core";
 import { hasLength, isNotEmpty, useForm } from "@mantine/form";
 import { TextSection, FormDiagnosticar } from "../../../components";
 import { useEquipoStore, useSoporteStore, useUiSoporte } from "../../../hooks";
+import dayjs from "dayjs";
 
 export const ModalDiagnostico = ({ option }) => {
     const { modalActionDiagnosticar, isOpenModalDiagnosticar } = useUiSoporte();
@@ -14,7 +15,7 @@ export const ModalDiagnostico = ({ option }) => {
     const form = useForm({
         initialValues: {
             id_sop: null,
-            fecha_fin: new Date(),
+            fecha_fin: dayjs(),
             id_area_tic: null,
             id_tipo_soporte: null,
             solucion: "",
@@ -27,7 +28,7 @@ export const ModalDiagnostico = ({ option }) => {
             id_tipo_soporte: isNotEmpty("Por favor ingrese el tipo"),
             solucion: hasLength(
                 { min: 10, max: 600 },
-                "La solución debe tener entre 10 y 500 caracteres"
+                "La solución debe tener entre 10 y 600 caracteres"
             ),
             id_equipo: (value, values) =>
                 values.id_tipo_soporte == 1 && value === null
@@ -36,9 +37,7 @@ export const ModalDiagnostico = ({ option }) => {
         },
         transformValues: (values) => ({
             ...values,
-            fecha_fin: values.fecha_fin.toLocaleString("sv-SE", {
-                timeZone: "America/Guayaquil",
-            }),
+            fecha_fin: dayjs(values.fecha_fin).format("YYYY-MM-DD HH:mm:ss"),
             id_area_tic: Number(values.id_area_tic) || null,
             id_tipo_soporte: Number(values.id_tipo_soporte) || null,
             id_equipo: Number(values.id_equipo) || null,

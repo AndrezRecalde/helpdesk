@@ -136,7 +136,7 @@ class SoporteAdminController extends Controller
             if ($request->id_usu_tecnico_asig) {
 
                 $soporte->id_estado = 5;
-
+                $soporte->fecha_asig = Carbon::now();
                 $soporte->save();
 
                 $asignacion = Soporte::from('sop_soporte as ss')

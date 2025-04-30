@@ -10,10 +10,10 @@ export const FormAnularPermiso = ({ form }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        modalActionAnularPermiso(0);
         startAnularPermiso(form.values, storagePermisoFields);
         //console.log(form.values);
         setActivatePermiso(null);
+        modalActionAnularPermiso(0);
         form.reset();
     };
 

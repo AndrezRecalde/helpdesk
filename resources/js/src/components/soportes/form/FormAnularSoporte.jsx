@@ -21,6 +21,7 @@ export const FormAnularSoporte = ({ form }) => {
     const handleSubmit = () => {
         //console.log(form.values);
         startAnularSoporte(form.values);
+        form.reset();
         modalActionAnularSoporte(0);
     };
 

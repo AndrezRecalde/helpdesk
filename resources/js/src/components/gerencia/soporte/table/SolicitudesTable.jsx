@@ -24,11 +24,13 @@ export const SolicitudesTable = ({ menu, isLoading }) => {
         () => [
             {
                 accessorKey: "numero_sop", //access nested data with dot notation
-                header: "Número de soporte",
+                header: "No. Soporte",
+                size: 80,
             },
             {
                 accessorFn: (row) => dayjs(row.fecha_ini).fromNow(), //access nested data with dot notation
                 header: "Fecha - Hora",
+                size: 80
             },
             {
                 accessorKey: "usuario_recibe", //normal accessorKey
