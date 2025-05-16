@@ -1,8 +1,9 @@
-import { Button, Group, Stepper, Text, Title } from "@mantine/core";
 import { useEffect, useState } from "react";
+import { Button, Group, Stepper, Text, Title } from "@mantine/core";
 import { FormInfoUser, FormTipoUser, FormTrabajoUser } from "../../../../components";
 import { useStorageField, useUiUser, useUsersStore } from "../../../../hooks";
 import { IconSend } from "@tabler/icons-react";
+import dayjs from "dayjs";
 
 export const StepperUser = ({ form }) => {
     const [active, setActive] = useState(0);
@@ -28,7 +29,7 @@ export const StepperUser = ({ form }) => {
                 finaliza_contrato:
                     activateUser.finaliza_contrato?.toString() ?? "0",
                 usu_f_f_contrato: activateUser.usu_f_f_contrato
-                    ? new Date(activateUser.usu_f_f_contrato)
+                    ? dayjs(activateUser.usu_f_f_contrato).format("YYYY-MM-DD")
                     : null,
 
                 tecnico: activateUser.tecnico?.toString() ?? "0",

@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Gerente;
 use App\Enums\MsgStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ResetPwdRequest;
-use App\Http\Requests\TecnicoRequest;
+//use App\Http\Requests\TecnicoRequest;
 use App\Http\Requests\UserRequest;
 use App\Http\Requests\UserUpdateActivo;
 use App\Models\Soporte;
@@ -62,7 +62,14 @@ class UserAdminController extends Controller
     function store(UserRequest $request): JsonResponse
     {
         try {
-            User::create($request->validated());
+            $data = $request->validated();
+            $usuario = new User($data);
+
+            if (is_null($usuario->cdgo_dprtmnto)) {
+                $usuario->cdgo_dprtmnto = $usuario->cdgo_direccion;
+            }
+
+            $usuario->save();
             return response()->json(['status' => MsgStatus::Success, 'msg' => MsgStatus::Created], 201);
         } catch (\Throwable $th) {
             return response()->json(['status' => MsgStatus::Error, 'msg' => $th->getMessage()], 500);
@@ -72,13 +79,29 @@ class UserAdminController extends Controller
     function update(UserRequest $request, int $cdgo_usrio): JsonResponse
     {
         $usuario = User::find($cdgo_usrio);
+
+        if (!$usuario) {
+            return response()->json([
+                'status' => MsgStatus::Error,
+                'msg' => MsgStatus::UserNotFound
+            ], 404);
+        }
+
         try {
-            if ($usuario) {
-                $usuario->update($request->validated());
-                return response()->json(['status' => MsgStatus::Success, 'msg' => MsgStatus::Updated], 201);
-            } else {
-                return response()->json(['status' => MsgStatus::Error, 'msg' => MsgStatus::UserNotFound], 404);
+            $data = $request->validated();
+
+            $usuario->fill($data);
+
+            if (is_null($usuario->cdgo_dprtmnto)) {
+                $usuario->cdgo_dprtmnto = $usuario->cdgo_direccion;
             }
+
+            $usuario->save();
+
+            return response()->json([
+                'status' => MsgStatus::Success,
+                'msg' => MsgStatus::Updated
+            ], 200);
         } catch (\Throwable $th) {
             return response()->json(['status' => MsgStatus::Error, 'msg' => $th->getMessage()], 500);
         }
@@ -88,33 +111,14 @@ class UserAdminController extends Controller
     {
         $usuario = User::find($cdgo_usrio);
 
-        try {
-            if ($usuario) {
-                $usuario->update($request->validated());
-                Soporte::create([
-                    'id_tipo_solicitud' => 7,
-                    'id_direccion' => $usuario->cdgo_direccion,
-                    'id_usu_recibe' => $usuario->cdgo_usrio,
-                    'id_area_tic'   => 5,
-                    'id_tipo_soporte' => 3,
-                    'id_usu_tecnico_asig' => auth()->id(),
-                    'incidente'     =>  'SOLICITUD DE RESETEO DE CONTRASEÑA',
-                    'solucion'      =>  'Se reseteo la contraseña al usuario solicitante'
-
-                ]);
-                return response()->json(['status' => MsgStatus::Success, 'msg' => MsgStatus::Updated], 201);
-            } else {
-                return response()->json(['status' => MsgStatus::Error, 'msg' => MsgStatus::UserNotFound], 404);
-            }
-        } catch (\Throwable $th) {
-            return response()->json(['status' => MsgStatus::Error, 'msg' => $th->getMessage()], 500);
+        if (!$usuario) {
+            return response()->json([
+                'status' => MsgStatus::Error,
+                'msg' => MsgStatus::UserNotFound
+            ], 404);
         }
-    }
 
-    function updateActivoUser(UserUpdateActivo $request, int $cdgo_usrio): JsonResponse
-    {
-        $usuario = User::find($cdgo_usrio);
-        if ($usuario) {
+        try {
             $usuario->update($request->validated());
             Soporte::create([
                 'id_tipo_solicitud' => 7,
@@ -123,13 +127,41 @@ class UserAdminController extends Controller
                 'id_area_tic'   => 5,
                 'id_tipo_soporte' => 3,
                 'id_usu_tecnico_asig' => auth()->id(),
-                'incidente'     =>  'SOLICITUD DE ACTIVACIÓN DE USUARIO',
-                'solucion'      => 'SE REALIZÓ LA ACTIVACIÓN DEL USUARIO SOLICITANTE'
+                'incidente'     =>  'SOLICITUD DE RESETEO DE CONTRASEÑA',
+                'solucion'      =>  'SE RESETEO LA CONTRASEÑA AL USUARIO SOLICITANTE'
+            ]);
+            return response()->json(['status' => MsgStatus::Success, 'msg' => MsgStatus::Updated], 200);
+        } catch (\Throwable $th) {
+            return response()->json(['status' => MsgStatus::Error, 'msg' => $th->getMessage()], 500);
+        }
+    }
 
+    function updateActivoUser(UserUpdateActivo $request, int $cdgo_usrio): JsonResponse
+    {
+        $usuario = User::find($cdgo_usrio);
+
+        if (!$usuario) {
+            return response()->json([
+                'status' => MsgStatus::Error,
+                'msg' => MsgStatus::UserNotFound
+            ], 404);
+        }
+
+        try {
+            $usuario->update($request->validated());
+            Soporte::create([
+                'id_tipo_solicitud' => 7,
+                'id_direccion' => $usuario->cdgo_direccion,
+                'id_usu_recibe' => $usuario->cdgo_usrio,
+                'id_area_tic'   => 5,
+                'id_tipo_soporte' => 3,
+                'id_usu_tecnico_asig' => auth()->id(),
+                'incidente'     => 'SOLICITUD DE ACTIVACIÓN DE USUARIO',
+                'solucion'      => 'SE REALIZÓ LA ACTIVACIÓN DEL USUARIO SOLICITANTE'
             ]);
             return response()->json(['status' => MsgStatus::Success, 'msg' => MsgStatus::Updated], 201);
-        } else {
-            return response()->json(['status' => MsgStatus::Error, 'msg' => MsgStatus::UserNotFound], 404);
+        } catch (\Throwable $th) {
+            return response()->json(['status' => MsgStatus::Error, 'msg' => $th->getMessage()], 500);
         }
     }
 
