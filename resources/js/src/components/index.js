@@ -41,7 +41,9 @@ import { SolicitudesVacacionesTable } from "./vacaciones/table/SolicitudesVacaci
 import { FechasVacacionesField } from "./vacaciones/form/FechasVacacionesField";
 import { MotivosVacacionesField } from "./vacaciones/form/MotivosVacacionesField";
 import { JefesVacacionesField } from "./vacaciones/form/JefesVacacionesField";
-import { FilterVacacionesForm } from "./vacaciones/form/FilterVacacionesForm"; */
+import { FilterVacacionesForm } from "./vacaciones/form/FilterVacacionesForm";
+import { SolAnulacionVacacionModal } from "./vacaciones/modal/SolAnulacionVacacionModal";
+import { SolAnulacionForm } from "./vacaciones/form/SolAnulacionForm"; */
 
 /* SOPORTE */
 import { FilterFormSearchDates } from "./gerencia/soporte/filter/FilterFormSearchDates";
@@ -225,7 +227,6 @@ import { BtnActivateElement } from "./elements/buttons/BtnActivateElement";
 import {
     BtnDarkMode,
     ActionReportPDF,
-    BtnSearchMenu,
 } from "./elements/buttons/BtnActions";
 import { ModalActivateElement } from "./elements/modal/ModalActivateElement";
 import { InformationActividadList } from "./elements/lists/InformationActividadList";
@@ -241,7 +242,8 @@ import {
     MenuSolicitudTable,
     MenuTable_Per,
     MenuTable_AutorizarPermiso,
-    MenuTable_Imprimir
+    MenuTable_Imprimir,
+    MenuTable_AutorizarVacacion
 } from "./elements/tables/MenuTable";
 import { TableContent } from "./elements/tables/TableContent";
 
@@ -288,7 +290,9 @@ export {
     FechasVacacionesField,
     MotivosVacacionesField,
     JefesVacacionesField,
-    FilterVacacionesForm, */
+    FilterVacacionesForm,
+    SolAnulacionVacacionModal,
+    SolAnulacionForm, */
 
     /* SOPORTE */
     FilterFormSearchDates,
@@ -455,7 +459,6 @@ export {
     BtnActivateElement,
     BtnDarkMode,
     ActionReportPDF,
-    BtnSearchMenu,
     ModalActivateElement,
     InformationActividadList,
     MenuSeleccion,
@@ -466,6 +469,7 @@ export {
     MenuTable_Equipo,
     MenuTable_Consumible,
     MenuTable_Imprimir,
+    MenuTable_AutorizarVacacion,
     MenuTable_T,
     MenuSolicitudTable,
     MenuTable_Per,

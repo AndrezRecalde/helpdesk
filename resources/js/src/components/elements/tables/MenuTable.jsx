@@ -394,3 +394,57 @@ export const MenuTable_Per = ({ row, handleExport, handleAnular }) => {
         </>
     );
 };
+
+export const MenuTable_AutorizarVacacion = ({
+    row,
+    isAdministrator,
+    handleAnular,
+    handleAutorizar,
+    handleSolicitarAnulacion,
+    handleExport
+}) => {
+    return (
+        <>
+            {isAdministrator ? (
+                <>
+                    <Menu.Item
+                        leftSection={
+                            <IconChecks
+                                style={{ width: rem(15), height: rem(15) }}
+                            />
+                        }
+                        onClick={() => handleAutorizar(row.original)}
+                    >
+                        Autorizar Vacacion
+                    </Menu.Item>
+                    <Menu.Item
+                        leftSection={
+                            <IconNotesOff
+                                style={{ width: rem(15), height: rem(15) }}
+                            />
+                        }
+                        onClick={() => handleAnular(row.original)}
+                    >
+                        Anular Vacacion
+                    </Menu.Item>
+                </>
+            ) : null}
+            <Menu.Item
+                leftSection={
+                    <IconNotesOff style={{ width: rem(15), height: rem(15) }} />
+                }
+                onClick={() => handleSolicitarAnulacion(row.original)}
+            >
+                Solicitud de Anulacion
+            </Menu.Item>
+            <Menu.Item
+                leftSection={
+                    <IconPrinter style={{ width: rem(15), height: rem(15) }} />
+                }
+                onClick={() => handleExport(row.original)}
+            >
+                Imprimir
+            </Menu.Item>
+        </>
+    );
+};
