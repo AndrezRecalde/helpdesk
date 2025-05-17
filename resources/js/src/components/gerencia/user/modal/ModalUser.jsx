@@ -107,7 +107,9 @@ export const ModalUser = () => {
             id_tipo_usuario: Number(values.id_tipo_usuario) || null,
             usu_ult_tipo_contrato: Number(values.usu_ult_tipo_contrato) || null,
             finaliza_contrato: Number(values.finaliza_contrato),
-            usu_f_f_contrato: dayjs(values.usu_f_f_contrato).format("YYYY-MM-DD") || null,
+            usu_f_f_contrato: dayjs(values.usu_f_f_contrato).isValid()
+                ? dayjs(values.usu_f_f_contrato).format("YYYY-MM-DD")
+                : null,
             tecnico: Number(values.tecnico),
             secretaria_tic: Number(values.secretaria_tic),
             super_user: Number(values.super_user),

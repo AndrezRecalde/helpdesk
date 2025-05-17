@@ -29,9 +29,8 @@ export const StepperUser = ({ form }) => {
                 finaliza_contrato:
                     activateUser.finaliza_contrato?.toString() ?? "0",
                 usu_f_f_contrato: activateUser.usu_f_f_contrato
-                    ? dayjs(activateUser.usu_f_f_contrato).format("YYYY-MM-DD")
+                    ? dayjs(activateUser.usu_f_f_contrato).toDate()
                     : null,
-
                 tecnico: activateUser.tecnico?.toString() ?? "0",
                 secretaria_tic: activateUser.secretaria_tic?.toString() ?? "0",
                 super_user: activateUser.super_user?.toString() ?? "0",

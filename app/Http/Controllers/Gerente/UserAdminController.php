@@ -31,7 +31,7 @@ class UserAdminController extends Controller
                         us.cdgo_dprtmnto, de.nmbre_dprtmnto as departamento,
                         us.crgo_id, nc.nom_cargo,
                         us.id_tipo_usuario, us.usu_ult_tipo_contrato,
-                        us.finaliza_contrato, us.tecnico, us.secretaria_tic,
+                        us.finaliza_contrato, us.usu_f_f_contrato, us.tecnico, us.secretaria_tic,
                         us.super_user, us.interno, us.usu_estado, us.usu_alias, us.usu_ing')
             ->leftJoin('nom_cargo as nc', 'nc.idnom_cargo', 'us.crgo_id')
             ->leftJoin('dprtmntos as d', 'd.cdgo_dprtmnto', 'us.cdgo_direccion')
@@ -94,6 +94,12 @@ class UserAdminController extends Controller
 
             if (is_null($usuario->cdgo_dprtmnto)) {
                 $usuario->cdgo_dprtmnto = $usuario->cdgo_direccion;
+            }
+
+            if ($request->finaliza_contrato == 0) {
+                $usuario->usu_f_f_contrato = null;
+            } else {
+                $usuario->usu_f_f_contrato = $request->usu_f_f_contrato;
             }
 
             $usuario->save();
