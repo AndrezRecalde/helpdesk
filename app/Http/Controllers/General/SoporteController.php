@@ -120,7 +120,8 @@ class SoporteController extends Controller
             ->whereIn('id_estado', [3, 4])
             ->orderBy(
                 'id_sop',
-                'DESC')
+                'DESC'
+            )
             ->take(200)
             ->get(['id_sop', 'numero_sop']);
 
@@ -131,7 +132,11 @@ class SoporteController extends Controller
     {
         try {
             $soporte = Soporte::create($request->validated());
-            $soporte->id_calificacion = 3;
+            if ($soporte->id_estado == 4) {
+                $soporte->id_calificacion = 5;
+            } else {
+                $soporte->id_calificacion = 3;
+            }
             $soporte->save();
             return response()->json([
                 'status' => 'success',

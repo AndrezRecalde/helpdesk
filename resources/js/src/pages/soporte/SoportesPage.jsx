@@ -89,7 +89,7 @@ const SoportesPage = () => {
                 icon: message.status,
                 text: message.msg,
                 showConfirmButton: false,
-                timer: 1500,
+                timer: 2000,
             });
             return;
         }
@@ -101,8 +101,8 @@ const SoportesPage = () => {
                 icon: "error",
                 title: "Opps...",
                 text: errores,
-                showConfirmButton: false,
-                timer: 2000,
+                showConfirmButton: true,
+                confirmButtonText: "Aceptar"
             });
             return;
         }

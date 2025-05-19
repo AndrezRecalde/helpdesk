@@ -138,11 +138,6 @@ class SoporteAdminController extends Controller
             // Crear solicitud
             $soporte = Soporte::create($data);
 
-            // Estado inicial y calificación por defecto si aplica
-            if ($soporte->id_estado == 4) {
-                $soporte->id_calificacion = 5;
-            }
-
             // Si se asigna técnico
             if (!empty($request->id_usu_tecnico_asig)) {
                 $soporte->id_estado = 5;
