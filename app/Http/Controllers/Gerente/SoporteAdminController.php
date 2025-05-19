@@ -18,6 +18,8 @@ use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log;
+
 
 class SoporteAdminController extends Controller
 {
@@ -128,61 +130,70 @@ class SoporteAdminController extends Controller
         }
     }
 
-    function crearSolicitudAdmin(SolicitudAdminRequest $request): JsonResponse
+    public function crearSolicitudAdmin(SolicitudAdminRequest $request): JsonResponse
     {
         try {
-            $soporte = Soporte::create($request->validated());
+            $data = $request->validated();
 
-            if ($request->id_usu_tecnico_asig) {
+            // Crear solicitud
+            $soporte = Soporte::create($data);
 
+            // Estado inicial y calificación por defecto si aplica
+            if ($soporte->id_estado == 4) {
+                $soporte->id_calificacion = 5;
+            }
+
+            // Si se asigna técnico
+            if (!empty($request->id_usu_tecnico_asig)) {
                 $soporte->id_estado = 5;
-                $soporte->fecha_asig = Carbon::now();
+                $soporte->fecha_asig = now();
                 $soporte->save();
 
-                $asignacion = Soporte::from('sop_soporte as ss')
+                // Obtener datos de asignación en una sola consulta
+                $asignacion = DB::table('sop_soporte as ss')
                     ->selectRaw('ss.id_sop, ss.numero_sop,
-                                ss.id_direccion, d.nmbre_dprtmnto as direccion,
-                                ss.id_usu_tecnico_asig, u.nmbre_usrio as tecnico,
-                                ss.id_usu_recibe, us.nmbre_usrio as solicitante, us.email,
-                                ss.incidente, ss.fecha_ini')
-                    ->join('dprtmntos as d', 'd.cdgo_dprtmnto', 'ss.id_direccion')
-                    ->join('usrios_sstma as u', 'u.cdgo_usrio', 'ss.id_usu_tecnico_asig')
-                    ->join('usrios_sstma as us', 'us.cdgo_usrio', 'ss.id_usu_recibe')
+                             ss.id_direccion, d.nmbre_dprtmnto as direccion,
+                             ss.id_usu_tecnico_asig, ut.nmbre_usrio as tecnico, ut.email as email_tecnico,
+                             ss.id_usu_recibe, ur.nmbre_usrio as solicitante, ur.email as email_solicitante,
+                             ss.incidente, ss.fecha_ini')
+                    ->join('dprtmntos as d', 'd.cdgo_dprtmnto', '=', 'ss.id_direccion')
+                    ->join('usrios_sstma as ut', 'ut.cdgo_usrio', '=', 'ss.id_usu_tecnico_asig')
+                    ->join('usrios_sstma as ur', 'ur.cdgo_usrio', '=', 'ss.id_usu_recibe')
                     ->where('ss.id_sop', $soporte->id_sop)
                     ->first();
 
-                $usuario = User::where("cdgo_usrio", $request->id_usu_recibe)->first(['cdgo_usrio', 'email']);
-                $tecnico = User::where("cdgo_usrio", $request->id_usu_tecnico_asig)
-                    ->first(['cdgo_usrio', 'email']);
+                if ($asignacion) {
+                    // Enviar correos
+                    if (!empty($asignacion->email_solicitante)) {
+                        Mail::to($asignacion->email_solicitante)->send(new UsuarioMail($asignacion));
+                    }
 
+                    if (!empty($asignacion->email_tecnico)) {
+                        Mail::to($asignacion->email_tecnico)->send(new TecnicoMail($asignacion));
+                    }
+                }
 
-                /* MAIL PARA EL TÉCNICO */
-                Mail::to($tecnico->email)->send(new TecnicoMail($asignacion));
-
-                /* MAIL PARA EL USUARIO */
-                Mail::to($usuario->email)->send(new UsuarioMail($asignacion));
-
-                return response()->json(
-                    [
-                        'status'     => MsgStatus::Success,
-                        'msg'        => MsgStatus::SoporteCreatedSuccess,
-                        'asignacion' => is_null($asignacion) || null
-                    ],
-                    200
-                );
-            } else {
-                $soporte->id_estado = 1;
-                $soporte->save();
-                return response()->json(
-                    [
-                        'status'     => MsgStatus::Success,
-                        'msg'        => MsgStatus::SoporteCreatedSuccess
-                    ],
-                    200
-                );
+                return response()->json([
+                    'status'     => MsgStatus::Success,
+                    'msg'        => MsgStatus::SoporteCreatedSuccess,
+                    'asignacion' => $asignacion ?? null,
+                ], 200);
             }
+
+            // Si no se asignó técnico
+            $soporte->id_estado = 1;
+            $soporte->save();
+
+            return response()->json([
+                'status' => MsgStatus::Success,
+                'msg'    => MsgStatus::SoporteCreatedSuccess
+            ], 200);
         } catch (\Throwable $th) {
-            return response()->json(['status' => MsgStatus::Error, 'message' => $th->getMessage()], 500);
+            Log::error('Error creando solicitud de soporte: ' . $th->getMessage());
+            return response()->json([
+                'status'  => MsgStatus::Error,
+                'message' => 'Error al crear la solicitud: ' . $th->getMessage()
+            ], 500);
         }
     }
 

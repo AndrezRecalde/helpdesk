@@ -6,7 +6,7 @@
 Buen día, estimado ingeniero/a {{ $asignacion['tecnico'] }}, se solicita de su ayuda con: <br>
 
 El funcionario: {{ $asignacion['solicitante'] }} <br>
-Con correo: {{ $asignacion['email'] }}<br>
+Con correo: {{ $asignacion['email_solicitante'] }}<br>
 del departamento: {{ $asignacion['direccion'] }}
 
 ### Descripción del problema: <br>
