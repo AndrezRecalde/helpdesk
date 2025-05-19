@@ -30,6 +30,7 @@ export const FormCreateSoporte = ({ form }) => {
         id_tipo_solicitud,
         activo_informatico,
         id_tipo_soporte,
+        fecha_fin
     } = form.values;
     const { estados } = useEstadoStore();
     const { users } = useUsersStore();
@@ -47,14 +48,14 @@ export const FormCreateSoporte = ({ form }) => {
             "id_estado",
             activateSoporte?.id_estado
                 ? activateSoporte.id_estado.toString()
-                : "3"
+                : id_estado
         );
         form.setFieldValue("solucion", activateSoporte?.solucion);
         form.setFieldValue(
             "fecha_fin",
             activateSoporte?.fecha_fin
                 ? new Date(activateSoporte.fecha_fin)
-                : new Date()
+                : fecha_fin
         );
     };
 
@@ -100,7 +101,7 @@ export const FormCreateSoporte = ({ form }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        //console.log(form.getTransformedValues());
+        console.log(form.getTransformedValues());
         startCreateSoporte(form.getTransformedValues(), storageFields);
         modalActionCreateSoporte(0);
         form.reset();
@@ -285,7 +286,11 @@ export const FormCreateSoporte = ({ form }) => {
                     />
                 ) : null}
                 <DateTimePicker
+                    clearable
                     withAsterisk
+                    disabled={
+                        id_estado == 3 || id_estado == 4 ? false : true
+                    }
                     valueFormat="YYYY-MM-DD HH:mm"
                     label="Fecha de finalización"
                     placeholder="Seleccione fecha de finalización"

@@ -53,7 +53,7 @@ export const ModalCreateSoporte = ({ role }) => {
             incidente: "",
             solucion: "",
             id_equipo: null,
-            fecha_fin: dayjs().tz("America/Guayaquil").toDate(),
+            fecha_fin: null,
 
             activo_informatico: false,
         },
@@ -67,19 +67,23 @@ export const ModalCreateSoporte = ({ role }) => {
                     return "La fecha de inicio no es válida";
                 }
                 if (fechaInicio.isAfter(now, "minute")) {
-                    return "La fecha de inicio no puede ser anterior a la fecha actual";
+                    return "La fecha de inicio no puede ser despues a la fecha actual";
                 }
                 return null;
             },
             fecha_fin: (value, values) => {
-                const fechaFin = dayjs(value).tz("America/Guayaquil");
-                const fechaInicio = dayjs(values.fecha_ini).tz("America/Guayaquil");
+                if (values.id_estado == 3 || values.id_estado == 4) {
+                    const fechaFin = dayjs(value).tz("America/Guayaquil");
+                    const fechaInicio = dayjs(values.fecha_ini).tz(
+                        "America/Guayaquil"
+                    );
 
-                if (!fechaFin.isValid()) {
-                    return "La fecha de finalización no es válida";
-                }
-                if (fechaFin.isBefore(fechaInicio, "minute")) {
-                    return "La fecha de finalización no puede ser anterior a la fecha de inicio";
+                    if (!fechaFin.isValid()) {
+                        return "La fecha de finalización no es válida";
+                    }
+                    if (fechaFin.isBefore(fechaInicio, "minute")) {
+                        return "La fecha de fin no puede ser antes a la fecha de inicio";
+                    }
                 }
                 return null;
             },
@@ -108,8 +112,14 @@ export const ModalCreateSoporte = ({ role }) => {
         transformValues: (values) => ({
             ...values,
             id_estado: Number(values.id_estado) || null,
-            fecha_ini: dayjs(values.fecha_ini).tz("America/Guayaquil").format("YYYY-MM-DD HH:mm:ss"),
-            fecha_fin: dayjs(values.fecha_fin).tz("America/Guayaquil").format("YYYY-MM-DD HH:mm:ss"),
+            fecha_ini: dayjs(values.fecha_ini)
+                .tz("America/Guayaquil")
+                .format("YYYY-MM-DD HH:mm:ss"),
+            fecha_fin: dayjs(values.fecha_fin).isValid()
+                ? dayjs(values.fecha_fin)
+                      .tz("America/Guayaquil")
+                      .format("YYYY-MM-DD HH:mm:ss")
+                : null,
             id_tipo_solicitud: Number(values.id_tipo_solicitud) || null,
             id_usu_tecnico_asig: Number(values.id_usu_tecnico_asig) || null,
             id_direccion: Number(values.id_direccion),

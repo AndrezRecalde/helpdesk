@@ -9,13 +9,14 @@ use App\Http\Requests\SolicitudRequest;
 use App\Http\Requests\SoporteRequest;
 use App\Models\Departamento;
 use App\Models\Soporte;
-use App\Models\User;
+//use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+//use Illuminate\Support\Facades\DB;
 
 class SoporteController extends Controller
 {
@@ -128,24 +129,31 @@ class SoporteController extends Controller
         return response()->json(['status' => MsgStatus::Success, 'soportes' => $soportes], 200);
     }
 
-    function createSoporte(SoporteRequest $request): JsonResponse
+    public function createSoporte(SoporteRequest $request): JsonResponse
     {
         try {
-            $soporte = Soporte::create($request->validated());
-            if ($soporte->id_estado == 4) {
-                $soporte->id_calificacion = 5;
-            } else {
-                $soporte->id_calificacion = 3;
-            }
-            $soporte->fecha_asig = now();
-            $soporte->save();
+            $data = $request->validated();
+
+            // Calificación por estado
+            $data['id_calificacion'] = ($data['id_estado'] == 4) ? 5 : 3;
+
+            // Fecha de asignación según estado
+            $data['fecha_asig'] = in_array($data['id_estado'], [1, 2]) ? null : now();
+
+            // Crear soporte con datos ya preparados
+            $soporte = Soporte::create($data);
+
             return response()->json([
-                'status' => 'success',
-                'msg' => 'Soporte creado con éxito',
-                'numero_sop' => $soporte->numero_sop
+                'status'      => 'success',
+                'msg'         => 'Soporte creado con éxito',
+                'numero_sop'  => $soporte->numero_sop,
             ], 200);
         } catch (\Throwable $th) {
-            return response()->json(['status' => 'error', 'message' => $th->getMessage()], 500);
+            Log::error('Error al crear soporte: ' . $th->getMessage());
+            return response()->json([
+                'status'  => 'error',
+                'message' => 'Ocurrió un error al crear el soporte: ' . $th->getMessage()
+            ], 500);
         }
     }
 
