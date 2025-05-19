@@ -137,6 +137,7 @@ class SoporteController extends Controller
             } else {
                 $soporte->id_calificacion = 3;
             }
+            $soporte->fecha_asig = now();
             $soporte->save();
             return response()->json([
                 'status' => 'success',
