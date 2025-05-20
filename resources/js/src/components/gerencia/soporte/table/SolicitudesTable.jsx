@@ -1,7 +1,13 @@
 import { useCallback, useMemo } from "react";
 import { useMantineReactTable } from "mantine-react-table";
 import { MRT_Localization_ES } from "mantine-react-table/locales/es/index.cjs";
-import { MenuSolicitudTable, MenuTable_T, TableContent } from "../../../../components";
+import {
+    DetailSolicitudesActualesTable,
+    MenuSolicitudTable,
+    MenuTable_T,
+    TableContent,
+    TextSection,
+} from "../../../../components";
 import { Badge, Table, useMantineColorScheme } from "@mantine/core";
 import { useSoporteStore, useUiSoporte } from "../../../../hooks";
 import dayjs from "dayjs";
@@ -23,27 +29,32 @@ export const SolicitudesTable = ({ menu, isLoading }) => {
     const columns = useMemo(
         () => [
             {
-                accessorKey: "numero_sop", //access nested data with dot notation
+                accessorFn: (row) => (
+                    <div>
+                        <Badge color={row.color} variant="dot">
+                            {row.numero_sop}
+                        </Badge>
+                        <TextSection fs="italic" fz={12} tt="">
+                            — {dayjs(row.fecha_ini).fromNow()}
+                        </TextSection>
+                    </div>
+                ), //access nested data with dot notation
                 header: "No. Soporte",
                 size: 80,
             },
             {
-                accessorFn: (row) => dayjs(row.fecha_ini).fromNow(), //access nested data with dot notation
-                header: "Fecha - Hora",
-                size: 80
-            },
-            {
-                accessorKey: "usuario_recibe", //normal accessorKey
-                header: "Solicitante",
-                filterVariant: "autocomplete",
-            },
-            {
-                accessorKey: "direccion", //normal accessorKey
+                accessorFn: (row) => row.direccion.toUpperCase(), //normal accessorKey
                 header: "Departamento del solicitante",
                 filterVariant: "autocomplete",
             },
             {
-                accessorFn: (row) => row.tecnico_asignado ?? "No asignado", //normal accessorKey
+                accessorFn: (row) => row.usuario_recibe.toUpperCase(), //normal accessorKey
+                header: "Solicitante",
+                filterVariant: "autocomplete",
+            },
+            {
+                accessorFn: (row) =>
+                    row.tecnico_asignado.toUpperCase() ?? "NO ASIGNADO", //normal accessorKey
                 header: "Técnico asignado",
                 filterVariant: "autocomplete",
             },
@@ -115,22 +126,7 @@ export const SolicitudesTable = ({ menu, isLoading }) => {
             },
         }),
         renderDetailPanel: ({ row }) => (
-            <Table variant="vertical" layout="fixed" withTableBorder>
-                <Table.Tbody>
-                    <Table.Tr>
-                        <Table.Th w={250}>Incidencia</Table.Th>
-                        <Table.Td>{row.original.incidente}</Table.Td>
-                    </Table.Tr>
-                    <Table.Tr>
-                        <Table.Th w={250}>Estado del Soporte</Table.Th>
-                        <Table.Td>
-                            <Badge radius="sm" color={row.original.color}>
-                                {row.original.estado}
-                            </Badge>
-                        </Table.Td>
-                    </Table.Tr>
-                </Table.Tbody>
-            </Table>
+            <DetailSolicitudesActualesTable row={row} />
         ),
         mantineTableProps: {
             withColumnBorders: true,

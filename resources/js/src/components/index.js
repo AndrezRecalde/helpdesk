@@ -50,6 +50,8 @@ import { FilterFormSearchDates } from "./gerencia/soporte/filter/FilterFormSearc
 import { FilterFormSoportes } from "./gerencia/soporte/filter/FilterFormSoportes";
 import { SolicitudesAnuladasTable } from "./gerencia/soporte/table/SolicitudesAnuladasTable";
 import { SolicitudesTable } from "./gerencia/soporte/table/SolicitudesTable";
+import { DetailSolicitudesActualesTable } from "./gerencia/soporte/table/DetailSolicitudesActualesTable";
+
 /* TECNICO */
 import { FormAddTecnico } from "./gerencia/tecnico/form/FormAddTecnico";
 import { ModalActivateTecnico } from "./gerencia/tecnico/modal/ModalActivateTecnico";
@@ -299,6 +301,7 @@ export {
     FilterFormSoportes,
     SolicitudesAnuladasTable,
     SolicitudesTable,
+    DetailSolicitudesActualesTable,
     /* TECNICO */
     FormAddTecnico,
     ModalActivateTecnico,

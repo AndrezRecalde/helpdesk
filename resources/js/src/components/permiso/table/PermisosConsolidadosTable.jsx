@@ -28,11 +28,13 @@ export const PermisosConsolidadosTable = () => {
         () => [
             {
                 accessorKey: "direccion_string", //access nested data with dot notation
-                header: "Gestión",
+                header: "Dirección",
+                filterVariant: "autocomplete",
             },
             {
                 accessorKey: "usuario_string", //access nested data with dot notation
                 header: "Servidor",
+                filterVariant: "autocomplete",
             },
             {
                 accessorKey: "total_permisos",

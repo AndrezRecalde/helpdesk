@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import {
     Card,
-    Text,
     Group,
     rem,
     Textarea,
@@ -10,19 +9,20 @@ import {
     Checkbox,
     Box,
     Stack,
+    Table,
 } from "@mantine/core";
 import { DateTimePicker } from "@mantine/dates";
-import {
-    IconCalendarMonth,
-    IconRosetteDiscountCheck,
-} from "@tabler/icons-react";
-import { BtnSubmit } from "../../../components";
+import { BtnSubmit, TextSection } from "../../../components";
 import {
     useEquipoStore,
     useSoporteStore,
     useStorageField,
     useUiSoporte,
 } from "../../../hooks";
+import {
+    IconCalendarMonth,
+    IconRosetteDiscountCheck,
+} from "@tabler/icons-react";
 import classes from "../../../assets/styles/modules/soporte/CardDiagnostico.module.css";
 import dayjs from "dayjs";
 
@@ -88,52 +88,86 @@ export const FormDiagnosticar = ({ form, option }) => {
 
     return (
         <Card withBorder padding="lg" className={classes.card}>
-            <Group justify="space-between">
-                <Text fz="sm" fw={700} className={classes.title}>
-                    Incidencia del usuario:
-                </Text>
-                <Group gap={5}>
-                    <Text fz="sm" c="dimmed">
-                        {dayjs(activateSoporte?.fecha_ini).format("YYYY-MM-DD")}
-                    </Text>
-                    <IconCalendarMonth
-                        style={{ width: rem(20), height: rem(20) }}
-                    />
-                </Group>
-            </Group>
-            <Text mt="sm" mb="md" c="dimmed" fz="xs">
-                {activateSoporte?.incidente}
-            </Text>
             <Card.Section withBorder inheritPadding py="xs">
-                <SimpleGrid
-                    cols={{ base: 1, sm: 1, md: 3, lg: 3 }}
-                    spacing={{ base: 10, md: "xl" }}
+                <Table
+                    withColumnBorders
+                    style={{ tableLayout: "fixed", width: "100%" }}
                 >
-                    <div>
-                        <Text size="xs" c="dimmed">
-                            Direccion
-                        </Text>
-                        <Text fw={500} size="sm">
-                            {activateSoporte?.direccion}
-                        </Text>
-                    </div>
-                    <div>
-                        <Text size="xs" c="dimmed">
-                            Solicitante
-                        </Text>
-                        <Text fw={500} size="sm">
-                            {activateSoporte?.usuario_recibe}
-                        </Text>
-                    </div>
-                    <div>
-                        <Text size="xs" c="dimmed">
-                            Número de soporte
-                        </Text>
-                        <Text fw={500} size="sm">
-                            {activateSoporte?.numero_sop}
-                        </Text>
-                    </div>
-                </SimpleGrid>
+                    <Table.Thead>
+                        <Table.Tr>
+                            <Table.Th style={{ width: "38.33%" }}>
+                                <TextSection
+                                    fw={500}
+                                    fz={12}
+                                    tt=""
+                                    color="dimmed"
+                                >
+                                    Dirección
+                                </TextSection>
+                            </Table.Th>
+                            <Table.Th style={{ width: "33.33%" }}>
+                                <TextSection
+                                    fw={500}
+                                    fz={12}
+                                    tt=""
+                                    color="dimmed"
+                                >
+                                    Solicitante
+                                </TextSection>
+                            </Table.Th>
+                            <Table.Th style={{ width: "28.33%" }}>
+                                <TextSection
+                                    fw={500}
+                                    fz={12}
+                                    tt=""
+                                    color="dimmed"
+                                >
+                                    No. Soporte
+                                </TextSection>
+                            </Table.Th>
+                        </Table.Tr>
+                    </Table.Thead>
+                    <Table.Tbody>
+                        <Table.Tr>
+                            <Table.Td>
+                                <TextSection fw={400} fz={13}>
+                                    {activateSoporte?.direccion}
+                                </TextSection>
+                            </Table.Td>
+                            <Table.Td>
+                                <TextSection fw={400} fz={13}>
+                                    {activateSoporte?.usuario_recibe}
+                                </TextSection>
+                            </Table.Td>
+                            <Table.Td>
+                                <TextSection fw={400} fz={13}>
+                                    {" "}
+                                    {activateSoporte?.numero_sop}
+                                </TextSection>
+                            </Table.Td>
+                        </Table.Tr>
+                    </Table.Tbody>
+                </Table>
+            </Card.Section>
+            <Card.Section withBorder inheritPadding py="xs">
+                <Group justify="space-between">
+                    <TextSection fz={14} fw={700} tt="">
+                        Incidencia del usuario:
+                    </TextSection>
+                    <Group gap={5}>
+                        <TextSection tt="" fz={14} color="dimmed">
+                            {dayjs(activateSoporte?.fecha_ini).format(
+                                "YYYY-MM-DD"
+                            )}
+                        </TextSection>
+                        <IconCalendarMonth
+                            style={{ width: rem(20), height: rem(20) }}
+                        />
+                    </Group>
+                </Group>
+                <TextSection mt="xs" mb="xs" color="black" fz={13}>
+                    {activateSoporte?.incidente}
+                </TextSection>
             </Card.Section>
             <Card.Section withBorder inheritPadding py="xs">
                 <Box

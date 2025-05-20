@@ -50,10 +50,12 @@ export const SoportesTable = () => {
                         {cell.row.original.estado}
                     </Badge>
                 ),
+                size: 80
             },
             {
                 accessorKey: "numero_sop", //access nested data with dot notation
-                header: "Número de soporte",
+                header: "No. Soporte",
+                size: 80
             },
             {
                 accessorFn: (row) =>
@@ -62,7 +64,7 @@ export const SoportesTable = () => {
             },
             {
                 accessorKey: "usuario_recibe", //normal accessorKey
-                header: "Usuario solicitante",
+                header: "Solicitante",
                 filterVariant: "autocomplete",
                 mantineEditSelectProps: {
                     data: users,
@@ -70,7 +72,7 @@ export const SoportesTable = () => {
             },
             {
                 accessorKey: "direccion", //normal accessorKey
-                header: "Dirección del usuario",
+                header: "Departamento del solicitante",
                 filterVariant: "autocomplete",
                 mantineEditSelectProps: {
                     data: direcciones,
@@ -203,6 +205,21 @@ export const SoportesTable = () => {
                 </Table.Tbody>
             </Table>
         ),
+        mantineTableProps: {
+            withColumnBorders: true,
+            withTableBorder: true,
+            sx: {
+                "thead > tr": {
+                    backgroundColor: "inherit",
+                },
+                "thead > tr > th": {
+                    backgroundColor: "inherit",
+                },
+                "tbody > tr > td": {
+                    backgroundColor: "inherit",
+                },
+            },
+        },
     });
 
     return <TableContent table={table} />;

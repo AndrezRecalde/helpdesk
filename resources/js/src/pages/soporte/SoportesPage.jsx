@@ -21,9 +21,9 @@ import {
     useUiSoporte,
 } from "../../hooks";
 import { isNotEmpty, useForm } from "@mantine/form";
+import { IconDeviceImacUp, IconMessageUp } from "@tabler/icons-react";
 import Swal from "sweetalert2";
 import dayjs from "dayjs";
-import { IconDeviceImacUp, IconMessageUp } from "@tabler/icons-react";
 
 const SoportesPage = () => {
     useTitlePage("Helpdesk | Soportes");
@@ -102,7 +102,8 @@ const SoportesPage = () => {
                 title: "Opps...",
                 text: errores,
                 showConfirmButton: true,
-                confirmButtonText: "Aceptar"
+                confirmButtonText: "Aceptar",
+                confirmButtonColor: "#094293",
             });
             return;
         }

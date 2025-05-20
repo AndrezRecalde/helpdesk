@@ -21,11 +21,13 @@ export const PermisosTable = () => {
             },
             {
                 accessorKey: "usuario_pide", //access nested data with dot notation
-                header: "Usuario solicitante",
+                header: "Solicitante",
+                filterVariant: "autocomplete",
             },
             {
                 accessorKey: "direccion_pide", //access nested data with dot notation
                 header: "Departamento solicitante",
+                filterVariant: "autocomplete",
             },
             {
                 accessorFn: (row) =>
@@ -46,10 +48,12 @@ export const PermisosTable = () => {
             {
                 accessorKey: "motivo", //access nested data with dot notation
                 header: "Motivo",
+                filterVariant: "autocomplete",
             },
             {
                 accessorKey: "tiempo_total", //access nested data with dot notation
                 header: "T. total",
+                size: 80
             },
             /* {
                 accessorFn: (row) => {

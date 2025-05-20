@@ -44,46 +44,59 @@ class SoporteAdminController extends Controller
         return response()->json(['status' => MsgStatus::Success, 'soporte' => $soporte], 200);
     }
 
-    function asignarSoporte(SoporteAsignarcionRequest $request, int $id_sop): JsonResponse
+    public function asignarSoporte(SoporteAsignarcionRequest $request, int $id_sop): JsonResponse
     {
-        $soporte = Soporte::find($id_sop);
         try {
+            $soporte = Soporte::find($id_sop);
 
-            if ($soporte) {
-                $soporte->update($request->validated());
-                $soporte->id_usu_tecnico = $request->id_usu_tecnico_asig;
-                $soporte->id_estado = 5;
-                $soporte->fecha_asig = Carbon::now();
-                $soporte->save();
-
-                $tecnico = User::where("cdgo_usrio", $request->id_usu_tecnico_asig)->first(['cdgo_usrio', 'email']);
-
-                $usuario = User::where("cdgo_usrio", $request->id_usu_recibe)->first(['cdgo_usrio', 'email']);
-
-                $asignacion = Soporte::from('sop_soporte as ss')
-                    ->selectRaw('ss.id_sop, ss.numero_sop,
-                                ss.id_direccion, d.nmbre_dprtmnto as direccion,
-                                ss.id_usu_tecnico_asig, u.nmbre_usrio as tecnico,
-                                ss.id_usu_recibe, us.nmbre_usrio as solicitante, us.email,
-                                ss.incidente, ss.fecha_ini')
-                    ->join('dprtmntos as d', 'd.cdgo_dprtmnto', 'ss.id_direccion')
-                    ->join('usrios_sstma as u', 'u.cdgo_usrio', 'ss.id_usu_tecnico_asig')
-                    ->join('usrios_sstma as us', 'us.cdgo_usrio', 'ss.id_usu_recibe')
-                    ->where('ss.id_sop', $id_sop)
-                    ->first();
-
-                /** Mail para el técnico */
-                Mail::to($tecnico->email)->send(new TecnicoMail($asignacion));
-
-                /** Mail para el usuario */
-                Mail::to($usuario->email)->send(new UsuarioMail($asignacion));
-
-                return response()->json(['status' => MsgStatus::Success, 'msg' => MsgStatus::SoporteAsignado], 200);
-            } else {
-                return response()->json(['status' => MsgStatus::Error, 'msg' => MsgStatus::SoporteNotFound], 404);
+            if (!$soporte) {
+                return response()->json([
+                    'status' => MsgStatus::Error,
+                    'msg'    => MsgStatus::SoporteNotFound
+                ], 404);
             }
+
+            // Consolidar todos los datos antes del update
+            $data = $request->validated();
+            $data['id_usu_tecnico'] = $request->id_usu_tecnico_asig;
+            $data['id_estado'] = 5;
+            $data['fecha_asig'] = now();
+
+            $soporte->update($data);
+
+            // Cargar información para el correo
+            $asignacion = Soporte::from('sop_soporte as ss')
+                ->selectRaw('ss.id_sop, ss.numero_sop,
+                        ss.id_direccion, d.nmbre_dprtmnto as direccion,
+                        ss.id_usu_tecnico_asig, u.nmbre_usrio as tecnico, u.email as email_tecnico,
+                        ss.id_usu_recibe, us.nmbre_usrio as solicitante, us.email as email_solicitante,
+                        ss.incidente, ss.fecha_ini')
+                ->join('dprtmntos as d', 'd.cdgo_dprtmnto', 'ss.id_direccion')
+                ->join('usrios_sstma as u', 'u.cdgo_usrio', 'ss.id_usu_tecnico_asig')
+                ->join('usrios_sstma as us', 'us.cdgo_usrio', 'ss.id_usu_recibe')
+                ->where('ss.id_sop', $id_sop)
+                ->first();
+
+            // Verificar correos válidos antes de enviar
+            if (!empty($asignacion->email_tecnico)) {
+                Mail::to($asignacion->email_tecnico)->send(new TecnicoMail($asignacion));
+            }
+
+            if (!empty($asignacion->email_solicitante)) {
+                Mail::to($asignacion->email_solicitante)->send(new UsuarioMail($asignacion));
+            }
+
+            return response()->json([
+                'status' => MsgStatus::Success,
+                'msg'    => MsgStatus::SoporteAsignado
+            ], 200);
         } catch (\Throwable $th) {
-            return response()->json(['status' => MsgStatus::Error, 'message' => $th->getMessage()], 500);
+            Log::error("Error al asignar soporte ID {$id_sop}: " . $th->getMessage());
+
+            return response()->json([
+                'status'  => MsgStatus::Error,
+                'message' => 'Ocurrió un error al asignar el soporte.'
+            ], 500);
         }
     }
 

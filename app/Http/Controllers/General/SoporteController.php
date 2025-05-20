@@ -23,14 +23,14 @@ class SoporteController extends Controller
     function getSoportesActuales(Request $request): JsonResponse
     {
         $soportes = Soporte::from('sop_soporte as ss')
-            ->selectRaw('ss.id_sop, ss.anio, ss.numero_sop,
+            ->selectRaw('ss.id_sop, ss.anio, ss.numero_sop, ss.numero_escrito,
                             ss.id_direccion, d.nmbre_dprtmnto as direccion,
                             ss.id_usu_recibe, u.nmbre_usrio as usuario_recibe,
-                            ss.fecha_ini, ss.incidente,
-                            ss.id_area_tic, sat.nombre as area_tic,
+                            ss.fecha_ini,  ss.id_area_tic, sat.nombre as area_tic,
                             ss.id_tipo_soporte, sts.nombre as tipo_soporte,
                             ss.id_estado, se.nombre as estado, se.color,
-                            ss.id_usu_tecnico_asig, us.nmbre_usrio as tecnico_asignado')
+                            ss.id_usu_tecnico_asig, us.nmbre_usrio as tecnico_asignado,
+                            ss.incidente, ss.solucion')
             ->join('dprtmntos as d', 'd.cdgo_dprtmnto', 'ss.id_direccion')
             ->join('usrios_sstma as u', 'u.cdgo_usrio', 'ss.id_usu_recibe')
             ->leftJoin('sop_areas_tic as sat', 'sat.id_areas_tic', 'ss.id_area_tic')
@@ -161,13 +161,24 @@ class SoporteController extends Controller
     function enviarSolicitud(SolicitudRequest $request): JsonResponse
     {
         try {
-            $soporte = Soporte::create($request->validated());
-            $soporte->id_direccion = Auth::user()->cdgo_direccion;
-            $soporte->id_usu_recibe = Auth::user()->cdgo_usrio;
-            $soporte->save();
-            return response()->json(['status' => 'success', 'msg' => MsgStatus::SoporteSendSuccess], 200);
+            $user = Auth::user();
+
+            $data = $request->validated();
+            $data['id_direccion'] = $user->cdgo_direccion;
+            $data['id_usu_recibe'] = $user->cdgo_usrio;
+
+            Soporte::create($data);
+
+            return response()->json([
+                'status' => 'success',
+                'msg'    => MsgStatus::SoporteSendSuccess
+            ], 200);
         } catch (\Throwable $th) {
-            return response()->json(['status' => 'error', 'message' => $th->getMessage()], 500);
+            Log::error('Error al enviar solicitud: ' . $th->getMessage());
+            return response()->json([
+                'status'  => 'error',
+                'message' => 'Ocurrió un error al enviar la solicitud.'
+            ], 500);
         }
     }
 
