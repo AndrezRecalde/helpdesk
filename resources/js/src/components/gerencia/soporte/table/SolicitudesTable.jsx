@@ -8,7 +8,7 @@ import {
     TableContent,
     TextSection,
 } from "../../../../components";
-import { Badge, Table, useMantineColorScheme } from "@mantine/core";
+import { Badge, useMantineColorScheme } from "@mantine/core";
 import { useSoporteStore, useUiSoporte } from "../../../../hooks";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
@@ -29,16 +29,17 @@ export const SolicitudesTable = ({ menu, isLoading }) => {
     const columns = useMemo(
         () => [
             {
-                accessorFn: (row) => (
+                accessorKey: "numero_sop",
+                Cell: ({ cell }) => (
                     <div>
-                        <Badge color={row.color} variant="dot">
-                            {row.numero_sop}
+                        <Badge color={cell.row.original.color} variant="dot">
+                            {cell.row.original.numero_sop}
                         </Badge>
                         <TextSection fs="italic" fz={12} tt="">
-                            — {dayjs(row.fecha_ini).fromNow()}
+                            — {dayjs(cell.row.original.fecha_ini).fromNow()}
                         </TextSection>
                     </div>
-                ), //access nested data with dot notation
+                ),
                 header: "No. Soporte",
                 size: 80,
             },
@@ -54,7 +55,9 @@ export const SolicitudesTable = ({ menu, isLoading }) => {
             },
             {
                 accessorFn: (row) =>
-                    row.tecnico_asignado.toUpperCase() ?? "NO ASIGNADO", //normal accessorKey
+                    (row?.tecnico_asignado || "NO ASIGNADO")
+                        .toString()
+                        .toUpperCase(), //normal accessorKey
                 header: "Técnico asignado",
                 filterVariant: "autocomplete",
             },

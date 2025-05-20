@@ -25,7 +25,7 @@ export const DetailSolicitudesActualesTable = ({ row }) => {
                     </Table.Th>
                     <Table.Td>
                         <Badge variant="dot" color={row.original.color}>
-                            {row.original.tipo_soporte}
+                            {row.original.tipo_soporte || "SIN CATEGORIA"}
                         </Badge>
                     </Table.Td>
                 </Table.Tr>
@@ -37,7 +37,7 @@ export const DetailSolicitudesActualesTable = ({ row }) => {
                     </Table.Th>
                     <Table.Td>
                         <Badge variant="dot" color={row.original.color}>
-                            {row.original.area_tic}
+                            {row.original.area_tic || "SIN CATEGORIA"}
                         </Badge>
                     </Table.Td>
                 </Table.Tr>

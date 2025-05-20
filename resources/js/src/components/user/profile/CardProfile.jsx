@@ -110,7 +110,7 @@ export const CardProfile = ({ usuario, handleAction, handleMarcacion }) => {
                 ) : (
                     <MenuSeleccion />
                 )}
-                <Group justify="center">
+                <Group justify="center" mt={10}>
                     <BtnSection
                         fontSize={16}
                         heigh={50}

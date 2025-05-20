@@ -15,7 +15,7 @@ const UserSoportesPage = () => {
     //console.log(soporteValue)
 
     return (
-        <Container size="xxl">
+        <Container size="xl">
             <Tabs
                 value={soporteValue}
                 onChange={(value) => navigate(`/intranet/soportes/${value}`)}

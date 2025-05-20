@@ -1,17 +1,33 @@
 import { useMemo } from "react";
+import { Badge } from "@mantine/core";
 import { useMantineReactTable } from "mantine-react-table";
-import { Table } from "@mantine/core";
-import { TableContent, TextSection } from "../../../components";
+import { DetailSolicitudesActualesTable, TableContent, TextSection } from "../../../components";
 import { useSoporteStore } from "../../../hooks";
 import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+import "dayjs/locale/es";
+
+dayjs.extend(relativeTime); // Extiende Day.js con el plugin
+dayjs.locale("es"); // Configura el idioma a español
 
 export const SoportesUsersTable = () => {
     const { isLoading, soportes } = useSoporteStore();
     const columns = useMemo(
         () => [
             {
-                accessorKey: "numero_sop", //access nested data with dot notation
-                header: "Número de soporte",
+                accessorKey: "numero_sop",
+                Cell: ({ cell }) => (
+                    <div>
+                        <Badge color={cell.row.original.color} variant="dot">
+                            {cell.row.original.numero_sop}
+                        </Badge>
+                        <TextSection fs="italic" fz={12} tt="">
+                            — {dayjs(cell.row.original.fecha_ini).fromNow()}
+                        </TextSection>
+                    </div>
+                ),
+                header: "No. Soporte",
+                size: 80,
             },
             {
                 accessorFn: (row) =>
@@ -20,13 +36,24 @@ export const SoportesUsersTable = () => {
             },
 
             {
-                accessorFn: (row) => row.tecnico_asignado ?? "No asignado", //normal accessorKey
+                accessorFn: (row) =>
+                    (row?.tecnico_asignado || "NO ASIGNADO")
+                        .toString()
+                        .toUpperCase(), //normal accessorKey
                 header: "Técnico asignado",
                 filterVariant: "autocomplete",
             },
             {
-                accessorKey: "estado", //normal accessorKey
+                accessorKey: "estado",
                 header: "Estado",
+                Cell: ({ cell }) => (
+                    <Badge
+                        variant="dot"
+                        color={cell.row.original.color}
+                    >
+                        {cell.row.original.estado}
+                    </Badge>
+                ),
                 filterVariant: "autocomplete",
             },
         ],
@@ -42,29 +69,14 @@ export const SoportesUsersTable = () => {
             style: {
                 backgroundColor:
                     cell.row.original.tecnico_asignado === null
-                        ? "#CB3234"
+                        ? "#fa6e70"
                         : "",
                 color:
                     cell.row.original.tecnico_asignado === null ? "white" : "",
             },
         }),
         renderDetailPanel: ({ row }) => (
-            <Table variant="vertical" layout="fixed" withTableBorder>
-                <Table.Tbody>
-                    <Table.Tr>
-                        <Table.Th w={250}>Incidencia</Table.Th>
-                        <Table.Td>{row.original.incidente}</Table.Td>
-                    </Table.Tr>
-                    <Table.Tr>
-                        <Table.Th w={250}>Retrospectiva del técnico</Table.Th>
-                        <Table.Td>
-                            <TextSection tt="">
-                                {row.original.solucion ?? "Aun sin solución"}
-                            </TextSection>
-                        </Table.Td>
-                    </Table.Tr>
-                </Table.Tbody>
-            </Table>
+            <DetailSolicitudesActualesTable row={row} />
         ),
         mantineTableProps: {
             withColumnBorders: true,

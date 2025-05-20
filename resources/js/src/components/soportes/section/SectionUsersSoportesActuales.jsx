@@ -25,7 +25,7 @@ export const SectionUsersSoportesActuales = ({ tabValue }) => {
     }, [tabValue]);
 
     return (
-        <Container size="xxl" my={20}>
+        <Container size="xl" my={20}>
             <TitlePage order={2}>
                 Seguimiento de Soportes
             </TitlePage>

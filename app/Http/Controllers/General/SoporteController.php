@@ -308,12 +308,16 @@ class SoporteController extends Controller
     {
         $soportes = Soporte::from('sop_soporte as ss')
             ->selectRaw('ss.id_sop, ss.numero_sop,
-                        ss.fecha_ini, ss.incidente, ss.solucion,
-                        ss.id_usu_recibe, u.nmbre_usrio as usuario_recibe,
+                        ss.fecha_ini, ss.id_area_tic, sat.nombre as area_tic,
+                        ss.id_tipo_soporte, sts.nombre as tipo_soporte,
                         ss.id_estado, se.nombre as estado, se.color,
+                        ss.incidente, ss.solucion,
+                        ss.id_usu_recibe, u.nmbre_usrio as usuario_recibe,
                         ss.id_usu_tecnico_asig, us.nmbre_usrio as tecnico_asignado')
             ->join('usrios_sstma as u', 'u.cdgo_usrio', 'ss.id_usu_recibe')
             ->join('sop_estado as se', 'se.id_estado_caso', 'ss.id_estado')
+            ->leftJoin('sop_areas_tic as sat', 'sat.id_areas_tic', 'ss.id_area_tic')
+            ->leftJoin('sop_tipo_soporte as sts', 'sts.id_tipo_soporte', 'ss.id_tipo_soporte')
             ->leftJoin('usrios_sstma as us', 'us.cdgo_usrio', 'ss.id_usu_tecnico_asig')
             ->where('ss.fecha_ini', "LIKE", "%" . Carbon::now()->format('Y-m-d') . "%")
             ->where('ss.id_usu_recibe', $request->cdgo_usrio)
