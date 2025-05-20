@@ -65,7 +65,7 @@ class UserAdminController extends Controller
             $data = $request->validated();
             $usuario = new User($data);
 
-            if (is_null($usuario->cdgo_dprtmnto)) {
+            if (is_null($request->cdgo_dprtmnto)) {
                 $usuario->cdgo_dprtmnto = $usuario->cdgo_direccion;
             }
 
