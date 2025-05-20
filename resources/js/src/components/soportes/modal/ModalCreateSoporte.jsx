@@ -42,7 +42,7 @@ export const ModalCreateSoporte = ({ role }) => {
     const form = useForm({
         initialValues: {
             id_estado: activateSoporte?.id_estado?.toString() || "3",
-            fecha_ini: dayjs().tz("America/Guayaquil").toDate(),
+            fecha_ini: dayjs(),
             id_tipo_solicitud: activateSoporte?.id_tipo_solicitud || "1",
             numero_escrito: "",
             id_usu_tecnico_asig: null,

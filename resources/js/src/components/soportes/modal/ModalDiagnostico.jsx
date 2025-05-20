@@ -15,7 +15,7 @@ export const ModalDiagnostico = ({ option }) => {
     const form = useForm({
         initialValues: {
             id_sop: null,
-            fecha_fin: dayjs().tz("America/Guayaquil").toDate(),
+            fecha_fin: dayjs().add(15, "minute"),
             id_area_tic: null,
             id_tipo_soporte: null,
             solucion: "",
