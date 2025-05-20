@@ -157,7 +157,7 @@ export const FormDiagnosticar = ({ form, option }) => {
                     <Group gap={5}>
                         <TextSection tt="" fz={14} color="dimmed">
                             {dayjs(activateSoporte?.fecha_ini).format(
-                                "YYYY-MM-DD"
+                                "YYYY-MM-DD HH:mm"
                             )}
                         </TextSection>
                         <IconCalendarMonth

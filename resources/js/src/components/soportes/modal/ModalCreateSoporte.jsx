@@ -10,9 +10,9 @@ import {
     useUiSoporte,
     useUsersStore,
 } from "../../../hooks";
-import { hasLength, isNotEmpty, useForm } from "@mantine/form";
+import { isNotEmpty, useForm } from "@mantine/form";
 import dayjs from "dayjs";
-import customParseFormat from "dayjs/plugin/customParseFormat";
+/* import customParseFormat from "dayjs/plugin/customParseFormat";
 import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
 
@@ -20,7 +20,7 @@ dayjs.extend(utc);
 dayjs.extend(timezone);
 
 // Extender Day.js con el plugin
-dayjs.extend(customParseFormat);
+dayjs.extend(customParseFormat); */
 
 export const ModalCreateSoporte = ({ role }) => {
     const usuario = JSON.parse(localStorage.getItem("service_user"));
@@ -114,11 +114,11 @@ export const ModalCreateSoporte = ({ role }) => {
             id_estado: Number(values.id_estado) || null,
             fecha_ini: dayjs(values.fecha_ini)
                 .tz("America/Guayaquil")
-                .format("YYYY-MM-DD HH:mm:ss"),
+                .format("YYYY-MM-DD HH:mm"),
             fecha_fin: dayjs(values.fecha_fin).isValid()
                 ? dayjs(values.fecha_fin)
                       .tz("America/Guayaquil")
-                      .format("YYYY-MM-DD HH:mm:ss")
+                      .format("YYYY-MM-DD HH:mm")
                 : null,
             id_tipo_solicitud: Number(values.id_tipo_solicitud) || null,
             id_usu_tecnico_asig: Number(values.id_usu_tecnico_asig) || null,
@@ -181,8 +181,8 @@ export const ModalCreateSoporte = ({ role }) => {
                 incidente: incidente || "",
                 solucion: solucion || "",
                 id_equipo: convertToString(id_equipo),
-                fecha_ini: fecha_ini ? new Date(fecha_ini) : null,
-                fecha_fin: fecha_fin ? new Date(fecha_fin) : null,
+                fecha_ini: dayjs(fecha_ini).isValid() ? dayjs(fecha_ini).tz("America/Guayaquil").toDate(): null,
+                fecha_fin: dayjs(fecha_fin).isValid() ? dayjs(fecha_fin).tz("America/Guayaquil").toDate(): null,
                 activo_informatico: id_equipo ? true : false,
             });
 

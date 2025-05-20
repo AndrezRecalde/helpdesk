@@ -101,7 +101,7 @@ export const FormCreateSoporte = ({ form }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(form.getTransformedValues());
+        //console.log(form.getTransformedValues());
         startCreateSoporte(form.getTransformedValues(), storageFields);
         modalActionCreateSoporte(0);
         form.reset();
