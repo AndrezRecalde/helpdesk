@@ -123,7 +123,7 @@ const ListPermisosAdminPage = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(form.getTransformedValues());
+        //console.log(form.getTransformedValues());
         setStoragePermisoFields(form.getTransformedValues());
         startLoadPermisos(form.getTransformedValues());
     };
