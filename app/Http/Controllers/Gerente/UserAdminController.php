@@ -63,16 +63,22 @@ class UserAdminController extends Controller
     {
         try {
             $data = $request->validated();
-            $usuario = new User($data);
 
             if (is_null($request->cdgo_dprtmnto)) {
-                $usuario->cdgo_dprtmnto = $usuario->cdgo_direccion;
+                $data['cdgo_dprtmnto'] = $data['cdgo_direccion'];
             }
 
-            $usuario->save();
-            return response()->json(['status' => MsgStatus::Success, 'msg' => MsgStatus::Created], 201);
+            User::create($data);
+
+            return response()->json([
+                'status' => MsgStatus::Success,
+                'msg'    => MsgStatus::Created
+            ], 201);
         } catch (\Throwable $th) {
-            return response()->json(['status' => MsgStatus::Error, 'msg' => $th->getMessage()], 500);
+            return response()->json([
+                'status' => MsgStatus::Error,
+                'msg'    => $th->getMessage()
+            ], 500);
         }
     }
 
