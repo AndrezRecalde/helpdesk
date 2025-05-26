@@ -26,7 +26,7 @@ class SoporteController extends Controller
             ->selectRaw('ss.id_sop, ss.anio, ss.numero_sop, ss.numero_escrito,
                             ss.id_direccion, d.nmbre_dprtmnto as direccion,
                             ss.id_usu_recibe, u.nmbre_usrio as usuario_recibe,
-                            ss.fecha_ini,  ss.id_area_tic, sat.nombre as area_tic,
+                            ss.fecha_ini, ss.fecha_fin,  ss.id_area_tic, sat.nombre as area_tic,
                             ss.id_tipo_soporte, sts.nombre as tipo_soporte,
                             ss.id_estado, se.nombre as estado, se.color,
                             ss.id_usu_tecnico_asig, us.nmbre_usrio as tecnico_asignado,

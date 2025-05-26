@@ -1,5 +1,5 @@
 import { useEffect, useMemo } from "react";
-import { Container, Divider, LoadingOverlay } from "@mantine/core";
+import { Container, Divider } from "@mantine/core";
 import {
     ActionReportPDF,
     FilterFormSearchDates,
@@ -47,11 +47,13 @@ const ReporteSoportes = () => {
             {
                 accessorKey: "numero_sop", //normal accessorKey
                 header: "No. Soporte",
+                size: 80
             },
             {
                 accessorFn: (row) =>
                     dayjs(row.fecha_ini).format("YYYY-MM-DD HH:mm"),
                 header: "Fecha",
+                size: 80
             },
             {
                 accessorKey: "incidente", //normal accessorKey
@@ -77,6 +79,7 @@ const ReporteSoportes = () => {
                 icon: message.status,
                 text: message.msg,
                 showConfirmButton: true,
+                confirmButtonColor: "#38d17b",
             });
             return;
         }
@@ -87,7 +90,8 @@ const ReporteSoportes = () => {
             Swal.fire({
                 icon: "error",
                 text: errores,
-                showConfirmButton: true,
+                showConfirmButton: false,
+                confirmButtonColor: "#38d17b",
             });
             return;
         }

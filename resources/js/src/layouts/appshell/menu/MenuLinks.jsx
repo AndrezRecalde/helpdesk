@@ -73,11 +73,11 @@ export const MenuItems = ({ menuHome, classes, theme, toggleDrawer = null }) => 
             >
                 <item.icon
                     color={theme.colors[item.color][5]}
-                    size={30}
+                    size={25}
                     stroke={1.7}
                 />
             </ThemeIcon>
-            <TextSection tt="left" fw={400} fz={14} mt={7}>
+            <TextSection tt="left" fw={400} fz={16} mt={7}>
                 {item.title}
             </TextSection>
         </Link>

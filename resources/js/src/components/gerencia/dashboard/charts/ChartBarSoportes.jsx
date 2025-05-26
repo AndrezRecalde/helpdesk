@@ -1,10 +1,8 @@
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import { Card } from "@mantine/core";
-import { useDashGerenciaStore } from "../../../../hooks";
 
-export const ChartBarSoportes = () => {
-    const { soportesForAreas } = useDashGerenciaStore();
+export const ChartBarSoportes = ({ data }) => {
 
     const options = {
         chart: {
@@ -20,7 +18,7 @@ export const ChartBarSoportes = () => {
             },
         },
         xAxis: {
-            categories: soportesForAreas?.map((soporte) => soporte.area_tic),
+            categories: data?.map((soporte) => soporte.area_tic),
             title: {
                 text: "Áreas de Soporte",
                 style: {
@@ -104,28 +102,28 @@ export const ChartBarSoportes = () => {
         series: [
             {
                 name: "Total Asignados",
-                data: soportesForAreas?.map(
+                data: data?.map(
                     (soporte) => soporte.total_asignados
                 ),
                 color: "rgba(248, 123, 3, 0.8)",
             },
             {
                 name: "Sin Cerrar",
-                data: soportesForAreas?.map(
+                data: data?.map(
                     (soporte) => soporte.total_atendidos
                 ),
                 color: "rgba(4, 115, 253, 0.8)",
             },
             {
                 name: "Finalizados",
-                data: soportesForAreas?.map(
+                data: data?.map(
                     (soporte) => soporte.total_finalizados
                 ),
                 color: "rgba(1, 250, 82, 0.8)",
             },
             {
                 name: "Anulados",
-                data: soportesForAreas?.map(
+                data: data?.map(
                     (soporte) => soporte.total_anuladas
                 ),
                 color: "rgba(250, 9, 9, 0.8)",

@@ -1,25 +1,26 @@
 import { useCallback, useMemo } from "react";
-import { Badge, Table, useMantineColorScheme } from "@mantine/core";
+import { Badge, useMantineColorScheme } from "@mantine/core";
 import { useMantineReactTable } from "mantine-react-table";
 import { MRT_Localization_ES } from "mantine-react-table/locales/es/index.cjs";
 import {
+    DetailSolicitudesActualesTable,
     MenuSolicitudTable,
     MenuTable_T,
     TableContent,
 } from "../../../components";
 import {
-    useDireccionStore,
+    //useDireccionStore,
     useSoporteStore,
-    useTecnicoStore,
+    //useTecnicoStore,
     useUiSoporte,
-    useUsersStore,
+    //useUsersStore,
 } from "../../../hooks";
 import dayjs from "dayjs";
-import relativeTime from "dayjs/plugin/relativeTime";
+/* import relativeTime from "dayjs/plugin/relativeTime";
 import "dayjs/locale/es";
 
 dayjs.extend(relativeTime); // Extiende Day.js con el plugin
-dayjs.locale("es"); // Configura el idioma a español
+dayjs.locale("es"); // Configura el idioma a español */
 //import { useNavigate } from "react-router-dom";
 
 export const SoportesTable = () => {
@@ -33,11 +34,53 @@ export const SoportesTable = () => {
         modalActionCreateSoporte,
         modalActionDiagnosticar,
     } = useUiSoporte();
-    const { direcciones } = useDireccionStore();
+    /*     const { direcciones } = useDireccionStore();
     const { tecnicos } = useTecnicoStore();
-    const { users } = useUsersStore();
+    const { users } = useUsersStore(); */
     const columns = useMemo(
         () => [
+            {
+                accessorKey: "numero_sop",
+                Cell: ({ cell }) => (
+                    <div>
+                        <Badge color={cell.row.original.color} variant="dot">
+                            {cell.row.original.numero_sop}
+                        </Badge>
+                    </div>
+                ),
+                header: "No. Soporte",
+                size: 80,
+            },
+            {
+                accessorFn: (row) =>
+                    dayjs(row.fecha_ini).format("YYYY-MM-DD HH:mm"),
+                header: "Fecha - Hora",
+                size: 80,
+            },
+            {
+                accessorFn: (row) =>
+                    (row?.direccion || "SIN DIRECCION")
+                        .toString()
+                        .toUpperCase(), //normal accessorKey
+                header: "Departamento del solicitante",
+                filterVariant: "autocomplete",
+            },
+            {
+                accessorFn: (row) =>
+                    (row?.usuario_recibe || "SIN SOLICITANTE")
+                        .toString()
+                        .toUpperCase(), //normal accessorKey
+                header: "Solicitante",
+                filterVariant: "autocomplete",
+            },
+            {
+                accessorFn: (row) =>
+                    (row?.tecnico_asignado || "NO ASIGNADO")
+                        .toString()
+                        .toUpperCase(), //normal accessorKey
+                header: "Técnico asignado",
+                filterVariant: "autocomplete",
+            },
             {
                 accessorKey: "estado", //access nested data with dot notation
                 header: "Estado",
@@ -50,41 +93,7 @@ export const SoportesTable = () => {
                         {cell.row.original.estado}
                     </Badge>
                 ),
-                size: 80
-            },
-            {
-                accessorKey: "numero_sop", //access nested data with dot notation
-                header: "No. Soporte",
-                size: 80
-            },
-            {
-                accessorFn: (row) =>
-                    dayjs(row.fecha_ini).format("YYYY-MM-DD HH:mm"),
-                header: "Fecha - Hora",
-            },
-            {
-                accessorKey: "usuario_recibe", //normal accessorKey
-                header: "Solicitante",
-                filterVariant: "autocomplete",
-                mantineEditSelectProps: {
-                    data: users,
-                },
-            },
-            {
-                accessorKey: "direccion", //normal accessorKey
-                header: "Departamento del solicitante",
-                filterVariant: "autocomplete",
-                mantineEditSelectProps: {
-                    data: direcciones,
-                },
-            },
-            {
-                accessorFn: (row) => row.tecnico_asignado ?? "No asignado", //normal accessorKey
-                header: "Técnico asignado",
-                filterVariant: "autocomplete",
-                mantineEditSelectProps: {
-                    data: tecnicos,
-                },
+                size: 80,
             },
         ],
         [soportes]
@@ -123,6 +132,12 @@ export const SoportesTable = () => {
         state: { showProgressBars: isLoading },
         enableFacetedValues: true,
         enableRowActions: true,
+        displayColumnDefOptions: {
+            "mrt-row-actions": {
+                header: "Acciones", //change header text
+                size: 80, //make actions column wider
+            },
+        },
         localization: MRT_Localization_ES,
         mantineTableBodyCellProps: ({ cell }) => ({
             style: {
@@ -174,36 +189,7 @@ export const SoportesTable = () => {
                 />
             ) : null,
         renderDetailPanel: ({ row }) => (
-            <Table variant="vertical" layout="fixed" withTableBorder>
-                <Table.Tbody>
-                    <Table.Tr>
-                        <Table.Th w={300}>Tipo Soporte</Table.Th>
-                        <Table.Td>{row.original.tipo_soporte}</Table.Td>
-                    </Table.Tr>
-                    <Table.Tr>
-                        <Table.Th w={300}>Incidencia</Table.Th>
-                        <Table.Td>
-                            {row.original.incidente} <br />
-                            {"- "} {dayjs(row.original.fecha_ini).fromNow()}{" "}
-                        </Table.Td>
-                    </Table.Tr>
-
-                    <Table.Tr>
-                        <Table.Th w={300}>Retrospectiva del técnico</Table.Th>
-                        <Table.Td>
-                            <div
-                                dangerouslySetInnerHTML={{
-                                    __html:
-                                        row.original.solucion ?? "Sin solución",
-                                }}
-                            />
-                            {row.original.fecha_fin
-                                ? "- " + dayjs(row.original.fecha_fin).fromNow()
-                                : null}{" "}
-                        </Table.Td>
-                    </Table.Tr>
-                </Table.Tbody>
-            </Table>
+            <DetailSolicitudesActualesTable row={row} />
         ),
         mantineTableProps: {
             withColumnBorders: true,

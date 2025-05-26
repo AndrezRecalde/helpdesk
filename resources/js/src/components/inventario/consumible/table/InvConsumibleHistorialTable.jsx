@@ -29,12 +29,12 @@ export const InvConsumibleHistorialTable = () => {
             [historial]
         );
 
-    const handleImprimir = useCallback(
+    /* const handleImprimir = useCallback(
         (selected) => {
             //console.log("editar");
         },
         [historial]
-    );
+    ); */
 
     const table = useMantineReactTable({
         columns,
@@ -46,14 +46,14 @@ export const InvConsumibleHistorialTable = () => {
         enableFullScreenToggle: false,
         enableColumnFilters: true,
         enableGlobalFilter: false,
-        enableRowActions: true,
+        enableRowActions: false,
         enableColumnActions: false,
-        renderRowActionMenuItems: ({ row }) => (
+        /* renderRowActionMenuItems: ({ row }) => (
             <MenuTable_Imprimir
                 row={row}
                 handleImprimir={handleImprimir}
             />
-        ),
+        ), */
         /* renderTopToolbarCustomActions: ({ table }) =>
             consumibles.length !== 0 ? (
                 <ActionReportPDF handleExportDataPDF={handleExportDataPDF} />

@@ -137,12 +137,12 @@
                     <td>{{ $index + 1 }}</td>
                     <td>{{ $equipo->modelo }}</td>
                     <td>{{ $equipo->nombre_marca }}</td>
-                    <td>{{ $equipo->numero_serie }}</td>
+                    <td>{{ $equipo->numero_serie ?? 'SIN SERIE' }}</td>
                     <td>
                         {{ \Carbon\Carbon::parse($equipo->fecha_adquisicion)->format('Y-m-d') }} - <br>
                         <i>{{ \Carbon\Carbon::parse($equipo->fecha_adquisicion)->diffInYears(now()) }} años de uso</i>
                     </td>
-                    <td>{{ $equipo->codigo_antiguo ?? 'Sin Código' }}</td>
+                    <td>{{ $equipo->codigo_antiguo ?? 'SIN CODIGO' }}</td>
                     <td>{{ $equipo->codigo_nuevo }}</td>
                     <td>{{ $equipo->custodio }}</td>
                 </tr>

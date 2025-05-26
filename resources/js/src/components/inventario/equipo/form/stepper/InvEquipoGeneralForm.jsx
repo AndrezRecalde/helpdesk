@@ -99,7 +99,6 @@ export const InvEquipoGeneralForm = ({ form }) => {
 
             <SimpleGrid cols={{ base: 1, xs: 1, sm: 2, md: 2, lg: 2 }}>
                 <TextInput
-                    withAsterisk
                     label="Número de serie"
                     placeholder="Digite el número de serie"
                     {...form.getInputProps("numero_serie")}

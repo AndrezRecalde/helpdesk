@@ -48,4 +48,10 @@ enum MsgStatus:string {
     /* Inventario */
     case ComponentesSuccess = 'Componentes asignados correctamente al equipo';
     case AssignEquipoSuccess = 'Equipo agregado con éxito';
+
+    /* Permiso */
+    case PermisoNotFound = 'No se encontraron permisos';
+    case FichaIncidentePermiso = 'SOLICITUD DE CREACION DE PERMISO';
+    case FichaSolucionPermiso = 'SE REALIZO LA CREACION DEL PERMISO SOLICITADO';
+    case PermisoObservacionAnulado  = 'SE ANULA PERMISO A PETICION DEL USUARIO DESDE LA RECEPCION DE TTHH';
 }

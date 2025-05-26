@@ -1,11 +1,8 @@
-import React from "react";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import { Card } from "@mantine/core";
-import { useDashGerenciaStore } from "../../../../hooks";
 
-export const ChartPieSoportes = () => {
-    const { soportesForEstado } = useDashGerenciaStore();
+export const ChartPieSoportes = ({ data }) => {
 
     const options = {
         chart: {
@@ -67,7 +64,7 @@ export const ChartPieSoportes = () => {
             {
                 name: "Total",
                 colorByPoint: true,
-                data: soportesForEstado?.map((soporte) => ({
+                data: data?.map((soporte) => ({
                     name: soporte.estado,
                     y: soporte.total_estados,
                     color: soporte.color, // Colores personalizados
@@ -77,7 +74,7 @@ export const ChartPieSoportes = () => {
     };
 
     return (
-        <Card withBorder shadow="sm" radius="lg" mb="sm" p="md">
+        <Card withBorder shadow="sm" radius="lg" mt="sm" mb="xl" p="md">
             {/* <Card.Section withBorder inheritPadding py="md">
                 <TextSection fz={16} fw={700} color="dimmed">
                     Estados de los soportes - {new Date().getFullYear()}

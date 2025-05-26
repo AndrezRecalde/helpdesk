@@ -1,6 +1,7 @@
 import { SimpleGrid } from "@mantine/core";
 import {
     ChartPieEficiencia,
+    ChartPieSoportes,
     TableDesempenoEstados,
     TextSection,
     TitlePage,
@@ -8,7 +9,7 @@ import {
 import { useIndicadorStore } from "../../../hooks";
 
 export const ResumenDesempenoEstados = () => {
-    const { sumaDesempenoForEstados } = useIndicadorStore();
+    const { sumaDesempenoForEstados, desempenoForEstados } = useIndicadorStore();
 
     return (
         <>
@@ -20,7 +21,7 @@ export const ResumenDesempenoEstados = () => {
             </TextSection>
             <SimpleGrid cols={{ base: 1, sm: 2, md: 2, lg: 2 }}>
                 <TableDesempenoEstados />
-                <ChartPieEficiencia />
+                <ChartPieSoportes data={desempenoForEstados} />
             </SimpleGrid>
         </>
     );

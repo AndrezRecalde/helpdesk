@@ -6,28 +6,30 @@ use App\Enums\MsgStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PermisoAdminRequest;
 use App\Models\Permiso;
+use App\Models\Soporte;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class PermisosAdminController extends Controller
 {
 
-    function getAprobadoAnulado() : JsonResponse
+    function getAprobadoAnulado(): JsonResponse
     {
         try {
             $estados = DB::table('per_estado_permiso')
                 ->select('idper_estado_permiso', 'per_est_nombre')
-                ->whereIn('idper_estado_permiso', [2,6])
+                ->whereIn('idper_estado_permiso', [2, 6])
                 ->get();
             return response()->json([
-                'status' => MsgStatus::Success,
+                'status'  => MsgStatus::Success,
                 'estados' => $estados
             ], 200);
         } catch (\Throwable $th) {
-            return response()->json(['status' => MsgStatus::Error, 'msg' => 'No existen permisos con esos filtros'], 404);
+            return response()->json(['status' => MsgStatus::Error, 'msg' => MsgStatus::PermisoNotFound], 404);
         }
     }
 
@@ -60,7 +62,7 @@ class PermisosAdminController extends Controller
         if (sizeof($permisos) > 0) {
             return response()->json(['status' => MsgStatus::Success, 'permisos' => $permisos], 200);
         } else {
-            return response()->json(['status' => MsgStatus::Error, 'msg' => 'No existen permisos con esos filtros'], 404);
+            return response()->json(['status' => MsgStatus::Error, 'msg' => MsgStatus::PermisoNotFound], 404);
         }
     }
 
@@ -82,7 +84,21 @@ class PermisosAdminController extends Controller
     {
         try {
             $permiso = Permiso::create($request->validated());
+            $user = Auth::user();
+            $role = $user->roles->first();
 
+            if ($role && ($role->id == 1 && $user->cdgo_usrio != $permiso->id_usu_pide)) {
+                Soporte::create([
+                    'id_tipo_solicitud'   => 7,
+                    'id_direccion'        => $permiso->id_direccion_pide,
+                    'id_usu_recibe'       => $permiso->id_usu_pide,
+                    'id_area_tic'         => 5,
+                    'id_tipo_soporte'     => 3,
+                    'id_usu_tecnico_asig' => $user->cdgo_usrio,
+                    'incidente'           =>  MsgStatus::FichaIncidentePermiso,
+                    'solucion'            =>  MsgStatus::FichaSolucionPermiso,
+                ]);
+            }
 
             /* $pdf = Pdf::loadView('pdf.permisos.gerencia.permiso', $data);
             return $pdf->setPaper('a4', 'portrait')->download('permiso.pdf'); */
@@ -115,8 +131,8 @@ class PermisosAdminController extends Controller
 
         $data = [
             'institucion' => 'GOBIERNO AUTÓNOMO DESCENTRALIZADO DE LA PROVINCIA DE ESMERALDAS',
-            'titulo'   =>  'CONCESIÓN DE PERMISO HASTA 4 HORAS',
-            'permisos' => $permisos
+            'titulo'      =>  'CONCESIÓN DE PERMISO HASTA 4 HORAS',
+            'permisos'    => $permisos
         ];
         $pdf = Pdf::loadView('pdf.permisos.general.new', $data);
         return $pdf->setPaper('a4', 'portrait')->download('permiso.pdf');
@@ -141,8 +157,8 @@ class PermisosAdminController extends Controller
 
         $data = [
             'institucion' => 'GOBIERNO AUTÓNOMO DESCENTRALIZADO DE LA PROVINCIA DE ESMERALDAS',
-            'titulo'   =>  'CONCESIÓN DE PERMISO HASTA 4 HORAS',
-            'permisos' => $permisos
+            'titulo'      =>  'CONCESIÓN DE PERMISO HASTA 4 HORAS',
+            'permisos'    => $permisos
         ];
         $pdf = Pdf::loadView('pdf.permisos.gerencia.permiso', $data);
         return $pdf->setPaper('a4', 'portrait')->download('permiso.pdf');
@@ -167,12 +183,12 @@ class PermisosAdminController extends Controller
     {
         $permisos = DB::select('CALL get_consolidados_permisos(?,?,?)', [$request->fecha_inicio, $request->fecha_fin, $request->motivo_id]);
         $data = [
-            'permisos' => $permisos,
-            'institucion' => 'GOBIERNO AUTÓNOMO DESCENTRALIZADO DE LA PROVINCIA DE ESMERALDAS',
-            'titulo' => 'CONSOLIDADO DE PERMISOS',
-            'fecha_inicio' => $request->fecha_inicio,
-            'fecha_fin' => $request->fecha_fin,
-            'motivo_id' => $request->motivo_id
+            'permisos'      => $permisos,
+            'institucion'   => 'GOBIERNO AUTÓNOMO DESCENTRALIZADO DE LA PROVINCIA DE ESMERALDAS',
+            'titulo'        => 'CONSOLIDADO DE PERMISOS',
+            'fecha_inicio'  => $request->fecha_inicio,
+            'fecha_fin'     => $request->fecha_fin,
+            'motivo_id'     => $request->motivo_id
         ];
         $pdf = Pdf::loadView('pdf.permisos.gerencia.consolidado', $data);
         return $pdf->setPaper('a4', 'landscape')->download('consolidado_permisos.pdf');
@@ -184,7 +200,7 @@ class PermisosAdminController extends Controller
 
         try {
             if (!$permiso->per_observacion_anulado) {
-                $permiso->per_observacion_anulado = "SE ANULA PERMISO A PETICION DEL USUARIO DESDE LA RECEPCION DE TTHH";
+                $permiso->per_observacion_anulado = MsgStatus::PermisoObservacionAnulado;
             }
             $permiso->id_estado = $request->id_estado; //Para anular o autorizar el permiso
             if ($request->id_estado == 6) {

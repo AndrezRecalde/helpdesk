@@ -1,5 +1,11 @@
 import { Badge, Table } from "@mantine/core";
 import { TextSection } from "../../../elements/titles/TextSection";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+import "dayjs/locale/es";
+
+dayjs.extend(relativeTime); // Extiende Day.js con el plugin
+dayjs.locale("es"); // Configura el idioma a español
 
 export const DetailSolicitudesActualesTable = ({ row }) => {
     return (
@@ -13,7 +19,7 @@ export const DetailSolicitudesActualesTable = ({ row }) => {
                     </Table.Th>
                     <Table.Td>
                         <Badge variant="dot" color={row.original.color}>
-                            {row.original.estado}
+                            {row.original.estado || "SIN ESTADO"}
                         </Badge>
                     </Table.Td>
                 </Table.Tr>
@@ -47,7 +53,12 @@ export const DetailSolicitudesActualesTable = ({ row }) => {
                             Incidencia
                         </TextSection>
                     </Table.Th>
-                    <Table.Td w={350}>{row.original.incidente}</Table.Td>
+                    <Table.Td w={350}>
+                        {row.original.incidente || "SIN INCIDENCIA"} <br />
+                        {row.original.fecha_ini
+                            ? "- " + dayjs(row.original.fecha_ini).fromNow()
+                            : null}{" "}
+                    </Table.Td>
                 </Table.Tr>
                 <Table.Tr>
                     <Table.Th w={350}>
@@ -56,7 +67,14 @@ export const DetailSolicitudesActualesTable = ({ row }) => {
                         </TextSection>
                     </Table.Th>
                     <Table.Td w={350}>
-                        {row.original.solucion || "SIN SOLUCIÓN"}
+                        <div
+                            dangerouslySetInnerHTML={{
+                                __html: row.original.solucion || "SIN SOLUCIÓN",
+                            }}
+                        />
+                        {row.original.fecha_fin
+                            ? "- " + dayjs(row.original.fecha_fin).fromNow()
+                            : null}{" "}
                     </Table.Td>
                 </Table.Tr>
             </Table.Tbody>

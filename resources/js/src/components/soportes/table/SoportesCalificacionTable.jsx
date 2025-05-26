@@ -12,7 +12,8 @@ export const SoportesCalificacionTable = () => {
         () => [
             {
                 accessorKey: "numero_sop", //access nested data with dot notation
-                header: "Número de soporte",
+                header: "No. soporte",
+                size: 80
             },
             {
                 accessorKey: "usuario_recibe", //normal accessorKey

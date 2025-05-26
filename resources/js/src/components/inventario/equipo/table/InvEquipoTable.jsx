@@ -7,7 +7,12 @@ import {
     MenuTable_Equipo,
     TableContent,
 } from "../../../../components";
-import { useInvEquipoStore, useInvUiEquipo, useStorageField, useUiInvCustodio } from "../../../../hooks";
+import {
+    useInvEquipoStore,
+    useInvUiEquipo,
+    useStorageField,
+    useUiInvCustodio,
+} from "../../../../hooks";
 import Swal from "sweetalert2";
 
 export const InvEquipoTable = () => {
@@ -32,9 +37,9 @@ export const InvEquipoTable = () => {
             {
                 header: "Código",
                 accessorFn: (row) =>
-                    (row.codigo_antiguo || "S/C") +
+                    (row.codigo_antiguo || "SCA") +
                     " : : : : " +
-                    (row.codigo_nuevo || "S/C"), //normal accessorKey
+                    (row.codigo_nuevo || "SCN"), //normal accessorKey
                 filterVariant: "autocomplete",
             },
             {
@@ -48,12 +53,18 @@ export const InvEquipoTable = () => {
             },
             {
                 header: "Departamento",
-                accessorFn: (row) => row.direccion || "Sin Dirección",
+                accessorFn: (row) =>
+                    (row?.direccion || "SIN DIRECCION")
+                        .toString()
+                        .toUpperCase(),
                 filterVariant: "autocomplete",
             },
             {
                 header: "Custodio",
-                accessorFn: (row) => row.responsable || "Sin Custodio",
+                accessorFn: (row) =>
+                    (row?.responsable || "SIN CUSTODIO")
+                        .toString()
+                        .toUpperCase(),
                 filterVariant: "autocomplete",
             },
             {
@@ -171,13 +182,15 @@ export const InvEquipoTable = () => {
                 <Table.Tbody>
                     <Table.Tr>
                         <Table.Th w={160}>No. Serie</Table.Th>
-                        <Table.Td>{row.original.numero_serie}</Table.Td>
+                        <Table.Td>
+                            {row.original.numero_serie || "SIN NUMERO DE SERIE"}
+                        </Table.Td>
                     </Table.Tr>
 
                     <Table.Tr>
                         <Table.Th w={160}>Descripción</Table.Th>
                         <Table.Td>
-                            {row.original.descripcion || "Sin Descripción"}
+                            {row.original.descripcion || "SIN DESCRIPCIÓN"}
                         </Table.Td>
                     </Table.Tr>
                 </Table.Tbody>

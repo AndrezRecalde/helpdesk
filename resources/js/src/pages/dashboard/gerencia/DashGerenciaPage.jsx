@@ -17,7 +17,7 @@ import {
 
 const DashGerenciaPage = () => {
     useTitlePage("Helpdesk | Dashboard");
-    const { isLoading, startLoadDashboard, clearDashboard } =
+    const { isLoading, startLoadDashboard, soportesForEstado, soportesForAreas, clearDashboard } =
         useDashGerenciaStore();
     const { startLoadDesempenoTecnicosAnual, clearIndicadores } =
         useIndicadorStore();
@@ -47,11 +47,11 @@ const DashGerenciaPage = () => {
                 <DashSoporteStats />
                 <SimpleGrid cols={{ base: 1, sm: 2, md: 2, lg: 2 }}>
                     <DashInfoStats />
-                    <ChartPieSoportes />
+                    <ChartPieSoportes data={soportesForEstado} />
                 </SimpleGrid>
                 <SimpleGrid cols={{ base: 1, sm: 1, md: 1, lg: 1 }}>
                     <ChartSoportesMes />
-                    <ChartBarSoportes />
+                    <ChartBarSoportes data={soportesForAreas} />
                 </SimpleGrid>
                 <SimpleGrid cols={{ base: 1, sm: 1, md: 1, lg: 1 }}>
                     <ChartDesempTecnicos />

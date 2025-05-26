@@ -249,7 +249,7 @@ export const menuHome = [
         link: "/intranet/profile",
     },
     {
-        title: "Marcaciones Biometricos",
+        title: "Mis Marcaciones",
         icon: IconFingerprint,
         color: "blue",
         link: "/intranet/marcaciones-biometricos",
@@ -267,7 +267,7 @@ export const menuHome = [
         link: "/intranet/solicitud-soporte",
     },
     {
-        title: "Mis Soportes Solicitados",
+        title: "Soportes Solicitados",
         icon: IconList,
         color: "teal",
         link: "/intranet/soportes/actuales",
@@ -279,7 +279,7 @@ export const menuHome = [
         link: "/intranet/permiso",
     },
     {
-        title: "Ver mis permisos",
+        title: "Mis permisos",
         icon: IconEyeCheck,
         color: "blue",
         link: "/intranet/ver-permisos",

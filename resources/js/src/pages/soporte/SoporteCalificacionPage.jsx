@@ -23,7 +23,7 @@ const SoporteCalificacionPage = () => {
                 icon: message.status,
                 text: message.msg,
                 showConfirmButton: false,
-                timer: 1500,
+                timer: 2000,
             });
             return;
         }

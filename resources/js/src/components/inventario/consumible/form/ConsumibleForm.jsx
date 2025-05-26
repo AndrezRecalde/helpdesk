@@ -70,6 +70,11 @@ export const ConsumibleForm = ({ form }) => {
                     })}
                 />
                 <TextInput
+                    label="Código"
+                    placeholder="Digite el código del consumible"
+                    {...form.getInputProps("codigo")}
+                />
+                <TextInput
                     label="Consumible"
                     placeholder="Digite el nombre del consumible"
                     {...form.getInputProps("nombre_consumible")}

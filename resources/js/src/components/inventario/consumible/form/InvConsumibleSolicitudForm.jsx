@@ -15,6 +15,8 @@ import {
     useUsersStore,
 } from "../../../../hooks";
 import { TitlePage, BtnSubmit, BtnSection } from "../../../../components";
+import { DateInput } from "@mantine/dates";
+import dayjs from "dayjs";
 
 export const InvConsumibleSolicitudForm = ({ form }) => {
     const { users } = useUsersStore();
@@ -26,6 +28,7 @@ export const InvConsumibleSolicitudForm = ({ form }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         startSolicitarConsumible(form.getTransformedValues());
+        console.log(form.getTransformedValues());
         modalActionSolicitudConsumible(false);
         form.reset();
     };
@@ -41,6 +44,14 @@ export const InvConsumibleSolicitudForm = ({ form }) => {
                 justify="center"
                 gap="lg"
             >
+                <DateInput
+                    clearable
+                    maxDate={dayjs(new Date()).add(1, "month").toDate()}
+                    valueFormat="YYYY-MM-DD"
+                    label="Fecha de solicitud"
+                    placeholder="Registra la fecha"
+                    {...form.getInputProps("fecha")}
+                />
                 <Select
                     required
                     searchable
@@ -55,36 +66,38 @@ export const InvConsumibleSolicitudForm = ({ form }) => {
                         };
                     })}
                 />
-                <Select
-                    required
-                    searchable
-                    clearable
-                    label="Departamento Solicitante"
-                    placeholder="Seleccione el departamento solicitante"
-                    nothingFoundMessage="Nothing found..."
-                    {...form.getInputProps("departamento_id")}
-                    data={direcciones.map((direccion) => {
-                        return {
-                            value: direccion.cdgo_dprtmnto.toString(),
-                            label: direccion.nmbre_dprtmnto,
-                        };
-                    })}
-                />
-                <Select
-                    required
-                    searchable
-                    clearable
-                    label="Solicitante"
-                    placeholder="Usuario Solicita"
-                    nothingFoundMessage="Nothing found..."
-                    {...form.getInputProps("usuario_solicita")}
-                    data={users.map((user) => {
-                        return {
-                            label: user.nmbre_usrio,
-                            value: user.cdgo_usrio.toString(),
-                        };
-                    })}
-                />
+                <SimpleGrid cols={{ base: 1, sm: 2, lg: 2 }}>
+                    <Select
+                        required
+                        searchable
+                        clearable
+                        label="Departamento Solicitante"
+                        placeholder="Seleccione el departamento solicitante"
+                        nothingFoundMessage="Nothing found..."
+                        {...form.getInputProps("departamento_id")}
+                        data={direcciones.map((direccion) => {
+                            return {
+                                value: direccion.cdgo_dprtmnto.toString(),
+                                label: direccion.nmbre_dprtmnto,
+                            };
+                        })}
+                    />
+                    <Select
+                        required
+                        searchable
+                        clearable
+                        label="Solicitante"
+                        placeholder="Usuario Solicita"
+                        nothingFoundMessage="Nothing found..."
+                        {...form.getInputProps("usuario_solicita")}
+                        data={users.map((user) => {
+                            return {
+                                label: user.nmbre_usrio,
+                                value: user.cdgo_usrio.toString(),
+                            };
+                        })}
+                    />
+                </SimpleGrid>
                 <Select
                     required
                     searchable
@@ -134,9 +147,7 @@ export const InvConsumibleSolicitudForm = ({ form }) => {
                             required
                             label="Consumible"
                             nothingFoundMessage="Nothing found..."
-                            {...form.getInputProps(
-                                `consumibles.${index}.id`
-                            )}
+                            {...form.getInputProps(`consumibles.${index}.id`)}
                             data={consumibles.map((consumible) => {
                                 return {
                                     label: consumible.nombre_consumible,

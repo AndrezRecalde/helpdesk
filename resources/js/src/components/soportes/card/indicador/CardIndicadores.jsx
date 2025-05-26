@@ -34,9 +34,8 @@ export const CardIndicadores = ({ handleExportPDF }) => {
                             Reporte de indicadores
                         </TextSection>
                         <ActionIcon
-                            variant="light"
-                            color="red"
-                            aria-label="Settings"
+                            variant="default"
+                            aria-label="Exportar PDF"
                             size="lg"
                             onClick={(e) => handleExportPDF(e)}
                         >

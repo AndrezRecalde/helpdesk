@@ -89,7 +89,8 @@ export const DrawerMenuMobile = ({ usuario, classes, theme }) => {
                         <Divider my="sm" /> */}
                 <SimpleGrid
                     cols={{ base: 2, xs: 2, sm: 2, md: 2, lg: 2 }}
-                    mt="md"
+                    mt="sm"
+                    p={5}
                 >
                     <MenuItems
                         menuHome={menuHome}
@@ -98,7 +99,7 @@ export const DrawerMenuMobile = ({ usuario, classes, theme }) => {
                         toggleDrawer={modalActionDrawerMobile}
                     />
                 </SimpleGrid>
-                <Group justify="center" mt={20} p={20}>
+                <Group justify="center" mt={20} mb={20} p={20}>
                     <UserBtnMobile />
                 </Group>
             </ScrollArea>

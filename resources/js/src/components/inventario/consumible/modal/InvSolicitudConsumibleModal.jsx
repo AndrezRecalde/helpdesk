@@ -12,6 +12,7 @@ import {
     useUiInvConsumible,
     useUsersStore,
 } from "../../../../hooks";
+import dayjs from "dayjs";
 
 export const InvSolicitudConsumibleModal = () => {
     const { isOpenModalSolicitudConsumible, modalActionSolicitudConsumible } =
@@ -40,6 +41,7 @@ export const InvSolicitudConsumibleModal = () => {
             usuario_autoriza: Number(values.usuario_autoriza) || null,
             departamento_id: Number(values.departamento_id) || null,
             equipo_id: Number(values.equipo_id) || null,
+            fecha: dayjs(values.fecha).isValid() ? dayjs(values.fecha).format("YYYY-MM-DD") : null,
             consumibles: values.consumibles.map((consumible) => ({
                 id: Number(consumible.id) || null,
                 cantidad: Number(consumible.cantidad) || 1,

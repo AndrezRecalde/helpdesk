@@ -43,7 +43,7 @@
             border: 1px solid black;
             padding: 5px;
             //text-align: center;
-            width: 20%;
+            width:35%;
             /* Define un ancho uniforme para todas las celdas */
         }
 
@@ -123,13 +123,13 @@
         <table class="info-table">
             <tr>
                 <td>
-                    <input type="text" style="height: 20px; width: 100%;">
+                    <input type="text" style="height: 35px; width: 97%;">
                 </td>
                 <td>
-                    <input type="text" style="height: 20px; width: 100%;">
+                    <input type="text" style="height: 35px; width: 97%;">
                 </td>
                 <td>
-                    <input type="text" style="height: 20px; width: 100%;">
+                    <input type="text" style="height: 35px; width: 97%;">
                 </td>
             </tr>
             <tr>
@@ -142,10 +142,10 @@
         <table class="info-table">
             <tr>
                 <td>
-                    <input type="text" style="height: 20px; width: 100%;">
+                    <input type="text" style="height: 35px; width: 97%;">
                 </td>
                 <td>
-                    <input type="text" style="height: 20px; width: 100%;">
+                    <input type="text" style="height: 35px; width: 97%;">
                 </td>
             </tr>
             <tr>
@@ -205,13 +205,13 @@
         <table class="info-table">
             <tr>
                 <td>
-                    <input type="text" style="height: 20px; width: 100%;">
+                    <input type="text" style="height: 35px; width: 97%;">
                 </td>
                 <td>
-                    <input type="text" style="height: 20px; width: 100%;">
+                    <input type="text" style="height: 35px; width: 97%;">
                 </td>
                 <td>
-                    <input type="text" style="height: 20px; width: 100%;">
+                    <input type="text" style="height: 35px; width: 97%;">
                 </td>
             </tr>
             <tr>
@@ -224,10 +224,10 @@
         <table class="info-table">
             <tr>
                 <td>
-                    <input type="text" style="height: 20px; width: 100%;">
+                    <input type="text" style="height: 35px; width: 97%;">
                 </td>
                 <td>
-                    <input type="text" style="height: 20px; width: 100%;">
+                    <input type="text" style="height: 35px; width: 97%;">
                 </td>
             </tr>
             <tr>

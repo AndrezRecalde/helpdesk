@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Button, Group, Stepper } from "@mantine/core";
+import { Group, Stepper } from "@mantine/core";
 import {
     BtnSection,
     InvEquipoComplementaria,

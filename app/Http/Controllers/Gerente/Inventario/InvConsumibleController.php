@@ -15,6 +15,7 @@ use App\Models\InvCategoria; */
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Log;
 
 class InvConsumibleController extends Controller
 {
@@ -150,7 +151,7 @@ class InvConsumibleController extends Controller
 
                 // Preparar datos para el PDF
                 $pdfData = [
-                    'fecha'            => $request->fecha === null ? now()->format('d/m/Y') : $request->fecha,
+                    'fecha'            => $request->fecha === null ? now()->format('Y-m-d') : $request->fecha,
                     'departamento'     => $departamento->nmbre_dprtmnto,
                     'consumibles'      => [],
                     'usuario_solicita' => $solicita->nmbre_usrio,
@@ -176,16 +177,18 @@ class InvConsumibleController extends Controller
                         'nombre_consumible' => $consumible->nombre_consumible,
                         'codigo'            => $consumible->codigo,
                         'cantidad_solicitada' => $item['cantidad'],
+                        //'fecha'             => $request->fecha === null ? now()->format('d/m/Y') : $request->fecha,
                     ];
 
                     // Registrar en tabla pivote
                     $departamento->consumibles()->attach($item['id'], [
                         'cantidad_solicitada'  => $item['cantidad'],
-                        'usuario_autoriza' => $request->usuario_autoriza,
-                        'usuario_solicita' => $request->usuario_solicita,
-                        'equipo_id'        => $equipo->id,
+                        'usuario_autoriza' =>  $request->usuario_autoriza,
+                        'usuario_solicita' =>  $request->usuario_solicita,
+                        'equipo_id'        =>  $equipo->id,
                         'director_area'    =>  $director->jefe->cdgo_usrio,
                         'director_tic'     =>  $directorTic->jefe->cdgo_usrio,
+                        'fecha'            => $request->fecha === null ? now()->format('Y-m-d') : $request->fecha
                     ]);
                 }
             });
@@ -196,6 +199,7 @@ class InvConsumibleController extends Controller
 
             return $pdf->setPaper('a4', 'portrait')->download('Solicitud_Materiales.pdf');
         } catch (\Exception $e) {
+            Log::error('Error al crear solicitud: ' . $e->getMessage());
             return response()->json(['status' => 'error', 'error' => $e->getMessage()], 400);
         }
     }

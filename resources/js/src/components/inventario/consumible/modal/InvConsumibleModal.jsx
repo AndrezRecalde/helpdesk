@@ -18,11 +18,13 @@ export const InvConsumibleModal = () => {
 
     const form = useForm({
         initialValues: {
+            codigo: "",
             nombre_consumible: "",
             tipocategoria_id: null,
             categoria_id: null,
         },
         validate: {
+            codigo: isNotEmpty("Por favor ingrese el código del consumible"),
             nombre_consumible: isNotEmpty(
                 "Por favor ingrese el nombre del consumible"
             ),
@@ -52,6 +54,7 @@ export const InvConsumibleModal = () => {
             setActivateInvConsumible(null);
         }
         modalActionConsumible(false);
+        form.reset();
     };
 
     return (

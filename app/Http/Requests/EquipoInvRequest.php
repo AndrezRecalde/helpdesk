@@ -65,7 +65,7 @@ class EquipoInvRequest extends FormRequest
     {
         return [
             'modelo.required'           =>   'El modelo es requerido',
-            'numero_serie.required'     =>   'El número de serie es requerido',
+            //'numero_serie.required'     =>   'El número de serie es requerido',
             'numero_serie.unique'       =>   'El número de serie ya está registrado en otro equipo o periférico',
             'fecha_adquisicion.required' =>  'La fecha de adquisición es requerida',
             'vida_util.required'        =>   'Coloque la vida útil en años',
@@ -81,8 +81,8 @@ class EquipoInvRequest extends FormRequest
             //'departamento.required'    =>   'Por favor seleccione el departamento donde se encuentra',
 
 
-            'perifericos.*.numero_serie.required' => 'El número de serie del periférico es requerido',
-            'perifericos.*.numero_serie.unique'   => 'El número de serie del periférico ya está registrado',
+            //'perifericos.*.numero_serie.required' => 'El número de serie del periférico es requerido',
+            //'perifericos.*.numero_serie.unique'   => 'El número de serie del periférico ya está registrado',
         ];
     }
 

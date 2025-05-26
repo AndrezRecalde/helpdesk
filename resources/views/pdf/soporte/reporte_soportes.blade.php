@@ -116,7 +116,7 @@
                 <td>{{ $soporte->fecha_ini }}</td>
                 <td>{{ $soporte->incidente }}</td>
                 <td>{!! $soporte->solucion !!}</td>
-                <td>{{ $soporte->usuario_recibe }}</td>
+                <td>{{ Str::upper($soporte->usuario_recibe) }}</td>
             </tr>
         @endforeach
     </table>

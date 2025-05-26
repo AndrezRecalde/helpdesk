@@ -44,12 +44,18 @@ export const SolicitudesTable = ({ menu, isLoading }) => {
                 size: 80,
             },
             {
-                accessorFn: (row) => row.direccion.toUpperCase(), //normal accessorKey
+                accessorFn: (row) =>
+                    (row?.direccion || "SIN DIRECCION")
+                        .toString()
+                        .toUpperCase(), //normal accessorKey
                 header: "Departamento del solicitante",
                 filterVariant: "autocomplete",
             },
             {
-                accessorFn: (row) => row.usuario_recibe.toUpperCase(), //normal accessorKey
+                accessorFn: (row) =>
+                    (row?.usuario_recibe || "SIN SOLICITANTE")
+                        .toString()
+                        .toUpperCase(), //normal accessorKey
                 header: "Solicitante",
                 filterVariant: "autocomplete",
             },
