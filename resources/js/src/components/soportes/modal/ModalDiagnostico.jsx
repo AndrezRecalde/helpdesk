@@ -4,6 +4,15 @@ import { hasLength, isNotEmpty, useForm } from "@mantine/form";
 import { TextSection, FormDiagnosticar } from "../../../components";
 import { useEquipoStore, useSoporteStore, useUiSoporte } from "../../../hooks";
 import dayjs from "dayjs";
+import customParseFormat from "dayjs/plugin/customParseFormat";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
+
+// Extender Day.js con el plugin
+dayjs.extend(customParseFormat);
 
 export const ModalDiagnostico = ({ option }) => {
     const { modalActionDiagnosticar, isOpenModalDiagnosticar } = useUiSoporte();
@@ -15,7 +24,7 @@ export const ModalDiagnostico = ({ option }) => {
     const form = useForm({
         initialValues: {
             id_sop: null,
-            fecha_fin: dayjs().add(15, "minute"),
+            fecha_fin: dayjs().add(15, "minute").toDate(),
             id_area_tic: null,
             id_tipo_soporte: null,
             solucion: "",

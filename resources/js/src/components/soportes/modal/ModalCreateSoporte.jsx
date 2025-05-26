@@ -12,7 +12,7 @@ import {
 } from "../../../hooks";
 import { isNotEmpty, useForm } from "@mantine/form";
 import dayjs from "dayjs";
-/* import customParseFormat from "dayjs/plugin/customParseFormat";
+import customParseFormat from "dayjs/plugin/customParseFormat";
 import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
 
@@ -20,7 +20,7 @@ dayjs.extend(utc);
 dayjs.extend(timezone);
 
 // Extender Day.js con el plugin
-dayjs.extend(customParseFormat); */
+dayjs.extend(customParseFormat);
 
 export const ModalCreateSoporte = ({ role }) => {
     const usuario = JSON.parse(localStorage.getItem("service_user"));
@@ -42,7 +42,7 @@ export const ModalCreateSoporte = ({ role }) => {
     const form = useForm({
         initialValues: {
             id_estado: activateSoporte?.id_estado?.toString() || "3",
-            fecha_ini: dayjs(),
+            fecha_ini: dayjs().toDate(),
             id_tipo_solicitud: activateSoporte?.id_tipo_solicitud || "1",
             numero_escrito: "",
             id_usu_tecnico_asig: null,

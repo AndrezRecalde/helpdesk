@@ -1,6 +1,6 @@
 import { SimpleGrid } from "@mantine/core";
 import {
-    ChartPieEficiencia,
+    //ChartPieEficiencia,
     ChartPieSoportes,
     TableDesempenoEstados,
     TextSection,
