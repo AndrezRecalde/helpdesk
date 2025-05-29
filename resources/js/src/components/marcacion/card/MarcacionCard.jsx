@@ -11,6 +11,7 @@ export const MarcacionCard = ({
     rango1 = [240, 660], // 04:00 - 11:00
     rango2 = [900, 1380], // 15:00 - 23:00
     mostrarSegundaLista = true,
+    btnDisabled = false,
 }) => {
     const theme = useMantineTheme();
     const { marcaciones } = useMarcacionStore();
@@ -58,7 +59,11 @@ export const MarcacionCard = ({
                     <TextSection fw={900} fz={18}>
                         {children}
                     </TextSection>
-
+                    {(listaUno.length > 0 || listaDos.length > 0) && (
+                        <TextSection fw={500} fz={14} fs="italic" mt={5}>
+                            Marcación Realizada
+                        </TextSection>
+                    )}
                     <SimpleGrid cols={2} mt={10}>
                         {/* Lista Uno */}
                         <List withPadding spacing="xs">
@@ -93,10 +98,11 @@ export const MarcacionCard = ({
                         variant="light"
                         color={theme.colors[btnColor][5]}
                         onClick={handleMarcacion}
+                        disabled={btnDisabled}
                         style={{
                             borderWidth: 2,
-                            borderColor: theme.colors[btnColor][8],
-                            color: theme.colors[btnColor][5],
+                            borderColor: !btnDisabled ? theme.colors[btnColor][8] : theme.colors.gray[8],
+                            color: !btnDisabled ? theme.colors[btnColor][5] : theme.colors.gray[5],
                             textAlign: "center",
                             whiteSpace: "normal",
                             lineHeight: 1.2,
