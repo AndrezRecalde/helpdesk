@@ -5,33 +5,38 @@ import { useMarcacionStore } from "../../../hooks";
 export const MarcacionSection = ({ usuario }) => {
     const { startAddMarcacion } = useMarcacionStore();
 
-    const handleMarcacionEntrada = () => {
-        startAddMarcacion({ asi_id_reloj: usuario.asi_id_reloj });
+    const handleMarcacionEntradaSalida = () => {
+        startAddMarcacion({
+            asi_id_reloj: usuario.asi_id_reloj,
+            checktype: "I",
+        });
     };
 
-    const handleMarcacionSalida = () => {
-        startAddMarcacion({ asi_id_reloj: usuario.asi_id_reloj });
+    const handleMarcacionAlmuerzos = () => {
+        startAddMarcacion({
+            asi_id_reloj: usuario.asi_id_reloj,
+            checktype: "O",
+        });
     };
 
     return (
         <SimpleGrid cols={{ base: 1, sm: 1, md: 2, lg: 2 }} mt={40}>
             <MarcacionCard
-                children="Marcación de Entrada"
+                children="Marcación de Entrada - Salida"
                 btnColor="blue"
-                handleMarcacion={handleMarcacionEntrada}
-                horaObjetivo={8} // Buscamos cerca de 8:00 AM
-                textoVerificacion="Entrada realizada"
-                textoNoMarcacion="Entrada no realizada"
-                rangoHabilitacion={{ desde: 4, hasta: 12 }}
+                handleMarcacion={handleMarcacionEntradaSalida}
+                checkType="I"
+                rango1={[240, 660]} // 04:00 - 11:00
+                rango2={[900, 1380]} // 15:00 - 23:00
+                mostrarSegundaLista={true}
             />
             <MarcacionCard
-                children="Marcación de Salida"
-                btnColor="red"
-                handleMarcacion={handleMarcacionSalida}
-                horaObjetivo={17} // Buscamos cerca de 5:00 PM
-                textoVerificacion="Salida realizada"
-                textoNoMarcacion="Salida no realizada"
-                rangoHabilitacion={{ desde: 12, hasta: 23 }} // O el rango que necesites
+                children="Marcación de Almuerzos"
+                btnColor="yellow"
+                handleMarcacion={handleMarcacionAlmuerzos}
+                checkType="O"
+                rango1={[720, 900]} // 12:00 - 15:00
+                mostrarSegundaLista={false}
             />
         </SimpleGrid>
     );

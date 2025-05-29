@@ -56,13 +56,14 @@ export const useMarcacionStore = () => {
         }
     };
 
-    const startAddMarcacion = async ({ asi_id_reloj }) => {
+    const startAddMarcacion = async ({ asi_id_reloj, checktype }) => {
         try {
             dispatch(onLoading(true));
             const { data } = await helpdeskApi.post(
                 "/usuario/store/marcacion",
                 {
                     asi_id_reloj,
+                    checktype
                 }
             );
             if (data.status === "success") {

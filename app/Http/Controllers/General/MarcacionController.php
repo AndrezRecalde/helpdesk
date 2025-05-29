@@ -69,7 +69,7 @@ class MarcacionController extends Controller
             DB::connection('sqlsrv')->table('CHECKINOUT')->insert([
                 'USERID' => $_user->USERID,
                 'CHECKTIME' => DB::raw("CONVERT(DATETIME, '" . Carbon::now()->format('Y-m-d H:i:s') . "', 120)"),
-                'CHECKTYPE' => 'I',
+                'CHECKTYPE' => $request->checktype,
                 'VERIFYCODE' => 1,
                 'SENSORID' => 2,
                 'Memoinfo' => NULL,
