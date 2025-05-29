@@ -287,6 +287,10 @@
                         <td>PERIODO(NUMERO DE DIAS)</td>
                         <td>{{ $sumaDiasHabiles[0]->dias_habiles }}</td>
                     </tr>
+                    <tr>
+                        <td>SATISFACCION DE LOS USUARIOS</td>
+                        <td>{{ $promedioCalificacion[0]->promedio }} / 5 </td>
+                    </tr>
                 </tbody>
             </table>
         </div>

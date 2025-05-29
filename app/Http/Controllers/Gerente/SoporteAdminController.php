@@ -230,7 +230,7 @@ class SoporteAdminController extends Controller
         $efectividadForAreas = DB::select('CALL sop_get_efectividad_for_areas(?,?)', [$request->fecha_inicio, $request->fecha_fin]);
         $efectividadForTecnicos = DB::select('CALL sop_get_efectividad_for_tecnicos(?,?)', [$request->fecha_inicio, $request->fecha_fin]);
         $sumaDiasHabiles = DB::select('CALL sop_get_dias_habiles(?,?)', [$request->fecha_inicio, $request->fecha_fin]);
-
+        $promedioCalificacion = DB::select('CALL sop_promedio_calificacion_por_fecha(?,?)', [$request->fecha_inicio, $request->fecha_fin]);
 
         /* SUMATORIA DE TOTAL DE CASOS EN DESEMPEÑO */
         $sumaDesempenoForEstados = 0;
@@ -248,7 +248,8 @@ class SoporteAdminController extends Controller
             'desempenoForTecnicos'    => $desempenoForTecnicos,
             'efectividadForAreas'     => $efectividadForAreas,
             'efectividadForTecnicos'  => $efectividadForTecnicos,
-            'sumaDiasHabiles'         => $sumaDiasHabiles
+            'sumaDiasHabiles'         => $sumaDiasHabiles,
+            'promedioCalificacion'    => $promedioCalificacion,
         ], 200);
     }
 
@@ -260,6 +261,7 @@ class SoporteAdminController extends Controller
         $efectividadForAreas = DB::select('CALL sop_get_efectividad_for_areas(?,?)', [$request->fecha_inicio, $request->fecha_fin]);
         $efectividadForTecnicos = DB::select('CALL sop_get_efectividad_for_tecnicos(?,?)', [$request->fecha_inicio, $request->fecha_fin]);
         $sumaDiasHabiles = DB::select('CALL sop_get_dias_habiles(?,?)', [$request->fecha_inicio, $request->fecha_fin]);
+        $promedioCalificacion = DB::select('CALL sop_promedio_calificacion_por_fecha(?,?)', [$request->fecha_inicio, $request->fecha_fin]);
         $usuarioGenerador = User::from('usrios_sstma as us')
             ->selectRaw('us.cdgo_usrio, us.nmbre_usrio as generador, nc.nom_cargo as cargo_generador,
                                         u.nmbre_usrio as director, ncd.nom_cargo as cargo_director')
@@ -328,6 +330,7 @@ class SoporteAdminController extends Controller
             'efectividadForAreas'     => $efectividadForAreas,
             'efectividadForTecnicos'  => $efectividadForTecnicos,
             'sumaDiasHabiles'         => $sumaDiasHabiles,
+            'promedioCalificacion'    => $promedioCalificacion,
             'usuarioGenerador'        => $usuarioGenerador,
             'chartUrl'                => $url,
             'chartUrl2'               => $url2

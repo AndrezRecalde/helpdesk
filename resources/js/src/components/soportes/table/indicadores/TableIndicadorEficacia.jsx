@@ -1,9 +1,10 @@
-import { Badge, Table } from "@mantine/core";
+import { Badge, Rating, Table } from "@mantine/core";
 import { TitlePage } from "../../../../components";
 import { useIndicadorStore } from "../../../../hooks";
 
 export const TableIndicadorEficacia = () => {
-    const { desempenoForEstados, sumaDiasHabiles } = useIndicadorStore();
+    const { desempenoForEstados, sumaDiasHabiles, promedioCalificacion } =
+        useIndicadorStore();
 
     let porcentajeEficacia = (
         (desempenoForEstados[3]?.total_estados /
@@ -19,7 +20,10 @@ export const TableIndicadorEficacia = () => {
             </TitlePage>
             <TitlePage mt={20} order={6}>
                 C.1 CASOS DE FINALIZADOS/META(30 X DIA, EN{" "}
-                {sumaDiasHabiles[0]?.dias_habiles} DIAS) = <Badge variant="light" color="teal.7" size="lg" radius="sm">{porcentajeEficacia}%</Badge>
+                {sumaDiasHabiles[0]?.dias_habiles} DIAS) ={" "}
+                <Badge variant="light" color="teal.7" size="lg" radius="sm">
+                    {porcentajeEficacia}%
+                </Badge>
             </TitlePage>
             <Table.ScrollContainer>
                 <Table
@@ -50,6 +54,22 @@ export const TableIndicadorEficacia = () => {
                             <Table.Td>PERIODO(NUMERO DE DIAS)</Table.Td>
                             <Table.Td>
                                 {sumaDiasHabiles[0]?.dias_habiles}
+                            </Table.Td>
+                        </Table.Tr>
+                        <Table.Tr>
+                            <Table.Td>SATISFACCION DE LOS USUARIOS</Table.Td>
+                            <Table.Td>
+                                <div>
+                                    {promedioCalificacion[0]?.promedio}/5 - {promedioCalificacion[0]?.detalle}
+                                    <Rating
+                                        value={
+                                            promedioCalificacion[0]
+                                                ?.promedio
+                                        }
+                                        fractions={2}
+                                        readOnly
+                                    />
+                                </div>
                             </Table.Td>
                         </Table.Tr>
                     </Table.Tbody>

@@ -8,6 +8,7 @@ import {
     onLoadEfectividadForAreas,
     onLoadEfectividadForTecnicos,
     onLoadErrores,
+    onLoadPromedioCalificacion,
     onLoadSumaDesempenoForEstados,
     onLoadSumaDiasHabiles,
     onLoading,
@@ -26,6 +27,7 @@ export const useIndicadorStore = () => {
         efectividadForAreas,
         efectividadForTecnicos,
         sumaDiasHabiles,
+        promedioCalificacion,
         errores,
     } = useSelector((state) => state.indicador);
     const { ExceptionMessageError } = useErrorException(onLoadErrores);
@@ -46,6 +48,7 @@ export const useIndicadorStore = () => {
                 efectividadForAreas,
                 efectividadForTecnicos,
                 sumaDiasHabiles,
+                promedioCalificacion
             } = data;
             dispatch(onLoadDesempenoForEstados(desempenoForEstados));
             dispatch(onLoadSumaDesempenoForEstados(sumaDesempenoForEstados));
@@ -54,6 +57,7 @@ export const useIndicadorStore = () => {
             dispatch(onLoadEfectividadForAreas(efectividadForAreas));
             dispatch(onLoadEfectividadForTecnicos(efectividadForTecnicos));
             dispatch(onLoadSumaDiasHabiles(sumaDiasHabiles));
+            dispatch(onLoadPromedioCalificacion(promedioCalificacion));
             dispatch(onPageLoad(true));
             dispatch(onLoading(false));
         } catch (error) {
@@ -119,6 +123,7 @@ export const useIndicadorStore = () => {
         efectividadForAreas,
         efectividadForTecnicos,
         sumaDiasHabiles,
+        promedioCalificacion,
         errores,
 
         startLoadIndicadores,

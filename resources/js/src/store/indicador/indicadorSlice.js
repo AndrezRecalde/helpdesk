@@ -12,6 +12,7 @@ export const indicadorSlice = createSlice({
         efectividadForAreas: [],
         efectividadForTecnicos: [],
         sumaDiasHabiles: [],
+        promedioCalificacion: null,
         errores: undefined,
     },
     reducers: {
@@ -42,6 +43,9 @@ export const indicadorSlice = createSlice({
         onLoadSumaDiasHabiles: (state, { payload }) => {
             state.sumaDiasHabiles = payload;
         },
+        onLoadPromedioCalificacion: (state, { payload }) => {
+            state.promedioCalificacion = payload;
+        },
         onClearIndicadores: (state) => {
             state.isLoading = false;
             state.desempenoForEstados = [];
@@ -51,6 +55,7 @@ export const indicadorSlice = createSlice({
             state.efectividadForAreas = [];
             state.efectividadForTecnicos = [];
             state.sumaDiasHabiles = [];
+            state.promedioCalificacion = null;
         },
         onLoadErrores: (state, { payload }) => {
             state.errores = payload;
@@ -69,6 +74,7 @@ export const {
     onLoadEfectividadForAreas,
     onLoadEfectividadForTecnicos,
     onLoadSumaDiasHabiles,
+    onLoadPromedioCalificacion,
     onClearIndicadores,
     onLoadErrores,
 } = indicadorSlice.actions;
