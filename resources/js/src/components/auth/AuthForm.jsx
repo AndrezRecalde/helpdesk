@@ -20,12 +20,12 @@ export const AuthForm = () => {
         initialValues: {
             lgin: "",
             paswrd: "",
-            remember: true,
+            remember: false,
         },
         transformValues: (values) => ({
             ...values,
-            lgin: values.lgin.toLowerCase()
-        })
+            lgin: values.lgin.toLowerCase(),
+        }),
     });
 
     useEffect(() => {
@@ -57,7 +57,7 @@ export const AuthForm = () => {
                 zIndex={1000}
                 overlayProps={{ radius: "sm", blur: 2 }}
             />
-            <Stack>
+            <Stack p={30}>
                 <TextInput
                     label="Usuario"
                     placeholder="Digite su usuario"
@@ -89,7 +89,9 @@ export const AuthForm = () => {
                         ¿Olvidó su contraseña?
                     </Anchor> */}
                 </Group>
-                <BtnSubmit IconSection={IconChevronsRight}>Acceder</BtnSubmit>
+                <BtnSubmit mb={0} IconSection={IconChevronsRight}>
+                    Acceder
+                </BtnSubmit>
             </Stack>
         </Box>
     );

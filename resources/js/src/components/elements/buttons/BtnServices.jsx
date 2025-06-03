@@ -22,6 +22,8 @@ import {
 
 export const BtnSubmit = ({
     children,
+    mt = "md",
+    mb = "md",
     fullwidth = true,
     heigh = 45,
     fontSize = 18,
@@ -34,8 +36,8 @@ export const BtnSubmit = ({
             color="teal.5"
             type="submit"
             fullWidth={fullwidth}
-            mt="md"
-            mb="md"
+            mt={mt}
+            mb={mb}
             rightSection={<IconSection />}
             disabled={disabled}
             loading={loading}
@@ -258,7 +260,7 @@ export const BtnAdministracion = ({ theme, linkNavigate }) => {
 
 export const BtnServicesApps = () => {
     return (
-        <Group grow mt="md">
+        <Group grow p={15}>
             <Button
                 leftSection={<IconMailFast size={16} color="orange" />}
                 radius="md"
