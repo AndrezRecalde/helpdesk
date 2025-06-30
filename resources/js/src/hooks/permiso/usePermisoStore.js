@@ -155,6 +155,7 @@ export const usePermisoStore = () => {
             dispatch(onSetActivatePermiso(info_permisos));
             dispatch(onLoading(false));
         } catch (error) {
+            dispatch(onLoading(false));
             ExceptionMessageError(error);
         }
     };

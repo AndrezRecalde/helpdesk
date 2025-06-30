@@ -126,7 +126,7 @@ export const useSoporteStore = () => {
     const startAnularSoporte = async (soporte) => {
         try {
             const { data } = await helpdeskApi.put(
-                `/gerencia/anular-soporte/${soporte.id_sop}`,
+                `/usuario/anular-soporte/${soporte.id_sop}`,
                 {
                     obs_anulado: soporte.obs_anulado,
                 }
@@ -135,7 +135,7 @@ export const useSoporteStore = () => {
             setTimeout(() => {
                 dispatch(onLoadMessage(undefined));
             }, 40);
-            dispatch(onAnularSoporte(soporte));
+            //dispatch(onAnularSoporte(soporte));
         } catch (error) {
             //console.log(error);
             ExceptionMessageError(error);
@@ -420,6 +420,7 @@ export const useSoporteStore = () => {
             );
             const { soportes } = data;
             dispatch(onLoadSoportes(soportes));
+            //return data;
         } catch (error) {
             //console.log(error);
             ExceptionMessageError(error);

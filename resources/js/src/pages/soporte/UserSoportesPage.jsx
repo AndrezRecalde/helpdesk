@@ -1,51 +1,93 @@
-import { Container, Tabs, rem } from "@mantine/core";
-import { IconDeviceImacUp, IconDeviceImacExclamation } from "@tabler/icons-react";
+import { useEffect } from "react";
+import { Container, Divider, Group } from "@mantine/core";
 import {
-    SectionUsersSoportesActuales,
-    SectionUsersSoportesAnuales,
+    AlertSection,
+    BtnSection,
+    ModalAnularSoporte,
+    SoportesUsersTable,
+    TitlePage,
 } from "../../components";
-import { useNavigate, useParams } from "react-router-dom";
-import { useTitlePage } from "../../hooks";
+import { useSoporteStore } from "../../hooks";
+import { IconChevronsRight, IconInfoCircle } from "@tabler/icons-react";
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
-const UserSoportesPage = () => {
-    useTitlePage("Helpdesk | Mis Soportes");
+const UsersSoportesPage = () => {
+    const usuario = JSON.parse(localStorage.getItem("service_user"));
+    const {
+        isLoading,
+        startLoadSoportesAnualesUsuarios,
+        clearSoportes,
+        message,
+        errores,
+    } = useSoporteStore();
     const navigate = useNavigate();
-    const { soporteValue } = useParams();
-    const iconStyle = { width: rem(15), height: rem(15) };
-    //console.log(soporteValue)
+
+    const handleAction = () => {
+        navigate("/intranet/solicitud-soporte");
+    };
+
+    useEffect(() => {
+        startLoadSoportesAnualesUsuarios(usuario.cdgo_usrio);
+
+        return () => {
+            clearSoportes();
+        };
+    }, []);
+
+    useEffect(() => {
+        if (message !== undefined) {
+            Swal.fire({
+                icon: message.status,
+                text: message.msg,
+                showConfirmButton: false,
+                timer: 1500,
+            });
+            return;
+        }
+    }, [message]);
+
+    useEffect(() => {
+        if (errores !== undefined) {
+            Swal.fire({
+                icon: "error",
+                title: "Opps...",
+                text: errores,
+                confirmButtonColor: "#094293",
+                footer: "Intentalo más tarde",
+            });
+            return;
+        }
+    }, [errores]);
 
     return (
-        <Container size="xl">
-            <Tabs
-                value={soporteValue}
-                onChange={(value) => navigate(`/intranet/soportes/${value}`)}
-                defaultValue="actuales"
+        <Container size="xl" my={20}>
+            <Group justify="space-between">
+                <TitlePage order={2}>Todas Mis Solicitudes</TitlePage>
+
+                <BtnSection
+                    IconSection={IconChevronsRight}
+                    handleAction={handleAction}
+                >
+                    Solicitar Soporte
+                </BtnSection>
+            </Group>
+            <Divider my="sm" />
+            <AlertSection
+                variant="light"
+                color="teal"
+                radius="md"
+                title=""
+                icon={IconInfoCircle}
             >
-                <Tabs.List grow>
-                    <Tabs.Tab
-                        value="actuales"
-                        leftSection={<IconDeviceImacUp style={iconStyle} />}
-                    >
-                        Seguimiento de soportes
-                    </Tabs.Tab>
-                    <Tabs.Tab
-                        value="anuales"
-                        leftSection={<IconDeviceImacExclamation style={iconStyle} />}
-                    >
-                        Todas mis solicitudes
-                    </Tabs.Tab>
-                </Tabs.List>
+                Se visualizan el seguimiento de los soportes de todo el año
+                actual
+            </AlertSection>
+            <SoportesUsersTable isLoading={isLoading} />
 
-                <Tabs.Panel value="actuales">
-                    <SectionUsersSoportesActuales tabValue={soporteValue} />
-                </Tabs.Panel>
-
-                <Tabs.Panel value="anuales">
-                    <SectionUsersSoportesAnuales tabValue={soporteValue} />
-                </Tabs.Panel>
-            </Tabs>
+            <ModalAnularSoporte />
         </Container>
     );
 };
 
-export default UserSoportesPage;
+export default UsersSoportesPage;

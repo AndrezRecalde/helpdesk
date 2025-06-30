@@ -29,10 +29,11 @@ import dayjs from "dayjs";
 export const FormDiagnosticar = ({ form, option }) => {
     const { activo_informatico, id_tipo_soporte } = form.values;
     const [checkEstado, setCheckEstado] = useState(false);
-    const { equipos } = useEquipoStore();
+    const { startLoadEquiposInformaticos, clearEquiposInformaticos, equipos } = useEquipoStore();
     const { modalActionDiagnosticar } = useUiSoporte();
     const { activateSoporte, startDiagnosticarSoporte } = useSoporteStore();
     const { storageFields } = useStorageField();
+
 
     useEffect(() => {
         if (activateSoporte !== null) {
@@ -67,6 +68,17 @@ export const FormDiagnosticar = ({ form, option }) => {
             setCheckEstado(false);
         }
     }, [id_tipo_soporte]);
+
+    useEffect(() => {
+        if (activo_informatico) {
+            startLoadEquiposInformaticos();
+            return;
+        }
+
+        return () => {
+            clearEquiposInformaticos();
+        };
+    }, [activo_informatico]);
 
     const handleSubmit = (e) => {
         e.preventDefault();

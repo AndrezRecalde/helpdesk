@@ -12,7 +12,7 @@ import Swal from "sweetalert2";
 const AdminDireccionesPage = () => {
     useTitlePage("Helpdesk | Direcciones");
     const { startLoadUsers, clearUsers } = useUsersStore();
-    const { directores, clearDirectores, message, errores } =
+    const { clearDirectores, message, errores } =
         useDirectorStore();
 
     useEffect(() => {
@@ -55,7 +55,7 @@ const AdminDireccionesPage = () => {
             <Divider my="md" />
             <FilterFormDirecciones />
 
-            {directores.length !== 0 ? <DireccionesTable /> : null}
+            <DireccionesTable />
             <ModalDireccion />
         </Container>
     );

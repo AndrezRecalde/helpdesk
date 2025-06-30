@@ -1,6 +1,7 @@
 import { Menu, rem } from "@mantine/core";
 import {
     IconChecks,
+    IconClockHour2,
     IconEditCircle,
     IconEyeCheck,
     IconLogs,
@@ -13,7 +14,12 @@ import {
     IconUserShare,
 } from "@tabler/icons-react";
 
-export const MenuUsersTable = ({ row, handleEdit, handleResetPassword }) => {
+export const MenuUsersTable = ({
+    row,
+    handleEdit,
+    handleResetPassword,
+    handleCodigoBiometrico,
+}) => {
     return (
         <>
             <Menu.Item
@@ -33,6 +39,16 @@ export const MenuUsersTable = ({ row, handleEdit, handleResetPassword }) => {
                 onClick={() => handleResetPassword(row.original)}
             >
                 Resetear contraseña
+            </Menu.Item>
+            <Menu.Item
+                leftSection={
+                    <IconClockHour2
+                        style={{ width: rem(15), height: rem(15) }}
+                    />
+                }
+                onClick={() => handleCodigoBiometrico(row.original)}
+            >
+                Código Biométrico
             </Menu.Item>
         </>
     );
@@ -401,11 +417,22 @@ export const MenuTable_AutorizarVacacion = ({
     handleAnular,
     handleAutorizar,
     handleSolicitarAnulacion,
-    handleExport
+    handleExport,
 }) => {
+    const estado = row.original.estado;
+
+    // Lógicas de visibilidad
+    const canAutorizar = estado === "NUEVO";
+    const canAnular =
+        estado === "NUEVO" || estado === "EN PROCESO DE ANULACION";
+    const canImprimir =
+        estado === "NUEVO" ||
+        estado === "APROBADO" ||
+        estado === "EN PROCESO DE ANULACION";
+
     return (
         <>
-            {isAdministrator ? (
+            {isAdministrator && (
                 <>
                     <Menu.Item
                         leftSection={
@@ -414,6 +441,7 @@ export const MenuTable_AutorizarVacacion = ({
                             />
                         }
                         onClick={() => handleAutorizar(row.original)}
+                        disabled={!canAutorizar}
                     >
                         Autorizar Vacacion
                     </Menu.Item>
@@ -424,24 +452,33 @@ export const MenuTable_AutorizarVacacion = ({
                             />
                         }
                         onClick={() => handleAnular(row.original)}
+                        disabled={!canAnular}
                     >
                         Anular Vacacion
                     </Menu.Item>
                 </>
-            ) : null}
-            <Menu.Item
-                leftSection={
-                    <IconNotesOff style={{ width: rem(15), height: rem(15) }} />
-                }
-                onClick={() => handleSolicitarAnulacion(row.original)}
-            >
-                Solicitud de Anulacion
-            </Menu.Item>
+            )}
+
+            {!isAdministrator && (
+                <Menu.Item
+                    leftSection={
+                        <IconNotesOff
+                            style={{ width: rem(15), height: rem(15) }}
+                        />
+                    }
+                    onClick={() => handleSolicitarAnulacion(row.original)}
+                    disabled={!canAutorizar}
+                >
+                    Solicitud de Anulacion
+                </Menu.Item>
+            )}
+
             <Menu.Item
                 leftSection={
                     <IconPrinter style={{ width: rem(15), height: rem(15) }} />
                 }
                 onClick={() => handleExport(row.original)}
+                disabled={!canImprimir}
             >
                 Imprimir
             </Menu.Item>

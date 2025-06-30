@@ -5,8 +5,8 @@ export const AlertSection = ({
     color,
     icon: Icon,
     title,
-    mt=10,
-    mb=20,
+    mt = 10,
+    mb = 20,
     children,
 }) => {
     return (

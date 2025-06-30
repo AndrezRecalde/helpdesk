@@ -5,6 +5,7 @@ import { useSoporteStore, useUiSoporte } from "../../../hooks";
 import { IconProgressX } from "@tabler/icons-react";
 
 export const FormAnularSoporte = ({ form }) => {
+    const usuario = JSON.parse(localStorage.getItem("service_user"));
     const { startAnularSoporte, activateSoporte } = useSoporteStore();
     const { modalActionAnularSoporte } = useUiSoporte();
 
@@ -21,6 +22,7 @@ export const FormAnularSoporte = ({ form }) => {
     const handleSubmit = () => {
         //console.log(form.values);
         startAnularSoporte(form.values);
+        startLoadSoportesActualesUsuarios(usuario.cdgo_usrio);
         form.reset();
         modalActionAnularSoporte(0);
     };

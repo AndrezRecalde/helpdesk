@@ -5,9 +5,10 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Facades\Hash;
+//use Illuminate\Support\Facades\Hash;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 
@@ -80,6 +81,24 @@ class User extends Authenticatable
         'usu_f_f_contrato' => 'date'
     ];
 
+    //Permisos
+    public function permisos()
+    {
+        return $this->hasMany(Permiso::class, 'id_usu_pide', 'cdgo_usrio');
+    }
+
+    //Periodo Vacacional - HasMany
+    public function periodoVacacionales(): HasMany
+    {
+        return $this->hasMany(NomPeriodoVacacional::class, 'cdgo_usrio', 'cdgo_usrio');
+    }
+
+    //Vacaciones - HasMany
+    public function vacaciones(): HasMany
+    {
+        return $this->hasMany(NomVacacion::class, 'cdgo_usrio', 'cdgo_usrio');
+    }
+
     function equipos(): BelongsToMany
     {
         return $this->belongsToMany(InvEquipo::class, 'usuario_equipo', 'usuario_id', 'equipo_id')
@@ -137,6 +156,13 @@ class User extends Authenticatable
     }
 
     function scopeTecnico($query, $cdgo_usrio)
+    {
+        if ($cdgo_usrio) {
+            return $query->where('us.cdgo_usrio', $cdgo_usrio);
+        }
+    }
+
+    function scopeByCodigoUsuario($query, $cdgo_usrio)
     {
         if ($cdgo_usrio) {
             return $query->where('us.cdgo_usrio', $cdgo_usrio);

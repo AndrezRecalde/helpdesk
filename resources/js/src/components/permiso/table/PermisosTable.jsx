@@ -3,8 +3,8 @@ import { useMantineReactTable } from "mantine-react-table";
 import { MRT_Localization_ES } from "mantine-react-table/locales/es/index.cjs";
 import { MenuTable_Per, TableContent } from "../../../components";
 import { usePermisoStore, useUiPermiso } from "../../../hooks";
-import dayjs from "dayjs";
 import { Spoiler } from "@mantine/core";
+import dayjs from "dayjs";
 /* import duration from 'dayjs/plugin/duration';
 dayjs.extend(duration); */
 
@@ -14,6 +14,11 @@ export const PermisosTable = () => {
     const { modalActionAnularPermiso } = useUiPermiso();
     const columns = useMemo(
         () => [
+            {
+                accessorKey: "estado", //access nested data with dot notation
+                header: "Estado",
+                size: 80,
+            },
             {
                 accessorKey: "idper_permisos", //access nested data with dot notation
                 header: "Código",
@@ -28,12 +33,13 @@ export const PermisosTable = () => {
                 accessorKey: "direccion_pide", //access nested data with dot notation
                 header: "Departamento solicitante",
                 filterVariant: "autocomplete",
+                size: 200,
             },
             {
                 accessorFn: (row) =>
                     dayjs(row.per_fecha_salida).format("YYYY-MM-DD"),
                 header: "Fecha",
-                size: 80
+                size: 80,
             },
             {
                 accessorFn: (row) =>
@@ -49,30 +55,11 @@ export const PermisosTable = () => {
                 accessorKey: "motivo", //access nested data with dot notation
                 header: "Motivo",
                 filterVariant: "autocomplete",
+                size: 80,
             },
             {
                 accessorKey: "tiempo_total", //access nested data with dot notation
                 header: "T. total",
-                size: 80
-            },
-            /* {
-                accessorFn: (row) => {
-                    const salida = dayjs(row.per_fecha_salida);
-                    const llegada = dayjs(row.per_fecha_llegada);
-
-                    // Verificamos que ambas fechas existan
-                    if (!salida.isValid() || !llegada.isValid()) return "—";
-
-                    const duration = dayjs.duration(llegada.diff(salida));
-
-                    // Puedes devolver el tiempo en el formato que prefieras:
-                    return `${String(duration.hours()).padStart(2, "0")}:${String(duration.minutes()).padStart(2, "0")}:${String(duration.seconds()).padStart(2, "0")}`;
-                },
-                header: "T. total",
-            }, */
-            {
-                accessorKey: "estado", //access nested data with dot notation
-                header: "Estado",
                 size: 80,
             },
             {
@@ -124,6 +111,15 @@ export const PermisosTable = () => {
                 handleExport={handleExport}
             />
         ),
+        mantineTableBodyCellProps: ({ column, cell }) => ({
+            style:
+                column.id === "estado"
+                    ? {
+                          backgroundColor: cell.row.original.color,
+                          color: "white",
+                      }
+                    : {},
+        }),
         mantineTableProps: {
             withColumnBorders: true,
             withTableBorder: true,

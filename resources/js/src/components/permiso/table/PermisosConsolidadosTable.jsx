@@ -29,7 +29,7 @@ export const PermisosConsolidadosTable = () => {
             {
                 accessorKey: "direccion_string", //access nested data with dot notation
                 header: "Dirección",
-                filterVariant: "autocomplete",
+                filterVariant: "multi-select",
             },
             {
                 accessorKey: "usuario_string", //access nested data with dot notation

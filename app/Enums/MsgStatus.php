@@ -9,6 +9,7 @@ enum MsgStatus:string {
     case NotFound = '404 - No Encontrado';
 
     case Success = 'success';
+    case Info = 'info';
     case Error = 'error';
 
     /* Authentication */
@@ -54,4 +55,8 @@ enum MsgStatus:string {
     case FichaIncidentePermiso = 'SOLICITUD DE CREACION DE PERMISO';
     case FichaSolucionPermiso = 'SE REALIZO LA CREACION DEL PERMISO SOLICITADO';
     case PermisoObservacionAnulado  = 'SE ANULA PERMISO A PETICION DEL USUARIO DESDE LA RECEPCION DE TTHH';
+
+    /* Periodos : Vacaciones */
+    case InfoPeriodos = 'Todos los periodos ya existían para este usuario.';
+    case PeriodosCreated = 'Periodos creados correctamente.';
 }

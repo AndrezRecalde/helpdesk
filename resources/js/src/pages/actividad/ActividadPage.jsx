@@ -1,13 +1,20 @@
 import { useEffect } from "react";
-import { Card, Container } from "@mantine/core";
-import { ActividadForm, AlertSection, InformationActividadList, TitlePage } from "../../components";
+import { Card, Container, Divider, Group } from "@mantine/core";
+import {
+    ActividadForm,
+    AlertSection,
+    BtnSection,
+    InformationActividadList,
+    TitlePage,
+} from "../../components";
 import { useActividadStore, useTitlePage } from "../../hooks";
-import { IconInfoCircle } from "@tabler/icons-react";
+import { IconChevronsRight, IconInfoCircle } from "@tabler/icons-react";
+import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-
 
 const ActividadPage = () => {
     useTitlePage("Helpdesk | Actividad");
+    const navigate = useNavigate();
     const { message, errores } = useActividadStore();
 
     useEffect(() => {
@@ -34,11 +41,22 @@ const ActividadPage = () => {
         }
     }, [errores]);
 
+    const handleAction = () => {
+         navigate("/intranet/lista-actividades");
+    }
+
     return (
-        <Container size="sm" my="md">
-            <TitlePage order={2}>
-                Registrar actividad
-            </TitlePage>
+        <Container size="md" my="md">
+            <Group justify="space-between">
+                <TitlePage order={2}>Registrar actividad</TitlePage>
+                <BtnSection
+                    IconSection={IconChevronsRight}
+                    handleAction={handleAction}
+                >
+                    Ver Actividades
+                </BtnSection>
+            </Group>
+            <Divider my="md" />
             <Card withBorder shadow="sm" radius="md" mt="md">
                 <Card.Section withBorder inheritPadding py="xs">
                     <ActividadForm />

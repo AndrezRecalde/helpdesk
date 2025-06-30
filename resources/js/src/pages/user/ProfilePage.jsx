@@ -1,10 +1,6 @@
 import { useEffect } from "react";
 import { Container, SimpleGrid } from "@mantine/core";
-import {
-    TitlePage,
-    CardProfile,
-    CardInfoStatsUser,
-} from "../../components";
+import { TitlePage, CardProfile, CardInfoStatsUser } from "../../components";
 import {
     useAuthStore,
     usePermisoStore,
@@ -62,15 +58,19 @@ const ProfilePage = () => {
         navigate("/helpdesk/soportes");
     };
 
-    const handleNavigateMarcaciones = () => {
+    /* const handleNavigateMarcaciones = () => {
         navigate("/intranet/marcaciones-biometricos");
-    }
+    }; */
 
     return (
         <Container size="xl">
             <TitlePage order={1}>Perfil</TitlePage>
             <SimpleGrid cols={{ base: 1, sm: 2 }} spacing="md" mb={20}>
-                <CardProfile usuario={usuario} handleAction={handleAction} handleMarcacion={handleNavigateMarcaciones} />
+                <CardProfile
+                    usuario={usuario}
+                    handleAction={handleAction}
+                    //handleMarcacion={handleNavigateMarcaciones}
+                />
                 <CardInfoStatsUser usuario={usuario} />
             </SimpleGrid>
         </Container>

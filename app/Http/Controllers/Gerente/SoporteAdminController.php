@@ -95,7 +95,7 @@ class SoporteAdminController extends Controller
 
             return response()->json([
                 'status'  => MsgStatus::Error,
-                'message' => 'Ocurrió un error al asignar el soporte.'
+                'message' => 'Error al crear la solicitud: ' . $th->getMessage()
             ], 500);
         }
     }

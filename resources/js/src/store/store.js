@@ -21,7 +21,9 @@ import {
     invTipocategoriaSlice,
     invUbicacionSlice,
     marcacionSlice,
+    periodoSlice,
     permisoSlice,
+    rutaSlice,
     sexoSlice,
     soporteSlice,
     storageFieldsSlice,
@@ -42,11 +44,15 @@ import {
     uiInvMarcaSlice,
     uiInvTipocategoriaSlice,
     uiInvUbicacionSlice,
+    uiPeriodoSlice,
     uiPermisoSlice,
+    uiRutaSlice,
     uiSoporteSlice,
     uiTecnicoSlice,
     uiUserSlice,
+    uiVacacionesSlice,
     usersSlice,
+    vacacionesSlice,
 } from "../store";
 
 export const store = configureStore({
@@ -77,6 +83,13 @@ export const store = configureStore({
         actividad: actividadSlice.reducer,
         permiso: permisoSlice.reducer,
         uiPermiso: uiPermisoSlice.reducer,
+
+        vacaciones: vacacionesSlice.reducer,
+        uiVacaciones: uiVacacionesSlice.reducer,
+
+        periodoVacacional: periodoSlice.reducer,
+        uiPeriodoVacacional: uiPeriodoSlice.reducer,
+
         marcacion: marcacionSlice.reducer,
         uiActividad: uiActividadSlice.reducer,
         dashGerencia: dashGerenciaSlice.reducer,
@@ -107,6 +120,9 @@ export const store = configureStore({
         uiInvConsumible: uiInvConsumibleSlice.reducer,
 
         uiInvCustodio: uiInvCustodioSlice.reducer,
+
+        ruta: rutaSlice.reducer,
+        uiRuta: uiRutaSlice.reducer,
 
         storageField: storageFieldsSlice.reducer
     },

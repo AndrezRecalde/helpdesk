@@ -1,4 +1,5 @@
 import {
+    IconBeach,
     IconBuilding,
     IconCertificate,
     IconChartBar,
@@ -159,8 +160,8 @@ export const MenuRapido = [
     {
         icon: IconList,
         title: "Mis Soportes Solicitados",
-        path: "soportes/:soporteValue",
-        link: "/intranet/soportes/actuales",
+        path: "soportes",
+        link: "/intranet/soportes",
         roles: [""],
     },
     {
@@ -187,8 +188,8 @@ export const MenuRapido = [
     {
         icon: IconList,
         title: "Reporte Vacaciones",
-        path: "soportes/:soporteValue",
-        link: "/intranet/soportes/actuales",
+        path: "soportes",
+        link: "/intranet/soportes",
         roles: [""],
     }, */
     {
@@ -270,7 +271,7 @@ export const menuHome = [
         title: "Soportes Solicitados",
         icon: IconList,
         color: "teal",
-        link: "/intranet/soportes/actuales",
+        link: "/intranet/soportes",
     },
     {
         title: "Solicitar Permiso",
@@ -284,6 +285,18 @@ export const menuHome = [
         color: "blue",
         link: "/intranet/ver-permisos",
     },
+    /* {
+        title: "Solicitar Vacaciones",
+        icon: IconBeach,
+        color: "orange",
+        link: "/intranet/vacaciones",
+    },
+    {
+        title: "Reporte Vacaciones",
+        icon: IconList,
+        color: "orange",
+        link: "/intranet/solicitudes-vacaciones",
+    }, */
     {
         title: "Agregar actividad",
         icon: IconPencilPlus,

@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { Container, Divider } from "@mantine/core";
 import {
+    AlertSection,
     FilterFormSearchDates,
     TableMarcacionRelojOnline,
     TitlePage,
@@ -8,6 +9,8 @@ import {
 import { isNotEmpty, useForm } from "@mantine/form";
 import { useMarcacionStore, useTitlePage } from "../../hooks";
 import dayjs from "dayjs";
+import { IconAlertCircle } from "@tabler/icons-react";
+import { Link } from "react-router-dom";
 
 const MarcacionesBiometricos = () => {
     const usuario = JSON.parse(localStorage.getItem("service_user"));
@@ -61,6 +64,17 @@ const MarcacionesBiometricos = () => {
             />
 
             <TableMarcacionRelojOnline usuario={usuario} />
+            <AlertSection
+                mt={20}
+                mb={0}
+                variant="light"
+                color="red.7"
+                title="¿No puedes visualizar tus marcaciones?"
+                icon={IconAlertCircle}
+            >
+                Si no puedes visualizar tus marcaciones puedes reportar a la{" "}
+                <Link to="/intranet/solicitud-soporte">administración</Link>
+            </AlertSection>
         </Container>
     );
 };

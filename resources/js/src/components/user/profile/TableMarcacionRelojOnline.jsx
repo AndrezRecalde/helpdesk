@@ -111,7 +111,7 @@ export const TableMarcacionRelojOnline = () => {
             },
         }),
         mantineTableProps: {
-            highlightOnHover: false,
+            highlightOnHover: true,
             withColumnBorders: true,
             withTableBorder: true,
             sx: {

@@ -1,4 +1,4 @@
-import { IconBellPlus, IconLayoutSidebarRightCollapseFilled } from "@tabler/icons-react";
+import { IconBellPlus } from "@tabler/icons-react";
 import { ActionIcon, Box, Burger, Group, useMantineTheme } from "@mantine/core";
 import { Logo, UserBtnHeader } from "../../../components";
 import {
@@ -25,9 +25,9 @@ export function HeaderMenu({ usuario, asideValue, modalAside }) {
             <Box pb={30}>
                 <header className={classes.header}>
                     <Group justify="space-between" h="100%">
-                        <Group>
+                        <Group h="100%">
                             <Logo height={50} width={200} />
-                            <Group h="100%" gap={0} visibleFrom="md">
+                            <Group h="100%" gap={0} visibleFrom="lg">
                                 <HeaderBtnInicio
                                     classes={classes}
                                     theme={theme}
@@ -69,7 +69,7 @@ export function HeaderMenu({ usuario, asideValue, modalAside }) {
                             </Group>
                         </Group>
 
-                        <Group visibleFrom="md">
+                        <Group visibleFrom="lg">
                             {!asideValue ? (
                                 <ActionIcon
                                     size={35}
@@ -95,7 +95,7 @@ export function HeaderMenu({ usuario, asideValue, modalAside }) {
                         <Burger
                             opened={isOpenDrawerMobile}
                             onClick={() => modalActionDrawerMobile(true)}
-                            hiddenFrom="md"
+                            hiddenFrom="lg"
                         />
                     </Group>
                 </header>

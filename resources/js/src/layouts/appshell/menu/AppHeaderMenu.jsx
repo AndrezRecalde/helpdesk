@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import { AppShell, ScrollArea } from "@mantine/core";
-import { useDisclosure } from "@mantine/hooks";
 import { HeaderMenu } from "./HeaderMenu";
 import { useUiHeaderMenu, useUsersStore } from "../../../hooks";
 import { StackAside } from "./StackAside";
@@ -10,7 +9,7 @@ export const AppHeaderMenu = ({ children }) => {
     const usuario = JSON.parse(localStorage.getItem("service_user"));
     //const [opened, { toggle }] = useDisclosure();
     const { isOpenModalAside, modalActionAside } = useUiHeaderMenu();
-    const [asideOpened, { toggle: toggleAside }] = useDisclosure(true);
+    //const [asideOpened, { toggle: toggleAside }] = useDisclosure(true);
     const { startLoadBirthdays } = useUsersStore();
 
     useEffect(() => {
@@ -19,8 +18,8 @@ export const AppHeaderMenu = ({ children }) => {
 
     return (
         <AppShell
-            header={{ height: 60 }}
-            footer={{ height: 60 }}
+            header={{ height: { base: 48, sm: 60, lg: 60 } }}
+            //footer={{ height: 60 }}
             /* navbar={{
                 width: 200,
                 breakpoint: "sm",

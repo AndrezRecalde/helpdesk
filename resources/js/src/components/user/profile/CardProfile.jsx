@@ -1,25 +1,18 @@
 import { Badge, Box, Card, Group, SimpleGrid, Skeleton } from "@mantine/core";
 import {
     AlertSection,
-    BtnSection,
     BtnSubmit,
     MenuSeleccion,
     ProfileForm,
     TextSection,
 } from "../../../components";
-import {
-    IconDeviceImacUp,
-    IconFingerprint,
-    IconInfoCircle,
-} from "@tabler/icons-react";
+import { IconDeviceImacUp, IconInfoCircle } from "@tabler/icons-react";
 import { useAuthStore, useTecnicoStore } from "../../../hooks";
 import { Roles } from "../../../helpers/dictionary";
-import { useNavigate } from "react-router-dom";
 
-export const CardProfile = ({ usuario, handleAction, handleMarcacion }) => {
+export const CardProfile = ({ usuario, handleAction }) => {
     const year = new Date();
     const { isLoading, profile } = useAuthStore();
-    const navigate = useNavigate();
 
     const { infoSoportes: totalTecnicossSoportes } = useTecnicoStore();
 
@@ -56,8 +49,8 @@ export const CardProfile = ({ usuario, handleAction, handleMarcacion }) => {
             shadow="sm"
             radius="md"
             p="lg"
-            mt={20}
-            mb={20}
+            mt={10}
+            mb={10}
             sx={{ position: "static", height: "50" }}
         >
             <Card.Section withBorder inheritPadding py="xs">
@@ -110,16 +103,6 @@ export const CardProfile = ({ usuario, handleAction, handleMarcacion }) => {
                 ) : (
                     <MenuSeleccion />
                 )}
-                <Group justify="center" mt={10}>
-                    <BtnSection
-                        fontSize={16}
-                        heigh={50}
-                        IconSection={IconFingerprint}
-                        handleAction={handleMarcacion}
-                    >
-                        Ver Marcaciones Biometricos
-                    </BtnSection>
-                </Group>
             </Card.Section>
         </Card>
     );

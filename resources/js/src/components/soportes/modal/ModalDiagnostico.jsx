@@ -1,8 +1,7 @@
-import { useEffect } from "react";
 import { Modal } from "@mantine/core";
 import { hasLength, isNotEmpty, useForm } from "@mantine/form";
 import { TextSection, FormDiagnosticar } from "../../../components";
-import { useEquipoStore, useSoporteStore, useUiSoporte } from "../../../hooks";
+import { useSoporteStore, useUiSoporte } from "../../../hooks";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import utc from "dayjs/plugin/utc";
@@ -18,8 +17,6 @@ export const ModalDiagnostico = ({ option }) => {
     const { modalActionDiagnosticar, isOpenModalDiagnosticar } = useUiSoporte();
 
     const { setActivateSoporte } = useSoporteStore();
-    const { startLoadEquiposInformaticos, clearEquiposInformaticos } =
-        useEquipoStore();
 
     const form = useForm({
         initialValues: {
@@ -53,16 +50,6 @@ export const ModalDiagnostico = ({ option }) => {
         }),
     });
 
-    useEffect(() => {
-        if (isOpenModalDiagnosticar) {
-            startLoadEquiposInformaticos();
-            return;
-        }
-
-        return () => {
-            clearEquiposInformaticos();
-        };
-    }, [isOpenModalDiagnosticar]);
 
     const handleCloseModal = () => {
         modalActionDiagnosticar(0);

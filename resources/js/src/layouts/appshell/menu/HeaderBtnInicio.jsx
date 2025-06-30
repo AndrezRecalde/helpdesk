@@ -1,5 +1,5 @@
 import { Box } from "@mantine/core";
-import { IconHomeCheck } from "@tabler/icons-react";
+import { IconHomeCheck, IconHomeMove } from "@tabler/icons-react";
 import { Link } from "react-router-dom";
 
 export const HeaderBtnInicio = ({ classes, theme }) => {
@@ -11,7 +11,7 @@ export const HeaderBtnInicio = ({ classes, theme }) => {
             <Box component="span" mr={5}>
                 Inicio
             </Box>
-            <IconHomeCheck size={16} color={theme.colors.teal[6]} />
+            <IconHomeMove size={18} color={theme.colors.teal[6]} />
         </Link>
     );
 };

@@ -42,7 +42,7 @@ class PermisosAdminController extends Controller
                             pp.id_tipo_motivo, ptp.tip_per_nombre as motivo,
                             pp.per_fecha_salida, pp.per_fecha_llegada,
                             pp.id_jefe_inmediato, u.nmbre_usrio as jefe_inmediato,
-                            pp.per_observaciones, pp.id_estado, pep.per_est_nombre as estado,
+                            pp.per_observaciones, pp.id_estado, pep.per_est_nombre as estado, pep.color,
                             TIMEDIFF(pp.per_fecha_llegada, pp.per_fecha_salida) as tiempo_total')
             ->join('usrios_sstma as us', 'us.cdgo_usrio', 'pp.id_usu_pide')
             ->join('dprtmntos as d', 'd.cdgo_dprtmnto', 'pp.id_direccion_pide')

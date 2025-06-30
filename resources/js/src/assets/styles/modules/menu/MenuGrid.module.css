@@ -31,3 +31,14 @@
         transform: scale(1.05);
     }
 }
+
+  .ring {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+
+    @media (max-width: $mantine-breakpoint-xs) {
+      justify-content: center;
+      margin-top: var(--mantine-spacing-md);
+    }
+  }

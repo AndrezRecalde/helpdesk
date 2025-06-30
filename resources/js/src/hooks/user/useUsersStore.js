@@ -37,13 +37,14 @@ export const useUsersStore = () => {
     const startLoadUsersGeneral = async ({ cdgo_direccion = null }) => {
         try {
             dispatch(onLoading(true));
-            const { data } = await helpdeskApi.post("/general/usuarios", {
+            const { data } = await helpdeskApi.post("/usuarios", {
                 cdgo_direccion,
             });
             const { usuarios } = data;
             dispatch(onLoadUsers(usuarios));
         } catch (error) {
             //console.log(error);
+            dispatch(onLoading(false));
             ExceptionMessageError(error);
         }
     };
@@ -62,6 +63,7 @@ export const useUsersStore = () => {
             dispatch(onLoadUsers(usuarios));
         } catch (error) {
             //console.log(error);
+            dispatch(onLoading(false));
             ExceptionMessageError(error);
         }
     };
@@ -86,6 +88,7 @@ export const useUsersStore = () => {
             dispatch(onLoadUsers(usuarios));
         } catch (error) {
             //console.log(error);
+            dispatch(onLoading(false));
             ExceptionMessageError(error);
         }
     };
@@ -98,6 +101,7 @@ export const useUsersStore = () => {
             dispatch(onLoadBirthdays(birthdays));
         } catch (error) {
             //console.log(error);
+            dispatch(onLoading(false));
             ExceptionMessageError(error);
         }
     }
@@ -170,7 +174,7 @@ export const useUsersStore = () => {
         }
     };
 
-    const startAddUser = async (user, storageFields) => {
+    const startAddUser = async (user, storageFields = null) => {
         try {
             if (user.cdgo_usrio) {
                 const { data } = await helpdeskApi.put(
@@ -199,6 +203,22 @@ export const useUsersStore = () => {
             ExceptionMessageError(error);
         }
     };
+
+    const startAddCodigoBiometrico = async (cdgo_usrio, asi_id_reloj, storageFields = null) => {
+        try {
+            const { data } = await helpdeskApi.put(
+                `/gerencia/update/codigo-biometrico/${cdgo_usrio}`,
+                { asi_id_reloj }
+            );
+            dispatch(onLoadMessage(data));
+            setTimeout(() => {
+                dispatch(onLoadMessage(undefined));
+            }, 40);
+            if (storageFields) startLoadUsers(storageFields);
+        } catch (error) {
+            ExceptionMessageError(error);
+        }
+    }
 
     const updateTecnico = async ({ cdgo_usrio, roles, actvo }) => {
         try {
@@ -245,6 +265,7 @@ export const useUsersStore = () => {
             dispatch(onSetInfoSoportes(info));
         } catch (error) {
             //console.log(error);
+            dispatch(onLoading(false));
             ExceptionMessageError(error);
         }
     };
@@ -289,6 +310,7 @@ export const useUsersStore = () => {
         startUpdatePassword,
         startChangePwdUser,
         startLoadInfoUsersSoporte,
+        startAddCodigoBiometrico,
         clearInfoSoportes,
         clearUsers,
         setActivateUser,

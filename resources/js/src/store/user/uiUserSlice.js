@@ -7,6 +7,7 @@ export const uiUserSlice = createSlice({
         isOpenModalResetPwd: false,
         isOpenModalActiveUser: false,
         isModalEditUser: false,
+        isOpenModalCodigoBiometrico: false
     },
     reducers: {
         onOpenModalAddUser: (state, { payload }) => {
@@ -20,6 +21,9 @@ export const uiUserSlice = createSlice({
         },
         onOpenModalEditUser: (state, { payload }) => {
             state.isModalEditUser = payload;
+        },
+        onOpenModalCodigoBiometrico: (state, { payload }) => {
+            state.isOpenModalCodigoBiometrico = payload;
         }
     },
 });
@@ -28,5 +32,6 @@ export const {
     onOpenModalAddUser,
     onOpenModalResetPwd,
     onOpenModalActiveUser,
-    onOpenModalEditUser
+    onOpenModalEditUser,
+    onOpenModalCodigoBiometrico
 } = uiUserSlice.actions;

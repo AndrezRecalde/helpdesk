@@ -57,7 +57,7 @@ export const ModalSolicitudAdminSoporte = () => {
     }, [isOpenModalAddSolicitud]);
 
     useEffect(() => {
-        if (isOpenModalAddSolicitud) {
+        if (can_tecnico) {
             startLoadTecnicos();
             return;
         }

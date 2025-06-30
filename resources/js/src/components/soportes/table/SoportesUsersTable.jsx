@@ -1,8 +1,13 @@
-import { useMemo } from "react";
-import { Badge } from "@mantine/core";
+import { useCallback, useMemo } from "react";
+import { ActionIcon, Badge, Group } from "@mantine/core";
 import { useMantineReactTable } from "mantine-react-table";
-import { DetailSolicitudesActualesTable, TableContent, TextSection } from "../../../components";
-import { useSoporteStore } from "../../../hooks";
+import {
+    DetailSolicitudesActualesTable,
+    TableContent,
+    TextSection,
+} from "../../../components";
+import { useSoporteStore, useUiSoporte } from "../../../hooks";
+import { IconThumbDown, IconThumbUp } from "@tabler/icons-react";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import "dayjs/locale/es";
@@ -10,8 +15,16 @@ import "dayjs/locale/es";
 dayjs.extend(relativeTime); // Extiende Day.js con el plugin
 dayjs.locale("es"); // Configura el idioma a español
 
-export const SoportesUsersTable = () => {
-    const { isLoading, soportes } = useSoporteStore();
+export const SoportesUsersTable = ({ isLoading }) => {
+    const usuario = JSON.parse(localStorage.getItem("service_user"));
+    const {
+        soportes,
+        startLoadSoportesAnualesUsuarios,
+        startCerrarSoporte,
+        setActivateSoporte,
+    } = useSoporteStore();
+    const { modalActionAnularSoporte } = useUiSoporte();
+
     const columns = useMemo(
         () => [
             {
@@ -47,20 +60,69 @@ export const SoportesUsersTable = () => {
                 accessorKey: "estado",
                 header: "Estado",
                 Cell: ({ cell }) => (
-                    <Badge
-                        variant="dot"
-                        color={cell.row.original.color}
-                    >
+                    <Badge variant="dot" color={cell.row.original.color}>
                         {cell.row.original.estado}
                     </Badge>
                 ),
                 filterVariant: "autocomplete",
             },
+            {
+                header: "Accion",
+                Cell: ({ cell }) => {
+                    return cell.row.original.id_estado === 3 ? (
+                        <Group justify="flex-start" gap={25}>
+                            <ActionIcon
+                                variant="default"
+                                size={40}
+                                radius="xl"
+                                onClick={() => handleSuccess(cell.row.original)}
+                            >
+                                <IconThumbUp />
+                            </ActionIcon>
+                            <ActionIcon
+                                variant="default"
+                                size={40}
+                                radius="xl"
+                                onClick={() => handleAnular(cell.row.original)}
+                            >
+                                <IconThumbDown />
+                            </ActionIcon>
+                        </Group>
+                    ) : (
+                        <TextSection fz={16}>Sin Acciones</TextSection>
+                    );
+                },
+            },
         ],
         [soportes]
     );
 
+    const handleSuccess = useCallback(
+        (selected) => {
+            const values = { id_calificacion: 5, id_estado: 4 };
+            //setActivateSoporte(selected);
+            startCerrarSoporte(selected, values);
+            setTimeout(() => {
+                startLoadSoportesAnualesUsuarios(usuario.cdgo_usrio);
+            }, 2500);
+        },
+        [soportes]
+    );
+
+    const handleAnular = useCallback(
+        (selected) => {
+            setActivateSoporte(selected);
+            modalActionAnularSoporte(1);
+        },
+        [soportes]
+    );
+
     const table = useMantineReactTable({
+        enableFullScreenToggle: false,
+        enableGlobalFilter: false,
+        enableDensityToggle: false,
+        enableColumnFilters: true,
+        enableSorting: false,
         columns,
         data: soportes, //must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
         state: { showProgressBars: isLoading },

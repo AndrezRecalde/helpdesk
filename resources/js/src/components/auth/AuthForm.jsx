@@ -59,11 +59,13 @@ export const AuthForm = () => {
             />
             <Stack p={30}>
                 <TextInput
+                    withAsterisk
                     label="Usuario"
                     placeholder="Digite su usuario"
                     {...form.getInputProps("lgin")}
                 />
                 <PasswordInput
+                    withAsterisk
                     label="Contraseña"
                     placeholder="Tu contraseña"
                     {...form.getInputProps("paswrd")}

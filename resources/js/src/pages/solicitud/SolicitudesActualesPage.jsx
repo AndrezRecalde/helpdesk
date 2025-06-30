@@ -13,9 +13,9 @@ import {
 import { useSoporteStore, useTitlePage, useUiSoporte } from "../../hooks";
 import { useDispatch } from "react-redux";
 import { onLoadSoportes } from "../../store/soporte/soporteSlice";
+import { IconBrandTelegram } from "@tabler/icons-react";
 import useSWR, { mutate } from "swr";
 import Swal from "sweetalert2";
-import { IconBrandTelegram } from "@tabler/icons-react";
 
 const SolicitudesActualesPage = () => {
     useTitlePage("Helpdesk | Solicitudes");
@@ -36,7 +36,7 @@ const SolicitudesActualesPage = () => {
     const { data, error, isLoading } = useSWR(
         usuario,
         startLoadSoportesActuales,
-        { refreshInterval: 2000 }
+        { refreshInterval: 5000 }
     );
 
     useEffect(() => {

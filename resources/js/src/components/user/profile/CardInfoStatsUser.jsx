@@ -19,22 +19,24 @@ export const CardInfoStatsUser = ({ usuario }) => {
     const { infoSoportes: totalTecnicosSoportes } = useTecnicoStore();
     const { infoSoportes } = useUsersStore();
 
-    function timeToMinutes(time) {
+    //Convertir Horas a Minutos
+    /* function timeToMinutes(time) {
         if (!time) return 0; // Asegurar un valor predeterminado en caso de que `time` sea nulo o indefinido
         const parts = time.split(":"); // Separar por ':'
         const hours = parseInt(parts[0], 10); // Obtener horas
         const minutes = parseInt(parts[1], 10); // Obtener minutos
         // Convertir horas a minutos y sumar minutos
         return hours * 60 + minutes;
-    }
+    } */
 
-    function timeToDays(time) {
+    //Convertir Horas a dias
+    /* function timeToDays(time) {
         if (!time) return 0; // Asegurar un valor predeterminado en caso de que `time` sea nulo o indefinido
         const [hours, minutes, seconds] = time.split(":").map(Number); // Separar y convertir cada parte a número
         const totalHours = hours + minutes / 60 + seconds / 3600; // Convertir todo a horas
         const days = totalHours / 24; // Dividir horas entre 24 para obtener los días
         return parseFloat(days.toFixed(2));
-    }
+    } */
 
     const icons = {
         total_permisos: IconLicense,
@@ -52,7 +54,7 @@ export const CardInfoStatsUser = ({ usuario }) => {
         {
             title: "Minutos en Permisos",
             icon: "tiempo_permiso",
-            value: timeToMinutes(activatePermiso?.tiempo_estimado),
+            value: activatePermiso?.tiempo_minutos || 0, //timeToMinutes(activatePermiso?.tiempo_estimado),
             descripcion: "Tiempo en minutos del total en permisos",
         },
         {
@@ -64,7 +66,7 @@ export const CardInfoStatsUser = ({ usuario }) => {
         {
             title: "Total en Días",
             icon: "tiempo_permiso",
-            value: timeToDays(activatePermiso?.tiempo_estimado),
+            value: activatePermiso?.dias_equivalentes || 0,
             descripcion: "Tiempo en días del total en permisos",
         },
         {

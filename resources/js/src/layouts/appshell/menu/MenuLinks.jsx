@@ -1,4 +1,4 @@
-import { Group, Menu, Text, ThemeIcon } from "@mantine/core";
+import { Grid, Group, Menu, Text, ThemeIcon } from "@mantine/core";
 import { TextSection } from "../../../components";
 import { Link } from "react-router-dom";
 
@@ -48,14 +48,18 @@ export const MenuQuick = ({ menuData, classes, theme }) => {
     ));
 };
 
-export const MenuItems = ({ menuHome, classes, theme, toggleDrawer = null }) => {
-
+export const MenuItems = ({
+    menuHome,
+    classes,
+    theme,
+    toggleDrawer = null,
+}) => {
     const handleCloseDrawer = () => {
-       if (toggleDrawer !== null) {
+        if (toggleDrawer !== null) {
             toggleDrawer(false);
             return;
-       }
-    }
+        }
+    };
 
     return menuHome.map((item) => (
         <Link
@@ -65,21 +69,27 @@ export const MenuItems = ({ menuHome, classes, theme, toggleDrawer = null }) => 
             onClick={handleCloseDrawer}
             style={{ textDecoration: "none", color: "inherit" }}
         >
-            <ThemeIcon
-                size={40}
-                variant="transparent"
-                radius="sm"
-                color={theme.colors[item.color][5]}
-            >
-                <item.icon
-                    color={theme.colors[item.color][5]}
-                    size={25}
-                    stroke={1.7}
-                />
-            </ThemeIcon>
-            <TextSection tt="left" fw={400} fz={16} mt={7}>
-                {item.title}
-            </TextSection>
+            <Grid>
+                <Grid.Col span={5}>
+                    <ThemeIcon
+                        size={50}
+                        variant="default"
+                        radius="md"
+                        color={theme.colors[item.color][5]}
+                    >
+                        <item.icon
+                            color={theme.colors[item.color][7]}
+                            //size={40}
+                            //stroke={1.5}
+                        />
+                    </ThemeIcon>
+                </Grid.Col>
+                <Grid.Col span={7}>
+                    <TextSection tt="left" fw={400} fz={16} mt={7}>
+                        {item.title}
+                    </TextSection>
+                </Grid.Col>
+            </Grid>
         </Link>
     ));
 };

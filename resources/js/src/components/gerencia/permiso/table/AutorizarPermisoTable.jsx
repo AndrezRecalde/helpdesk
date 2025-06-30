@@ -1,7 +1,10 @@
 import { useCallback, useMemo } from "react";
 import { useMantineReactTable } from "mantine-react-table";
 import { MRT_Localization_ES } from "mantine-react-table/locales/es/index.cjs";
-import { MenuTable_AutorizarPermiso, TableContent } from "../../../../components";
+import {
+    MenuTable_AutorizarPermiso,
+    TableContent,
+} from "../../../../components";
 import { usePermisoStore } from "../../../../hooks";
 import Swal from "sweetalert2";
 import dayjs from "dayjs";
@@ -21,9 +24,15 @@ export const AutorizarPermisoTable = () => {
     const columns = useMemo(
         () => [
             {
+                accessorKey: "estado", //access nested data with dot notation
+                header: "Estado",
+                filterVariant: "autocomplete",
+                size: 80,
+            },
+            {
                 accessorKey: "idper_permisos", //access nested data with dot notation
                 header: "Código",
-                size: "80",
+                size: 80,
             },
             {
                 accessorKey: "usuario_pide", //access nested data with dot notation
@@ -33,21 +42,19 @@ export const AutorizarPermisoTable = () => {
                 accessorFn: (row) =>
                     dayjs(row.per_fecha_salida).format("YYYY-MM-DD"),
                 header: "Fecha",
+                size: 80,
             },
             {
                 accessorFn: (row) =>
                     dayjs(row.per_fecha_salida).format("HH:mm:ss"),
                 header: "Hora de Salida",
+                size: 80,
             },
             {
                 accessorFn: (row) =>
                     dayjs(row.per_fecha_llegada).format("HH:mm:ss"),
                 header: "Hora de llegada",
-            },
-            {
-                accessorKey: "estado", //access nested data with dot notation
-                header: "Estado",
-                filterVariant: "autocomplete",
+                size: 80,
             },
             {
                 accessorKey: "per_observaciones", //access nested data with dot notation
@@ -72,7 +79,7 @@ export const AutorizarPermisoTable = () => {
                 confirmButtonText: "Si, confirmo!",
             }).then((result) => {
                 if (result.isConfirmed) {
-                    startUpdateEstadoPermiso(selected,ANULAR_PERMISO);
+                    startUpdateEstadoPermiso(selected, ANULAR_PERMISO);
                 }
             });
         },
@@ -94,7 +101,7 @@ export const AutorizarPermisoTable = () => {
                 confirmButtonText: "Si, confirmo!",
             }).then((result) => {
                 if (result.isConfirmed) {
-                    startUpdateEstadoPermiso(selected,AUTORIZAR_PERMISO);
+                    startUpdateEstadoPermiso(selected, AUTORIZAR_PERMISO);
                 }
             });
         },
@@ -115,6 +122,15 @@ export const AutorizarPermisoTable = () => {
                 handleAutorizar={handleAutorizarPermiso}
             />
         ),
+        mantineTableBodyCellProps: ({ column, cell }) => ({
+            style:
+                column.id === "estado"
+                    ? {
+                          backgroundColor: cell.row.original.color,
+                          color: "white",
+                      }
+                    : {},
+        }),
         mantineTableProps: {
             withColumnBorders: true,
             withTableBorder: true,

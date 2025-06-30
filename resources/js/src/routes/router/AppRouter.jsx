@@ -1,4 +1,4 @@
-import { authRoutes, peerLinks, routes } from "./routes";
+import { authRoutes, consultaTramiteRoutes, peerLinks, routes } from "./routes";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { PublicRoutes } from "../public/PublicRoutes";
 import { PrivateRoutes } from "../private";
@@ -13,6 +13,7 @@ const AuthRoutes = () => (
     <PublicRoutes>
         <Routes>
             <Route path={authRoutes.path} element={<authRoutes.Component />} />
+            <Route path={consultaTramiteRoutes.path} element={<consultaTramiteRoutes.Component />} />
             <Route
                 path="/*"
                 element={<Navigate replace to={authRoutes.link} />}

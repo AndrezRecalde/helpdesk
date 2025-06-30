@@ -18,14 +18,14 @@ export const StepperUser = ({ form }) => {
             //console.log('hola')
             form.setValues({
                 ...activateUser,
-                sexo: activateUser.sexo.toString(),
-                usu_id_empresa: activateUser.usu_id_empresa?.toString(),
-                cdgo_direccion: activateUser.cdgo_direccion?.toString(),
-                cdgo_dprtmnto: activateUser.cdgo_dprtmnto?.toString(),
-                crgo_id: activateUser.crgo_id?.toString(),
-                id_tipo_usuario: activateUser.id_tipo_usuario?.toString(),
+                sexo: activateUser.sexo.toString() || null,
+                usu_id_empresa: activateUser.usu_id_empresa?.toString() || null,
+                cdgo_direccion: activateUser.cdgo_direccion?.toString() || null,
+                cdgo_dprtmnto: activateUser.cdgo_dprtmnto?.toString() || null,
+                crgo_id: activateUser.crgo_id?.toString() || null,
+                id_tipo_usuario: activateUser.id_tipo_usuario?.toString() || null,
                 usu_ult_tipo_contrato:
-                    activateUser.usu_ult_tipo_contrato?.toString(),
+                    activateUser.usu_ult_tipo_contrato?.toString() || null,
                 finaliza_contrato:
                     activateUser.finaliza_contrato?.toString() ?? "0",
                 usu_f_f_contrato: activateUser.usu_f_f_contrato
@@ -121,7 +121,7 @@ export const StepperUser = ({ form }) => {
             //console.log(form.getTransformedValues());
             startAddUser(form.getTransformedValues());
         } */
-        //console.log(form.getTransformedValues());
+        console.log(form.getTransformedValues());
         startAddUser(form.getTransformedValues(), storageUserFields);
         setClearActivateUser();
         modalActionUser(false);

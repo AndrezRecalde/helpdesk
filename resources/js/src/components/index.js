@@ -8,6 +8,7 @@ import { CardInfoStatsUser } from "./user/profile/CardInfoStatsUser";
 import { TableMarcacionRelojOnline } from "./user/profile/TableMarcacionRelojOnline";
 import { UserBtnHeader } from "./user/menu/UserBtnHeader";
 import { NightModeSwitch } from "./user/menu/NightModeSwitch";
+import { ProfileField } from "./user/profile/ProfileField";
 
 /* Usuario: Contraseña */
 import { ChangePwdForm } from "./user/password/ChangePwdForm";
@@ -36,14 +37,19 @@ import { FilterAutorizarPermiso } from "./gerencia/permiso/filter/FilterAutoriza
 import { AutorizarPermisoTable } from "./gerencia/permiso/table/AutorizarPermisoTable";
 
 /* VACACIONES */
-/* import { SolicitudVacacionesForm } from "./vacaciones/form/SolicitudVacacionesForm";
-import { SolicitudesVacacionesTable } from "./vacaciones/table/SolicitudesVacacionesTable";
-import { FechasVacacionesField } from "./vacaciones/form/FechasVacacionesField";
-import { MotivosVacacionesField } from "./vacaciones/form/MotivosVacacionesField";
-import { JefesVacacionesField } from "./vacaciones/form/JefesVacacionesField";
-import { FilterVacacionesForm } from "./vacaciones/form/FilterVacacionesForm";
-import { SolAnulacionVacacionModal } from "./vacaciones/modal/SolAnulacionVacacionModal";
-import { SolAnulacionForm } from "./vacaciones/form/SolAnulacionForm"; */
+import { SolicitudVacacionesForm } from "./vacaciones/solicitudes/form/SolicitudVacacionesForm";
+import { SolicitudesVacacionesTable } from "./vacaciones/solicitudes/table/SolicitudesVacacionesTable";
+import { FechasVacacionesField } from "./vacaciones/solicitudes/form/FechasVacacionesField";
+import { MotivosVacacionesField } from "./vacaciones/solicitudes/form/MotivosVacacionesField";
+import { JefesVacacionesField } from "./vacaciones/solicitudes/form/JefesVacacionesField";
+import { FilterVacacionesForm } from "./vacaciones/solicitudes/form/FilterVacacionesForm";
+import { SolAnulacionVacacionModal } from "./vacaciones/solicitudes/modal/SolAnulacionVacacionModal";
+import { SolAnulacionForm } from "./vacaciones/solicitudes/form/SolAnulacionForm";
+
+/* PERIODOS VACACIONES */
+import { CreatePeriodoModal } from "./vacaciones/periodos/modal/CreatePeriodoModal";
+import { PeriodoForm } from "./vacaciones/periodos/form/PeriodoForm";
+
 
 /* SOPORTE */
 import { FilterFormSearchDates } from "./gerencia/soporte/filter/FilterFormSearchDates";
@@ -72,6 +78,9 @@ import { ModalResetPwdUser } from "./gerencia/user/modal/ModalResetPwdUser";
 import { ModalUser } from "./gerencia/user/modal/ModalUser";
 import { StepperUser } from "./gerencia/user/stepper/StepperUser";
 import { UsersTable } from "./gerencia/user/table/UsersTable";
+import { ModalCodigoBiometrico } from "./gerencia/user/modal/ModalCodigoBiometrico";
+import { FormCodigoBiometrico } from "./gerencia/user/form/FormCodigoBiometrico";
+
 
 /* Permisos */
 import { FilterPermiso } from "./permiso/filter/FilterPermiso";
@@ -101,8 +110,6 @@ import { ModalSolicitudAdminSoporte } from "./soportes/modal/ModalSolicitudAdmin
 
 import { ResumenDesempenoArea } from "./soportes/section/ResumenDesempenoArea";
 import { ResumenDesempenoEstados } from "./soportes/section/ResumenDesempenoEstados";
-import { SectionUsersSoportesActuales } from "./soportes/section/SectionUsersSoportesActuales";
-import { SectionUsersSoportesAnuales } from "./soportes/section/SectionUsersSoportesAnuales";
 
 import {
     ContactIcon,
@@ -211,6 +218,11 @@ import { InvConsumibleHistorialModal } from "./inventario/consumible/modal/InvCo
 import { InvConsumibleBusqueda } from "./inventario/consumible/form/InvConsumibleBusqueda";
 import { InvConsumibleHistorialTable } from "./inventario/consumible/table/InvConsumibleHistorialTable";
 
+/* Ruta de Archivos */
+import { ConsultaTramiteForm } from "./rutas/form/ConsultaTramiteForm";
+import { FichaIngresoCard } from "./rutas/card/FichaIngresoCard";
+import { DespachosTable } from "./rutas/table/DespachosTable";
+import { InformacionTramiteModal } from "./rutas/modal/InformacionTramiteModal";
 
 /* Elementos */
 import { Logo } from "./elements/application/Logo";
@@ -248,6 +260,7 @@ import {
     MenuTable_AutorizarVacacion
 } from "./elements/tables/MenuTable";
 import { TableContent } from "./elements/tables/TableContent";
+import { StatInfoDepartamento } from "./elements/stats/StatInfoDepartamento";
 
 export {
     /* Authenticacion */
@@ -260,6 +273,7 @@ export {
     TableMarcacionRelojOnline,
     UserBtnHeader,
     NightModeSwitch,
+    ProfileField,
 
     /* Usuario: Contraseña */
     ChangePwdForm,
@@ -287,14 +301,17 @@ export {
     AutorizarPermisoTable,
 
     /* VACACIONES */
-    /* SolicitudVacacionesForm,
+    SolicitudVacacionesForm,
     SolicitudesVacacionesTable,
     FechasVacacionesField,
     MotivosVacacionesField,
     JefesVacacionesField,
     FilterVacacionesForm,
     SolAnulacionVacacionModal,
-    SolAnulacionForm, */
+    SolAnulacionForm,
+
+    CreatePeriodoModal,
+    PeriodoForm,
 
     /* SOPORTE */
     FilterFormSearchDates,
@@ -322,6 +339,8 @@ export {
     ModalUser,
     StepperUser,
     UsersTable,
+    ModalCodigoBiometrico,
+    FormCodigoBiometrico,
 
     /* Permisos */
     FilterPermiso,
@@ -347,8 +366,6 @@ export {
     ModalSolicitudAdminSoporte,
     ResumenDesempenoArea,
     ResumenDesempenoEstados,
-    SectionUsersSoportesActuales,
-    SectionUsersSoportesAnuales,
     ContactIcon,
     ContactIconsList,
     SoportesCalificacionTable,
@@ -448,6 +465,12 @@ export {
     InvConsumibleBusqueda,
     InvConsumibleHistorialTable,
 
+    /* Ruta de archivos */
+    ConsultaTramiteForm,
+    FichaIngresoCard,
+    DespachosTable,
+    InformacionTramiteModal,
+
     /* Elements */
     Logo,
     TitlePage,
@@ -478,4 +501,5 @@ export {
     MenuTable_Per,
     MenuTable_AutorizarPermiso,
     TableContent,
+    StatInfoDepartamento
 };

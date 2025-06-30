@@ -5,6 +5,10 @@ const AuthPage = lazy(() =>
     import(/* webpackChunkName: "AuthPage" */ "../../pages/auth/AuthPage")
 );
 
+const ConsultaTramiteRutaPage = lazy(() =>
+    import(/* webpackChunkName: "ConsultaTramiteRutaPage" */ "../../pages/ruta/ConsultaTramiteRutaPage")
+);
+
 const HomePage = lazy(() =>
     import(/* webpackChunkName: "HomePage" */ "../../pages/home/HomePage")
 );
@@ -146,17 +150,23 @@ const AutorizarPermisosPage = lazy(() =>
     )
 );
 
-//const SolicitudVacacionesPage = lazy(() =>
-//    import(
-//        /* webpackChunkName: "SolicitudVacacionesPage" */ "../../pages/vacaciones/SolicitudVacacionesPage"
-//    )
-//);
+const SolicitudVacacionesPage = lazy(() =>
+    import(
+        /* webpackChunkName: "SolicitudVacacionesPage" */ "../../pages/vacaciones/SolicitudVacacionesPage"
+    )
+);
 
-//const SolicitudesVacacionesPage = lazy(() =>
-//    import(
-//        /* webpackChunkName: "SolicitudesVacacionesPage" */ "../../pages/vacaciones/SolicitudesVacacionesPage"
-//    )
-//);
+const SolicitudesVacacionesPage = lazy(() =>
+    import(
+        /* webpackChunkName: "SolicitudesVacacionesPage" */ "../../pages/vacaciones/SolicitudesVacacionesPage"
+    )
+);
+
+const PeriodoVacacionalesPage = lazy(() =>
+    import(
+        /* webpackChunkName: "PeriodoVacacionalesPage" */ "../../pages/vacaciones/PeriodoVacacionalesPage"
+    )
+);
 
 const ErrorNotFound = lazy(() =>
     import(
@@ -172,6 +182,12 @@ const generateRoutes = (basePath, components, roles) =>
         Component,
         roles,
     }));
+
+export const consultaTramiteRoutes = {
+    path: "consulta-tramite/*",
+    link: "consulta-tramite",
+    Component: ConsultaTramiteRutaPage,
+};
 
 export const authRoutes = {
     path: "auth/login/*",
@@ -234,13 +250,14 @@ const peerRoutes = generateRoutes(
         { path: "ver-permisos", Component: ListPermisosPage },
 
         /* { path: "vacaciones", Component: SolicitudVacacionesPage },
-        { path: "solicitudes-vacaciones", Component: SolicitudesVacacionesPage }, */
+        { path: "solicitudes-vacaciones", Component: SolicitudesVacacionesPage },
+        { path: "periodos-vacaciones", Component: PeriodoVacacionalesPage }, */
 
         { path: "agregar-actividad", Component: ActividadPage },
         { path: "lista-actividades", Component: ListActividadesPage },
 
         { path: "solicitud-soporte", Component: SolicitudPage },
-        { path: "soportes/:soporteValue", Component: UserSoportesPage },
+        { path: "soportes", Component: UserSoportesPage },
     ],
     [""]
 );

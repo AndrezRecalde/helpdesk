@@ -1,21 +1,24 @@
 import { useMantineReactTable } from "mantine-react-table";
 import { useCallback, useMemo } from "react";
-import {
-    ActivateUserBtn,
-    MenuUsersTable,
-    TableContent,
-} from "../../..";
+import { ActivateUserBtn, MenuUsersTable, TableContent } from "../../..";
 import { useUiUser, useUsersStore } from "../../../../hooks";
+import { Table } from "@mantine/core";
 
 export const UsersTable = () => {
     const { isLoading, users, setActivateUser } = useUsersStore();
-    const { modalActionUser, modalActionActiveUser, modalActionResetPwd } = useUiUser();
+    const {
+        modalActionUser,
+        modalActionActiveUser,
+        modalActionResetPwd,
+        modalActionCodigoBiometrico,
+    } = useUiUser();
     const columns = useMemo(
         () => [
             {
                 accessorKey: "direccion", //access nested data with dot notation
                 header: "Dirección",
                 filterVariant: "autocomplete",
+                size: 250,
             },
             {
                 accessorKey: "nmbre_usrio", //access nested data with dot notation
@@ -29,6 +32,7 @@ export const UsersTable = () => {
             {
                 accessorKey: "lgin",
                 header: "Usuario",
+                size: 80,
             },
             {
                 accessorKey: "email",
@@ -40,6 +44,7 @@ export const UsersTable = () => {
                 Cell: ({ cell }) => (
                     <ActivateUserBtn cell={cell} handleActive={handleActive} />
                 ),
+                size: 80,
             },
         ],
         []
@@ -70,6 +75,14 @@ export const UsersTable = () => {
         [users]
     );
 
+    const handleCodigoBiometrico = useCallback(
+        (selected) => {
+            setActivateUser(selected);
+            modalActionCodigoBiometrico(true);
+        },
+        [users]
+    );
+
     const table = useMantineReactTable({
         columns,
         data: users, //must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
@@ -81,22 +94,50 @@ export const UsersTable = () => {
                 row={row}
                 handleEdit={handleEdit}
                 handleResetPassword={handleResetPassword}
+                handleCodigoBiometrico={handleCodigoBiometrico}
             />
+        ),
+        renderDetailPanel: ({ row }) => (
+            <Table withTableBorder withColumnBorders>
+                <Table.Thead>
+                    <Table.Tr>
+                        <Table.Th>Cédula</Table.Th>
+                        <Table.Th>Código Biométrico</Table.Th>
+                        <Table.Th>Tipo Contrato</Table.Th>
+                    </Table.Tr>
+                </Table.Thead>
+
+                <Table.Tbody>
+                    <Table.Tr key={row.original.cdgo_usrio}>
+                        <Table.Td>
+                            {row.original.usu_ci || "SIN DATOS CEDULACION"}
+                        </Table.Td>
+                        <Table.Td>
+                            {row.original.asi_id_reloj ||
+                                "SIN DATOS INGRESADOS"}
+                        </Table.Td>
+                        <Table.Td>
+                            {row.original.tipo_contrato ||
+                                "SIN DATOS INGRESADOS"}
+                        </Table.Td>
+                    </Table.Tr>
+                </Table.Tbody>
+            </Table>
         ),
         mantineTableProps: {
             withColumnBorders: true,
             withTableBorder: true,
             sx: {
-                'thead > tr': {
-                  backgroundColor: 'inherit',
+                "thead > tr": {
+                    backgroundColor: "inherit",
                 },
-                'thead > tr > th': {
-                  backgroundColor: 'inherit',
+                "thead > tr > th": {
+                    backgroundColor: "inherit",
                 },
-                'tbody > tr > td': {
-                  backgroundColor: 'inherit',
+                "tbody > tr > td": {
+                    backgroundColor: "inherit",
                 },
-            }
+            },
         },
     });
 

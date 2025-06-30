@@ -105,7 +105,7 @@ const usuarioRoutes = generateRoutes(
     "staff",
     [
         { path: "solicitud", Component: SolicitudPage },
-        { path: "soportes/:soporteValue", Component: UserSoportesPage },
+        { path: "soportes", Component: UserSoportesPage },
         { path: "agregar-actividad", Component: ActividadPage },
         { path: "lista-actividades", Component: ListActividadesPage },
         { path: "permiso", Component: PermisosPage },
@@ -345,7 +345,7 @@ export const navRoutes = [
             },
             {
                 label: "Mis soportes",
-                path: "soportes/:soporteValue",
+                path: "soportes",
                 link: "/soportes/actuales",
                 roles: ["USUARIO"],
                 //Component: UserSoportesPage,

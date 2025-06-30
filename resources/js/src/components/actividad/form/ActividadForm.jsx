@@ -10,7 +10,6 @@ import SubScript from "@tiptap/extension-subscript";
 import { BtnSubmit, FormRichText } from "../..";
 import { isNotEmpty, useForm } from "@mantine/form";
 import { useActividadStore, useUiActividad } from "../../..//hooks";
-import { IconDatabase } from "@tabler/icons-react";
 import dayjs from "dayjs";
 
 export const ActividadForm = ({ fecha_inicio, fecha_fin }) => {
@@ -82,7 +81,7 @@ export const ActividadForm = ({ fecha_inicio, fecha_fin }) => {
                     {...form.getInputProps("fecha_actividad")}
                 />
                 <FormRichText form={form} nameInput="actividad" editor={editor} />
-                <BtnSubmit IconSection={IconDatabase}>
+                <BtnSubmit>
                     Guardar actividad
                 </BtnSubmit>
             </Stack>

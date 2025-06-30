@@ -33,7 +33,7 @@ const mockdata = [
         title: "Revisar Marcaciones",
         icon: IconFingerprintScan,
         color: "indigo",
-        link: "/intranet/ver-marcaciones",
+        link: "/intranet/marcaciones-biometricos",
     },
     {
         title: "Agregar actividades",
@@ -54,7 +54,7 @@ export const MenuSeleccion = () => {
             onClick={() => navigate(item.link)}
         >
             <item.icon color={theme.colors[item.color][6]} size="2rem" />
-            <TextSection tt="" fz={12} mt={7}>
+            <TextSection tt="" fz={14} mt={7}>
                 {item.title}
             </TextSection>
         </UnstyledButton>

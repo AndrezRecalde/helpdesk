@@ -29,7 +29,7 @@ export const DrawerMenuMobile = ({ usuario, classes, theme }) => {
             size="100%"
             padding="md"
             title="Menú"
-            hiddenFrom="md"
+            hiddenFrom="lg"
             zIndex={1000000}
             classNames={{
                 body: classes.drawer,

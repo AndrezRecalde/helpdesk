@@ -1,9 +1,10 @@
 import { useCallback, useEffect, useMemo } from "react";
-import { Container, Divider, LoadingOverlay } from "@mantine/core";
+import { Container, Divider, Group } from "@mantine/core";
 import { isNotEmpty, useForm } from "@mantine/form";
 import { useMantineReactTable } from "mantine-react-table";
 import {
     ActionReportPDF,
+    BtnSection,
     FilterFormSearchDates,
     MenuTable_E,
     ModalActividad,
@@ -11,11 +12,14 @@ import {
     TitlePage,
 } from "../../components";
 import { useActividadStore, useTitlePage, useUiActividad } from "../../hooks";
+import { IconChevronsRight } from "@tabler/icons-react";
+import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
 import Swal from "sweetalert2";
 
 const ListActividadesPage = () => {
     useTitlePage("Helpdesk | Mis Actividades");
+    const navigate = useNavigate();
     const srv_user = JSON.parse(localStorage.getItem("service_user"));
     const { modalActionActividad } = useUiActividad();
 
@@ -176,9 +180,22 @@ const ListActividadesPage = () => {
         },
     });
 
+    const handleAction = () => {
+        navigate("/intranet/agregar-actividad");
+    };
+
     return (
         <Container size="xl" my="md">
-            <TitlePage order={2}>Lista de actividades</TitlePage>
+            <Group justify="space-between">
+                <TitlePage order={2}>Lista de actividades</TitlePage>
+
+                <BtnSection
+                    IconSection={IconChevronsRight}
+                    handleAction={handleAction}
+                >
+                    Crear actividad
+                </BtnSection>
+            </Group>
             <Divider my="md" />
             <FilterFormSearchDates
                 form={form}

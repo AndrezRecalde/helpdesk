@@ -68,6 +68,12 @@ import { uiActividadSlice } from "./actividad/uiActividadSlice";
 import { permisoSlice } from "./permiso/permisoSlice";
 import { uiPermisoSlice } from "./permiso/uiPermisoSlice";
 
+/* Vacaciones */
+import { vacacionesSlice } from "./vacaciones/vacacionesSlice";
+import { uiVacacionesSlice } from "./vacaciones/uiVacacionesSlice";
+import { periodoSlice } from "./vacaciones/periodo/periodoSlice";
+import { uiPeriodoSlice } from "./vacaciones/periodo/uiPeriodoSlice";
+
 /* Marcaciones */
 import { marcacionSlice } from "./marcacion/marcacionSlice";
 
@@ -105,6 +111,11 @@ import { uiInvConsumibleSlice } from "./consumible/uiInvConsumibleSlice";
 
 /* Inventario: Ui Custodios */
 import { uiInvCustodioSlice } from "./inventario/custodio/uiInvCustodioSlice";
+
+/* Ruta de tramites */
+import { rutaSlice } from "./ruta/rutaSlice";
+import { uiRutaSlice } from "./ruta/uiRutaSlice";
+
 
 /* Storage Fields */
 import { storageFieldsSlice } from "./fields/storageFieldsSlice";
@@ -187,6 +198,12 @@ export {
     permisoSlice,
     uiPermisoSlice,
 
+    /* Vacaciones */
+    vacacionesSlice,
+    uiVacacionesSlice,
+    periodoSlice,
+    uiPeriodoSlice,
+
     /* Marcaciones */
     marcacionSlice,
 
@@ -224,6 +241,10 @@ export {
 
     /* Inventario: Ui Custodio */
     uiInvCustodioSlice,
+
+    /* Ruta de tramites */
+    rutaSlice,
+    uiRutaSlice,
 
     /* Storage */
     storageFieldsSlice

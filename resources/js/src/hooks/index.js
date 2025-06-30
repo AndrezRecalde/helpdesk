@@ -72,7 +72,11 @@ import { usePermisoStore } from "./permiso/usePermisoStore";
 import { useUiPermiso } from "./permiso/useUiPermiso";
 
 /* Vacaciones */
-/* import { useVacacionesStore } from "./vacaciones/useVacacionesStore"; */
+import { useVacacionesStore } from "./vacaciones/useVacacionesStore";
+import { useUiVacaciones } from "./vacaciones/useUiVacaciones";
+/* Periodos Vacaciones */
+import { usePeriodoStore } from "./vacaciones/periodos/usePeriodoStore";
+import { useUiPeriodo } from "./vacaciones/periodos/useUiPeriodo";
 
 /* Marcaciones */
 import { useMarcacionStore } from "./marcacion/useMarcacionStore";
@@ -113,6 +117,10 @@ import { useUiInvConsumible } from "./inventario/consumible/useUiInvConsumible";
 
 /* Inventario: UI Custodio */
 import { useUiInvCustodio } from "./inventario/custodio/useUiInvCustodio";
+
+/* Ruta de Tramite */
+import { useRutaStore } from "./ruta/useRutaStore";
+import { useUiRuta } from "./ruta/useUiRuta";
 
 /* Hook para la fecha y hora */
 import useFechaHoraEcuador from "./date/useFechaHoraEcuador";
@@ -173,7 +181,11 @@ export {
     usePermisoStore,
     useUiPermiso,
 
-    /* useVacacionesStore, */
+    useVacacionesStore,
+    useUiVacaciones,
+
+    usePeriodoStore,
+    useUiPeriodo,
 
     useMarcacionStore,
 
@@ -203,6 +215,9 @@ export {
     useUiInvConsumible,
 
     useUiInvCustodio,
+
+    useRutaStore,
+    useUiRuta,
 
     useFechaHoraEcuador,
 

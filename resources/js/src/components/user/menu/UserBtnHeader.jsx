@@ -6,8 +6,8 @@ import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "../../../hooks";
 import { NightModeSwitch } from "./NightModeSwitch";
 import { menuProfile } from "../../../layouts/appshell/menu/data/menuRoutes";
-import classes from "../../../assets/styles/modules/user/UserHeader.module.css";
 import { TextSection } from "../../elements/titles/TextSection";
+import classes from "../../../assets/styles/modules/user/UserHeader.module.css";
 
 export const UserBtnHeader = () => {
     const { startLogout } = useAuthStore();
@@ -59,11 +59,11 @@ export const UserBtnHeader = () => {
                             {nombres}
                         </Avatar>
                          <div style={{ flex: 1 }}>
-                            <Text fw={500} size="sm">
-                                {usuario?.usu_alias || "Sin datos"}
+                            <Text fw={600} size="sm">
+                                {typeof usuario?.usu_alias === "string" ? usuario.usu_alias.toUpperCase() : "Sin datos"}
                             </Text>
                             <Text size="xs" c="dimmed">
-                                {usuario?.email || "Sin datos"}
+                                {usuario?.email ?? "Sin datos"}
                             </Text>
                         </div>
                         <IconChevronRight

@@ -36,6 +36,10 @@ import PermisosPage from "./permisos/PermisosPage";
 import ListPermisosPage from "./permisos/ListPermisosPage";
 import ListPermisosAdminPage from "./permisos/ListPermisosAdminPage";
 
+/* Vacaciones */
+import SolicitudVacacionesPage  from "./vacaciones/SolicitudVacacionesPage";
+import SolicitudesVacacionesPage from "./vacaciones/SolicitudesVacacionesPage";
+
 /* Marcaciones */
 import MarcacionPage from "./marcacion/MarcacionPage";
 
@@ -81,6 +85,8 @@ export {
     SolicitudesActualesPage,
     //SolicitudesAnuladasPage,
 
+    SolicitudVacacionesPage,
+    SolicitudesVacacionesPage,
 
     SoportesPage,
     //BusquedaSoportePage,
