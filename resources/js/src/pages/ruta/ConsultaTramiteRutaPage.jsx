@@ -5,11 +5,13 @@ import {
     DespachosTable,
     FichaIngresoCard,
     InformacionTramiteModal,
+    StatInfoDepartamento,
     TitlePage,
 } from "../../components";
 import { IconHelp } from "@tabler/icons-react";
 import { useRutaStore, useTitlePage, useUiRuta } from "../../hooks";
 import Swal from "sweetalert2";
+import { infoSecretaria } from "../../helpers/infoStats";
 
 const ConsultaTramiteRutaPage = () => {
     useTitlePage("Consulta tramite");
@@ -43,7 +45,8 @@ const ConsultaTramiteRutaPage = () => {
 
     return (
         <Container size="xl" my="xl">
-            <Group justify="space-between">
+            <StatInfoDepartamento infoDepartamento={infoSecretaria} />
+            <Group justify="space-between" mt={20}>
                 <TitlePage order={2}>Consulta de Trámites</TitlePage>
                 <ActionIcon
                     variant="subtle"
