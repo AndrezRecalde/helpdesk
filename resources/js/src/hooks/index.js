@@ -1,6 +1,12 @@
 import { useTitlePage } from "./title/useTitlePage";
 import { useErrorException } from "./error/useErrorException";
 
+/* Hook para la fecha y hora */
+import useFechaHoraEcuador from "./date/useFechaHoraEcuador";
+
+/* Storage */
+import { useStorageField } from "./storage/useStorageField";
+
 /* Authenticacion */
 import { useAuthStore } from "./auth/useAuthStore";
 
@@ -122,15 +128,15 @@ import { useUiInvCustodio } from "./inventario/custodio/useUiInvCustodio";
 import { useRutaStore } from "./ruta/useRutaStore";
 import { useUiRuta } from "./ruta/useUiRuta";
 
-/* Hook para la fecha y hora */
-import useFechaHoraEcuador from "./date/useFechaHoraEcuador";
 
-/* Storage */
-import { useStorageField } from "./storage/useStorageField";
 
 export {
     useTitlePage,
     useErrorException,
+
+        useFechaHoraEcuador,
+
+    useStorageField,
 
     useAuthStore,
 
@@ -219,7 +225,5 @@ export {
     useRutaStore,
     useUiRuta,
 
-    useFechaHoraEcuador,
 
-    useStorageField
 }

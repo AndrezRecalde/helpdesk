@@ -1,5 +1,5 @@
-import axios from "axios";
 import { getEnv } from "../helpers/getEnv";
+import axios from "axios";
 
 const { VITE_APP_URL } = getEnv();
 

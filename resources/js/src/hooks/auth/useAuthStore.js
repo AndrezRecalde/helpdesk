@@ -1,4 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
+import { useErrorException } from "../../hooks";
 import {
     onAuthenticate,
     onClearErrores,
@@ -9,20 +10,17 @@ import {
     onLogout,
     onValidate,
 } from "../../store/auth/authSlice";
-import { useErrorException } from "../../hooks";
-import {
-    useMantineColorScheme,
-} from "@mantine/core";
+import { useMantineColorScheme } from "@mantine/core";
 import helpdeskApi from "../../api/helpdeskApi";
 
 export const useAuthStore = () => {
-    const { clearColorScheme  } = useMantineColorScheme();
+    const { clearColorScheme } = useMantineColorScheme();
     const { isLoading, user, token, profile, validate, errores } = useSelector(
         (state) => state.auth
     );
-    const dispatch = useDispatch();
-
     const { ExceptionMessageError } = useErrorException(onLoadErrores);
+
+    const dispatch = useDispatch();
 
     const startLogin = async ({ lgin, paswrd }) => {
         try {
@@ -55,7 +53,7 @@ export const useAuthStore = () => {
         if (!token) return dispatch(onLogout());
 
         try {
-            const { data } = await helpdeskApi.post("/refresh",{});
+            const { data } = await helpdeskApi.post("/refresh", {});
             const { user, access_token } = data;
             localStorage.setItem("service_user", JSON.stringify(user));
             localStorage.setItem("auth_token", access_token);
@@ -111,6 +109,6 @@ export const useAuthStore = () => {
         checkAuthToken,
         startProfile,
         clearProfile,
-        startLogout
+        startLogout,
     };
 };

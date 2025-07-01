@@ -1,5 +1,5 @@
-import React from "react";
-import { useErrorException } from "../error/useErrorException";
+import { useDispatch, useSelector } from "react-redux";
+import { useErrorException } from "../../hooks";
 import {
     onLoadDespachos,
     onLoadErrores,
@@ -7,7 +7,6 @@ import {
     onLoadingDespachos,
     onLoadNumeroRuta,
 } from "../../store/ruta/rutaSlice";
-import { useDispatch, useSelector } from "react-redux";
 import helpdeskApi from "../../api/helpdeskApi";
 
 export const useRutaStore = () => {
@@ -25,7 +24,7 @@ export const useRutaStore = () => {
     const dispatch = useDispatch();
 
     const startSearchRutaTramite = async ({ anio, numero_ruta, captcha }) => {
-        console.log(captcha);
+        //console.log(captcha);
         try {
             dispatch(onLoadingDespachos(true));
             const { data } = await helpdeskApi.post("/consulta-tramite", {

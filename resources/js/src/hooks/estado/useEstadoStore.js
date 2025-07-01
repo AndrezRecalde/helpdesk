@@ -1,10 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
+import { useErrorException } from "../../hooks";
 import {
     onClearEstados,
     onLoadErrores,
     onLoadEstados,
 } from "../../store/estado/estadoSlice";
-import { useErrorException } from "../../hooks";
 import helpdeskApi from "../../api/helpdeskApi";
 
 export const useEstadoStore = () => {
