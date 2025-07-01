@@ -1,9 +1,9 @@
+import { useEffect } from "react";
 import { authRoutes, consultaTramiteRoutes, peerLinks, routes } from "./routes";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { PublicRoutes } from "../public/PublicRoutes";
 import { PrivateRoutes } from "../private";
 import { useAuthStore } from "../../hooks";
-import { useEffect } from "react";
 import { RoutesNotFound } from "../not-found/RoutesNotFound";
 //import { AppLayout, Roles } from "../../layouts";
 import { AuthGuard } from "../private/guards";

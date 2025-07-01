@@ -1,25 +1,16 @@
 import { useRef, useState } from "react";
-import {
-    Box,
-    Fieldset,
-    Group,
-    NumberInput,
-    SimpleGrid,
-} from "@mantine/core";
+import { Box, Fieldset, Group, NumberInput, SimpleGrid } from "@mantine/core";
 import { YearPickerInput } from "@mantine/dates";
 import { BtnSubmit } from "../../../components";
 import { IconSearch } from "@tabler/icons-react";
 import { isNotEmpty, useForm } from "@mantine/form";
 import { useRutaStore } from "../../../hooks";
-import { getEnv } from "../../../helpers/getEnv";
 import ReCAPTCHA from "react-google-recaptcha";
 import dayjs from "dayjs";
 
-const { VITE_RECAPTCHA_SITE_KEY } = getEnv();
-
 export const ConsultaTramiteForm = () => {
+    const VITE_RECAPTCHA_SITE_KEY = "6LeDo2QrAAAAANZ0ZF-3cNBoNGMoe0MjuVy9ivzb";
     const { isLoadingDespachos, startSearchRutaTramite } = useRutaStore();
-
     const [captchaToken, setCaptchaToken] = useState(null);
     const [captchaError, setCaptchaError] = useState(false);
     const captchaRef = useRef(null);

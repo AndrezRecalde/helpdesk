@@ -6,13 +6,14 @@ const AuthPage = lazy(() =>
 );
 
 const ConsultaTramiteRutaPage = lazy(() =>
-    import(/* webpackChunkName: "ConsultaTramiteRutaPage" */ "../../pages/ruta/ConsultaTramiteRutaPage")
+    import(
+        /* webpackChunkName: "ConsultaTramiteRutaPage" */ "../../pages/ruta/ConsultaTramiteRutaPage"
+    )
 );
 
 const HomePage = lazy(() =>
     import(/* webpackChunkName: "HomePage" */ "../../pages/home/HomePage")
 );
-
 
 const DashGerenciaPage = lazy(() =>
     import(
@@ -183,16 +184,16 @@ const generateRoutes = (basePath, components, roles) =>
         roles,
     }));
 
-export const consultaTramiteRoutes = {
-    path: "consulta-tramite/*",
-    link: "consulta-tramite",
-    Component: ConsultaTramiteRutaPage,
-};
-
 export const authRoutes = {
     path: "auth/login/*",
     link: "auth/login",
     Component: AuthPage,
+};
+
+export const consultaTramiteRoutes = {
+    path: "consulta-tramite/*",
+    link: "consulta-tramite",
+    Component: ConsultaTramiteRutaPage,
 };
 
 const helpdeskGerenciaRoutes = generateRoutes(
@@ -244,7 +245,6 @@ const peerRoutes = generateRoutes(
         { path: "ver-marcaciones", Component: MarcacionPage },
         { path: "marcaciones-biometricos", Component: MarcacionesBiometricos },
         { path: "marcacion", Component: MarcacionOnlinePage },
-
 
         { path: "permiso", Component: PermisosPage },
         { path: "ver-permisos", Component: ListPermisosPage },

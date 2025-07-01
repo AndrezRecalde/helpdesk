@@ -4,11 +4,11 @@ import { AuthForm } from "./auth/AuthForm";
 /* Usuario : Perfil */
 import { CardProfile } from "./user/profile/CardProfile";
 import { ProfileForm } from "./user/profile/ProfileForm";
+import { ProfileField } from "./user/profile/ProfileField";
 import { CardInfoStatsUser } from "./user/profile/CardInfoStatsUser";
 import { TableMarcacionRelojOnline } from "./user/profile/TableMarcacionRelojOnline";
 import { UserBtnHeader } from "./user/menu/UserBtnHeader";
 import { NightModeSwitch } from "./user/menu/NightModeSwitch";
-import { ProfileField } from "./user/profile/ProfileField";
 
 /* Usuario: Contraseña */
 import { ChangePwdForm } from "./user/password/ChangePwdForm";

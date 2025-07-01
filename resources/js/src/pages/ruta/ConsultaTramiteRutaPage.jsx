@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { ActionIcon, Container, Divider, Group } from "@mantine/core";
+import { useRutaStore, useTitlePage, useUiRuta } from "../../hooks";
 import {
     ConsultaTramiteForm,
     DespachosTable,
@@ -9,9 +10,8 @@ import {
     TitlePage,
 } from "../../components";
 import { IconHelp } from "@tabler/icons-react";
-import { useRutaStore, useTitlePage, useUiRuta } from "../../hooks";
-import Swal from "sweetalert2";
 import { infoSecretaria } from "../../helpers/infoStats";
+import Swal from "sweetalert2";
 
 const ConsultaTramiteRutaPage = () => {
     useTitlePage("Consulta tramite");

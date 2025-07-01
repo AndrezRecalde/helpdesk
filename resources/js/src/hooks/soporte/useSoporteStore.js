@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useErrorException } from "../../hooks";
 import {
-    onAnularSoporte,
+    //onAnularSoporte,
     onCalificarSoporte,
     onClearSoportes,
     onLoadErrores,
