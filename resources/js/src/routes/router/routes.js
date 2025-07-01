@@ -150,23 +150,23 @@ const AutorizarPermisosPage = lazy(() =>
     )
 );
 
-const SolicitudVacacionesPage = lazy(() =>
-    import(
-        /* webpackChunkName: "SolicitudVacacionesPage" */ "../../pages/vacaciones/SolicitudVacacionesPage"
-    )
-);
+//const SolicitudVacacionesPage = lazy(() =>
+//    import(
+//        /* webpackChunkName: "SolicitudVacacionesPage" */ "../../pages/vacaciones/SolicitudVacacionesPage"
+//    )
+//);
 
-const SolicitudesVacacionesPage = lazy(() =>
-    import(
-        /* webpackChunkName: "SolicitudesVacacionesPage" */ "../../pages/vacaciones/SolicitudesVacacionesPage"
-    )
-);
+//const SolicitudesVacacionesPage = lazy(() =>
+//    import(
+//        /* webpackChunkName: "SolicitudesVacacionesPage" */ "../../pages/vacaciones/SolicitudesVacacionesPage"
+//    )
+//);
 
-const PeriodoVacacionalesPage = lazy(() =>
-    import(
-        /* webpackChunkName: "PeriodoVacacionalesPage" */ "../../pages/vacaciones/PeriodoVacacionalesPage"
-    )
-);
+//const PeriodoVacacionalesPage = lazy(() =>
+//    import(
+//        /* webpackChunkName: "PeriodoVacacionalesPage" */ "../../pages/vacaciones/PeriodoVacacionalesPage"
+//    )
+//);
 
 const ErrorNotFound = lazy(() =>
     import(

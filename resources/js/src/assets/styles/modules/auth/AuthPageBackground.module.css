@@ -9,7 +9,6 @@
     margin: auto;
     width: 100%;
     max-width: 90vw;
-    //padding: 1rem;
 
     /* Para pantallas pequeñas (móviles) */
     @media (min-width: 400px) {
