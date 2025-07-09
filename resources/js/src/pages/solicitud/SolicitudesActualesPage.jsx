@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Container, Divider, Group, LoadingOverlay } from "@mantine/core";
+import { Button, Container, Divider, Group, LoadingOverlay } from "@mantine/core";
 import {
     BtnSection,
     ModalAnularSoporte,
@@ -36,7 +36,7 @@ const SolicitudesActualesPage = () => {
     const { data, error, isLoading } = useSWR(
         usuario,
         startLoadSoportesActuales,
-        { refreshInterval: 5000 }
+        { refreshInterval: 6000 }
     );
 
     useEffect(() => {
