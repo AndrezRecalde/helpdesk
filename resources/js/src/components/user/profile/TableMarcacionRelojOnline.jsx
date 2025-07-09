@@ -8,14 +8,14 @@ const STORAGE_KEY = "marcaciones_page_size";
 
 export const TableMarcacionRelojOnline = () => {
     const { isLoading, marcaciones } = useMarcacionStore();
-    const [pageSize, setPageSize] = useState(() => {
-        const saved = localStorage.getItem(STORAGE_KEY);
-        return saved ? parseInt(saved, 10) : 50;
+    const [pagination, setPagination] = useState({
+        pageIndex: 0,
+        pageSize: pageSize, // desde localStorage
     });
 
     useEffect(() => {
-        localStorage.setItem(STORAGE_KEY, pageSize.toString());
-    }, [pageSize]);
+        localStorage.setItem(STORAGE_KEY, pagination.pageSize.toString());
+    }, [pagination.pageSize]);
 
     const columns = useMemo(
         () => [
@@ -78,22 +78,13 @@ export const TableMarcacionRelojOnline = () => {
         columns,
         data: marcaciones,
         enableFacetedValues: true,
-        onPaginationChange: (updater) => {
-            const newPagination =
-                typeof updater === "function"
-                    ? updater(table.getState().pagination)
-                    : updater;
-            setPageSize(newPagination.pageSize); // Guarda el nuevo pageSize
-            table.setPagination(newPagination); // Aplica el cambio a la tabla
-        },
         initialState: {
             showColumnFilters: true,
             showGlobalFilter: true,
             showProgressBars: isLoading,
-            pagination: {
-                pageSize,
-            },
+            pagination
         },
+        onPaginationChange: setPagination,
         mantineTableBodyCellProps: ({ cell }) => ({
             style: {
                 backgroundColor:
