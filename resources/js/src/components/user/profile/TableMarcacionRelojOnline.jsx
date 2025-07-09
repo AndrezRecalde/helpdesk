@@ -1,11 +1,21 @@
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { TableContent } from "../../../components";
 import { useMarcacionStore } from "../../../hooks";
 import { useMantineReactTable } from "mantine-react-table";
 import dayjs from "dayjs";
 
+const STORAGE_KEY = "marcaciones_page_size";
+
 export const TableMarcacionRelojOnline = () => {
-    const { marcaciones } = useMarcacionStore();
+    const { isLoading, marcaciones } = useMarcacionStore();
+    const [pageSize, setPageSize] = useState(() => {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        return saved ? parseInt(saved, 10) : 50;
+    });
+
+    useEffect(() => {
+        localStorage.setItem(STORAGE_KEY, pageSize.toString());
+    }, [pageSize]);
 
     const columns = useMemo(
         () => [
@@ -36,7 +46,10 @@ export const TableMarcacionRelojOnline = () => {
 
                     if (checkType === "I") {
                         return checkTime.hour() < 12 ? "ENTRADA" : "SALIDA";
-                    } else if (checkType === "O" && checkTime.isBefore(dayjs().hour(13).minute(30))) {
+                    } else if (
+                        checkType === "O" &&
+                        checkTime.isBefore(dayjs().hour(13).minute(30))
+                    ) {
                         return "ALMUERZO";
                     }
                     return "";
@@ -44,40 +57,6 @@ export const TableMarcacionRelojOnline = () => {
                 header: "TIPO DE MARCACION",
                 filterVariant: "autocomplete",
             },
-            /* {
-                accessorFn: (row) =>
-                    row.SENSORID !== null ? row.SENSORID : null,
-                header: "SENSOR RELOJ",
-                enableColumnFilter: false,
-                //filterVariant: "autocomplete",
-            }, */
-            /* {
-                accessorFn: (row) =>
-                    row.STARTSPECDAY !== null
-                        ? dayjs(row.STARTSPECDAY).format("YYYY-MM-DD")
-                        : null,
-                header: "FECHA PERMISO",
-                enableColumnFilter: false,
-                //filterVariant: "autocomplete",
-            }, */
-            /* {
-                accessorFn: (row) =>
-                    row.STARTSPECDAY !== null
-                        ? dayjs(row.STARTSPECDAY).format("HH:mm:ss")
-                        : null,
-                header: "HORA INICIO PERMISO",
-                enableColumnFilter: false,
-                //filterVariant: "autocomplete",
-            }, */
-            /*  {
-                accessorFn: (row) =>
-                    row.STARTSPECDAY !== null
-                        ? dayjs(row.ENDSPECDAY).format("HH:mm:ss")
-                        : null,
-                header: "HORA FINAL PERMISO",
-                enableColumnFilter: false,
-                //filterVariant: "autocomplete",
-            }, */
             {
                 accessorFn: (row) =>
                     row.LeaveName !== null
@@ -97,12 +76,24 @@ export const TableMarcacionRelojOnline = () => {
 
     const table = useMantineReactTable({
         columns,
-        data: marcaciones, //must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
-        /* renderTopToolbarCustomActions: ({ table }) => (
-            <TitlePage order={3}>Marcaciones desde el Biométrico</TitlePage>
-        ), */
-        initialState: { showColumnFilters: true, showGlobalFilter: true },
+        data: marcaciones,
         enableFacetedValues: true,
+        onPaginationChange: (updater) => {
+            const newPagination =
+                typeof updater === "function"
+                    ? updater(table.getState().pagination)
+                    : updater;
+            setPageSize(newPagination.pageSize); // Guarda el nuevo pageSize
+            table.setPagination(newPagination); // Aplica el cambio a la tabla
+        },
+        initialState: {
+            showColumnFilters: true,
+            showGlobalFilter: true,
+            showProgressBars: isLoading,
+            pagination: {
+                pageSize,
+            },
+        },
         mantineTableBodyCellProps: ({ cell }) => ({
             style: {
                 backgroundColor:
