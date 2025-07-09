@@ -8,11 +8,19 @@ const STORAGE_KEY = "marcaciones_page_size";
 
 export const TableMarcacionRelojOnline = () => {
     const { isLoading, marcaciones } = useMarcacionStore();
+
+    // ✅ Obtener pageSize desde localStorage o usar 50 por defecto
+    const getInitialPageSize = () => {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        return saved ? parseInt(saved, 10) : 50;
+    };
+
     const [pagination, setPagination] = useState({
         pageIndex: 0,
-        pageSize: pageSize, // desde localStorage
+        pageSize: getInitialPageSize(),
     });
 
+    // ✅ Guardar pageSize cuando cambia
     useEffect(() => {
         localStorage.setItem(STORAGE_KEY, pagination.pageSize.toString());
     }, [pagination.pageSize]);
@@ -20,13 +28,13 @@ export const TableMarcacionRelojOnline = () => {
     const columns = useMemo(
         () => [
             {
-                accessorKey: "NAME", //access nested data with dot notation
+                accessorKey: "NAME",
                 header: "SERVIDOR",
                 enableColumnFilter: false,
             },
             {
                 accessorFn: (row) =>
-                    dayjs(row.EVENTO_FECHA).format("YYYY-MM-DD"), //access nested data with dot notation
+                    dayjs(row.EVENTO_FECHA).format("YYYY-MM-DD"),
                 header: "FECHA DE MARCACION",
                 filterVariant: "autocomplete",
             },
@@ -34,16 +42,14 @@ export const TableMarcacionRelojOnline = () => {
                 accessorFn: (row) =>
                     row.CHECKTYPE !== null
                         ? dayjs(row.EVENTO_FECHA).format("HH:mm:ss")
-                        : "SIN MARCACION", //normal accessorKey
+                        : "SIN MARCACION",
                 header: "HORA DE MARCACION",
                 enableColumnFilter: false,
-                //filterVariant: "autocomplete",
             },
             {
                 accessorFn: (row) => {
                     const checkType = row.CHECKTYPE;
-                    const checkTime = dayjs(row.EVENTO_FECHA); // Convierte la fecha con dayjs
-
+                    const checkTime = dayjs(row.EVENTO_FECHA);
                     if (checkType === "I") {
                         return checkTime.hour() < 12 ? "ENTRADA" : "SALIDA";
                     } else if (
@@ -68,7 +74,6 @@ export const TableMarcacionRelojOnline = () => {
                         : null,
                 header: "OBSERVACION",
                 enableColumnFilter: false,
-                //filterVariant: "autocomplete",
             },
         ],
         [marcaciones]
@@ -78,13 +83,15 @@ export const TableMarcacionRelojOnline = () => {
         columns,
         data: marcaciones,
         enableFacetedValues: true,
+        state: {
+            pagination, // 👈 controlado desde useState
+        },
+        onPaginationChange: setPagination,
         initialState: {
             showColumnFilters: true,
             showGlobalFilter: true,
             showProgressBars: isLoading,
-            pagination
         },
-        onPaginationChange: setPagination,
         mantineTableBodyCellProps: ({ cell }) => ({
             style: {
                 backgroundColor:
