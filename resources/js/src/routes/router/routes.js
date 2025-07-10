@@ -118,11 +118,11 @@ const MarcacionesBiometricos = lazy(() =>
     )
 );
 
-const MarcacionOnlinePage = lazy(() =>
-    import(
-        /* webpackChunkName: "MarcacionOnlinePage" */ "../../pages/marcacion/MarcacionOnlinePage"
-    )
-);
+//const MarcacionOnlinePage = lazy(() =>
+//    import(
+//        /* webpackChunkName: "MarcacionOnlinePage" */ "../../pages/marcacion/MarcacionOnlinePage"
+//    )
+//);
 
 const ActividadPage = lazy(() =>
     import(
@@ -244,7 +244,7 @@ const peerRoutes = generateRoutes(
 
         { path: "ver-marcaciones", Component: MarcacionPage },
         { path: "marcaciones-biometricos", Component: MarcacionesBiometricos },
-        { path: "marcacion", Component: MarcacionOnlinePage },
+        /* { path: "marcacion", Component: MarcacionOnlinePage }, */
 
         { path: "permiso", Component: PermisosPage },
         { path: "ver-permisos", Component: ListPermisosPage },
