@@ -1,7 +1,9 @@
 import { useEffect, useMemo, useState } from "react";
+import { List, Spoiler, ThemeIcon } from "@mantine/core";
+import { useMantineReactTable } from "mantine-react-table";
 import { TableContent } from "../../../components";
 import { useMarcacionStore } from "../../../hooks";
-import { useMantineReactTable } from "mantine-react-table";
+import { IconCircleDashedCheck } from "@tabler/icons-react";
 import dayjs from "dayjs";
 
 const STORAGE_KEY = "marcaciones_page_size";
@@ -28,52 +30,98 @@ export const TableMarcacionRelojOnline = () => {
     const columns = useMemo(
         () => [
             {
-                accessorKey: "NAME",
+                accessorKey: "Nombre",
                 header: "SERVIDOR",
                 enableColumnFilter: false,
             },
             {
-                accessorFn: (row) =>
-                    dayjs(row.EVENTO_FECHA).format("YYYY-MM-DD"),
-                header: "FECHA DE MARCACION",
+                accessorFn: (row) => dayjs(row.Fecha).format("YYYY-MM-DD"),
+                header: "FECHA",
                 filterVariant: "autocomplete",
+                size: 80,
             },
             {
-                accessorFn: (row) =>
-                    row.CHECKTYPE !== null
-                        ? dayjs(row.EVENTO_FECHA).format("HH:mm:ss")
-                        : "SIN MARCACION",
-                header: "HORA DE MARCACION",
+                accessorFn: (row) => row.Entrada,
+                header: "ENTRADA",
                 enableColumnFilter: false,
+                size: 80,
             },
             {
-                accessorFn: (row) => {
-                    const checkType = row.CHECKTYPE;
-                    const checkTime = dayjs(row.EVENTO_FECHA);
-                    if (checkType === "I") {
-                        return checkTime.hour() < 12 ? "ENTRADA" : "SALIDA";
-                    } else if (
-                        checkType === "O" &&
-                        checkTime.isBefore(dayjs().hour(13).minute(30))
-                    ) {
-                        return "ALMUERZO";
-                    }
-                    return "";
+                accessorFn: (row) => row.AlmuerzoSalida,
+                header: "SALIDA ALMUERZO",
+                enableColumnFilter: false,
+                size: 80,
+            },
+            {
+                accessorFn: (row) => row.AlmuerzoRetorno,
+                header: "RETORNO ALMUERZO",
+                enableColumnFilter: false,
+                size: 80,
+            },
+            {
+                accessorFn: (row) => row.Salida,
+                header: "SALIDA",
+                enableColumnFilter: false,
+                size: 80,
+            },
+            {
+                id: "observacion",
+                accessorFn: (row) => row, // accedemos a toda la fila
+                header: "OBSERVACIÓN",
+                enableColumnFilter: false,
+                Cell: ({ cell }) => {
+                    const row = cell.getValue();
+                    const permisosDesde = row.PermisoDesde?.split(", ") || [];
+                    const permisosHasta = row.PermisoHasta?.split(", ") || [];
+                    const tiposPermiso = row.TipoPermiso?.split(", ") || [];
+
+                    return (
+                        <Spoiler
+                            maxHeight={40}
+                            showLabel="Mostrar"
+                            hideLabel="Ocultar"
+                        >
+                            <List
+                                spacing="xs"
+                                size="sm"
+                                center
+                                icon={
+                                    <ThemeIcon
+                                        //color="indigo"
+                                        variant="default"
+                                        size={24}
+                                        radius="xl"
+                                    >
+                                        <IconCircleDashedCheck size={16} />
+                                    </ThemeIcon>
+                                }
+                            >
+                                {permisosDesde.length > 0 ? (
+                                    permisosDesde.map((desde, index) => (
+                                        <List.Item key={`permiso-${index}`}>
+                                            <b>
+                                                [
+                                                {tiposPermiso[index] ??
+                                                    "Permiso"}
+                                                ]
+                                            </b>{" "}
+                                            Desde:{" "}
+                                            {dayjs(desde).format("HH:mm:ss")}
+                                            {permisosHasta[index]
+                                                ? ` - Hasta: ${dayjs(
+                                                      permisosHasta[index]
+                                                  ).format("HH:mm:ss")}`
+                                                : ""}
+                                        </List.Item>
+                                    ))
+                                ) : (
+                                    <List.Item>Sin permisos</List.Item>
+                                )}
+                            </List>
+                        </Spoiler>
+                    );
                 },
-                header: "TIPO DE MARCACION",
-                filterVariant: "autocomplete",
-            },
-            {
-                accessorFn: (row) =>
-                    row.LeaveName !== null
-                        ? `JUSTIFICADO - ${row.LeaveName} - CON HORAS: ${dayjs(
-                              row.STARTSPECDAY
-                          ).format("HH:mm:ss")} - ${dayjs(
-                              row.ENDSPECDAY
-                          ).format("HH:mm:ss")}`
-                        : null,
-                header: "OBSERVACION",
-                enableColumnFilter: false,
+                size: 250,
             },
         ],
         [marcaciones]
@@ -92,12 +140,14 @@ export const TableMarcacionRelojOnline = () => {
             showGlobalFilter: true,
             showProgressBars: isLoading,
         },
-        mantineTableBodyCellProps: ({ cell }) => ({
-            style: {
-                backgroundColor:
-                    cell.row.original.LeaveName !== null ? "#448af2" : null,
-                color: cell.row.original.LeaveName !== null ? "white" : null,
-            },
+        mantineTableBodyCellProps: ({ column, cell }) => ({
+            style:
+                column.id === "observacion"
+                    ? {
+                          backgroundColor: cell.row.original.PermisoDesde ? "#008fdb" : null,
+                          color: cell.row.original.PermisoDesde ? "white" : "black",
+                      }
+                    : {},
         }),
         mantineTableProps: {
             highlightOnHover: true,

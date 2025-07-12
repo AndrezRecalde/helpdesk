@@ -44,7 +44,7 @@ class MarcacionController extends Controller
         ]);
 
         // Ejecutar el procedimiento almacenado utilizando el parámetro como string
-        $sql = "EXEC SP_GetUserEventsByBadge ?, ?, ?";
+        $sql = "EXEC sp_GetMarcacionesPorDiaYTipo_v3 ?, ?, ?";
         $marcaciones = DB::connection('sqlsrv')->select($sql, [
             (string) $request->asi_id_reloj,
             $request->fecha_inicio,

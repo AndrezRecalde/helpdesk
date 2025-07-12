@@ -39,19 +39,23 @@ export const PermisosConsolidadosTable = () => {
             {
                 accessorKey: "total_permisos",
                 header: "T. Permisos",
+                size: 80
             },
             {
                 accessorFn: (row) =>
                     timeToMinutes(row.suma_tiempo),
                 header: "T. Minutos",
+                size: 80
             },
             {
                 accessorKey: "suma_tiempo",
                 header: "T. Total",
+                size: 80
             },
             {
                 accessorFn: (row) => timeToDays(row.suma_tiempo), //access nested data with dot notation
                 header: "T. Días",
+                size: 80
             },
         ],
         [permisos]
