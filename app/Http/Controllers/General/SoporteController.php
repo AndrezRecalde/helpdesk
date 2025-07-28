@@ -90,11 +90,11 @@ class SoporteController extends Controller
                         ss.id_tipo_soporte, sts.nombre as tipo_soporte,
                         ss.id_usu_tecnico_asig, us.nmbre_usrio as tecnico_asignado,
                         ss.id_equipo, seq.sop_equipo_codigo, seq.sop_equipo_serie')
-            ->join('dprtmntos as d', 'd.cdgo_dprtmnto', 'ss.id_direccion')
-            ->join('usrios_sstma as u', 'u.cdgo_usrio', 'ss.id_usu_recibe')
+            ->leftJoin('dprtmntos as d', 'd.cdgo_dprtmnto', 'ss.id_direccion')
+            ->leftJoin('usrios_sstma as u', 'u.cdgo_usrio', 'ss.id_usu_recibe')
             ->leftJoin('sop_areas_tic as sat', 'sat.id_areas_tic', 'ss.id_area_tic')
             ->join('sop_estado as se', 'se.id_estado_caso', 'ss.id_estado')
-            ->join('sop_tipo_soporte as sts', 'sts.id_tipo_soporte', 'ss.id_tipo_soporte')
+            ->leftJoin('sop_tipo_soporte as sts', 'sts.id_tipo_soporte', 'ss.id_tipo_soporte')
             ->join('sop_tipo_solicitud as stsol', 'stsol.id_tipo_solic', 'ss.id_tipo_solicitud')
             ->leftJoin('sop_equipo as seq', 'seq.idsop_equipo', 'ss.id_equipo')
             ->leftJoin('usrios_sstma as us', 'us.cdgo_usrio', 'ss.id_usu_tecnico_asig')
