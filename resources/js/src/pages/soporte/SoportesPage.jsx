@@ -38,8 +38,8 @@ const SoportesPage = () => {
 
     const form = useForm({
         initialValues: {
-            fecha_inicio: "",
-            fecha_fin: "",
+            fecha_inicio: null,
+            fecha_fin: null,
             anio: new Date(),
             id_direccion: null,
             numero_sop: "",
@@ -52,8 +52,12 @@ const SoportesPage = () => {
         },
         transformValues: (values) => ({
             ...values,
-            fecha_inicio: dayjs(values.fecha_inicio) || "",
-            fecha_fin: dayjs(values.fecha_fin).add(1, "day") || "",
+            fecha_inicio: dayjs(values.fecha_inicio).isValid()
+                ? dayjs(values.fecha_inicio).format("YYYY-MM-DD")
+                : null,
+            fecha_fin: dayjs(values.fecha_fin).isValid()
+                ? dayjs(values.fecha_fin).add(1, "day").format("YYYY-MM-DD")
+                : null,
             //id_direccion: Number(values.id_direccion),
             id_usu_tecnico_asig: Number(values.id_usu_tecnico_asig) || null,
             anio: values.anio.getFullYear(),
