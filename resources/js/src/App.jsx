@@ -6,6 +6,7 @@ import "@mantine/tiptap/styles.css";
 import "mantine-react-table/styles.css";
 import { Suspense } from "react";
 import { MantineProvider } from "@mantine/core";
+import { DatesProvider } from "@mantine/dates";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 import { AppRouter } from "./routes/router/AppRouter";
@@ -16,13 +17,15 @@ import { store } from "./store";
 export const App = () => {
     return (
         <MantineProvider theme={theme} defaultColorScheme="light">
-            <Provider store={store}>
-                <Suspense fallback={<span>Loading...</span>}>
-                    <BrowserRouter>
-                        <AppRouter />
-                    </BrowserRouter>
-                </Suspense>
-            </Provider>
+            <DatesProvider settings={{ locale: "es" }}>
+                <Provider store={store}>
+                    <Suspense fallback={<span>Loading...</span>}>
+                        <BrowserRouter>
+                            <AppRouter />
+                        </BrowserRouter>
+                    </Suspense>
+                </Provider>
+            </DatesProvider>
         </MantineProvider>
     );
 };

@@ -33,7 +33,7 @@ export const BtnSubmit = ({
 }) => {
     return (
         <Button
-            color="teal.5"
+            color="teal.8"
             type="submit"
             fullWidth={fullwidth}
             mt={mt}
@@ -72,7 +72,7 @@ export const BtnSection = ({
             mb={mb}
             disabled={disabled}
             variant="default"
-            leftSection={<IconSection color={"#12b886"} stroke={1.8} />}
+            leftSection={<IconSection color={"#0fa376"} stroke={1.8} />}
             styles={{
                 root: {
                     "--button-height": rem(heigh),
@@ -106,11 +106,11 @@ export const BtnAddActions = ({
             <Menu.Target>
                 <Button
                     variant="default"
-                    color="teal.5"
+                    color="teal.8"
                     rightSection={
                         <IconChevronDown
                             style={{ width: rem(18), height: rem(18) }}
-                            stroke={1.5}
+                            stroke={1.8}
                         />
                     }
                     pr={12}
@@ -133,12 +133,12 @@ export const BtnAddActions = ({
                         onClick={onClick}
                         leftSection={
                             <Icon
-                                style={{ width: rem(16), height: rem(16) }}
+                                style={{ width: rem(18), height: rem(18) }}
                                 color={
-                                    theme.colors[color]?.[6] ||
-                                    theme.colors.gray[6]
+                                    theme.colors[color]?.[8] ||
+                                    theme.colors.gray[8]
                                 }
-                                stroke={1.5}
+                                stroke={1.8}
                             />
                         }
                     >
@@ -165,7 +165,7 @@ export const BtnSolicitarSoporte = ({ theme, linkNavigate }) => {
                     aria-label="ActionIcon soportes"
                 >
                     <IconDeviceDesktopExclamation
-                        style={{ width: rem(22), height: rem(22) }}
+                        style={{ width: rem(18), height: rem(18) }}
                     />
                 </ActionIcon>
             </Menu.Target>
@@ -213,7 +213,7 @@ export const BtnAdministracion = ({ theme, linkNavigate }) => {
                     variant="default"
                     aria-label="ActionIcon administracion"
                 >
-                    <IconSettings style={{ width: rem(22), height: rem(22) }} />
+                    <IconSettings style={{ width: rem(18), height: rem(18) }} />
                 </ActionIcon>
             </Menu.Target>
             <Menu.Dropdown>
@@ -262,7 +262,8 @@ export const BtnServicesApps = () => {
     return (
         <Group grow p={15}>
             <Button
-                leftSection={<IconMailFast size={16} color="orange" />}
+                leftSection={<IconMailFast size={18} color="orange" />}
+                size="md"
                 radius="md"
                 variant="light"
                 component="a"
@@ -273,7 +274,8 @@ export const BtnServicesApps = () => {
                 Webmail
             </Button>
             <Button
-                leftSection={<IconCategory size={16} color="teal" />}
+                leftSection={<IconCategory size={18} color="teal" />}
+                size="md"
                 radius="md"
                 variant="light"
                 component="a"

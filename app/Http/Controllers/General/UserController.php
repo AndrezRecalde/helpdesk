@@ -19,10 +19,14 @@ class UserController extends Controller
             ->selectRaw('us.cdgo_usrio, us.nmbre_usrio, nc.nom_cargo,
                         d.cdgo_dprtmnto, d.nmbre_dprtmnto as direccion,
                         de.nmbre_dprtmnto as departamento,
-                        us.lgin, us.actvo, us.email')
+                        us.lgin, us.actvo, us.email,
+                        us.usu_ult_tipo_contrato, ntc.nom_tipo_contrato as tipo_contrato,
+                        ntc.regimen_laboral_id, rgl.nombre_regimen')
             ->leftJoin('nom_cargo as nc', 'nc.idnom_cargo', 'us.crgo_id')
             ->leftJoin('dprtmntos as d', 'd.cdgo_dprtmnto', 'us.cdgo_direccion')
             ->leftJoin('dprtmntos as de', 'de.cdgo_dprtmnto', 'us.cdgo_dprtmnto')
+            ->leftJoin('nom_tipo_contrato as ntc', 'ntc.idnom_tipo_contrato', 'us.usu_ult_tipo_contrato')
+            ->join('nom_regimen_laboral as rgl', 'rgl.id', 'ntc.regimen_laboral_id')
             ->direccion($request->cdgo_direccion)
             ->where('us.actvo', 1)
             ->get();

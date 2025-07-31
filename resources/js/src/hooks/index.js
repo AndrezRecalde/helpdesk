@@ -75,6 +75,11 @@ import { useUiPermiso } from "./permiso/useUiPermiso";
 /* Vacaciones */
 import { useVacacionesStore } from "./vacaciones/useVacacionesStore";
 import { useUiVacaciones } from "./vacaciones/useUiVacaciones";
+
+/* Descuento */
+import { useDescuentoStore } from "./vacaciones/descuentos/useDescuentoStore";
+import { useUiDescuento } from "./vacaciones/descuentos/useUiDescuento";
+
 /* Periodos Vacaciones */
 import { usePeriodoStore } from "./vacaciones/periodos/usePeriodoStore";
 import { useUiPeriodo } from "./vacaciones/periodos/useUiPeriodo";
@@ -182,6 +187,9 @@ export {
 
     useVacacionesStore,
     useUiVacaciones,
+
+    useDescuentoStore,
+    useUiDescuento,
 
     usePeriodoStore,
     useUiPeriodo,

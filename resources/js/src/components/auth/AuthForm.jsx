@@ -91,7 +91,7 @@ export const AuthForm = () => {
                         ¿Olvidó su contraseña?
                     </Anchor> */}
                 </Group>
-                <BtnSubmit mb={0} IconSection={IconChevronsRight}>
+                <BtnSubmit heigh={50} mb={0} IconSection={IconChevronsRight}>
                     Acceder
                 </BtnSubmit>
             </Stack>

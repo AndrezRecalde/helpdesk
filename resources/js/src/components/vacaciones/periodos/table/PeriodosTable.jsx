@@ -1,14 +1,24 @@
-import { useMemo } from "react";
-import { TableContent } from "../../../../components";
-import { usePeriodoStore } from "../../../../hooks";
+import { useCallback, useMemo } from "react";
+import { MenuTable_E, TableContent } from "../../../../components";
+import { usePeriodoStore, useUiUser, useUsersStore } from "../../../../hooks";
 import { useMantineReactTable } from "mantine-react-table";
 import { PeriodoInfoTable } from "./PeriodoInfoTable";
 import dayjs from "dayjs";
 
 export const PeriodosTable = () => {
     const { isLoading, periodos } = usePeriodoStore();
+    const { setActivateUser } = useUsersStore();
+    const { modalActionUser } = useUiUser();
     const columns = useMemo(
         () => [
+            {
+                header: "Departamento",
+                accessorFn: (row) =>
+                    (row?.departamento || "NO CONTIENE INFORMACION")
+                        .toString()
+                        .toUpperCase(),
+                filterVariant: "autocomplete",
+            },
             {
                 header: "Cedula",
                 accessorFn: (row) =>
@@ -23,6 +33,7 @@ export const PeriodosTable = () => {
                     (row?.nmbre_usrio || "NO CONTIENE NOMBRES")
                         .toString()
                         .toUpperCase(),
+                filterVariant: "autocomplete",
             },
             {
                 header: "Cargo",
@@ -30,6 +41,17 @@ export const PeriodosTable = () => {
                     (row?.cargo || "NO CONTIENE INFORMACION")
                         .toString()
                         .toUpperCase(),
+
+                size: 80,
+            },
+            {
+                header: "Regímen Contrato",
+                accessorFn: (row) =>
+                    (row?.nombre_regimen || "NO CONTIENE INFORMACION")
+                        .toString()
+                        .toUpperCase(),
+                size: 80,
+                filterVariant: "autocomplete",
             },
             {
                 header: "Fecha Ingreso",
@@ -43,6 +65,15 @@ export const PeriodosTable = () => {
         [periodos]
     );
 
+    const handleEdit = useCallback(
+        (selected) => {
+            console.log(selected);
+            setActivateUser(selected);
+            modalActionUser(false, true);
+        },
+        [periodos]
+    );
+
     const table = useMantineReactTable({
         columns,
         data: periodos, //must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
@@ -51,9 +82,10 @@ export const PeriodosTable = () => {
         enableColumnDragging: false,
         enableDensityToggle: false,
         enableRowActions: true,
-        renderDetailPanel: ({ row }) => (
-            <PeriodoInfoTable data={row} />
+        renderRowActionMenuItems: ({ row }) => (
+            <MenuTable_E row={row} handleEdit={handleEdit} />
         ),
+        renderDetailPanel: ({ row }) => <PeriodoInfoTable data={row} />,
         mantineTableProps: {
             withColumnBorders: true,
             withTableBorder: true,

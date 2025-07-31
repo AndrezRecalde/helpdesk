@@ -192,6 +192,7 @@ export const FormDiagnosticar = ({ form, option }) => {
                             valueFormat="YYYY-MM-DD HH:mm"
                             label="Fecha de finalización"
                             placeholder="Seleccione fecha de finalización"
+                            minDate={dayjs(activateSoporte?.fecha_ini).toDate()}
                             {...form.getInputProps("fecha_fin")}
                         />
                         <SimpleGrid cols={{ base: 1, sm: 1, md: 2, lg: 2 }}>

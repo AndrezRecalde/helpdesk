@@ -15,10 +15,12 @@ class NomPeriodoVacacional extends Model
 
     protected $fillable = [
         'cdgo_usrio',
+        'regimen_laboral_id',
         'anio',
         'dias_total',
         'dias_tomados',
-        'dias_disponibles'
+        'dias_disponibles',
+        'observacion'
     ];
 
     public function usuario(): BelongsTo
@@ -29,6 +31,11 @@ class NomPeriodoVacacional extends Model
     public function asignaciones()
     {
         return $this->hasMany(NomAsignacionVacacionesPeriodo::class, 'nom_periodo_vacacional_id');
+    }
+
+    public function descuentos()
+    {
+        return $this->hasMany(NomVacacionesDescuento::class, 'nom_periodo_vacacional_id');
     }
 
     function scopeByUsuarioId(Builder $query, $cdgo_usrio)

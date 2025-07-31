@@ -25,12 +25,15 @@ export const ActividadForm = ({ fecha_inicio, fecha_fin }) => {
 
         validate: {
             actividad: isNotEmpty("Por favor ingresa la actividad"),
-            fecha_actividad: isNotEmpty("Por favor ingresa la fecha de la actividad"),
+            fecha_actividad: isNotEmpty(
+                "Por favor ingresa la fecha de la actividad"
+            ),
         },
         transformValues: (values) => ({
             ...values,
-            fecha_actividad: dayjs(values.fecha_actividad).format("YYYY-MM-DD") || null
-        })
+            fecha_actividad:
+                dayjs(values.fecha_actividad).format("YYYY-MM-DD") || null,
+        }),
     });
 
     let content = "";
@@ -70,7 +73,10 @@ export const ActividadForm = ({ fecha_inicio, fecha_fin }) => {
     };
 
     return (
-        <Box component="form" onSubmit={form.onSubmit((_, e) => handleSubmit(e))}>
+        <Box
+            component="form"
+            onSubmit={form.onSubmit((_, e) => handleSubmit(e))}
+        >
             <Stack>
                 <DateInput
                     withAsterisk
@@ -80,10 +86,12 @@ export const ActividadForm = ({ fecha_inicio, fecha_fin }) => {
                     placeholder="Registra la fecha"
                     {...form.getInputProps("fecha_actividad")}
                 />
-                <FormRichText form={form} nameInput="actividad" editor={editor} />
-                <BtnSubmit>
-                    Guardar actividad
-                </BtnSubmit>
+                <FormRichText
+                    form={form}
+                    nameInput="actividad"
+                    editor={editor}
+                />
+                <BtnSubmit>Guardar actividad</BtnSubmit>
             </Stack>
         </Box>
     );

@@ -1,44 +1,46 @@
 .card {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+    transition: transform 150ms ease, box-shadow 150ms ease;
+    border-radius: var(--mantine-radius-xs);
     background-color: light-dark(
         var(--mantine-color-gray-0),
         var(--mantine-color-dark-8)
     ) !important;
-    padding: var(--mantine-spacing-lg);
-    box-shadow: var(--mantine-shadow-lg);
 }
 
-.title {
-    font-weight: 700 !important;
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--mantine-shadow-md);
 }
 
-.item {
-    display: flex !important;
-    padding: var(--mantine-spacing-lg);
-    flex-direction: column !important;
-    align-items: left !important;
-    justify-content: left !important;
-    text-align: left !important;
-    border-radius: var(--mantine-radius-md) !important;
-    height: rem(95px) !important;
+.cardInner {
     background-color: light-dark(
         var(--mantine-color-white),
         var(--mantine-color-dark-7)
-    ) !important;
-    transition: box-shadow 150ms ease, transform 100ms ease;
-
-    @mixin hover {
-        box-shadow: var(--mantine-shadow-lg);
-        transform: scale(1.05);
-    }
+    );
+    border-radius: var(--mantine-radius-lg);
+    padding: var(--mantine-spacing-lg);
+    text-align: center;
 }
 
-  .ring {
-    flex: 1;
-    display: flex;
-    justify-content: center;
+.icon {
+    background-color: light-dark(
+        var(--mantine-color-indigo-0),
+        var(--mantine-color-dark-5)
+    );
+}
 
-    @media (max-width: $mantine-breakpoint-xs) {
-      justify-content: center;
-      margin-top: var(--mantine-spacing-md);
-    }
-  }
+.title {
+    font-weight: 500;
+    margin-top: var(--mantine-spacing-xs);
+}
+
+.description {
+    font-weight: 400;
+    line-height: 1.4;
+    text-align: center;
+    max-width: 200px;
+}

@@ -1,8 +1,6 @@
-import { useForm } from "@mantine/form";
 import {
     Group,
     ActionIcon,
-    Modal,
     Stack,
     Select,
     NumberInput,
@@ -10,6 +8,7 @@ import {
     Box,
     Table,
     Card,
+    Textarea,
 } from "@mantine/core";
 import { BtnSection, BtnSubmit, TextSection } from "../../../../components";
 import { randomId } from "@mantine/hooks";
@@ -20,47 +19,24 @@ import {
     useVacacionesStore,
 } from "../../../../hooks";
 import dayjs from "dayjs";
+import { useEffect } from "react";
 
-export function SolAutorizarForm() {
-    const { isLoading, activateVacacion, setActivateVacacion } =
-        useVacacionesStore();
+export function SolAutorizarForm({ form }) {
+    const {
+        isLoading,
+        activateVacacion,
+        setActivateVacacion,
+        startGestionarVacaciones,
+    } = useVacacionesStore();
     const { modalActionGestionarVacacion } = useUiVacaciones();
     const { periodos } = usePeriodoStore();
-    const form = useForm({
-        initialValues: {
-            periodos: [
-                {
-                    periodo_id: null,
-                    dias_usados: 0,
-                    dias_disponibles: 0,
-                    key: randomId(),
-                },
-            ],
-        },
-        validate: {
-            periodos: (values) => {
-                if (values.periodos.length === 0) {
-                    return "Debe agregar al menos un periodo";
-                }
-                for (const periodo of values.periodos) {
-                    if (!periodo.periodo_id) {
-                        return "Todos los periodos deben tener un ID de periodo";
-                    }
-                    if (periodo.dias_usados <= 0) {
-                        return "Los días usados deben ser mayores a cero";
-                    }
-                }
-                return null;
-            },
-        },
-        transformValues: (values) => ({
-            periodos: values.periodos.map((periodo) => ({
-                periodo_id: Number(periodo.periodo_id) || null,
-                dias_usados: Number(periodo.dias_usados) || 0,
-                key: periodo.key,
-            })),
-        }),
-    });
+
+    useEffect(() => {
+        if (activateVacacion !== null) {
+            form.setFieldValue("estado_id", 2);
+            return;
+        }
+    }, [activateVacacion]);
 
     const fields = form.getValues().periodos.map((item, index) => (
         <div key={item.key}>
@@ -100,14 +76,17 @@ export function SolAutorizarForm() {
                             selectedPeriodo?.dias_disponibles || 0
                         );
                     }}
+                    error={form.errors?.periodos?.[index]?.periodo_id}
                 />
                 <NumberInput
                     required
                     label="Dias a usar"
                     placeholder="Ingrese los dias a usar"
-                    defaultValue={100}
+                    max={activateVacacion?.dias_solicitados || 0}
                     {...form.getInputProps(`periodos.${index}.dias_usados`)}
+                    error={form.errors?.periodos?.[index]?.dias_usados}
                 />
+
                 <NumberInput
                     label="Dias disponibles"
                     placeholder="Ingrese los dias a usar"
@@ -115,12 +94,20 @@ export function SolAutorizarForm() {
                     value={item.dias_disponibles}
                 />
             </SimpleGrid>
+            <Textarea
+                mt={10}
+                resize="vertical"
+                label="Observacion"
+                placeholder="Ingrese la observacion si tiene alguna"
+                {...form.getInputProps(`periodos.${index}.observacion`)}
+            />
         </div>
     ));
 
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log(form.getTransformedValues());
+        startGestionarVacaciones(form.getTransformedValues(), activateVacacion);
         setActivateVacacion(null); // Reset the activateVacacion state
         modalActionGestionarVacacion(false);
         form.reset();

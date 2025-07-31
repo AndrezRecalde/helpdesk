@@ -36,6 +36,7 @@ use App\Http\Controllers\Gerente\TipoSolicitudController;
 use App\Http\Controllers\Gerente\TipoUsuarioController;
 use App\Http\Controllers\Gerente\TTHH\NomPeriodoVacacionesController;
 use App\Http\Controllers\Gerente\TTHH\NomVacacionesController;
+use App\Http\Controllers\Gerente\TTHH\NomVacacionesDescuentoController;
 use App\Http\Controllers\Gerente\UserAdminController;
 //use App\Models\InvDocumentoEquipo;
 //use Illuminate\Http\Request;
@@ -66,7 +67,7 @@ Route::put('/change-password/{cdgo_usrio}', [UserController::class, 'updatePassw
 Route::post('/consulta-tramite', [RutaController::class, 'getConsultaTramite']);
 
 /* USUARIOS */
-    Route::post('/usuarios', [UserController::class, 'getUsuarios'])->middleware('auth:sanctum');
+Route::post('/usuarios', [UserController::class, 'getUsuarios'])->middleware('auth:sanctum');
 
 /* RUTAS: GERENTE */
 
@@ -311,6 +312,9 @@ Route::group(['prefix' => 'usuario', 'middleware' => ['auth:sanctum']], function
 /* RUTAS NOM_ASISTENCIA */
 Route::group(['prefix' => 'tthh/asistencia', 'middleware' => ['auth:sanctum', 'role:TIC_GERENTE|NOM_ASISTENCIA|NOM_VACACIONES']], function () {
 
+    /* USUARIOS - FECHA INGRESO */
+    Route::put('/update/fecha-ingreso/{cdgo_usrio}', [UserAdminController::class, 'updateFechaIngreso']);
+
     /* PERMISOS */
     // Route::post('/buscar-permiso', [PermisosAdminController::class, 'searchPermiso']);
     Route::put('/actualizar-permiso/{idper_permisos}', [PermisosAdminController::class, 'updateEstadoPermiso']);
@@ -328,6 +332,13 @@ Route::group(['prefix' => 'tthh/asistencia', 'middleware' => ['auth:sanctum', 'r
     /* PERIODOS VACACIONES */
     Route::post('/consulta-periodos', [NomPeriodoVacacionesController::class, 'getConsultarPeriodos']);
     Route::post('/store/periodo', [NomPeriodoVacacionesController::class, 'store']);
-    Route::put('/update/periodo/{id}', [NomPeriodoVacacionesController::class, 'update']);
+    Route::put('/update/periodo/{id}', [NomPeriodoVacacionesController::class, 'updatePeriodo']);
     Route::delete('/delete/periodo/{id}', [NomPeriodoVacacionesController::class, 'destroy']);
+
+    /* DESCUENTOS VACACIONES */
+    Route::post('/descuentos', [NomVacacionesDescuentoController::class, 'getNomVacacionesDescuentos']);
+    Route::post('/store/descuento', [NomVacacionesDescuentoController::class, 'store']);
+    Route::put('/update/descuento/{id}', [NomVacacionesDescuentoController::class, 'update']);
+    Route::delete('/delete/descuento/{id}', [NomVacacionesDescuentoController::class, 'destroy']);
+
 });

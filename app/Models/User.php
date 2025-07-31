@@ -57,7 +57,9 @@ class User extends Authenticatable
         'usu_id_sub_empresa',
         'cdgo_dprtmnto',
         'paswrd',
-        'asi_id_reloj'
+        'asi_id_reloj',
+
+        'usu_fi_institucion'
     ];
 
     /**
@@ -78,7 +80,8 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
         //'paswrd' => 'string',
-        'usu_f_f_contrato' => 'date'
+        'usu_f_f_contrato' => 'date',
+        'usu_fi_institucion' => 'date'
     ];
 
     //Permisos

@@ -48,7 +48,6 @@ export const ModalActivateElement = ({
         startAction(form.getValues());
         form.reset();
         modalAction(false);
-
     };
 
     return (

@@ -12,6 +12,7 @@ import { GestionMenu } from "./appshell/menu/GestionMenu";
 import { MenuSection, MenuRapidoSection } from "./appshell/menu/MenuSection";
 import { HeaderBtnInicio } from "./appshell/menu/HeaderBtnInicio";
 import { DrawerMenuMobile } from "./appshell/menu/DrawerMenuMobile";
+import { MenuHome } from "./appshell/menu/MenuHome";
 
 export {
     NavMenuTics,
@@ -28,5 +29,6 @@ export {
     MenuSection,
     MenuRapidoSection,
     HeaderBtnInicio,
-    DrawerMenuMobile
+    DrawerMenuMobile,
+    MenuHome
 };

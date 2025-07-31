@@ -14,6 +14,7 @@ class NomAsignacionVacacionesPeriodo extends Model
         'nom_vacacion_id',
         'nom_periodo_vacacional_id',
         'dias_usados',
+        'observacion'
     ];
 
     public function vacacion()

@@ -8,6 +8,7 @@ use App\Http\Requests\NomGestionVacacionRequest;
 use App\Http\Requests\NomVacacionesRequest;
 use App\Models\NomAsignacionVacacionesPeriodo;
 use App\Models\NomMotivoVacaciones;
+use App\Models\NomPeriodoVacacional;
 use App\Models\NomVacacion;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -116,7 +117,7 @@ class NomVacacionesController extends Controller
     public function gestionarVacaciones(NomGestionVacacionRequest $request, int $id): JsonResponse
     {
         try {
-            $vacacion = NomVacacion::find($id);
+            $vacacion = NomVacacion::findOrFail($id);
             $vacacion->estado_id = $request->estado_id;
 
             if ($request->estado_id == 2) { // Aprobado
@@ -124,59 +125,45 @@ class NomVacacionesController extends Controller
                 if ($vacacion->asignaciones()->exists()) {
                     return response()->json([
                         'status' => MsgStatus::Error,
-                        'msg' => 'Ya se asignaron días a esta solicitud.'
+                        'msg'    => 'Ya se asignaron días a esta solicitud.'
                     ], 400);
                 }
 
-                // Si el personal de TTHH desea reasignar los periodos vacacionales
-                /*  if ($vacacion->asignaciones()->exists()) {
-                    // Eliminar asignaciones anteriores para reasignar desde cero
-                    foreach ($vacacion->asignaciones as $asignacion) {
-                        $periodo = $asignacion->periodo;
-                        $periodo->dias_disponibles += $asignacion->dias_usados;
-                        $periodo->dias_tomados -= $asignacion->dias_usados;
-                        $periodo->save();
-                        $asignacion->delete();
+                $periodos = $request->input('periodos', []);
+                $diasTotalesAsignados = 0;
+
+                foreach ($periodos as $p) {
+                    $periodo = NomPeriodoVacacional::findOrFail($p['periodo_id']);
+                    $diasUsados = (int) $p['dias_usados'];
+                    $observacion = $p['observacion'] ?? '';
+
+                    if ($diasUsados <= 0 || $diasUsados > $periodo->dias_disponibles) {
+                        return response()->json([
+                            'status' => MsgStatus::Error,
+                            'msg'    => "Los días asignados superan los disponibles o no son válidos para el periodo {$periodo->anio}."
+                        ], 400);
                     }
-                } */
-
-                $diasRestantes = $vacacion->dias_solicitados;
-                $usuario = $vacacion->usuario;
-
-                // Buscar periodos disponibles
-                $periodos = $usuario->periodosVacacionales()
-                    ->where('activo', true)
-                    ->whereColumn('dias_disponibles', '>', 0)
-                    ->orderBy('anio')
-                    ->get();
-
-                foreach ($periodos as $periodo) {
-                    if ($diasRestantes <= 0) break;
-
-                    $disponibles = $periodo->dias_disponibles;
-                    if ($disponibles <= 0) continue;
-
-                    $aUsar = min($disponibles, $diasRestantes);
 
                     // Crear asignación
                     NomAsignacionVacacionesPeriodo::create([
-                        'nom_vacacion_id' => $vacacion->id,
+                        'nom_vacacion_id'           => $vacacion->id,
                         'nom_periodo_vacacional_id' => $periodo->id,
-                        'dias_usados' => $aUsar
+                        'dias_usados'               => $diasUsados,
+                        'observacion'               => $observacion
                     ]);
 
                     // Actualizar periodo
-                    $periodo->dias_disponibles -= $aUsar;
-                    $periodo->dias_tomados += $aUsar;
+                    $periodo->dias_disponibles -= $diasUsados;
+                    $periodo->dias_tomados += $diasUsados;
                     $periodo->save();
 
-                    $diasRestantes -= $aUsar;
+                    $diasTotalesAsignados += $diasUsados;
                 }
 
-                if ($diasRestantes > 0) {
+                if ($diasTotalesAsignados < $vacacion->dias_solicitados) {
                     return response()->json([
                         'status' => MsgStatus::Error,
-                        'msg' => 'No hay suficientes días en los periodos disponibles para aprobar esta solicitud.'
+                        'msg'    => 'No se asignaron todos los días solicitados.'
                     ], 400);
                 }
             }
@@ -201,15 +188,16 @@ class NomVacacionesController extends Controller
 
             return response()->json([
                 'status' => MsgStatus::Success,
-                'msg' => 'Solicitud actualizada correctamente'
+                'msg'    => 'Solicitud actualizada correctamente'
             ], 200);
         } catch (\Throwable $th) {
             return response()->json([
                 'status' => MsgStatus::Error,
-                'msg' => $th->getMessage()
+                'msg'    => $th->getMessage()
             ], 500);
         }
     }
+
 
 
     // Metodo para ver las fichas de Vacaciones

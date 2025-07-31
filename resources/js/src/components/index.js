@@ -47,9 +47,17 @@ import { SolAnulacionVacacionModal } from "./vacaciones/solicitudes/modal/SolAnu
 import { SolAnulacionForm } from "./vacaciones/solicitudes/form/SolAnulacionForm";
 
 /* PERIODOS VACACIONES */
-import { CreatePeriodoModal } from "./vacaciones/periodos/modal/CreatePeriodoModal";
+import { PeriodoCreateModal } from "./vacaciones/periodos/modal/PeriodoCreateModal";
 import { PeriodoForm } from "./vacaciones/periodos/form/PeriodoForm";
+import { PeriodoEditModal } from "./vacaciones/periodos/modal/PeriodoEditModal";
+import { PeriodoEditForm } from "./vacaciones/periodos/form/PeriodoEditForm";
+import { SolAutorizarVacacionModal } from "./vacaciones/solicitudes/modal/SolAutorizarVacacionModal";
 
+/* DESCUENTOS VACACIONES */
+import { DescuentoVacacionesTable } from "./vacaciones/descuentos/table/DescuentoVacacionesTable";
+import { FilterDescuentoVacacionesForm } from "./vacaciones/descuentos/form/FilterDescuentoVacacionesForm";
+import { DescuentoVacacionesModal } from "./vacaciones/descuentos/modal/DescuentoVacacionesModal";
+import { DescuentoVacacionalForm } from "./vacaciones/descuentos/form/DescuentoVacacionalForm";
 
 /* SOPORTE */
 import { FilterFormSearchDates } from "./gerencia/soporte/filter/FilterFormSearchDates";
@@ -310,8 +318,17 @@ export {
     SolAnulacionVacacionModal,
     SolAnulacionForm,
 
-    CreatePeriodoModal,
+    PeriodoCreateModal,
     PeriodoForm,
+    PeriodoEditModal,
+    PeriodoEditForm,
+    SolAutorizarVacacionModal,
+
+    /* DESCUENTOS VACACIONES */
+    DescuentoVacacionesTable,
+    FilterDescuentoVacacionesForm,
+    DescuentoVacacionesModal,
+    DescuentoVacacionalForm,
 
     /* SOPORTE */
     FilterFormSearchDates,

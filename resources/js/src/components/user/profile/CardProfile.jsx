@@ -21,21 +21,21 @@ export const CardProfile = ({ usuario, handleAction }) => {
             <SimpleGrid cols={{ base: 2, sm: 2, lg: 2 }}>
                 <AlertSection
                     variant="light"
-                    color="orange.5"
+                    color="orange.8"
                     title="Soportes Asignados"
                     icon={IconInfoCircle}
                 >
-                    <TextSection fw={700} fz={18} color="orange.7">
+                    <TextSection fw={700} fz={18} color="orange.8">
                         {stat.total_asignados}
                     </TextSection>
                 </AlertSection>
                 <AlertSection
                     variant="light"
-                    color="green.5"
+                    color="green.8"
                     title="Soportes Atendidos"
                     icon={IconInfoCircle}
                 >
-                    <TextSection fw={700} fz={18} color="green.7">
+                    <TextSection fw={700} fz={18} color="green.8">
                         {stat.total_atendidos}
                     </TextSection>
                 </AlertSection>
@@ -63,7 +63,7 @@ export const CardProfile = ({ usuario, handleAction }) => {
                     ) : (
                         <Badge
                             variant="light"
-                            color="orange.7"
+                            color="orange.8"
                             size="lg"
                             radius="md"
                         >

@@ -28,7 +28,7 @@ export const StackAside = ({ modalAside }) => {
                 <AlertSection
                     key={index}
                     variant="light"
-                    color="rgba(18, 184, 24, 1)"
+                    color="teal"
                     title="Cumpleaños  🎉"
                     icon={IconGiftFilled}
                     mt={1}

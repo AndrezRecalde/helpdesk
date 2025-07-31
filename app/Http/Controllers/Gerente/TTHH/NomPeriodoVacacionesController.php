@@ -16,7 +16,7 @@ class NomPeriodoVacacionesController extends Controller
     {
         try {
             $periodos = NomPeriodoVacacional::from('nom_periodo_vacacionales as npv')
-                ->select('npv.id', 'npv.dias_total', 'npv.dias_tomados', 'npv.dias_disponibles', 'npv.anio')
+                ->select('npv.id', 'npv.anio', 'npv.dias_total', 'npv.dias_tomados', 'npv.dias_disponibles', 'npv.observacion')
                 ->byUsuarioId($request->cdgo_usrio)
                 ->orderBy('npv.anio', 'DESC')
                 ->get();
@@ -44,9 +44,9 @@ class NomPeriodoVacacionesController extends Controller
         $totalDiasDisponibles = $periodos->sum('total_dias'); // Sumar todos los días disponibles
 
         return response()->json([
-            'status' => MsgStatus::Success,
+            'status'                 => MsgStatus::Success,
             'total_dias_disponibles' => $totalDiasDisponibles,
-            'detalle_por_periodo' => $periodos
+            'detalle_por_periodo'    => $periodos
         ]);
     }
 
@@ -54,7 +54,9 @@ class NomPeriodoVacacionesController extends Controller
     {
         try {
             $cdgo_usrio = $request->cdgo_usrio;
+            $regimen_laboral_id = $request->regimen_laboral_id;
             $anios = $request->anios;
+            $observacion = $request->observacion;
             $creados = [];
 
             foreach ($anios as $anio) {
@@ -63,13 +65,23 @@ class NomPeriodoVacacionesController extends Controller
                     ->exists();
 
                 if (!$existe) {
+                    // Determinar los días según el régimen laboral
+                    $dias_total = 0;
+                    if (in_array($regimen_laboral_id, [1, 3])) {
+                        $dias_total = 30;
+                    } elseif ($regimen_laboral_id == 2) {
+                        $dias_total = 15;
+                    }
+
                     $periodo = NomPeriodoVacacional::create([
-                        'cdgo_usrio' => $cdgo_usrio,
-                        'anio' => $anio,
-                        //'dias_total' => 30,
-                        //'dias_tomados' => 0,
-                        //'dias_disponibles' => 30,
-                        //'activo' => true,
+                        'cdgo_usrio'          => $cdgo_usrio,
+                        'regimen_laboral_id'  => $regimen_laboral_id,
+                        'anio'                => $anio,
+                        'dias_total'          => $dias_total,
+                        'dias_tomados'        => 0,
+                        'dias_disponibles'    => $dias_total,
+                        'observacion'         => $observacion,
+                        'activo'              => true,
                     ]);
                     $creados[] = $periodo;
                 }
@@ -95,7 +107,56 @@ class NomPeriodoVacacionesController extends Controller
         }
     }
 
-    function update(NomPeriodoVacacionesRequest $request, int $id): JsonResponse
+    public function updatePeriodo(Request $request, int $id): JsonResponse
+    {
+        $periodo = NomPeriodoVacacional::find($id);
+
+        try {
+            if (!$periodo) {
+                return response()->json([
+                    'status' => MsgStatus::Error,
+                    'msg'    => MsgStatus::NotFound
+                ], 404);
+            }
+
+            // Validar y obtener los días tomados desde el request
+            $dias_tomados = $request->dias_tomados;
+            $observacion = $request->observacion;
+
+            // Validación básica (opcional pero recomendable)
+            if (!is_numeric($dias_tomados) || $dias_tomados < 0) {
+                return response()->json([
+                    'status' =>  MsgStatus::Error,
+                    'msg'    => 'El valor de días tomados no es válido.'
+                ], 422);
+            }
+
+            // Recalcular días disponibles
+            $dias_disponibles = max($periodo->dias_total - $dias_tomados, 0);
+            $activo = $dias_disponibles > 0;
+
+            // Actualizar el modelo
+            $periodo->update([
+                'dias_tomados'     => $dias_tomados,
+                'dias_disponibles' => $dias_disponibles,
+                'observacion'      => $observacion,
+                'activo'           => $activo,
+            ]);
+
+            return response()->json([
+                'status' => MsgStatus::Success,
+                'msg'    => MsgStatus::Updated
+            ], 201);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => MsgStatus::Error,
+                'msg'    => $th->getMessage()
+            ], 500);
+        }
+    }
+
+
+    /* function update(NomPeriodoVacacionesRequest $request, int $id): JsonResponse
     {
         $periodo = NomPeriodoVacacional::find($id);
         try {
@@ -114,7 +175,7 @@ class NomPeriodoVacacionesController extends Controller
         } catch (\Throwable $th) {
             return response()->json(['status' => MsgStatus::Error, 'msg' => $th->getMessage()], 500);
         }
-    }
+    } */
 
     function destroy(int $id): JsonResponse
     {
@@ -125,12 +186,12 @@ class NomPeriodoVacacionesController extends Controller
                 $periodo->delete();
                 return response()->json([
                     'status' => MsgStatus::Success,
-                    'msg' => MsgStatus::Deleted
+                    'msg'    => MsgStatus::Deleted
                 ], 201);
             } else {
                 return response()->json([
                     'status' => MsgStatus::Error,
-                    'msg' => MsgStatus::NotFound
+                    'msg'    => MsgStatus::NotFound
                 ], 404);
             }
         } catch (\Throwable $th) {

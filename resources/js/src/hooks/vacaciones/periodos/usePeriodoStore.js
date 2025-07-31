@@ -6,6 +6,7 @@ import {
     onLoadingPeriodos,
     onLoadMessage,
     onClearPeriodos,
+    onSetActivatePeriodo,
 } from "../../../store/vacaciones/periodo/periodoSlice";
 import helpdeskApi from "../../../api/helpdeskApi";
 
@@ -51,20 +52,6 @@ export const usePeriodoStore = () => {
         try {
             dispatch(onLoading(true));
 
-            if (periodo.id) {
-                // Update existing periodo
-                const { data } = await helpdeskApi.put(
-                    `/tthh/asistencia/update/periodo/${periodo.id}`,
-                    periodo
-                );
-                dispatch(onLoadMessage(data));
-                setTimeout(() => {
-                    dispatch(onLoadMessage(undefined));
-                }, 40);
-                startLoadPeriodos({});
-                return;
-            }
-
             // Create new periodo
             const { data } = await helpdeskApi.post(
                 "/tthh/asistencia/store/periodo",
@@ -82,6 +69,28 @@ export const usePeriodoStore = () => {
         }
     };
 
+    const startUpdatePeriodo = async (periodo) => {
+        try {
+            const { data } = await helpdeskApi.put(
+                `/tthh/asistencia/update/periodo/${periodo.id}`,
+                periodo
+            );
+            dispatch(onLoadMessage(data));
+            setTimeout(() => {
+                dispatch(onLoadMessage(undefined));
+            }, 40);
+            startLoadPeriodos({});
+        } catch (error) {
+            console.log(error);
+            dispatch(onLoading(false));
+            ExceptionMessageError(error);
+        }
+    };
+
+    const setActivatePeriodo = (periodo) => {
+        dispatch(onSetActivatePeriodo(periodo));
+    };
+
     const startClearPeriodos = () => {
         dispatch(onClearPeriodos());
     };
@@ -97,6 +106,8 @@ export const usePeriodoStore = () => {
         startLoadPeriodos,
         startLoadPeriodosByUser,
         startAddPeriodo,
-        startClearPeriodos
+        startUpdatePeriodo,
+        setActivatePeriodo,
+        startClearPeriodos,
     };
 };

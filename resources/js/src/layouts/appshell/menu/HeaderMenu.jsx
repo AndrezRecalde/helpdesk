@@ -21,7 +21,6 @@ export function HeaderMenu({ usuario, asideValue, modalAside }) {
     const { isOpenDrawerMobile, modalActionDrawerMobile } = useUiHeaderMenu();
     const theme = useMantineTheme();
     return (
-        <div>
             <Box pb={30}>
                 <header className={classes.header}>
                     <Group justify="space-between" h="100%">
@@ -74,7 +73,7 @@ export function HeaderMenu({ usuario, asideValue, modalAside }) {
                                 <ActionIcon
                                     size={35}
                                     variant="default"
-                                    color="red.7"
+                                    //color="red.7"
                                     aria-label="Notificacion Menu"
                                     onClick={() => modalAside(true)}
                                 >
@@ -105,6 +104,5 @@ export function HeaderMenu({ usuario, asideValue, modalAside }) {
                     theme={theme}
                 />
             </Box>
-        </div>
     );
 }

@@ -119,6 +119,26 @@ class UserAdminController extends Controller
         }
     }
 
+    function updateFechaIngreso(Request $request, int $cdgo_usrio) : JsonResponse
+    {
+        $usuario = User::find($cdgo_usrio);
+
+        if (!$usuario) {
+            return response()->json([
+                'status' => MsgStatus::Error,
+                'msg' => MsgStatus::UserNotFound
+            ], 404);
+        }
+        try {
+            $usuario->update([
+                'usu_fi_institucion' => $request->usu_fi_institucion
+            ]);
+            return response()->json(['status' => MsgStatus::Success, 'msg' => MsgStatus::Updated]);
+        } catch (\Throwable $th) {
+            return response()->json(['status' => MsgStatus::Error, 'msg' => $th->getMessage()], 500);
+        }
+    }
+
     function resetPasword(ResetPwdRequest $request, int $cdgo_usrio): JsonResponse
     {
         $usuario = User::find($cdgo_usrio);
@@ -221,13 +241,17 @@ class UserAdminController extends Controller
                 ->selectRaw('usrios_sstma.cdgo_usrio, usrios_sstma.nmbre_usrio, usrios_sstma.nombre_formateado,
                          usrios_sstma.usu_ci, usrios_sstma.email, usrios_sstma.usu_fi_institucion as fecha_ingreso,
                          usrios_sstma.cdgo_direccion, d.nmbre_dprtmnto as departamento,
-                         usrios_sstma.crgo_id, nc.nom_cargo as cargo')
+                         usrios_sstma.crgo_id, nc.nom_cargo as cargo,
+                         usrios_sstma.usu_ult_tipo_contrato, ntc.nom_tipo_contrato as tipo_contrato,
+                         ntc.regimen_laboral_id, rgl.nombre_regimen')
                 ->with(['periodoVacacionales' => function ($query) {
                     $query->select('id', 'cdgo_usrio', 'anio', 'dias_total', 'dias_tomados', 'dias_disponibles', 'activo')
                         ->orderBy('anio', 'DESC');
                 }])
                 ->leftJoin('dprtmntos as d', 'd.cdgo_dprtmnto', 'usrios_sstma.cdgo_direccion')
                 ->leftJoin('nom_cargo as nc', 'nc.idnom_cargo', 'usrios_sstma.crgo_id')
+                ->leftJoin('nom_tipo_contrato as ntc', 'ntc.idnom_tipo_contrato', 'usrios_sstma.usu_ult_tipo_contrato')
+                ->join('nom_regimen_laboral as rgl', 'rgl.id', 'ntc.regimen_laboral_id')
                 ->whereHas('periodoVacacionales')
                 ->byCodigoUsuario($request->cdgo_usrio)
                 ->orderBy('usrios_sstma.nmbre_usrio', 'asc')
@@ -266,10 +290,11 @@ class UserAdminController extends Controller
                     $anio = $periodo->anio;
                     if (isset($mapaPermisos[$periodo->cdgo_usrio][$anio])) {
                         $periodo->tiempo_total_permiso = $mapaPermisos[$periodo->cdgo_usrio][$anio]['tiempo_total'];
-                        $periodo->dias_equivalentes_permiso = $mapaPermisos[$periodo->cdgo_usrio][$anio]['dias_equivalentes'];
+                        $periodo->dias_equivalentes_permiso = (float)$mapaPermisos[$periodo->cdgo_usrio][$anio]['dias_equivalentes'];
+                        $periodo->disponibilidad_vacaciones = (float)$periodo->dias_disponibles - (float)$mapaPermisos[$periodo->cdgo_usrio][$anio]['dias_equivalentes'];
                     } else {
                         $periodo->tiempo_total_permiso = "00:00:00";
-                        $periodo->dias_equivalentes_permiso = 0;
+                        $periodo->dias_equivalentes_permiso = (float)0;
                     }
                 }
             }

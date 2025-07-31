@@ -125,6 +125,7 @@ export const useVacacionesStore = () => {
                 gestionForm
             );
             dispatch(onLoadMessage(data));
+            startLoadSolicitudesVacaciones({});
             setTimeout(() => {
                 dispatch(onLoadMessage(undefined));
             }, 40);

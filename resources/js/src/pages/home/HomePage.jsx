@@ -11,6 +11,7 @@ import { useTitlePage } from "../../hooks";
 import { TextSection, TitlePage } from "../../components";
 import { MenuItems } from "../../layouts";
 import { menuHome } from "../../layouts/appshell/menu/data/menuRoutes";
+import { capitalizarCadaPalabra } from "../../helpers/fnHelpers";
 import classes from "../../assets/styles/modules/menu/MenuGrid.module.css";
 
 function HomePage() {
@@ -21,8 +22,8 @@ function HomePage() {
     return (
         <Container mt={20} size="md">
             <Group justify="space-between">
-                <TitlePage order={2} fw={800}>
-                    Bienvenido, {usuario.usu_alias || "Usuario"}
+                <TitlePage order={3} fw={800}>
+                    Bienvenido, { capitalizarCadaPalabra(usuario.usu_alias) || "Usuario"}
                 </TitlePage>
             </Group>
             <Divider my="sm" />
@@ -33,13 +34,14 @@ function HomePage() {
                     </TextSection>
                     <Badge
                         variant="light"
-                        color="orange.7"
+                        color="teal.8"
                         size="lg"
                         radius="md"
                     >
                         {usuario.lgin || "Sin Datos"}
                     </Badge>
                 </Group>
+                <Divider my="sm" />
                 <SimpleGrid cols={{ base: 1, xs: 1, sm: 1, md: 2, lg: 2 }} mt="md">
                     <MenuItems menuHome={menuHome} classes={classes} theme={theme} />
                 </SimpleGrid>

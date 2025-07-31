@@ -93,7 +93,7 @@ export const useUsersStore = () => {
         }
     };
 
-    const startLoadBirthdays = async() => {
+    const startLoadBirthdays = async () => {
         try {
             dispatch(onLoading(true));
             const { data } = await helpdeskApi.get("/usuario/birthdays");
@@ -104,7 +104,7 @@ export const useUsersStore = () => {
             dispatch(onLoading(false));
             ExceptionMessageError(error);
         }
-    }
+    };
 
     const startUpdateActivoUser = async (usuario) => {
         try {
@@ -113,6 +113,23 @@ export const useUsersStore = () => {
                 usuario
             );
             dispatch(onUpdateUsers(usuario));
+            dispatch(onLoadMessage(data));
+            dispatch(onSetActivateUser(null));
+            setTimeout(() => {
+                dispatch(onLoadMessage(undefined));
+            }, 40);
+        } catch (error) {
+            //console.log(error);
+            ExceptionMessageError(error);
+        }
+    };
+
+    const startUpdateFechaIngreso = async (usuario, values) => {
+        try {
+            const { data } = await helpdeskApi.put(
+                `/tthh/asistencia/update/fecha-ingreso/${usuario.cdgo_usrio}`,
+                values
+            );
             dispatch(onLoadMessage(data));
             dispatch(onSetActivateUser(null));
             setTimeout(() => {
@@ -204,7 +221,11 @@ export const useUsersStore = () => {
         }
     };
 
-    const startAddCodigoBiometrico = async (cdgo_usrio, asi_id_reloj, storageFields = null) => {
+    const startAddCodigoBiometrico = async (
+        cdgo_usrio,
+        asi_id_reloj,
+        storageFields = null
+    ) => {
         try {
             const { data } = await helpdeskApi.put(
                 `/gerencia/update/codigo-biometrico/${cdgo_usrio}`,
@@ -218,7 +239,7 @@ export const useUsersStore = () => {
         } catch (error) {
             ExceptionMessageError(error);
         }
-    }
+    };
 
     const updateTecnico = async ({ cdgo_usrio, roles, actvo }) => {
         try {
@@ -305,6 +326,7 @@ export const useUsersStore = () => {
         startLoadUsers,
         startLoadBirthdays,
         startUpdateActivoUser,
+        startUpdateFechaIngreso,
         verifiedUser,
         startFindUserResponsable,
         startUpdatePassword,

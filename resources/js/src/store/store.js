@@ -5,6 +5,7 @@ import {
     cargoSlice,
     dashGerenciaSlice,
     departamentoSlice,
+    descuentoSlice,
     diagnosticoSlice,
     direccionSlice,
     directorSlice,
@@ -32,6 +33,7 @@ import {
     tipoSolicitudSlice,
     tiposUsuariosSlice,
     uiActividadSlice,
+    uiDescuentoSlice,
     uiDirectorSlice,
     uiHeaderMenuSlice,
     uiIndicadorSlice,
@@ -86,6 +88,9 @@ export const store = configureStore({
 
         vacaciones: vacacionesSlice.reducer,
         uiVacaciones: uiVacacionesSlice.reducer,
+
+        descuento: descuentoSlice.reducer,
+        uiDescuento: uiDescuentoSlice.reducer,
 
         periodoVacacional: periodoSlice.reducer,
         uiPeriodoVacacional: uiPeriodoSlice.reducer,

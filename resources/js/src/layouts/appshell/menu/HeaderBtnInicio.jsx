@@ -11,7 +11,7 @@ export const HeaderBtnInicio = ({ classes, theme }) => {
             <Box component="span" mr={5}>
                 Inicio
             </Box>
-            <IconHomeMove size={18} color={theme.colors.teal[6]} />
+            <IconHomeMove size={18} color={theme.colors.dark[6]} />
         </Link>
     );
 };

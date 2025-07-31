@@ -30,7 +30,7 @@ export const AppHeaderMenu = ({ children }) => {
                 breakpoint: "md",
                 collapsed: { desktop: !isOpenModalAside, mobile: true }, // Controla el Aside
             }}
-            padding="md"
+            padding={30}
         >
             <AppShell.Header>
                 <HeaderMenu

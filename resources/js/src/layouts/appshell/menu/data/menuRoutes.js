@@ -159,7 +159,7 @@ export const MenuRapido = [
     },
     {
         icon: IconList,
-        title: "Mis Soportes Solicitados",
+        title: "Soportes Solicitados",
         path: "soportes",
         link: "/intranet/soportes",
         roles: [""],
@@ -245,12 +245,14 @@ export const menuProfile = [
 export const menuHome = [
     {
         title: "Ver mi perfil",
+        description: "Accede a la información de tu perfil.",
         icon: IconUserHexagon,
         color: "indigo",
         link: "/intranet/profile",
     },
     {
         title: "Mis Marcaciones",
+        description: "Consulta tus marcaciones biométricas.",
         icon: IconFingerprint,
         color: "blue",
         link: "/intranet/marcaciones-biometricos",
@@ -263,24 +265,28 @@ export const menuHome = [
     }, */
     {
         title: "Solicitar Soporte",
+        description: "Solicita asistencia técnica para tus equipos.",
         icon: IconDeviceImacBolt,
         color: "teal",
         link: "/intranet/solicitud-soporte",
     },
     {
         title: "Soportes Solicitados",
+        description: "Revisa tus solicitudes de soporte técnico.",
         icon: IconList,
         color: "teal",
         link: "/intranet/soportes",
     },
     {
         title: "Solicitar Permiso",
+        description: "Envía una solicitud de permiso 4 horas.",
         icon: IconLicense,
         color: "blue",
         link: "/intranet/permiso",
     },
     {
         title: "Mis permisos",
+        description: "Consulta tus permisos 4 horas solicitados.",
         icon: IconEyeCheck,
         color: "blue",
         link: "/intranet/ver-permisos",
@@ -299,12 +305,14 @@ export const menuHome = [
     }, */
     {
         title: "Agregar actividad",
+        description: "Añade una nueva actividad a tu lista.",
         icon: IconPencilPlus,
         color: "violet",
         link: "/intranet/agregar-actividad",
     },
     {
         title: "Listar actividades",
+        description: "Consulta todas tus actividades registradas.",
         icon: IconListCheck,
         color: "violet",
         link: "/intranet/lista-actividades",

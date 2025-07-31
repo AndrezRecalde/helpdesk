@@ -17,7 +17,7 @@ export const useUiUser = () => {
     } = useSelector((state) => state.uiUser);
     const dispatch = useDispatch();
 
-    const modalActionUser = (behavior, action = false) => {
+    const modalActionUser = (behavior = false, action = false) => {
         dispatch(onOpenModalAddUser(behavior));
         dispatch(onOpenModalEditUser(action));
     };

@@ -1,30 +1,43 @@
-import { Grid, Group, Menu, Text, ThemeIcon } from "@mantine/core";
+import {
+    Group,
+    Menu,
+    Stack,
+    Text,
+    ThemeIcon,
+    UnstyledButton,
+} from "@mantine/core";
 import { TextSection } from "../../../components";
 import { Link } from "react-router-dom";
 
 export const MenuList = ({ usuario, menuData, theme }) => {
-    return Object.entries(menuData).map(([category, items]) => (
-        <div key={category}>
-            <Menu.Label>{category}</Menu.Label>
-            {items.map((item) => {
-                const isAllowed = item.roles.includes(usuario.role);
-                return (
+    return Object.entries(menuData).map(([category, items]) => {
+        // Filtramos los items permitidos según el role del usuario
+        const allowedItems = items.filter((item) =>
+            item.roles.includes(usuario.role)
+        );
+
+        // Si no hay items permitidos, no renderizamos nada para esta categoría
+        if (allowedItems.length === 0) return null;
+
+        return (
+            <div key={category}>
+                <Menu.Label>{category}</Menu.Label>
+                {allowedItems.map((item) => (
                     <Menu.Item
                         key={item.title}
                         leftSection={
-                            <item.icon size={18} color={theme.colors.teal[7]} />
+                            <item.icon size={18} color={theme.colors.teal[8]} />
                         }
-                        disabled={!isAllowed}
-                        component={isAllowed ? Link : "div"}
-                        to={isAllowed ? item.link : "#"}
+                        component={Link}
+                        to={item.link}
                     >
                         {item.title}
                     </Menu.Item>
-                );
-            })}
-            <Menu.Divider />
-        </div>
-    ));
+                ))}
+                <Menu.Divider />
+            </div>
+        );
+    });
 };
 
 /* Links de Mega Menu */
@@ -37,8 +50,8 @@ export const MenuQuick = ({ menuData, classes, theme }) => {
             style={{ textDecoration: "none", color: "inherit" }}
         >
             <Group wrap="nowrap" align="flex-start">
-                <ThemeIcon size={35} variant="light" radius="md">
-                    <item.icon size={22} color={theme.colors.teal[7]} />
+                <ThemeIcon size={35} variant="default" radius="md">
+                    <item.icon size={22} color={theme.colors.dark[8]} />
                 </ThemeIcon>
                 <Text size="sm" fw={500}>
                     {item.title}
@@ -48,48 +61,46 @@ export const MenuQuick = ({ menuData, classes, theme }) => {
     ));
 };
 
-export const MenuItems = ({
-    menuHome,
-    classes,
-    theme,
-    toggleDrawer = null,
-}) => {
+export const MenuItems = ({ menuHome, classes, theme, toggleDrawer = null }) => {
     const handleCloseDrawer = () => {
-        if (toggleDrawer !== null) {
-            toggleDrawer(false);
-            return;
-        }
+        if (toggleDrawer) toggleDrawer(false);
     };
 
     return menuHome.map((item) => (
-        <Link
+        <UnstyledButton
             key={item.title}
+            component={Link}
             to={item.link}
-            className={classes.item}
+            className={classes.card}
             onClick={handleCloseDrawer}
-            style={{ textDecoration: "none", color: "inherit" }}
         >
-            <Grid>
-                <Grid.Col span={5}>
+            <div className={classes.cardInner}>
+                <Stack align="center">
                     <ThemeIcon
                         size={50}
-                        variant="default"
                         radius="md"
-                        color={theme.colors[item.color][5]}
+                        variant="outline"
+                        color={theme.colors[item.color][8]}
+                        className={classes.icon}
                     >
-                        <item.icon
-                            color={theme.colors[item.color][7]}
-                            //size={40}
-                            //stroke={1.5}
-                        />
+                        <item.icon size={27} stroke={1.8} />
                     </ThemeIcon>
-                </Grid.Col>
-                <Grid.Col span={7}>
-                    <TextSection tt="left" fw={400} fz={16} mt={7}>
+
+                    <Text className={classes.title} size="md">
                         {item.title}
-                    </TextSection>
-                </Grid.Col>
-            </Grid>
-        </Link>
+                    </Text>
+
+                    {item.description && (
+                        <Text
+                            className={classes.description}
+                            size="sm"
+                            c="dimmed"
+                        >
+                            {item.description}
+                        </Text>
+                    )}
+                </Stack>
+            </div>
+        </UnstyledButton>
     ));
 };

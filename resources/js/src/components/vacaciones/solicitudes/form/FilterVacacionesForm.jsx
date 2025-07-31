@@ -97,7 +97,7 @@ export const FilterVacacionesForm = ({ usuario }) => {
                     justify="center"
                     gap="md"
                 >
-                    <SimpleGrid cols={{ base: 1, sm: 1, md: 2, lg: 2 }}>
+                    <SimpleGrid cols={{ base: 1, sm: 1, md: 4, lg: 4 }}>
                         <YearPickerInput
                             label="Año"
                             placeholder="Seleccione el año"

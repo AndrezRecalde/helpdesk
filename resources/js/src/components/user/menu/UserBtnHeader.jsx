@@ -1,12 +1,24 @@
 import cx from "clsx";
 import { useMemo, useState } from "react";
-import { Avatar, Divider, Group, Menu, Text, UnstyledButton, rem } from "@mantine/core";
-import { IconChevronRight, IconLogout } from "@tabler/icons-react";
+import {
+    Avatar,
+    Divider,
+    Group,
+    Menu,
+    Text,
+    UnstyledButton,
+    rem,
+} from "@mantine/core";
+import {
+    IconChevronDown,
+    IconLogout,
+} from "@tabler/icons-react";
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "../../../hooks";
 import { NightModeSwitch } from "./NightModeSwitch";
 import { menuProfile } from "../../../layouts/appshell/menu/data/menuRoutes";
 import { TextSection } from "../../elements/titles/TextSection";
+import { capitalizarCadaPalabra } from "../../../helpers/fnHelpers";
 import classes from "../../../assets/styles/modules/user/UserHeader.module.css";
 
 export const UserBtnHeader = () => {
@@ -52,22 +64,24 @@ export const UserBtnHeader = () => {
                     <Group gap={20}>
                         <Avatar
                             alt={nombres}
-                            variant="filled"
+                            variant="default"
                             radius="xl"
-                            color="teal.7"
+                            //color="teal.7"
                         >
                             {nombres}
                         </Avatar>
-                         <div style={{ flex: 1 }}>
+                        <div style={{ flex: 1 }}>
                             <Text fw={600} size="sm">
-                                {typeof usuario?.usu_alias === "string" ? usuario.usu_alias.toUpperCase() : "Sin datos"}
+                                {typeof usuario?.usu_alias === "string"
+                                    ? capitalizarCadaPalabra(usuario.usu_alias)
+                                    : "Sin datos"}
                             </Text>
                             <Text size="xs" c="dimmed">
                                 {usuario?.email ?? "Sin datos"}
                             </Text>
                         </div>
-                        <IconChevronRight
-                            style={{ width: rem(12), height: rem(12) }}
+                        <IconChevronDown
+                            style={{ width: rem(20), height: rem(20) }}
                             stroke={1.5}
                         />
                     </Group>
@@ -77,18 +91,18 @@ export const UserBtnHeader = () => {
                 <Group justify="space-between" p={20}>
                     <Avatar
                         alt={nombres}
-                        variant="filled"
+                        variant="default"
                         radius="xl"
-                        color="teal.7"
+                        //color="teal.7"
                         size="lg"
                     >
                         {nombres}
                     </Avatar>
                     <div>
-                        <TextSection  tt="" fz={13} fw={500} size="sm">
+                        <TextSection tt="" fz={14} fw={500} size="sm">
                             {usuario?.usu_alias || "Sin datos"} <br />
                         </TextSection>
-                        <TextSection  tt="" fz={13} fw={300} size="sm">
+                        <TextSection tt="" fz={14} fw={300} size="sm">
                             {usuario?.email || "Sin datos"}
                         </TextSection>
                     </div>

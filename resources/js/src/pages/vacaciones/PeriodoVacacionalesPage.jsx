@@ -1,9 +1,10 @@
-import { Container, Divider, Group } from "@mantine/core";
-import { BtnSection, CreatePeriodoModal, TitlePage } from "../../components";
-import { IconCubePlus } from "@tabler/icons-react";
-import { usePeriodoStore, useUiPeriodo, useUsersStore } from "../../hooks";
 import { useEffect } from "react";
+import { Container, Divider, Group } from "@mantine/core";
+import { BtnSection, PeriodoCreateModal, PeriodoEditModal, TitlePage } from "../../components";
+import { usePeriodoStore, useUiPeriodo, useUsersStore } from "../../hooks";
 import { PeriodosTable } from "../../components/vacaciones/periodos/table/PeriodosTable";
+import { FechaIngresoModal } from "../../components/gerencia/user/modal/FechaIngresoModal";
+import { IconCubePlus } from "@tabler/icons-react";
 import Swal from "sweetalert2";
 
 const PeriodoVacacionalesPage = () => {
@@ -65,7 +66,9 @@ const PeriodoVacacionalesPage = () => {
             <Divider my="md" />
             <PeriodosTable />
 
-            <CreatePeriodoModal />
+            <PeriodoCreateModal />
+            <PeriodoEditModal />
+            <FechaIngresoModal />
         </Container>
     );
 };

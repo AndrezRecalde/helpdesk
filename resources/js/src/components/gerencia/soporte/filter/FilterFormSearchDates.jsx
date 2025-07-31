@@ -2,7 +2,7 @@ import { Box, Fieldset, SimpleGrid } from "@mantine/core";
 import { BtnSubmit, TextSection } from "../../..";
 import { DateInput } from "@mantine/dates";
 import { IconSearch } from "@tabler/icons-react";
-import classes from '../../../../assets/styles/modules/layout/input/LabelsInputs.module.css'
+import classes from "../../../../assets/styles/modules/layout/input/LabelsInputs.module.css";
 
 export const FilterFormSearchDates = ({
     title = "",

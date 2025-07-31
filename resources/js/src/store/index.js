@@ -74,6 +74,11 @@ import { uiVacacionesSlice } from "./vacaciones/uiVacacionesSlice";
 import { periodoSlice } from "./vacaciones/periodo/periodoSlice";
 import { uiPeriodoSlice } from "./vacaciones/periodo/uiPeriodoSlice";
 
+/* Descuentos */
+import { descuentoSlice } from "./vacaciones/descuento/descuentoSlice";
+import { uiDescuentoSlice } from "./vacaciones/descuento/uiDescuentoSlice";
+
+
 /* Marcaciones */
 import { marcacionSlice } from "./marcacion/marcacionSlice";
 
@@ -203,6 +208,10 @@ export {
     uiVacacionesSlice,
     periodoSlice,
     uiPeriodoSlice,
+
+    /* Descuentos */
+    descuentoSlice,
+    uiDescuentoSlice,
 
     /* Marcaciones */
     marcacionSlice,

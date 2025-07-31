@@ -6,10 +6,10 @@ import {
     Stack,
     TextInput,
 } from "@mantine/core";
-import { BtnSubmit, TextSection } from "../../..";
-import { IconSearch } from "@tabler/icons-react";
 import { DateInput, YearPickerInput } from "@mantine/dates";
+import { BtnSubmit, TextSection } from "../../../../components";
 import { useDireccionStore, useUsersStore } from "../../../../hooks";
+import { IconSearch } from "@tabler/icons-react";
 import classes from "../../../../assets/styles/modules/layout/input/LabelsInputs.module.css";
 
 export const FilterPermisoAdmin = ({

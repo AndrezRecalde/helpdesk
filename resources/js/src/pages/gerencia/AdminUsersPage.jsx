@@ -8,6 +8,7 @@ import {
     ModalUser,
     TitlePage,
     UsersTable,
+    ModalCodigoBiometrico,
 } from "../../components";
 import {
     useCargoStore,
@@ -21,7 +22,6 @@ import {
 } from "../../hooks";
 import { IconPencilPlus } from "@tabler/icons-react";
 import Swal from "sweetalert2";
-import { ModalCodigoBiometrico } from "../../components/gerencia/user/modal/ModalCodigoBiometrico";
 
 const AdminUsersPage = () => {
     useTitlePage("Helpdesk | Usuarios");

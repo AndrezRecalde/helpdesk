@@ -1,6 +1,6 @@
-import { Drawer, Group, ScrollArea, SimpleGrid } from "@mantine/core";
+import { Divider, Drawer, Group, ScrollArea, SimpleGrid } from "@mantine/core";
 import { useUiHeaderMenu } from "../../../hooks";
-import { MenuSection, MenuItems } from "../../../layouts";
+import { MenuSection, MenuItems, MenuHome } from "../../../layouts";
 import { UserBtnMobile } from "../../../components/user/menu/UserBtnMobile";
 import {
     menuHome,
@@ -37,10 +37,18 @@ export const DrawerMenuMobile = ({ usuario, classes, theme }) => {
             }}
         >
             <ScrollArea h="calc(100vh - 80px" mx="-md">
+                <MenuHome
+                    classes={classes}
+                    theme={theme}
+                    toggleDrawer={modalActionDrawerMobile}
+                />
+                <Divider my="sm" />
+
                 {usuario.role === Roles.TIC_GERENTE ||
                 usuario.role === Roles.TIC_TECNICO ? (
                     <MenuSection
                         title="Gestión de TIC"
+                        usuario={usuario}
                         menuData={NavMenuTics}
                         classes={classes}
                         theme={theme}
@@ -53,6 +61,7 @@ export const DrawerMenuMobile = ({ usuario, classes, theme }) => {
                 {usuario.role === Roles.TIC_GERENTE ? (
                     <MenuSection
                         title="Gestión General"
+                        usuario={usuario}
                         menuData={NavMenuAdminTics}
                         classes={classes}
                         theme={theme}
@@ -66,6 +75,7 @@ export const DrawerMenuMobile = ({ usuario, classes, theme }) => {
                 usuario.role === Roles.NOM_ASISTENCIA ? (
                     <MenuSection
                         title="Permisos Admin"
+                        usuario={usuario}
                         menuData={NavMenuPermisosAdmin}
                         classes={classes}
                         theme={theme}

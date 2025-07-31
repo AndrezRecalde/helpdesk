@@ -1,17 +1,17 @@
+import { useEffect, useMemo } from "react";
 import { Container, Divider, Group } from "@mantine/core";
 import {
+    TitlePage,
     BtnSection,
     FilterVacacionesForm,
     SolAnulacionVacacionModal,
     SolicitudesVacacionesTable,
-    TitlePage,
+    SolAutorizarVacacionModal
 } from "../../components";
 import { IconCubePlus } from "@tabler/icons-react";
-import { useEffect, useMemo } from "react";
 import { useVacacionesStore } from "../../hooks";
-import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
-import { SolAutorizarVacacionModal } from "../../components/vacaciones/solicitudes/modal/SolAutorizarVacacionModal";
+import Swal from "sweetalert2";
 
 const SolicitudesVacacionesPage = () => {
     const usuario = useMemo(
