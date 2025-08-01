@@ -113,7 +113,7 @@
         @foreach ($soportes as $soporte)
             <tr>
                 <td style="width: 80px;">{{ $soporte->numero_sop }}</td>
-                <td>{{ $soporte->fecha_ini }}</td>
+                <td>{{ $soporte->fecha_ini->format('Y-m-d') }}</td>
                 <td>{{ $soporte->incidente }}</td>
                 <td>{!! $soporte->solucion !!}</td>
                 <td>{{ Str::upper($soporte->usuario_recibe) }}</td>
