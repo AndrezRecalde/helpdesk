@@ -62,7 +62,7 @@ export const InvEquipoModal = () => {
             //nombre_equipo: isNotEmpty("Por favor ingrese la marca"),
             modelo: isNotEmpty("Por favor ingrese el modelo"),
             codigo_nuevo: isNotEmpty("Por favor ingrese el código nuevo"),
-            numero_serie: isNotEmpty("Por favor ingrese el número de serie"),
+            //numero_serie: isNotEmpty("Por favor ingrese el número de serie"),
             vida_util: isNotEmpty("Por favor ingrese la vida útil"),
             /* descripcion: hasLength(
                 { min: 5, max: 300 },
