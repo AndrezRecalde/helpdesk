@@ -1,11 +1,12 @@
 import { Divider, Modal } from "@mantine/core";
 import { isNotEmpty, useForm } from "@mantine/form";
 import { TextSection } from "../../../../components";
-import { useUiPeriodo } from "../../../../hooks";
+import { usePeriodoStore, useUiPeriodo } from "../../../../hooks";
 import { PeriodoEditForm } from "../form/PeriodoEditForm";
 
 export const PeriodoEditModal = () => {
     const { isOpenModalEditPeriodo, modalActionEditPeriodo } = useUiPeriodo();
+    const { setActivatePeriodo } = usePeriodoStore();
 
     const form = useForm({
         initialValues: {
@@ -27,6 +28,8 @@ export const PeriodoEditModal = () => {
 
     const handleCloseModal = () => {
         modalActionEditPeriodo(false);
+        setActivatePeriodo(null);
+        form.reset();
     };
 
     return (

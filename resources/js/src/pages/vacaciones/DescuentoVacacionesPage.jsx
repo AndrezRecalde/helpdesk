@@ -2,16 +2,14 @@ import { Container, Divider, Group } from "@mantine/core";
 import {
     BtnAddActions,
     BtnSection,
-    DescuentoVacacionesModal,
     DescuentoVacacionesTable,
     FilterDescuentoVacacionesForm,
     TitlePage,
 } from "../../components";
 import {
-    IconChevronsLeft,
+    IconChevronsRight,
     IconEyeSearch,
     IconList,
-    IconPencilDiscount,
 } from "@tabler/icons-react";
 import { Roles } from "../../helpers/dictionary";
 import { useUiDescuento } from "../../hooks";
@@ -22,9 +20,9 @@ const DescuentoVacacionesPage = () => {
     const navigate = useNavigate();
     const { modalActionDescuento } = useUiDescuento();
 
-    const handleOpenModalDescuento = () => {
+    /* const handleOpenModalDescuento = () => {
         modalActionDescuento(true);
-    };
+    }; */
 
     const handleOpenModalSolicitudes = () => {
         navigate("/vacaciones/solicitudes");
@@ -35,12 +33,12 @@ const DescuentoVacacionesPage = () => {
     };
 
     const menuActions = [
-        {
+        /* {
             label: "Ingresar Descuento",
             icon: IconPencilDiscount,
             onClick: handleOpenModalDescuento,
             color: "teal",
-        },
+        }, */
         {
             label: "Ver Solicitudes",
             icon: IconEyeSearch,
@@ -67,7 +65,7 @@ const DescuentoVacacionesPage = () => {
                     <BtnSection
                         heigh={45}
                         fontSize={12}
-                        IconSection={IconChevronsLeft}
+                        IconSection={IconChevronsRight}
                         handleAction={() => console.log("clic")}
                     >
                         Ver Solicitudes
@@ -80,7 +78,6 @@ const DescuentoVacacionesPage = () => {
 
             <DescuentoVacacionesTable />
 
-            <DescuentoVacacionesModal />
         </Container>
     );
 };

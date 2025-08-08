@@ -2,10 +2,12 @@ import { Menu, rem } from "@mantine/core";
 import {
     IconChecks,
     IconClockHour2,
+    IconDiscount,
     IconEditCircle,
     IconEyeCheck,
     IconLogs,
     IconNotesOff,
+    IconOctagonMinus,
     IconPrinter,
     IconRestore,
     IconSortAscending,
@@ -481,6 +483,34 @@ export const MenuTable_AutorizarVacacion = ({
                 disabled={!canImprimir}
             >
                 Imprimir
+            </Menu.Item>
+        </>
+    );
+};
+
+
+export const MenuTable_PV = ({ row, handleEdit, handleDescuento }) => {
+    return (
+        <>
+            <Menu.Item
+                leftSection={
+                    <IconEditCircle
+                        style={{ width: rem(15), height: rem(15) }}
+                    />
+                }
+                onClick={() => handleEdit(row.original)}
+            >
+                Editar
+            </Menu.Item>
+            <Menu.Item
+                leftSection={
+                    <IconOctagonMinus
+                        style={{ width: rem(15), height: rem(15) }}
+                    />
+                }
+                onClick={() => handleDescuento(row.original)}
+            >
+                Agregar Descuento
             </Menu.Item>
         </>
     );

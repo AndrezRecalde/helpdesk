@@ -1,10 +1,10 @@
 import { useMemo } from "react";
 import { useMantineReactTable } from "mantine-react-table";
 import { TableContent } from "../../../../components";
-
-const descuentos = [];
+import { useDescuentoStore } from "../../../../hooks";
 
 export const DescuentoVacacionesTable = () => {
+    const { isLoading, descuentos } = useDescuentoStore();
     const columns = useMemo(
         () => [
             {
@@ -43,7 +43,7 @@ export const DescuentoVacacionesTable = () => {
             {
                 header: "Ingresado Por",
                 accessorFn: (row) =>
-                    row?.usuario_tthh || "NO CONTIENE INFORMACION",
+                    row?.usuario_tthh_name || "NO CONTIENE INFORMACION",
                 size: 80,
             },
         ],
@@ -53,7 +53,7 @@ export const DescuentoVacacionesTable = () => {
     const table = useMantineReactTable({
         columns,
         data: descuentos, //must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
-        //state: { showProgressBars: isLoading },
+        state: { showProgressBars: isLoading },
         enableFacetedValues: false,
         enableColumnDragging: false,
         enableDensityToggle: false,

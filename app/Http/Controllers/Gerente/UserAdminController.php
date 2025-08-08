@@ -119,7 +119,7 @@ class UserAdminController extends Controller
         }
     }
 
-    function updateFechaIngreso(Request $request, int $cdgo_usrio) : JsonResponse
+    function updateFechaIngreso(Request $request, int $cdgo_usrio): JsonResponse
     {
         $usuario = User::find($cdgo_usrio);
 
@@ -245,7 +245,15 @@ class UserAdminController extends Controller
                          usrios_sstma.usu_ult_tipo_contrato, ntc.nom_tipo_contrato as tipo_contrato,
                          ntc.regimen_laboral_id, rgl.nombre_regimen')
                 ->with(['periodoVacacionales' => function ($query) {
-                    $query->select('id', 'cdgo_usrio', 'anio', 'dias_total', 'dias_tomados', 'dias_disponibles', 'activo')
+                    $query->select('nom_periodo_vacacionales.id',
+                                   'nom_periodo_vacacionales.cdgo_usrio',
+                                   'usrios_sstma.nmbre_usrio',
+                                   'nom_periodo_vacacionales.anio',
+                                   'nom_periodo_vacacionales.dias_total',
+                                   'nom_periodo_vacacionales.dias_tomados',
+                                   'nom_periodo_vacacionales.dias_disponibles',
+                                   'nom_periodo_vacacionales.activo')
+                        ->join('usrios_sstma', 'usrios_sstma.cdgo_usrio', '=', 'nom_periodo_vacacionales.cdgo_usrio')
                         ->orderBy('anio', 'DESC');
                 }])
                 ->leftJoin('dprtmntos as d', 'd.cdgo_dprtmnto', 'usrios_sstma.cdgo_direccion')
@@ -272,7 +280,7 @@ class UserAdminController extends Controller
                 SEC_TO_TIME(SUM(TIME_TO_SEC(p.tiempo_estimado))) as tiempo_total,
                 ROUND(SUM(TIME_TO_SEC(p.tiempo_estimado)) / 3600 / 24, 2) as dias_equivalentes
             ')
-                ->groupBy('u.cdgo_usrio', 'pv.anio')
+                ->groupBy('u.cdgo_usrio', 'pv.id', 'pv.anio')
                 ->get();
 
             // Agrupar permisos por usuario y año
@@ -288,13 +296,17 @@ class UserAdminController extends Controller
             foreach ($periodos as $periodo) {
                 foreach ($periodo->periodoVacacionales as $periodo) {
                     $anio = $periodo->anio;
+                    // $nom_periodo_vacacional_id = $periodo->id;
                     if (isset($mapaPermisos[$periodo->cdgo_usrio][$anio])) {
                         $periodo->tiempo_total_permiso = $mapaPermisos[$periodo->cdgo_usrio][$anio]['tiempo_total'];
                         $periodo->dias_equivalentes_permiso = (float)$mapaPermisos[$periodo->cdgo_usrio][$anio]['dias_equivalentes'];
                         $periodo->disponibilidad_vacaciones = (float)$periodo->dias_disponibles - (float)$mapaPermisos[$periodo->cdgo_usrio][$anio]['dias_equivalentes'];
+                        //$periodo->nom_periodo_vacacional_id = $nom_periodo_vacacional_id;
                     } else {
                         $periodo->tiempo_total_permiso = "00:00:00";
                         $periodo->dias_equivalentes_permiso = (float)0;
+                        $periodo->disponibilidad_vacaciones = (float)0;
+                        //$periodo->nom_periodo_vacacional_id = $nom_periodo_vacacional_id;
                     }
                 }
             }

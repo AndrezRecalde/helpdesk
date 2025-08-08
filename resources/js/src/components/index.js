@@ -265,7 +265,8 @@ import {
     MenuTable_Per,
     MenuTable_AutorizarPermiso,
     MenuTable_Imprimir,
-    MenuTable_AutorizarVacacion
+    MenuTable_AutorizarVacacion,
+    MenuTable_PV
 } from "./elements/tables/MenuTable";
 import { TableContent } from "./elements/tables/TableContent";
 import { StatInfoDepartamento } from "./elements/stats/StatInfoDepartamento";
@@ -513,6 +514,7 @@ export {
     MenuTable_Consumible,
     MenuTable_Imprimir,
     MenuTable_AutorizarVacacion,
+    MenuTable_PV,
     MenuTable_T,
     MenuSolicitudTable,
     MenuTable_Per,

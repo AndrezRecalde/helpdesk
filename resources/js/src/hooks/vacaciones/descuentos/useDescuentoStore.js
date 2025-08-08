@@ -5,6 +5,7 @@ import {
     onLoadDescuentos,
     onLoadErrores,
     onLoading,
+    onLoadMessage,
     onSetActivateDescuento,
 } from "../../../store/vacaciones/descuento/descuentoSlice";
 import helpdeskApi from "../../../api/helpdeskApi";
@@ -35,7 +36,7 @@ export const useDescuentoStore = () => {
         try {
             if (descuento.id) {
                 const { data } = await helpdeskApi.put(
-                    `/tthh/asistencia/descuento/update/${descuento.id}`,
+                    `/tthh/asistencia/update/descuento/${descuento.id}`,
                     descuento
                 );
                 dispatch(onLoadMessage(data));
@@ -45,7 +46,7 @@ export const useDescuentoStore = () => {
                 return;
             }
             const { data } = await helpdeskApi.post(
-                "/tthh/asistencia/descuento/store",
+                "/tthh/asistencia/store/descuento",
                 descuento
             );
             dispatch(onLoadMessage(data));

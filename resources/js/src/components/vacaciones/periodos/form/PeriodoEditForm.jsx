@@ -38,7 +38,7 @@ export const PeriodoEditForm = ({ form }) => {
             >
                 <Group>
                     El periodo a modificar es:
-                    <TextSection fw={700}>{activatePeriodo.anio}</TextSection>
+                    <TextSection fw={700}>{activatePeriodo?.anio}</TextSection>
                 </Group>
                 <NumberInput
                     required

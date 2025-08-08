@@ -9,7 +9,6 @@ import {
     IconDeviceDesktopCog,
     IconDeviceImac,
     IconDeviceImacBolt,
-    IconEditCircle,
     IconEyeCheck,
     IconFileDescription,
     IconFingerprint,
@@ -178,7 +177,7 @@ export const MenuRapido = [
         link: "/intranet/ver-permisos",
         roles: [""],
     },
-    /* {
+    {
         icon: IconBeach,
         title: "Solicitar Vacaciones",
         path: "solicitud-soporte",
@@ -191,9 +190,9 @@ export const MenuRapido = [
         path: "soportes",
         link: "/intranet/soportes",
         roles: [""],
-    }, */
+    },
     {
-        icon: IconEditCircle,
+        icon: IconPencilPlus,
         title: "Agregar Actividad",
         path: "agregar-actividad",
         link: "/intranet/agregar-actividad",
@@ -291,18 +290,20 @@ export const menuHome = [
         color: "blue",
         link: "/intranet/ver-permisos",
     },
-    /* {
+    {
         title: "Solicitar Vacaciones",
+        description: "Envía una solicitud de vacaciones.",
         icon: IconBeach,
-        color: "orange",
+        color: "green",
         link: "/intranet/vacaciones",
     },
     {
         title: "Reporte Vacaciones",
+        description: "Consulta el reporte de vacaciones.",
         icon: IconList,
-        color: "orange",
+        color: "green",
         link: "/intranet/solicitudes-vacaciones",
-    }, */
+    },
     {
         title: "Agregar actividad",
         description: "Añade una nueva actividad a tu lista.",

@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { Container, Divider, Group } from "@mantine/core";
-import { BtnSection, PeriodoCreateModal, PeriodoEditModal, TitlePage } from "../../components";
+import { BtnSection, DescuentoVacacionesModal, PeriodoCreateModal, PeriodoEditModal, TitlePage } from "../../components";
 import { usePeriodoStore, useUiPeriodo, useUsersStore } from "../../hooks";
 import { PeriodosTable } from "../../components/vacaciones/periodos/table/PeriodosTable";
 import { FechaIngresoModal } from "../../components/gerencia/user/modal/FechaIngresoModal";
@@ -69,6 +69,8 @@ const PeriodoVacacionalesPage = () => {
             <PeriodoCreateModal />
             <PeriodoEditModal />
             <FechaIngresoModal />
+
+            <DescuentoVacacionesModal />
         </Container>
     );
 };

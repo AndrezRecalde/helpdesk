@@ -1,20 +1,28 @@
-import { Box, NumberInput, Select, Stack, Textarea } from "@mantine/core";
+import { Box, NumberInput, Stack, Table, Textarea } from "@mantine/core";
 import { BtnSubmit } from "../../../../components";
 import {
+    useDescuentoStore,
     usePeriodoStore,
     useUiDescuento,
-    useUsersStore,
 } from "../../../../hooks";
 
 export const DescuentoVacacionalForm = ({ form }) => {
     const { modalActionDescuento } = useUiDescuento();
-    const { users } = useUsersStore();
-    const { periodos } = usePeriodoStore();
+    const { startAddDescuento } = useDescuentoStore();
+    const { startLoadPeriodos, activatePeriodo } = usePeriodoStore();
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(form.getValues());
+        const values = form.getTransformedValues();
+        const formulario = {
+            ...values,
+            usuario_id: activatePeriodo.cdgo_usrio,
+            nom_periodo_vacacional_id: activatePeriodo.id,
+        };
+        console.log(formulario);
         form.reset();
+        await startAddDescuento(formulario);
+        await startLoadPeriodos({});
         modalActionDescuento(false);
     };
 
@@ -29,30 +37,26 @@ export const DescuentoVacacionalForm = ({ form }) => {
                 justify="center"
                 gap="lg"
             >
-                <Select
-                    clearable
-                    required
-                    label="Usuario"
-                    placeholder="Seleccione el usuario"
-                    data={users.map((user) => ({
-                        value: user.cdgo_usrio.toString(),
-                        label: user.nmbre_usrio,
-                    }))}
-                    {...form.getInputProps("usuario_id")}
-                    nothingFoundMessage="Nada encontrado..."
-                />
-                <Select
-                    clearable
-                    required
-                    label="Periodo"
-                    placeholder="Seleccione un periodo"
-                    data={periodos.map((periodo) => ({
-                        value: periodo.id.toString(),
-                        label: periodo.anio,
-                    }))}
-                    {...form.getInputProps("nom_periodo_id")}
-                    nothingFoundMessage="Nada encontrado..."
-                />
+                <Table withTableBorder withColumnBorders>
+                    <Table.Thead>
+                        <Table.Tr>
+                            <Table.Th>Servidor</Table.Th>
+                            <Table.Th>Periodo</Table.Th>
+                            <Table.Th>Disponibilidad</Table.Th>
+                        </Table.Tr>
+                    </Table.Thead>
+                    <Table.Tbody>
+                        <Table.Tr>
+                            <Table.Td>
+                                {activatePeriodo?.nmbre_usrio.toUpperCase()}
+                            </Table.Td>
+                            <Table.Td>{activatePeriodo?.anio}</Table.Td>
+                            <Table.Td>
+                                {activatePeriodo?.disponibilidad_vacaciones}
+                            </Table.Td>
+                        </Table.Tr>
+                    </Table.Tbody>
+                </Table>
                 <NumberInput
                     label="Dias de descuento"
                     placeholder="Ingrese los días de descuento"

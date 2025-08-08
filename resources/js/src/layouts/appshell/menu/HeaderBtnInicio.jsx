@@ -1,5 +1,5 @@
 import { Box } from "@mantine/core";
-import { IconHomeCheck, IconHomeMove } from "@tabler/icons-react";
+import { IconHomeMove } from "@tabler/icons-react";
 import { Link } from "react-router-dom";
 
 export const HeaderBtnInicio = ({ classes, theme }) => {

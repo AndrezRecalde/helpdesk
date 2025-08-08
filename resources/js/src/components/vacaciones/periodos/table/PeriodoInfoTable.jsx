@@ -1,13 +1,14 @@
 import { useCallback, useMemo } from "react";
-import { MenuTable_E, TableContent, TextSection } from "../../../../components";
+import { MenuTable_PV, TableContent, TextSection } from "../../../../components";
 import { useMantineReactTable } from "mantine-react-table";
-import { usePeriodoStore, useUiPeriodo } from "../../../../hooks";
+import { usePeriodoStore, useUiDescuento, useUiPeriodo } from "../../../../hooks";
 
 export const PeriodoInfoTable = ({ data }) => {
     const { original } = data;
     const { periodo_vacacionales } = original;
     const { setActivatePeriodo } = usePeriodoStore();
     const { modalActionEditPeriodo } = useUiPeriodo();
+    const { modalActionDescuento } = useUiDescuento();
 
     const columns = useMemo(
         () => [
@@ -61,6 +62,17 @@ export const PeriodoInfoTable = ({ data }) => {
         [periodo_vacacionales]
     );
 
+    const handleDescuento = useCallback(
+        (selected) => {
+            console.log(selected);
+            setActivatePeriodo(selected);
+            modalActionDescuento(true);
+            //setActivateUser(selected);
+            //modalActionUser(false, true);
+        },
+        [periodo_vacacionales]
+    );
+
     const table = useMantineReactTable({
         columns,
         data: periodo_vacacionales, //must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
@@ -75,7 +87,7 @@ export const PeriodoInfoTable = ({ data }) => {
         enableColumnActions: false,
         enableRowActions: true,
         renderRowActionMenuItems: ({ row }) => (
-            <MenuTable_E row={row} handleEdit={handleEdit} />
+            <MenuTable_PV row={row} handleEdit={handleEdit} handleDescuento={handleDescuento} />
         ),
         renderTopToolbarCustomActions: ({ table }) => (
             <TextSection mt={10} fw={700}>Informacion de los periodos</TextSection>

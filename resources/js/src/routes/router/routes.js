@@ -151,29 +151,29 @@ const AutorizarPermisosPage = lazy(() =>
     )
 );
 
-const SolicitudVacacionesPage = lazy(() =>
-    import(
-        /* webpackChunkName: "SolicitudVacacionesPage" */ "../../pages/vacaciones/SolicitudVacacionesPage"
-    )
-);
+//const SolicitudVacacionesPage = lazy(() =>
+//    import(
+//       /* webpackChunkName: "SolicitudVacacionesPage" */ "../../pages/vacaciones/SolicitudVacacionesPage"
+//    )
+//);
 
-const SolicitudesVacacionesPage = lazy(() =>
-    import(
-        /* webpackChunkName: "SolicitudesVacacionesPage" */ "../../pages/vacaciones/SolicitudesVacacionesPage"
-    )
-);
+//const SolicitudesVacacionesPage = lazy(() =>
+//    import(
+//       /* webpackChunkName: "SolicitudesVacacionesPage" */ "../../pages/vacaciones/SolicitudesVacacionesPage"
+//    )
+//);
 
-const PeriodoVacacionalesPage = lazy(() =>
-    import(
-        /* webpackChunkName: "PeriodoVacacionalesPage" */ "../../pages/vacaciones/PeriodoVacacionalesPage"
-    )
-);
+//const PeriodoVacacionalesPage = lazy(() =>
+//    import(
+//       /* webpackChunkName: "PeriodoVacacionalesPage" */ "../../pages/vacaciones/PeriodoVacacionalesPage"
+//    )
+//);
 
-const DescuentoVacacionesPage = lazy(() =>
-    import(
-        /* webpackChunkName: "DescuentoVacacionesPage" */ "../../pages/vacaciones/DescuentoVacacionesPage"
-    )
-);
+//const DescuentoVacacionesPage = lazy(() =>
+//    import(
+//        /* webpackChunkName: "DescuentoVacacionesPage" */ "../../pages/vacaciones/DescuentoVacacionesPage"
+//    )
+//);
 
 const ErrorNotFound = lazy(() =>
     import(
@@ -255,11 +255,11 @@ const peerRoutes = generateRoutes(
         { path: "permiso", Component: PermisosPage },
         { path: "ver-permisos", Component: ListPermisosPage },
 
-        { path: "vacaciones", Component: SolicitudVacacionesPage },
+        /* { path: "vacaciones", Component: SolicitudVacacionesPage },
         { path: "solicitudes-vacaciones", Component: SolicitudesVacacionesPage },
-        { path: "periodos-vacaciones", Component: PeriodoVacacionalesPage },
+        { path: "periodos-vacaciones", Component: PeriodoVacacionalesPage }, */
 
-        { path: "descuentos-vacaciones", Component: DescuentoVacacionesPage },
+        /* { path: "descuentos-vacaciones", Component: DescuentoVacacionesPage }, */
 
         { path: "agregar-actividad", Component: ActividadPage },
         { path: "lista-actividades", Component: ListActividadesPage },

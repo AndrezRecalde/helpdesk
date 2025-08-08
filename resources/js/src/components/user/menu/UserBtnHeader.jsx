@@ -9,10 +9,7 @@ import {
     UnstyledButton,
     rem,
 } from "@mantine/core";
-import {
-    IconChevronDown,
-    IconLogout,
-} from "@tabler/icons-react";
+import { IconChevronDown, IconLogout } from "@tabler/icons-react";
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "../../../hooks";
 import { NightModeSwitch } from "./NightModeSwitch";
@@ -99,10 +96,13 @@ export const UserBtnHeader = () => {
                         {nombres}
                     </Avatar>
                     <div>
-                        <TextSection tt="" fz={14} fw={500} size="sm">
-                            {usuario?.usu_alias || "Sin datos"} <br />
+                        <TextSection tt="" fz={15} fw={500} size="sm">
+                            {typeof usuario?.usu_alias === "string"
+                                ? capitalizarCadaPalabra(usuario.usu_alias)
+                                : "Sin datos"}{" "}
+                            <br />
                         </TextSection>
-                        <TextSection tt="" fz={14} fw={300} size="sm">
+                        <TextSection tt="" fz={15} fw={300} size="sm">
                             {usuario?.email || "Sin datos"}
                         </TextSection>
                     </div>

@@ -10,6 +10,7 @@ use App\Models\NomVacacionesDescuento;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class NomVacacionesDescuentoController extends Controller
 {
@@ -18,6 +19,7 @@ class NomVacacionesDescuentoController extends Controller
         try {
             $descuentos = NomVacacionesDescuento::from('nom_vacaciones_descuentos as nvd')
                 ->join('usrios_sstma as us', 'nvd.usuario_id', '=', 'us.cdgo_usrio')
+                ->join('usrios_sstma as u', 'nvd.usuario_tthh', '=', 'u.cdgo_usrio')
                 ->join('nom_periodo_vacacionales as npv', 'nvd.nom_periodo_vacacional_id', '=', 'npv.id')
                 ->select(
                     'nvd.id',
@@ -27,6 +29,7 @@ class NomVacacionesDescuentoController extends Controller
                     'nvd.dias_descuento',
                     'nvd.motivo',
                     'nvd.usuario_tthh',
+                    'u.nmbre_usrio as usuario_tthh_name',
                 )
                 ->when($request->usuario_id, fn($q) => $q->where('nvd.usuario_id', $request->usuario_id))
                 ->when($request->anio, fn($q) => $q->where('npv.anio', $request->anio))
@@ -43,44 +46,55 @@ class NomVacacionesDescuentoController extends Controller
         }
     }
 
-    function store(NomVacacionesDescuentoRequest $request, int $id): JsonResponse
+    public function store(NomVacacionesDescuentoRequest $request): JsonResponse
     {
-        $periodo = NomPeriodoVacacional::find($id);
+        $periodo = NomPeriodoVacacional::find($request->nom_periodo_vacacional_id);
+
+        if (!$periodo) {
+            return response()->json([
+                'status' => MsgStatus::Error,
+                'msg'    => MsgStatus::NotFound
+            ], 404);
+        }
+
+        $diasDescuento = $request->dias_descuento;
+        $diasDisponibles = $periodo->dias_disponibles;
+
+        if ($diasDescuento > $diasDisponibles) {
+            return response()->json([
+                'status' => MsgStatus::Error,
+                'msg'    => 'Los días de descuento no pueden ser mayores a los días disponibles del periodo vacacional.'
+            ], 422);
+        }
+
         try {
+            DB::beginTransaction();
 
-            if (!$periodo) {
-                return response()->json([
-                    'status' => MsgStatus::Error,
-                    'msg' => MsgStatus::NotFound
-                ], 404);
-            }
-
-            $dias_descuento = $request->dias_descuento;
-            if ($dias_descuento > $periodo->dias_disponibles) {
-                return response()->json([
-                    'status' => MsgStatus::Error,
-                    'msg'    => 'Los días de descuento no pueden ser mayores a los días disponibles del periodo vacacional.'
-                ], 422);
-            }
-
-            $dias_tomados = $periodo->dias_tomados + $dias_descuento;
-            $dias_disponibles = max($periodo->dias_disponibles - $dias_descuento, 0);
-
+            // Actualizar el periodo vacacional
             $periodo->update([
-                'dias_tomados' => $dias_tomados,
-                'dias_disponibles' => $dias_disponibles,
+                'dias_tomados'     => $periodo->dias_tomados + $diasDescuento,
+                'dias_disponibles' => max($diasDisponibles - $diasDescuento, 0),
             ]);
 
-            $periodo->fill($request->validated());
-            $periodo->usuario_tthh = Auth::user()->id;
-            $periodo->save();
+            // Crear el descuento
+            NomVacacionesDescuento::create(array_merge(
+                $request->validated(),
+                ['usuario_tthh' => Auth::id()]
+            ));
+
+            DB::commit();
 
             return response()->json([
                 'status' => MsgStatus::Success,
                 'msg'    => MsgStatus::Created,
             ], 201);
-        } catch (\Throwable $th) {
-            return response()->json(['status' => MsgStatus::Error, 'msg' => $th->getMessage()], 500);
+        } catch (\Throwable $e) {
+            DB::rollBack();
+
+            return response()->json([
+                'status' => MsgStatus::Error,
+                'msg'    => 'Error al registrar el descuento: ' . $e->getMessage()
+            ], 500);
         }
     }
 
