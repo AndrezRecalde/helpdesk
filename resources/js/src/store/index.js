@@ -1,3 +1,7 @@
+/* Application */
+import { appSlice } from "./app/appSlice";
+import { uiAppSlice } from "./app/uiAppSlice";
+
 /* Auth */
 import { authSlice } from "./auth/authSlice";
 
@@ -132,6 +136,9 @@ import { store } from "./store";
 export {
     store,
 
+    /* Application */
+    appSlice,
+    uiAppSlice,
 
     /* Auth */
     authSlice,

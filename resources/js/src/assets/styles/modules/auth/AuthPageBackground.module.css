@@ -2,8 +2,8 @@
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    background-size: cover;
-    background-image: url(https://prefecturadeesmeraldas.gob.ec/wp-content/uploads/2025/08/17580-scaled.jpg);
+    //background-size: cover;
+    //background-image: url(https://prefecturadeesmeraldas.gob.ec/wp-content/uploads/2025/08/17580-scaled.jpg);
 }
 .wrapper_paper {
     margin: auto;

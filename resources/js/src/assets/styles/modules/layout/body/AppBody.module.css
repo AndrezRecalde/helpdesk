@@ -2,5 +2,16 @@
     background-color: light-dark(
         var(--mantine-color-gray-1),
         var(--mantine-color-dark-6)
-    ) !important;
+    );
 }
+
+/* .aside {
+    background-color: light-dark(
+        var(--mantine-color-gray-2),
+        var(--mantine-color-dark-7)
+    ) !important;
+} */
+
+/* .body {
+    background-image: url(https://prefecturadeesmeraldas.gob.ec/wp-content/uploads/2025/08/17580-scaled.jpg);
+} */

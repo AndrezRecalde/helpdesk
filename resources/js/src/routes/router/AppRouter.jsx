@@ -3,7 +3,7 @@ import { authRoutes, consultaTramiteRoutes, peerLinks, routes } from "./routes";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { PublicRoutes } from "../public/PublicRoutes";
 import { PrivateRoutes } from "../private";
-import { useAuthStore } from "../../hooks";
+import { useAppStore, useAuthStore } from "../../hooks";
 import { RoutesNotFound } from "../not-found/RoutesNotFound";
 //import { AppLayout, Roles } from "../../layouts";
 import { AuthGuard } from "../private/guards";
@@ -13,7 +13,10 @@ const AuthRoutes = () => (
     <PublicRoutes>
         <Routes>
             <Route path={authRoutes.path} element={<authRoutes.Component />} />
-            <Route path={consultaTramiteRoutes.path} element={<consultaTramiteRoutes.Component />} />
+            <Route
+                path={consultaTramiteRoutes.path}
+                element={<consultaTramiteRoutes.Component />}
+            />
             <Route
                 path="/*"
                 element={<Navigate replace to={authRoutes.link} />}
@@ -24,9 +27,20 @@ const AuthRoutes = () => (
 
 export const AppRouter = () => {
     const { checkAuthToken } = useAuthStore();
+    const { startLoadImagenes, imagenes } = useAppStore();
 
     useEffect(() => {
         checkAuthToken();
+    }, []);
+
+    useEffect(() => {
+        if (imagenes !== null || imagenes.length === 0) {
+            startLoadImagenes();
+        }
+
+        /* return () => {
+                startClearImagenes();
+            }; */
     }, []);
 
     // Helper para renderizar rutas de acuerdo a la estructura dinámica

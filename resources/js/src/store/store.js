@@ -1,6 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import {
     actividadSlice,
+    appSlice,
     authSlice,
     cargoSlice,
     dashGerenciaSlice,
@@ -33,6 +34,7 @@ import {
     tipoSolicitudSlice,
     tiposUsuariosSlice,
     uiActividadSlice,
+    uiAppSlice,
     uiDescuentoSlice,
     uiDirectorSlice,
     uiHeaderMenuSlice,
@@ -59,6 +61,8 @@ import {
 
 export const store = configureStore({
     reducer: {
+        app: appSlice.reducer,
+        uiApp: uiAppSlice.reducer,
         auth: authSlice.reducer,
         uiHeaderMenu: uiHeaderMenuSlice.reducer,
         users: usersSlice.reducer,

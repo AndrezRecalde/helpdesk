@@ -1,8 +1,7 @@
 import { Image } from '@mantine/core';
-import logo from "../../../assets/images/LogoMediano.png";
-
 
 export const Logo = ({ height = 200, width = "auto" }) => {
+    const imagenes = JSON.parse(localStorage.getItem("service_images"));
     return (
         <Image
             radius="md"
@@ -11,7 +10,8 @@ export const Logo = ({ height = 200, width = "auto" }) => {
             w={width}
             fit="contain"
             alt="logo"
-            src={logo}
+            src={imagenes?.imagen_logo}
+            fallbackSrc="https://placehold.co/600x400?text=Placeholder"
         />
     );
 };

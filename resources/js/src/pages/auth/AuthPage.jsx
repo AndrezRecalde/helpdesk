@@ -1,16 +1,21 @@
 import { Divider, Image, Paper } from "@mantine/core";
+import { AuthForm, BtnServicesApps } from "../../components";
 import { useTitlePage } from "../../hooks";
-import {
-    AuthForm,
-    BtnServicesApps,
-} from "../../components";
 import classes from "../../assets/styles/modules/auth/AuthPageBackground.module.css";
 
 const AuthPage = () => {
+    const imagenes = JSON.parse(localStorage.getItem("service_images"));
     useTitlePage("Helpdesk | Login");
 
     return (
-        <div className={classes.wrapper}>
+        <div
+            className={classes.wrapper}
+            style={{
+                backgroundImage: `url(${imagenes?.imagen_fondo})`,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+            }}
+        >
             <Paper
                 withBorder
                 shadow="lg"
@@ -20,10 +25,15 @@ const AuthPage = () => {
                 <Image
                     radius="xs"
                     h={180}
-                    src="https://prefecturadeesmeraldas.gob.ec/wp-content/uploads/2025/07/login_prefectura.png"
+                    src={imagenes?.imagen_login}
+                    fallbackSrc="https://placehold.co/600x400?text=Placeholder"
                 />
                 <AuthForm />
-                <Divider my="xs" label="Otros servicios" labelPosition="center" />
+                <Divider
+                    my="xs"
+                    label="Otros servicios"
+                    labelPosition="center"
+                />
                 <BtnServicesApps />
             </Paper>
         </div>

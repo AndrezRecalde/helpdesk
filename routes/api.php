@@ -13,6 +13,7 @@ use App\Http\Controllers\General\Ruta\RutaController;
 use App\Http\Controllers\General\SoporteController;
 //use App\Http\Controllers\General\STipoEquipoController;
 use App\Http\Controllers\General\UserController;
+use App\Http\Controllers\Gerente\AppController;
 use App\Http\Controllers\Gerente\CargoController;
 use App\Http\Controllers\Gerente\DashGerenteController;
 use App\Http\Controllers\Gerente\DireccionAdminController;
@@ -57,6 +58,9 @@ Route::get('/sanctum/csrf-cookie', function () {
     return response()->json(['csrfToken' => csrf_token()]);
 });
 
+/* IMAGENES PREDEFINIDAS DEL SISTEMA */
+Route::get('/app/imagenes', [AppController::class, 'getImagenesApp']);
+
 Route::post('/auth/login', [AuthController::class, 'login']);
 
 Route::post('/refresh', [AuthController::class, 'refresh'])->middleware('auth:sanctum');
@@ -72,6 +76,9 @@ Route::post('/usuarios', [UserController::class, 'getUsuarios'])->middleware('au
 /* RUTAS: GERENTE */
 
 Route::group(['prefix' => 'gerencia', 'middleware' => ['auth:sanctum', 'role:TIC_GERENTE']], function () {
+
+    /* APLICACION */
+    Route::put('/app/imagenes/update/{id}', [AppController::class, 'update']);
 
     /* USUARIOS */
     Route::post('/admin/usuarios', [UserAdminController::class, 'getUsuariosAdmin']);
@@ -340,5 +347,4 @@ Route::group(['prefix' => 'tthh/asistencia', 'middleware' => ['auth:sanctum', 'r
     Route::post('/store/descuento', [NomVacacionesDescuentoController::class, 'store']);
     Route::put('/update/descuento/{id}', [NomVacacionesDescuentoController::class, 'update']);
     Route::delete('/delete/descuento/{id}', [NomVacacionesDescuentoController::class, 'destroy']);
-
 });

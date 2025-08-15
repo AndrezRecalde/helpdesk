@@ -13,6 +13,12 @@ import { NightModeSwitch } from "./user/menu/NightModeSwitch";
 /* Usuario: Contraseña */
 import { ChangePwdForm } from "./user/password/ChangePwdForm";
 
+/* Aplicacion: Logos Imagenes */
+import { AppLogosTable } from "./app/table/AppLogosTable";
+import { AppLogosModal } from "./app/modal/AppLogosModal";
+import { AppLogosForm } from "./app/form/AppLogosForm";
+
+
 /* Elementos Gerencia */
 /* CHARTS */
 import { ChartBarDesempAreas } from "./gerencia/dashboard/charts/ChartBarDesempAreas";
@@ -286,6 +292,11 @@ export {
 
     /* Usuario: Contraseña */
     ChangePwdForm,
+
+    /* Aplicacion: Logos */
+    AppLogosTable,
+    AppLogosModal,
+    AppLogosForm,
 
     /* Elementos Gerencia */
     /* CHARTS */

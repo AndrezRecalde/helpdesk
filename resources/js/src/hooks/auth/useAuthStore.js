@@ -87,11 +87,17 @@ export const useAuthStore = () => {
     const startLogout = async () => {
         try {
             await helpdeskApi.post("/auth/logout");
-            localStorage.clear();
+            //localStorage.clear();
+            localStorage.removeItem("service_user");
+            localStorage.removeItem("auth_token");
+            localStorage.removeItem("token_init_date");
             dispatch(onLogout());
             clearColorScheme();
         } catch (error) {
-            localStorage.clear();
+            //localStorage.clear();
+            localStorage.removeItem("service_user");
+            localStorage.removeItem("auth_token");
+            localStorage.removeItem("token_init_date");
             dispatch(onLogout());
             clearColorScheme();
         }
