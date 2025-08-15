@@ -3,7 +3,7 @@ import { Drawer } from "@mantine/core";
 import { FormCreateSoporte, TextSection } from "../../../components";
 import {
     useEquipoStore,
-    useEstadoStore,
+    //useEstadoStore,
     useSoporteStore,
     useTecnicoStore,
     useTipoSolicitudStore,
@@ -34,7 +34,7 @@ export const ModalCreateSoporte = ({ role }) => {
 
     const { startLoadEquiposInformaticos, clearEquiposInformaticos } =
         useEquipoStore();
-    const { startLoadEstados, clearEstados } = useEstadoStore();
+    //const { startLoadEstados, clearEstados } = useEstadoStore();
 
     const convertToString = (value) =>
         value !== null && value !== undefined ? value.toString() : null;
@@ -136,12 +136,12 @@ export const ModalCreateSoporte = ({ role }) => {
         if (isOpenModalCreateSoporte) {
             startLoadTiposSolicitudes();
             startLoadEquiposInformaticos();
-            startLoadEstados();
+            //startLoadEstados();
         }
         return () => {
             clearTiposSolicitudes();
             clearEquiposInformaticos();
-            clearEstados();
+            //clearEstados();
         };
     }, [isOpenModalCreateSoporte]);
 

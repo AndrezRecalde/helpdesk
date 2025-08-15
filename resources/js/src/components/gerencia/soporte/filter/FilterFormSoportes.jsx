@@ -1,5 +1,6 @@
 import {
     Box,
+    Chip,
     Fieldset,
     Group,
     Select,
@@ -37,11 +38,11 @@ export const FilterFormSoportes = ({ form }) => {
             //console.log(values);
             startSearchSoporte(values);
             setStorageFields(values);
-            //console.log(values);
+            console.log(values);
         } else {
             //console.log("aki2");
 
-            //console.log(form.getTransformedValues());
+            console.log(form.getTransformedValues());
             startSearchSoporte(form.getTransformedValues());
             setStorageFields(form.getTransformedValues());
         }
@@ -62,19 +63,41 @@ export const FilterFormSoportes = ({ form }) => {
                 component="form"
                 onSubmit={form.onSubmit((_, e) => handleSubmit(e))}
             >
-                <Group justify="flex-end" spacing="md">
-                    <YearPickerInput
-                        required
-                        placeholder="Seleccione el año"
-                        {...form.getInputProps("anio")}
-                    />
-                    <Switch
-                        size="xl"
-                        onLabel="G"
-                        offLabel="T"
-                        disabled={usuario?.role_id == 2 ? true : false} //Tiene que ser tecnico para que sea true
-                        {...form.getInputProps("switch_role")}
-                    />
+                <Group justify="space-between" spacing="md">
+                    <Group>
+                        <Chip.Group
+                            multiple
+                            value={form.values.id_estado} // debe ser array de strings
+                            onChange={(values) =>
+                                form.setFieldValue("id_estado", values)
+                            }
+                        >
+                            {estados.map((estado) => (
+                                <Chip
+                                    key={estado.id_estado_caso}
+                                    value={estado.id_estado_caso.toString()}
+                                    variant="light"
+                                    size="sm"
+                                >
+                                    {estado.nombre}
+                                </Chip>
+                            ))}
+                        </Chip.Group>
+                    </Group>
+                    <Group>
+                        <YearPickerInput
+                            required
+                            placeholder="Seleccione el año"
+                            {...form.getInputProps("anio")}
+                        />
+                        <Switch
+                            size="xl"
+                            onLabel="G"
+                            offLabel="T"
+                            disabled={usuario?.role_id == 2 ? true : false} //Tiene que ser tecnico para que sea true
+                            {...form.getInputProps("switch_role")}
+                        />
+                    </Group>
                 </Group>
 
                 <SimpleGrid cols={{ base: 1, sm: 1, md: 2, lg: 2 }} mt={10}>
@@ -95,7 +118,7 @@ export const FilterFormSoportes = ({ form }) => {
                         {...form.getInputProps("fecha_fin")}
                     />
                 </SimpleGrid>
-                <SimpleGrid cols={{ base: 1, sm: 1, md: 3, lg: 3 }} mt={10}>
+                <SimpleGrid cols={{ base: 1, sm: 1, md: 2, lg: 2 }} mt={10}>
                     <Select
                         searchable
                         label="Dirección"
@@ -115,7 +138,7 @@ export const FilterFormSoportes = ({ form }) => {
                         {...form.getInputProps("numero_sop")}
                         placeholder="Filtrar por soporte"
                     />
-                    <Select
+                    {/* <Select
                         searchable
                         clearable
                         label="Estado"
@@ -128,7 +151,7 @@ export const FilterFormSoportes = ({ form }) => {
                                 label: estado.nombre,
                             };
                         })}
-                    />
+                    /> */}
                 </SimpleGrid>
 
                 <BtnSubmit IconSection={IconSearch} loading={isLoading}>

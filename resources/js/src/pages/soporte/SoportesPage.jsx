@@ -43,7 +43,7 @@ const SoportesPage = () => {
             anio: new Date(),
             id_direccion: null,
             numero_sop: "",
-            id_estado: null,
+            id_estado: [],
             switch_role: false,
             id_usu_tecnico_asig: usuario.cdgo_usrio,
         },
@@ -61,7 +61,7 @@ const SoportesPage = () => {
             //id_direccion: Number(values.id_direccion),
             id_usu_tecnico_asig: Number(values.id_usu_tecnico_asig) || null,
             anio: values.anio.getFullYear(),
-            id_estado: Number(values.id_estado) || null,
+            id_estado: values.id_estado.map((id) => Number(id)),
         }),
     });
 

@@ -89,10 +89,12 @@ class Soporte extends Model
         }
     }
 
-    function scopeEstado($query, $id_estado)
+    public function scopeEstado($query, array $id_estado)
     {
-        if ($id_estado) {
-            return $query->where('ss.id_estado', $id_estado);
+        if (!empty($id_estado)) {
+            return $query->whereIn('ss.id_estado', $id_estado);
         }
+
+        return $query;
     }
 }
