@@ -85,6 +85,7 @@ import { uiDescuentoSlice } from "./vacaciones/descuento/uiDescuentoSlice";
 
 /* Marcaciones */
 import { marcacionSlice } from "./marcacion/marcacionSlice";
+import { uiMarcacionSlice } from "./marcacion/uiMarcacionSlice";
 
 /* Inventario: Tipos Categorias */
 import { invTipocategoriaSlice } from "./inventario/tipocategoria/invTipocategoriaSlice";
@@ -222,6 +223,7 @@ export {
 
     /* Marcaciones */
     marcacionSlice,
+    uiMarcacionSlice,
 
     /* Inventario: Tipos Categorias */
     invTipocategoriaSlice,

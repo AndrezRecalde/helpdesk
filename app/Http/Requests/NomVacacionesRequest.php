@@ -25,6 +25,7 @@ class NomVacacionesRequest extends FormRequest
     {
         return [
             'cdgo_usrio'       => 'required',
+            'direccion_id'     => 'required',
             'fecha_solicitud'  => '',
             'fecha_inicio'     => 'required',
             'fecha_fin'        => 'required',
@@ -33,6 +34,7 @@ class NomVacacionesRequest extends FormRequest
             'jefe_id'          => 'nullable',
             'director_id'      => 'nullable',
             'motivo_id'        => 'required',
+            'reemplazo_id'     => '',
         ];
     }
 
@@ -40,6 +42,7 @@ class NomVacacionesRequest extends FormRequest
     {
         return [
             'cdgo_usrio.required'       => 'El usuario es requerido',
+            'direccion_id.required'     => 'La dirección es requerida',
             'fecha_inicio.required'     => 'La fecha de inicio es requerida',
             'fecha_fin.required'        => 'La fecha de final es requerida',
             'fecha_retorno.required'    => 'La fecha de retorno es requerida',

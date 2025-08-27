@@ -3,6 +3,7 @@ import "@mantine/core/styles.css";
 import "@mantine/dates/styles.css";
 import "@mantine/spotlight/styles.css";
 import "@mantine/tiptap/styles.css";
+import '@mantine/notifications/styles.css';
 import "mantine-react-table/styles.css";
 import { Suspense } from "react";
 import { MantineProvider } from "@mantine/core";
@@ -12,11 +13,13 @@ import { BrowserRouter } from "react-router-dom";
 import { AppRouter } from "./routes/router/AppRouter";
 import { theme } from "./theme";
 import { store } from "./store";
+import { Notifications } from "@mantine/notifications";
 //import { AppRouter2 } from "./routes/AppRouter2";
 
 export const App = () => {
     return (
         <MantineProvider theme={theme} defaultColorScheme="light">
+            <Notifications />
             <DatesProvider settings={{ locale: "es" }}>
                 <Provider store={store}>
                     <Suspense fallback={<span>Loading...</span>}>

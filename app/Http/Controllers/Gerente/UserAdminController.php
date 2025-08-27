@@ -252,7 +252,8 @@ class UserAdminController extends Controller
                                    'nom_periodo_vacacionales.dias_total',
                                    'nom_periodo_vacacionales.dias_tomados',
                                    'nom_periodo_vacacionales.dias_disponibles',
-                                   'nom_periodo_vacacionales.activo')
+                                   'nom_periodo_vacacionales.activo',
+                                   'nom_periodo_vacacionales.observacion',)
                         ->join('usrios_sstma', 'usrios_sstma.cdgo_usrio', '=', 'nom_periodo_vacacionales.cdgo_usrio')
                         ->orderBy('anio', 'DESC');
                 }])
@@ -277,6 +278,7 @@ class UserAdminController extends Controller
                 ->selectRaw('
                 u.cdgo_usrio,
                 pv.anio,
+                pv.observacion,
                 SEC_TO_TIME(SUM(TIME_TO_SEC(p.tiempo_estimado))) as tiempo_total,
                 ROUND(SUM(TIME_TO_SEC(p.tiempo_estimado)) / 3600 / 24, 2) as dias_equivalentes
             ')

@@ -6,7 +6,6 @@ import {
     ThemeIcon,
     UnstyledButton,
 } from "@mantine/core";
-import { TextSection } from "../../../components";
 import { Link } from "react-router-dom";
 
 export const MenuList = ({ usuario, menuData, theme }) => {

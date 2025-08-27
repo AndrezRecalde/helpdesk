@@ -7,6 +7,8 @@ import { ProfileForm } from "./user/profile/ProfileForm";
 import { ProfileField } from "./user/profile/ProfileField";
 import { CardInfoStatsUser } from "./user/profile/CardInfoStatsUser";
 import { TableMarcacionRelojOnline } from "./user/profile/TableMarcacionRelojOnline";
+import { ReporteJustificativoModal } from "./user/modal/ReporteJustificativoModal";
+import { ReporteJustificativoForm } from "./user/form/ReporteJustificativoForm";
 import { UserBtnHeader } from "./user/menu/UserBtnHeader";
 import { NightModeSwitch } from "./user/menu/NightModeSwitch";
 
@@ -286,6 +288,8 @@ export {
     CardProfile,
     CardInfoStatsUser,
     TableMarcacionRelojOnline,
+    ReporteJustificativoModal,
+    ReporteJustificativoForm,
     UserBtnHeader,
     NightModeSwitch,
     ProfileField,

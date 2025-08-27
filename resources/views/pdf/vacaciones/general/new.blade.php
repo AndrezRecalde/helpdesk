@@ -106,7 +106,9 @@
                     </td>
                     <td style="text-align: left; width: 40%;">{{ Str::upper($vacaciones->solicitante) }}</td>
                     <td style="text-align: left; width: 20%;"><strong>CODIGO DE SOLICITUD:</strong></td>
-                    <td style="text-align: left; width: 20%;">{{ $vacaciones->codigo_vacacion }}</td>
+                    <td
+                        style="text-align: left; width: 20%; background-color:#d2d6d9; padding:5px; border-radius:6px;"">
+                        {{ $vacaciones->codigo_vacacion }}</td>
                 </tr>
             </table>
             <table>
@@ -132,18 +134,24 @@
                 <tr>
                     <td style="width: 25%; text-align: center; vertical-align: middle;"><strong>NUMERO DE DIAS QUE
                             SOLICITA:</strong></td>
-                    <td style="width: 25%; text-align: center; vertical-align: middle;">
+                    <td
+                        style="width: 25%; text-align: center; vertical-align: middle; background-color:#d2d6d9; padding:5px; border-radius:6px;"">
                         {{ $vacaciones->dias_solicitados }}</td>
                     <td style="width: 25%; text-align: center; vertical-align: middle;"><strong>DESDE: </strong></td>
-                    <td style="width: 25%; text-align: center; vertical-align: middle;">{{ \Carbon\Carbon::parse($vacaciones->fecha_inicio)->format('Y-m-d') }}
+                    <td
+                        style="width: 25%; text-align: center; vertical-align: middle; background-color:#d2d6d9; padding:5px; border-radius:6px;"">
+                        {{ \Carbon\Carbon::parse($vacaciones->fecha_inicio)->format('Y-m-d') }}
                     </td>
                     <td style="width: 25%; text-align: center; vertical-align: middle;"><strong>HASTA: </strong></td>
-                    <td style="width: 25%; text-align: center; vertical-align: middle;">{{ \Carbon\Carbon::parse($vacaciones->fecha_fin)->format('Y-m-d') }}
+                    <td
+                        style="width: 25%; text-align: center; vertical-align: middle; background-color:#d2d6d9; padding:5px; border-radius:6px;"">
+                        {{ \Carbon\Carbon::parse($vacaciones->fecha_fin)->format('Y-m-d') }}
                     </td>
                 </tr>
                 <tr>
                     <td colspan="3"><strong>DIA DE INGRESO A SUS LABORES</strong></td>
-                    <td colspan="3">{{ \Carbon\Carbon::parse($vacaciones->fecha_retorno)->format('Y-m-d') }}</td>
+                    <td colspan="3" style="background-color:#d2d6d9; padding:5px; border-radius:6px;">
+                        {{ \Carbon\Carbon::parse($vacaciones->fecha_retorno)->format('Y-m-d') }}</td>
                 </tr>
                 <tr>
                     <td colspan="3"><strong>ƒ: FIRMA DEL SOLICITANTE</strong></td>
@@ -156,8 +164,9 @@
                         <input type="text" style="height: 40px; width: 95%;">
                         <strong style="font-size: 12px">{{ Str::upper($vacaciones->solicitante) }}</strong>
                     </td>
-                    <td colspan="3" style="text-align: center; vertical-align: middle;">
-                        <input type="text" style="height: 40px; width: 90%;" class="header"
+                    <td colspan="3"
+                        style="text-align: center; vertical-align: middle; background-color:#d2d6d9; padding:5px; border-radius:6px;"">
+                        <input type="text" style="height: 40px; width: 90%; background-color:#d2d6d9;" class="header"
                             value={{ \Carbon\Carbon::parse($vacaciones->fecha_solicitud)->format('Y-m-d') ?? \Carbon\Carbon::now()->format('Y-m-d') }}>
                         {{-- <strong style="font-size: 12px"></strong> --}}
                     </td>
@@ -247,9 +256,9 @@
             </table>
             <table>
                 <tr>
-                    <td style="text-align: center; width: 30%;"><strong>PERSONAS QUE ME REEMPLAZARAN:</strong></td>
+                    <td style="text-align: center; width: 30%;"><strong>PERSONA QUE ME REEMPLAZARA:</strong></td>
                     <td style="width: 70%;">
-                        <input type="text" style="width: 90%; height: 20px;">
+                        <input type="text" style="width: 90%; height: 20px;" value="{{ Str::upper($vacaciones->reemplazo) ?? '' }}" />
                     </td>
                 </tr>
             </table>

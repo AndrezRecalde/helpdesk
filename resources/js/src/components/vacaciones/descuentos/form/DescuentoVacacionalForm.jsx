@@ -52,7 +52,7 @@ export const DescuentoVacacionalForm = ({ form }) => {
                             </Table.Td>
                             <Table.Td>{activatePeriodo?.anio}</Table.Td>
                             <Table.Td>
-                                {activatePeriodo?.disponibilidad_vacaciones}
+                                {activatePeriodo?.disponibilidad_vacaciones.toFixed(2)}
                             </Table.Td>
                         </Table.Tr>
                     </Table.Tbody>

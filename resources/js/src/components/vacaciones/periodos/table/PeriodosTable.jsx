@@ -4,8 +4,10 @@ import { usePeriodoStore, useUiUser, useUsersStore } from "../../../../hooks";
 import { useMantineReactTable } from "mantine-react-table";
 import { PeriodoInfoTable } from "./PeriodoInfoTable";
 import dayjs from "dayjs";
+import { Roles } from "../../../../helpers/dictionary";
 
 export const PeriodosTable = () => {
+    const usuario = JSON.parse(localStorage.getItem("service_user"));
     const { isLoading, periodos } = usePeriodoStore();
     const { setActivateUser } = useUsersStore();
     const { modalActionUser } = useUiUser();
@@ -81,11 +83,11 @@ export const PeriodosTable = () => {
         enableFacetedValues: false,
         enableColumnDragging: false,
         enableDensityToggle: false,
-        enableRowActions: true,
+        enableRowActions: usuario.role === Roles.NOM_VACACIONES ? true : false,
         renderRowActionMenuItems: ({ row }) => (
             <MenuTable_E row={row} handleEdit={handleEdit} />
         ),
-        renderDetailPanel: ({ row }) => <PeriodoInfoTable data={row} />,
+        renderDetailPanel: ({ row }) => <PeriodoInfoTable data={row} usuario={usuario} />,
         mantineTableProps: {
             withColumnBorders: true,
             withTableBorder: true,

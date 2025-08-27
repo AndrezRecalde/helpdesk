@@ -84,6 +84,12 @@ class User extends Authenticatable
         'usu_fi_institucion' => 'date'
     ];
 
+
+    public function isGerenteTic(): bool
+    {
+        return $this->hasRole('TIC_GERENTE');
+    }
+
     //Permisos
     public function permisos()
     {
@@ -168,7 +174,7 @@ class User extends Authenticatable
     function scopeByCodigoUsuario($query, $cdgo_usrio)
     {
         if ($cdgo_usrio) {
-            return $query->where('us.cdgo_usrio', $cdgo_usrio);
+            return $query->where('usrios_sstma.cdgo_usrio', $cdgo_usrio);
         }
     }
 }

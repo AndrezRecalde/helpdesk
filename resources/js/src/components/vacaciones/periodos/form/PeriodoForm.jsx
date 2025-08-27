@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
-import { Box, Select, Stack, Switch, Text } from "@mantine/core";
+import { Box, Select, Stack, Switch } from "@mantine/core";
 import { YearPickerInput } from "@mantine/dates";
 import { AlertSection, BtnSubmit } from "../../../../components";
-import { usePeriodoStore, useUsersStore } from "../../../../hooks";
+import { usePeriodoStore, useUiPeriodo, useUsersStore } from "../../../../hooks";
 import { IconAlertCircle } from "@tabler/icons-react";
 
 export const PeriodoForm = ({ form }) => {
     const { is_multiple_anio } = form.getValues();
     const { users } = useUsersStore();
     const { startAddPeriodo } = usePeriodoStore();
+    const { modalActionAddPeriodo } = useUiPeriodo();
     const [nombreRegimen, setNombreRegimen] = useState("");
 
     const handleChange = (value) => {
@@ -33,6 +34,8 @@ export const PeriodoForm = ({ form }) => {
         console.log(form.getTransformedValues());
         startAddPeriodo(form.getTransformedValues());
         form.reset();
+        setNombreRegimen("");
+        modalActionAddPeriodo(false);
     };
 
     return (

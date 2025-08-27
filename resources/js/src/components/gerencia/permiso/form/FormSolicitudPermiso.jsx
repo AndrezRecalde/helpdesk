@@ -14,7 +14,6 @@ import { BtnSubmit } from "../../..";
 import {
     useDireccionStore,
     usePermisoStore,
-    //useStorageField,
     useUsersStore,
 } from "../../../../hooks";
 import { IconClock } from "@tabler/icons-react";
@@ -28,15 +27,8 @@ export const FormSolicitudPermiso = ({ form, disabled }) => {
     const ref_2 = useRef(null);
     const { direcciones } = useDireccionStore();
     const { users } = useUsersStore();
-    const {
-        isLoading,
-        message,
-        errores,
-        isExport,
-        startAddPermiso,
-        startCardPermiso,
-    } = usePermisoStore();
-    //const { setStoragePermisoFields } = useStorageField();
+    const { isLoading, startAddPermiso } = usePermisoStore();
+
     const pickerControl_1 = (
         <ActionIcon
             variant="subtle"
@@ -64,50 +56,18 @@ export const FormSolicitudPermiso = ({ form, disabled }) => {
     );
 
     useEffect(() => {
-        if (message !== undefined) {
-            //setStoragePermisoFields(message);
-            Swal.fire({
-                text: `${message.msg}, ¿Deseas imprimir el permiso?`,
-                icon: "success",
-                showCancelButton: true,
-                confirmButtonColor: "#20c997",
-                cancelButtonColor: "#d33",
-                confirmButtonText: "Si, imprimir!",
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    startCardPermiso(message.idper_permisos);
-                    //console.log(message.idper_permisos)
-                }
-            });
-            return;
-        }
-    }, [message]);
+        form.setFieldValue(
+            "per_fecha_salida",
+            dayjs(fecha).format("YYYY-MM-DD") + " " + hora_1
+        );
+    }, [hora_1]);
 
     useEffect(() => {
-        if (errores !== undefined) {
-            Swal.fire({
-                icon: "error",
-                text: errores,
-                showConfirmButton: true,
-            });
-            return;
-        }
-    }, [errores]);
-
-    useEffect(() => {
-        if (isExport === true) {
-            Swal.fire({
-                icon: "warning",
-                text: "Un momento porfavor, se está exportando",
-                showConfirmButton: false,
-                didOpen: () => {
-                    Swal.showLoading();
-                },
-            });
-        } else {
-            Swal.close(); // Cierra el modal cuando isExport es false
-        }
-    }, [isExport]);
+        form.setFieldValue(
+            "per_fecha_llegada",
+            dayjs(fecha).format("YYYY-MM-DD") + " " + hora_2
+        );
+    }, [hora_2]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -138,20 +98,6 @@ export const FormSolicitudPermiso = ({ form, disabled }) => {
             }
         });
     };
-
-    useEffect(() => {
-        form.setFieldValue(
-            "per_fecha_salida",
-            dayjs(fecha).format("YYYY-MM-DD") + " " + hora_1
-        );
-    }, [hora_1]);
-
-    useEffect(() => {
-        form.setFieldValue(
-            "per_fecha_llegada",
-            dayjs(fecha).format("YYYY-MM-DD") + " " + hora_2
-        );
-    }, [hora_2]);
 
     return (
         <Box

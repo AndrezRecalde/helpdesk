@@ -90,6 +90,7 @@ import { useUiPeriodo } from "./vacaciones/periodos/useUiPeriodo";
 
 /* Marcaciones */
 import { useMarcacionStore } from "./marcacion/useMarcacionStore";
+import { useUiMarcacion } from "./marcacion/useUiMarcacion";
 
 /* Inventario: Tipos categorias */
 import { useInvTipocategoriaStore } from "./inventario/tipocategoria/useInvTipocategoriaStore";
@@ -202,7 +203,7 @@ export {
     useUiPeriodo,
 
     useMarcacionStore,
-
+    useUiMarcacion,
 
     useInvTipocategoriaStore,
     useInvUiTipocategoria,

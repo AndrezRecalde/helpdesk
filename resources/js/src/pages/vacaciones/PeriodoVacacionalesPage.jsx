@@ -1,20 +1,34 @@
 import { useEffect } from "react";
 import { Container, Divider, Group } from "@mantine/core";
-import { BtnSection, DescuentoVacacionesModal, PeriodoCreateModal, PeriodoEditModal, TitlePage } from "../../components";
+import {
+    BtnSection,
+    DescuentoVacacionesModal,
+    PeriodoCreateModal,
+    PeriodoEditModal,
+    TitlePage,
+} from "../../components";
 import { usePeriodoStore, useUiPeriodo, useUsersStore } from "../../hooks";
 import { PeriodosTable } from "../../components/vacaciones/periodos/table/PeriodosTable";
 import { FechaIngresoModal } from "../../components/gerencia/user/modal/FechaIngresoModal";
 import { IconCubePlus } from "@tabler/icons-react";
 import Swal from "sweetalert2";
+import { Roles } from "../../helpers/dictionary";
 
 const PeriodoVacacionalesPage = () => {
-    const { startLoadPeriodos, startClearPeriodos, message, errores } = usePeriodoStore();
+    const usuario = JSON.parse(localStorage.getItem("service_user"));
+    const { startLoadPeriodos, startClearPeriodos, message, errores } =
+        usePeriodoStore();
     const { modalActionAddPeriodo } = useUiPeriodo();
     const { startLoadUsersGeneral, clearUsers } = useUsersStore();
 
     useEffect(() => {
-        startLoadPeriodos({});
-        startLoadUsersGeneral({});
+        if (usuario.role === Roles.NOM_VACACIONES) {
+            startLoadPeriodos({});
+            startLoadUsersGeneral({});
+        } else {
+            startLoadPeriodos({ cdgo_usrio: usuario.cdgo_usrio });
+            startLoadUsersGeneral({ cdgo_direccion: usuario.cdgo_direccion });
+        }
 
         return () => {
             clearUsers();
@@ -54,14 +68,14 @@ const PeriodoVacacionalesPage = () => {
         <Container size="xl">
             <Group justify="space-between">
                 <TitlePage order={1}>Periodos Vacaciones</TitlePage>
-                <BtnSection
-                    heigh={45}
-                    fontSize={12}
-                    IconSection={IconCubePlus}
-                    handleAction={handleCrearPeriodo}
-                >
-                    Crear Periodo
-                </BtnSection>
+                {usuario.role === Roles.NOM_VACACIONES && (
+                    <BtnSection
+                        IconSection={IconCubePlus}
+                        handleAction={handleCrearPeriodo}
+                    >
+                        Crear Periodo
+                    </BtnSection>
+                )}
             </Group>
             <Divider my="md" />
             <PeriodosTable />

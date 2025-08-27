@@ -22,6 +22,7 @@ export const SolicitudVacacionesForm = () => {
             fecha_retorno: null,
             dias_solicitados: 0,
             motivo_id: "2",
+            reemplazo_id: null,
             direccion_id: null,
             tiene_jefe: false,
             tiene_director: false,
@@ -57,6 +58,7 @@ export const SolicitudVacacionesForm = () => {
                 ? dayjs(values.fecha_retorno).format("YYYY-MM-DD")
                 : null,
             motivo_id: Number(values.motivo_id) || null, // Convertir a número
+            reemplazo_id: Number(values.reemplazo_id) || null,
             direccion_id: Number(values.direccion_id) || null,
             jefe_id: Number(values.jefe_id) || null,
             director_id: Number(values.director_id) || null,

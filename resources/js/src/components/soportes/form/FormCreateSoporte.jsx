@@ -30,7 +30,7 @@ export const FormCreateSoporte = ({ form }) => {
         id_tipo_solicitud,
         activo_informatico,
         id_tipo_soporte,
-        fecha_fin
+        fecha_fin,
     } = form.values;
     const { estados } = useEstadoStore();
     const { users } = useUsersStore();
@@ -172,35 +172,36 @@ export const FormCreateSoporte = ({ form }) => {
                         };
                     })}
                 />
+                <SimpleGrid cols={{ base: 1, sm: 1, md: 2, lg: 2 }}>
+                    <Select
+                        withAsterisk
+                        searchable
+                        clearable
+                        label="Usuario solicitante"
+                        placeholder="Seleccione el solicitante"
+                        {...form.getInputProps("id_usu_recibe")}
+                        data={users.map((user) => {
+                            return {
+                                value: user.cdgo_usrio.toString(),
+                                label: user.nmbre_usrio,
+                            };
+                        })}
+                    />
 
-                <Select
-                    withAsterisk
-                    searchable
-                    clearable
-                    label="Usuario solicitante"
-                    placeholder="Seleccione el solicitante"
-                    {...form.getInputProps("id_usu_recibe")}
-                    data={users.map((user) => {
-                        return {
-                            value: user.cdgo_usrio.toString(),
-                            label: user.nmbre_usrio,
-                        };
-                    })}
-                />
-
-                <Select
-                    withAsterisk
-                    disabled
-                    label="Dirección"
-                    placeholder="Seleccione la dirección/gestión"
-                    {...form.getInputProps("id_direccion")}
-                    data={direcciones.map((direccion) => {
-                        return {
-                            value: direccion.cdgo_dprtmnto.toString(),
-                            label: direccion.nmbre_dprtmnto,
-                        };
-                    })}
-                />
+                    <Select
+                        withAsterisk
+                        disabled
+                        label="Dirección"
+                        placeholder="Seleccione la dirección/gestión"
+                        {...form.getInputProps("id_direccion")}
+                        data={direcciones.map((direccion) => {
+                            return {
+                                value: direccion.cdgo_dprtmnto.toString(),
+                                label: direccion.nmbre_dprtmnto,
+                            };
+                        })}
+                    />
+                </SimpleGrid>
                 <SimpleGrid cols={{ base: 1, sm: 1, md: 2, lg: 2 }}>
                     <Select
                         withAsterisk
@@ -240,6 +241,7 @@ export const FormCreateSoporte = ({ form }) => {
                     autosize
                     minRows={3}
                     maxRows={3}
+                    resize="vertical"
                     {...form.getInputProps("incidente")}
                 />
                 {id_estado == 3 || id_estado == 4 ? (
@@ -250,6 +252,7 @@ export const FormCreateSoporte = ({ form }) => {
                         autosize
                         minRows={3}
                         maxRows={3}
+                        resize="vertical"
                         {...form.getInputProps("solucion")}
                     />
                 ) : null}
@@ -288,9 +291,7 @@ export const FormCreateSoporte = ({ form }) => {
                 <DateTimePicker
                     clearable
                     withAsterisk
-                    disabled={
-                        id_estado == 3 || id_estado == 4 ? false : true
-                    }
+                    disabled={id_estado == 3 || id_estado == 4 ? false : true}
                     valueFormat="YYYY-MM-DD HH:mm"
                     label="Fecha de finalización"
                     placeholder="Seleccione fecha de finalización"

@@ -183,11 +183,13 @@
         </tr>
         <tr>
             <td><strong>MOTIVO DEL PERMISO:</strong></td>
-            <td colspan="3">{{ $permisos->motivo }}</td>
+            <td colspan="3" style="font-size:15px; background-color:#d2d6d9; padding:5px; border-radius:6px;">
+                {{ $permisos->motivo }}
+            </td>
         </tr>
         <tr>
             <td><strong>FECHA DEL PERMISO:</strong></td>
-            <td style="font-size:15px;">
+            <td style="font-size:15px; background-color:#d2d6d9; padding:5px; border-radius:6px;">
                 <strong>
                     {{ \Carbon\Carbon::parse($permisos->per_fecha_salida)->format('Y-m-d') }}
                 </strong>
@@ -201,10 +203,11 @@
         </tr>
         <tr>
             <td><strong>HORA DE INICIO:</strong></td>
-            <td style="font-size:15px;"><strong>{{ \Carbon\Carbon::parse($permisos->per_fecha_salida)->toTimeString() }}
+            <td style="font-size:15px; background-color:#d2d6d9; padding:5px; border-radius:6px;">
+                <strong>{{ \Carbon\Carbon::parse($permisos->per_fecha_salida)->toTimeString() }}
                 </strong></td>
             <td><strong>HORA DE FINALIZACIÓN:</strong></td>
-            <td style="font-size:15px;">
+            <td style="font-size:15px; background-color:#d2d6d9; padding:5px; border-radius:6px;">
                 <strong>{{ \Carbon\Carbon::parse($permisos->per_fecha_llegada)->toTimeString() }}
                 </strong>
             </td>
@@ -276,11 +279,11 @@
         </tr>
         <tr>
             <td><strong>MOTIVO DEL PERMISO:</strong></td>
-            <td colspan="3">{{ $permisos->motivo }}</td>
+            <td colspan="3" style="font-size:15px; background-color:#d2d6d9; padding:5px; border-radius:6px;">{{ $permisos->motivo }}</td>
         </tr>
         <tr>
             <td><strong>FECHA DEL PERMISO:</strong></td>
-            <td style="font-size:15px;">
+            <td style="font-size:15px; background-color:#d2d6d9; padding:5px; border-radius:6px;">
                 <strong>
                     {{ \Carbon\Carbon::parse($permisos->per_fecha_salida)->format('Y-m-d') }}
                 </strong>
@@ -294,12 +297,12 @@
         </tr>
         <tr>
             <td><strong>HORA DE INICIO:</strong></td>
-            <td style="font-size:15px;">
+            <td style="font-size:15px; background-color:#d2d6d9; padding:5px; border-radius:6px;">
                 <strong>{{ \Carbon\Carbon::parse($permisos->per_fecha_salida)->toTimeString() }}
                 </strong>
             </td>
             <td><strong>HORA DE FINALIZACIÓN:</strong></td>
-            <td style="font-size:15px;">
+            <td style="font-size:15px; background-color:#d2d6d9; padding:5px; border-radius:6px;">
                 <strong>{{ \Carbon\Carbon::parse($permisos->per_fecha_llegada)->toTimeString() }}
                 </strong>
             </td>

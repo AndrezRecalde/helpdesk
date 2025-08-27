@@ -4,13 +4,14 @@ import {
     onClearMarcaciones,
     onLoadErrores,
     onLoading,
+    onLoadingExport,
     onLoadMarcaciones,
     onLoadMessage,
 } from "../../store/marcacion/marcacionSlice";
 import helpdeskApi from "../../api/helpdeskApi";
 
 export const useMarcacionStore = () => {
-    const { isLoading, marcaciones, activateMarcacion, message, errores } =
+    const { isLoading, isLoadingExport, marcaciones, activateMarcacion, message, errores } =
         useSelector((state) => state.marcacion);
     const { ExceptionMessageError } = useErrorException(onLoadErrores);
 
@@ -64,7 +65,7 @@ export const useMarcacionStore = () => {
                 "/usuario/store/marcacion",
                 {
                     asi_id_reloj,
-                    checktype
+                    checktype,
                 }
             );
             if (data.status === "success") {
@@ -80,12 +81,36 @@ export const useMarcacionStore = () => {
         }
     };
 
+    const startExportJustificativo = async (datos) => {
+        try {
+            dispatch(onLoadingExport(true));
+            const response = await helpdeskApi.post(
+                "/usuario/marcaciones-justificativo-pdf",
+                datos,
+                {
+                    responseType: "blob", // Asegúrate de que la respuesta sea tratada como un blob
+                }
+            );
+            const pdfBlob = new Blob([response.data], {
+                type: "application/pdf",
+            });
+            const url = window.open(URL.createObjectURL(pdfBlob));
+            window.URL.revokeObjectURL(url);
+            dispatch(onLoadingExport(false));
+        } catch (error) {
+            console.log(error);
+            dispatch(onLoadingExport(false));
+            ExceptionMessageError(error);
+        }
+    };
+
     const clearMarcaciones = () => {
         dispatch(onClearMarcaciones());
     };
 
     return {
         isLoading,
+        isLoadingExport,
         marcaciones,
         activateMarcacion,
         message,
@@ -94,6 +119,7 @@ export const useMarcacionStore = () => {
         startLoadMarcaciones,
         startLoadMarcacionesBiometricos,
         startAddMarcacion,
+        startExportJustificativo,
         clearMarcaciones,
     };
 };

@@ -48,6 +48,7 @@ import {
     uiInvMarcaSlice,
     uiInvTipocategoriaSlice,
     uiInvUbicacionSlice,
+    uiMarcacionSlice,
     uiPeriodoSlice,
     uiPermisoSlice,
     uiRutaSlice,
@@ -100,6 +101,7 @@ export const store = configureStore({
         uiPeriodoVacacional: uiPeriodoSlice.reducer,
 
         marcacion: marcacionSlice.reducer,
+        uiMarcacion: uiMarcacionSlice.reducer,
         uiActividad: uiActividadSlice.reducer,
         dashGerencia: dashGerenciaSlice.reducer,
 

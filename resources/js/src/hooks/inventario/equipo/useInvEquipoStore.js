@@ -48,14 +48,17 @@ export const useInvEquipoStore = () => {
         }
     };
 
-    const startSearchEquipos = async ({ user_id = null, direccion_id = null }) => {
+    const startSearchEquipos = async ({
+        user_id = null,
+        direccion_id = null,
+    }) => {
         try {
             dispatch(onLoading(true));
             const { data } = await helpdeskApi.post(
                 "/gerencia/inventario/buscar/equipo",
                 {
                     user_id,
-                    direccion_id
+                    direccion_id,
                 }
             );
             const { equipos } = data;
@@ -77,7 +80,10 @@ export const useInvEquipoStore = () => {
                 setTimeout(() => {
                     dispatch(onLoadMessage(undefined));
                 }, 40);
-                startLoadInvEquipos(storageFields);
+
+                if (storageFields && Object.keys(storageFields).length > 0) {
+                    startLoadInvEquipos(storageFields);
+                }
                 return;
             }
             const { data } = await helpdeskApi.post(
@@ -88,9 +94,11 @@ export const useInvEquipoStore = () => {
             setTimeout(() => {
                 dispatch(onLoadMessage(undefined));
             }, 40);
-            startLoadInvEquipos(storageFields);
+
+            if (storageFields && Object.keys(storageFields).length > 0) {
+                startLoadInvEquipos(storageFields);
+            }
         } catch (error) {
-            //console.log(error);
             ExceptionMessageError(error);
         }
     };

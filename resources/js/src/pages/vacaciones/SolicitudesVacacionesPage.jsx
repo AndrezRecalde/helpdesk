@@ -2,13 +2,13 @@ import { useEffect, useMemo } from "react";
 import { Container, Divider, Group } from "@mantine/core";
 import {
     TitlePage,
-    BtnSection,
     FilterVacacionesForm,
     SolAnulacionVacacionModal,
     SolicitudesVacacionesTable,
-    SolAutorizarVacacionModal
+    SolAutorizarVacacionModal,
+    BtnAddActions,
 } from "../../components";
-import { IconCubePlus } from "@tabler/icons-react";
+import { IconCubePlus, IconEyeSearch } from "@tabler/icons-react";
 import { useVacacionesStore } from "../../hooks";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
@@ -25,8 +25,12 @@ const SolicitudesVacacionesPage = () => {
 
     const handleCrearSolicitud = () => {
         //console.log("clic");
-        navigate("/intranet/vacaciones")
+        navigate("/intranet/vacaciones");
     };
+
+    const handleVerPeriodos = () => {
+        navigate("/intranet/periodos-vacaciones");
+    }
 
     useEffect(() => {
         return () => {
@@ -73,18 +77,30 @@ const SolicitudesVacacionesPage = () => {
         }
     }, [isExport]);
 
+    const menuActions = [
+        {
+            label: "Crear Solicitud",
+            icon: IconCubePlus,
+            onClick: handleCrearSolicitud,
+            color: "teal",
+        },
+        {
+            label: "Ver Periodos",
+            icon: IconEyeSearch,
+            onClick: handleVerPeriodos,
+            color: "pink",
+        },
+    ];
+
     return (
         <Container size="xl">
             <Group justify="space-between">
                 <TitlePage order={1}>Solicitudes Vacaciones</TitlePage>
-                <BtnSection
-                    heigh={45}
-                    fontSize={12}
-                    IconSection={IconCubePlus}
-                    handleAction={handleCrearSolicitud}
-                >
-                    Crear Solicitud
-                </BtnSection>
+                <Group>
+                    <BtnAddActions actions={menuActions}>
+                        Acciones
+                    </BtnAddActions>
+                </Group>
             </Group>
             <Divider my="md" />
             <FilterVacacionesForm usuario={usuario} />

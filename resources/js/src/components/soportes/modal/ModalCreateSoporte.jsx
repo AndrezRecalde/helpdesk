@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Drawer } from "@mantine/core";
+import { Divider, Drawer } from "@mantine/core";
 import { FormCreateSoporte, TextSection } from "../../../components";
 import {
     useEquipoStore,
@@ -181,8 +181,12 @@ export const ModalCreateSoporte = ({ role }) => {
                 incidente: incidente || "",
                 solucion: solucion || "",
                 id_equipo: convertToString(id_equipo),
-                fecha_ini: dayjs(fecha_ini).isValid() ? dayjs(fecha_ini).tz("America/Guayaquil").toDate(): null,
-                fecha_fin: dayjs(fecha_fin).isValid() ? dayjs(fecha_fin).tz("America/Guayaquil").toDate(): null,
+                fecha_ini: dayjs(fecha_ini).isValid()
+                    ? dayjs(fecha_ini).tz("America/Guayaquil").toDate()
+                    : null,
+                fecha_fin: dayjs(fecha_fin).isValid()
+                    ? dayjs(fecha_fin).tz("America/Guayaquil").toDate()
+                    : null,
                 activo_informatico: id_equipo ? true : false,
             });
 

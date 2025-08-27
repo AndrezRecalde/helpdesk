@@ -10,6 +10,7 @@ use App\Models\NomAsignacionVacacionesPeriodo;
 use App\Models\NomMotivoVacaciones;
 use App\Models\NomPeriodoVacacional;
 use App\Models\NomVacacion;
+use App\Models\Soporte;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 //use Illuminate\Support\Arr;
@@ -55,6 +56,21 @@ class NomVacacionesController extends Controller
             $vacacion->codigo_vacacion = $codigo;
             $vacacion->save();
 
+            $user = Auth::user();
+
+            if ($user->isGerenteTic() && $user->cdgo_usrio != $vacacion->cdgo_usrio) {
+                Soporte::create([
+                    'id_tipo_solicitud'   => 7,
+                    'id_direccion'        => $vacacion->direccion_id,
+                    'id_usu_recibe'       => $vacacion->cdgo_usrio,
+                    'id_area_tic'         => 5,
+                    'id_tipo_soporte'     => 3,
+                    'id_usu_tecnico_asig' => $user->cdgo_usrio,
+                    'incidente'           => MsgStatus::FichaIncidenciaVacacion,
+                    'solucion'            => MsgStatus::FichaSolucionVacacion,
+                ]);
+            }
+
             DB::commit();
 
             return response()->json([
@@ -80,9 +96,13 @@ class NomVacacionesController extends Controller
                     'nv.fecha_retorno',
                     'nv.dias_solicitados',
                     'nv.motivo_id',
+                    'nv.reemplazo_id',
+                    'usr.nmbre_usrio as reemplazo',
                     'nmv.motivo_vacaciones',
                     'nv.cdgo_usrio',
                     'u.nmbre_usrio as solicitante',
+                    'nv.direccion_id',
+                    'd.nmbre_dprtmnto as direccion',
                     'nv.jefe_id',
                     'usj.nmbre_usrio as jefe',
                     'nv.director_id',
@@ -92,8 +112,10 @@ class NomVacacionesController extends Controller
                 )
                 ->join('nom_motivos_vacaciones as nmv', 'nmv.id', 'nv.motivo_id')
                 ->join('usrios_sstma as u', 'u.cdgo_usrio', 'nv.cdgo_usrio')
+                ->join('dprtmntos as d', 'd.cdgo_dprtmnto', 'nv.direccion_id')
                 ->leftJoin('usrios_sstma as usj', 'usj.cdgo_usrio', 'nv.jefe_id')
                 ->leftJoin('usrios_sstma as usd', 'usd.cdgo_usrio', 'nv.director_id')
+                ->leftJoin('usrios_sstma as usr', 'usr.cdgo_usrio', 'nv.reemplazo_id')
                 ->join('per_estado_permiso as pep', 'pep.idper_estado_permiso', 'nv.estado_id')
                 ->where('nv.codigo_vacacion', $request->codigo_vacacion)
                 ->first();
@@ -210,11 +232,15 @@ class NomVacacionesController extends Controller
                     'nv.codigo_vacacion',
                     'nv.cdgo_usrio',
                     'us.nmbre_usrio as solicitante',
+                    'nv.direccion_id',
+                    'd.nmbre_dprtmnto as direccion',
                     'nv.fecha_inicio',
                     'nv.fecha_fin',
                     'nv.fecha_retorno',
                     'nv.dias_solicitados',
                     'nv.motivo_id',
+                    'nv.reemplazo_id',
+                    'usr.nmbre_usrio as reemplazo',
                     'nvm.motivo_vacaciones',
                     'usj.nmbre_usrio as jefe',
                     'usd.nmbre_usrio as director',
@@ -223,8 +249,10 @@ class NomVacacionesController extends Controller
                     'pep.color'
                 )
                 ->join('usrios_sstma as us', 'us.cdgo_usrio', 'nv.cdgo_usrio')
+                ->join('dprtmntos as d', 'd.cdgo_dprtmnto', 'nv.direccion_id')
                 ->leftJoin('usrios_sstma as usj', 'usj.cdgo_usrio', 'nv.jefe_id')
                 ->leftJoin('usrios_sstma as usd', 'usd.cdgo_usrio', 'nv.director_id')
+                ->leftJoin('usrios_sstma as usr', 'usr.cdgo_usrio', 'nv.reemplazo_id')
                 ->join('nom_motivos_vacaciones as nvm', 'nvm.id', 'nv.motivo_id')
                 ->join('per_estado_permiso as pep', 'pep.idper_estado_permiso', 'nv.estado_id')
                 ->byUsuarioId($request->cdgo_usrio)

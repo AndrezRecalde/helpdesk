@@ -15,6 +15,8 @@ import {
     IconLicense,
     IconList,
     IconListCheck,
+    IconListDetails,
+    IconListSearch,
     IconLogout,
     IconPencilPlus,
     IconSettings,
@@ -146,6 +148,29 @@ export const NavMenuPermisosAdmin = {
             roles: [Roles.TIC_GERENTE, Roles.NOM_ASISTENCIA],
         },
     ],
+    Vacaciones: [
+        {
+            icon: IconBeach,
+            title: "Crear solicitud",
+            path: "vacaciones",
+            link: "/intranet/vacaciones",
+            roles: [Roles.TIC_GERENTE, Roles.NOM_VACACIONES],
+        },
+        {
+            icon: IconListSearch,
+            title: "Solicitudes Vacaciones",
+            path: "solicitudes-vacaciones",
+            link: "/intranet/solicitudes-vacaciones",
+            roles: [Roles.NOM_VACACIONES],
+        },
+        {
+            icon: IconListDetails,
+            title: "Periodos Vacaciones",
+            path: "periodos-vacaciones",
+            link: "/intranet/periodos-vacaciones",
+            roles: [Roles.NOM_VACACIONES],
+        },
+    ]
 };
 /* Menu Rápido de Usuarios */
 export const MenuRapido = [
@@ -186,7 +211,7 @@ export const MenuRapido = [
     },
     {
         icon: IconList,
-        title: "Reporte Vacaciones",
+        title: "Solicitudes Vacaciones",
         path: "soportes",
         link: "/intranet/soportes",
         roles: [""],
@@ -298,7 +323,7 @@ export const menuHome = [
         link: "/intranet/vacaciones",
     },
     {
-        title: "Reporte Vacaciones",
+        title: "Solicitudes Vacaciones",
         description: "Consulta el reporte de vacaciones.",
         icon: IconList,
         color: "green",

@@ -4,6 +4,7 @@ export const marcacionSlice = createSlice({
     name: "marcacion",
     initialState: {
         isLoading: false,
+        isLoadingExport: false,
         marcaciones: [],
         activateMarcacion: null,
         message: undefined,
@@ -12,6 +13,9 @@ export const marcacionSlice = createSlice({
     reducers: {
         onLoading: (state, { payload }) => {
             state.isLoading = payload;
+        },
+        onLoadingExport: (state, { payload }) => {
+            state.isLoadingExport = payload;
         },
         onLoadMarcaciones: (state, { payload }) => {
             state.marcaciones = payload;
@@ -39,6 +43,7 @@ export const marcacionSlice = createSlice({
 
 export const {
     onLoading,
+    onLoadingExport,
     onLoadMarcaciones,
     onSetActivateMarcacion,
     onClearMarcaciones,

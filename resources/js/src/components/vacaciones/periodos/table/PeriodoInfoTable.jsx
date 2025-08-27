@@ -2,8 +2,9 @@ import { useCallback, useMemo } from "react";
 import { MenuTable_PV, TableContent, TextSection } from "../../../../components";
 import { useMantineReactTable } from "mantine-react-table";
 import { usePeriodoStore, useUiDescuento, useUiPeriodo } from "../../../../hooks";
+import { Roles } from "../../../../helpers/dictionary";
 
-export const PeriodoInfoTable = ({ data }) => {
+export const PeriodoInfoTable = ({ data, usuario }) => {
     const { original } = data;
     const { periodo_vacacionales } = original;
     const { setActivatePeriodo } = usePeriodoStore();
@@ -39,12 +40,12 @@ export const PeriodoInfoTable = ({ data }) => {
             },
             {
                 header: "Disponibilidad Vacaciones",
-                accessorFn: (row) => row.disponibilidad_vacaciones, //row.dias_disponibles - row.dias_equivalentes_permiso,
+                accessorFn: (row) => row.disponibilidad_vacaciones.toFixed(2), //row.dias_disponibles - row.dias_equivalentes_permiso,
                 size: 80,
             },
             {
                 header: "Observación",
-                accessorFn: (row) => "Sin observación", //row.dias_disponibles - row.dias_equivalentes_permiso,
+                accessorFn: (row) => row.observacion || "Sin observación", //row.dias_disponibles - row.dias_equivalentes_permiso,
                 size: 80,
             },
         ],
@@ -85,7 +86,7 @@ export const PeriodoInfoTable = ({ data }) => {
         enableHiding: false,
         enableStickyHeader: false,
         enableColumnActions: false,
-        enableRowActions: true,
+        enableRowActions: usuario.role === Roles.NOM_VACACIONES ? true : false,
         renderRowActionMenuItems: ({ row }) => (
             <MenuTable_PV row={row} handleEdit={handleEdit} handleDescuento={handleDescuento} />
         ),

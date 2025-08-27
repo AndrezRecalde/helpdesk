@@ -38,7 +38,7 @@ function HomePage() {
                         size="lg"
                         radius="md"
                     >
-                        {usuario.lgin || "Sin Datos"}
+                        {usuario.lgin || "Sin Datos"} - {usuario.cdgo_lrgo || "GADPE"}
                     </Badge>
                 </Group>
                 <Divider my="sm" />

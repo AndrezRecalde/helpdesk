@@ -10,16 +10,19 @@ import { hasLength, isNotEmpty, useForm } from "@mantine/form";
 import {
     useDireccionStore,
     useDirectorStore,
+    usePermisoStore,
     useTitlePage,
     useUsersStore,
 } from "../../hooks";
 import { IconChevronsRight, IconInfoCircle } from "@tabler/icons-react";
 import { useNavigate } from "react-router-dom";
 import { Roles } from "../../helpers/dictionary";
+import Swal from "sweetalert2";
 
 const PermisosPage = () => {
     useTitlePage("Helpdesk | Permisos");
     const usuario = JSON.parse(localStorage.getItem("service_user"));
+    const { message, errores, isExport, startCardPermiso } = usePermisoStore();
     const { startLoadDirecciones, clearDirecciones } = useDireccionStore();
     const { startLoadUsersExtrict, clearUsers } = useUsersStore();
     const {
@@ -116,7 +119,8 @@ const PermisosPage = () => {
 
     useEffect(() => {
         if (
-        usuario.role !== Roles.TIC_GERENTE && usuario.role !== Roles.NOM_ASISTENCIA
+            usuario.role !== Roles.TIC_GERENTE &&
+            usuario.role !== Roles.NOM_ASISTENCIA
         ) {
             form.setValues({
                 id_direccion_pide: usuario.cdgo_dprtmnto.toString(),
@@ -126,6 +130,52 @@ const PermisosPage = () => {
             return;
         }
     }, [id_direccion_pide, directores]);
+
+    useEffect(() => {
+        if (message !== undefined) {
+            //setStoragePermisoFields(message);
+            Swal.fire({
+                text: `${message.msg}, ¿Deseas imprimir el permiso?`,
+                icon: "success",
+                showCancelButton: true,
+                confirmButtonColor: "#20c997",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Si, imprimir!",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    startCardPermiso(message.idper_permisos);
+                    //console.log(message.idper_permisos)
+                }
+            });
+            return;
+        }
+    }, [message]);
+
+    useEffect(() => {
+        if (errores !== undefined) {
+            Swal.fire({
+                icon: "error",
+                text: errores,
+                showConfirmButton: true,
+            });
+            return;
+        }
+    }, [errores]);
+
+    useEffect(() => {
+        if (isExport === true) {
+            Swal.fire({
+                icon: "warning",
+                text: "Un momento porfavor, se está exportando",
+                showConfirmButton: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                },
+            });
+        } else {
+            Swal.close(); // Cierra el modal cuando isExport es false
+        }
+    }, [isExport]);
 
     const handleNavigate = () => {
         navigate("/intranet/ver-permisos");

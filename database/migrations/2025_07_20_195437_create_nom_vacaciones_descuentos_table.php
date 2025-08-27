@@ -19,6 +19,15 @@ return new class extends Migration
             $table->string('motivo', 300);
             $table->integer('usuario_tthh');
             $table->timestamps();
+
+            $table->foreign('usuario_id')->references('cdgo_usrio')->on('usrios_sstma')->onDelete('cascade');
+            $table->foreign('nom_periodo_vacacional_id')->references('id')->on('nom_periodo_vacacionales')->onDelete('cascade');
+            $table->foreign('usuario_tthh')->references('cdgo_usrio')->on('usrios_sstma')->onDelete('cascade');
+
+
+            $table->index('usuario_id');
+            $table->index('nom_periodo_vacacional_id');
+            $table->index('usuario_tthh');
         });
     }
 

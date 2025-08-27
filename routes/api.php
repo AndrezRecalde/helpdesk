@@ -278,6 +278,7 @@ Route::group(['prefix' => 'usuario', 'middleware' => ['auth:sanctum']], function
     /* MARCACIONES */
     Route::post('/marcaciones', [MarcacionController::class, 'getMarcaciones']);
     Route::post('/marcaciones-biometricos', [MarcacionController::class, 'getMarcacionesBiometrico']);
+    Route::post('/marcaciones-justificativo-pdf', [MarcacionController::class, 'exportJustificativo']);
     Route::post('/store/marcacion', [MarcacionController::class, 'addMarcacion']);
 
 

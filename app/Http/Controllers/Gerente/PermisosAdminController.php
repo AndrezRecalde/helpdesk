@@ -82,12 +82,12 @@ class PermisosAdminController extends Controller
 
     function store(PermisoAdminRequest $request)
     {
+        DB::beginTransaction();
         try {
             $permiso = Permiso::create($request->validated());
             $user = Auth::user();
-            $role = $user->roles->first();
 
-            if ($role && ($role->id == 1 && $user->cdgo_usrio != $permiso->id_usu_pide)) {
+            if ($user->isGerenteTic() && $user->cdgo_usrio != $permiso->id_usu_pide) {
                 Soporte::create([
                     'id_tipo_solicitud'   => 7,
                     'id_direccion'        => $permiso->id_direccion_pide,
@@ -95,8 +95,8 @@ class PermisosAdminController extends Controller
                     'id_area_tic'         => 5,
                     'id_tipo_soporte'     => 3,
                     'id_usu_tecnico_asig' => $user->cdgo_usrio,
-                    'incidente'           =>  MsgStatus::FichaIncidentePermiso,
-                    'solucion'            =>  MsgStatus::FichaSolucionPermiso,
+                    'incidente'           => MsgStatus::FichaIncidentePermiso,
+                    'solucion'            => MsgStatus::FichaSolucionPermiso,
                 ]);
             }
 
@@ -108,6 +108,7 @@ class PermisosAdminController extends Controller
                 'idper_permisos' => $permiso->idper_permisos
             ], 200);
         } catch (\Throwable $th) {
+            DB::rollBack();
             return response()->json(['status' => MsgStatus::Error, 'msg' => $th->getMessage()], 500);
         }
     }

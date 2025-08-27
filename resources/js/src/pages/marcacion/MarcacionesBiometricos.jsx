@@ -1,21 +1,35 @@
 import { useEffect } from "react";
-import { Container, Divider } from "@mantine/core";
+import { Container, Divider, Group } from "@mantine/core";
 import {
     AlertSection,
+    BtnAddActions,
     FilterFormSearchDates,
+    ReporteJustificativoModal,
     TableMarcacionRelojOnline,
     TitlePage,
 } from "../../components";
 import { isNotEmpty, useForm } from "@mantine/form";
-import { useMarcacionStore, useTitlePage } from "../../hooks";
+import { useMarcacionStore, useTitlePage, useUiMarcacion } from "../../hooks";
 import dayjs from "dayjs";
-import { IconAlertCircle } from "@tabler/icons-react";
-import { Link } from "react-router-dom";
+import {
+    IconAlertCircle,
+    IconLicense,
+    IconTextScan2,
+} from "@tabler/icons-react";
+import { Link, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const MarcacionesBiometricos = () => {
     const usuario = JSON.parse(localStorage.getItem("service_user"));
-    const { startLoadMarcacionesBiometricos, clearMarcaciones } =
-        useMarcacionStore();
+    const {
+        isLoadingExport,
+        message,
+        errores,
+        startLoadMarcacionesBiometricos,
+        clearMarcaciones,
+    } = useMarcacionStore();
+    const { modalActionGenerarReporte } = useUiMarcacion();
+    const navigate = useNavigate();
     useTitlePage("Intranet | Marcaciones");
 
     const form = useForm({
@@ -47,15 +61,83 @@ const MarcacionesBiometricos = () => {
         };
     }, []);
 
+    useEffect(() => {
+        if (message !== undefined) {
+            Swal.fire({
+                icon: message.status,
+                text: message.msg,
+                showConfirmButton: false,
+                timer: 1500,
+            });
+            return;
+        }
+    }, [message]);
+
+    useEffect(() => {
+        if (errores !== undefined) {
+            Swal.fire({
+                icon: "error",
+                title: "Opps...",
+                text: errores,
+                showConfirmButton: false,
+                timer: 1500,
+            });
+            return;
+        }
+    }, [errores]);
+
+    useEffect(() => {
+        if (isLoadingExport === true) {
+            Swal.fire({
+                icon: "warning",
+                text: "Un momento porfavor, se está exportando",
+                showConfirmButton: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                },
+            });
+        } else {
+            Swal.close(); // Cierra el modal cuando isExport es false
+        }
+    }, [isLoadingExport]);
+
     const handleSubmit = (e) => {
         e.preventDefault();
         //console.log(form.getTransformedValues());
         startLoadMarcacionesBiometricos(form.getTransformedValues());
     };
 
+    const handleGenerarReporte = () => {
+        //console.log("clic");
+        modalActionGenerarReporte(true);
+    };
+
+    const handleGenerarPermiso = () => {
+        //console.log("clic");
+        navigate("/intranet/permiso");
+    };
+
+    const menuActions = [
+        {
+            label: "Generar Reporte",
+            icon: IconTextScan2,
+            onClick: handleGenerarReporte,
+            color: "teal",
+        },
+        {
+            label: "Generar Permiso",
+            icon: IconLicense,
+            onClick: handleGenerarPermiso,
+            color: "pink",
+        },
+    ];
+
     return (
         <Container size="xl">
-            <TitlePage order={1}>Marcaciones Biometricos</TitlePage>
+            <Group justify="space-between" align="center" mb={10} mt={20}>
+                <TitlePage order={1}>Marcaciones Biometricos</TitlePage>
+                <BtnAddActions actions={menuActions}>Generar</BtnAddActions>
+            </Group>
             <Divider my="md" />
             <FilterFormSearchDates
                 form={form}
@@ -75,6 +157,8 @@ const MarcacionesBiometricos = () => {
                 Si no puedes visualizar tus marcaciones puedes reportar a la{" "}
                 <Link to="/intranet/solicitud-soporte">administración</Link>
             </AlertSection>
+
+            <ReporteJustificativoModal />
         </Container>
     );
 };

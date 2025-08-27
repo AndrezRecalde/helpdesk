@@ -59,4 +59,6 @@ enum MsgStatus:string {
     /* Periodos : Vacaciones */
     case InfoPeriodos = 'Todos los periodos ya existían para este usuario.';
     case PeriodosCreated = 'Periodos creados correctamente.';
+    case FichaIncidenciaVacacion = 'SOLICITUD DE CREACION DE FICHA VACACIONAL';
+    case FichaSolucionVacacion = 'SE REALIZO LA CREACION DE LA FICHA VACACIONAL CON ÉXITO';
 }

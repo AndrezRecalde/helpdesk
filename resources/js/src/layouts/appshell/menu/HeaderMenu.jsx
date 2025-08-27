@@ -56,7 +56,8 @@ export function HeaderMenu({ usuario, asideValue, modalAside }) {
 
                                 {/* MENU DE PERMISOS ADMIN */}
                                 {usuario.role === Roles.TIC_GERENTE ||
-                                usuario.role === Roles.NOM_ASISTENCIA ? (
+                                usuario.role === Roles.NOM_ASISTENCIA ||
+                                usuario.role === Roles.NOM_VACACIONES ? (
                                     <GestionMenu
                                         title="Permisos Admin"
                                         menuData={NavMenuPermisosAdmin}

@@ -19,6 +19,7 @@ export const JefesVacacionesField = ({ form, classes }) => {
         useUsersStore();
     const [jefeField, setJefeField] = useState(true);
     const [directorField, setDirectorField] = useState(true);
+    const [disabledSelect, setDisabledSelect] = useState(false);
 
     useEffect(() => {
         if (
@@ -29,7 +30,9 @@ export const JefesVacacionesField = ({ form, classes }) => {
                 direccion_id: usuario.cdgo_dprtmnto.toString(),
                 cdgo_usrio: usuario.cdgo_usrio.toString(),
             });
-            return;
+            setDisabledSelect(true);
+        } else {
+            setDisabledSelect(false);
         }
     }, [direccion_id]);
 
@@ -72,17 +75,18 @@ export const JefesVacacionesField = ({ form, classes }) => {
         <Fieldset
             legend={
                 <TextSection tt="" fz={18} fw={500}>
-                    Seleccione Jefe(s) Inmediato(s)*
+                    Seleccione Información Solicitante*
                 </TextSection>
             }
             p={20}
         >
             <Stack>
-                <SimpleGrid cols={{ base: 1, xs: 1, sm: 2, md: 2, lg: 2 }}>
+                <SimpleGrid cols={{ base: 1, xs: 1, sm: 3, md: 3, lg: 3 }}>
                     <Select
                         withAsterisk
                         searchable
                         clearable
+                        disabled={disabledSelect}
                         label="Departamento del solicitante"
                         placeholder="Seleccione el departamento"
                         nothingFoundMessage="Nothing found..."
@@ -99,6 +103,7 @@ export const JefesVacacionesField = ({ form, classes }) => {
                         withAsterisk
                         searchable
                         clearable
+                        disabled={disabledSelect}
                         label="Solicitante"
                         placeholder="Seleccione el solicitante"
                         nothingFoundMessage="Nothing found..."
@@ -111,6 +116,26 @@ export const JefesVacacionesField = ({ form, classes }) => {
                         })}
                         {...form.getInputProps("cdgo_usrio")}
                     />
+                    <Select
+                        searchable
+                        clearable
+                        label="Reemplazo (Opcional)"
+                        placeholder="Seleccione su reemplazo (Opcional)"
+                        nothingFoundMessage="Nothing found..."
+                        classNames={classes}
+                        data={users.map((reemplazo) => {
+                            return {
+                                label: reemplazo.nmbre_usrio,
+                                value: reemplazo.cdgo_usrio.toString(),
+                            };
+                        })}
+                        {...form.getInputProps("reemplazo_id")}
+                    />
+                </SimpleGrid>
+                <SimpleGrid
+                    cols={{ base: 1, xs: 1, sm: 2, md: 2, lg: 2 }}
+                    mt={10}
+                >
                     <Checkbox
                         color="teal.4"
                         iconColor="dark.8"
@@ -129,11 +154,6 @@ export const JefesVacacionesField = ({ form, classes }) => {
                             type: "checkbox",
                         })}
                     />
-                </SimpleGrid>
-                <SimpleGrid
-                    cols={{ base: 1, xs: 1, sm: 2, md: 2, lg: 2 }}
-                    mt={10}
-                >
                     <Select
                         withAsterisk
                         searchable
