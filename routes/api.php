@@ -340,6 +340,7 @@ Route::group(['prefix' => 'tthh/asistencia', 'middleware' => ['auth:sanctum', 'r
     /* PERIODOS VACACIONES */
     Route::post('/consulta-periodos', [NomPeriodoVacacionesController::class, 'getConsultarPeriodos']);
     Route::post('/store/periodo', [NomPeriodoVacacionesController::class, 'store']);
+    Route::post('/calcular-dias', [NomPeriodoVacacionesController::class, 'calcularDias']);
     Route::put('/update/periodo/{id}', [NomPeriodoVacacionesController::class, 'updatePeriodo']);
     Route::delete('/delete/periodo/{id}', [NomPeriodoVacacionesController::class, 'destroy']);
 

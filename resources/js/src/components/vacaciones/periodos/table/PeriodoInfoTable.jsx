@@ -1,6 +1,7 @@
 import { useCallback, useMemo } from "react";
 import { MenuTable_PV, TableContent, TextSection } from "../../../../components";
 import { useMantineReactTable } from "mantine-react-table";
+import { MRT_Localization_ES } from "mantine-react-table/locales/es/index.cjs";
 import { usePeriodoStore, useUiDescuento, useUiPeriodo } from "../../../../hooks";
 import { Roles } from "../../../../helpers/dictionary";
 
@@ -42,6 +43,7 @@ export const PeriodoInfoTable = ({ data, usuario }) => {
                 header: "Disponibilidad Vacaciones",
                 accessorFn: (row) => row.disponibilidad_vacaciones.toFixed(2), //row.dias_disponibles - row.dias_equivalentes_permiso,
                 size: 80,
+                id: "disponibilidad_vacaciones",
             },
             {
                 header: "Observación",
@@ -93,6 +95,7 @@ export const PeriodoInfoTable = ({ data, usuario }) => {
         renderTopToolbarCustomActions: ({ table }) => (
             <TextSection mt={10} fw={700}>Informacion de los periodos</TextSection>
         ),
+        localization: MRT_Localization_ES,
         mantineTableProps: {
             withColumnBorders: true,
             withTableBorder: true,
@@ -108,6 +111,15 @@ export const PeriodoInfoTable = ({ data, usuario }) => {
                 },
             },
         },
+        mantineTableBodyCellProps: ({ column }) => ({
+            style:
+                column.id === "disponibilidad_vacaciones"
+                    ? {
+                          backgroundColor: "teal",
+                          color: "white",
+                      }
+                    : {},
+        }),
     });
 
     return <TableContent table={table} />;

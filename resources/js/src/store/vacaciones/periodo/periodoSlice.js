@@ -7,6 +7,7 @@ export const periodoSlice = createSlice({
         isExport: false,
         periodos: [],
         activatePeriodo: null,
+        tableCalculoDias: [],
         message: undefined,
         errores: undefined,
     },
@@ -20,6 +21,9 @@ export const periodoSlice = createSlice({
         onLoadingPeriodos: (state, { payload }) => {
             state.periodos = payload;
             state.isLoading = false;
+        },
+        onSetTableCalculoDias: (state, { payload }) => {
+            state.tableCalculoDias = payload;
         },
         onSetActivatePeriodo: (state, { payload }) => {
             state.activatePeriodo = payload;
@@ -44,6 +48,7 @@ export const {
     onLoading,
     onLoadingExport,
     onLoadingPeriodos,
+    onSetTableCalculoDias,
     onSetActivatePeriodo,
     onClearPeriodos,
     onLoadMessage,

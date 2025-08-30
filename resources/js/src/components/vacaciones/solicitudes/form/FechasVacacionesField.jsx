@@ -5,7 +5,7 @@ import { DateInput } from "@mantine/dates";
 import dayjs from "dayjs";
 
 export const FechasVacacionesField = ({ form, classes }) => {
-    const { fecha_inicio, fecha_fin, dias_solicitados } = form.values;
+    const { fecha_inicio, fecha_fin } = form.values;
 
     useEffect(() => {
         if (fecha_inicio && fecha_fin) {
@@ -16,8 +16,18 @@ export const FechasVacacionesField = ({ form, classes }) => {
                 form.setFieldValue("fecha_fin", null);
                 form.setFieldValue("dias_solicitados", 0);
             } else {
-                const dias_diff = date_fin.diff(date_inicio, "days");
-                form.setFieldValue("dias_solicitados", dias_diff + 1); // incluye ambos días
+                let dias_diff = date_fin.diff(date_inicio, "days") + 1; // incluye ambos días
+
+                // ✅ Si es exactamente de lunes a viernes, sumar sábado y domingo
+                if (
+                    date_inicio.day() === 1 && // lunes
+                    date_fin.day() === 5 && // viernes
+                    dias_diff === 5 // exactamente 5 días
+                ) {
+                    dias_diff += 2; // se suman sábado y domingo
+                }
+
+                form.setFieldValue("dias_solicitados", dias_diff);
             }
         } else {
             form.setFieldValue("dias_solicitados", 0);

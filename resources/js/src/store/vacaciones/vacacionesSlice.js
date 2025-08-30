@@ -3,6 +3,7 @@ export const vacacionesSlice = createSlice({
     name: "vacaciones",
     initialState: {
         isLoading: false,
+        isLoadingMotivos: false,
         isExport: false,
         solicitudes: [],
         motivos: [],
@@ -14,6 +15,9 @@ export const vacacionesSlice = createSlice({
         onLoading: (state, { payload }) => {
             state.isLoading = payload;
         },
+        onLoadingMotivos: (state, { payload }) => {
+            state.isLoadingMotivos = payload;
+        },
         onExport: (state, { payload }) => {
             state.isExport = payload;
         },
@@ -23,7 +27,7 @@ export const vacacionesSlice = createSlice({
         },
         onLoadMotivosVacaciones: (state, { payload }) => {
             state.motivos = payload;
-            state.isLoading = false;
+            state.isLoadingMotivos = false;
         },
         onSetActivateVacacion: (state, { payload }) => {
             state.activateVacacion = payload;
@@ -34,6 +38,9 @@ export const vacacionesSlice = createSlice({
             state.activateVacacion = null;
             state.message = undefined;
             state.errores = undefined;
+            state.isLoading = false;
+            state.isLoadingMotivos = false;
+            state.isExport = false;
         },
         onLoadMessage: (state, { payload }) => {
             state.message = payload;
@@ -41,12 +48,14 @@ export const vacacionesSlice = createSlice({
         onLoadErrores: (state, { payload }) => {
             state.errores = payload;
             state.isLoading = false;
+            state.isLoadingMotivos = false;
         },
     },
 });
 
 export const {
     onLoading,
+    onLoadingMotivos,
     onExport,
     onLoadSolicitudesVacaciones,
     onLoadMotivosVacaciones,

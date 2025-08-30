@@ -1,14 +1,23 @@
 import { useEffect, useState } from "react";
-import { Box, Select, Stack, Switch } from "@mantine/core";
+import { Box, Select, Stack, Switch, Table } from "@mantine/core";
 import { YearPickerInput } from "@mantine/dates";
 import { AlertSection, BtnSubmit } from "../../../../components";
-import { usePeriodoStore, useUiPeriodo, useUsersStore } from "../../../../hooks";
+import {
+    usePeriodoStore,
+    useUiPeriodo,
+    useUsersStore,
+} from "../../../../hooks";
 import { IconAlertCircle } from "@tabler/icons-react";
 
 export const PeriodoForm = ({ form }) => {
-    const { is_multiple_anio } = form.getValues();
+    const { is_multiple_anio, anios } = form.getValues();
     const { users } = useUsersStore();
-    const { startAddPeriodo } = usePeriodoStore();
+    const {
+        startAddPeriodo,
+        calcularDias,
+        startClearCalculoDias,
+        tableCalculoDias,
+    } = usePeriodoStore();
     const { modalActionAddPeriodo } = useUiPeriodo();
     const [nombreRegimen, setNombreRegimen] = useState("");
 
@@ -28,6 +37,19 @@ export const PeriodoForm = ({ form }) => {
             form.setFieldValue("anios", []);
         }
     }, [is_multiple_anio]);
+
+    useEffect(() => {
+        if (anios && anios.length > 0) {
+            const { cdgo_usrio, regimen_laboral_id } = form.getValues();
+            if (cdgo_usrio && regimen_laboral_id) {
+                calcularDias({ cdgo_usrio, regimen_laboral_id, anios });
+            }
+        }
+
+        return () => {
+            startClearCalculoDias();
+        };
+    }, [anios]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -90,6 +112,14 @@ export const PeriodoForm = ({ form }) => {
                         }
                     }}
                 />
+                <YearPickerInput
+                    clearable
+                    label="Año"
+                    placeholder="Seleccione el año"
+                    type="multiple"
+                    {...form.getInputProps("anios")}
+                    onChange={handleChange}
+                />
                 {nombreRegimen && (
                     <AlertSection
                         mt={0}
@@ -124,14 +154,28 @@ export const PeriodoForm = ({ form }) => {
                         )}
                     </AlertSection>
                 )}
-                <YearPickerInput
-                    clearable
-                    label="Año"
-                    placeholder="Seleccione el año"
-                    type="multiple"
-                    {...form.getInputProps("anios")}
-                    onChange={handleChange}
-                />
+                {tableCalculoDias?.length > 0 ? (
+                    <Table striped withTableBorder withColumnBorders>
+                        <Table.Thead>
+                            <Table.Tr>
+                                <Table.Th>Año</Table.Th>
+                                <Table.Th>Días Asignados</Table.Th>
+                                <Table.Th>Días Total</Table.Th>
+                                <Table.Th>Observacion</Table.Th>
+                            </Table.Tr>
+                        </Table.Thead>
+                        <Table.Tbody>
+                            {tableCalculoDias.map((row) => (
+                                <Table.Tr key={row?.anio}>
+                                    <Table.Td>{new Date(row?.anio).getFullYear()}</Table.Td>
+                                    <Table.Td>{row?.dias_total}</Table.Td>
+                                    <Table.Td>{row?.dias_total}</Table.Td>
+                                    <Table.Td>{row?.observacion}</Table.Td>
+                                </Table.Tr>
+                            ))}
+                        </Table.Tbody>
+                    </Table>
+                ) : null}
                 <BtnSubmit>Guardar Periodo</BtnSubmit>
             </Stack>
         </Box>

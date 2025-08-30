@@ -25,7 +25,7 @@ const AuthPage = () => {
                 <Image
                     radius="xs"
                     h={180}
-                    src={imagenes?.imagen_login}
+                    src={imagenes[0]?.imagen_login}
                     fallbackSrc="https://placehold.co/600x400?text=Placeholder"
                 />
                 <AuthForm />

@@ -258,7 +258,7 @@ class NomVacacionesController extends Controller
                 ->byUsuarioId($request->cdgo_usrio)
                 ->byCodigo($request->codigo)
                 ->byAnio($request->anio)
-                ->get();
+                ->latest('nv.created_at', 'DESC')->get();
 
             return response()->json([
                 'status'      => MsgStatus::Success,

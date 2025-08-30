@@ -4,6 +4,7 @@ import {
     onClearImagenes,
     onLoadErrores,
     onLoadImagenes,
+    onLoading,
     onLoadMessage,
     onSetActivateImagenes,
 } from "../../store/app/appSlice";
@@ -18,6 +19,7 @@ export const useAppStore = () => {
 
     const startLoadImagenes = async () => {
         try {
+            dispatch(onLoading(true));
             const { data } = await helpdeskApi.get("/app/imagenes");
             const { imagenes } = data;
             localStorage.setItem("service_images", JSON.stringify(imagenes));

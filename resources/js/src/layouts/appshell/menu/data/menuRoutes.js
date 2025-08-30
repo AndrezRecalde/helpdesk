@@ -122,6 +122,15 @@ export const NavMenuAdminTics = {
             roles: [Roles.TIC_GERENTE],
         },
     ],
+    Aplicacion: [
+        {
+            icon: IconSettings,
+            title: "Configuracion de la App",
+            path: "configuracion-app",
+            link: "/helpdesk/gerencia/configuracion-app",
+            roles: [Roles.TIC_GERENTE],
+        },
+    ],
 };
 /* Menu de Permisos Admin */
 export const NavMenuPermisosAdmin = {
@@ -170,7 +179,7 @@ export const NavMenuPermisosAdmin = {
             link: "/intranet/periodos-vacaciones",
             roles: [Roles.NOM_VACACIONES],
         },
-    ]
+    ],
 };
 /* Menu Rápido de Usuarios */
 export const MenuRapido = [

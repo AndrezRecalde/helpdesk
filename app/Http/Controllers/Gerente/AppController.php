@@ -14,7 +14,7 @@ class AppController extends Controller
     function getImagenesApp(): JsonResponse
     {
         try {
-            $imagenes = Application::first();
+            $imagenes = Application::get();
             return response()->json(['status' => MsgStatus::Success, 'imagenes' => $imagenes], 200);
         } catch (\Throwable $th) {
             return response()->json(['status' => MsgStatus::Error, 'msg' => $th->getMessage()], 500);

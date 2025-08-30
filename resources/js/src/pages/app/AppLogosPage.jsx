@@ -1,10 +1,17 @@
 import { useEffect } from "react";
 import { Container, Divider, Group } from "@mantine/core";
-import { AppLogosTable, TitlePage } from "../../components";
+import { AppLogosModal, AppLogosTable, TitlePage } from "../../components";
 import { useAppStore } from "../../hooks";
+import Swal from "sweetalert2";
 
-export const AppLogosPage = () => {
-    const { startLoadImagenes, imagenes, startClearImagenes } = useAppStore();
+const AppLogosPage = () => {
+    const {
+        startLoadImagenes,
+        imagenes,
+        startClearImagenes,
+        message,
+        errores,
+    } = useAppStore();
 
     useEffect(() => {
         if (imagenes !== null || imagenes.length === 0) {
@@ -16,6 +23,30 @@ export const AppLogosPage = () => {
         };
     }, []);
 
+    useEffect(() => {
+        if (message !== undefined) {
+            Swal.fire({
+                icon: message.status,
+                text: message.msg,
+                showConfirmButton: false,
+                timer: 2000,
+            });
+            return;
+        }
+    }, [message]);
+
+    useEffect(() => {
+        if (errores !== undefined) {
+            Swal.fire({
+                icon: "error",
+                title: "Opps...",
+                text: errores,
+                confirmButtonColor: "#38d17b",
+            });
+            return;
+        }
+    }, [errores]);
+
     return (
         <Container size="xl">
             <Group justify="space-between" mb={20}>
@@ -25,6 +56,10 @@ export const AppLogosPage = () => {
             </Group>
             <Divider my="sm" />
             <AppLogosTable />
+
+            <AppLogosModal />
         </Container>
     );
 };
+
+export default AppLogosPage;

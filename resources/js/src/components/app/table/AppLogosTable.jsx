@@ -2,23 +2,55 @@ import { useCallback, useMemo } from "react";
 import { MenuTable_E, TableContent } from "../../../components";
 import { useMantineReactTable } from "mantine-react-table";
 import { useAppStore, useUiApp } from "../../../hooks";
+import { Image } from "@mantine/core";
 
 export const AppLogosTable = () => {
-    const { isLoading, imagenes } = useAppStore();
+    const { isLoading, imagenes, setActivateImagenes } = useAppStore();
     const { modalActionApplication } = useUiApp();
+
     const columns = useMemo(
         () => [
             {
                 header: "Imagen Login",
-                accessorFn: (row) => row.imagen_login,
+                accessorKey: "imagen_login",
+                Cell: ({ cell }) => (
+                    <Image
+                        radius="md"
+                        h={75}
+                        w="auto"
+                        fit="contain"
+                        src={cell.getValue() || ""}
+                        fallbackSrc="https://placehold.co/600x400?text=Placeholder"
+                    />
+                ),
             },
             {
                 header: "Imagen Fondo",
-                accessorFn: (row) => row.imagen_fondo,
+                accessorKey: "imagen_fondo",
+                Cell: ({ cell }) => (
+                    <Image
+                        radius="md"
+                        h={75}
+                        w="auto"
+                        fit="contain"
+                        src={cell.getValue() || ""}
+                        fallbackSrc="https://placehold.co/600x400?text=Placeholder"
+                    />
+                ),
             },
             {
                 header: "Imgen Logo",
-                accessorFn: (row) => row.imagen_logo,
+                accessorKey: "imagen_logo",
+                Cell: ({ cell }) => (
+                    <Image
+                        radius="md"
+                        h={75}
+                        w="auto"
+                        fit="contain"
+                        src={cell.getValue() || ""}
+                        fallbackSrc="https://placehold.co/600x400?text=Placeholder"
+                    />
+                ),
             },
         ],
         [imagenes]
@@ -26,7 +58,7 @@ export const AppLogosTable = () => {
 
     const handleEdit = useCallback(
         (selected) => {
-            //console.log(selected);
+            console.log(selected);
             setActivateImagenes(selected);
             modalActionApplication(true);
         },

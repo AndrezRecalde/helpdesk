@@ -7,11 +7,12 @@ import {
     onLoadMessage,
     onClearPeriodos,
     onSetActivatePeriodo,
+    onSetTableCalculoDias,
 } from "../../../store/vacaciones/periodo/periodoSlice";
 import helpdeskApi from "../../../api/helpdeskApi";
 
 export const usePeriodoStore = () => {
-    const { isLoading, isExport, periodos, activatePeriodo, message, errores } =
+    const { isLoading, isExport, periodos, activatePeriodo, tableCalculoDias, message, errores } =
         useSelector((state) => state.periodoVacacional);
     const dispatch = useDispatch();
     const { ExceptionMessageError } = useErrorException(onLoadErrores);
@@ -57,6 +58,8 @@ export const usePeriodoStore = () => {
                 "/tthh/asistencia/store/periodo",
                 periodo
             );
+            const { creados } = data;
+            console.log(creados);
             dispatch(onLoadMessage(data));
             setTimeout(() => {
                 dispatch(onLoadMessage(undefined));
@@ -87,6 +90,29 @@ export const usePeriodoStore = () => {
         }
     };
 
+    const calcularDias = async ({ cdgo_usrio, regimen_laboral_id, anios }) => {
+        try {
+            dispatch(onLoading(true));
+            const { data } = await helpdeskApi.post("/tthh/asistencia/calcular-dias", {
+                cdgo_usrio,
+                regimen_laboral_id,
+                anios,
+            });
+            const { resultados } = data;
+            console.log(resultados);
+            dispatch(onSetTableCalculoDias(resultados));
+            dispatch(onLoading(false));
+        } catch (error) {
+            console.log(error);
+            dispatch(onLoading(false));
+            ExceptionMessageError(error);
+        }
+    };
+
+    const startClearCalculoDias = () => {
+        dispatch(onSetTableCalculoDias([]));
+    };
+
     const setActivatePeriodo = (periodo) => {
         dispatch(onSetActivatePeriodo(periodo));
     };
@@ -100,6 +126,7 @@ export const usePeriodoStore = () => {
         isExport,
         periodos,
         activatePeriodo,
+        tableCalculoDias,
         message,
         errores,
 
@@ -107,6 +134,8 @@ export const usePeriodoStore = () => {
         startLoadPeriodosByUser,
         startAddPeriodo,
         startUpdatePeriodo,
+        calcularDias,
+        startClearCalculoDias,
         setActivatePeriodo,
         startClearPeriodos,
     };

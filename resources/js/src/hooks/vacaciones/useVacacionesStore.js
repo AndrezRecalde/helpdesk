@@ -5,6 +5,7 @@ import {
     onExport,
     onLoadErrores,
     onLoading,
+    onLoadingMotivos,
     onLoadMessage,
     onLoadMotivosVacaciones,
     onLoadSolicitudesVacaciones,
@@ -15,6 +16,7 @@ import helpdeskApi from "../../api/helpdeskApi";
 export const useVacacionesStore = () => {
     const {
         isLoading,
+        isLoadingMotivos,
         isExport,
         solicitudes,
         motivos,
@@ -27,14 +29,14 @@ export const useVacacionesStore = () => {
 
     const startLoadMotivosVacaciones = async () => {
         try {
-            dispatch(onLoading(true));
+            dispatch(onLoadingMotivos(true));
             const { data } = await helpdeskApi.get(
                 "/usuario/motivos-vacaciones"
             );
             const { motivos } = data;
             dispatch(onLoadMotivosVacaciones(motivos));
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };
@@ -64,26 +66,26 @@ export const useVacacionesStore = () => {
             dispatch(onLoadSolicitudesVacaciones(solicitudes));
             dispatch(onLoading(false));
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             dispatch(onLoading(false));
             ExceptionMessageError(error);
         }
     };
 
     const startSolicitarVacaciones = async (solicitud) => {
-        console.log(solicitud);
+        //console.log(solicitud);
         try {
             const { data } = await helpdeskApi.post(
                 "/usuario/solicitar-vacaciones",
                 solicitud
             );
-            console.log(data);
+            //console.log(data);
             dispatch(onLoadMessage(data));
             setTimeout(() => {
                 dispatch(onLoadMessage(undefined));
             }, 40);
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };
@@ -113,7 +115,7 @@ export const useVacacionesStore = () => {
             dispatch(onExport(false));
             dispatch(onSetActivateVacacion(null));
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };
@@ -150,7 +152,7 @@ export const useVacacionesStore = () => {
                 dispatch(onLoadMessage(undefined));
             }, 40);
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };
@@ -165,6 +167,7 @@ export const useVacacionesStore = () => {
 
     return {
         isLoading,
+        isLoadingMotivos,
         isExport,
         solicitudes,
         motivos,

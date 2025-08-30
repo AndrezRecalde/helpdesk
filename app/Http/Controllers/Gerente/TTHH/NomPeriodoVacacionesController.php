@@ -6,6 +6,7 @@ use App\Enums\MsgStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\NomPeriodoVacacionesRequest;
 use App\Models\NomPeriodoVacacional;
+use App\Models\NomReglasVacacion;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -50,7 +51,7 @@ class NomPeriodoVacacionesController extends Controller
         ]);
     }
 
-    public function store(NomPeriodoVacacionesRequest $request): JsonResponse
+    public function storeEstatico(NomPeriodoVacacionesRequest $request): JsonResponse
     {
         try {
             $cdgo_usrio = $request->cdgo_usrio;
@@ -58,6 +59,9 @@ class NomPeriodoVacacionesController extends Controller
             $anios = $request->anios;
             $observacion = $request->observacion;
             $creados = [];
+
+            // Contar cuántos periodos ya tiene el usuario (solo aplicable a regimen 2)
+            $periodosExistentes = NomPeriodoVacacional::where('cdgo_usrio', $cdgo_usrio)->count();
 
             foreach ($anios as $anio) {
                 $existe = NomPeriodoVacacional::where('cdgo_usrio', $cdgo_usrio)
@@ -67,10 +71,18 @@ class NomPeriodoVacacionesController extends Controller
                 if (!$existe) {
                     // Determinar los días según el régimen laboral
                     $dias_total = 0;
+
                     if (in_array($regimen_laboral_id, [1, 3])) {
                         $dias_total = 30;
                     } elseif ($regimen_laboral_id == 2) {
-                        $dias_total = 15;
+                        $indicePeriodo = $periodosExistentes + 1; // siguiente periodo
+                        if ($indicePeriodo <= 5) {
+                            $dias_total = 15;
+                        } else {
+                            // a partir del 6to aumenta 1 por periodo hasta 30
+                            $dias_total = min(15 + ($indicePeriodo - 5), 30);
+                        }
+                        $periodosExistentes++; // avanzar contador por cada nuevo registro
                     }
 
                     $periodo = NomPeriodoVacacional::create([
@@ -106,6 +118,152 @@ class NomPeriodoVacacionesController extends Controller
             ], 500);
         }
     }
+
+    public function store(NomPeriodoVacacionesRequest $request): JsonResponse
+    {
+        try {
+            $cdgo_usrio         = $request->cdgo_usrio;
+            $regimen_laboral_id = $request->regimen_laboral_id;
+            $anios              = $request->anios;
+            $observacion        = $request->observacion;
+            $creados            = [];
+
+            // Cantidad de periodos ya registrados para este usuario
+            $periodosExistentes = NomPeriodoVacacional::where('cdgo_usrio', $cdgo_usrio)->count();
+
+            foreach ($anios as $index => $anio) {
+                $existe = NomPeriodoVacacional::where('cdgo_usrio', $cdgo_usrio)
+                    ->where('anio', $anio)
+                    ->exists();
+
+                if ($existe) {
+                    continue;
+                }
+
+                // Calcular el número de periodo que corresponde
+                $numPeriodo = $periodosExistentes + $index + 1;
+
+                // Buscar la regla aplicable
+                $regla = NomReglasVacacion::where('regimen_laboral_id', $regimen_laboral_id)
+                    ->where('desde_periodo', '<=', $numPeriodo)
+                    ->orderByDesc('desde_periodo')
+                    ->first();
+
+                $dias_total = 0;
+
+                if ($regla) {
+                    if ($regla->incremental) {
+                        // Ejemplo: desde el 6to periodo se otorgan 15 + (numPeriodo - 6 + 1) hasta 30
+                        $base  = $regla->dias_otorgados;
+                        $extra = ($numPeriodo - $regla->desde_periodo + 1);
+                        $dias_total = min($base + $extra, 30);
+                    } else {
+                        $dias_total = $regla->dias_otorgados;
+                    }
+                }
+
+                // Crear el periodo vacacional
+                $periodo = NomPeriodoVacacional::create([
+                    'cdgo_usrio'          => $cdgo_usrio,
+                    'regimen_laboral_id'  => $regimen_laboral_id,
+                    'anio'                => $anio,
+                    'dias_total'          => $dias_total,
+                    'dias_tomados'        => 0,
+                    'dias_disponibles'    => $dias_total,
+                    'observacion'         => $observacion,
+                    'activo'              => true,
+                ]);
+
+                $creados[] = $periodo;
+            }
+
+            if (count($creados) === 0) {
+                return response()->json([
+                    'status' => MsgStatus::Info,
+                    'msg'    => MsgStatus::InfoPeriodos,
+                ], 200);
+            }
+
+            return response()->json([
+                'status' => MsgStatus::Success,
+                'msg'    => MsgStatus::PeriodosCreated,
+                'creados'   => $creados
+            ], 201);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => MsgStatus::Error,
+                'msg'    => $th->getMessage()
+            ], 500);
+        }
+    }
+
+
+    public function calcularDias(Request $request): JsonResponse
+    {
+        try {
+            $cdgo_usrio         = $request->cdgo_usrio;
+            $regimen_laboral_id = $request->regimen_laboral_id;
+            $anios              = $request->anios;
+
+            // Cantidad de periodos ya registrados para este usuario
+            $periodosExistentes = NomPeriodoVacacional::where('cdgo_usrio', $cdgo_usrio)->count();
+
+            foreach ($anios as $index => $anio) {
+                $existe = NomPeriodoVacacional::where('cdgo_usrio', $cdgo_usrio)
+                    ->where('anio', $anio)
+                    ->exists();
+
+                if ($existe) {
+                    $resultados[] = [
+                        'anio'        => $anio,
+                        'dias_total'  => 0,
+                        'observacion' => 'Ya existe este periodo para el usuario'
+                    ];
+                    continue;
+                }
+
+                // Calcular el número de periodo que corresponde
+                $numPeriodo = $periodosExistentes + $index + 1;
+
+                // Buscar la regla aplicable
+                $regla = NomReglasVacacion::where('regimen_laboral_id', $regimen_laboral_id)
+                    ->where('desde_periodo', '<=', $numPeriodo)
+                    ->orderByDesc('desde_periodo')
+                    ->first();
+
+                $dias_total = 0;
+
+                if ($regla) {
+                    if ($regla->incremental) {
+                        // Ejemplo: desde el 6to periodo se otorgan 15 + (numPeriodo - 6 + 1) hasta 30
+                        $base  = $regla->dias_otorgados;
+                        $extra = ($numPeriodo - $regla->desde_periodo + 1);
+                        $dias_total = min($base + $extra, 30);
+                    } else {
+                        $dias_total = $regla->dias_otorgados;
+                    }
+                }
+
+                $resultados[] = [
+                    'anio'                => $anio,
+                    'dias_total'          => $dias_total,
+                    'dias_disponibles'    => $dias_total,
+                ];
+            }
+
+            return response()->json([
+                'status' => MsgStatus::Success,
+                'resultados'   => $resultados
+            ], 200);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => MsgStatus::Error,
+                'msg'    => $th->getMessage()
+            ], 500);
+        }
+    }
+
+
 
     public function updatePeriodo(Request $request, int $id): JsonResponse
     {

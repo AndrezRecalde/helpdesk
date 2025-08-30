@@ -7,8 +7,8 @@ import {
 } from "../../components";
 import { IconChevronsRight } from "@tabler/icons-react";
 import { useDireccionStore, useVacacionesStore } from "../../hooks";
-import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const SolicitudVacacionesPage = () => {
     const {

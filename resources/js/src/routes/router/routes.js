@@ -5,6 +5,12 @@ const AuthPage = lazy(() =>
     import(/* webpackChunkName: "AuthPage" */ "../../pages/auth/AuthPage")
 );
 
+const AppLogosPage = lazy(() =>
+    import(
+        /* webpackChunkName: "AppLogosPage" */ "../../pages/app/AppLogosPage"
+    )
+);
+
 const ConsultaTramiteRutaPage = lazy(() =>
     import(
         /* webpackChunkName: "ConsultaTramiteRutaPage" */ "../../pages/ruta/ConsultaTramiteRutaPage"
@@ -205,6 +211,7 @@ export const consultaTramiteRoutes = {
 const helpdeskGerenciaRoutes = generateRoutes(
     "helpdesk/gerencia",
     [
+        { path: "configuracion-app", Component: AppLogosPage },
         { path: "cerrar-soportes", Component: SoporteCalificacionPage },
         { path: "indicadores-soportes", Component: IndicadorReportPage },
         { path: "dashboard", Component: DashGerenciaPage },

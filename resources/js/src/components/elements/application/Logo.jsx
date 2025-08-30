@@ -10,7 +10,7 @@ export const Logo = ({ height = 200, width = "auto" }) => {
             w={width}
             fit="contain"
             alt="logo"
-            src={imagenes?.imagen_logo}
+            src={imagenes[0]?.imagen_logo}
             fallbackSrc="https://placehold.co/600x400?text=Placeholder"
         />
     );
