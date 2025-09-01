@@ -34,13 +34,16 @@ export const AppRouter = () => {
     }, []);
 
     useEffect(() => {
-        if (imagenes !== null || imagenes.length === 0) {
-            startLoadImagenes();
-        }
+        const load = async () => {
+            if (imagenes !== null && imagenes.length > 0) {
+                await startLoadImagenes();
+            }
+        };
 
-        /* return () => {
-                startClearImagenes();
-            }; */
+        load();
+
+        // Si quieres limpiar al desmontar:
+        // return () => startClearImagenes();
     }, []);
 
     // Helper para renderizar rutas de acuerdo a la estructura dinámica
