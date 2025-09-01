@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('nom_reglas_vacaciones', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('regimen_laboral_id');
+            $table->unsignedBigInteger('regimen_laboral_id');
             $table->integer('desde_periodo');
             $table->integer('hasta_periodo');
             $table->integer('dias_otorgados');
