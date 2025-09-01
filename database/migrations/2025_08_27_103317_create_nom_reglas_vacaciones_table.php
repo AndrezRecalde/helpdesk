@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('nom_reglas_vacaciones', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('regimen_laboral_id');
+            $table->unsignedInteger('regimen_laboral_id');
             $table->integer('desde_periodo');
             $table->integer('hasta_periodo');
             $table->integer('dias_otorgados');
@@ -21,9 +21,14 @@ return new class extends Migration
             $table->integer('maximo_dias');
             $table->timestamps();
 
-            $table->foreign('regimen_laboral_id')->references('id')->on('nom_regimen_laboral')->onDelete('cascade');
+            // Foreign key con nombre corto
+            $table->foreign('regimen_laboral_id', 'fk_reglas_vac_regimen')
+                ->references('id')
+                ->on('nom_regimen_laboral')
+                ->onDelete('cascade');
 
-            $table->index('regimen_laboral_id');
+            // Índice con nombre corto
+            $table->index('regimen_laboral_id', 'idx_reglas_vac_regimen');
         });
     }
 
