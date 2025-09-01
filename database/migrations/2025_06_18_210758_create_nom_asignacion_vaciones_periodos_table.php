@@ -13,14 +13,16 @@ return new class extends Migration
     {
         Schema::create('nom_asignacion_vacaciones_periodos', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('nom_vacacion_id')
-                ->constrained('nom_vacaciones')
-                ->onDelete('cascade');
-            $table->foreignId('nom_periodo_vacacional_id')
-                ->constrained('nom_periodo_vacacionales')
-                ->onDelete('cascade');
-            $table->integer(column: 'dias_usados');
+            $table->unsignedBigInteger('nom_vacacion_id');
+            $table->unsignedBigInteger('nom_periodo_vacacional_id');
+            $table->integer('dias_usados');
             $table->timestamps();
+
+            $table->foreign('nom_vacacion_id')->references('nom_vacaciones')->on('id')->onDelete('cascade');
+            $table->foreign('nom_periodo_vacacional_id')->references('nom_periodo_vacacionales')->on('id')->onDelete('cascade');
+
+            $table->index('nom_vacacion_id');
+            $table->index('nom_periodo_vacacional_id');
         });
     }
 
