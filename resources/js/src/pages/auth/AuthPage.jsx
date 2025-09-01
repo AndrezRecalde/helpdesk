@@ -11,7 +11,7 @@ const AuthPage = () => {
         <div
             className={classes.wrapper}
             style={{
-                backgroundImage: `url(${imagenes?.imagen_fondo})`,
+                backgroundImage: `url(${imagenes[0]?.imagen_fondo})`,
                 backgroundSize: "cover",
                 backgroundPosition: "center",
             }}
