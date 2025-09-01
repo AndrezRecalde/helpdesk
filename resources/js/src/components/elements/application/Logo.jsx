@@ -1,7 +1,7 @@
 import { Image } from '@mantine/core';
 
 export const Logo = ({ height = 200, width = "auto" }) => {
-    const imagenes = JSON.parse(localStorage.getItem("service_images"));
+    const imagenes = JSON.parse(localStorage.getItem("service_images")) || [];
     return (
         <Image
             radius="md"
