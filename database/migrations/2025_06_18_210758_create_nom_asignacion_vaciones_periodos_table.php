@@ -18,8 +18,15 @@ return new class extends Migration
             $table->integer('dias_usados');
             $table->timestamps();
 
-            $table->foreign('nom_vacacion_id')->references('id')->on('nom_vacaciones')->onDelete('cascade');
-            $table->foreign('nom_periodo_vacacional_id')->references('id')->on('nom_periodo_vacacionales')->onDelete('cascade');
+            $table->foreign('nom_vacacion_id', 'fk_asig_vac_vacacion')
+                ->references('id')
+                ->on('nom_vacaciones')
+                ->onDelete('cascade');
+
+            $table->foreign('nom_periodo_vacacional_id', 'fk_asig_vac_periodo')
+                ->references('id')
+                ->on('nom_periodo_vacacionales')
+                ->onDelete('cascade');
 
             $table->index('nom_vacacion_id');
             $table->index('nom_periodo_vacacional_id');
