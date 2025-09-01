@@ -12,24 +12,25 @@ import {
     IconList,
 } from "@tabler/icons-react";
 import { Roles } from "../../helpers/dictionary";
-import { useUiDescuento } from "../../hooks";
+import { useTitlePage } from "../../hooks";
 import { useNavigate } from "react-router-dom";
 
 const DescuentoVacacionesPage = () => {
+    useTitlePage("Helpdesk | Descuentos Vacaciones");
     const usuario = JSON.parse(localStorage.getItem("service_user"));
     const navigate = useNavigate();
-    const { modalActionDescuento } = useUiDescuento();
+    //const { modalActionDescuento } = useUiDescuento();
 
     /* const handleOpenModalDescuento = () => {
         modalActionDescuento(true);
     }; */
 
-    const handleOpenModalSolicitudes = () => {
-        navigate("/vacaciones/solicitudes");
+    const handleNavigateSolicitudes = () => {
+        navigate("/intranet/solicitudes-vacaciones");
     };
 
-    const handleOpenModalPeriodos = () => {
-        navigate("periodos-vacaciones");
+    const handleNavigatePeriodos = () => {
+        navigate("/intranet/periodos-vacaciones");
     };
 
     const menuActions = [
@@ -42,13 +43,13 @@ const DescuentoVacacionesPage = () => {
         {
             label: "Ver Solicitudes",
             icon: IconEyeSearch,
-            onClick: handleOpenModalSolicitudes,
+            onClick: handleNavigateSolicitudes,
             color: "blue",
         },
         {
             label: "Ver Periodos",
             icon: IconList,
-            onClick: handleOpenModalPeriodos,
+            onClick: handleNavigatePeriodos,
             color: "pink",
         },
     ];
@@ -77,7 +78,6 @@ const DescuentoVacacionesPage = () => {
             <Divider my="md" />
 
             <DescuentoVacacionesTable />
-
         </Container>
     );
 };

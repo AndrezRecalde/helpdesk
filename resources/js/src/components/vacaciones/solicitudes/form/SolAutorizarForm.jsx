@@ -106,7 +106,7 @@ export function SolAutorizarForm({ form }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(form.getTransformedValues());
+        //console.log(form.getTransformedValues());
         startGestionarVacaciones(form.getTransformedValues(), activateVacacion);
         setActivateVacacion(null); // Reset the activateVacacion state
         modalActionGestionarVacacion(false);

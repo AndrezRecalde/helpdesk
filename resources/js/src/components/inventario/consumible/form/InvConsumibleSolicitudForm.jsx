@@ -28,7 +28,7 @@ export const InvConsumibleSolicitudForm = ({ form }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         startSolicitarConsumible(form.getTransformedValues());
-        console.log(form.getTransformedValues());
+        //console.log(form.getTransformedValues());
         modalActionSolicitudConsumible(false);
         form.reset();
     };

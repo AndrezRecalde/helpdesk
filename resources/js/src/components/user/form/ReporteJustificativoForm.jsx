@@ -34,7 +34,7 @@ export const ReporteJustificativoForm = ({ form }) => {
             ...form.getTransformedValues(),
             cdgo_usrio: usuario.cdgo_usrio,
         };
-        console.log(formulario);
+        //console.log(formulario);
         startExportJustificativo(formulario);
         form.reset();
         modalActionGenerarReporte(false);

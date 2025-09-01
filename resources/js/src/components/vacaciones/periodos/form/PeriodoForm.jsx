@@ -53,7 +53,7 @@ export const PeriodoForm = ({ form }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(form.getTransformedValues());
+        //console.log(form.getTransformedValues());
         startAddPeriodo(form.getTransformedValues());
         form.reset();
         setNombreRegimen("");

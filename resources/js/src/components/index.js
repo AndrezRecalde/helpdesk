@@ -20,6 +20,8 @@ import { AppLogosTable } from "./app/table/AppLogosTable";
 import { AppLogosModal } from "./app/modal/AppLogosModal";
 import { AppLogosForm } from "./app/form/AppLogosForm";
 
+/* HOME */
+import { ServiceSection } from "./home/section/ServiceSection";
 
 /* Elementos Gerencia */
 /* CHARTS */
@@ -301,6 +303,9 @@ export {
     AppLogosTable,
     AppLogosModal,
     AppLogosForm,
+
+    /* HOME */
+    ServiceSection,
 
     /* Elementos Gerencia */
     /* CHARTS */

@@ -21,7 +21,7 @@ export const FechaIngresoForm = ({ form }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         startUpdateFechaIngreso(activateUser, form.getTransformedValues());
-        console.log(form.getTransformedValues());
+        //console.log(form.getTransformedValues());
         modalActionUser(0);
         form.reset();
     };

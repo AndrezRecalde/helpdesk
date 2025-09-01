@@ -121,11 +121,11 @@ export const StepperUser = ({ form }) => {
             //console.log(form.getTransformedValues());
             startAddUser(form.getTransformedValues());
         } */
-        console.log(form.getTransformedValues());
+        //console.log(form.getTransformedValues());
         startAddUser(form.getTransformedValues(), storageUserFields);
         setClearActivateUser();
-        modalActionUser(false);
         form.reset();
+        modalActionUser(false);
     };
 
     const { usu_ape_pat, usu_ape_mat, usu_nombres } = form.values;

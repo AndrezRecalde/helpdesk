@@ -1,15 +1,13 @@
-import { Divider, Drawer, Group, ScrollArea, SimpleGrid } from "@mantine/core";
+import { Divider, Drawer, Group, ScrollArea } from "@mantine/core";
 import { useUiHeaderMenu } from "../../../hooks";
-import { MenuSection, MenuItems, MenuHome } from "../../../layouts";
+import { MenuSection, MenuHome } from "../../../layouts";
 import { UserBtnMobile } from "../../../components/user/menu/UserBtnMobile";
 import {
-    menuHome,
     NavMenuAdminTics,
     NavMenuPermisosAdmin,
     NavMenuTics,
 } from "./data/menuRoutes";
 import { Roles } from "../../../helpers/dictionary";
-import classess from "../../../assets/styles/modules/menu/MenuGrid.module.css";
 
 export const DrawerMenuMobile = ({ usuario, classes, theme }) => {
     const {
@@ -84,31 +82,6 @@ export const DrawerMenuMobile = ({ usuario, classes, theme }) => {
                         toggleDrawer={modalActionDrawerMobile}
                     />
                 ) : null}
-
-                {/* Menú Rápido en el Drawer */}
-                {/* <MenuRapidoSection
-                            title="Menú Rápido"
-                            menuData={MenuRapido}
-                            classes={classes}
-                            theme={theme}
-                            isOpen={linksMenuQuick}
-                            toggle={toggleMenuQuick}
-                            toggleDrawer={toggleDrawer}
-                        />
-
-                        <Divider my="sm" /> */}
-                <SimpleGrid
-                    cols={{ base: 2, xs: 2, sm: 2, md: 2, lg: 2 }}
-                    mt="sm"
-                    p={5}
-                >
-                    <MenuItems
-                        menuHome={menuHome}
-                        classes={classess}
-                        theme={theme}
-                        toggleDrawer={modalActionDrawerMobile}
-                    />
-                </SimpleGrid>
                 <Group justify="center" mt={20} mb={20} p={20}>
                     <UserBtnMobile />
                 </Group>

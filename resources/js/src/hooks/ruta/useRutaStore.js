@@ -38,7 +38,7 @@ export const useRutaStore = () => {
             dispatch(onLoadDespachos(despachos));
             dispatch(onLoadingDespachos(false));
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             dispatch(onLoadingDespachos(false));
             ExceptionMessageError(error);
         }

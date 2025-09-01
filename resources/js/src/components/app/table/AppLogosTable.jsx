@@ -58,7 +58,7 @@ export const AppLogosTable = () => {
 
     const handleEdit = useCallback(
         (selected) => {
-            console.log(selected);
+            //console.log(selected);
             setActivateImagenes(selected);
             modalActionApplication(true);
         },

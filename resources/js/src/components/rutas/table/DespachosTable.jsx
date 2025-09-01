@@ -7,8 +7,6 @@ import dayjs from "dayjs";
 
 export const DespachosTable = () => {
     const { despachos } = useRutaStore();
-    console.log("tabla");
-
     const columns = useMemo(
         () => [
             {

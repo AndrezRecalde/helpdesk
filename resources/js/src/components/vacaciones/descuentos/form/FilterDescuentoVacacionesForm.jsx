@@ -36,7 +36,7 @@ export const FilterDescuentoVacacionesForm = () => {
             usuario_id: usuario.cdgo_usuario,
             anio: form.getTransformedValues(),
         });
-        console.log(form.getTransformedValues());
+        //console.log(form.getTransformedValues());
         form.reset();
     };
 

@@ -2,6 +2,7 @@ import { useCallback, useMemo } from "react";
 import { MenuTable_E, TableContent } from "../../../../components";
 import { usePeriodoStore, useUiUser, useUsersStore } from "../../../../hooks";
 import { useMantineReactTable } from "mantine-react-table";
+import { MRT_Localization_ES } from "mantine-react-table/locales/es/index.cjs";
 import { PeriodoInfoTable } from "./PeriodoInfoTable";
 import dayjs from "dayjs";
 import { Roles } from "../../../../helpers/dictionary";
@@ -69,7 +70,7 @@ export const PeriodosTable = () => {
 
     const handleEdit = useCallback(
         (selected) => {
-            console.log(selected);
+            //console.log(selected);
             setActivateUser(selected);
             modalActionUser(false, true);
         },
@@ -87,7 +88,10 @@ export const PeriodosTable = () => {
         renderRowActionMenuItems: ({ row }) => (
             <MenuTable_E row={row} handleEdit={handleEdit} />
         ),
-        renderDetailPanel: ({ row }) => <PeriodoInfoTable data={row} usuario={usuario} />,
+        renderDetailPanel: ({ row }) => (
+            <PeriodoInfoTable data={row} usuario={usuario} />
+        ),
+        localization: MRT_Localization_ES,
         mantineTableProps: {
             withColumnBorders: true,
             withTableBorder: true,

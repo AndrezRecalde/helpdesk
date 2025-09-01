@@ -21,7 +21,7 @@ export const PeriodoEditForm = ({ form }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         startUpdatePeriodo(form.getTransformedValues())
-        console.log(form.getTransformedValues());
+        //console.log(form.getTransformedValues());
         form.reset();
     };
 

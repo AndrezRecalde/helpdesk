@@ -48,11 +48,11 @@ export const FilterVacacionesForm = ({ usuario }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (switch_role) {
-            console.log(form.getTransformedValues());
+            //console.log(form.getTransformedValues());
             startLoadSolicitudesVacaciones(form.getTransformedValues());
             setStorageFields(form.getTransformedValues());
         } else {
-            console.log(form.getTransformedValues());
+            //console.log(form.getTransformedValues());
             startLoadSolicitudesVacaciones({
                 ...form.getTransformedValues(),
                 cdgo_usrio: JSON.parse(localStorage.getItem("service_user"))

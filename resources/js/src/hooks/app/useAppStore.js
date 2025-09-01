@@ -25,7 +25,7 @@ export const useAppStore = () => {
             localStorage.setItem("service_images", JSON.stringify(imagenes));
             dispatch(onLoadImagenes(imagenes));
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };

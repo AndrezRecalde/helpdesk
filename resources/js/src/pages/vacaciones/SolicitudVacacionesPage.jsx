@@ -6,11 +6,16 @@ import {
     TitlePage,
 } from "../../components";
 import { IconChevronsRight } from "@tabler/icons-react";
-import { useDireccionStore, useVacacionesStore } from "../../hooks";
+import {
+    useDireccionStore,
+    useTitlePage,
+    useVacacionesStore,
+} from "../../hooks";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
 const SolicitudVacacionesPage = () => {
+    useTitlePage("Helpdesk | Solicitud Vacaciones");
     const {
         message,
         errores,
@@ -45,7 +50,7 @@ const SolicitudVacacionesPage = () => {
                 confirmButtonText: "Si, imprimir!",
             }).then((result) => {
                 if (result.isConfirmed) {
-                    console.log(message.codigo);
+                    //console.log(message.codigo);
                     startExportFichaVacaciones(message.codigo);
                     //console.log(message.idper_permisos)
                 }
@@ -88,7 +93,11 @@ const SolicitudVacacionesPage = () => {
         <Container size="xl">
             <Group justify="space-between">
                 <TitlePage order={1}>Solicitud Vacaciones</TitlePage>
-                <BtnSection heigh={45} IconSection={IconChevronsRight} handleAction={handleAction}>
+                <BtnSection
+                    heigh={45}
+                    IconSection={IconChevronsRight}
+                    handleAction={handleAction}
+                >
                     Mis solicitudes
                 </BtnSection>
             </Group>

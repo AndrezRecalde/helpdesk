@@ -8,12 +8,13 @@ import {
     SolAutorizarVacacionModal,
     BtnAddActions,
 } from "../../components";
-import { IconCubePlus, IconEyeSearch } from "@tabler/icons-react";
-import { useVacacionesStore } from "../../hooks";
+import { IconCubePlus, IconEyeSearch, IconOctagonMinus } from "@tabler/icons-react";
+import { useTitlePage, useVacacionesStore } from "../../hooks";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
 const SolicitudesVacacionesPage = () => {
+    useTitlePage("Helpdesk | Solicitudes Vacaciones");
     const usuario = useMemo(
         () => JSON.parse(localStorage.getItem("service_user")),
         []
@@ -30,7 +31,11 @@ const SolicitudesVacacionesPage = () => {
 
     const handleVerPeriodos = () => {
         navigate("/intranet/periodos-vacaciones");
-    }
+    };
+
+    const handleVerDescuentos = () => {
+        navigate("/intranet/descuentos-vacaciones");
+    };
 
     useEffect(() => {
         return () => {
@@ -89,6 +94,12 @@ const SolicitudesVacacionesPage = () => {
             icon: IconEyeSearch,
             onClick: handleVerPeriodos,
             color: "pink",
+        },
+        {
+            label: "Ver Descuentos",
+            icon: IconOctagonMinus,
+            onClick: handleVerDescuentos,
+            color: "orange",
         },
     ];
 

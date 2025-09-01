@@ -27,7 +27,7 @@ export const usePeriodoStore = () => {
             const { periodos } = data;
             dispatch(onLoadingPeriodos(periodos));
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             dispatch(onLoading(false));
             ExceptionMessageError(error);
         }
@@ -43,7 +43,7 @@ export const usePeriodoStore = () => {
             const { periodos } = data;
             dispatch(onLoadingPeriodos(periodos));
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             dispatch(onLoading(false));
             ExceptionMessageError(error);
         }
@@ -59,14 +59,14 @@ export const usePeriodoStore = () => {
                 periodo
             );
             const { creados } = data;
-            console.log(creados);
+            //console.log(creados);
             dispatch(onLoadMessage(data));
             setTimeout(() => {
                 dispatch(onLoadMessage(undefined));
             }, 40);
             startLoadPeriodos({});
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             dispatch(onLoading(false));
             ExceptionMessageError(error);
         }
@@ -84,7 +84,7 @@ export const usePeriodoStore = () => {
             }, 40);
             startLoadPeriodos({});
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             dispatch(onLoading(false));
             ExceptionMessageError(error);
         }
@@ -99,11 +99,11 @@ export const usePeriodoStore = () => {
                 anios,
             });
             const { resultados } = data;
-            console.log(resultados);
+            //console.log(resultados);
             dispatch(onSetTableCalculoDias(resultados));
             dispatch(onLoading(false));
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             dispatch(onLoading(false));
             ExceptionMessageError(error);
         }

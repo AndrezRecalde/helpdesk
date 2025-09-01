@@ -26,7 +26,7 @@ export const useDescuentoStore = () => {
             const { descuentos } = data;
             dispatch(onLoadDescuentos(descuentos));
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             dispatch(onLoading(false));
             ExceptionMessageError(error);
         }
@@ -54,7 +54,7 @@ export const useDescuentoStore = () => {
                 dispatch(onLoadMessage(undefined));
             }, 40);
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             dispatch(onLoading(false));
             ExceptionMessageError(error);
         }

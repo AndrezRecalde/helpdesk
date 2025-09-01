@@ -56,7 +56,7 @@ export const PeriodoInfoTable = ({ data, usuario }) => {
 
     const handleEdit = useCallback(
         (selected) => {
-            console.log(selected);
+            //console.log(selected);
             setActivatePeriodo(selected);
             modalActionEditPeriodo(true);
             //setActivateUser(selected);
@@ -67,7 +67,7 @@ export const PeriodoInfoTable = ({ data, usuario }) => {
 
     const handleDescuento = useCallback(
         (selected) => {
-            console.log(selected);
+            //console.log(selected);
             setActivatePeriodo(selected);
             modalActionDescuento(true);
             //setActivateUser(selected);

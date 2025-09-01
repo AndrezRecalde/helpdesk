@@ -98,7 +98,7 @@ export const useMarcacionStore = () => {
             window.URL.revokeObjectURL(url);
             dispatch(onLoadingExport(false));
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             dispatch(onLoadingExport(false));
             ExceptionMessageError(error);
         }

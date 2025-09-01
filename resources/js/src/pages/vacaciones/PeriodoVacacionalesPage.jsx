@@ -7,7 +7,12 @@ import {
     PeriodoEditModal,
     TitlePage,
 } from "../../components";
-import { usePeriodoStore, useUiPeriodo, useUsersStore } from "../../hooks";
+import {
+    usePeriodoStore,
+    useTitlePage,
+    useUiPeriodo,
+    useUsersStore,
+} from "../../hooks";
 import { PeriodosTable } from "../../components/vacaciones/periodos/table/PeriodosTable";
 import { FechaIngresoModal } from "../../components/gerencia/user/modal/FechaIngresoModal";
 import { IconCubePlus } from "@tabler/icons-react";
@@ -15,6 +20,7 @@ import Swal from "sweetalert2";
 import { Roles } from "../../helpers/dictionary";
 
 const PeriodoVacacionalesPage = () => {
+    useTitlePage("Helpdesk | Periodos Vacaciones");
     const usuario = JSON.parse(localStorage.getItem("service_user"));
     const { startLoadPeriodos, startClearPeriodos, message, errores } =
         usePeriodoStore();

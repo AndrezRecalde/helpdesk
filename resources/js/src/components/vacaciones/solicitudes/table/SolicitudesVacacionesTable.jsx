@@ -88,7 +88,6 @@ export const SolicitudesVacacionesTable = ({ usuario }) => {
 
     const handleAutorizar = useCallback(
         (selected) => {
-            console.log("clic autorizar");
             setActivateVacacion(selected);
             modalActionGestionarVacacion(true);
         },
@@ -97,7 +96,6 @@ export const SolicitudesVacacionesTable = ({ usuario }) => {
 
     const handleSolicitarAnulacion = useCallback(
         (selected) => {
-            console.log("clic solicitar anulacion");
             setActivateVacacion(selected);
             modalActionSolAnulacion(true);
         },
@@ -106,7 +104,6 @@ export const SolicitudesVacacionesTable = ({ usuario }) => {
 
     const handleExport = useCallback(
         (selected) => {
-            console.log("clic exportar");
             Swal.fire({
                 text: `¿Deseas imprimir la ficha ${selected.codigo_vacacion}?`,
                 icon: "info",
@@ -116,7 +113,7 @@ export const SolicitudesVacacionesTable = ({ usuario }) => {
                 confirmButtonText: "Si, imprimir!",
             }).then((result) => {
                 if (result.isConfirmed) {
-                    console.log(selected.codigo_vacacion);
+                    //console.log(selected.codigo_vacacion);
                     startExportFichaVacaciones(selected.codigo_vacacion);
                     //console.log(message.idper_permisos)
                 }

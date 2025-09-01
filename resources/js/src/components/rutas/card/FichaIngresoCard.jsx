@@ -5,7 +5,6 @@ import dayjs from "dayjs";
 
 export const FichaIngresoCard = () => {
     const { ingreso } = useRutaStore();
-    console.log("ficha ingreso");
     return (
         <Card withBorder shadow="sm" radius="sm">
             <Card.Section withBorder inheritPadding py="xs" shadow="md">

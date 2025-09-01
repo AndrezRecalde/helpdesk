@@ -19,7 +19,7 @@ export const DescuentoVacacionalForm = ({ form }) => {
             usuario_id: activatePeriodo.cdgo_usrio,
             nom_periodo_vacacional_id: activatePeriodo.id,
         };
-        console.log(formulario);
+        //console.log(formulario);
         form.reset();
         await startAddDescuento(formulario);
         await startLoadPeriodos({});

@@ -283,13 +283,6 @@ export const menuHome = [
         color: "indigo",
         link: "/intranet/profile",
     },
-    {
-        title: "Mis Marcaciones",
-        description: "Consulta tus marcaciones biométricas.",
-        icon: IconFingerprint,
-        color: "blue",
-        link: "/intranet/marcaciones-biometricos",
-    },
     /* {
         title: "Cambiar contrasena",
         icon: IconSettings,
@@ -300,15 +293,41 @@ export const menuHome = [
         title: "Solicitar Soporte",
         description: "Solicita asistencia técnica para tus equipos.",
         icon: IconDeviceImacBolt,
-        color: "teal",
+        color: "dark",
         link: "/intranet/solicitud-soporte",
     },
     {
         title: "Soportes Solicitados",
         description: "Revisa tus solicitudes de soporte técnico.",
         icon: IconList,
-        color: "teal",
+        color: "dark",
         link: "/intranet/soportes",
+    },
+
+    {
+        title: "Agregar actividad",
+        description: "Añade una nueva actividad a tu lista.",
+        icon: IconPencilPlus,
+        color: "violet",
+        link: "/intranet/agregar-actividad",
+    },
+    {
+        title: "Listar actividades",
+        description: "Consulta todas tus actividades registradas.",
+        icon: IconListCheck,
+        color: "violet",
+        link: "/intranet/lista-actividades",
+    },
+    /* { title: "Cashback", icon: IconCashBanknote, color: "orange" }, */
+];
+
+export const menuHomeContratados = [
+    {
+        title: "Mis Marcaciones",
+        description: "Consulta tus marcaciones biométricas.",
+        icon: IconFingerprint,
+        color: "blue",
+        link: "/intranet/marcaciones-biometricos",
     },
     {
         title: "Solicitar Permiso",
@@ -338,19 +357,4 @@ export const menuHome = [
         color: "green",
         link: "/intranet/solicitudes-vacaciones",
     },
-    {
-        title: "Agregar actividad",
-        description: "Añade una nueva actividad a tu lista.",
-        icon: IconPencilPlus,
-        color: "violet",
-        link: "/intranet/agregar-actividad",
-    },
-    {
-        title: "Listar actividades",
-        description: "Consulta todas tus actividades registradas.",
-        icon: IconListCheck,
-        color: "violet",
-        link: "/intranet/lista-actividades",
-    },
-    /* { title: "Cashback", icon: IconCashBanknote, color: "orange" }, */
 ];

@@ -67,7 +67,7 @@ export const SolicitudVacacionesForm = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(form.getTransformedValues());
+        //console.log(form.getTransformedValues());
         Swal.fire({
             text: "¿Estas seguro de crear la ficha de vacaciones?",
             icon: "info",
