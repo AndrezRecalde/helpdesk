@@ -28,8 +28,8 @@ return new class extends Migration
                 ->on('nom_periodo_vacacionales')
                 ->onDelete('cascade');
 
-            $table->index('nom_vacacion_id');
-            $table->index('nom_periodo_vacacional_id');
+            $table->index('nom_vacacion_id', 'idx_asig_vac_vacacion');
+            $table->index('nom_periodo_vacacional_id', 'idx_asig_vac_periodo');
         });
     }
 
