@@ -21,7 +21,7 @@ return new class extends Migration
             $table->date('fecha_retorno');
             $table->date('fecha_emision');
             $table->unsignedInteger('dias_solicitados');
-            $table->unsignedInteger('motivo_id');
+            $table->unsignedBigInteger('motivo_id');
             $table->integer('reemplazo_id')->nullable();
             $table->integer('jefe_id')->nullable();
             $table->integer('director_id')->nullable();
