@@ -35,7 +35,7 @@ export const AppRouter = () => {
 
     useEffect(() => {
         const load = async () => {
-            if (imagenes !== null && imagenes.length > 0) {
+            if (imagenes !== null || imagenes.length > 0) {
                 await startLoadImagenes();
             }
         };
