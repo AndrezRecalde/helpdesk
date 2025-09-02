@@ -48,9 +48,10 @@ export const JefesVacacionesField = ({ form, classes }) => {
 
     useEffect(() => {
         if (tiene_jefe && direccion_id) {
-            setJefeField(false);
-            setDirectorField(true);
-            form.setFieldValue("jefe_id", null);
+            setJefeField(false); //Se habilita jefe departamental
+            setDirectorField(true); //Se deshabilita director departamental
+            form.setFieldValue("director_id", null);
+            form.setFieldValue("tiene_director", false);
             return;
         }
     }, [tiene_jefe, direccion_id]);
@@ -59,7 +60,8 @@ export const JefesVacacionesField = ({ form, classes }) => {
         if (tiene_director && direccion_id) {
             setDirectorField(false);
             setJefeField(true);
-            form.setFieldValue("director_id", null);
+            form.setFieldValue("jefe_id", null);
+            form.setFieldValue("tiene_jefe", false);
             return;
         }
     }, [tiene_director, direccion_id]);
@@ -68,6 +70,8 @@ export const JefesVacacionesField = ({ form, classes }) => {
         if (!tiene_jefe && !tiene_director) {
             setDirectorField(true);
             setJefeField(true);
+            form.setFieldValue("jefe_id", null);
+            form.setFieldValue("director_id", null);
         }
     }, [tiene_jefe, tiene_director]);
 
