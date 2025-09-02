@@ -20,7 +20,9 @@ class NomPeriodoVacacional extends Model
         'dias_total',
         'dias_tomados',
         'dias_disponibles',
-        'observacion'
+        'observacion',
+        'usuario_creador',
+        'usuario_modifica',
     ];
 
     public function usuario(): BelongsTo

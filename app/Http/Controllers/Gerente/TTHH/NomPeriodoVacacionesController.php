@@ -9,6 +9,7 @@ use App\Models\NomPeriodoVacacional;
 use App\Models\NomReglasVacacion;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class NomPeriodoVacacionesController extends Controller
@@ -125,7 +126,7 @@ class NomPeriodoVacacionesController extends Controller
             $cdgo_usrio         = $request->cdgo_usrio;
             $regimen_laboral_id = $request->regimen_laboral_id;
             $anios              = $request->anios;
-            $observacion        = $request->observacion;
+            //$observacion        = $request->observacion;
             $creados            = [];
 
             // Cantidad de periodos ya registrados para este usuario
@@ -170,8 +171,9 @@ class NomPeriodoVacacionesController extends Controller
                     'dias_total'          => $dias_total,
                     'dias_tomados'        => 0,
                     'dias_disponibles'    => $dias_total,
-                    'observacion'         => $observacion,
+                    //'observacion'         => $observacion,
                     'activo'              => true,
+                    'usuario_creador'     => Auth::id()
                 ]);
 
                 $creados[] = $periodo;
@@ -299,6 +301,7 @@ class NomPeriodoVacacionesController extends Controller
                 'dias_disponibles' => $dias_disponibles,
                 'observacion'      => $observacion,
                 'activo'           => $activo,
+                'usuario_modifica' => Auth::id()
             ]);
 
             return response()->json([

@@ -298,7 +298,7 @@ export const FormCreateSoporte = ({ form }) => {
                     {...form.getInputProps("fecha_fin")}
                 />
                 <BtnSubmit IconSection={IconBrandTelegram}>
-                    Crear el soporte
+                    Guardar
                 </BtnSubmit>
             </Stack>
         </Box>

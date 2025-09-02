@@ -1,4 +1,4 @@
-import { Divider, Modal } from "@mantine/core";
+import { Modal } from "@mantine/core";
 import { isNotEmpty, useForm } from "@mantine/form";
 import { TextSection } from "../../../../components";
 import { usePeriodoStore, useUiPeriodo } from "../../../../hooks";
@@ -47,7 +47,6 @@ export const PeriodoEditModal = () => {
                 blur: 3,
             }}
         >
-            <Divider my="xs" />
             <PeriodoEditForm form={form} />
         </Modal>
     );
