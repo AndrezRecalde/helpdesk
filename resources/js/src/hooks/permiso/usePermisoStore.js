@@ -63,6 +63,7 @@ export const usePermisoStore = () => {
             dispatch(onSetActivatePermiso(null));
         } catch (error) {
             //console.log(error);
+            dispatch(onExport(false));
             ExceptionMessageError(error);
         }
     };

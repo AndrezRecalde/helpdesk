@@ -102,6 +102,10 @@ class PermisosAdminController extends Controller
 
             /* $pdf = Pdf::loadView('pdf.permisos.gerencia.permiso', $data);
             return $pdf->setPaper('a4', 'portrait')->download('permiso.pdf'); */
+
+            // confirmar cambios
+            DB::commit();
+
             return response()->json([
                 'status' => MsgStatus::Success,
                 'msg'    => 'Permiso #' . $permiso->idper_permisos . ' creado con éxito',

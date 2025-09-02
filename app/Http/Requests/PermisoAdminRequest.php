@@ -24,10 +24,10 @@ class PermisoAdminRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'id_usu_pide' => 'required',
+            'id_usu_pide'       => 'required',
             'id_direccion_pide' => 'required',
-            'id_tipo_motivo' => 'required',
-            'per_fecha_salida' => 'required',
+            'id_tipo_motivo'    => 'required',
+            'per_fecha_salida'  => 'required',
             'per_fecha_llegada' => 'required',
             'id_jefe_inmediato' => 'required',
             'per_observaciones' => ''
