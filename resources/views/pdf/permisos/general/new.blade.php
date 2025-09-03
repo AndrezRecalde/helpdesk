@@ -234,15 +234,15 @@
         <tr>
             <td>
                 <input type="text" style="height: 60px; width: 100%;">
-                <strong style="font-size: 12px">{{ $permisos->jefe_inmediato }}</strong>
+                <strong style="font-size: 11px">{{ Str::upper($permisos->jefe_inmediato) }}</strong>
             </td>
             <td>
                 <input type="text" style="height: 60px; width: 100%;">
-                <strong style="font-size: 12px">{{ $permisos->usuario_pide }}</strong>
+                <strong style="font-size: 11px">{{ Str::upper($permisos->usuario_pide) }}</strong>
             </td>
             <td>
                 <input type="text" style="height: 60px; width: 100%;">
-                <strong style="font-size: 12px">Personal TTHH</strong>
+                <strong style="font-size: 11px">PERSONAL TTHH</strong>
             </td>
             <td style="text-align: center; vertical-align: middle;">
                 <div class="barcode"
@@ -329,15 +329,15 @@
         <tr>
             <td>
                 <input type="text" style="height: 60px; width: 100%;">
-                <strong style="font-size: 12px">{{ $permisos->jefe_inmediato }}</strong>
+                <strong style="font-size: 11px">{{ Str::upper($permisos->jefe_inmediato) }}</strong>
             </td>
             <td>
                 <input type="text" style="height: 60px; width: 100%;">
-                <strong style="font-size: 12px">{{ $permisos->usuario_pide }}</strong>
+                <strong style="font-size: 11px">{{ Str::upper($permisos->usuario_pide) }}</strong>
             </td>
             <td>
                 <input type="text" style="height: 60px; width: 100%;">
-                <strong style="font-size: 12px">Personal TTHH</strong>
+                <strong style="font-size: 11px">PERSONAL TTHH</strong>
             </td>
             <td style="text-align: center; vertical-align: middle;">
                 <div class="barcode"

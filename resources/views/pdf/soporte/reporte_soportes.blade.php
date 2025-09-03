@@ -78,6 +78,21 @@
             margin-top: 1%;
             margin-bottom: 0%;
         }
+
+        .firmas {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
+            /* fuerza ancho fijo */
+        }
+
+        .firmas td {
+            width: 50%;
+            /* cada bloque ocupa la mitad */
+            text-align: center;
+            vertical-align: top;
+            padding: 5px;
+        }
     </style>
 </head>
 
@@ -97,7 +112,9 @@
     </table>
     <h4>RESUMEN DE ACTIVIDADES:</h4>
     <div style="text-align: justify;">
-        Durante el periodo comprendido entre el {{ $fecha_inicio }} al {{ $fecha_fin }}, en mi rol de funcionario del
+        Durante el periodo comprendido entre el
+        {{ \Carbon\Carbon::parse($fecha_inicio)->translatedFormat('d \\de F \\de Y') }} al
+        {{ \Carbon\Carbon::parse($fecha_fin)->translatedFormat('d \\de F \\de Y') }}, en mi rol de funcionario del
         Gobierno Autónomo Descentralizado de la Provincia de Esmeraldas, en la Gestión de Tecnologías de la Información
         y Comunicación (GTIC), yo, <strong>{{ $soportes[0]->tecnico }}</strong>, he llevado a cabo las siguientes
         actividades.
@@ -120,7 +137,7 @@
             </tr>
         @endforeach
     </table>
-    <table>
+    <table class="firmas">
         <tr>
             <td colspan="2">Generado por:</td>
             <td colspan="2">Aprobado por:</td>

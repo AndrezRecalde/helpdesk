@@ -12,7 +12,7 @@
         }
 
         body {
-            font-family: Arial, sans-serif;
+            font-family: "DejaVu Sans", Arial, sans-serif;
             background-image: url("http://prefecturadeesmeraldas.gob.ec/wp-content/uploads/2023/11/FondoArchivo7.png");
             background-repeat: no-repeat;
             background-size: cover;
@@ -35,15 +35,15 @@
         .title {
             text-align: center;
             font-weight: bold;
-            font-size: 1em;
-            margin: 20px 0;
+            font-size: 0.87em;
+            margin: 12px 0;
         }
 
         .membrete,
         .content,
         .anexos,
         .signatures {
-            margin: 20px 0;
+            margin: 10px 0;
         }
 
         table {
@@ -64,6 +64,19 @@
             border: 1px solid black;
             font-size: 13px;
             /* Borde para celdas */
+        }
+
+        .no-border,
+        .no-border th,
+        .no-border td {
+            border: none !important;
+            font-size: 14px;
+        }
+
+        p {
+            font-size: 14px;
+            line-height: 1.4;
+            margin-bottom: 10px;
         }
 
         input {
@@ -88,6 +101,21 @@
             margin-top: 80px;
             /* Centra el texto en cada firma */
         }
+
+        .firmas {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
+            /* fuerza ancho fijo */
+        }
+
+        .firmas td {
+            width: 50%;
+            /* cada bloque ocupa la mitad */
+            text-align: center;
+            vertical-align: top;
+            padding: 5px;
+        }
     </style>
 </head>
 
@@ -97,38 +125,55 @@
         @if ($actividades[0]->id_empresa === 2)
             <img class="img-fluid" alt="Logo del GAD Esmeraldas"
                 src="{{ public_path('/assets/images/LogoTransparente.png') }}" height="100" width="320">
-            <h4>GOBIERNO AUTÓNOMO DESCENTRALIZADO DE LA PROVINCIA DE ESMERALDAS</h4>
+            <h5>GOBIERNO AUTÓNOMO DESCENTRALIZADO DE LA PROVINCIA DE ESMERALDAS</h5>
         @else
             <img class="img-fluid" alt="logo" src="{{ public_path('/assets/images/logo_unamydesc.png') }}"
                 height="100" width="320">
-            <h4>UNIDAD DE ASISTENCIA MÉDICA Y DESARROLLO SOCIAL Y CULTURAL</h4>
+            <h5>UNIDAD DE ASISTENCIA MÉDICA Y DESARROLLO SOCIAL Y CULTURAL</h5>
         @endif
     </div>
 
     <div class="title">INFORME DE ACTIVIDADES LABORALES</div>
 
-    <div class="membrete">
-        <p><strong>DE:</strong> {{ $actividades[0]->usuario }}</p>
-        <p>
-            <strong>PARA:</strong>
-            @if ($actividades[0]->crgo_id !== 5)
-                {{ $actividades[0]->director }}
+    <table class="no-border">
+        <tr>
+            <td style="width: 80px;"><strong>DE:</strong></td>
+            <td>{{ $actividades[0]->usuario }}</td>
+        </tr>
+        <tr>
+            <td style="width: 80px;"><strong>PARA:</strong></td>
+            <td>{{ $actividades[0]->director }}</td>
+        </tr>
+        <tr>
+            <td style="width: 80px;"></td>
+            <td>
+                @if ($actividades[0]->crgo_id !== 5)
 
-                @if (strcasecmp($actividades[0]->cargo_director, 'PREFECTO/A') === 0)
-                    <sub><i>{{ $actividades[0]->cargo_director . ' PROVINCIAL' }}</i></sub>
-                @else
-                    <sub><i>{{ $actividades[0]->cargo_director . ' DE ' . $actividades[0]->departamento }}</i></sub>
+                    @if (strcasecmp($actividades[0]->cargo_director, 'PREFECTO/A') === 0)
+                        <sub><i>{{ $actividades[0]->cargo_director . ' PROVINCIAL' }}</i></sub>
+                    @else
+                        <sub><i>{{ $actividades[0]->cargo_director . ' DE ' . $actividades[0]->departamento }}</i></sub>
+                    @endif
                 @endif
-            @endif
-        </p>
-        <p><strong>FECHA:</strong> {{ $current_fecha }}</p>
-        <p><strong>ASUNTO:</strong> {{ $title }}</p>
-    </div>
+            </td>
+        </tr>
+
+        <tr>
+            <td style="width: 80px;"><strong>FECHA:</strong></td>
+            <td>{{ $current_fecha }}</td>
+        </tr>
+        <tr>
+            <td style="width: 80px;"><strong>ASUNTO:</strong></td>
+            <td>{{ $title }}</td>
+        </tr>
+    </table>
 
     <div class="content">
         <p style="text-align: justify;">
             Por medio de este informe, presento un resumen de las actividades realizadas durante el periodo de tiempo
-            {{ $fecha_inicio }} hasta {{ $fecha_fin }} en el área de {{ $actividades[0]->departamento }}.
+            {{ \Carbon\Carbon::parse($fecha_inicio)->translatedFormat('d \\de F \\de Y') }} hasta
+            {{ \Carbon\Carbon::parse($fecha_fin)->translatedFormat('d \\de F \\de Y') }} en el área de
+            {{ $actividades[0]->departamento }}.
             Este documento tiene como propósito brindar un registro detallado de las gestiones efectuadas, los logros
             alcanzados y las tareas que contribuyen al cumplimiento de los objetivos institucionales.
         </p>
@@ -150,40 +195,26 @@
         </table>
     </div>
 
-    {{-- <div class="anexos">
-        <h3>Anexos</h3>
-        <p>Se adjuntan evidencias fotográficas de las actividades más relevantes realizadas durante el mes:</p>
-        <ul>
-            @foreach ($actividades as $actividad)
-                @foreach ($actividad->imagenes as $imagen)
-                    <li><strong>{!! $actividad->actividad !!}</strong><br>
-                        <img src="{{ asset('storage/' . $imagen->ruta_imagen) }}"
-                             alt="Imagen de {{ $actividad->nombre }}" width="100" height="100">
-                    </li>
-                @endforeach
-            @endforeach
-        </ul>
-    </div> --}}
-
-
     <div class="content">
         <h4>CONCLUSIÓN</h4>
         <p style="text-align: justify;">
-            Durante el periodo {{ $fecha_inicio }} hasta {{ $fecha_fin }}, se llevaron a cabo las actividades
+            Durante el periodo {{ \Carbon\Carbon::parse($fecha_inicio)->translatedFormat('d \\de F \\de Y') }} hasta
+            {{ \Carbon\Carbon::parse($fecha_fin)->translatedFormat('d \\de F \\de Y') }}, se llevaron a cabo las
+            actividades
             programadas, contribuyendo significativamente al
             desarrollo de los proyectos en curso y al cumplimiento de los objetivos establecidos por el área. Las
             acciones implementadas han permitido mejorar la eficiencia y fortalecer la colaboración dentro del equipo.
         </p>
     </div>
 
-    <table>
+    <table class="firmas">
         <tr>
             <td colspan="2">Generado por:</td>
             <td colspan="2">Aprobado por:</td>
         </tr>
         <tr>
-            <td colspan="2"><input type="text" style="height: 50px;"></td>
-            <td colspan="2"><input type="text" style="height: 50px;"></td>
+            <td colspan="2"><input type="text" style="height: 50px; width: 100%;"></td>
+            <td colspan="2"><input type="text" style="height: 50px; width: 100%;"></td>
         </tr>
         <tr>
             <td colspan="2" class="header">
@@ -191,7 +222,7 @@
                 <strong>{{ $actividades[0]->cargo_usuario }}</strong>
             </td>
             <td colspan="2" class="header">
-                {{ $actividades[0]->crgo_id === 5 ? 'González Cervantes Mónica Alexandra' : $actividades[0]->director }}
+                {{ $actividades[0]->crgo_id === 5 ? 'Benítez Pozo Alba Genoveva' : $actividades[0]->director }}
                 <br>
                 <strong>{{ $actividades[0]->crgo_id === 5 ? 'DIRECTOR/A' : $actividades[0]->cargo_director }}</strong>
             </td>
