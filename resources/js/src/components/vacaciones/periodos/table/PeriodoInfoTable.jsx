@@ -16,38 +16,38 @@ export const PeriodoInfoTable = ({ data, usuario }) => {
         () => [
             {
                 header: "Anio",
-                accessorFn: (row) => row.anio,
+                accessorFn: (row) => row?.anio || "NO CONTIENE INFORMACION",
                 size: 80,
             },
             {
                 header: "Dias Totales",
-                accessorFn: (row) => row.dias_total,
+                accessorFn: (row) => row?.dias_total || "NO CONTIENE INFORMACION",
                 size: 80,
             },
             {
                 header: "Dias Tomados",
-                accessorFn: (row) => row.dias_tomados,
+                accessorFn: (row) => row?.dias_tomados || "NO CONTIENE INFORMACION",
                 size: 80,
             },
             {
                 header: "Dias Disponibles",
-                accessorFn: (row) => row.dias_disponibles,
+                accessorFn: (row) => row?.dias_disponibles || "NO CONTIENE INFORMACION",
                 size: 80,
             },
             {
                 header: "Total Permisos (Dias)",
-                accessorFn: (row) => row.dias_equivalentes_permiso,
+                accessorFn: (row) => row?.dias_equivalentes_permiso || "NO CONTIENE INFORMACION",
                 size: 80,
             },
             {
                 header: "Disponibilidad Vacaciones",
-                accessorFn: (row) => row.disponibilidad_vacaciones.toFixed(2), //row.dias_disponibles - row.dias_equivalentes_permiso,
+                accessorFn: (row) => row?.disponibilidad_vacaciones.toFixed(2) || "NO CONTIENE INFORMACION", //row.dias_disponibles - row.dias_equivalentes_permiso,
                 size: 80,
                 id: "disponibilidad_vacaciones",
             },
             {
                 header: "Observación",
-                accessorFn: (row) => row.observacion || "Sin observación", //row.dias_disponibles - row.dias_equivalentes_permiso,
+                accessorFn: (row) => row?.observacion || "SIN OBSERVACIÓN", //row.dias_disponibles - row.dias_equivalentes_permiso,
                 size: 80,
             },
         ],
