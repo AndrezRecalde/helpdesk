@@ -51,12 +51,12 @@ class InvEquipoController extends Controller
 
         // Mapear los nombres de campo con sus relaciones
         $mapaCampos = [
-            'direccion'     => 'inve.direccion_id',
-            'usuario'       => 'inve.user_id',
+            'direccion'     => 'd.nmbre_dprtmnto',
+            'usuario'       => 'us.nmbre_usrio',
             'codigo'        => ['inve.codigo_nuevo', 'inve.codigo_antiguo'], // Buscar en ambos códigos
-            'categoria'     => 'inve.categoria_id',
+            'categoria'     => 'invc.nombre_categoria',
             'numero_serie'  => 'inve.numero_serie',
-            'estado'        => 'inve.estado_id',
+            'estado'        => 'inves.nombre_estado',
         ];
 
         if (!array_key_exists($campo, $mapaCampos)) {

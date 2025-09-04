@@ -85,28 +85,28 @@ export const FilterFormEquipos = () => {
             case "direccion":
                 data =
                     direcciones?.map((d) => ({
-                        value: d.cdgo_dprtmnto.toString(),
+                        value: d.nmbre_dprtmnto,
                         label: d.nmbre_dprtmnto,
                     })) || [];
                 break;
             case "usuario":
                 data =
                     users?.map((u) => ({
-                        value: u.cdgo_usrio.toString(),
+                        value: u.nmbre_usrio,
                         label: u.nmbre_usrio,
                     })) || [];
                 break;
             case "categoria":
                 data =
                     categorias?.map((c) => ({
-                        value: c.id.toString(),
+                        value: c.nombre_categoria,
                         label: c.nombre_categoria,
                     })) || [];
                 break;
             case "estado":
                 data =
                     invEstados?.map((e) => ({
-                        value: e.id.toString(),
+                        value: e.nombre_estado,
                         label: e.nombre_estado,
                     })) || [];
                 break;
@@ -125,8 +125,11 @@ export const FilterFormEquipos = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         //console.log(form.getTransformedValues());
-        startLoadInvEquipos(form.getTransformedValues());
-        setStorageFields(form.getTransformedValues())
+        const values = { ...form.getTransformedValues() };
+        console.log(values);
+        startLoadInvEquipos(values);
+        setStorageFields(values);
+        //form.reset();
     };
 
     return (
@@ -145,8 +148,9 @@ export const FilterFormEquipos = () => {
             >
                 <SimpleGrid cols={{ base: 1, sm: 1, md: 2, lg: 2 }} mt={10}>
                     <Select
+                        key={campo}
                         searchable
-                        clearable
+                        //clearable
                         label="Seleccione el filtro"
                         placeholder="Elige el campo a buscar"
                         {...form.getInputProps("campo")}
@@ -163,6 +167,7 @@ export const FilterFormEquipos = () => {
                     />
                     {campo === "codigo" || campo === "numero_serie" ? (
                         <TextInput
+                            key={`text-${campo}`}
                             label="Búsqueda"
                             placeholder="Ingrese búsqueda..."
                             icon={<IconSearch size={16} />}
@@ -174,6 +179,7 @@ export const FilterFormEquipos = () => {
                         />
                     ) : (
                         <Select
+                            key={`select-${campo}`}
                             searchable
                             clearable
                             label={`Seleccione ${campo}`}

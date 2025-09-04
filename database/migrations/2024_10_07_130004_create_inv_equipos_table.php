@@ -32,6 +32,9 @@ return new class extends Migration
             $table->unsignedBigInteger('marca_id');
             $table->integer('user_id')->nullable(); //Se agrega usuario custodio
             $table->integer('direccion_id')->nullable(); //Se agrega usuario custodio
+            $table->boolean('antivirus')->default(false);
+            $table->boolean('office')->default(false);
+            $table->boolean('mantenimiento')->default(false);
             $table->timestamps();
 
 
