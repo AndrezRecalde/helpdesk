@@ -2,6 +2,7 @@ import { Badge, Card, Group, Table } from "@mantine/core";
 import { TextSection } from "../../elements/titles/TextSection";
 import { useRutaStore } from "../../../hooks";
 import dayjs from "dayjs";
+import classes from "../../../assets/styles/modules/stats/IngresoTable.module.css"
 
 export const FichaIngresoCard = () => {
     const { ingreso } = useRutaStore();
@@ -16,17 +17,17 @@ export const FichaIngresoCard = () => {
                 </Group>
             </Card.Section>
             <Card.Section withBorder inheritPadding py="xs">
-                <Table variant="vertical" layout="fixed" withTableBorder>
+                <Table variant="vertical" layout="fixed" withTableBorder className={classes.responsiveTable}>
                     <Table.Tbody>
                         <Table.Tr>
                             <Table.Th w={160}>No. TRAMITE: </Table.Th>
                             <Table.Td>{ingreso.cnsctvo_rta}</Table.Td>
                             <Table.Th w={160}>ESTADO: </Table.Th>
-                            <Table.Td>
+                            <Table.Td bg={ingreso.color}>
                                 <Badge
                                     size="md"
                                     radius="sm"
-                                    variant="dot"
+                                    variant="filled"
                                     color={ingreso.color}
                                 >
                                     {ingreso.detalle_largo}

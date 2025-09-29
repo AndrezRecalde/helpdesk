@@ -1,0 +1,37 @@
+.responsiveTable {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+@media (max-width: 768px) {
+    .responsiveTable tr {
+        display: block;
+        margin-bottom: 1rem;
+        border: 1px solid #e0e0e0;
+        border-radius: 3px;
+        padding: 0.5rem;
+    }
+
+    .responsiveTable th,
+    .responsiveTable td {
+        display: block;
+        width: 100% !important;
+        text-align: left;
+        padding: 0.25rem 0.5rem;
+    }
+
+    .responsiveTable th {
+        font-weight: 600;
+        color: #333;
+        background: transparent !important;
+    }
+
+    .responsiveTable td {
+        border-bottom: none;
+    }
+
+    .responsive-table th::after {
+        content: ":";
+        margin-left: 4px;
+    }
+}

@@ -2,13 +2,15 @@ import { Badge, Box, Card, Group, SimpleGrid, Skeleton } from "@mantine/core";
 import {
     AlertSection,
     BtnSubmit,
-    MenuSeleccion,
     ProfileForm,
+    ServiceSection,
     TextSection,
 } from "../../../components";
 import { IconDeviceImacUp, IconInfoCircle } from "@tabler/icons-react";
 import { useAuthStore, useTecnicoStore } from "../../../hooks";
 import { Roles } from "../../../helpers/dictionary";
+import { menuHome } from "../../../layouts/appshell/menu/data/menuRoutes";
+import classes from "../../../assets/styles/modules/menu/MenuGrid.module.css";
 
 export const CardProfile = ({ usuario, handleAction }) => {
     const year = new Date();
@@ -101,7 +103,11 @@ export const CardProfile = ({ usuario, handleAction }) => {
                         </BtnSubmit>
                     </Box>
                 ) : (
-                    <MenuSeleccion />
+                    <ServiceSection
+                        title="Servicios Rápidos"
+                        menu={menuHome}
+                        classes={classes}
+                    />
                 )}
             </Card.Section>
         </Card>

@@ -110,9 +110,9 @@ class RutaController extends Controller
                     'acc.nmbre_accion as accion',
                     'd.dscrpcion_accion as descripcion_accion',
                     'd.fcha_rspsta',
-                    'd.ofcio_rspsta',
+                    'd.ofcio_rspsta as oficio_respuesta',
                     'd.dscrpcion_rspsta as descripcion_respuesta',
-                    'd.nmro_ofcio as oficio_respuesta'
+                    'd.nmro_ofcio as numero_oficio'
                 )
                 ->join('acciones as acc', 'acc.cdgo_accion', 'd.cdgo_accion')
                 ->join('clntes as cl', 'cl.cdgo_clnte', 'd.envdo_a')

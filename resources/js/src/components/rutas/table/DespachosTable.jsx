@@ -10,21 +10,20 @@ export const DespachosTable = () => {
     const columns = useMemo(
         () => [
             {
-                accessorKey: "nmro_item", //access nested data with dot notation
+                accessorKey: "nmro_item",
                 header: "Item",
-                size: 80,
+                size: 60, // lo más pequeño, solo números
             },
             {
-                accessorKey: "remitente", //access nested data with dot notation
+                accessorKey: "remitente",
                 header: "Remitente",
-                size: 120,
+                size: 150, // nombre corto, un poco más de espacio
                 filterVariant: "autocomplete",
             },
             {
-                accessorKey: "descripcion_accion", //access nested data with dot notation
+                accessorKey: "descripcion_accion",
                 header: "Acción",
-                size: 200,
-                //filterVariant: "autocomplete",
+                size: 220, // acción puede ser descriptiva
             },
             {
                 accessorFn: (row) =>
@@ -32,7 +31,8 @@ export const DespachosTable = () => {
                         ? dayjs(row.fcha_dspcho).format("YYYY-MM-DD HH:mm")
                         : null,
                 header: "Fecha despacho",
-                size: 80,
+                size: 80, // fecha con hora necesita más que 80
+                wrap: false
             },
             {
                 accessorFn: (row) =>
@@ -40,17 +40,18 @@ export const DespachosTable = () => {
                         ? dayjs(row.fcha_rspsta).format("YYYY-MM-DD HH:mm")
                         : null,
                 header: "Fecha respuesta",
-                size: 80,
+                size: 80, // igual a la anterior para simetría
+                wrap: false
             },
             {
-                accessorKey: "descripcion_respuesta", //access nested data with dot notation
+                accessorKey: "descripcion_respuesta",
                 header: "Respuesta",
-                size: 200,
-                //filterVariant: "autocomplete",
+                size: 220, // texto explicativo
             },
             {
-                accessorKey: "oficio_respuesta", //access nested data with dot notation
+                accessorKey: "oficio_respuesta",
                 header: "Doc. respuesta",
+                size: 160, // docs suelen ser cortos, pero darle aire
             },
         ],
         [despachos]
@@ -63,6 +64,7 @@ export const DespachosTable = () => {
         enableColumnDragging: false,
         enableDensityToggle: false,
         enableFullScreenToggle: false,
+        enableSorting: false,
         data: despachos, //must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
         //state: { showProgressBars: isLoading },
         localization: MRT_Localization_ES,
