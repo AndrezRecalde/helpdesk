@@ -12,8 +12,8 @@ export const actividadSlice = createSlice({
         errores: undefined,
     },
     reducers: {
-        onLoading: (state) => {
-            state.isLoading = true;
+        onLoading: (state, { payload }) => {
+            state.isLoading = payload;
         },
         onLoadPDF: (state, { payload }) => {
             state.loadPDF = payload;

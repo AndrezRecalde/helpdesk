@@ -5,6 +5,7 @@ import {
     onLoadErrores,
     onLoadFichaIngreso,
     onLoadingDespachos,
+    onLoadingFichaIngreso,
     onLoadNumeroRuta,
 } from "../../store/ruta/rutaSlice";
 import helpdeskApi from "../../api/helpdeskApi";
@@ -43,6 +44,15 @@ export const useRutaStore = () => {
             ExceptionMessageError(error);
         }
     };
+
+    const startBuscarFichasIngresos = async () => {
+        try {
+            dispatch(onLoadingFichaIngreso(true));
+            const { data } = await helpdeskApi.post("/");
+        } catch (error) {
+            ExceptionMessageError(error);
+        }
+    }
 
     return {
         isLoadingIngreso,

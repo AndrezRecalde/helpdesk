@@ -10,7 +10,7 @@ import {
 import { IconAlertCircle } from "@tabler/icons-react";
 
 export const PeriodoForm = ({ form }) => {
-    const { is_multiple_anio, anios } = form.getValues();
+    const { anios } = form.getValues();
     const { users } = useUsersStore();
     const {
         startAddPeriodo,
@@ -21,7 +21,7 @@ export const PeriodoForm = ({ form }) => {
     const { modalActionAddPeriodo } = useUiPeriodo();
     const [nombreRegimen, setNombreRegimen] = useState("");
 
-    const handleChange = (value) => {
+    /* const handleChange = (value) => {
         // Si está permitido múltiple, aceptar todos
         if (is_multiple_anio) {
             form.setFieldValue("anios", value);
@@ -30,13 +30,13 @@ export const PeriodoForm = ({ form }) => {
             const ultimo = Array.isArray(value) ? value.slice(-1) : [value];
             form.setFieldValue("anios", ultimo);
         }
-    };
+    }; */
 
-    useEffect(() => {
+    /* useEffect(() => {
         if (!is_multiple_anio) {
             form.setFieldValue("anios", []);
         }
-    }, [is_multiple_anio]);
+    }, [is_multiple_anio]); */
 
     useEffect(() => {
         if (anios && anios.length > 0) {
@@ -71,12 +71,12 @@ export const PeriodoForm = ({ form }) => {
                 justify="center"
                 gap="lg"
             >
-                <Switch
+                {/* <Switch
                     size="md"
                     mb="md"
                     label="¿Agregar más de un período?"
                     {...form.getInputProps("is_multiple_anio")}
-                />
+                /> */}
                 <Select
                     searchable
                     clearable
@@ -118,7 +118,7 @@ export const PeriodoForm = ({ form }) => {
                     placeholder="Seleccione el año"
                     type="multiple"
                     {...form.getInputProps("anios")}
-                    onChange={handleChange}
+                    //onChange={handleChange}
                 />
                 {nombreRegimen && (
                     <AlertSection

@@ -2,14 +2,12 @@ import { Box, Fieldset, Group, Stack, Switch } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { YearPickerInput } from "@mantine/dates";
 import { BtnSubmit, TextSection } from "../../../../components";
-import { useDescuentoStore } from "../../../../hooks";
 import { IconSearch } from "@tabler/icons-react";
 import { Roles } from "../../../../helpers/dictionary";
 import classes from "../../../../assets/styles/modules/layout/input/LabelsInputs.module.css";
 
-export const FilterDescuentoVacacionesForm = () => {
+export const FilterDescuentoVacacionesForm = ({ startLoadDescuentos }) => {
     const usuario = JSON.parse(localStorage.getItem("service_user"));
-    const { startLoadDescuentos } = useDescuentoStore();
     const form = useForm({
         initialValues: {
             switch_role: false,

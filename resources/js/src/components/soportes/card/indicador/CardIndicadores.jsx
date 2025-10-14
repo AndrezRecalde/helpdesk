@@ -1,10 +1,6 @@
+import { ActionIcon, Card, Group, LoadingOverlay } from "@mantine/core";
 import {
-    ActionIcon,
-    Card,
-    Group,
-    LoadingOverlay,
-} from "@mantine/core";
-import {
+    ActionReportPDF,
     ChartDesempTecnicos,
     ResumenDesempenoArea,
     ResumenDesempenoEstados,
@@ -33,20 +29,9 @@ export const CardIndicadores = ({ handleExportPDF }) => {
                         <TextSection fw={700} tt="" fz={20}>
                             Reporte de indicadores
                         </TextSection>
-                        <ActionIcon
-                            variant="default"
-                            aria-label="Exportar PDF"
-                            size="lg"
-                            onClick={(e) => handleExportPDF(e)}
-                        >
-                            <IconFileTypePdf
-                                style={{
-                                    width: "80%",
-                                    height: "80%",
-                                }}
-                                stroke={1.5}
-                            />
-                        </ActionIcon>
+                        <ActionReportPDF
+                            handleExportDataPDF={handleExportPDF}
+                        />
                     </Group>
                 </Card.Section>
                 <Card.Section inheritPadding py="xs">

@@ -92,7 +92,7 @@ export const usePeriodoStore = () => {
 
     const calcularDias = async ({ cdgo_usrio, regimen_laboral_id, anios }) => {
         try {
-            dispatch(onLoading(true));
+            //dispatch(onLoading(true));
             const { data } = await helpdeskApi.post("/tthh/asistencia/calcular-dias", {
                 cdgo_usrio,
                 regimen_laboral_id,
@@ -104,7 +104,7 @@ export const usePeriodoStore = () => {
             dispatch(onLoading(false));
         } catch (error) {
             //console.log(error);
-            dispatch(onLoading(false));
+            //dispatch(onLoading(false));
             ExceptionMessageError(error);
         }
     };

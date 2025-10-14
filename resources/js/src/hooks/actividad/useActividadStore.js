@@ -28,7 +28,7 @@ export const useActividadStore = () => {
 
     const startLoadActividades = async (user_id, fecha_inicio, fecha_fin) => {
         try {
-            dispatch(onLoading());
+            dispatch(onLoading(true));
             const { data } = await helpdeskApi.post(
                 "/usuario/listar-actividades",
                 {
@@ -42,6 +42,8 @@ export const useActividadStore = () => {
         } catch (error) {
             //console.log(error);
             ExceptionMessageError(error);
+        } finally {
+            dispatch(onLoading(false));
         }
     };
 
@@ -50,7 +52,7 @@ export const useActividadStore = () => {
             if (actividad.id) {
                 const { data } = await helpdeskApi.put(
                     `/usuario/update/actividad/${actividad.id}`,
-                    actividad,
+                    actividad
                 );
                 dispatch(onLoadMessage(data));
                 setTimeout(() => {
@@ -66,7 +68,7 @@ export const useActividadStore = () => {
             }
             const { data } = await helpdeskApi.post(
                 "/usuario/create/actividad",
-                actividad,
+                actividad
             );
             dispatch(onLoadMessage(data));
             setTimeout(() => {
@@ -85,32 +87,37 @@ export const useActividadStore = () => {
     ) => {
         try {
             dispatch(onLoadPDF(true));
-            const response = await helpdeskApi.post(
+
+            const { data } = await helpdeskApi.post(
                 "/usuario/export/pdf/actividades",
-                {
-                    user_id,
-                    fecha_inicio,
-                    fecha_fin,
-                },
+                { user_id, fecha_inicio, fecha_fin },
                 { responseType: "blob" }
             );
-            const pdfBlob = new Blob([response.data], {
-                type: "application/pdf",
-            });
-            const url = window.open(URL.createObjectURL(pdfBlob));
-            //console.log(url);
-            /*  const tempLink = document.createElement("a");
-            tempLink.href = url;
-            tempLink.setAttribute("download", "actividades.pdf");
-            document.body.appendChild(tempLink);
-            tempLink.click();
 
-            document.body.removeChild(tempLink); */
-            window.URL.revokeObjectURL(url);
-            dispatch(onLoadPDF(false));
+            const blob = new Blob([data], { type: "application/pdf" });
+            const url = URL.createObjectURL(blob);
+
+            // Fecha y hora del sistema en formato YYYY-MM-DD_HH-mm
+            const now = new Date();
+            const date = now.toISOString().split("T")[0]; // YYYY-MM-DD
+            const time = now.toTimeString().split(" ")[0].replace(/:/g, "-"); // HH-mm-ss
+            const timestamp = `${date}_${time}`;
+
+            // Nombre del archivo con usuario + timestamp
+            const fileName = `actividades_${timestamp}.pdf`;
+
+            const link = document.createElement("a");
+            link.href = url;
+            link.download = fileName;
+            document.body.appendChild(link);
+            link.click();
+
+            link.remove();
+            URL.revokeObjectURL(url);
         } catch (error) {
-            //console.log(error);
             ExceptionMessageError(error);
+        } finally {
+            dispatch(onLoadPDF(false));
         }
     };
 

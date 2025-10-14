@@ -82,6 +82,21 @@
             width: 170px;
             height: auto;
         }
+
+        .firmas {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
+            /* fuerza ancho fijo */
+        }
+
+        .firmas td {
+            width: 50%;
+            /* cada bloque ocupa la mitad */
+            text-align: center;
+            vertical-align: top;
+            padding: 5px;
+        }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 
@@ -295,14 +310,14 @@
             </table>
         </div>
         <!-- C. FIN EFICACIA -->
-        <table>
+        <table class="firmas">
             <tr>
                 <td colspan="2">Generado por:</td>
                 <td colspan="2">Aprobado por:</td>
             </tr>
             <tr>
-                <td colspan="2"><input type="text" style="height: 30px;"></td>
-                <td colspan="2"><input type="text" style="height: 30px;"></td>
+                <td colspan="2"><input type="text" style="height: 50px; width: 100%;"></td>
+                <td colspan="2"><input type="text" style="hheight: 50px; width: 100%;"></td>
             </tr>
             <tr>
                 <td colspan="2" class="header">

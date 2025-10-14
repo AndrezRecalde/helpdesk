@@ -16,6 +16,7 @@ import { IconChevronsRight } from "@tabler/icons-react";
 import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
 import Swal from "sweetalert2";
+import { MRT_Localization_ES } from "mantine-react-table/locales/es/index.cjs";
 
 const ListActividadesPage = () => {
     useTitlePage("Helpdesk | Mis Actividades");
@@ -61,7 +62,7 @@ const ListActividadesPage = () => {
                     <div dangerouslySetInnerHTML={{ __html: row.actividad }} />
                 ),
                 header: "Actividad",
-                size: 200,
+                size: 250,
             },
             {
                 accessorKey: "usuario", //normal accessorKey
@@ -110,6 +111,7 @@ const ListActividadesPage = () => {
                 icon: message.status,
                 text: message.msg,
                 showConfirmButton: true,
+                confirmButtonColor: "#094293",
             });
             return;
         }
@@ -118,9 +120,10 @@ const ListActividadesPage = () => {
     useEffect(() => {
         if (errores !== undefined) {
             Swal.fire({
-                icon: "error",
+                icon: "info",
                 text: errores,
                 showConfirmButton: true,
+                confirmButtonColor: "#094293",
             });
             return;
         }
@@ -157,6 +160,13 @@ const ListActividadesPage = () => {
         columns,
         data: actividades,
         enableRowActions: true,
+        displayColumnDefOptions: {
+            "mrt-row-actions": {
+                header: "Acciones", //change header text
+                size: 80, //make actions column wider
+            },
+        },
+        localization: MRT_Localization_ES,
         renderTopToolbarCustomActions: ({ table }) => (
             <ActionReportPDF handleExportDataPDF={handleExportDataPDF} />
         ),

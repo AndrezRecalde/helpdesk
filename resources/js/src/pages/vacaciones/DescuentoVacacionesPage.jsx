@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Container, Divider, Group } from "@mantine/core";
 import {
     BtnAddActions,
@@ -12,13 +13,14 @@ import {
     IconList,
 } from "@tabler/icons-react";
 import { Roles } from "../../helpers/dictionary";
-import { useTitlePage } from "../../hooks";
+import { useDescuentoStore, useTitlePage } from "../../hooks";
 import { useNavigate } from "react-router-dom";
 
 const DescuentoVacacionesPage = () => {
     useTitlePage("Helpdesk | Descuentos Vacaciones");
     const usuario = JSON.parse(localStorage.getItem("service_user"));
     const navigate = useNavigate();
+    const { startLoadDescuentos, startClearDescuentos } = useDescuentoStore();
     //const { modalActionDescuento } = useUiDescuento();
 
     /* const handleOpenModalDescuento = () => {
@@ -54,6 +56,12 @@ const DescuentoVacacionesPage = () => {
         },
     ];
 
+    useEffect(() => {
+        return () => {
+            startClearDescuentos();
+        };
+    }, []);
+
     return (
         <Container size="xl">
             <Group justify="space-between">
@@ -74,7 +82,9 @@ const DescuentoVacacionesPage = () => {
                 )}
             </Group>
             <Divider my="md" />
-            <FilterDescuentoVacacionesForm />
+            <FilterDescuentoVacacionesForm
+                startLoadDescuentos={startLoadDescuentos}
+            />
             <Divider my="md" />
 
             <DescuentoVacacionesTable />

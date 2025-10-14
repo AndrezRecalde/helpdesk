@@ -24,7 +24,7 @@
 
         .header h4,
         .header h5 {
-            margin: 15px 0;
+            margin: 12px 0;
             /* Reduce márgenes */
         }
 
@@ -64,6 +64,10 @@
             border: 1px solid black;
             font-size: 13px;
             /* Borde para celdas */
+        }
+
+        th {
+            background-color: #ddd;
         }
 
         .no-border,
@@ -131,40 +135,37 @@
                 height="100" width="320">
             <h5>UNIDAD DE ASISTENCIA MÉDICA Y DESARROLLO SOCIAL Y CULTURAL</h5>
         @endif
+        <h5>INFORME DE ACTIVIDADES LABORALES</h5>
     </div>
-
-    <div class="title">INFORME DE ACTIVIDADES LABORALES</div>
 
     <table class="no-border">
         <tr>
-            <td style="width: 80px;"><strong>DE:</strong></td>
-            <td>{{ $actividades[0]->usuario }}</td>
+            <td style="width: 100px;"><strong>DE:</strong></td>
+            <td>{{ Str::upper($actividades[0]->usuario) }}</td>
         </tr>
         <tr>
-            <td style="width: 80px;"><strong>PARA:</strong></td>
-            <td>{{ $actividades[0]->director }}</td>
-        </tr>
-        <tr>
-            <td style="width: 80px;"></td>
+            <td style="width: 100px;"><strong>PARA:</strong></td>
             <td>
+                {{ Str::upper($actividades[0]->director) }} <br>
                 @if ($actividades[0]->crgo_id !== 5)
-
                     @if (strcasecmp($actividades[0]->cargo_director, 'PREFECTO/A') === 0)
-                        <sub><i>{{ $actividades[0]->cargo_director . ' PROVINCIAL' }}</i></sub>
+                        <sub><i>— {{ $actividades[0]->cargo_director . ' PROVINCIAL' }}</i></sub>
                     @else
-                        <sub><i>{{ $actividades[0]->cargo_director . ' DE ' . $actividades[0]->departamento }}</i></sub>
+                        <sub><i>—
+                                {{ $actividades[0]->cargo_director . ' DE ' . $actividades[0]->departamento }}</i></sub>
                     @endif
                 @endif
             </td>
         </tr>
-
         <tr>
-            <td style="width: 80px;"><strong>FECHA:</strong></td>
-            <td>{{ $current_fecha }}</td>
+            <td style="width: 100px;"><strong>FECHA:</strong></td>
+            <td>
+                {{ Str::upper('ESMERALDAS, ' . \Carbon\Carbon::parse($current_fecha)->translatedFormat('d \d\e F \d\e Y')) }}
+            </td>
         </tr>
         <tr>
-            <td style="width: 80px;"><strong>ASUNTO:</strong></td>
-            <td>{{ $title }}</td>
+            <td style="width: 100px;"><strong>ASUNTO:</strong></td>
+            <td>{{ Str::upper($title) }}</td>
         </tr>
     </table>
 
@@ -222,7 +223,7 @@
                 <strong>{{ $actividades[0]->cargo_usuario }}</strong>
             </td>
             <td colspan="2" class="header">
-                {{ $actividades[0]->crgo_id === 5 ? 'Benítez Pozo Alba Genoveva' : $actividades[0]->director }}
+                {{ $actividades[0]->crgo_id === 5 ? 'Sampietro Fernandez Gigliola Antonella' : $actividades[0]->director }}
                 <br>
                 <strong>{{ $actividades[0]->crgo_id === 5 ? 'DIRECTOR/A' : $actividades[0]->cargo_director }}</strong>
             </td>

@@ -181,6 +181,12 @@ const DescuentoVacacionesPage = lazy(() =>
     )
 );
 
+const BusquedaTramiteRutaPage = lazy(() =>
+    import(
+        /* webpackChunkName: "BusquedaTramiteRutaPage" */ "../../pages/ruta/admin/BusquedaTramiteRutaPage"
+    )
+);
+
 const ErrorNotFound = lazy(() =>
     import(
         /* webpackChunkName: "ErrorNotFound" */ "../../pages/error/ErrorNotFound"
@@ -276,6 +282,8 @@ const peerRoutes = generateRoutes(
 
         { path: "solicitud-soporte", Component: SolicitudPage },
         { path: "soportes", Component: UserSoportesPage },
+
+        { path: "busqueda-tramite", Component: BusquedaTramiteRutaPage }
     ],
     [""]
 );

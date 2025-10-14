@@ -97,6 +97,9 @@ export const PeriodoInfoTable = ({ data = {}, usuario }) => {
         enableHiding: false,
         enableStickyHeader: false,
         enableColumnActions: false,
+        enablePagination: false,
+        enableSorting: false,
+        enableBottomToolbar: false,
         enableRowActions: usuario.role === Roles.NOM_VACACIONES ? true : false,
         renderRowActionMenuItems: ({ row }) => (
             <MenuTable_PV

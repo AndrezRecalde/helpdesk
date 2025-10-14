@@ -1,4 +1,4 @@
-import { Divider, Modal } from "@mantine/core";
+import { Modal } from "@mantine/core";
 import { PeriodoForm, TextSection } from "../../..";
 import { usePeriodoStore, useUiPeriodo } from "../../../../hooks";
 import { isNotEmpty, useForm } from "@mantine/form";
@@ -18,7 +18,9 @@ export const PeriodoCreateModal = () => {
 
         validate: {
             cdgo_usrio: isNotEmpty("Seleccione un usuario"),
-            regimen_laboral_id: isNotEmpty("El usuario no tiene un tipo de contrato"),
+            regimen_laboral_id: isNotEmpty(
+                "El usuario no tiene un tipo de contrato"
+            ),
             anios: isNotEmpty("Elija al menos un periodo"),
         },
 
@@ -31,7 +33,6 @@ export const PeriodoCreateModal = () => {
                     return isNaN(year) ? null : year;
                 })
                 .filter(Boolean), // Elimina posibles nulls
-
         }),
     });
 
@@ -56,7 +57,6 @@ export const PeriodoCreateModal = () => {
                 blur: 3,
             }}
         >
-            <Divider my="xs" />
             <PeriodoForm form={form} />
         </Modal>
     );

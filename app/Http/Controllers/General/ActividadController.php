@@ -39,7 +39,7 @@ class ActividadController extends Controller
         if (sizeof($actividades) >= 1) {
             return response()->json(['status' => MsgStatus::Success, 'actividades' => $actividades], 200);
         } else {
-            return response()->json(['status' => MsgStatus::Error, 'msg' => MsgStatus::ActivitiesNotFound], 500);
+            return response()->json(['status' => MsgStatus::Error, 'msg' => MsgStatus::ActivitiesNotFound], 404);
         }
     }
 

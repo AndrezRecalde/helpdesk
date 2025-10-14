@@ -41,7 +41,7 @@ const AppLogosPage = () => {
                 icon: "error",
                 title: "Opps...",
                 text: errores,
-                confirmButtonColor: "#38d17b",
+                confirmButtonColor: "#094293",
             });
             return;
         }

@@ -2,14 +2,11 @@ import cx from "clsx";
 import {
     ActionIcon,
     rem,
+    Tooltip,
     useComputedColorScheme,
     useMantineColorScheme,
 } from "@mantine/core";
-import {
-    IconFileTypePdf,
-    IconMoon,
-    IconSunHigh,
-} from "@tabler/icons-react";
+import { IconFileTypePdf, IconMoon, IconSunHigh } from "@tabler/icons-react";
 
 export const BtnDarkMode = ({ classes }) => {
     const { setColorScheme } = useMantineColorScheme();
@@ -44,18 +41,15 @@ export const BtnDarkMode = ({ classes }) => {
 };
 
 export const ActionReportPDF = ({ handleExportDataPDF }) => (
-    <ActionIcon
-        size={40}
-        variant="default"
-        color="red.7"
-        aria-label="Exportacion pdf"
-        onClick={handleExportDataPDF}
-    >
-        <IconFileTypePdf
-            stroke={1.5}
-            style={{ width: rem(25), height: rem(25) }}
-        />
-    </ActionIcon>
+    <Tooltip label="Exportar PDF" withArrow position="left">
+        <ActionIcon
+            size={42}
+            variant="default"
+            color="red.7"
+            aria-label="Exportacion pdf"
+            onClick={handleExportDataPDF}
+        >
+            <IconFileTypePdf size={24} />
+        </ActionIcon>
+    </Tooltip>
 );
-
-

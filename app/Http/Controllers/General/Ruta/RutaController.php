@@ -8,6 +8,7 @@ use App\Models\Despacho;
 use App\Models\Ingreso;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 
 
@@ -137,6 +138,84 @@ class RutaController extends Controller
             return response()->json([
                 'status' => MsgStatus::Error,
                 'message' => $e->getMessage(),
+            ], 500);
+        }
+    }
+
+    function buscarFichasIngresos(Request $request): JsonResponse
+    {
+        try {
+
+            $numero_ruta = (int) $request->numero_ruta;
+            $numero_cifras = strlen((string) $numero_ruta);
+
+            $anio_ingresado = (int) $request->anio;
+            $anio_actual = now()->year;
+
+            $anio_ruta = $anio_ingresado !== $anio_actual ? $anio_ingresado : null;
+
+            // Determinar ceros a la izquierda
+            if ($numero_cifras == 4) {
+                $index = '00';
+            } else if ($numero_cifras == 3) {
+                $index = '000';
+            } elseif ($numero_cifras == 2) {
+                $index = '0000';
+            } elseif ($numero_cifras == 1) {
+                $index = '00000';
+            } else {
+                $index = ''; // o algún valor por defecto si es necesario
+            }
+
+            // Construir número completo
+            $numero_ruta_completo = ($anio_ruta ? $anio_ruta : '') . $index . $numero_ruta;
+
+            $ficha_ingreso = Ingreso::from('ingreso as ing')
+                ->select(
+                    'ing.cnsctvo_rta',
+                    'ing.nmro_ofcio as numero_oficio',
+                    'ing.fcha_rcpcion as fecha_recepcion',
+                    'ing.rmtnte as remitente',
+                    'ing.asnto',
+                    'ie.detalle_largo',
+                    DB::raw('COUNT(dsp.cnsctvo_dspcho) as total_despachos')
+                )
+                ->join('clntes as clr', 'clr.cdgo_clnte', 'ing.rmtnte')
+                ->join('clntes as cld', 'cld.cdgo_clnte', 'ing.dstntrio')
+                ->join('ingreso_estado as ie', 'ie.indicativo', 'ing.indctvo_estdo')
+                ->join('ruta_tipo_documento as rtd', 'rtd.idruta_tipo_documento', 'ing.tipo_doc_id')
+                ->leftJoin('despacho as dsp', 'dsp.cnsctvo_rta', '=', 'ing.cnsctvo_rta')
+                ->byNumeroRuta($numero_ruta_completo)
+                ->byNumeroOficio($request->numero_oficio)
+                ->byFechaElaboracion($request->fechaElabInicio, $request->fechaElabFin)
+                ->byFechaRecepcion($request->fechaRecInicio, $request->fechaRecFin)
+                ->byClientes($request->remitente)
+                ->byAsunto($request->asunto)
+                ->groupBy(
+                    'ing.cnsctvo_rta',
+                    'ing.nmro_ofcio',
+                    'ing.fcha_rcpcion',
+                    'ing.rmtnte',
+                    'ing.asnto',
+                    'ie.detalle_largo'
+                )
+                ->get();
+
+            if ($ficha_ingreso) {
+                return response()->json([
+                    'status' => MsgStatus::Success,
+                    'ficha_ingreso' => $ficha_ingreso,
+                ], 200);
+            } else {
+                return response()->json([
+                    'status' => MsgStatus::Error,
+                    'msg'    => 'No se encontró ningún trámite.',
+                ], 404);
+            }
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => MsgStatus::Error,
+                'message' => $th->getMessage(),
             ], 500);
         }
     }
