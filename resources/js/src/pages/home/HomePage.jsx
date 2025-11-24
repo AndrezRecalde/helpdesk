@@ -1,12 +1,7 @@
-import { useMemo } from "react";
-import {
-    Badge,
-    Container,
-    Divider,
-    Group,
-} from "@mantine/core";
-import { useTitlePage } from "../../hooks";
-import { ServiceSection, TitlePage } from "../../components";
+import { useEffect } from "react";
+import { Badge, Container, Divider, Group } from "@mantine/core";
+import { ServiceSection, TitlePage, BirthdaySection } from "../../components";
+import { useTitlePage, useUsersStore } from "../../hooks";
 import {
     menuHome,
     menuHomeContratados,
@@ -16,12 +11,11 @@ import classes from "../../assets/styles/modules/menu/MenuGrid.module.css";
 
 function HomePage() {
     useTitlePage("Helpdesk | Inicio");
-    const usuario = useMemo(() => {
-        try {
-            return JSON.parse(localStorage.getItem("service_user")) || {};
-        } catch {
-            return {};
-        }
+    const usuario = JSON.parse(localStorage.getItem("service_user"));
+    const { startLoadBirthdays } = useUsersStore();
+
+    useEffect(() => {
+        startLoadBirthdays();
     }, []);
 
     return (
@@ -48,6 +42,7 @@ function HomePage() {
                 menu={menuHomeContratados}
                 classes={classes}
             />
+            <BirthdaySection />
         </Container>
     );
 }

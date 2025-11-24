@@ -60,7 +60,12 @@ export const MenuQuick = ({ menuData, classes, theme }) => {
     ));
 };
 
-export const MenuItems = ({ menuHome, classes, theme, toggleDrawer = null }) => {
+export const MenuItems = ({
+    menuHome,
+    classes,
+    theme,
+    toggleDrawer = null,
+}) => {
     const handleCloseDrawer = () => {
         if (toggleDrawer) toggleDrawer(false);
     };
@@ -85,7 +90,7 @@ export const MenuItems = ({ menuHome, classes, theme, toggleDrawer = null }) => 
                         <item.icon size={27} stroke={1.8} />
                     </ThemeIcon>
 
-                    <Text className={classes.title} size="md">
+                    <Text className={classes.title} size="sm">
                         {item.title}
                     </Text>
 

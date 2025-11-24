@@ -96,13 +96,13 @@ export const UserBtnHeader = () => {
                         {nombres}
                     </Avatar>
                     <div>
-                        <TextSection tt="" fz={15} fw={500} size="sm">
+                        <TextSection tt="" fz={15} fw={500}>
                             {typeof usuario?.usu_alias === "string"
                                 ? capitalizarCadaPalabra(usuario.usu_alias)
                                 : "Sin datos"}{" "}
                             <br />
                         </TextSection>
-                        <TextSection tt="" fz={15} fw={300} size="sm">
+                        <TextSection tt="" fz={15} fw={300}>
                             {usuario?.email || "Sin datos"}
                         </TextSection>
                     </div>

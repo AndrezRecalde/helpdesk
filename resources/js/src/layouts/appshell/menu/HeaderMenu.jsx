@@ -1,5 +1,4 @@
-import { IconBellPlus } from "@tabler/icons-react";
-import { ActionIcon, Box, Burger, Group, useMantineTheme } from "@mantine/core";
+import { Box, Burger, Group, useMantineTheme } from "@mantine/core";
 import { Logo, UserBtnHeader } from "../../../components";
 import {
     MenuRapido,
@@ -17,7 +16,7 @@ import { Roles } from "../../../helpers/dictionary";
 import { useUiHeaderMenu } from "../../../hooks";
 import classes from "../../../assets/styles/modules/layout/menu/HeaderMenu.module.css";
 
-export function HeaderMenu({ usuario, asideValue, modalAside }) {
+export function HeaderMenu({ usuario }) {
     const { isOpenDrawerMobile, modalActionDrawerMobile } = useUiHeaderMenu();
     const theme = useMantineTheme();
     return (
@@ -70,7 +69,7 @@ export function HeaderMenu({ usuario, asideValue, modalAside }) {
                         </Group>
 
                         <Group visibleFrom="lg">
-                            {!asideValue ? (
+                            {/* {!asideValue ? (
                                 <ActionIcon
                                     size={35}
                                     variant="default"
@@ -82,7 +81,7 @@ export function HeaderMenu({ usuario, asideValue, modalAside }) {
                                         size={25}
                                     />
                                 </ActionIcon>
-                            ) : null}
+                            ) : null} */}
                             <SolicitudesMenu
                                 menuData={MenuRapido}
                                 classes={classes}

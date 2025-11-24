@@ -1,20 +1,19 @@
-import { useEffect } from "react";
-import { AppShell, ScrollArea } from "@mantine/core";
+import { AppShell } from "@mantine/core";
 import { HeaderMenu } from "./HeaderMenu";
-import { useUiHeaderMenu, useUsersStore } from "../../../hooks";
-import { StackAside } from "./StackAside";
+//import { useUiHeaderMenu } from "../../../hooks";
+//import { StackAside } from "./StackAside";
 import classes from "../../../assets/styles/modules/layout/body/AppBody.module.css"
 
 export const AppHeaderMenu = ({ children }) => {
     const usuario = JSON.parse(localStorage.getItem("service_user"));
     //const [opened, { toggle }] = useDisclosure();
-    const { isOpenModalAside, modalActionAside } = useUiHeaderMenu();
+    //const { isOpenModalAside, modalActionAside } = useUiHeaderMenu();
     //const [asideOpened, { toggle: toggleAside }] = useDisclosure(true);
-    const { startLoadBirthdays } = useUsersStore();
+    //const { startLoadBirthdays } = useUsersStore();
 
-    useEffect(() => {
+    /* useEffect(() => {
         startLoadBirthdays();
-    }, []);
+    }, []); */
 
     return (
         <AppShell
@@ -25,18 +24,18 @@ export const AppHeaderMenu = ({ children }) => {
                 breakpoint: "sm",
                 collapsed: { mobile: !opened },
             }} */
-            aside={{
+            /* aside={{
                 width: 300,
                 breakpoint: "md",
                 collapsed: { desktop: !isOpenModalAside, mobile: true }, // Controla el Aside
-            }}
+            }} */
             padding={30}
         >
             <AppShell.Header>
                 <HeaderMenu
                     usuario={usuario}
-                    asideValue={isOpenModalAside}
-                    modalAside={modalActionAside}
+                    //asideValue={isOpenModalAside}
+                    //modalAside={modalActionAside}
                 />
             </AppShell.Header>
             {/* <AppShell.Navbar p="md">
@@ -48,9 +47,9 @@ export const AppHeaderMenu = ({ children }) => {
                     ))}
             </AppShell.Navbar> */}
             <AppShell.Main className={classes.body}>{children}</AppShell.Main>
-            <AppShell.Aside className={classes.body} p="sm" component={ScrollArea}>
+            {/* <AppShell.Aside className={classes.body} p="sm" component={ScrollArea}>
                 <StackAside modalAside={modalActionAside} />
-            </AppShell.Aside>
+            </AppShell.Aside> */}
             {/* <AppShell.Footer p="md">Footer</AppShell.Footer> */}
         </AppShell>
     );

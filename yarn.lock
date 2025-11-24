@@ -363,6 +363,11 @@
   resolved "https://registry.yarnpkg.com/@kurkle/color/-/color-0.3.4.tgz#4d4ff677e1609214fc71c580125ddddd86abcabf"
   integrity sha512-M5UknZPHRu3DEDWoipU6sE8PdkZ6Z/S+v4dD+Ke8IaNlpdSQah50lz1KtcFBa2vsdOnwbbnxJwVM4wty6udA5w==
 
+"@mantine/carousel@^7.17.5":
+  version "7.17.8"
+  resolved "https://registry.yarnpkg.com/@mantine/carousel/-/carousel-7.17.8.tgz#4bf3a834d0bc981648f6136554444d6a077bdee5"
+  integrity sha512-o9xozkiXYnAlh0n9QASBOcTx56VCoVGq6CzgcGVJBIx7QvZI95pNzGGC1HsP4It1xsyRsUHRySP/Q2Asn+upnw==
+
 "@mantine/core@^7.17.5":
   version "7.17.5"
   resolved "https://registry.yarnpkg.com/@mantine/core/-/core-7.17.5.tgz#ae8f8deb615ed8e642cc0afa7c4a76cd642d4f90"
@@ -1166,6 +1171,18 @@ electron-to-chromium@^1.5.73:
   version "1.5.145"
   resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.5.145.tgz#abd50700ac2c809e40a4694584f66711ee937fb6"
   integrity sha512-pZ5EcTWRq/055MvSBgoFEyKf2i4apwfoqJbK/ak2jnFq8oHjZ+vzc3AhRcz37Xn+ZJfL58R666FLJx0YOK9yTw==
+
+embla-carousel-react@7.1.0:
+  version "7.1.0"
+  resolved "https://registry.yarnpkg.com/embla-carousel-react/-/embla-carousel-react-7.1.0.tgz#e716f4df7fd31f7ca3e59a3e011158167bc3c468"
+  integrity sha512-tbYRPRZSDNd2QLNqYDcArAakGIxtUbhS7tkP0dGXktXHGgcX+3ji3VrOUTOftBiujZrMV8kRxtrRUe/1soloIQ==
+  dependencies:
+    embla-carousel "7.1.0"
+
+embla-carousel@7.1.0:
+  version "7.1.0"
+  resolved "https://registry.yarnpkg.com/embla-carousel/-/embla-carousel-7.1.0.tgz#c770dd3ade9285a97f5e3b6bbf705bc35ec0f9b5"
+  integrity sha512-Bh8Pa8NWzgugLkf8sAGexQlBCNDFaej5BXiKgQdRJ1mUC9NWBrw9Z23YVPVGkguWoz5LMjZXXFVGCobl3UPt/Q==
 
 entities@^4.4.0:
   version "4.5.0"

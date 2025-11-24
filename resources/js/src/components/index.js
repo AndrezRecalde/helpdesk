@@ -22,6 +22,7 @@ import { AppLogosForm } from "./app/form/AppLogosForm";
 
 /* HOME */
 import { ServiceSection } from "./home/section/ServiceSection";
+import { BirthdaySection } from "./home/section/BirthdaySection";
 
 /* Elementos Gerencia */
 /* CHARTS */
@@ -306,6 +307,7 @@ export {
 
     /* HOME */
     ServiceSection,
+    BirthdaySection,
 
     /* Elementos Gerencia */
     /* CHARTS */
