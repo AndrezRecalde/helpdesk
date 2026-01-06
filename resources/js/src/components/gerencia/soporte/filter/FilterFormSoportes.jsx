@@ -18,6 +18,7 @@ import {
     useStorageField,
 } from "../../../../hooks";
 import classes from "../../../../assets/styles/modules/layout/input/LabelsInputs.module.css";
+import dayjs from "dayjs";
 
 export const FilterFormSoportes = ({ form }) => {
     const usuario = JSON.parse(localStorage.getItem("service_user"));
@@ -26,27 +27,33 @@ export const FilterFormSoportes = ({ form }) => {
     const { estados } = useEstadoStore();
     const { setStorageFields } = useStorageField();
 
-    const { switch_role } = form.values;
+    const { switch_role, fecha_inicio } = form.values;
+
+    // Calcular la fecha máxima para fecha_fin (último día del año de fecha_inicio)
+    const getMaxDateFin = () => {
+        if (!fecha_inicio) return null;
+        const anioInicio = dayjs(fecha_inicio).year();
+        return dayjs(`${anioInicio}-12-31`).toDate();
+    };
+
+    // Calcular la fecha mínima para fecha_fin (igual a fecha_inicio)
+    const getMinDateFin = () => {
+        if (!fecha_inicio) return null;
+        return dayjs(fecha_inicio).toDate();
+    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        //console.log(switch_role);
+
         if (switch_role) {
-            // console.log("aki");
             const { id_usu_tecnico_asig, ...values } =
                 form.getTransformedValues();
-            //console.log(values);
             startSearchSoporte(values);
             setStorageFields(values);
-            //console.log(values);
         } else {
-            //console.log("aki2");
-
-            //console.log(form.getTransformedValues());
             startSearchSoporte(form.getTransformedValues());
             setStorageFields(form.getTransformedValues());
         }
-        //console.log(form.values);
     };
 
     return (
@@ -67,7 +74,7 @@ export const FilterFormSoportes = ({ form }) => {
                     <Group>
                         <Chip.Group
                             multiple
-                            value={form.values.id_estado} // debe ser array de strings
+                            value={form.values.id_estado}
                             onChange={(values) =>
                                 form.setFieldValue("id_estado", values)
                             }
@@ -94,7 +101,7 @@ export const FilterFormSoportes = ({ form }) => {
                             size="xl"
                             onLabel="G"
                             offLabel="T"
-                            disabled={usuario?.role_id == 2 ? true : false} //Tiene que ser tecnico para que sea true
+                            disabled={usuario?.role_id == 2 ? true : false}
                             {...form.getInputProps("switch_role")}
                         />
                     </Group>
@@ -108,6 +115,26 @@ export const FilterFormSoportes = ({ form }) => {
                         placeholder="Seleccione fecha inicio"
                         classNames={classes}
                         {...form.getInputProps("fecha_inicio")}
+                        onChange={(value) => {
+                            form.setFieldValue("fecha_inicio", value);
+                            // Limpiar fecha_fin si está fuera del rango permitido
+                            if (form.values.fecha_fin && value) {
+                                const anioInicio = dayjs(value).year();
+                                const anioFin = dayjs(
+                                    form.values.fecha_fin
+                                ).year();
+
+                                // Si fecha_fin es de otro año o es anterior a la nueva fecha_inicio, limpiarla
+                                if (
+                                    anioInicio !== anioFin ||
+                                    dayjs(form.values.fecha_fin).isBefore(
+                                        dayjs(value)
+                                    )
+                                ) {
+                                    form.setFieldValue("fecha_fin", null);
+                                }
+                            }
+                        }}
                     />
                     <DateInput
                         clearable
@@ -116,6 +143,9 @@ export const FilterFormSoportes = ({ form }) => {
                         placeholder="Seleccione fecha final"
                         classNames={classes}
                         {...form.getInputProps("fecha_fin")}
+                        minDate={getMinDateFin()}
+                        maxDate={getMaxDateFin()}
+                        disabled={!fecha_inicio}
                     />
                 </SimpleGrid>
                 <SimpleGrid cols={{ base: 1, sm: 1, md: 2, lg: 2 }} mt={10}>
@@ -138,22 +168,7 @@ export const FilterFormSoportes = ({ form }) => {
                         {...form.getInputProps("numero_sop")}
                         placeholder="Filtrar por soporte"
                     />
-                    {/* <Select
-                        searchable
-                        clearable
-                        label="Estado"
-                        placeholder="Elige el estado"
-                        classNames={classes}
-                        {...form.getInputProps("id_estado")}
-                        data={estados.map((estado) => {
-                            return {
-                                value: estado.id_estado_caso.toString(),
-                                label: estado.nombre,
-                            };
-                        })}
-                    /> */}
                 </SimpleGrid>
-
                 <BtnSubmit IconSection={IconSearch} loading={isLoading}>
                     Buscar
                 </BtnSubmit>

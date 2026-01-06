@@ -25,6 +25,7 @@ const ListPermisosAdminPage = () => {
     const { startLoadDirecciones, clearDirecciones } = useDireccionStore();
     const { startLoadUsersExtrict, clearUsers } = useUsersStore();
     const {
+        isLoading,
         startLoadPermisos,
         permisos,
         clearPermisos,
@@ -129,7 +130,7 @@ const ListPermisosAdminPage = () => {
     };
 
     return (
-        <Container size="xxl">
+        <Container size="xl">
             <Group justify="space-between">
                 <TitlePage order={2}>Lista de permisos</TitlePage>
                 <BtnSection
@@ -143,6 +144,7 @@ const ListPermisosAdminPage = () => {
             <FilterPermisoAdmin
                 form={form}
                 handleSubmit={handleSubmit}
+                isLoading={isLoading}
                 title="Filtrar permisos"
             />
             {permisos.length !== 0 ? <PermisosTable /> : null}

@@ -14,7 +14,8 @@ import {
 import { DateTimePicker } from "@mantine/dates";
 import { BtnSubmit, TextSection } from "../../../components";
 import {
-    useEquipoStore,
+    //useEquipoStore,
+    useInvEquipoStore,
     useSoporteStore,
     useStorageField,
     useUiSoporte,
@@ -29,11 +30,11 @@ import dayjs from "dayjs";
 export const FormDiagnosticar = ({ form, option }) => {
     const { activo_informatico, id_tipo_soporte } = form.values;
     const [checkEstado, setCheckEstado] = useState(false);
-    const { startLoadEquiposInformaticos, clearEquiposInformaticos, equipos } = useEquipoStore();
+    const { startLoadEquiposAgrupados, startClearInvEquipos, invEquipos } =
+        useInvEquipoStore();
     const { modalActionDiagnosticar } = useUiSoporte();
     const { activateSoporte, startDiagnosticarSoporte } = useSoporteStore();
     const { storageFields } = useStorageField();
-
 
     useEffect(() => {
         if (activateSoporte !== null) {
@@ -71,12 +72,14 @@ export const FormDiagnosticar = ({ form, option }) => {
 
     useEffect(() => {
         if (activo_informatico) {
-            startLoadEquiposInformaticos();
+            //startLoadEquiposInformaticos();
+            startLoadEquiposAgrupados();
             return;
         }
 
         return () => {
-            clearEquiposInformaticos();
+            //clearEquiposInformaticos();
+            startClearInvEquipos();
         };
     }, [activo_informatico]);
 
@@ -266,15 +269,18 @@ export const FormDiagnosticar = ({ form, option }) => {
                                 label="Activo Informatico"
                                 placeholder="Seleccione el activo informatico"
                                 {...form.getInputProps("id_equipo")}
-                                data={equipos.map((equipo) => {
+                                data={invEquipos.map((equipo) => {
                                     return {
-                                        group: equipo.sop_tipo_equipo_nombre,
+                                        group: equipo.nombre_categoria,
                                         items: equipo.equipos.map((eq) => {
                                             return {
-                                                value: eq.idsop_equipo.toString(),
+                                                value: eq.id.toString(),
                                                 label: `${
-                                                    eq.sop_equipo_codigo
-                                                } ${eq.sop_equipo_serie ?? ""}`,
+                                                    eq.codigo_antiguo ?? "SCA"
+                                                } — ${
+                                                    eq.codigo_nuevo ?? "SCN"
+                                                } —
+                                                ${eq.numero_serie ?? "SNS"}`,
                                             };
                                         }),
                                     };

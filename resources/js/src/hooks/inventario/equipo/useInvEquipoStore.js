@@ -30,6 +30,20 @@ export const useInvEquipoStore = () => {
 
     const dispatch = useDispatch();
 
+    const startLoadEquiposAgrupados = async () => {
+        try {
+            dispatch(onLoading(true));
+            const { data } = await helpdeskApi.get(
+                "/gerencia/inventario/tipos-equipos"
+            );
+            const { equipos } = data;
+            dispatch(onLoadInvEquipos(equipos));
+        } catch (error) {
+            //console.log(error);
+            ExceptionMessageError(error);
+        }
+    };
+
     const startLoadInvEquipos = async ({ campo, valor = null }) => {
         try {
             dispatch(onLoading(true));
@@ -328,6 +342,7 @@ export const useInvEquipoStore = () => {
         message,
         errores,
 
+        startLoadEquiposAgrupados,
         startLoadInvEquipos,
         startSearchEquipos,
         startAddInvEquipo,

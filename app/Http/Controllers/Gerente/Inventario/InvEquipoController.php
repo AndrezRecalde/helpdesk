@@ -24,6 +24,18 @@ use Maatwebsite\Excel\Facades\Excel;
 class InvEquipoController extends Controller
 {
 
+    function getEquipos(): JsonResponse
+    {
+        $equipos = InvCategoria::from('inv_categorias as invc')
+            ->with([
+                'equipos'
+            ])
+            ->selectRaw('invc.id, invc.nombre_categoria')
+            ->get();
+
+        return response()->json(['status' => MsgStatus::Success, 'equipos' => $equipos], 200);
+    }
+
     function buscarEquipoxUsuario(Request $request): JsonResponse
     {
         $userId = $request->input('user_id');

@@ -79,38 +79,80 @@ class SoporteController extends Controller
 
     function searchSoportes(Request $request): JsonResponse
     {
-        $soportes = Soporte::from('sop_soporte as ss')
-            ->selectRaw('ss.id_sop, ss.anio, ss.numero_sop, ss.solucion,
-                        ss.id_direccion, d.nmbre_dprtmnto as direccion,
-                        ss.id_usu_recibe, u.nmbre_usrio as usuario_recibe,
-                        ss.fecha_ini, ss.fecha_fin, ss.incidente, ss.numero_escrito,
-                        ss.id_tipo_solicitud, stsol.nombre as tipo_solicitud,
-                        ss.id_area_tic, sat.nombre as area_tic,
-                        ss.id_estado, se.nombre as estado, se.color,
-                        ss.id_tipo_soporte, sts.nombre as tipo_soporte,
-                        ss.id_usu_tecnico_asig, us.nmbre_usrio as tecnico_asignado,
-                        ss.id_equipo, seq.sop_equipo_codigo, seq.sop_equipo_serie')
+        $fecha_inicio = $request->fecha_inicio;
+        $fecha_fin = $request->fecha_fin;
+        $anio = $request->anio;
+
+        // Determinar qué tabla usar
+        $usarNuevaTabla = false;
+
+        if ($fecha_inicio) {
+            // Si hay fechas, usar el año de fecha_inicio para decidir la tabla
+            $anioFecha = date('Y', strtotime($fecha_inicio));
+            $usarNuevaTabla = $anioFecha >= 2026;
+        } else {
+            // Si no hay fechas, usar el año del request
+            $usarNuevaTabla = $anio >= 2026;
+        }
+
+        // Construir consulta
+        $query = Soporte::from('sop_soporte as ss')
+            ->selectRaw('ss. id_sop, ss.anio, ss.numero_sop, ss.solucion,
+                    ss.id_direccion, d.nmbre_dprtmnto as direccion,
+                    ss.id_usu_recibe, u.nmbre_usrio as usuario_recibe,
+                    ss.fecha_ini, ss.fecha_fin, ss.incidente, ss.numero_escrito,
+                    ss. id_tipo_solicitud, stsol.nombre as tipo_solicitud,
+                    ss.id_area_tic, sat. nombre as area_tic,
+                    ss.id_estado, se.nombre as estado, se. color,
+                    ss.id_tipo_soporte, sts.nombre as tipo_soporte,
+                    ss.id_usu_tecnico_asig, us_tec.nmbre_usrio as tecnico_asignado,
+                    ss.id_equipo')
             ->leftJoin('dprtmntos as d', 'd.cdgo_dprtmnto', 'ss.id_direccion')
             ->leftJoin('usrios_sstma as u', 'u.cdgo_usrio', 'ss.id_usu_recibe')
             ->leftJoin('sop_areas_tic as sat', 'sat.id_areas_tic', 'ss.id_area_tic')
             ->leftJoin('sop_estado as se', 'se.id_estado_caso', 'ss.id_estado')
             ->leftJoin('sop_tipo_soporte as sts', 'sts.id_tipo_soporte', 'ss.id_tipo_soporte')
             ->leftJoin('sop_tipo_solicitud as stsol', 'stsol.id_tipo_solic', 'ss.id_tipo_solicitud')
-            ->leftJoin('sop_equipo as seq', 'seq.idsop_equipo', 'ss.id_equipo')
-            ->leftJoin('usrios_sstma as us', 'us.cdgo_usrio', 'ss.id_usu_tecnico_asig')
-            ->fechas($request->fecha_inicio, $request->fecha_fin)
+            ->leftJoin('usrios_sstma as us_tec', 'us_tec.cdgo_usrio', 'ss.id_usu_tecnico_asig');
+
+        // Join condicional según la tabla a usar
+        if ($usarNuevaTabla) {
+            $query->leftJoin('inv_equipos as ie', 'ie.id', 'ss.id_equipo')
+                ->addSelect('ie.codigo_nuevo as sop_equipo_codigo', 'ie.numero_serie as sop_equipo_serie');
+        } else {
+            $query->leftJoin('sop_equipo as seq', 'seq.idsop_equipo', 'ss.id_equipo')
+                ->addSelect('seq.sop_equipo_codigo', 'seq.sop_equipo_serie');
+        }
+
+        // Filtros:  Prioridad a fechas, sino usar año
+        if ($fecha_inicio && $fecha_fin) {
+            $query->whereBetween('ss.fecha_ini', [$fecha_inicio, $fecha_fin]);
+        } elseif ($fecha_inicio) {
+            $query->where('ss.fecha_ini', '>=', $fecha_inicio);
+        } elseif ($fecha_fin) {
+            $query->where('ss.fecha_ini', '<=', $fecha_fin);
+        } else {
+            $query->where('ss.anio', $anio);
+        }
+
+        $soportes = $query
             ->direccion($request->id_direccion)
             ->numero($request->numero_sop)
             ->tecnico($request->id_usu_tecnico_asig)
             ->estado($request->id_estado)
-            ->where('ss.anio', $request->anio)
             ->orderBy('ss.numero_sop', 'DESC')
             ->get();
 
-        if (sizeof($soportes) >= 1) {
-            return response()->json(['status' => MsgStatus::Success, 'soportes' => $soportes], 200);
+        if ($soportes->count() >= 1) {
+            return response()->json([
+                'status' => MsgStatus::Success,
+                'soportes' => $soportes
+            ], 200);
         } else {
-            return response()->json(['status' => 'error', 'msg' => 'No hay soportes con esos filtros de búsqueda'], 404);
+            return response()->json([
+                'status' => 'error',
+                'msg' => 'No hay soportes con esos filtros de búsqueda'
+            ], 404);
         }
     }
 
@@ -205,28 +247,54 @@ class SoporteController extends Controller
 
     function exportPDFCardSoporte(Request $request)
     {
-        $soporte = Soporte::from('sop_soporte as ss')
+        // Obtener el soporte básico primero para determinar el año
+        $soporteBase = Soporte::from('sop_soporte as ss')
+            ->select('ss.id_sop', 'ss.anio', 'ss.fecha_ini')
+            ->where('ss.id_sop', $request->id_sop)
+            ->first();
+
+        if (!$soporteBase) {
+            return response()->json(['status' => MsgStatus::Error, 'msg' => MsgStatus::SoporteNotFound], 404);
+        }
+
+        // Determinar qué tabla de equipos usar basado en la fecha o año
+        $anioSoporte = $soporteBase->fecha_ini
+            ? date('Y', strtotime($soporteBase->fecha_ini))
+            : $soporteBase->anio;
+
+        $usarNuevaTabla = $anioSoporte >= 2026;
+
+        // Construir la consulta con la tabla apropiada
+        $query = Soporte::from('sop_soporte as ss')
             ->selectRaw('ss.id_sop, ss.anio, ss.numero_sop,
-                                 ss.numero_escrito, ss.fecha_ini, ss.fecha_fin,
-                                 stsol.nombre as tipo_solicitud,
-                                 d.nmbre_dprtmnto as direccion,
-                                 us.nmbre_usrio as usuario_recibe,
-                                 sts.nombre as tipo_soporte,
-                                 ss.incidente, ss.solucion,
-                                 sat.nombre as area_tic,
-                                 se.nombre as estado,
-                                 usua.nmbre_usrio as tecnico_asignado,
-                                 ss.cod_barra, seq.sop_equipo_codigo as codigo_equipo')
+                     ss.numero_escrito, ss.fecha_ini, ss.fecha_fin,
+                     stsol.nombre as tipo_solicitud,
+                     d.nmbre_dprtmnto as direccion,
+                     us.nmbre_usrio as usuario_recibe,
+                     sts.nombre as tipo_soporte,
+                     ss.incidente, ss.solucion,
+                     sat.nombre as area_tic,
+                     se.nombre as estado,
+                     usua.nmbre_usrio as tecnico_asignado,
+                     ss.cod_barra')
             ->join('sop_tipo_solicitud as stsol', 'stsol.id_tipo_solic', 'ss.id_tipo_solicitud')
             ->join('dprtmntos as d', 'd.cdgo_dprtmnto', 'ss.id_direccion')
             ->leftJoin('usrios_sstma as us', 'us.cdgo_usrio', 'ss.id_usu_recibe')
             ->leftJoin('sop_tipo_soporte as sts', 'sts.id_tipo_soporte', 'ss.id_tipo_soporte')
             ->leftJoin('sop_areas_tic as sat', 'sat.id_areas_tic', 'ss.id_area_tic')
             ->join('sop_estado as se', 'se.id_estado_caso', 'ss.id_estado')
-            ->leftJoin('usrios_sstma as usua', 'usua.cdgo_usrio', 'ss.id_usu_tecnico_asig')
-            ->leftJoin('sop_equipo as seq', 'seq.idsop_equipo', 'ss.id_equipo')
-            ->where('ss.id_sop', $request->id_sop)
-            ->first();
+            ->leftJoin('usrios_sstma as usua', 'usua.cdgo_usrio', 'ss.id_usu_tecnico_asig');
+
+        // Join condicional según el año del soporte
+        if ($usarNuevaTabla) {
+            $query->leftJoin('inv_equipos as ie', 'ie.id', 'ss.id_equipo')
+                ->addSelect('ie.codigo_nuevo as codigo_equipo');
+        } else {
+            $query->leftJoin('sop_equipo as seq', 'seq.idsop_equipo', 'ss.id_equipo')
+                ->addSelect('seq.sop_equipo_codigo as codigo_equipo');
+        }
+
+        $soporte = $query->where('ss.id_sop', $request->id_sop)->first();
 
         if ($soporte) {
             $data = [

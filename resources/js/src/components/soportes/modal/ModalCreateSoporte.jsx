@@ -1,8 +1,9 @@
 import { useEffect } from "react";
-import { Divider, Drawer } from "@mantine/core";
+import { Drawer } from "@mantine/core";
 import { FormCreateSoporte, TextSection } from "../../../components";
 import {
-    useEquipoStore,
+    //useEquipoStore,
+    useInvEquipoStore,
     //useEstadoStore,
     useSoporteStore,
     useTecnicoStore,
@@ -32,8 +33,8 @@ export const ModalCreateSoporte = ({ role }) => {
     const { startLoadTiposSolicitudes, clearTiposSolicitudes } =
         useTipoSolicitudStore();
 
-    const { startLoadEquiposInformaticos, clearEquiposInformaticos } =
-        useEquipoStore();
+    const { startLoadEquiposAgrupados, startClearInvEquipos } =
+        useInvEquipoStore();
     //const { startLoadEstados, clearEstados } = useEstadoStore();
 
     const convertToString = (value) =>
@@ -135,12 +136,14 @@ export const ModalCreateSoporte = ({ role }) => {
     useEffect(() => {
         if (isOpenModalCreateSoporte) {
             startLoadTiposSolicitudes();
-            startLoadEquiposInformaticos();
+            startLoadEquiposAgrupados();
+            //startLoadEquiposInformaticos();
             //startLoadEstados();
         }
         return () => {
             clearTiposSolicitudes();
-            clearEquiposInformaticos();
+            startClearInvEquipos();
+            //clearEquiposInformaticos();
             //clearEstados();
         };
     }, [isOpenModalCreateSoporte]);

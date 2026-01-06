@@ -14,6 +14,7 @@ import {
     useDireccionStore,
     useEquipoStore,
     useEstadoStore,
+    useInvEquipoStore,
     useSoporteStore,
     useStorageField,
     useTecnicoStore,
@@ -37,7 +38,7 @@ export const FormCreateSoporte = ({ form }) => {
     const { tecnicos } = useTecnicoStore();
     const { direcciones } = useDireccionStore();
     const { tiposSolicitudes } = useTipoSolicitudStore();
-    const { equipos } = useEquipoStore();
+    const { invEquipos } = useInvEquipoStore();
     const { startCreateSoporte, activateSoporte } = useSoporteStore();
     const { modalActionCreateSoporte } = useUiSoporte();
     const { storageFields = {} } = useStorageField();
@@ -273,15 +274,16 @@ export const FormCreateSoporte = ({ form }) => {
                         label="Activo Informatico"
                         placeholder="Seleccione el activo informatico"
                         {...form.getInputProps("id_equipo")}
-                        data={equipos.map((equipo) => {
+                        data={invEquipos.map((equipo) => {
                             return {
-                                group: equipo.sop_tipo_equipo_nombre,
+                                group: equipo.nombre_categoria,
                                 items: equipo.equipos.map((eq) => {
                                     return {
-                                        value: eq.idsop_equipo.toString(),
-                                        label: `${eq.sop_equipo_codigo} ${
-                                            eq.sop_equipo_serie ?? ""
-                                        }`,
+                                        value: eq.id.toString(),
+                                        label: `${
+                                            eq.codigo_antiguo ?? "SCA"
+                                        } — ${eq.codigo_nuevo ?? "SCN"} —
+                                                ${eq.numero_serie ?? "SNS"}`,
                                     };
                                 }),
                             };
@@ -297,9 +299,7 @@ export const FormCreateSoporte = ({ form }) => {
                     placeholder="Seleccione fecha de finalización"
                     {...form.getInputProps("fecha_fin")}
                 />
-                <BtnSubmit IconSection={IconBrandTelegram}>
-                    Guardar
-                </BtnSubmit>
+                <BtnSubmit IconSection={IconBrandTelegram}>Guardar</BtnSubmit>
             </Stack>
         </Box>
     );

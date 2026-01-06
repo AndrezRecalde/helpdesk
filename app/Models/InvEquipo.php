@@ -17,13 +17,11 @@ class InvEquipo extends Model
     protected $table = 'inv_equipos';
 
     protected $fillable = [
-        //'nombre_equipo',
         'modelo',
         'numero_serie',
         'codigo_antiguo',
         'codigo_nuevo',
         'fecha_adquisicion',
-        //'fecha_amortizacion',
         'fecha_baja',
         'vida_util',
         'descripcion',

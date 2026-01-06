@@ -49,6 +49,23 @@ const SoportesPage = () => {
         },
         validate: {
             anio: isNotEmpty("Por favor ingresar el año"),
+            fecha_fin: (value, values) => {
+                // Solo validar si ambas fechas están presentes
+                if (!values.fecha_inicio || !value) return null;
+
+                const anioInicio = dayjs(values.fecha_inicio).year();
+                const anioFin = dayjs(value).year();
+
+                if (anioInicio !== anioFin) {
+                    return "El rango de fechas no puede cruzar años";
+                }
+
+                if (dayjs(values.fecha_inicio).isAfter(dayjs(value))) {
+                    return "La fecha final debe ser posterior a la fecha inicial";
+                }
+
+                return null;
+            },
         },
         transformValues: (values) => ({
             ...values,
@@ -58,7 +75,6 @@ const SoportesPage = () => {
             fecha_fin: dayjs(values.fecha_fin).isValid()
                 ? dayjs(values.fecha_fin).add(1, "day").format("YYYY-MM-DD")
                 : null,
-            //id_direccion: Number(values.id_direccion),
             id_usu_tecnico_asig: Number(values.id_usu_tecnico_asig) || null,
             anio: values.anio.getFullYear(),
             id_estado: values.id_estado.map((id) => Number(id)),
