@@ -179,7 +179,6 @@ Route::group(['prefix' => 'gerencia', 'middleware' => ['auth:sanctum', 'role:TIC
     Route::delete('/inventario/ubicacion/destroy/{id}', [InvUbicacionController::class, 'destroy']);
 
     /* EQUIPOS */
-    Route::get('/inventario/tipos-equipos', [InvEquipoController::class, 'getEquipos']);
     Route::post('/inventario/equipos', [InvEquipoController::class, 'getEquiposInv']);
     Route::get('/inventario/equipo/{id}', [InvEquipoController::class, 'show']);
     Route::post('/inventario/equipo/store', [InvEquipoController::class, 'store']);
@@ -243,6 +242,9 @@ Route::group(['prefix' => 'general', 'middleware' => ['auth:sanctum', 'role:TIC_
 
     /* EQUIPOS */
     Route::get("/equipos", [EquipoController::class, 'getEquiposInformaticos']);
+
+    /* EQUIPOS NUEVA TABLA */
+    Route::get('/inventario/tipos-equipos', [InvEquipoController::class, 'getEquipos']);
 });
 
 

@@ -34,7 +34,7 @@ export const useInvEquipoStore = () => {
         try {
             dispatch(onLoading(true));
             const { data } = await helpdeskApi.get(
-                "/gerencia/inventario/tipos-equipos"
+                "/general/inventario/tipos-equipos"
             );
             const { equipos } = data;
             dispatch(onLoadInvEquipos(equipos));
