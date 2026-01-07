@@ -280,10 +280,7 @@ export const FormCreateSoporte = ({ form }) => {
                                 items: equipo.equipos.map((eq) => {
                                     return {
                                         value: eq.id.toString(),
-                                        label: `${
-                                            eq.codigo_antiguo ?? "SCA"
-                                        } — ${eq.codigo_nuevo ?? "SCN"} —
-                                                ${eq.numero_serie ?? "SNS"}`,
+                                        label: `${eq.codigo_antiguo ?? "SCA"} — ${eq.codigo_nuevo ?? "SCN"} — ${eq.numero_serie ?? "SNS"}`,
                                     };
                                 }),
                             };

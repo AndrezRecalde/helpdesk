@@ -172,7 +172,9 @@ class RutaController extends Controller
                     'ing.cnsctvo_rta',
                     'ing.nmro_ofcio as numero_oficio',
                     'ing.fcha_rcpcion as fecha_recepcion',
-                    'ing.rmtnte as remitente',
+                    'ing.rmtnte',
+                    'clr.nmbre_clnte as remitente',
+                    'cld.nmbre_clnte as destinatario',
                     'ing.asnto',
                     'ie.detalle_largo',
                     DB::raw('COUNT(dsp.cnsctvo_dspcho) as total_despachos')

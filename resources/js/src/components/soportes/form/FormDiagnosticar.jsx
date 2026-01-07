@@ -25,6 +25,7 @@ import {
     IconRosetteDiscountCheck,
 } from "@tabler/icons-react";
 import classes from "../../../assets/styles/modules/soporte/CardDiagnostico.module.css";
+import classess from "../../../assets/styles/modules/layout/input/LabelsInputs.module.css"
 import dayjs from "dayjs";
 
 export const FormDiagnosticar = ({ form, option }) => {
@@ -197,6 +198,7 @@ export const FormDiagnosticar = ({ form, option }) => {
                             placeholder="Seleccione fecha de finalización"
                             minDate={dayjs(activateSoporte?.fecha_ini).toDate()}
                             {...form.getInputProps("fecha_fin")}
+                            classNames={classess}
                         />
                         <SimpleGrid cols={{ base: 1, sm: 1, md: 2, lg: 2 }}>
                             <Select
@@ -215,6 +217,7 @@ export const FormDiagnosticar = ({ form, option }) => {
                                     },
                                     { value: "5", label: "SOPORTE TÉCNICO" },
                                 ]}
+                                classNames={classess}
                             />
                             <Select
                                 withAsterisk
@@ -241,6 +244,7 @@ export const FormDiagnosticar = ({ form, option }) => {
                                         label: "MANTENIMIENTO CORRECTIVO",
                                     },
                                 ]}
+                                classNames={classess}
                             />
                         </SimpleGrid>
                         <Textarea
@@ -275,16 +279,12 @@ export const FormDiagnosticar = ({ form, option }) => {
                                         items: equipo.equipos.map((eq) => {
                                             return {
                                                 value: eq.id.toString(),
-                                                label: `${
-                                                    eq.codigo_antiguo ?? "SCA"
-                                                } — ${
-                                                    eq.codigo_nuevo ?? "SCN"
-                                                } —
-                                                ${eq.numero_serie ?? "SNS"}`,
+                                                label: `${eq.codigo_antiguo ?? "SCA"} — ${eq.codigo_nuevo ?? "SCN"} — ${eq.numero_serie ?? "SNS"}`,
                                             };
                                         }),
                                     };
                                 })}
+                                classNames={classess}
                             />
                         ) : null}
                         <BtnSubmit IconSection={IconRosetteDiscountCheck}>
