@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useCallback } from "react";
+import { useEffect, useMemo, useCallback, useRef } from "react";
 import { Card, Container, Divider, Group, LoadingOverlay } from "@mantine/core";
 import {
     AlertSection,
@@ -23,8 +23,9 @@ const PermisosPage = () => {
     useTitlePage("Helpdesk | Permisos");
 
     const usuario = JSON.parse(localStorage.getItem("service_user"));
+    const isInitialMount = useRef(true);
 
-    const { message, errores, isExport, startCardPermiso } = usePermisoStore();
+    const { message, errores, isExport, startCardPermigo } = usePermisoStore();
     const { startLoadDirecciones, clearDirecciones } = useDireccionStore();
     const { startLoadUsersExtrict, clearUsers } = useUsersStore();
     const {
@@ -46,8 +47,10 @@ const PermisosPage = () => {
 
     const form = useForm({
         initialValues: {
-            id_direccion_pide: null,
-            id_usu_pide: null,
+            id_direccion_pide: !canEdit
+                ? usuario.cdgo_dprtmnto?.toString()
+                : null,
+            id_usu_pide: !canEdit ? usuario.cdgo_usrio?.toString() : null,
             id_tipo_motivo: "1",
             fecha: new Date(),
             per_fecha_salida: null,
@@ -84,11 +87,9 @@ const PermisosPage = () => {
                 }
                 return null;
             },
-            // Validación condicional para per_observaciones
             per_observaciones: (value, values) => {
                 const tipoMotivo = Number(values.id_tipo_motivo);
 
-                // Si id_tipo_motivo es 3, las observaciones son obligatorias
                 if (tipoMotivo === 3) {
                     if (!value || value.trim().length === 0) {
                         return "Las observaciones son obligatorias para este tipo de motivo";
@@ -98,7 +99,6 @@ const PermisosPage = () => {
                     }
                 }
 
-                // Validación de longitud máxima para todos los casos
                 if (value && value.length > 350) {
                     return "Las observaciones no pueden exceder 350 caracteres";
                 }
@@ -127,7 +127,11 @@ const PermisosPage = () => {
     useEffect(() => {
         if (id_direccion_pide) {
             startLoadUsersExtrict(id_direccion_pide);
-            form.setFieldValue("id_usu_pide", null);
+
+            // Solo limpiar si es usuario privilegiado Y no es el montaje inicial
+            if (canEdit && !isInitialMount.current) {
+                form.setFieldValue("id_usu_pide", null);
+            }
         }
         return () => clearUsers();
     }, [id_direccion_pide]);
@@ -136,27 +140,39 @@ const PermisosPage = () => {
     useEffect(() => {
         if (id_direccion_pide !== null) {
             startLoadDirectores({ cdgo_dprtmnto: id_direccion_pide });
-            form.setFieldValue("id_jefe_inmediato", null);
+
+            // Solo limpiar si es usuario privilegiado Y no es el montaje inicial
+            if (canEdit && !isInitialMount.current) {
+                form.setFieldValue("id_jefe_inmediato", null);
+            }
         }
         return () => clearDirectores();
     }, [id_direccion_pide]);
 
-    // Setear valores automáticos para usuarios no privilegiados
+    // Setear el jefe inmediato automáticamente cuando se cargan los directores
     useEffect(() => {
-        if (!canEdit && id_direccion_pide && directores.length > 0) {
-            form.setValues({
-                id_direccion_pide: usuario.cdgo_dprtmnto.toString(),
-                id_usu_pide: usuario.cdgo_usrio.toString(),
-                id_jefe_inmediato: directores[0]?.id_jefe?.toString(),
-            });
+        if (
+            !canEdit &&
+            directores.length > 0 &&
+            !form.values.id_jefe_inmediato
+        ) {
+            form.setFieldValue(
+                "id_jefe_inmediato",
+                directores[0]?.id_jefe?.toString()
+            );
         }
-    }, [id_direccion_pide, directores, canEdit]);
+    }, [directores, canEdit]);
+
+    // Marcar que ya no es el montaje inicial después del primer render
+    useEffect(() => {
+        isInitialMount.current = false;
+    }, []);
 
     // Manejar mensaje de éxito
     useEffect(() => {
         if (message?.msg) {
             Swal.fire({
-                text: `${message.msg}, ¿Deseas imprimir el permiso?`,
+                text: `${message.msg}, ¿Deseas imprimir el permiso? `,
                 icon: "success",
                 showCancelButton: true,
                 confirmButtonColor: "#20c997",
@@ -229,7 +245,7 @@ const PermisosPage = () => {
 
             <AlertSection
                 variant="light"
-                color="orange.7"
+                color="orange. 7"
                 title="Información"
                 mt={5}
                 mb={20}
