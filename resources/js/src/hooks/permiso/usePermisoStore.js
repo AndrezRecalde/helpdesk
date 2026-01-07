@@ -59,12 +59,13 @@ export const usePermisoStore = () => {
             document.body.removeChild(tempLink); */
             window.URL.revokeObjectURL(url);
             //dispatch(onLoadMessage(data));
-            dispatch(onExport(false));
+            //dispatch(onExport(false));
             dispatch(onSetActivatePermiso(null));
         } catch (error) {
             //console.log(error);
-            dispatch(onExport(false));
             ExceptionMessageError(error);
+        } finally {
+            dispatch(onExport(false));
         }
     };
 
@@ -89,11 +90,13 @@ export const usePermisoStore = () => {
 
             document.body.removeChild(tempLink); */
             window.URL.revokeObjectURL(url);
-            dispatch(onExport(false));
+            //dispatch(onExport(false));
             dispatch(onSetActivatePermiso(null));
         } catch (error) {
             //console.log(error);
             ExceptionMessageError(error);
+        } finally {
+            dispatch(onExport(false));
         }
     };
 
@@ -119,11 +122,13 @@ export const usePermisoStore = () => {
             });
             const { permisos } = data;
             dispatch(onLoadPermisos(permisos));
-            dispatch(onLoading(false));
+            //dispatch(onLoading(false));
         } catch (error) {
             //console.log(error);
             dispatch(onLoadPermisos([]));
             ExceptionMessageError(error);
+        } finally {
+            dispatch(onLoading(false));
         }
     };
 
@@ -139,10 +144,12 @@ export const usePermisoStore = () => {
             setTimeout(() => {
                 dispatch(onLoadMessage(undefined));
             }, 40);
-            dispatch(onLoading(false));
+            //dispatch(onLoading(false));
         } catch (error) {
             //console.log(error);
             ExceptionMessageError(error);
+        } finally {
+            dispatch(onLoading(false));
         }
     };
 
@@ -154,10 +161,12 @@ export const usePermisoStore = () => {
             });
             const { info_permisos } = data;
             dispatch(onSetActivatePermiso(info_permisos));
-            dispatch(onLoading(false));
+            //dispatch(onLoading(false));
         } catch (error) {
-            dispatch(onLoading(false));
+            //dispatch(onLoading(false));
             ExceptionMessageError(error);
+        } finally {
+            dispatch(onLoading(false));
         }
     };
 
@@ -171,10 +180,12 @@ export const usePermisoStore = () => {
             const { permisos } = data;
             //console.log(permisos);
             dispatch(onLoadPermisos(permisos));
-            dispatch(onLoading(false));
+            //dispatch(onLoading(false));
         } catch (error) {
             //console.log(error);
             ExceptionMessageError(error);
+        } finally {
+            dispatch(onLoading(false));
         }
     };
 
@@ -191,11 +202,13 @@ export const usePermisoStore = () => {
             });
             const url = window.open(URL.createObjectURL(pdfBlob));
             window.URL.revokeObjectURL(url);
-            dispatch(onExport(false));
+            //dispatch(onExport(false));
         } catch (error) {
             //console.log(error);
-            dispatch(onExport(false));
+            //dispatch(onExport(false));
             ExceptionMessageError(error);
+        } finally {
+            dispatch(onExport(false));
         }
     };
 
@@ -216,11 +229,13 @@ export const usePermisoStore = () => {
             setTimeout(() => {
                 dispatch(onLoadMessage(undefined));
             }, 40);
-            dispatch(onLoading(false));
+            //dispatch(onLoading(false));
         } catch (error) {
             //console.log(error);
-            dispatch(onLoading(false));
+            //dispatch(onLoading(false));
             ExceptionMessageError(error);
+        } finally {
+            dispatch(onLoading(false));
         }
     };
 

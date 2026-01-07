@@ -60,12 +60,7 @@ export const MenuQuick = ({ menuData, classes, theme }) => {
     ));
 };
 
-export const MenuItems = ({
-    menuHome,
-    classes,
-    theme,
-    toggleDrawer = null,
-}) => {
+export const MenuItems = ({ menuHome, classes, toggleDrawer = null }) => {
     const handleCloseDrawer = () => {
         if (toggleDrawer) toggleDrawer(false);
     };
@@ -75,36 +70,46 @@ export const MenuItems = ({
             key={item.title}
             component={Link}
             to={item.link}
-            className={classes.card}
+            className={classes.menuCard}
             onClick={handleCloseDrawer}
         >
-            <div className={classes.cardInner}>
-                <Stack align="center">
-                    <ThemeIcon
-                        size={50}
-                        radius="md"
-                        variant="outline"
-                        color={theme.colors[item.color][8]}
-                        className={classes.icon}
+            <Stack
+                align="center"
+                justify="center"
+                gap="sm"
+                className={classes.menuCardInner}
+                h="100%"
+            >
+                <ThemeIcon
+                    size={60}
+                    radius="xl"
+                    variant="light"
+                    color={item.color || "blue"}
+                    className={classes.menuIcon}
+                >
+                    <item.icon size={35} stroke={1.7} />
+                </ThemeIcon>
+
+                <Text
+                    className={classes.menuTitle}
+                    size="md"
+                    fw={700}
+                    ta="center"
+                >
+                    {item.title}
+                </Text>
+
+                {item.description && (
+                    <Text
+                        className={classes.menuDescription}
+                        size="sm"
+                        c="dimmed"
+                        ta="center"
                     >
-                        <item.icon size={27} stroke={1.8} />
-                    </ThemeIcon>
-
-                    <Text className={classes.title} size="sm">
-                        {item.title}
+                        {item.description}
                     </Text>
-
-                    {item.description && (
-                        <Text
-                            className={classes.description}
-                            size="sm"
-                            c="dimmed"
-                        >
-                            {item.description}
-                        </Text>
-                    )}
-                </Stack>
-            </div>
+                )}
+            </Stack>
         </UnstyledButton>
     ));
 };

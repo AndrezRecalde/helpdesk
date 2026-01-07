@@ -314,6 +314,9 @@ Route::group(['prefix' => 'usuario', 'middleware' => ['auth:sanctum']], function
     //Route::post('/consultar-periodos', [NomPeriodoVacacionesController::class, 'consultarDiasEnPeriodos']);
     Route::post('/periodos-vacacionales', [UserAdminController::class, 'getConsultarPeriodos']);
     Route::post('/vacaciones/dias-disponibles/{cdgo_usrio}', [NomPeriodoVacacionesController::class, 'obtenerDiasDisponiblesPorUsuario']);
+
+    /* RUTAS */
+    Route::post('/fichas-ingresos/buscar', [RutaController::class, 'buscarFichasIngresos']);
 });
 
 

@@ -33,37 +33,51 @@ class PermisosAdminController extends Controller
         }
     }
 
-    function getPermisosAdmin(Request $request): JsonResponse
+    public function getPermisosAdmin(Request $request): JsonResponse
     {
-        $permisos = Permiso::from('per_permisos as pp')
-            ->selectRaw('pp.idper_permisos,
-                            pp.id_usu_pide, us.nmbre_usrio as usuario_pide,
-                            pp.id_direccion_pide, d.nmbre_dprtmnto as direccion_pide,
-                            pp.id_tipo_motivo, ptp.tip_per_nombre as motivo,
-                            pp.per_fecha_salida, pp.per_fecha_llegada,
-                            pp.id_jefe_inmediato, u.nmbre_usrio as jefe_inmediato,
-                            pp.per_observaciones, pp.id_estado, pep.per_est_nombre as estado, pep.color,
-                            TIMEDIFF(pp.per_fecha_llegada, pp.per_fecha_salida) as tiempo_total')
-            ->join('usrios_sstma as us', 'us.cdgo_usrio', 'pp.id_usu_pide')
-            ->join('dprtmntos as d', 'd.cdgo_dprtmnto', 'pp.id_direccion_pide')
-            ->join('per_tipo_permiso as ptp', 'ptp.idper_tipo_permiso', 'pp.id_tipo_motivo')
-            ->join('usrios_sstma as u', 'u.cdgo_usrio', 'pp.id_jefe_inmediato')
-            ->join('per_estado_permiso as pep', 'pep.idper_estado_permiso', 'pp.id_estado')
+        $permisos = Permiso::query()
+            ->selectRaw('per_permisos.idper_permisos,
+                    per_permisos.id_usu_pide,
+                    us.nmbre_usrio as usuario_pide,
+                    per_permisos.id_direccion_pide,
+                    d.nmbre_dprtmnto as direccion_pide,
+                    per_permisos.id_tipo_motivo,
+                    ptp.tip_per_nombre as motivo,
+                    per_permisos.per_fecha_salida,
+                    per_permisos.per_fecha_llegada,
+                    per_permisos.id_jefe_inmediato,
+                    u.nmbre_usrio as jefe_inmediato,
+                    per_permisos.per_observaciones,
+                    per_permisos.id_estado,
+                    pep.per_est_nombre as estado,
+                    pep.color,
+                    TIMEDIFF(per_permisos.per_fecha_llegada, per_permisos.per_fecha_salida) as tiempo_total')
+            ->join('usrios_sstma as us', 'us.cdgo_usrio', '=', 'per_permisos.id_usu_pide')
+            ->join('dprtmntos as d', 'd.cdgo_dprtmnto', '=', 'per_permisos.id_direccion_pide')
+            ->join('per_tipo_permiso as ptp', 'ptp.idper_tipo_permiso', '=', 'per_permisos.id_tipo_motivo')
+            ->join('usrios_sstma as u', 'u.cdgo_usrio', '=', 'per_permisos.id_jefe_inmediato')
+            ->join('per_estado_permiso as pep', 'pep.idper_estado_permiso', '=', 'per_permisos.id_estado')
+            // AHORA SÍ USAR LOS SCOPES
             ->direccion($request->id_direccion_pide)
             ->usuario($request->id_usu_pide)
             ->codigo($request->idper_permisos)
             ->estado($request->id_estado)
-            ->where('pp.per_fecha_salida', 'LIKE', '%' . Carbon::parse($request->anio)->format('Y') . '%')
+            ->anio($request->anio)
             ->betweenFechas($request->fecha_inicio, $request->fecha_fin)
-            //->whereNotIn('pp.id_estado', [6])
-            ->orderBy('pp.per_fecha_salida', 'DESC')
+            ->orderByDesc('per_permisos.per_fecha_salida')
             ->get();
 
-        if (sizeof($permisos) > 0) {
-            return response()->json(['status' => MsgStatus::Success, 'permisos' => $permisos], 200);
-        } else {
-            return response()->json(['status' => MsgStatus::Error, 'msg' => MsgStatus::PermisoNotFound], 404);
+        if ($permisos->isEmpty()) {
+            return response()->json([
+                'status' => MsgStatus::Error,
+                'msg' => MsgStatus::PermisoNotFound
+            ], 404);
         }
+
+        return response()->json([
+            'status' => MsgStatus::Success,
+            'permisos' => $permisos
+        ], 200);
     }
 
     function anularPermisos(Request $request, int $idper_permisos): JsonResponse

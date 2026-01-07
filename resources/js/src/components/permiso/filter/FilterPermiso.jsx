@@ -1,6 +1,8 @@
-import { Box, Fieldset, Stack, TextInput } from "@mantine/core";
+import { Box, Fieldset, Group, Stack, TextInput } from "@mantine/core";
 import { BtnSubmit, TextSection } from "../../../components";
 import { IconSearch } from "@tabler/icons-react";
+import { YearPickerInput } from "@mantine/dates";
+import classes from "../../../assets/styles/modules/layout/input/LabelsInputs.module.css";
 
 export const FilterPermiso = ({
     title = "",
@@ -28,10 +30,19 @@ export const FilterPermiso = ({
                     justify="center"
                     gap="md"
                 >
+                    <Group justify="end">
+                        <YearPickerInput
+                            required
+                            placeholder="Seleccione el año"
+                            {...form.getInputProps("anio")}
+                            maxDate={new Date()}
+                        />
+                    </Group>
                     <TextInput
                         label="Número de permiso"
                         placeholder="Digita el número de soporte"
                         {...form.getInputProps("idper_permisos")}
+                        classNames={classes}
                     />
                     <BtnSubmit IconSection={IconSearch} loading={isLoading}>
                         Buscar

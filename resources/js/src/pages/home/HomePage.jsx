@@ -19,13 +19,13 @@ function HomePage() {
     }, []);
 
     return (
-        <Container mt={20} size="md">
+        <Container mt={20} size="xl">
             <Group justify="space-between">
                 <TitlePage order={3} fw={800}>
                     Bienvenido,{" "}
                     {capitalizarCadaPalabra(usuario?.usu_alias) || "Usuario"}
                 </TitlePage>
-                <Badge variant="light" color="teal.8" size="lg" radius="md">
+                <Badge variant="light" color="teal.7" size="lg" radius="md">
                     {usuario?.lgin || "Sin Datos"} -{" "}
                     {usuario?.cdgo_lrgo || "GADPE"}
                 </Badge>

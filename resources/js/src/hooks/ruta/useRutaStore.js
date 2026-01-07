@@ -31,28 +31,39 @@ export const useRutaStore = () => {
             const { data } = await helpdeskApi.post("/consulta-tramite", {
                 anio,
                 numero_ruta,
-                captcha
+                captcha,
             });
             const { numero_ruta: ruta, ingreso, despachos } = data;
             dispatch(onLoadNumeroRuta(ruta));
             dispatch(onLoadFichaIngreso(ingreso));
             dispatch(onLoadDespachos(despachos));
-            dispatch(onLoadingDespachos(false));
         } catch (error) {
             //console.log(error);
-            dispatch(onLoadingDespachos(false));
             ExceptionMessageError(error);
+        } finally {
+            dispatch(onLoadingDespachos(false));
         }
     };
 
-    const startBuscarFichasIngresos = async () => {
+    const startBuscarFichasIngresos = async (formValues) => {
         try {
             dispatch(onLoadingFichaIngreso(true));
-            const { data } = await helpdeskApi.post("/");
+            const { data } = await helpdeskApi.post(
+                "/usuario/fichas-ingresos/buscar",
+                {
+                    ...formValues,
+                }
+            );
+            const { fichas_ingresos } = data;
+
+            dispatch(onLoadFichaIngreso(fichas_ingresos));
         } catch (error) {
+            console.log(error);
             ExceptionMessageError(error);
+        } finally {
+            dispatch(onLoadingFichaIngreso(false));
         }
-    }
+    };
 
     return {
         isLoadingIngreso,
@@ -64,6 +75,7 @@ export const useRutaStore = () => {
         message,
         errores,
 
-        startSearchRutaTramite
+        startSearchRutaTramite,
+        startBuscarFichasIngresos,
     };
 };

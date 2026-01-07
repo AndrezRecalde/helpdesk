@@ -32,7 +32,7 @@ const AutorizarPermisosPage = () => {
     };
 
     return (
-        <Container size={1500}>
+        <Container size="xl">
             <Group justify="space-between">
                 <TitlePage order={2}>
                     Autorizar Permisos - {new Date().getFullYear()}

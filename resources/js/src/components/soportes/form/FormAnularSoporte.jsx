@@ -3,6 +3,7 @@ import { Box, Stack, Textarea } from "@mantine/core";
 import { BtnSubmit } from "../../../components";
 import { useSoporteStore, useUiSoporte } from "../../../hooks";
 import { IconProgressX } from "@tabler/icons-react";
+import { Roles } from "../../../helpers/dictionary";
 
 export const FormAnularSoporte = ({ form }) => {
     const usuario = JSON.parse(localStorage.getItem("service_user"));
@@ -22,7 +23,9 @@ export const FormAnularSoporte = ({ form }) => {
     const handleSubmit = () => {
         //console.log(form.values);
         startAnularSoporte(form.values);
-        startLoadSoportesActualesUsuarios(usuario.cdgo_usrio);
+        if (usuario.role === Roles.TIC_TECNICO) {
+            startLoadSoportesActualesUsuarios(usuario.cdgo_usrio);
+        }
         form.reset();
         modalActionAnularSoporte(0);
     };

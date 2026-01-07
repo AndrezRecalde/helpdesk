@@ -2,10 +2,35 @@ import { Input } from "@mantine/core";
 import { RichTextEditor } from "@mantine/tiptap";
 import classes from "../../../assets/styles/modules/solicitud/Richtext.module.css";
 
-export const FormRichText = ({ form, nameInput, editor }) => {
+export const FormRichText = ({
+    form,
+    nameInput,
+    editor,
+    label = "Contenido",
+    withAsterisk = false,
+    placeholder = "Escribe aquí...",
+}) => {
+    const inputProps = form.getInputProps(nameInput);
+
     return (
-        <Input.Wrapper {...form.getInputProps(nameInput)} >
-            <RichTextEditor editor={editor}>
+        <Input.Wrapper
+            label={label}
+            withAsterisk={withAsterisk}
+            error={inputProps.error}
+        >
+            <RichTextEditor
+                editor={editor}
+                styles={(theme) => ({
+                    root: {
+                        borderColor: inputProps.error
+                            ? theme.colors.red[6]
+                            : undefined,
+                    },
+                    content: {
+                        minHeight: "200px",
+                    },
+                })}
+            >
                 <RichTextEditor.Toolbar sticky stickyOffset={60}>
                     <RichTextEditor.ControlsGroup>
                         <RichTextEditor.Bold />

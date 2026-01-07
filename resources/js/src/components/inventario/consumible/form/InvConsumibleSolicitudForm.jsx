@@ -17,6 +17,7 @@ import {
 import { TitlePage, BtnSubmit, BtnSection } from "../../../../components";
 import { DateInput } from "@mantine/dates";
 import dayjs from "dayjs";
+import classes from "../../../../assets/styles/modules/layout/input/LabelsInputs.module.css"
 
 export const InvConsumibleSolicitudForm = ({ form }) => {
     const { users } = useUsersStore();
@@ -51,6 +52,7 @@ export const InvConsumibleSolicitudForm = ({ form }) => {
                     label="Fecha de solicitud"
                     placeholder="Registra la fecha"
                     {...form.getInputProps("fecha")}
+                    classNames={classes}
                 />
                 <Select
                     required
@@ -65,6 +67,7 @@ export const InvConsumibleSolicitudForm = ({ form }) => {
                             value: user.cdgo_usrio.toString(),
                         };
                     })}
+                    classNames={classes}
                 />
                 <SimpleGrid cols={{ base: 1, sm: 2, lg: 2 }}>
                     <Select
@@ -81,6 +84,7 @@ export const InvConsumibleSolicitudForm = ({ form }) => {
                                 label: direccion.nmbre_dprtmnto,
                             };
                         })}
+                        classNames={classes}
                     />
                     <Select
                         required
@@ -96,6 +100,7 @@ export const InvConsumibleSolicitudForm = ({ form }) => {
                                 value: user.cdgo_usrio.toString(),
                             };
                         })}
+                        classNames={classes}
                     />
                 </SimpleGrid>
                 <Select
@@ -118,6 +123,7 @@ export const InvConsumibleSolicitudForm = ({ form }) => {
                             }),
                         };
                     })}
+                    classNames={classes}
                 />
                 {form.values.consumibles.map((_, index) => (
                     <SimpleGrid cols={{ base: 1, sm: 2, lg: 2 }} key={index}>
@@ -154,6 +160,7 @@ export const InvConsumibleSolicitudForm = ({ form }) => {
                                     value: consumible.id.toString(),
                                 };
                             })}
+                            classNames={classes}
                         />
                         <NumberInput
                             required
@@ -163,6 +170,7 @@ export const InvConsumibleSolicitudForm = ({ form }) => {
                             {...form.getInputProps(
                                 `consumibles.${index}.cantidad`
                             )}
+                            classNames={classes}
                         />
                     </SimpleGrid>
                 ))}

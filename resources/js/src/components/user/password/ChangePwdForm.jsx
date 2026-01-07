@@ -13,6 +13,7 @@ import { useUsersStore } from "../../../hooks";
 import { useNavigate } from "react-router-dom";
 import { IconArrowLeft } from "@tabler/icons-react";
 import classes from "../../../assets/styles/modules/user/ChangePwd.module.css";
+import classess from "../../../assets/styles/modules/layout/input/LabelsInputs.module.css";
 
 
 export const ChangePwdForm = ({ form }) => {
@@ -39,10 +40,12 @@ export const ChangePwdForm = ({ form }) => {
                     <PasswordInput
                         label="Digita tu nueva contraseña"
                         {...form.getInputProps("paswrd")}
+                        classNames={classess}
                     />
                     <PasswordInput
                         label="Confirma tu nueva contraseña"
                         {...form.getInputProps("paswrd_confirmed")}
+                        classNames={classess}
                     />
                 </Stack>
                 <Group

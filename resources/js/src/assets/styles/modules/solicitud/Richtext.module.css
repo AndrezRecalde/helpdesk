@@ -1,8 +1,27 @@
+/* Asegurar que el editor ocupe toda la altura disponible */
 .rich {
-    height: 250px;
-    max-height: 100%;
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    overflow-y: auto;
+    min-height: 200px; /* Altura mínima del editor */
+    max-height: 500px; /* Altura máxima antes de scroll */
+    overflow-y: auto; /* Scroll cuando exceda la altura máxima */
+}
+
+/* Asegurar que el contenido interno sea totalmente clickeable */
+.rich:global(.ProseMirror) {
+    min-height: 200px;
+    padding: 12px;
+    outline: none;
+}
+
+/* Mejorar la apariencia del placeholder */
+.rich:global(.ProseMirror p.is-editor-empty:first-child::before) {
+    color: #adb5bd;
+    content: attr(data-placeholder);
+    float: left;
+    height: 0;
+    pointer-events: none;
+}
+
+/* Asegurar que el contenedor principal tenga la altura correcta */
+.rich:global(.mantine-RichTextEditor-content) {
+    min-height: 200px;
 }

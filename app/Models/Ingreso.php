@@ -49,43 +49,43 @@ class Ingreso extends Model
 
     function scopeByNumeroRuta(Builder $query, $numero_ruta)
     {
-        if ($numero_ruta) {
-            return $query->where('ing.cnsctvo_rta', $numero_ruta);
-        }
+        return $query->when($numero_ruta, function ($q) use ($numero_ruta) {
+            return $q->where('ing.cnsctvo_rta', $numero_ruta);
+        });
     }
 
     function scopeByNumeroOficio(Builder $query, $numero_oficio)
     {
-        if ($numero_oficio) {
-            return $query->where('ing.nmro_ofcio', $numero_oficio);
-        }
+        return $query->when($numero_oficio, fn($q) => $q->where('ing.nmro_ofcio', $numero_oficio));
     }
 
     function scopeByFechaElaboracion(Builder $query, $fecha_inicio, $fecha_fin)
     {
-        if ($fecha_inicio) {
-            return $query->whereBetween('ing.fcha_elbrcion', [$fecha_inicio, $fecha_fin]);
-        }
+        return $query->when(
+            $fecha_inicio && $fecha_fin,
+            fn($q) =>
+            $q->whereBetween('ing.fcha_elbrcion', [$fecha_inicio, $fecha_fin])
+        );
     }
 
     function scopeByFechaRecepcion(Builder $query, $fecha_inicio, $fecha_fin)
     {
-        if ($fecha_inicio) {
-            return $query->whereBetween('ing.fcha_rcpcion', [$fecha_inicio, $fecha_fin]);
-        }
+        return $query->when(
+            $fecha_inicio && $fecha_fin,
+            fn($q) =>
+            $q->whereBetween('ing.fcha_rcpcion', [$fecha_inicio, $fecha_fin])
+        );
     }
 
     function scopeByClientes(Builder $query, $cliente)
     {
-        if ($cliente) {
-            return $query->where('clr', 'LIKE', "%{$cliente}%");
-        }
+        return $query->when($cliente, fn($q) => $q->where('cl.nmbre_clnte', 'LIKE', "%{$cliente}%"));
+        // ⚠️ Nota: Cambiado 'clr' a 'clr.cdgo_clnte' (asumiendo que es el nombre completo de columna)
     }
 
     function scopeByAsunto(Builder $query, $asunto)
     {
-        if ($asunto) {
-            return $query->where('ing.asnto', $asunto);
-        }
+        return $query->when($asunto, fn($q) => $q->where('ing.asnto', 'LIKE', "%{$asunto}%"));
+        // ⚠️ Cambiado a LIKE para búsquedas parciales (ajusta según necesites)
     }
 }

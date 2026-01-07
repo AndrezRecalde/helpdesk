@@ -6,6 +6,7 @@ import {
     useUiInvConsumible,
 } from "../../../../hooks";
 import { useEffect } from "react";
+import classes from "../../../../assets/styles/modules/layout/input/LabelsInputs.module.css";
 
 export const ConsumibleForm = ({ form }) => {
     const { categorias } = useInvCategoriaStore();
@@ -68,16 +69,19 @@ export const ConsumibleForm = ({ form }) => {
                             label: categoria.nombre_categoria,
                         };
                     })}
+                    classNames={classes}
                 />
                 <TextInput
-                    label="Código"
+                    label="Código del Consumible"
                     placeholder="Digite el código del consumible"
                     {...form.getInputProps("codigo")}
+                    classNames={classes}
                 />
                 <TextInput
-                    label="Consumible"
+                    label="Nombre del Consumible"
                     placeholder="Digite el nombre del consumible"
                     {...form.getInputProps("nombre_consumible")}
+                    classNames={classes}
                 />
                 <BtnSubmit>Guardar</BtnSubmit>
             </Stack>

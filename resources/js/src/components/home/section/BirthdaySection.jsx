@@ -1,7 +1,8 @@
-import { Paper, Text, Group, Avatar, Stack, Badge, Box } from "@mantine/core";
+import { Paper, Group, Avatar, Stack, Badge, Box } from "@mantine/core";
 import { Carousel } from "@mantine/carousel";
-import { IconCake, IconGift, IconSparkles } from "@tabler/icons-react";
 import { useUsersStore } from "../../../hooks";
+import { TextSection } from "../../../components";
+import { IconCake, IconGift, IconSparkles } from "@tabler/icons-react";
 import "@mantine/carousel/styles.css";
 
 export const BirthdaySection = () => {
@@ -37,34 +38,28 @@ export const BirthdaySection = () => {
     }
 
     return (
-        <Paper
-            shadow="none"
-            p="md"
-            radius="md"
-            withBorder
-
-        >
+        <Paper shadow="none" p="md" radius="md" withBorder>
             <Group mb="sm" gap="xs">
                 <IconCake
-                    size={18}
-                    color="var(--mantine-color-cyan-4)"
-                    stroke={1.5}
+                    size={20}
+                    color="var(--mantine-color-teal-4)"
+                    stroke={1.7}
                 />
-                <Text size="sm" fw={500} c="dimmed">
+                <TextSection tt="" fz={15} fw={500}>
                     Cumpleaños del día de hoy
-                </Text>
-                <Badge size="xs" variant="light" color="cyan">
+                </TextSection>
+                <Badge size="md" variant="light" color="teal.7">
                     {birthdays.length}
                 </Badge>
             </Group>
 
             <Carousel
                 height={160}
-                slideSize="300px"
+                slideSize="330px"
                 slideGap="md"
                 align="start"
                 slidesToScroll={1}
-                withControls={birthdays.length > 1}
+                withControls={birthdays.length > 3}
                 draggable={birthdays.length > 1}
                 loop
             >
@@ -73,19 +68,14 @@ export const BirthdaySection = () => {
 
                     return (
                         <Carousel.Slide key={employee.cdgo_usrio}>
-                            <Paper
-                                p="sm"
-                                radius="md"
-                                withBorder
-                                h="100%"
-                            >
+                            <Paper p="sm" radius="md" withBorder h="100%">
                                 <Stack gap="xs" h="100%">
                                     <Group gap="sm" wrap="nowrap">
                                         <Box pos="relative">
                                             <Avatar
-                                                color="cyan"
+                                                color="teal"
                                                 radius="xl"
-                                                size="md"
+                                                size="lg"
                                                 variant="light"
                                             >
                                                 {getInitials(
@@ -99,7 +89,7 @@ export const BirthdaySection = () => {
                                             >
                                                 <IconSparkles
                                                     size={16}
-                                                    color="var(--mantine-color-cyan-4)"
+                                                    color="var(--mantine-color-teal-4)"
                                                 />
                                             </Box>
                                         </Box>
@@ -108,32 +98,31 @@ export const BirthdaySection = () => {
                                             gap={2}
                                             style={{ flex: 1, minWidth: 0 }}
                                         >
-                                            <Text
-                                                size="xs"
+                                            <TextSection
+                                                fz={14}
                                                 fw={600}
                                                 lineClamp={2}
-                                                lh={1.3}
                                                 tt="capitalize"
                                             >
                                                 {formatName(
                                                     employee.nmbre_usrio
                                                 )}
-                                            </Text>
+                                            </TextSection>
                                             <Group gap={6}>
                                                 <IconCake
                                                     size={12}
-                                                    color="var(--mantine-color-cyan-4)"
+                                                    color="var(--mantine-color-teal-4)"
                                                     stroke={1.5}
                                                 />
-                                                <Text size="xs" c="dimmed">
+                                                <TextSection fz={12} tt="">
                                                     {formatBirthday(
                                                         employee.usu_fec_nac
                                                     )}
-                                                </Text>
+                                                </TextSection>
                                                 <Badge
                                                     size="xs"
                                                     variant="light"
-                                                    color="cyan"
+                                                    color="teal"
                                                     leftSection={
                                                         <IconGift size={10} />
                                                     }
@@ -153,17 +142,17 @@ export const BirthdaySection = () => {
                                             flex: 1,
                                         }}
                                     >
-                                        <Text
-                                            size="xs"
-                                            c="dimmed"
+                                        <TextSection
+                                            fz={12}
                                             fw={500}
-                                            lh={1.4}
                                             fs="italic"
+                                            tt=""
+                                            ta="center"
                                         >
                                             {`¡Feliz cumpleaños ${formatName(
                                                 firstName
                                             )}! 🎉 La institución te desea un día maravilloso lleno de bendiciones y éxitos.`}
-                                        </Text>
+                                        </TextSection>
                                     </Paper>
                                 </Stack>
                             </Paper>

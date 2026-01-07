@@ -40,41 +40,63 @@ class Permiso extends Model
         return $permiso;
     }
 
-    function scopeDireccion($query, $id_direccion_pide)
+    public function scopeDireccion($query, $id_direccion_pide)
     {
-        if ($id_direccion_pide !== null) {
-            return $query->where('pp.id_direccion_pide', $id_direccion_pide);
-        }
+        return $query->when($id_direccion_pide !== null, function ($q) use ($id_direccion_pide) {
+            return $q->where('id_direccion_pide', $id_direccion_pide);
+        });
     }
 
-    function scopeUsuario($query, $id_usu_pide)
+    /**
+     * Scope para filtrar por usuario
+     */
+    public function scopeUsuario($query, $id_usu_pide)
     {
-        if ($id_usu_pide) {
-            return $query->where('pp.id_usu_pide', $id_usu_pide);
-        }
+        return $query->when($id_usu_pide, function ($q) use ($id_usu_pide) {
+            return $q->where('id_usu_pide', $id_usu_pide);
+        });
     }
 
-    function scopeCodigo($query, $idper_permisos)
+    /**
+     * Scope para filtrar por código/ID
+     */
+    public function scopeCodigo($query, $idper_permisos)
     {
-        if ($idper_permisos) {
-            return $query->where('pp.idper_permisos', $idper_permisos);
-        }
+        return $query->when($idper_permisos, function ($q) use ($idper_permisos) {
+            return $q->where('idper_permisos', $idper_permisos);
+        });
     }
 
-    function scopeEstado($query, $id_estado)
+    /**
+     * Scope para filtrar por estado
+     */
+    public function scopeEstado($query, $id_estado)
     {
-        if ($id_estado) {
-            return $query->where('pp.id_estado', $id_estado);
-        }
+        return $query->when($id_estado, function ($q) use ($id_estado) {
+            return $q->where('id_estado', $id_estado);
+        });
     }
 
-    function scopeBetweenFechas($query, $fecha_inicio, $fecha_fin)
+    /**
+     * Scope para filtrar por rango de fechas
+     */
+    public function scopeBetweenFechas($query, $fecha_inicio, $fecha_fin)
     {
-        if ($fecha_inicio && $fecha_fin) {
-            return $query->whereBetween('pp.per_fecha_salida', [
+        return $query->when($fecha_inicio && $fecha_fin, function ($q) use ($fecha_inicio, $fecha_fin) {
+            return $q->whereBetween('per_fecha_salida', [
                 Carbon::parse($fecha_inicio)->startOfDay(),
                 Carbon::parse($fecha_fin)->endOfDay(),
             ]);
-        }
+        });
+    }
+
+    /**
+     * Scope para filtrar por año (OPTIMIZADO)
+     */
+    public function scopeAnio($query, $anio)
+    {
+        return $query->when($anio, function ($q) use ($anio) {
+            return $q->whereYear('per_fecha_salida', $anio);
+        });
     }
 }

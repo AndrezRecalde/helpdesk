@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useMemo, useCallback } from "react";
 import { Card, Container, Divider, Group, LoadingOverlay } from "@mantine/core";
 import {
     AlertSection,
@@ -6,7 +6,7 @@ import {
     FormSolicitudPermiso,
     TitlePage,
 } from "../../components";
-import { hasLength, isNotEmpty, useForm } from "@mantine/form";
+import { isNotEmpty, useForm } from "@mantine/form";
 import {
     useDireccionStore,
     useDirectorStore,
@@ -21,7 +21,9 @@ import Swal from "sweetalert2";
 
 const PermisosPage = () => {
     useTitlePage("Helpdesk | Permisos");
+
     const usuario = JSON.parse(localStorage.getItem("service_user"));
+
     const { message, errores, isExport, startCardPermiso } = usePermisoStore();
     const { startLoadDirecciones, clearDirecciones } = useDireccionStore();
     const { startLoadUsersExtrict, clearUsers } = useUsersStore();
@@ -31,7 +33,16 @@ const PermisosPage = () => {
         isLoading: loadDirectores,
         clearDirectores,
     } = useDirectorStore();
+
     const navigate = useNavigate();
+
+    // Verificar si el usuario puede editar
+    const canEdit = useMemo(
+        () =>
+            usuario.role === Roles.TIC_GERENTE ||
+            usuario.role === Roles.NOM_ASISTENCIA,
+        [usuario.role]
+    );
 
     const form = useForm({
         initialValues: {
@@ -47,7 +58,7 @@ const PermisosPage = () => {
             per_observaciones: "",
         },
         validate: {
-            id_direccion_pide: isNotEmpty("Por favor seleccione la direccion"),
+            id_direccion_pide: isNotEmpty("Por favor seleccione la dirección"),
             id_usu_pide: isNotEmpty("Por favor seleccione usuario"),
             id_tipo_motivo: isNotEmpty("Por favor seleccione el motivo"),
             fecha: isNotEmpty("Por favor seleccione la fecha"),
@@ -73,10 +84,27 @@ const PermisosPage = () => {
                 }
                 return null;
             },
-            per_observaciones: hasLength(
-                { min: 0, max: 300 },
-                "La observación admite un minimo de 5 caracteres y máximo 300 caracteres"
-            ),
+            // Validación condicional para per_observaciones
+            per_observaciones: (value, values) => {
+                const tipoMotivo = Number(values.id_tipo_motivo);
+
+                // Si id_tipo_motivo es 3, las observaciones son obligatorias
+                if (tipoMotivo === 3) {
+                    if (!value || value.trim().length === 0) {
+                        return "Las observaciones son obligatorias para este tipo de motivo";
+                    }
+                    if (value.trim().length < 5) {
+                        return "Las observaciones deben tener al menos 5 caracteres";
+                    }
+                }
+
+                // Validación de longitud máxima para todos los casos
+                if (value && value.length > 350) {
+                    return "Las observaciones no pueden exceder 350 caracteres";
+                }
+
+                return null;
+            },
         },
         transformValues: (values) => ({
             ...values,
@@ -86,104 +114,99 @@ const PermisosPage = () => {
             id_tipo_motivo: Number(values.id_tipo_motivo) || null,
         }),
     });
+
     const { id_direccion_pide } = form.values;
 
+    // Cargar direcciones al montar
     useEffect(() => {
         startLoadDirecciones();
-
-        return () => {
-            clearDirecciones();
-        };
+        return () => clearDirecciones();
     }, []);
 
+    // Cargar usuarios cuando cambia la dirección
     useEffect(() => {
-        startLoadUsersExtrict(id_direccion_pide);
-        form.setFieldValue("id_usu_pide", null);
-
-        return () => {
-            clearUsers();
-        };
+        if (id_direccion_pide) {
+            startLoadUsersExtrict(id_direccion_pide);
+            form.setFieldValue("id_usu_pide", null);
+        }
+        return () => clearUsers();
     }, [id_direccion_pide]);
 
+    // Cargar directores cuando cambia la dirección
     useEffect(() => {
         if (id_direccion_pide !== null) {
             startLoadDirectores({ cdgo_dprtmnto: id_direccion_pide });
             form.setFieldValue("id_jefe_inmediato", null);
-            return;
         }
-
-        return () => {
-            clearDirectores();
-        };
+        return () => clearDirectores();
     }, [id_direccion_pide]);
 
+    // Setear valores automáticos para usuarios no privilegiados
     useEffect(() => {
-        if (
-            usuario.role !== Roles.TIC_GERENTE &&
-            usuario.role !== Roles.NOM_ASISTENCIA
-        ) {
+        if (!canEdit && id_direccion_pide && directores.length > 0) {
             form.setValues({
                 id_direccion_pide: usuario.cdgo_dprtmnto.toString(),
                 id_usu_pide: usuario.cdgo_usrio.toString(),
                 id_jefe_inmediato: directores[0]?.id_jefe?.toString(),
             });
-            return;
         }
-    }, [id_direccion_pide, directores]);
+    }, [id_direccion_pide, directores, canEdit]);
 
+    // Manejar mensaje de éxito
     useEffect(() => {
-        if (message !== undefined) {
-            //setStoragePermisoFields(message);
+        if (message?.msg) {
             Swal.fire({
                 text: `${message.msg}, ¿Deseas imprimir el permiso?`,
                 icon: "success",
                 showCancelButton: true,
                 confirmButtonColor: "#20c997",
                 cancelButtonColor: "#d33",
-                confirmButtonText: "Si, imprimir!",
+                confirmButtonText: "Sí, imprimir!",
+                cancelButtonText: "No, gracias",
             }).then((result) => {
-                if (result.isConfirmed) {
+                if (result.isConfirmed && message.idper_permisos) {
                     startCardPermiso(message.idper_permisos);
-                    //console.log(message.idper_permisos)
                 }
             });
-            return;
         }
     }, [message]);
 
+    // Manejar errores
     useEffect(() => {
-        if (errores !== undefined) {
+        if (errores) {
             Swal.fire({
                 icon: "error",
                 text: errores,
                 showConfirmButton: true,
+                confirmButtonColor: "#20c997",
             });
-            return;
         }
     }, [errores]);
 
+    // Manejar estado de exportación
     useEffect(() => {
-        if (isExport === true) {
+        if (isExport) {
             Swal.fire({
-                icon: "warning",
-                text: "Un momento porfavor, se está exportando",
+                icon: "info",
+                text: "Un momento por favor, se está exportando el documento.. .",
                 showConfirmButton: false,
+                allowOutsideClick: false,
                 didOpen: () => {
                     Swal.showLoading();
                 },
             });
         } else {
-            Swal.close(); // Cierra el modal cuando isExport es false
+            Swal.close();
         }
     }, [isExport]);
 
-    const handleNavigate = () => {
+    const handleNavigate = useCallback(() => {
         navigate("/intranet/ver-permisos");
-    };
+    }, [navigate]);
 
     return (
         <Container size="md">
-            <Group justify="space-between">
+            <Group justify="space-between" mb="md">
                 <TitlePage order={2}>Crear Permiso</TitlePage>
                 <BtnSection
                     IconSection={IconChevronsRight}
@@ -192,35 +215,24 @@ const PermisosPage = () => {
                     Ver permisos
                 </BtnSection>
             </Group>
+
             <Divider my="md" />
+
             <Card withBorder shadow="sm" radius="sm" mt={20} mb={20}>
                 <LoadingOverlay
-                    visible={
-                        (usuario.role !== Roles.TIC_GERENTE ||
-                            usuario.role !== Roles.NOM_ASISTENCIA) &&
-                        loadDirectores
-                            ? true
-                            : false
-                    }
+                    visible={!canEdit && loadDirectores}
                     zIndex={1000}
                     overlayProps={{ radius: "sm", blur: 2 }}
                 />
-                <FormSolicitudPermiso
-                    form={form}
-                    disabled={
-                        usuario.role === Roles.TIC_GERENTE ||
-                        usuario.role === Roles.NOM_ASISTENCIA
-                            ? false
-                            : true
-                    }
-                />
+                <FormSolicitudPermiso form={form} disabled={!canEdit} />
             </Card>
+
             <AlertSection
                 variant="light"
                 color="orange.7"
                 title="Información"
                 mt={5}
-                mb={5}
+                mb={20}
                 icon={IconInfoCircle}
             >
                 <p>

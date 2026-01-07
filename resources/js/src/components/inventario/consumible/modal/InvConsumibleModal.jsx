@@ -65,7 +65,7 @@ export const InvConsumibleModal = () => {
             size="lg"
             title={
                 <TextSection fz={18} fw={700} tt="capitalize">
-                    Concepto de Estado
+                    Consumible
                 </TextSection>
             }
             overlayProps={{
