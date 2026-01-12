@@ -25,7 +25,7 @@ const PermisosPage = () => {
     const usuario = JSON.parse(localStorage.getItem("service_user"));
     const isInitialMount = useRef(true);
 
-    const { message, errores, isExport, startCardPermigo } = usePermisoStore();
+    const { message, errores, isExport, startCardPermiso } = usePermisoStore();
     const { startLoadDirecciones, clearDirecciones } = useDireccionStore();
     const { startLoadUsersExtrict, clearUsers } = useUsersStore();
     const {

@@ -2,7 +2,6 @@ import { Menu, rem } from "@mantine/core";
 import {
     IconChecks,
     IconClockHour2,
-    IconDiscount,
     IconEditCircle,
     IconEyeCheck,
     IconLogs,
