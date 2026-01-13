@@ -11,7 +11,6 @@ import { Divider } from "@mantine/core";
 const InvTipocategoriasPage = ({ tabValue }) => {
     const {
         startLoadTiposcategorias,
-        startClearTiposcategorias,
         message,
         errores,
     } = useInvTipocategoriaStore();

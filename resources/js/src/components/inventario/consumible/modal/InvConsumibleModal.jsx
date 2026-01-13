@@ -40,7 +40,7 @@ export const InvConsumibleModal = () => {
 
     useEffect(() => {
         if (isOpenModalInvConsumible) {
-            startLoadInvCategorias({ tipocategoria_id: 2, activo: true });
+            startLoadInvCategorias({ tiposCategorias: [2,3], activo: true });
             return;
         }
 

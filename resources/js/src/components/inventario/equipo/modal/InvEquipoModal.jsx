@@ -1,6 +1,7 @@
 import { LoadingOverlay, Modal } from "@mantine/core";
 import { InvEquipoForm, TextSection } from "../../../../components";
 import {
+    useInvCategoriaStore,
     //useInvCategoriaStore,
     useInvConceptoStore,
     //useInvCategoriaStore,
@@ -23,8 +24,8 @@ export const InvEquipoModal = () => {
         useInvUbicacionStore();
     const { startLoadTiposcategorias, startClearTiposcategorias } =
         useInvTipocategoriaStore();
-    /* const { startLoadInvCategorias, startClearInvCategorias } =
-        useInvCategoriaStore(); */
+    const { startClearInvCategorias } =
+        useInvCategoriaStore();
     const { startLoadInvEstados, startClearInvEstados } = useInvEstadoStore();
     const { startLoadInvMarcas, startClearInvMarcas } = useInvMarcaStore();
     const { startLoadInvConceptos, startClearInvConceptos } =
@@ -104,7 +105,7 @@ export const InvEquipoModal = () => {
         return () => {
             startClearInvUbicaciones();
             startClearTiposcategorias();
-            //startClearInvCategorias();
+            startClearInvCategorias();
             startClearInvEstados();
             startClearInvMarcas();
             startClearInvConceptos();

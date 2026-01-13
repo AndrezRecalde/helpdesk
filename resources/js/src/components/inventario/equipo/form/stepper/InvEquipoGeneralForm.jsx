@@ -7,7 +7,7 @@ import {
     useInvUbicacionStore,
 } from "../../../../../hooks";
 
-export const InvEquipoGeneralForm = ({ form }) => {
+export const InvEquipoGeneralForm = ({ form, classes }) => {
     const { invUbicaciones } = useInvUbicacionStore();
     const { invMarcas } = useInvMarcaStore();
     const { invEstados } = useInvEstadoStore();
@@ -33,11 +33,13 @@ export const InvEquipoGeneralForm = ({ form }) => {
                         label: ubicacion.nombre_edificio,
                     };
                 })}
+                classNames={classes}
             />
             <SimpleGrid cols={{ base: 1, xs: 1, sm: 2, md: 2, lg: 2 }}>
                 <Select
                     withAsterisk
                     searchable
+                    clearable
                     label="Tipo Categoría"
                     placeholder="Seleccione un tipo de categoría"
                     {...form.getInputProps("tipocategoria_id")}
@@ -47,10 +49,12 @@ export const InvEquipoGeneralForm = ({ form }) => {
                             label: tipo.nombre_tipocategoria,
                         };
                     })}
+                    classNames={classes}
                 />
                 <Select
                     withAsterisk
                     searchable
+                    clearable
                     label="Categoría"
                     placeholder="Seleccione la categoría"
                     {...form.getInputProps("categoria_id")}
@@ -60,12 +64,14 @@ export const InvEquipoGeneralForm = ({ form }) => {
                             label: categoria.nombre_categoria,
                         };
                     })}
+                    classNames={classes}
                 />
             </SimpleGrid>
             <SimpleGrid cols={{ base: 1, xs: 1, sm: 2, md: 2, lg: 2 }}>
                 <Select
                     withAsterisk
                     searchable
+                    clearable
                     label="Marca del Equipo"
                     placeholder="Seleccione una marca"
                     {...form.getInputProps("marca_id")}
@@ -75,12 +81,14 @@ export const InvEquipoGeneralForm = ({ form }) => {
                             label: marca.nombre_marca,
                         };
                     })}
+                    classNames={classes}
                 />
                 <TextInput
                     withAsterisk
                     label="Modelo"
                     placeholder="Digite el modelo del equipo"
                     {...form.getInputProps("modelo")}
+                    classNames={classes}
                 />
             </SimpleGrid>
             <SimpleGrid cols={{ base: 1, xs: 1, sm: 2, md: 2, lg: 2 }}>
@@ -88,12 +96,14 @@ export const InvEquipoGeneralForm = ({ form }) => {
                     label="Código Antiguo"
                     placeholder="Digite el código antiguo"
                     {...form.getInputProps("codigo_antiguo")}
+                    classNames={classes}
                 />
                 <TextInput
                     withAsterisk
                     label="Código Nuevo"
                     placeholder="Digite el código nuevo"
                     {...form.getInputProps("codigo_nuevo")}
+                    classNames={classes}
                 />
             </SimpleGrid>
 
@@ -102,9 +112,11 @@ export const InvEquipoGeneralForm = ({ form }) => {
                     label="Número de serie"
                     placeholder="Digite el número de serie"
                     {...form.getInputProps("numero_serie")}
+                    classNames={classes}
                 />
                 <Select
                     withAsterisk
+                    clearable
                     label="Estado del equipo"
                     placeholder="Seleccione el estado del equipo"
                     {...form.getInputProps("estado_id")}
@@ -114,6 +126,7 @@ export const InvEquipoGeneralForm = ({ form }) => {
                             label: estado.nombre_estado,
                         };
                     })}
+                    classNames={classes}
                 />
             </SimpleGrid>
         </Stack>

@@ -20,6 +20,7 @@ export const useInvCategoriaStore = () => {
     const dispatch = useDispatch();
 
     const startLoadInvCategorias = async ({
+        tiposCategorias = null,
         tipocategoria_id = null,
         activo = null,
     }) => {
@@ -28,6 +29,7 @@ export const useInvCategoriaStore = () => {
             const { data } = await helpdeskApi.post(
                 "/gerencia/inventario/categorias",
                 {
+                    tiposCategorias,
                     tipocategoria_id,
                     activo,
                 }

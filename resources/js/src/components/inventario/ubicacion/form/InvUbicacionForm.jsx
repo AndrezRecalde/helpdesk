@@ -2,6 +2,7 @@ import { Box, Stack, TextInput } from "@mantine/core";
 import { BtnSubmit } from "../../../../components";
 import { useEffect } from "react";
 import { useInvUbicacionStore, useInvUiUbicacion } from "../../../../hooks";
+import classes from "../../../../assets/styles/modules/layout/input/LabelsInputs.module.css";
 
 export const InvUbicacionForm = ({ form }) => {
     const { startAddInvUbicacion, activateUbicacion, setActivateInvUbicacion } =
@@ -41,11 +42,13 @@ export const InvUbicacionForm = ({ form }) => {
                     label="Nombre edificio"
                     placeholder="Digite el nombre del edificio o entidad"
                     {...form.getInputProps("nombre_edificio")}
+                    classNames={classes}
                 />
                 <TextInput
                     label="Ubicación física"
                     placeholder="Digite la ubicación física"
                     {...form.getInputProps("nombre_ubicacion")}
+                    classNames={classes}
                 />
                 <BtnSubmit>Guardar</BtnSubmit>
             </Stack>

@@ -1,11 +1,5 @@
 import { useEffect } from "react";
-import {
-    Box,
-    MultiSelect,
-    Select,
-    Stack,
-    TextInput,
-} from "@mantine/core";
+import { Box, MultiSelect, Select, Stack, TextInput } from "@mantine/core";
 import { BtnSubmit } from "../../../../components";
 import { IconArrowDownToArc } from "@tabler/icons-react";
 import {
@@ -14,6 +8,7 @@ import {
     useSoporteStore,
     useUsersStore,
 } from "../../../../hooks";
+import classes from "../../../../assets/styles/modules/layout/input/LabelsInputs.module.css";
 
 export const InvBajaEquipoForm = ({ form }) => {
     const { user_id } = form.values;
@@ -52,6 +47,7 @@ export const InvBajaEquipoForm = ({ form }) => {
                 <Select
                     required
                     searchable
+                    clearable
                     label="Custodio"
                     placeholder="Seleccione custodio"
                     nothingFoundMessage="Nothing found..."
@@ -62,6 +58,7 @@ export const InvBajaEquipoForm = ({ form }) => {
                             label: user.nmbre_usrio,
                         };
                     })}
+                    classNames={classes}
                 />
                 <MultiSelect
                     required
@@ -83,10 +80,12 @@ export const InvBajaEquipoForm = ({ form }) => {
                             }),
                         };
                     })}
+                    classNames={classes}
                 />
                 <Select
                     required
                     searchable
+                    clearable
                     label="No. SOPORTE"
                     placeholder="Seleccione el No. de soporte"
                     nothingFoundMessage="Nothing found..."
@@ -97,13 +96,14 @@ export const InvBajaEquipoForm = ({ form }) => {
                             label: soporte.numero_sop.toString(),
                         };
                     })}
+                    classNames={classes}
                 />
                 <TextInput
                     required
-                    description="Ingrese el No. MEMO de la Dirección de TIC"
                     label="No. MEMORANDO"
-                    placeholder="Ingrese Número de MEMO"
+                    placeholder="Ingrese el No. MEMO de la Dirección de TIC"
                     {...form.getInputProps("numero_memorando")}
+                    classNames={classes}
                 />
 
                 <BtnSubmit

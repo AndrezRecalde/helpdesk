@@ -1,17 +1,22 @@
 .root {
     position: relative !important;
-  }
+}
 
-  .input {
+.input {
     height: 54px !important;
     padding-top: 18px !important;
-  }
+}
 
-  .label {
+.label {
     position: absolute !important;
     pointer-events: none !important;
     font-size: var(--mantine-font-size-xs) !important;
     padding-left: var(--mantine-spacing-sm) !important;
     padding-top: calc(var(--mantine-spacing-sm) / 2) !important;
     z-index: 1 !important;
-  }
+}
+
+.section {
+    top: 65% !important;
+    transform: translateY(-50%) !important;
+}

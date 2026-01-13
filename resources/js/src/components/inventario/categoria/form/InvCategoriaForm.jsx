@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { Box, Select, Stack, TextInput } from "@mantine/core";
 import { BtnSubmit } from "../../../../components";
 import { useInvCategoriaStore, useInvTipocategoriaStore, useInvUiCategoria } from "../../../../hooks";
+import classes from "../../../../assets/styles/modules/layout/input/LabelsInputs.module.css";
 
 export const InvCategoriaForm = ({ form }) => {
     const { tiposcategorias } = useInvTipocategoriaStore();
@@ -52,11 +53,13 @@ export const InvCategoriaForm = ({ form }) => {
                             label: tipocategoria.nombre_tipocategoria,
                         };
                     })}
+                    classNames={classes}
                 />
                 <TextInput
                     label="Categoría"
                     placeholder="Digite el nombre de la Categoría"
                     {...form.getInputProps("nombre_categoria")}
+                    classNames={classes}
                 />
                 <BtnSubmit>
                     Guardar

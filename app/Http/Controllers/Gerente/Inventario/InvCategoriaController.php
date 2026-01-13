@@ -20,6 +20,7 @@ class InvCategoriaController extends Controller
                         invc.activo')
             ->join('inv_tipocategorias as invt', 'invt.id', 'invc.tipocategoria_id')
             ->byTipocategoriaId($request->tipocategoria_id)
+            ->byTiposCategorias($request->tiposCategorias)
             ->activo($request->activo)
             ->get();
 

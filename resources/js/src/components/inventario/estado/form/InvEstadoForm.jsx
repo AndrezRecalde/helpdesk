@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { Box, ColorInput, Stack, TextInput } from "@mantine/core";
 import { BtnSubmit } from "../../../../components";
 import { useInvEstadoStore, useInvUiEstado } from "../../../../hooks";
+import classes from "../../../../assets/styles/modules/layout/input/LabelsInputs.module.css";
 
 export const InvEstadoForm = ({ form }) => {
     const { startAddInvEstado, activateInvEstado, setActivateInvEstado } =
@@ -41,11 +42,13 @@ export const InvEstadoForm = ({ form }) => {
                     label="Estado"
                     placeholder="Digite el nombre del estado"
                     {...form.getInputProps("nombre_estado")}
+                    classNames={classes}
                 />
                 <ColorInput
                     label="Color del estado"
                     placeholder="Seleccione un color para el estado"
                     {...form.getInputProps("color")}
+                    classNames={classes}
                 />
                 <BtnSubmit>Guardar</BtnSubmit>
             </Stack>

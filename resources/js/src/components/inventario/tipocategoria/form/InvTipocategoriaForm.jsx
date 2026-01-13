@@ -5,6 +5,7 @@ import {
     useInvTipocategoriaStore,
     useInvUiTipocategoria,
 } from "../../../../hooks";
+import classes from "../../../../assets/styles/modules/layout/input/LabelsInputs.module.css";
 
 export const InvTipocategoriaForm = ({ form }) => {
     const {
@@ -45,6 +46,7 @@ export const InvTipocategoriaForm = ({ form }) => {
                     label="Tipo categoría"
                     placeholder="Digite el tipo de categoría"
                     {...form.getInputProps("nombre_tipocategoria")}
+                    classNames={classes}
                 />
                 <BtnSubmit>Guardar</BtnSubmit>
             </Stack>

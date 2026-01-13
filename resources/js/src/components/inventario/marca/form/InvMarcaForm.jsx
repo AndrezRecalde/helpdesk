@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { Box, Stack, TextInput } from "@mantine/core";
 import { BtnSubmit } from "../../../../components";
 import { useInvMarcaStore, useInvUiMarca } from "../../../../hooks";
+import classes from "../../../../assets/styles/modules/layout/input/LabelsInputs.module.css";
 
 export const InvMarcaForm = ({ form }) => {
     const { startAddInvMarca, activateInvMarca, setActivateInvMarca } =
@@ -41,6 +42,7 @@ export const InvMarcaForm = ({ form }) => {
                     label="Marca"
                     placeholder="Digite el nombre el nombre de la marca"
                     {...form.getInputProps("nombre_marca")}
+                    classNames={classes}
                 />
                 <BtnSubmit>Guardar</BtnSubmit>
             </Stack>

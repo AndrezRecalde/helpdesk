@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { Box, Stack, TextInput } from "@mantine/core";
 import { BtnSubmit } from "../../../../components";
 import { useInvConceptoStore, useInvUiConcepto } from "../../../../hooks";
+import classes from "../../../../assets/styles/modules/layout/input/LabelsInputs.module.css";
 
 export const InvConceptoForm = ({ form }) => {
     const { startAddInvConcepto, activateConcepto, setActivateInvConcepto } =
@@ -42,6 +43,7 @@ export const InvConceptoForm = ({ form }) => {
                     label="Concepto de estado"
                     placeholder="Digite el nombre el nombre del estado"
                     {...form.getInputProps("nombre_concepto")}
+                    classNames={classes}
                 />
                 <BtnSubmit>
                     Guardar

@@ -45,19 +45,6 @@ export const ConsumibleForm = ({ form }) => {
                 justify="center"
                 gap="lg"
             >
-                {/* <Select
-                    disabled
-                    withAsterisk
-                    label="Tipo de categoría"
-                    placeholder="Seleccione el Tipo de categoría"
-                    {...form.getInputProps("tipocategoria_id")}
-                    data={tiposcategorias.map((tipocategoria) => {
-                        return {
-                            value: tipocategoria.id.toString(),
-                            label: tipocategoria.nombre_tipocategoria,
-                        };
-                    })}
-                /> */}
                 <Select
                     withAsterisk
                     label="Categoría"

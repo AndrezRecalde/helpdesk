@@ -17,6 +17,7 @@ import {
     IconChevronsRight,
     IconDevicesShare,
 } from "@tabler/icons-react";
+import classes from "../../../../assets/styles/modules/layout/input/LabelsInputs.module.css";
 
 export const InvEquipoForm = ({ form }) => {
     const { tipocategoria_id } = form.values;
@@ -34,14 +35,18 @@ export const InvEquipoForm = ({ form }) => {
                 id: activateInvEquipo.id,
                 modelo: activateInvEquipo.modelo,
                 numero_serie: activateInvEquipo.numero_serie,
-                codigo_antiguo: activateInvEquipo.codigo_antiguo ? activateInvEquipo.codigo_antiguo: "",
+                codigo_antiguo: activateInvEquipo.codigo_antiguo
+                    ? activateInvEquipo.codigo_antiguo
+                    : "",
                 codigo_nuevo: activateInvEquipo.codigo_nuevo,
                 fecha_adquisicion: new Date(
                     activateInvEquipo.fecha_adquisicion
                 ),
                 //fecha_amortizacion: new Date(activateInvEquipo.fecha_amortizacion),
                 vida_util: activateInvEquipo.vida_util,
-                descripcion: activateInvEquipo.descripcion ? activateInvEquipo.descripcion : "",
+                descripcion: activateInvEquipo.descripcion
+                    ? activateInvEquipo.descripcion
+                    : "",
                 bien_adquirido: activateInvEquipo.bien_adquirido ? 1 : 0,
                 bien_donado: activateInvEquipo.bien_donado ? 1 : 0,
                 bien_usado: activateInvEquipo.bien_usado ? 1 : 0,
@@ -63,16 +68,19 @@ export const InvEquipoForm = ({ form }) => {
     }, [activateInvEquipo]);
 
     useEffect(() => {
-        startLoadInvCategorias({
-            tipocategoria_id: tipocategoria_id,
-            activo: true,
-        });
-        form.setFieldValue(
-            "categoria_id",
-            activateInvEquipo?.categoria_id
-                ? activateInvEquipo?.categoria_id.toString()
-                : null
-        );
+        if (tipocategoria_id) {
+            startLoadInvCategorias({
+                tipocategoria_id: tipocategoria_id,
+                activo: true,
+            });
+            form.setFieldValue(
+                "categoria_id",
+                activateInvEquipo?.categoria_id
+                    ? activateInvEquipo?.categoria_id.toString()
+                    : null
+            );
+            return;
+        }
     }, [tipocategoria_id]);
 
     const nextStep = () => {
@@ -146,13 +154,13 @@ export const InvEquipoForm = ({ form }) => {
                     label="Informacion"
                     description="Información General"
                 >
-                    <InvEquipoGeneralForm form={form} />
+                    <InvEquipoGeneralForm form={form} classes={classes} />
                 </Stepper.Step>
                 <Stepper.Step
                     label="Complementaria"
                     description="Información Complementaria"
                 >
-                    <InvEquipoComplementaria form={form} />
+                    <InvEquipoComplementaria form={form} classes={classes} />
                 </Stepper.Step>
                 <Stepper.Completed>
                     <InvEquipoStepperFinal

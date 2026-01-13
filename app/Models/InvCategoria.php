@@ -49,9 +49,9 @@ class InvCategoria extends Model
         $this->activo = $this->stock > 0;
     } */
 
-    function equipos() : HasMany
+    function equipos(): HasMany
     {
-     return $this->hasMany(InvEquipo::class, 'categoria_id');
+        return $this->hasMany(InvEquipo::class, 'categoria_id');
     }
 
     function tipocategoria(): BelongsTo
@@ -63,6 +63,13 @@ class InvCategoria extends Model
     {
         if ($tipocategoria_id) {
             return $query->where('invc.tipocategoria_id', $tipocategoria_id);
+        }
+    }
+
+    function scopeByTiposCategorias(Builder $query, $tiposCategorias)
+    {
+        if ($tiposCategorias) {
+            return $query->whereIn('invt.id', $tiposCategorias);
         }
     }
 

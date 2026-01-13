@@ -13,7 +13,7 @@ import { TextSection } from "../../../../../components";
 import { useEffect, useState } from "react";
 import { useDireccionStore, useUsersStore } from "../../../../../hooks";
 
-export const InvEquipoComplementaria = ({ form }) => {
+export const InvEquipoComplementaria = ({ form, classes }) => {
     const { bien_adquirido, bien_donado, is_there_custodio } = form.values;
 
     const {
@@ -100,6 +100,7 @@ export const InvEquipoComplementaria = ({ form }) => {
                     label="Fecha adquisición"
                     placeholder="Seleccione fecha de adquisición"
                     {...form.getInputProps("fecha_adquisicion")}
+                    classNames={classes}
                 />
                 {/* <DateInput
                     //dateParser={dateParser}
@@ -114,6 +115,7 @@ export const InvEquipoComplementaria = ({ form }) => {
                     placeholder="Digite la vida útil en años"
                     allowNegative={false}
                     {...form.getInputProps("vida_util")}
+                    classNames={classes}
                 />
             </SimpleGrid>
 
@@ -142,6 +144,7 @@ export const InvEquipoComplementaria = ({ form }) => {
                                   }))
                                 : "Cargando"
                         }
+                        classNames={classes}
                     />
                     <Select
                         searchable
@@ -159,6 +162,7 @@ export const InvEquipoComplementaria = ({ form }) => {
                                   }))
                                 : "Cargando"
                         }
+                        classNames={classes}
                     />
                 </SimpleGrid>
             ) : null}
