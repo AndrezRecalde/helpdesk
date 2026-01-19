@@ -40,6 +40,14 @@ export const InvEquipoComplementaria = ({ form, classes }) => {
     }, [is_there_custodio]);
 
     useEffect(() => {
+      if(!is_there_custodio) {
+        form.setFieldValue("user_id", "");
+        form.setFieldValue("direccion_id", "");
+      }
+    }, [is_there_custodio])
+
+
+    useEffect(() => {
         return () => {
             clearUsers();
             clearDirecciones();
