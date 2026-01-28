@@ -3,78 +3,102 @@ import { getEnv } from "../helpers/getEnv";
 
 const { VITE_APP_URL } = getEnv();
 
-// Crear una instancia de Axios
 const helpdeskApi = axios.create({
     baseURL: VITE_APP_URL,
-    withCredentials: true, // Asegúrate de que Axios envíe las cookies con cada solicitud
-});
-
-// Interceptor para agregar los encabezados necesarios
-helpdeskApi.interceptors.request.use(async (config) => {
-    // Verificar si ya se ha obtenido el token CSRF
-    if (!document.cookie.includes('XSRF-TOKEN')) {
-        await axios.get(`${VITE_APP_URL}/sanctum/csrf-cookie`, {
-            withCredentials: true, // Esto es importante para Sanctum
-        });
-    }
-
-    // Agregar encabezado de autorización si existe el token en localStorage
-    const token = localStorage.getItem("auth_token");
-    if (token) {
-        config.headers.Authorization = `Bearer ${token}`;
-    }
-
-    // Agregar cualquier otro encabezado necesario
-    config.headers.Accept = "application/json";
-
-    return config;
-}, (error) => {
-    return Promise.reject(error);
-});
-
-// Interceptor para manejar errores de respuesta
-helpdeskApi.interceptors.response.use(
-    (response) => {
-        // Si la respuesta es exitosa, devolver los datos normalmente
-        return response;
+    withCredentials: true,
+    headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
     },
-    async (error) => {
-        // Si recibimos un error 401 (No autorizado)
-        if (error.response && error.response.status === 401) {
-            // Aquí podrías redirigir al usuario al login, limpiar el token o realizar otras acciones
-            console.log("Error 401: No autorizado, redirigiendo al login...");
-            localStorage.removeItem("auth_token"); // Limpiar el token almacenado
+});
 
-            // Redirigir a la página de inicio de sesión
-            //window.location.href = window.location.href;
+let csrfTokenInitialized = false;
+let isRefreshingToken = false;
+
+const ensureCsrfToken = async () => {
+    if (!csrfTokenInitialized && !isRefreshingToken) {
+        isRefreshingToken = true;
+        try {
+            await axios.get(`${VITE_APP_URL}/sanctum/csrf-cookie`, {
+                withCredentials: true,
+            });
+            csrfTokenInitialized = true;
+        } catch (error) {
+            console.error("Error al obtener CSRF token:", error);
+        } finally {
+            isRefreshingToken = false;
+        }
+    }
+};
+
+ensureCsrfToken();
+
+helpdeskApi.interceptors.request.use(
+    async (config) => {
+        // Asegurar que el CSRF token esté inicializado antes de cada petición
+        await ensureCsrfToken();
+
+        const token = localStorage.getItem("auth_token");
+        if (token) {
+            config.headers.Authorization = `Bearer ${token}`;
         }
 
-        // Si el error es otro, simplemente lo rechazas
+        return config;
+    },
+    (error) => {
         return Promise.reject(error);
-    }
+    },
+);
+
+helpdeskApi.interceptors.response.use(
+    (response) => response,
+    async (error) => {
+        const { response, config } = error;
+
+        if (response && response.status === 401) {
+            // Verificar si el token realmente no existe o expiró
+            const token = localStorage.getItem("auth_token");
+
+            if (!token) {
+                // No hay token, redirigir al login
+                localStorage.clear();
+                csrfTokenInitialized = false;
+                window.location.href = "/auth/login";
+            } else {
+                // Hay token pero falló - puede ser que expiró
+                // Solo redirigir si no es una petición que ya se está reintentando
+                if (!config._retry) {
+                    config._retry = true;
+
+                    // Intentar refrescar el CSRF token
+                    csrfTokenInitialized = false;
+                    await ensureCsrfToken();
+
+                    // Reintentar la petición una vez
+                    try {
+                        return await helpdeskApi(config);
+                    } catch (retryError) {
+                        // Si falla de nuevo, ahora sí redirigir
+                        localStorage.clear();
+                        csrfTokenInitialized = false;
+                        window.location.href = "/auth/login";
+                    }
+                }
+            }
+        }
+
+        if (response && response.status === 403) {
+            console.error(
+                "Error 403: No tienes permisos para acceder a este recurso",
+            );
+        }
+
+        if (!response) {
+            console.error("Error de red o servidor no disponible");
+        }
+
+        return Promise.reject(error);
+    },
 );
 
 export default helpdeskApi;
-
-
-
-/* import axios from "axios";
-import { getEnv } from "../helpers/getEnv";
-
-const { VITE_APP_URL } = getEnv();
-
-const helpdeskApi = axios.create({
-    baseURL: VITE_APP_URL,
-});
-
-helpdeskApi.interceptors.request.use((config) => {
-    config.headers = {
-        ...config.headers,
-        Accept: "application/json",
-        Authorization: "Bearer " + localStorage.getItem("auth_token"),
-    };
-    return config;
-});
-
-export default helpdeskApi;
- */
