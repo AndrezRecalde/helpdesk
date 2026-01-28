@@ -1,17 +1,27 @@
 .body {
     background-color: light-dark(
-        var(--mantine-color-gray-1),
-        var(--mantine-color-dark-6)
+        var(--mantine-color-gray-0),
+        var(--mantine-color-dark-8)
     );
+    min-height: 100vh;
 }
 
-/* .aside {
-    background-color: light-dark(
-        var(--mantine-color-gray-2),
-        var(--mantine-color-dark-7)
-    ) !important;
-} */
-
-/* .body {
-    background-image: url(https://prefecturadeesmeraldas.gob.ec/wp-content/uploads/2025/08/17580-scaled.jpg);
-} */
+/* Si deseas un patrón sutil para mayor profesionalismo */
+.body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: light-dark(0.03, 0.05);
+    background-image: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 10px,
+        rgba(0, 0, 0, 0.1) 10px,
+        rgba(0, 0, 0, 0.1) 11px
+    );
+    pointer-events: none;
+    z-index: 0;
+}

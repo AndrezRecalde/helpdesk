@@ -1,61 +1,87 @@
 .header {
-  height: 70px;
-  justify-content: space-between;
-  padding-left: var(--mantine-spacing-md);
-  padding-right: var(--mantine-spacing-md);
-  border-bottom: 1px solid light-dark(var(--mantine-color-dark-3), var(--mantine-color-dark-8));
-  background-color: light-dark(var(--mantine-color-white), var(--mantine-color-dark-6));
+    height: 70px;
+    justify-content: space-between;
+    padding-left: var(--mantine-spacing-md);
+    padding-right: var(--mantine-spacing-md);
+    border-bottom: 1px solid
+        light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-5));
+    background-color: light-dark(
+        var(--mantine-color-white),
+        var(--mantine-color-dark-7)
+    );
+    box-shadow: light-dark(
+        0 1px 3px rgba(0, 0, 0, 0.05),
+        0 1px 3px rgba(0, 0, 0, 0.3)
+    );
 }
 
 .link {
-  display: flex;
-  align-items: center;
-  height: 100%;
-  padding-left: var(--mantine-spacing-md);
-  padding-right: var(--mantine-spacing-md);
-  text-decoration: none;
-  color: light-dark(var(--mantine-color-black), var(--mantine-color-white));
-  font-weight: 500;
-  font-size: var(--mantine-font-size-sm);
+    display: flex;
+    align-items: center;
+    height: 100%;
+    padding-left: var(--mantine-spacing-md);
+    padding-right: var(--mantine-spacing-md);
+    text-decoration: none;
+    color: light-dark(var(--mantine-color-gray-8), var(--mantine-color-gray-2));
+    font-weight: 500;
+    font-size: var(--mantine-font-size-sm);
+    transition: all 0.15s ease;
 }
 
 .link:hover {
-  background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-4));
+    background-color: light-dark(
+        var(--mantine-color-gray-1),
+        var(--mantine-color-dark-5)
+    );
+    color: light-dark(var(--mantine-color-dark-9), var(--mantine-color-white));
 }
 
 .subLink {
-  width: 100%;
-  padding: var(--mantine-spacing-xs) var(--mantine-spacing-md);
-  border-radius: var(--mantine-radius-md);
+    width: 100%;
+    padding: var(--mantine-spacing-xs) var(--mantine-spacing-md);
+    border-radius: var(--mantine-radius-md);
+    color: light-dark(var(--mantine-color-gray-7), var(--mantine-color-gray-3));
+    transition: all 0.15s ease;
 }
 
 .subLink:hover {
-  background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-7));
+    background-color: light-dark(
+        var(--mantine-color-gray-1),
+        var(--mantine-color-dark-6)
+    );
+    color: light-dark(var(--mantine-color-dark-9), var(--mantine-color-white));
 }
 
 .dropdownFooter {
-  background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-7));
-  margin: calc(var(--mantine-spacing-md) * -1);
-  margin-top: var(--mantine-spacing-sm);
-  padding: var(--mantine-spacing-md) calc(var(--mantine-spacing-md) * 2);
-  padding-bottom: var(--mantine-spacing-xl);
-  border-top: 1px solid light-dark(var(--mantine-color-gray-1), var(--mantine-color-dark-5));
+    background-color: light-dark(
+        var(--mantine-color-gray-0),
+        var(--mantine-color-dark-8)
+    );
+    margin: calc(var(--mantine-spacing-md) * -1);
+    margin-top: var(--mantine-spacing-sm);
+    padding: var(--mantine-spacing-md) calc(var(--mantine-spacing-md) * 2);
+    padding-bottom: var(--mantine-spacing-xl);
+    border-top: 1px solid
+        light-dark(var(--mantine-color-gray-2), var(--mantine-color-dark-6));
 }
 
 .drawer {
-  background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-8)) !important;
+    background-color: light-dark(
+        var(--mantine-color-white),
+        var(--mantine-color-dark-7)
+    ) !important;
 }
 
 /* Estilos responsivos para móvil */
 @media (max-width: 576px) {
-  .header {
-    height: 60px;
-    padding-left: var(--mantine-spacing-sm);
-    padding-right: var(--mantine-spacing-sm);
-  }
+    .header {
+        height: 60px;
+        padding-left: var(--mantine-spacing-sm);
+        padding-right: var(--mantine-spacing-sm);
+    }
 
-  .link {
-    height: 42px;
-    width: 100%;
-  }
+    .link {
+        height: 42px;
+        width: 100%;
+    }
 }
