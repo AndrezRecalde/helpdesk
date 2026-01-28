@@ -8,7 +8,7 @@ import {
 } from "@mantine/core";
 import { Link } from "react-router-dom";
 
-export const MenuList = ({ usuario, menuData, theme }) => {
+export const MenuList = ({ usuario, menuData }) => {
     return Object.entries(menuData).map(([category, items]) => {
         // Filtramos los items permitidos según el role del usuario
         const allowedItems = items.filter((item) =>
@@ -25,7 +25,7 @@ export const MenuList = ({ usuario, menuData, theme }) => {
                     <Menu.Item
                         key={item.title}
                         leftSection={
-                            <item.icon size={18} color={theme.colors.teal[8]} />
+                            <item.icon size={18} />
                         }
                         component={Link}
                         to={item.link}
@@ -40,7 +40,7 @@ export const MenuList = ({ usuario, menuData, theme }) => {
 };
 
 /* Links de Mega Menu */
-export const MenuQuick = ({ menuData, classes, theme }) => {
+export const MenuQuick = ({ menuData, classes }) => {
     return menuData.map((item) => (
         <Link
             to={item.link}
@@ -50,7 +50,7 @@ export const MenuQuick = ({ menuData, classes, theme }) => {
         >
             <Group wrap="nowrap" align="flex-start">
                 <ThemeIcon size={35} variant="default" radius="md">
-                    <item.icon size={22} color={theme.colors.dark[8]} />
+                    <item.icon size={22} />
                 </ThemeIcon>
                 <Text size="sm" fw={500}>
                     {item.title}

@@ -5,16 +5,14 @@ import {
     Divider,
     Group,
     Menu,
-    Text,
     UnstyledButton,
     rem,
 } from "@mantine/core";
 import { IconChevronDown, IconLogout } from "@tabler/icons-react";
-import { useNavigate } from "react-router-dom";
+import { NightModeSwitch, TextSection } from "../../../components";
 import { useAuthStore } from "../../../hooks";
-import { NightModeSwitch } from "./NightModeSwitch";
+import { useNavigate } from "react-router-dom";
 import { menuProfile } from "../../../layouts/appshell/menu/data/menuRoutes";
-import { TextSection } from "../../elements/titles/TextSection";
 import { capitalizarCadaPalabra } from "../../../helpers/fnHelpers";
 import classes from "../../../assets/styles/modules/user/UserHeader.module.css";
 
@@ -29,16 +27,13 @@ export const UserBtnHeader = () => {
     }, []);
 
     const nombres = useMemo(() => {
-        if (!usuario || !usuario.usu_alias) return "G"; // Valor predeterminado si `usuario` no tiene alias
+        if (!usuario || !usuario.usu_alias) return "G";
         const [firstName = "", lastName = ""] = usuario.usu_alias.split(" ");
         return `${firstName[0] || ""}${lastName[0] || ""}`;
     }, [usuario]);
 
     const handleMenuClick = (linked) => {
         navigate(linked);
-        /* if (toggleMobile) {
-            toggleMobile(true);
-        } */
     };
 
     return (
@@ -63,19 +58,18 @@ export const UserBtnHeader = () => {
                             alt={nombres}
                             variant="default"
                             radius="xl"
-                            //color="teal.7"
                         >
                             {nombres}
                         </Avatar>
                         <div style={{ flex: 1 }}>
-                            <Text fw={600} size="sm">
+                            <TextSection tt="" fw={600} fz={15}>
                                 {typeof usuario?.usu_alias === "string"
                                     ? capitalizarCadaPalabra(usuario.usu_alias)
                                     : "Sin datos"}
-                            </Text>
-                            <Text size="xs" c="dimmed">
+                            </TextSection>
+                            <TextSection color="dimmed" tt="">
                                 {usuario?.email ?? "Sin datos"}
-                            </Text>
+                            </TextSection>
                         </div>
                         <IconChevronDown
                             style={{ width: rem(20), height: rem(20) }}
@@ -90,7 +84,6 @@ export const UserBtnHeader = () => {
                         alt={nombres}
                         variant="default"
                         radius="xl"
-                        //color="teal.7"
                         size="lg"
                     >
                         {nombres}
@@ -99,7 +92,7 @@ export const UserBtnHeader = () => {
                         <TextSection tt="" fz={15} fw={500}>
                             {typeof usuario?.usu_alias === "string"
                                 ? capitalizarCadaPalabra(usuario.usu_alias)
-                                : "Sin datos"}{" "}
+                                : "Sin datos"}
                             <br />
                         </TextSection>
                         <TextSection tt="" fz={15} fw={300}>
@@ -125,7 +118,6 @@ export const UserBtnHeader = () => {
                             {label}
                         </Menu.Item>
                     ))}
-
                 <Menu.Label>Sesión</Menu.Label>
                 <NightModeSwitch />
                 <Menu.Item

@@ -145,7 +145,7 @@ export const useInvConsumibleStore = () => {
     };
 
     const startSolicitarConsumible = async (solicitud) => {
-        //console.log(solicitud);
+        console.log(solicitud);
         try {
             dispatch(onExport(true));
             const response = await helpdeskApi.post(
@@ -160,7 +160,7 @@ export const useInvConsumibleStore = () => {
             window.URL.revokeObjectURL(url);
             dispatch(onExport(false));
         } catch (error) {
-            //console.log(error);
+            console.log(error);
             ExceptionMessageError(error);
         }
     };

@@ -22,7 +22,7 @@ export const App = () => {
             <Notifications />
             <DatesProvider settings={{ locale: "es" }}>
                 <Provider store={store}>
-                    <Suspense fallback={<span>Loading...</span>}>
+                    <Suspense fallback={<span>Cargando...</span>}>
                         <BrowserRouter>
                             <AppRouter />
                         </BrowserRouter>

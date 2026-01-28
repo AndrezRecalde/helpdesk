@@ -3,7 +3,6 @@ import {
     Center,
     Box,
     Collapse,
-    Text,
     Group,
     ThemeIcon,
     Divider,
@@ -11,6 +10,7 @@ import {
 import { IconChevronDown } from "@tabler/icons-react";
 import { MenuQuick } from "./MenuLinks";
 import { Link } from "react-router-dom";
+import { TextSection } from "../../../components";
 
 export const MenuSection = ({
     title,
@@ -19,7 +19,6 @@ export const MenuSection = ({
     isOpen,
     toggle,
     classes,
-    theme,
     toggleDrawer,
 }) => {
     const handleActionToggle = () => {
@@ -35,15 +34,15 @@ export const MenuSection = ({
                     <Box component="span" mr={5}>
                         {title}
                     </Box>
-                    <IconChevronDown size={16} color={theme.colors.dark[8]} />
+                    <IconChevronDown size={16} />
                 </Center>
             </UnstyledButton>
             <Collapse in={isOpen}>
                 {Object.entries(menuData).map(([category, items]) => (
                     <div key={category} style={{ paddingLeft: 10 }}>
-                        <Text fw={700} size="sm" c="dimmed">
+                        <TextSection fw={700} color="dimmed" style={{ letterSpacing: "1px" }}>
                             {category}
-                        </Text>
+                        </TextSection>
                         {items.map((item) => {
                             const isAllowed = item.roles.includes(usuario.role);
 
@@ -68,10 +67,9 @@ export const MenuSection = ({
                                         >
                                             <item.icon
                                                 size={18}
-                                                color={theme.colors.teal[8]}
                                             />
                                         </ThemeIcon>
-                                        <Text size="sm">{item.title}</Text>
+                                        <TextSection>{item.title}</TextSection>
                                     </Group>
                                 </Link>
                             );
@@ -100,7 +98,7 @@ export const MenuRapidoSection = ({
                 <Box component="span" mr={5}>
                     {title}
                 </Box>
-                <IconChevronDown size={16} color={theme.colors.teal[8]} />
+                <IconChevronDown size={16} />
             </Center>
         </UnstyledButton>
         <Collapse in={isOpen}>

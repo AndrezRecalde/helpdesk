@@ -2,7 +2,7 @@ import { Box } from "@mantine/core";
 import { IconHomeMove } from "@tabler/icons-react";
 import { Link } from "react-router-dom";
 
-export const MenuHome = ({ classes, theme, toggleDrawer }) => {
+export const MenuHome = ({ classes, toggleDrawer }) => {
     return (
         <Link
             className={classes.link}
@@ -12,7 +12,7 @@ export const MenuHome = ({ classes, theme, toggleDrawer }) => {
             <Box component="span" mr={5}>
                 Inicio
             </Box>
-            <IconHomeMove size={18} color={theme.colors.dark[8]} />
+            <IconHomeMove size={18} />
         </Link>
     );
 };

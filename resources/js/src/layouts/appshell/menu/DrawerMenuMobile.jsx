@@ -9,7 +9,7 @@ import {
 } from "./data/menuRoutes";
 import { Roles } from "../../../helpers/dictionary";
 
-export const DrawerMenuMobile = ({ usuario, classes, theme }) => {
+export const DrawerMenuMobile = ({ usuario, classes }) => {
     const {
         isOpenDrawerMobile,
         isOpenMenuLinksTics,
@@ -37,7 +37,6 @@ export const DrawerMenuMobile = ({ usuario, classes, theme }) => {
             <ScrollArea h="calc(100vh - 80px" mx="-md">
                 <MenuHome
                     classes={classes}
-                    theme={theme}
                     toggleDrawer={modalActionDrawerMobile}
                 />
                 <Divider my="sm" />
@@ -49,7 +48,6 @@ export const DrawerMenuMobile = ({ usuario, classes, theme }) => {
                         usuario={usuario}
                         menuData={NavMenuTics}
                         classes={classes}
-                        theme={theme}
                         isOpen={isOpenMenuLinksTics}
                         toggle={modalMenuLinksTics}
                         toggleDrawer={modalActionDrawerMobile}
@@ -62,7 +60,6 @@ export const DrawerMenuMobile = ({ usuario, classes, theme }) => {
                         usuario={usuario}
                         menuData={NavMenuAdminTics}
                         classes={classes}
-                        theme={theme}
                         isOpen={isOpenMenuLinksGestionGeneral}
                         toggle={modalMenuLinksGestionGeneral}
                         toggleDrawer={modalActionDrawerMobile}
@@ -76,7 +73,6 @@ export const DrawerMenuMobile = ({ usuario, classes, theme }) => {
                         usuario={usuario}
                         menuData={NavMenuPermisosAdmin}
                         classes={classes}
-                        theme={theme}
                         isOpen={isOpenMenuLinksPermisos}
                         toggle={modalMenuLinksPermisos}
                         toggleDrawer={modalActionDrawerMobile}

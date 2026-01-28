@@ -1,4 +1,4 @@
-import { Box, Burger, Group, useMantineTheme } from "@mantine/core";
+import { Box, Burger, Group } from "@mantine/core";
 import { Logo, UserBtnHeader } from "../../../components";
 import {
     MenuRapido,
@@ -18,7 +18,6 @@ import classes from "../../../assets/styles/modules/layout/menu/HeaderMenu.modul
 
 export function HeaderMenu({ usuario }) {
     const { isOpenDrawerMobile, modalActionDrawerMobile } = useUiHeaderMenu();
-    const theme = useMantineTheme();
     return (
             <Box pb={30}>
                 <header className={classes.header}>
@@ -28,7 +27,6 @@ export function HeaderMenu({ usuario }) {
                             <Group h="100%" gap={0} visibleFrom="lg">
                                 <HeaderBtnInicio
                                     classes={classes}
-                                    theme={theme}
                                 />
                                 {/* MENU DE GESTION DE TICS */}
                                 {usuario.role === Roles.TIC_GERENTE ||
@@ -38,7 +36,6 @@ export function HeaderMenu({ usuario }) {
                                         menuData={NavMenuTics}
                                         usuario={usuario}
                                         classes={classes}
-                                        theme={theme}
                                     />
                                 ) : null}
 
@@ -49,7 +46,6 @@ export function HeaderMenu({ usuario }) {
                                         menuData={NavMenuAdminTics}
                                         usuario={usuario}
                                         classes={classes}
-                                        theme={theme}
                                     />
                                 ) : null}
 
@@ -62,7 +58,6 @@ export function HeaderMenu({ usuario }) {
                                         menuData={NavMenuPermisosAdmin}
                                         usuario={usuario}
                                         classes={classes}
-                                        theme={theme}
                                     />
                                 ) : null}
                             </Group>
@@ -85,7 +80,6 @@ export function HeaderMenu({ usuario }) {
                             <SolicitudesMenu
                                 menuData={MenuRapido}
                                 classes={classes}
-                                theme={theme}
                             />
 
                             <UserBtnHeader />
@@ -101,7 +95,6 @@ export function HeaderMenu({ usuario }) {
                 <DrawerMenuMobile
                     usuario={usuario}
                     classes={classes}
-                    theme={theme}
                 />
             </Box>
     );

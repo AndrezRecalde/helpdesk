@@ -252,8 +252,6 @@ import {
     BtnSubmit,
     BtnSection,
     BtnAddActions,
-    BtnSolicitarSoporte,
-    BtnAdministracion,
     BtnServicesApps,
 } from "./elements/buttons/BtnServices";
 import { BtnActivateElement } from "./elements/buttons/BtnActivateElement";
@@ -263,7 +261,6 @@ import {
 } from "./elements/buttons/BtnActions";
 import { ModalActivateElement } from "./elements/modal/ModalActivateElement";
 import { InformationActividadList } from "./elements/lists/InformationActividadList";
-import { MenuSeleccion } from "./elements/menu/MenuSeleccion";
 import { FormRichText } from "./elements/rte/FormRichText";
 import {
     MenuUsersTable,
@@ -519,15 +516,12 @@ export {
     BtnSubmit,
     BtnSection,
     BtnAddActions,
-    BtnSolicitarSoporte,
-    BtnAdministracion,
     BtnServicesApps,
     BtnActivateElement,
     BtnDarkMode,
     ActionReportPDF,
     ModalActivateElement,
     InformationActividadList,
-    MenuSeleccion,
     FormRichText,
     MenuUsersTable,
     MenuTable_E,

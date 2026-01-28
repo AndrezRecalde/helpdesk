@@ -23,27 +23,61 @@ export const InvSolicitudConsumibleModal = () => {
 
     const form = useForm({
         initialValues: {
-            usuario_solicita: null,
-            usuario_autoriza: null,
-            departamento_id: null,
-            equipo_id: null,
+            usuario_solicita: "",
+            usuario_autoriza: "",
+            departamento_id: "",
+            equipo_id: "",
             fecha: null,
-            consumibles: [{ id: null, cantidad: 1 }],
+            consumibles: [{ id: "", cantidad: 1 }],
         },
+
         validate: {
-            usuario_solicita: isNotEmpty("Por favor ingrese solicitante"),
-            usuario_autoriza: isNotEmpty("Por favor ingrese autorizador"),
-            departamento_id: isNotEmpty("Por favor ingrese departamento"),
-            equipo_id: isNotEmpty("Por favor ingrese el activo informatico"),
+            usuario_solicita: (value) =>
+                value === "" || value === null
+                    ? "Por favor ingrese solicitante"
+                    : null,
+
+            usuario_autoriza: (value) =>
+                value === "" || value === null
+                    ? "Por favor ingrese autorizador"
+                    : null,
+
+            departamento_id: (value) =>
+                value === "" || value === null
+                    ? "Por favor ingrese departamento"
+                    : null,
+
+            equipo_id: (value) =>
+                value === "" || value === null
+                    ? "Por favor ingrese el activo informático"
+                    : null,
         },
+
         transformValues: (values) => ({
-            usuario_solicita: Number(values.usuario_solicita) || null,
-            usuario_autoriza: Number(values.usuario_autoriza) || null,
-            departamento_id: Number(values.departamento_id) || null,
-            equipo_id: Number(values.equipo_id) || null,
-            fecha: dayjs(values.fecha).isValid() ? dayjs(values.fecha).format("YYYY-MM-DD") : null,
+            usuario_solicita:
+                values.usuario_solicita !== ""
+                    ? Number(values.usuario_solicita)
+                    : null,
+
+            usuario_autoriza:
+                values.usuario_autoriza !== ""
+                    ? Number(values.usuario_autoriza)
+                    : null,
+
+            departamento_id:
+                values.departamento_id !== ""
+                    ? Number(values.departamento_id)
+                    : null,
+
+            equipo_id:
+                values.equipo_id !== "" ? Number(values.equipo_id) : null,
+
+            fecha: dayjs(values.fecha).isValid()
+                ? dayjs(values.fecha).format("YYYY-MM-DD")
+                : null,
+
             consumibles: values.consumibles.map((consumible) => ({
-                id: Number(consumible.id) || null,
+                id: consumible.id !== "" ? Number(consumible.id) : null,
                 cantidad: Number(consumible.cantidad) || 1,
             })),
         }),
