@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('codigo_antiguo')->unique();
             $table->string('codigo_nuevo')->unique();
             $table->string('modelo');
-            $table->string('numero_serie')->unique();
+            $table->string('numero_serie')->nullable()->unique();
             $table->date('fecha_adquisicion')->nullable();
             //$table->date('fecha_amortizacion')->nullable();
             $table->date('fecha_baja')->nullable();
