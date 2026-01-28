@@ -8,9 +8,9 @@ export const FormAnularPermiso = ({ form }) => {
     const { modalActionAnularPermiso } = useUiPermiso();
     const { storagePermisoFields } = useStorageField();
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        startAnularPermiso(form.values, storagePermisoFields);
+        await startAnularPermiso(form.values, storagePermisoFields);
         //console.log(form.values);
         setActivatePermiso(null);
         modalActionAnularPermiso(0);

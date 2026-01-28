@@ -1,31 +1,62 @@
-import { useEffect, useCallback, useMemo, useRef } from "react";
-import { Container, Divider, Group, Alert } from "@mantine/core";
+import { useEffect, useCallback, useRef, useMemo } from "react";
+import { Container, Divider, Group } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import {
+    AlertSection,
     BtnSection,
+    CardInfoStatsUser,
     FilterPermiso,
     ModalAnularPermiso,
     PermisosTable,
     TitlePage,
 } from "../../components";
 import { usePermisoStore, useStorageField, useTitlePage } from "../../hooks";
-import Swal from "sweetalert2";
 import { IconChevronsRight, IconAlertCircle } from "@tabler/icons-react";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+
+// Constantes fuera del componente
+const CURRENT_YEAR = new Date().getFullYear();
+const STORAGE_KEY = "service_user";
+
+// Utilidad para obtener el usuario de forma segura
+const getStoredUser = () => {
+    try {
+        const storedUser = localStorage.getItem(STORAGE_KEY);
+        return storedUser ? JSON.parse(storedUser) : null;
+    } catch (error) {
+        console.error("Error parsing user from localStorage:", error);
+        return null;
+    }
+};
+
+// Validadores separados para mejor mantenibilidad
+const validators = {
+    anio: (value) =>
+        value instanceof Date && !isNaN(value.getTime())
+            ? null
+            : "Fecha inválida",
+    idper_permisos: (value) =>
+        value === "" || (!isNaN(Number(value)) && Number(value) > 0)
+            ? null
+            : "ID de permiso inválido",
+};
 
 const ListPermisosPage = () => {
     useTitlePage("Helpdesk | Lista Permisos");
     const navigate = useNavigate();
     const hasLoadedInitialData = useRef(false);
 
-    // Memoizar el usuario
-    const usuario = JSON.parse(localStorage.getItem("service_user"));
+    // Memoizar el usuario para evitar re-parseos innecesarios
+    const usuario = useMemo(() => getStoredUser(), []);
 
     const {
         isLoading,
         startLoadPermisos,
+        startLoadInfoPermisos,
         clearPermisos,
         permisos,
+        activateStatsUsuarioPermiso,
         message,
         errores,
         isExport,
@@ -38,43 +69,38 @@ const ListPermisosPage = () => {
             anio: new Date(),
             idper_permisos: "",
         },
-        validate: {
-            anio: (value) =>
-                value instanceof Date && !isNaN(value)
-                    ? null
-                    : "Fecha inválida",
-            idper_permisos: (value) =>
-                value === "" || (!isNaN(Number(value)) && Number(value) > 0)
-                    ? null
-                    : "ID de permiso inválido",
-        },
+        validate: validators,
     });
 
+    // Efecto de inicialización
     useEffect(() => {
-        // Solo ejecutar una vez
-        if (hasLoadedInitialData.current) return;
-
-        if (!usuario?.cdgo_usrio) {
-            console.warn("Usuario no encontrado en localStorage");
-            return;
-        }
+        if (hasLoadedInitialData.current || !usuario?.cdgo_usrio) return;
 
         hasLoadedInitialData.current = true;
 
-        // Cargar permisos del año actual
-        startLoadPermisos({
-            anio: new Date().getFullYear(),
-            id_usu_pide: usuario.cdgo_usrio,
-        });
+        const loadInitialData = async () => {
+            try {
+                await Promise.all([
+                    startLoadInfoPermisos(usuario.cdgo_usrio, CURRENT_YEAR),
+                    startLoadPermisos({
+                        anio: CURRENT_YEAR,
+                        id_usu_pide: usuario.cdgo_usrio,
+                    }),
+                ]);
+            } catch (error) {
+                console.error("Error loading initial data:", error);
+            }
+        };
 
-        // Cleanup al desmontar
+        loadInitialData();
+
         return () => {
             clearPermisos();
         };
     }, []);
 
+    // Efecto para manejar alertas y exportación
     useEffect(() => {
-        // Si isExport está activo, mostrar el loading
         if (isExport) {
             Swal.fire({
                 icon: "info",
@@ -86,14 +112,9 @@ const ListPermisosPage = () => {
                     Swal.showLoading();
                 },
             });
-
-            // Función de limpieza para cerrar cuando isExport cambie
-            return () => {
-                Swal.close();
-            };
+            return () => Swal.close();
         }
 
-        // Si hay errores, mostrarlos
         if (errores) {
             Swal.fire({
                 icon: "warning",
@@ -101,10 +122,9 @@ const ListPermisosPage = () => {
                 text: errores,
                 confirmButtonText: "Entendido",
             });
-            return; // No hay limpieza, el usuario cierra manualmente
+            return;
         }
 
-        // Si hay un mensaje, mostrarlo
         if (message?.msg) {
             Swal.fire({
                 icon: message.status || "success",
@@ -114,11 +134,7 @@ const ListPermisosPage = () => {
                 timer: 3000,
                 timerProgressBar: true,
             });
-            return; // No hay limpieza, se cierra con timer o manualmente
         }
-
-        // Si no hay nada que mostrar, cerrar cualquier Swal abierto
-        //Swal.close();
     }, [message, errores, isExport]);
 
     const handleNavigate = useCallback(() => {
@@ -135,46 +151,39 @@ const ListPermisosPage = () => {
             }
 
             const transformedValues = {
-                anio:
-                    form.values.anio?.getFullYear() || new Date().getFullYear(),
+                anio: form.values.anio?.getFullYear() || CURRENT_YEAR,
                 idper_permisos: form.values.idper_permisos
                     ? Number(form.values.idper_permisos)
                     : null,
                 id_usu_pide: usuario?.cdgo_usrio || null,
             };
 
-            // Guardar en localStorage
             setStoragePermisoFields(transformedValues);
-
-            // Cargar permisos
+            startLoadInfoPermisos(usuario?.cdgo_usrio, transformedValues.anio);
             startLoadPermisos(transformedValues);
         },
-        [
-            form.values,
-            usuario?.cdgo_usrio,
-            setStoragePermisoFields,
-            startLoadPermisos,
-        ]
+        [form, usuario?.cdgo_usrio, setStoragePermisoFields, startLoadPermisos],
     );
 
-    // Manejo de usuario no autenticado
+    // Early return para usuario no autenticado
     if (!usuario?.cdgo_usrio) {
         return (
             <Container size="xl">
-                <Alert
-                    icon={<IconAlertCircle size="1rem" />}
+                <AlertSection
+                    icon={IconAlertCircle}
                     title="Error de autenticación"
                     color="red"
                 >
                     No se pudo cargar la información del usuario. Por favor,
                     inicia sesión nuevamente.
-                </Alert>
+                </AlertSection>
             </Container>
         );
     }
 
-    const currentYear =
-        form.values.anio?.getFullYear() || new Date().getFullYear();
+    const currentYear = form.values.anio?.getFullYear() || CURRENT_YEAR;
+    const hasPermisos = permisos?.length > 0;
+    const showEmptyState = !isLoading && permisos?.length === 0;
 
     return (
         <Container size="xl">
@@ -190,6 +199,10 @@ const ListPermisosPage = () => {
 
             <Divider my="md" />
 
+            {(activateStatsUsuarioPermiso ?? activateStatsUsuarioPermiso?.total_permisos > 0) ? (
+                <CardInfoStatsUser year={currentYear} />
+            ) : null}
+
             <FilterPermiso
                 form={form}
                 handleSubmit={handleSubmit}
@@ -197,17 +210,21 @@ const ListPermisosPage = () => {
                 isLoading={isLoading}
             />
 
-            {permisos?.length > 0 && <PermisosTable />}
+            {hasPermisos && (
+                <>
+                    <PermisosTable />
+                </>
+            )}
 
-            {!isLoading && permisos?.length === 0 && (
-                <Alert
-                    icon={<IconAlertCircle size="1rem" />}
+            {showEmptyState && (
+                <AlertSection
+                    icon={IconAlertCircle}
                     title="Sin resultados"
                     color="blue"
                     mt="md"
                 >
                     No se encontraron permisos con los filtros aplicados.
-                </Alert>
+                </AlertSection>
             )}
 
             <ModalAnularPermiso />

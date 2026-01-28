@@ -30,7 +30,7 @@ class PermisoAdminRequest extends FormRequest
             'per_fecha_salida'  => 'required',
             'per_fecha_llegada' => 'required',
             'id_jefe_inmediato' => 'required',
-            'per_observaciones' => ''
+            'per_observaciones' => 'nullable|string',
          ];
     }
 

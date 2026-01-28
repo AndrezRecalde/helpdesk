@@ -7,6 +7,7 @@ export const permisoSlice = createSlice({
         isExport: false,
         permisos: [],
         activatePermiso: null,
+        activateStatsUsuarioPermiso: null,
         message: undefined,
         errores: undefined,
     },
@@ -23,19 +24,25 @@ export const permisoSlice = createSlice({
         onSetActivatePermiso: (state, { payload }) => {
             state.activatePermiso = payload;
         },
+        onSetActivateStatsUsuarioPermiso: (state, { payload }) => {
+            state.activateStatsUsuarioPermiso = payload;
+        },
         onAnularPermiso: (state, { payload }) => {
             if (state.activatePermiso) {
                 state.permisos = state.permisos.filter(
                     (permiso) =>
                         permiso.idper_permisos !==
-                        state.activatePermiso.idper_permisos
+                        state.activatePermiso.idper_permisos,
                 );
             }
             state.activatePermiso = null;
         },
         onClearPermisos: (state) => {
+            state.isLoading = false;
+            state.isExport = false;
             state.permisos = [];
             state.activatePermiso = null;
+            state.activateStatsUsuarioPermiso = null;
             state.message = undefined;
             state.errores = undefined;
         },
@@ -54,6 +61,7 @@ export const {
     onExport,
     onLoadPermisos,
     onSetActivatePermiso,
+    onSetActivateStatsUsuarioPermiso,
     onAnularPermiso,
     onClearPermisos,
     onLoadMessage,

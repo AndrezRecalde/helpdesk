@@ -48,6 +48,7 @@ class PermisosAdminController extends Controller
                     per_permisos.id_jefe_inmediato,
                     u.nmbre_usrio as jefe_inmediato,
                     per_permisos.per_observaciones,
+                    per_permisos.per_observacion_anulado,
                     per_permisos.id_estado,
                     pep.per_est_nombre as estado,
                     pep.color,
@@ -183,11 +184,24 @@ class PermisosAdminController extends Controller
         return $pdf->setPaper('a4', 'portrait')->download('permiso.pdf');
     }
 
-    function getInfoPermisosForUser(Request $request): JsonResponse
+    public function getInfoPermisosForUser(Request $request, int $usuario_id): JsonResponse
     {
-        $info_permisos = collect(DB::select('CALL per_permisos_info_user(?)', [$request->usuario_id]))->first();
+        $request->validate([
+            'anio' => 'nullable|integer|min:2000|max:2100'
+        ]);
 
-        return response()->json(['status' => MsgStatus::Success, 'info_permisos' => $info_permisos], 200);
+        $info_permisos = collect(DB::select(
+            'CALL per_permisos_info_user(?,?)',
+            [
+                $usuario_id,
+                $request->anio ?? null
+            ]
+        ))->first();
+
+        return response()->json([
+            'status' => MsgStatus::Success,
+            'info_permisos' => $info_permisos
+        ], 200);
     }
 
 

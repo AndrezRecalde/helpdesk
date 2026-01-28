@@ -298,7 +298,7 @@ Route::group(['prefix' => 'usuario', 'middleware' => ['auth:sanctum']], function
     Route::post('/export-permiso-pdf', [PermisosAdminController::class, 'exportCardPDFPermiso']);
     Route::post('/permiso-pdf', [PermisosAdminController::class, 'exportPDFPermiso']);
     Route::put('/anular-permiso/{idper_permisos}', [PermisosAdminController::class, 'anularPermisos']);
-    Route::post('/info-permisos', [PermisosAdminController::class, 'getInfoPermisosForUser']);
+    Route::get('/{usuario_id}/info-permisos', [PermisosAdminController::class, 'getInfoPermisosForUser']);
 
 
     /* VACACIONES */

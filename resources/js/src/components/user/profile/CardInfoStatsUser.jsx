@@ -2,8 +2,6 @@ import { Group, Paper, SimpleGrid, Skeleton } from "@mantine/core";
 import { TextSection } from "../../../components";
 import {
     usePermisoStore,
-    useTecnicoStore,
-    useUsersStore,
 } from "../../../hooks";
 import {
     IconLicense,
@@ -11,13 +9,10 @@ import {
     IconDeviceImacStar,
 } from "@tabler/icons-react";
 import classes from "../../../assets/styles/modules/user/StatsGrid.module.css";
-import { Roles } from "../../../helpers/dictionary";
 
 
-export const CardInfoStatsUser = ({ usuario }) => {
-    const { isLoading, activatePermiso } = usePermisoStore();
-    const { infoSoportes: totalTecnicosSoportes } = useTecnicoStore();
-    const { infoSoportes } = useUsersStore();
+export const CardInfoStatsUser = ({ year}) => {
+    const { isLoading, activateStatsUsuarioPermiso } = usePermisoStore();
 
     //Convertir Horas a Minutos
     /* function timeToMinutes(time) {
@@ -48,40 +43,26 @@ export const CardInfoStatsUser = ({ usuario }) => {
         {
             title: "Total Permisos",
             icon: "total_permisos",
-            value: activatePermiso?.total_permisos || 0,
-            descripcion: "Visualización de permisos por el año actual",
+            value: activateStatsUsuarioPermiso?.total_permisos || 0,
+            descripcion: `Visualización de permisos por el año ${year}`,
         },
         {
             title: "Minutos en Permisos",
             icon: "tiempo_permiso",
-            value: activatePermiso?.tiempo_minutos || 0, //timeToMinutes(activatePermiso?.tiempo_estimado),
+            value: activateStatsUsuarioPermiso?.tiempo_minutos || 0, //timeToMinutes(activateStatsUsuarioPermiso?.tiempo_estimado),
             descripcion: "Tiempo en minutos del total en permisos",
         },
         {
             title: "Tiempo Total",
             icon: "tiempo_permiso",
-            value: activatePermiso?.tiempo_estimado || "00:00:00",
+            value: activateStatsUsuarioPermiso?.tiempo_estimado || "00:00:00",
             descripcion: "Tiempo en horas del total en permisos",
         },
         {
             title: "Total en Días",
             icon: "tiempo_permiso",
-            value: activatePermiso?.dias_equivalentes || 0,
+            value: activateStatsUsuarioPermiso?.dias_equivalentes || 0,
             descripcion: "Tiempo en días del total en permisos",
-        },
-        {
-            title:
-                usuario.role === Roles.USUARIO
-                    ? "Total Soportes recibidos"
-                    : "Total Soportes Brindados",
-            icon: "total_soportes",
-            value:
-                usuario.role === Roles.USUARIO
-                    ? infoSoportes?.total_soportes
-                    : (Array.isArray(totalTecnicosSoportes) && totalTecnicosSoportes.length > 0
-                    ? totalTecnicosSoportes[0].total_soportes
-                    : 0),
-            descripcion: "Total de soportes recibidos",
         },
     ];
 
@@ -113,7 +94,7 @@ export const CardInfoStatsUser = ({ usuario }) => {
 
     return (
         <div className={classes.root}>
-            <SimpleGrid cols={{ base: 1, xs: 1, md: 1 }}>{stats}</SimpleGrid>
+            <SimpleGrid cols={{ base: 1, xs: 1, md: 4 }}>{stats}</SimpleGrid>
         </div>
     );
 };

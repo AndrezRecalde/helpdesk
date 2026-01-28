@@ -9,12 +9,20 @@ import {
     onLoadPermisos,
     onLoading,
     onSetActivatePermiso,
+    onSetActivateStatsUsuarioPermiso,
 } from "../../store/permiso/permisoSlice";
 import helpdeskApi from "../../api/helpdeskApi";
 
 export const usePermisoStore = () => {
-    const { isLoading, permisos, activatePermiso, isExport, message, errores } =
-        useSelector((state) => state.permiso);
+    const {
+        isLoading,
+        permisos,
+        activatePermiso,
+        activateStatsUsuarioPermiso,
+        isExport,
+        message,
+        errores,
+    } = useSelector((state) => state.permiso);
     const { ExceptionMessageError } = useErrorException(onLoadErrores);
 
     const dispatch = useDispatch();
@@ -23,7 +31,7 @@ export const usePermisoStore = () => {
         try {
             const { data } = await helpdeskApi.post(
                 "/usuario/crear-permiso",
-                permiso
+                permiso,
             );
             dispatch(onLoadMessage(data));
             //console.log(data)
@@ -43,7 +51,7 @@ export const usePermisoStore = () => {
             const response = await helpdeskApi.post(
                 "/usuario/export-permiso-pdf",
                 { idper_permisos },
-                { responseType: "blob" }
+                { responseType: "blob" },
             );
             const pdfBlob = new Blob([response.data], {
                 type: "application/pdf",
@@ -75,7 +83,7 @@ export const usePermisoStore = () => {
             const response = await helpdeskApi.post(
                 "/usuario/permiso-pdf",
                 { idper_permisos },
-                { responseType: "blob" }
+                { responseType: "blob" },
             );
             const pdfBlob = new Blob([response.data], {
                 type: "application/pdf",
@@ -136,7 +144,10 @@ export const usePermisoStore = () => {
         try {
             dispatch(onLoading(true));
             const { data } = await helpdeskApi.put(
-                `/usuario/anular-permiso/${permiso.idper_permisos}`
+                `/usuario/anular-permiso/${permiso.idper_permisos}`,
+                {
+                    ...permiso,
+                },
             );
             //dispatch(onAnularPermiso(permiso));
             startLoadPermisos(storageFields);
@@ -153,14 +164,19 @@ export const usePermisoStore = () => {
         }
     };
 
-    const startLoadInfoPermisos = async (usuario_id) => {
+    const startLoadInfoPermisos = async (usuario_id, anio) => {
         try {
             dispatch(onLoading(true));
-            const { data } = await helpdeskApi.post("/usuario/info-permisos", {
-                usuario_id,
-            });
+            const { data } = await helpdeskApi.get(
+                `/usuario/${usuario_id}/info-permisos`,
+                {
+                    params: {
+                        anio,
+                    },
+                },
+            );
             const { info_permisos } = data;
-            dispatch(onSetActivatePermiso(info_permisos));
+            setActivateStatsUsuarioPermiso(info_permisos);
             //dispatch(onLoading(false));
         } catch (error) {
             //dispatch(onLoading(false));
@@ -175,7 +191,7 @@ export const usePermisoStore = () => {
             dispatch(onLoading(true));
             const { data } = await helpdeskApi.post(
                 "/tthh/asistencia/consolidado-permisos",
-                seleccion
+                seleccion,
             );
             const { permisos } = data;
             //console.log(permisos);
@@ -195,7 +211,7 @@ export const usePermisoStore = () => {
             const response = await helpdeskApi.post(
                 "/tthh/asistencia/export/consolidado-permisos",
                 seleccion,
-                { responseType: "blob" }
+                { responseType: "blob" },
             );
             const pdfBlob = new Blob([response.data], {
                 type: "application/pdf",
@@ -216,9 +232,10 @@ export const usePermisoStore = () => {
         try {
             dispatch(onLoading(true));
             const { data } = await helpdeskApi.put(
-                `/tthh/asistencia/actualizar-permiso/${permiso.idper_permisos}`, {
-                    id_estado
-                }
+                `/tthh/asistencia/actualizar-permiso/${permiso.idper_permisos}`,
+                {
+                    id_estado,
+                },
             );
             //dispatch(onAnularPermiso(permiso));
             startLoadPermisos({
@@ -243,6 +260,10 @@ export const usePermisoStore = () => {
         dispatch(onSetActivatePermiso(permiso));
     };
 
+    const setActivateStatsUsuarioPermiso = (stats) => {
+        dispatch(onSetActivateStatsUsuarioPermiso(stats));
+    };
+
     const clearPermisos = () => {
         dispatch(onClearPermisos());
     };
@@ -252,6 +273,7 @@ export const usePermisoStore = () => {
         isExport,
         permisos,
         activatePermiso,
+        activateStatsUsuarioPermiso,
         message,
         errores,
 
@@ -265,6 +287,7 @@ export const usePermisoStore = () => {
         startExportConsolidadosPermisos,
         startUpdateEstadoPermiso,
         setActivatePermiso,
+        setActivateStatsUsuarioPermiso,
         clearPermisos,
     };
 };

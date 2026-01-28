@@ -5,6 +5,7 @@ import {
     MenuTable_AutorizarPermiso,
     TableContent,
 } from "../../../../components";
+import { Table } from "@mantine/core";
 import { usePermisoStore } from "../../../../hooks";
 import Swal from "sweetalert2";
 import dayjs from "dayjs";
@@ -37,6 +38,7 @@ export const AutorizarPermisoTable = () => {
             {
                 accessorKey: "usuario_pide", //access nested data with dot notation
                 header: "Usuario solicitante",
+                filterVariant: "autocomplete",
             },
             {
                 accessorFn: (row) =>
@@ -56,12 +58,8 @@ export const AutorizarPermisoTable = () => {
                 header: "Hora de llegada",
                 size: 80,
             },
-            {
-                accessorKey: "per_observaciones", //access nested data with dot notation
-                header: "Observaciones",
-            },
         ],
-        [permisos]
+        [permisos],
     );
 
     const handleAnularPermiso = useCallback(
@@ -83,7 +81,7 @@ export const AutorizarPermisoTable = () => {
                 }
             });
         },
-        [permisos]
+        [permisos],
     );
 
     const handleAutorizarPermiso = useCallback(
@@ -105,7 +103,7 @@ export const AutorizarPermisoTable = () => {
                 }
             });
         },
-        [permisos]
+        [permisos],
     );
 
     const table = useMantineReactTable({
@@ -121,6 +119,30 @@ export const AutorizarPermisoTable = () => {
                 handleAnular={handleAnularPermiso}
                 handleAutorizar={handleAutorizarPermiso}
             />
+        ),
+        renderDetailPanel: ({ row }) => (
+            <Table highlightOnHover withTableBorder withColumnBorders>
+                <Table.Thead>
+                    <Table.Tr>
+                        <Table.Th>Observación</Table.Th>
+                        <Table.Th>Motivo de Anulación</Table.Th>
+                    </Table.Tr>
+                </Table.Thead>
+                <Table.Tbody>
+                    <Table.Tr key={row.original.idper_permisos}>
+                        <Table.Td>
+                            {row.original.per_observaciones
+                                ? row.original.per_observaciones
+                                : "Sin Observación"}
+                        </Table.Td>
+                        <Table.Td>
+                            {row.original.per_observacion_anulado
+                                ? row.original.per_observacion_anulado
+                                : "Sin motivo"}
+                        </Table.Td>
+                    </Table.Tr>
+                </Table.Tbody>
+            </Table>
         ),
         mantineTableBodyCellProps: ({ column, cell }) => ({
             style:

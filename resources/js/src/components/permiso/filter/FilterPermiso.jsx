@@ -33,6 +33,7 @@ export const FilterPermiso = ({
                     <Group justify="end">
                         <YearPickerInput
                             required
+                            size="md"
                             placeholder="Seleccione el año"
                             {...form.getInputProps("anio")}
                             maxDate={new Date()}
