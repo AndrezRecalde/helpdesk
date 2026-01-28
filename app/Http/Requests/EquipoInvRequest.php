@@ -26,10 +26,13 @@ class EquipoInvRequest extends FormRequest
     {
 
         return [
-            'codigo_antiguo'    =>  '',
+            'codigo_antiguo'    =>  'nullable',
             'codigo_nuevo'      =>  ['required', Rule::unique('inv_equipos')->ignore($this->request->get('id'))],
             'modelo'            =>  'required',
-            'numero_serie'      =>  ['', Rule::unique('inv_equipos')->ignore($this->request->get('id'))],
+            'numero_serie' => [
+                'nullable',
+                Rule::unique('inv_equipos')->ignore($this->request->get('id'))->whereNotNull('numero_serie')
+            ],
             'fecha_adquisicion' =>  'required',
             //'fecha_amortizacion' => '',
             'vida_util'         =>  'required',
@@ -37,12 +40,12 @@ class EquipoInvRequest extends FormRequest
             'bien_adquirido'    =>  'required',
             'bien_donado'       =>  'required',
             'bien_usado'        =>  'required',
-            'ubicacion_id'      =>  '',
+            'ubicacion_id'      =>  'nullable',
             'categoria_id'      =>  'required',
             'estado_id'         =>  'required',
             'marca_id'          =>  'required',
-            'user_id'           =>  '',
-            'direccion_id'      =>  ''
+            'user_id'           =>  'nullable',
+            'direccion_id'      =>  'nullable'
 
             /* 'usuario_id'        =>  '',
             'direccion_id'      =>  '',
