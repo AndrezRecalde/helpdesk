@@ -10,7 +10,7 @@ export const ServiceSection = ({ title, menu, classes }) => {
     };
 
     return (
-        <Card withBorder radius="md" className={classes.card} mb={20}>
+        <Card withBorder radius="md" className={classes.card} mt={20} mb={20}>
             <Group justify="space-between">
                 <TextSection tt="" fw={700} fz={18} c="dimmed">
                     {title}
