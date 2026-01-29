@@ -20,7 +20,7 @@ import { Roles } from "../../helpers/dictionary";
 import Swal from "sweetalert2";
 
 const PermisosPage = () => {
-    useTitlePage("Helpdesk | Permisos");
+    useTitlePage("Generar Permiso - Helpdesk");
 
     const usuario = JSON.parse(localStorage.getItem("service_user"));
     const isInitialMount = useRef(true);
@@ -223,7 +223,7 @@ const PermisosPage = () => {
     return (
         <Container size="md">
             <Group justify="space-between" mb="md">
-                <TitlePage order={2}>Crear Permiso</TitlePage>
+                <TitlePage order={2}>Generar Permiso 4 Horas</TitlePage>
                 <BtnSection
                     IconSection={IconChevronsRight}
                     handleAction={handleNavigate}

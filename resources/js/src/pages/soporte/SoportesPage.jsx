@@ -26,7 +26,7 @@ import Swal from "sweetalert2";
 import dayjs from "dayjs";
 
 const SoportesPage = () => {
-    useTitlePage("Helpdesk | Soportes");
+    useTitlePage("Gestión De Soportes Técnicos - Helpdesk");
     const usuario = JSON.parse(localStorage.getItem("service_user"));
     const { startLoadDirecciones, clearDirecciones } = useDireccionStore();
     const { startLoadEstados } = useEstadoStore();
@@ -163,7 +163,7 @@ const SoportesPage = () => {
         <Container size="xl">
             <Group justify="space-between">
                 <div>
-                    <TitlePage order={2}>Gestión De Soportes</TitlePage>
+                    <TitlePage order={2}>Gestión De Soportes Técnicos</TitlePage>
                     <TextSection fw={700} tt="" fz={16}>
                         Tienes {soportes.length ?? 0} soportes
                     </TextSection>

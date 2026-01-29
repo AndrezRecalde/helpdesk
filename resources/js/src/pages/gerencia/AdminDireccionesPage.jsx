@@ -10,7 +10,7 @@ import { useEffect } from "react";
 import Swal from "sweetalert2";
 
 const AdminDireccionesPage = () => {
-    useTitlePage("Helpdesk | Direcciones");
+    useTitlePage("Gestionar Direcciones - Helpdesk");
     const { startLoadUsers, clearUsers } = useUsersStore();
     const { clearDirectores, message, errores } =
         useDirectorStore();

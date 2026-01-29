@@ -18,7 +18,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useTitlePage } from "../../hooks";
 
 const ConfigInventarioPage = () => {
-    useTitlePage("Helpdesk | Config. Inv.");
+    useTitlePage("Configuración de Inventario - Helpdesk");
     const iconStyle = { width: rem(18), height: rem(18) };
 
     const navigate = useNavigate();

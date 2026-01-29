@@ -4,7 +4,7 @@ import { TitlePage, CardProfile } from "../../components";
 import { useAuthStore, useTitlePage } from "../../hooks";
 
 const ProfilePage = () => {
-    useTitlePage("Helpdesk | Perfil");
+    useTitlePage("Perfil de Usuario - Intranet");
     const token = JSON.stringify(localStorage.getItem("auth_token"));
 
     const { startProfile, clearProfile } = useAuthStore();
@@ -20,7 +20,7 @@ const ProfilePage = () => {
 
     return (
         <Container size="md">
-            <TitlePage order={1}>Perfil</TitlePage>
+            <TitlePage order={1}>Perfil de Usuario</TitlePage>
             <CardProfile />
         </Container>
     );

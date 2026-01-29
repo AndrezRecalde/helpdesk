@@ -121,14 +121,14 @@ export const FilterFormSoportes = ({ form }) => {
                             if (form.values.fecha_fin && value) {
                                 const anioInicio = dayjs(value).year();
                                 const anioFin = dayjs(
-                                    form.values.fecha_fin
+                                    form.values.fecha_fin,
                                 ).year();
 
                                 // Si fecha_fin es de otro año o es anterior a la nueva fecha_inicio, limpiarla
                                 if (
                                     anioInicio !== anioFin ||
                                     dayjs(form.values.fecha_fin).isBefore(
-                                        dayjs(value)
+                                        dayjs(value),
                                     )
                                 ) {
                                     form.setFieldValue("fecha_fin", null);
@@ -150,6 +150,7 @@ export const FilterFormSoportes = ({ form }) => {
                 </SimpleGrid>
                 <SimpleGrid cols={{ base: 1, sm: 1, md: 2, lg: 2 }} mt={10}>
                     <Select
+                        clearable
                         searchable
                         label="Dirección"
                         placeholder="Elige la dirección"

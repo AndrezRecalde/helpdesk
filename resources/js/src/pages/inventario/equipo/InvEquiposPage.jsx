@@ -22,7 +22,7 @@ import {
 import Swal from "sweetalert2";
 
 const InvEquiposPage = () => {
-    useTitlePage("Helpdesk | Inv. Equipos");
+    useTitlePage("Inventario de Equipos Informáticos - Helpdesk");
 
     const {
         isExport,
@@ -106,7 +106,7 @@ const InvEquiposPage = () => {
     return (
         <Container size="xl">
             <Group justify="space-between">
-                <TitlePage order={2}>Inventario de Equipos</TitlePage>
+                <TitlePage order={2}>Inventario de Equipos Informáticos</TitlePage>
                 <BtnAddActions actions={menuActions}>Crear nuevo</BtnAddActions>
             </Group>
             <Divider my="md" />

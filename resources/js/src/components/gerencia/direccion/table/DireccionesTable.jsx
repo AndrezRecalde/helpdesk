@@ -4,7 +4,7 @@ import { MenuTable_E, TableContent } from "../../../../components";
 import { useDirectorStore, useUiDirector } from "../../../../hooks";
 
 export const DireccionesTable = () => {
-    const { directores, setActivateDirectores } = useDirectorStore();
+    const { isLoading, directores, setActivateDirectores } = useDirectorStore();
     const { modalActionDirector } = useUiDirector();
 
     const handleEdit = useCallback(
@@ -39,6 +39,7 @@ export const DireccionesTable = () => {
         data: directores, //must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
         enableFacetedValues: true,
         enableRowActions: true,
+        state: { showProgressBars: isLoading },
         renderRowActionMenuItems: ({ row }) => (
             <MenuTable_E row={row} handleEdit={handleEdit} />
         ),

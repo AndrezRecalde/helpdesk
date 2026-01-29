@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
     Autocomplete,
     Select,
@@ -9,16 +9,21 @@ import {
 import { useSexoStore, useUiUser, useUsersStore } from "../../../../hooks";
 
 export const FormInfoUser = ({ form }) => {
-    const { usu_ci, lgin } = form.values;
+    const { usu_ci, lgin, email } = form.values;
     const { verifiedUser, userVerified } = useUsersStore();
     const { isModalEditUser } = useUiUser();
     const { sexo } = useSexoStore();
 
+    const [emailInput, setEmailInput] = useState(email || "");
+
+    const loadVerifiedUser = async (lgin) => {
+        await verifiedUser({ lgin });
+    };
+
     useEffect(() => {
         if (!isModalEditUser && lgin !== "" && lgin.length > 4) {
             setTimeout(() => {
-                //console.log("verified");
-                verifiedUser({ lgin });
+                loadVerifiedUser(lgin);
             }, 2000);
             return;
         }
@@ -30,11 +35,28 @@ export const FormInfoUser = ({ form }) => {
         } else {
             form.clearFieldError("lgin");
         }
-
-        /* return () => {
-            form.clearFieldError("lgin");
-        } */
     }, [userVerified]);
+
+    // Generar sugerencias de email
+    const emailSuggestions = useMemo(() => {
+        if (!emailInput || emailInput.includes("@")) {
+            return [];
+        }
+        return [`${emailInput}@gadpe.gob.ec`];
+    }, [emailInput]);
+
+    // Manejar cambios en el email
+    const handleEmailChange = (value) => {
+        setEmailInput(value);
+        form.setFieldValue("email", value);
+    };
+
+    // Sincronizar con el valor del formulario cuando se edita
+    useEffect(() => {
+        if (email !== emailInput) {
+            setEmailInput(email || "");
+        }
+    }, [email]);
 
     return (
         <Stack
@@ -50,6 +72,20 @@ export const FormInfoUser = ({ form }) => {
                 {...form.getInputProps("usu_ci")}
             />
             <SimpleGrid cols={{ base: 1, xs: 1, sm: 1, md: 2, lg: 2 }}>
+                <Select
+                    required
+                    searchable
+                    clearable
+                    label="Sexo"
+                    placeholder="Seleccione el sexo del usuario"
+                    {...form.getInputProps("sexo")}
+                    data={sexo.map((s) => {
+                        return {
+                            value: s.idnom_sexo.toString(),
+                            label: s.nom_sexo,
+                        };
+                    })}
+                />
                 <TextInput
                     required
                     label="Titulo"
@@ -77,27 +113,13 @@ export const FormInfoUser = ({ form }) => {
                 />
 
                 <Autocomplete
-                    required
                     label="Correo institucional"
                     placeholder="Digite el correo institucional"
-                    {...form.getInputProps("email")}
+                    value={emailInput}
+                    onChange={handleEmailChange}
+                    data={emailSuggestions}
+                    error={form.errors.email}
                 />
-
-                <Select
-                    required
-                    searchable
-                    clearable
-                    label="Sexo"
-                    placeholder="Seleccione el sexo del usuario"
-                    {...form.getInputProps("sexo")}
-                    data={sexo.map((s) => {
-                        return {
-                            value: s.idnom_sexo.toString(),
-                            label: s.nom_sexo,
-                        };
-                    })}
-                />
-
                 <TextInput
                     required
                     label="Usuario login"
@@ -115,7 +137,7 @@ export const FormInfoUser = ({ form }) => {
                     {...form.getInputProps("actvo")}
                     data={[
                         { value: "1", label: "Si" },
-                        { value: "2", label: "No" },
+                        { value: "0", label: "No" },
                     ]}
                 />
             </SimpleGrid>

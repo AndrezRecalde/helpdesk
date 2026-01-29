@@ -14,7 +14,7 @@ import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
 const SolicitudesVacacionesPage = () => {
-    useTitlePage("Helpdesk | Solicitudes Vacaciones");
+    useTitlePage("Solicitudes Vacaciones - Intranet");
     const usuario = useMemo(
         () => JSON.parse(localStorage.getItem("service_user")),
         []

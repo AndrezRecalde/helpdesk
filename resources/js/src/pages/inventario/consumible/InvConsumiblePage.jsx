@@ -18,7 +18,7 @@ import { useEffect } from "react";
 import Swal from "sweetalert2";
 
 const InvConsumiblePage = () => {
-    useTitlePage("Helpdesk | Inv. Consumibles");
+    useTitlePage("Inventario de Consumibles - Helpdesk");
 
     const {
         isExport,
@@ -105,7 +105,7 @@ const InvConsumiblePage = () => {
     return (
         <Container size="xl">
             <Group justify="space-between">
-                <TitlePage order={2}>Consumibles</TitlePage>
+                <TitlePage order={2}>Inventario de Consumibles</TitlePage>
                 <BtnAddActions actions={menuActions}>Crear nuevo</BtnAddActions>
             </Group>
             <Divider my="sm" />

@@ -8,10 +8,12 @@ import {
     useEmpresaStore,
     useTipoContratoStore,
     useTipoUsuarioStore,
+    useUsersStore,
 } from "../../../../hooks";
 
 export const FormTrabajoUser = ({ form }) => {
     const { finaliza_contrato, cdgo_direccion } = form.values;
+    const { activateResponsable } = useUsersStore();
     const { empresas } = useEmpresaStore();
     const { direcciones } = useDireccionStore();
     const { cargos } = useCargoStore();
@@ -67,7 +69,6 @@ export const FormTrabajoUser = ({ form }) => {
                 />
                 {departamentos.length > 0 ? (
                     <Select
-                        required
                         searchable
                         clearable
                         label="Departamento"
@@ -145,7 +146,63 @@ export const FormTrabajoUser = ({ form }) => {
                         {...form.getInputProps("usu_f_f_contrato")}
                     />
                 ) : null}
+
+                <Select
+                    required
+                    searchable
+                    clearable
+                    label="Interno"
+                    placeholder="¿El usuario es interno?"
+                    defaultValue="1"
+                    {...form.getInputProps("interno")}
+                    data={[
+                        { value: "1", label: "Si" },
+                        { value: "0", label: "No" },
+                    ]}
+                />
+
+                <Select
+                    required
+                    searchable
+                    clearable
+                    label="Estado"
+                    placeholder="Estado del usuario"
+                    defaultValue="1"
+                    {...form.getInputProps("usu_estado")}
+                    data={[
+                        {
+                            value: "1",
+                            label: "Activo",
+                        },
+                        {
+                            value: "2",
+                            label: "Inactivo",
+                        },
+                        {
+                            value: "4",
+                            label: "Ausente por comisión de servicios",
+                        },
+                        {
+                            value: "3",
+                            label: "Otro",
+                        },
+                    ]}
+                />
             </SimpleGrid>
+            <Select
+                disabled
+                required
+                searchable
+                clearable
+                label="Creado por"
+                {...form.getInputProps("usu_ing")}
+                data={activateResponsable.map((user) => {
+                    return {
+                        label: user.nmbre_usrio,
+                        value: user.cdgo_usrio.toString(),
+                    };
+                })}
+            />
         </Stack>
     );
 };

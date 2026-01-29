@@ -24,8 +24,8 @@ import { IconPencilPlus } from "@tabler/icons-react";
 import Swal from "sweetalert2";
 
 const AdminUsersPage = () => {
-    useTitlePage("Helpdesk | Usuarios");
-    const { users, errores, message } = useUsersStore();
+    useTitlePage("Administrar Usuarios - Helpdesk");
+    const { errores, message } = useUsersStore();
     const { modalActionUser } = useUiUser();
 
     const { clearEmpresas } = useEmpresaStore();

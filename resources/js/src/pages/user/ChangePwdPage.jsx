@@ -6,7 +6,7 @@ import { useTitlePage, useUsersStore } from "../../hooks";
 import Swal from "sweetalert2";
 
 const ChangePwdPage = () => {
-    useTitlePage("Helpdesk | Cambio contrasena");
+    useTitlePage("Cambio de Contraseña - Helpdesk");
     const { message, errores } = useUsersStore();
 
     const form = useForm({

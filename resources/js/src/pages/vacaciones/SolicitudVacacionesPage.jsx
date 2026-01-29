@@ -15,7 +15,7 @@ import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
 const SolicitudVacacionesPage = () => {
-    useTitlePage("Helpdesk | Solicitud Vacaciones");
+    useTitlePage("Solicitud de Vacaciones - Intranet");
     const {
         message,
         errores,

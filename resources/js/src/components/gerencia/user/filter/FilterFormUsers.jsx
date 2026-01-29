@@ -18,13 +18,13 @@ export const FilterFormUsers = () => {
 
     const form = useForm({
         initialValues: {
-            cdgo_direccion: null,
+            cdgo_direccion: "",
             nmbre_usrio: "",
             lgin: "",
         },
         transformValues: (values) => ({
             ...values,
-            cdgo_direccion: Number(values.cdgo_direccion) || null,
+            //cdgo_direccion: values.cdgo_direccion === "" ? null : Number(values.cdgo_direccion),
         }),
     });
 

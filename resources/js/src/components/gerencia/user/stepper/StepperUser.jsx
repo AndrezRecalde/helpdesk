@@ -18,6 +18,7 @@ export const StepperUser = ({ form }) => {
             //console.log('hola')
             form.setValues({
                 ...activateUser,
+                actvo: activateUser.actvo.toString() || "1",
                 sexo: activateUser.sexo.toString() || null,
                 usu_id_empresa: activateUser.usu_id_empresa?.toString() || null,
                 cdgo_direccion: activateUser.cdgo_direccion?.toString() || null,
@@ -31,9 +32,9 @@ export const StepperUser = ({ form }) => {
                 usu_f_f_contrato: activateUser.usu_f_f_contrato
                     ? dayjs(activateUser.usu_f_f_contrato).toDate()
                     : null,
-                tecnico: activateUser.tecnico?.toString() ?? "0",
-                secretaria_tic: activateUser.secretaria_tic?.toString() ?? "0",
-                super_user: activateUser.super_user?.toString() ?? "0",
+                //tecnico: activateUser.tecnico?.toString() ?? "0",
+                //secretaria_tic: activateUser.secretaria_tic?.toString() ?? "0",
+                //super_user: activateUser.super_user?.toString() ?? "0",
                 interno: activateUser.interno?.toString() ?? "0",
                 usu_estado: activateUser.usu_estado?.toString() ?? "0",
             });
@@ -59,7 +60,7 @@ export const StepperUser = ({ form }) => {
                     errors.hasOwnProperty("usu_ape_pat") ||
                     errors.hasOwnProperty("usu_ape_mat") ||
                     errors.hasOwnProperty("usu_nombres") ||
-                    errors.hasOwnProperty("email") ||
+                    //errors.hasOwnProperty("email") ||
                     errors.hasOwnProperty("sexo") ||
                     errors.hasOwnProperty("lgin") ||
                     errors.hasOwnProperty("actvo")
@@ -67,7 +68,7 @@ export const StepperUser = ({ form }) => {
                     setActive((current) => current * 1);
                 } else {
                     setActive((current) =>
-                        current < 3 ? current + 1 : current
+                        current < 2 ? current + 1 : current
                     );
                     form.clearErrors();
                 }
@@ -86,13 +87,13 @@ export const StepperUser = ({ form }) => {
                     setActive((current) => current * 1);
                 } else {
                     setActive((current) =>
-                        current < 3 ? current + 1 : current
+                        current < 2 ? current + 1 : current
                     );
                     form.clearErrors();
                 }
                 break;
 
-            case 2:
+/*             case 2:
                 if (
                     errors.hasOwnProperty("tecnico") ||
                     errors.hasOwnProperty("secretaria_tic") ||
@@ -107,7 +108,7 @@ export const StepperUser = ({ form }) => {
                     );
                     form.clearErrors();
                 }
-                break;
+                break; */
 
             default:
                 break;
@@ -149,14 +150,14 @@ export const StepperUser = ({ form }) => {
                 >
                     <FormTrabajoUser form={form} />
                 </Stepper.Step>
-                <Stepper.Step
+                {/* <Stepper.Step
                     label="Tipo de usuario"
                     description="Paso final"
                     allowStepSelect={active > 2}
                     allowStepClick={false}
                 >
                     <FormTipoUser form={form} />
-                </Stepper.Step>
+                </Stepper.Step> */}
 
                 <Stepper.Completed>
                     <Title order={5}>
@@ -170,7 +171,7 @@ export const StepperUser = ({ form }) => {
             </Stepper>
 
             <Group justify="center" mt="xl">
-                {active === 3 ? (
+                {active === 2 ? (
                     <Group justify="center" mt="xl">
                         <Button variant="default" onClick={prevStep}>
                             Regresar

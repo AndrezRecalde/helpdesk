@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import Swal from "sweetalert2";
 
 const SoporteCalificacionPage = () => {
-    useTitlePage("Helpdesk | Calificar Soportes");
+    useTitlePage("Cerrar Soportes Técnicos - Helpdesk");
     const { startLoadSoportesSinCalificar, clearSoportes, message, errores } =
         useSoporteStore();
 

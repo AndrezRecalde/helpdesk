@@ -9,7 +9,7 @@ import { usePermisoStore, useTitlePage } from "../../hooks";
 import { IconRefresh } from "@tabler/icons-react";
 
 const AutorizarPermisosPage = () => {
-    useTitlePage("Helpdesk | Permisos");
+    useTitlePage("Autorizar Permisos - Helpdesk");
     const { startLoadPermisos, clearPermisos } = usePermisoStore();
 
     useEffect(() => {

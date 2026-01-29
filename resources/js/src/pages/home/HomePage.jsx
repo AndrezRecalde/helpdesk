@@ -10,7 +10,7 @@ import { capitalizarCadaPalabra } from "../../helpers/fnHelpers";
 import classes from "../../assets/styles/modules/menu/MenuGrid.module.css";
 
 function HomePage() {
-    useTitlePage("Helpdesk | Inicio");
+    useTitlePage("Inicio - Intranet");
     const usuario = JSON.parse(localStorage.getItem("service_user"));
     const { startLoadBirthdays } = useUsersStore();
 

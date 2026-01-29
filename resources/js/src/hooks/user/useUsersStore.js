@@ -154,7 +154,7 @@ export const useUsersStore = () => {
                 dispatch(onSetUserVerified(null));
             }
         } catch (error) {
-            //console.log(error);
+            console.log(error);
             ExceptionMessageError(error);
         }
     };

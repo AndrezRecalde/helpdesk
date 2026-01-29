@@ -30,7 +30,7 @@ const MarcacionesBiometricos = () => {
     } = useMarcacionStore();
     const { modalActionGenerarReporte } = useUiMarcacion();
     const navigate = useNavigate();
-    useTitlePage("Intranet | Marcaciones");
+    useTitlePage("Marcaciones Biometricos - Intranet");
 
     const form = useForm({
         initialValues: {

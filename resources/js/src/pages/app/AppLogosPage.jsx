@@ -1,10 +1,11 @@
 import { useEffect } from "react";
 import { Container, Divider, Group } from "@mantine/core";
 import { AppLogosModal, AppLogosTable, TitlePage } from "../../components";
-import { useAppStore } from "../../hooks";
+import { useAppStore, useTitlePage } from "../../hooks";
 import Swal from "sweetalert2";
 
 const AppLogosPage = () => {
+    useTitlePage("Gestionar Aplicativo - Helpdesk");
     const {
         startLoadImagenes,
         imagenes,

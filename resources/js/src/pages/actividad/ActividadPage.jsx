@@ -13,7 +13,7 @@ import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
 const ActividadPage = () => {
-    useTitlePage("Helpdesk | Actividad");
+    useTitlePage("Registrar Actividad - Intranet");
     const navigate = useNavigate();
     const { message, errores } = useActividadStore();
 

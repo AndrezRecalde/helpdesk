@@ -19,7 +19,7 @@ import Swal from "sweetalert2";
 import { MRT_Localization_ES } from "mantine-react-table/locales/es/index.cjs";
 
 const ListActividadesPage = () => {
-    useTitlePage("Helpdesk | Mis Actividades");
+    useTitlePage("Mis Actividades - Intranet");
     const navigate = useNavigate();
     const srv_user = JSON.parse(localStorage.getItem("service_user"));
     const { modalActionActividad } = useUiActividad();

@@ -5,7 +5,7 @@ import classes from "../../assets/styles/modules/auth/AuthPageBackground.module.
 
 const AuthPage = () => {
     const imagenes = JSON.parse(localStorage.getItem("service_images")) || [];
-    useTitlePage("Helpdesk | Login");
+    useTitlePage("Autenticación - Intranet");
 
     return (
         <div

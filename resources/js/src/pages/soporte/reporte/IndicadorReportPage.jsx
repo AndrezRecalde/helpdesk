@@ -11,7 +11,7 @@ import dayjs from "dayjs";
 import Swal from "sweetalert2";
 
 const IndicadorReportPage = () => {
-    useTitlePage("Helpdesk | Indicadores");
+    useTitlePage("Reporte de Indicadores - Helpdesk");
     const {
         isLoading,
         pageLoad,

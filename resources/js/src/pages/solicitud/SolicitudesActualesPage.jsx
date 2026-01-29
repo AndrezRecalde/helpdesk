@@ -18,7 +18,7 @@ import useSWR, { mutate } from "swr";
 import Swal from "sweetalert2";
 
 const SolicitudesActualesPage = () => {
-    useTitlePage("Helpdesk | Solicitudes");
+    useTitlePage("Solicitudes Actuales - Helpdesk");
     const usuario = JSON.parse(localStorage.getItem("service_user"));
     const dispatch = useDispatch();
     const {

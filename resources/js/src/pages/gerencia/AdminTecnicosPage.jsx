@@ -11,7 +11,7 @@ import { useTecnicoStore, useTitlePage, useUiTecnico } from "../../hooks";
 import { IconPencilPlus } from "@tabler/icons-react";
 
 const AdminTecnicosPage = () => {
-    useTitlePage("Helpdesk | Técnicos");
+    useTitlePage("Gestionar Técnicos - Helpdesk");
     const { tecnicos, startLoadTecnicosAdmin, clearTecnicos } =
         useTecnicoStore();
     const { modalActionTecnico } = useUiTecnico();

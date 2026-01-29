@@ -21,7 +21,7 @@ import dayjs from "dayjs";
 import Swal from "sweetalert2";
 
 const ListPermisosAdminPage = () => {
-    useTitlePage("Helpdesk | Lista Permisos");
+    useTitlePage("Gestionar Permisos - Intranet");
     const { startLoadDirecciones, clearDirecciones } = useDireccionStore();
     const { startLoadUsersExtrict, clearUsers } = useUsersStore();
     const {

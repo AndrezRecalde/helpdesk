@@ -13,7 +13,7 @@ export const FilterFormDirecciones = () => {
 
     const form = useForm({
         initialValues: {
-            cdgo_dprtmnto: null,
+            cdgo_dprtmnto: "",
         },
         /* transformValues: (values) => ({
             cdgo_dprtmnto: Number(values.cdgo_dprtmnto) || ""

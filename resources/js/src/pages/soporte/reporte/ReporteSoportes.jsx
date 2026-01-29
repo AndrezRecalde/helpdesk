@@ -13,7 +13,7 @@ import dayjs from "dayjs";
 import Swal from "sweetalert2";
 
 const ReporteSoportes = () => {
-    useTitlePage("Helpdesk | Reporte");
+    useTitlePage("Reporte de Soportes Técnicos - Helpdesk");
     const usuario = JSON.parse(localStorage.getItem("service_user"));
     const {
         isLoading,

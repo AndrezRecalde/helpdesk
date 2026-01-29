@@ -7,12 +7,13 @@ import {
     SoportesUsersTable,
     TitlePage,
 } from "../../components";
-import { useSoporteStore } from "../../hooks";
+import { useSoporteStore, useTitlePage } from "../../hooks";
 import { IconChevronsRight, IconInfoCircle } from "@tabler/icons-react";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
 const UsersSoportesPage = () => {
+    useTitlePage("Solicitudes de Soporte - Helpdesk");
     const usuario = JSON.parse(localStorage.getItem("service_user"));
     const {
         isLoading,

@@ -32,28 +32,28 @@ export const ModalUser = () => {
             usu_ape_pat: "",
             usu_ape_mat: "",
             usu_nombres: "",
-            nombre_formateado: "",
+            //nombre_formateado: "",
             email: "",
-            sexo: null,
+            sexo: "",
             lgin: "",
             actvo: "1",
 
-            usu_id_empresa: null,
-            cdgo_direccion: null,
-            cdgo_dprtmnto: null,
-            crgo_id: null,
-            id_tipo_usuario: null,
-            usu_ult_tipo_contrato: null,
+            usu_id_empresa: "",
+            cdgo_direccion: "",
+            cdgo_dprtmnto: "",
+            crgo_id: "",
+            id_tipo_usuario: "",
+            usu_ult_tipo_contrato: "",
             finaliza_contrato: "0",
-            usu_f_f_contrato: null,
+            usu_f_f_contrato: "",
 
             tecnico: "0",
             secretaria_tic: "0",
             super_user: "0",
-            interno: "0",
+            interno: "1",
             usu_estado: "1",
-            usu_alias: "",
-            usu_ing: null,
+            //usu_alias: "",
+            usu_ing: "",
         },
         validate: {
             usu_ci: hasLength(
@@ -76,7 +76,7 @@ export const ModalUser = () => {
             usu_nombres: isNotEmpty(
                 "Por favor ingrese los nombres del usuario"
             ),
-            email: isEmail("Dígite un email valido"),
+            //email: isEmail("Dígite un email valido"),
             sexo: isNotEmpty("Por favor seleccione una opción"),
             lgin: isNotEmpty("Por favor ingrese el usuario login"),
             actvo: isNotEmpty("Por favor seleccione el estado"),
@@ -101,8 +101,8 @@ export const ModalUser = () => {
             sexo: Number(values.sexo) || null,
             //actvo: Number(values.actvo) || null,
             usu_id_empresa: Number(values.usu_id_empresa) || null,
-            cdgo_direccion:isNaN(Number(values.cdgo_direccion)) ? null : Number(values.cdgo_direccion),
-            cdgo_dprtmnto: isNaN(Number(values.cdgo_dprtmnto)) ? null : Number(values.cdgo_dprtmnto),
+            cdgo_direccion: values.cdgo_direccion === "" ? null : Number(values.cdgo_direccion),
+            cdgo_dprtmnto: values.cdgo_dprtmnto === "" ? null : Number(values.cdgo_dprtmnto),
             crgo_id: Number(values.crgo_id) || null,
             id_tipo_usuario: Number(values.id_tipo_usuario) || null,
             usu_ult_tipo_contrato: Number(values.usu_ult_tipo_contrato) || null,
@@ -171,7 +171,7 @@ export const ModalUser = () => {
                     Usuario
                 </TextSection>
             }
-            size="xl"
+            size={900}
             closeOnClickOutside={false}
             overlayProps={{
                 backgroundOpacity: 0.55,

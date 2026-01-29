@@ -43,7 +43,7 @@ const validators = {
 };
 
 const ListPermisosPage = () => {
-    useTitlePage("Helpdesk | Lista Permisos");
+    useTitlePage("Lista Permisos - Intranet");
     const navigate = useNavigate();
     const hasLoadedInitialData = useRef(false);
 

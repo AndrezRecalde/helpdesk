@@ -13,7 +13,7 @@ import dayjs from "dayjs";
 import Swal from "sweetalert2";
 
 const ConsolidadoPermisosPage = () => {
-    useTitlePage("Helpdesk | Consolidados");
+    useTitlePage("Consolidados de Permisos - Helpdesk");
     const {
         isExport,
         startLoadConsolidadosPermisos,

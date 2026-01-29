@@ -24,7 +24,7 @@ import { infoTics } from "../../helpers/infoStats";
 import { useNavigate } from "react-router-dom";
 
 const SolicitudPage = () => {
-    useTitlePage("Helpdesk | Solicitud");
+    useTitlePage("Solicitud de Soporte Técnico - Helpdesk");
     const usuario = JSON.parse(localStorage.getItem("service_user"));
     const navigate = useNavigate();
     const {

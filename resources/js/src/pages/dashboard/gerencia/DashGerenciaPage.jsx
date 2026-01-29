@@ -16,7 +16,7 @@ import {
 } from "../../../components";
 
 const DashGerenciaPage = () => {
-    useTitlePage("Helpdesk | Dashboard");
+    useTitlePage("Panel de Soportes Técnicos - Helpdesk");
     const { isLoading, startLoadDashboard, soportesForEstado, soportesForAreas, clearDashboard } =
         useDashGerenciaStore();
     const { startLoadDesempenoTecnicosAnual, clearIndicadores } =
@@ -36,7 +36,7 @@ const DashGerenciaPage = () => {
         <Container size="xl">
             <Box pos="relative">
                 <TitlePage order={2}>
-                    Panel de Soporte Técnico
+                    Panel de Soportes Técnicos
                 </TitlePage>
                 <Divider my="md" />
                 <LoadingOverlay
