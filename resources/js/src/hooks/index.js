@@ -129,6 +129,9 @@ import { useUiInvConsumible } from "./inventario/consumible/useUiInvConsumible";
 /* Inventario: UI Custodio */
 import { useUiInvCustodio } from "./inventario/custodio/useUiInvCustodio";
 
+/* Denuncias */
+import { useDenunciaStore } from "./denuncia/useDenunciaStore";
+import { useUiDenuncia } from "./denuncia/useUiDenuncia";
 
 import { useTitlePage } from "./title/useTitlePage";
 import { useErrorException } from "./error/useErrorException";
@@ -233,6 +236,9 @@ export {
 
     useRutaStore,
     useUiRuta,
+
+    useDenunciaStore,
+    useUiDenuncia,
 
     useTitlePage,
     useErrorException,

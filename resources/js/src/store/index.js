@@ -126,6 +126,9 @@ import { uiInvCustodioSlice } from "./inventario/custodio/uiInvCustodioSlice";
 import { rutaSlice } from "./ruta/rutaSlice";
 import { uiRutaSlice } from "./ruta/uiRutaSlice";
 
+/* Denuncias */
+import { denunciaSlice } from "./denuncia/denunciaSlice";
+import { uiDenunciaSlice } from "./denuncia/uiDenunciaSlice";
 
 /* Storage Fields */
 import { storageFieldsSlice } from "./fields/storageFieldsSlice";
@@ -263,6 +266,10 @@ export {
     /* Ruta de tramites */
     rutaSlice,
     uiRutaSlice,
+
+    /* Denuncias */
+    denunciaSlice,
+    uiDenunciaSlice,
 
     /* Storage */
     storageFieldsSlice

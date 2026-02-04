@@ -5,6 +5,7 @@ import {
     authSlice,
     cargoSlice,
     dashGerenciaSlice,
+    denunciaSlice,
     departamentoSlice,
     descuentoSlice,
     diagnosticoSlice,
@@ -36,6 +37,7 @@ import {
     uiActividadSlice,
     uiAppSlice,
     uiDescuentoSlice,
+    uiDenunciaSlice,
     uiDirectorSlice,
     uiHeaderMenuSlice,
     uiIndicadorSlice,
@@ -134,6 +136,9 @@ export const store = configureStore({
 
         ruta: rutaSlice.reducer,
         uiRuta: uiRutaSlice.reducer,
+
+        denuncia: denunciaSlice.reducer,
+        uiDenuncia: uiDenunciaSlice.reducer,
 
         storageField: storageFieldsSlice.reducer
     },

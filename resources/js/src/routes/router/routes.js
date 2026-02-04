@@ -187,6 +187,18 @@ const BusquedaTramiteRutaPage = lazy(() =>
     )
 );
 
+const MisDenunciasPage = lazy(() =>
+    import(
+        /* webpackChunkName: "MisDenunciasPage" */ "../../pages/denuncia/MisDenunciasPage"
+    )
+);
+
+const DenunciasAdminPage = lazy(() =>
+    import(
+        /* webpackChunkName: "DenunciasAdminPage" */ "../../pages/denuncia/DenunciasAdminPage"
+    )
+);
+
 const ErrorNotFound = lazy(() =>
     import(
         /* webpackChunkName: "ErrorNotFound" */ "../../pages/error/ErrorNotFound"
@@ -283,9 +295,19 @@ const peerRoutes = generateRoutes(
         { path: "solicitud-soporte", Component: SolicitudPage },
         { path: "soportes", Component: UserSoportesPage },
 
+        { path: "reportar-abuso", Component: MisDenunciasPage },
+
         { path: "busqueda-tramite", Component: BusquedaTramiteRutaPage }
     ],
     [""]
+);
+
+const denunciasAdminRoutes = generateRoutes(
+    "denuncias/gerencia",
+    [
+        { path: "gestionar-denuncias", Component: DenunciasAdminPage },
+    ],
+    [Roles.NOM_DENUNCIAS]
 );
 
 export const routes = {
@@ -293,6 +315,7 @@ export const routes = {
     HELPDESK_TECNICO: helpdeskTecnicoRoutes,
 
     NOM_PERMISOS: permisosAdminRoutes,
+    NOM_DENUNCIAS: denunciasAdminRoutes,
 };
 
 export const peerLinks = {

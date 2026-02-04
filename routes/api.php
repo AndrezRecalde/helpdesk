@@ -3,6 +3,7 @@
 use Laravel\Sanctum\Sanctum;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\General\ActividadController;
+use App\Http\Controllers\General\DenunciaController;
 use App\Http\Controllers\General\DiagnosticoController;
 use App\Http\Controllers\General\DireccionController;
 use App\Http\Controllers\General\EquipoController;
@@ -13,9 +14,12 @@ use App\Http\Controllers\General\Ruta\RutaController;
 use App\Http\Controllers\General\SoporteController;
 //use App\Http\Controllers\General\STipoEquipoController;
 use App\Http\Controllers\General\UserController;
+use App\Http\Controllers\General\TelegramController;
 use App\Http\Controllers\Gerente\AppController;
+use App\Http\Controllers\Gerente\AreaTicController;
 use App\Http\Controllers\Gerente\CargoController;
 use App\Http\Controllers\Gerente\DashGerenteController;
+use App\Http\Controllers\Gerente\DenunciaAdminController;
 use App\Http\Controllers\Gerente\DireccionAdminController;
 use App\Http\Controllers\Gerente\EmpresaController;
 use App\Http\Controllers\Gerente\Inventario\InvBajaController;
@@ -90,10 +94,27 @@ Route::group(['prefix' => 'gerencia', 'middleware' => ['auth:sanctum', 'role:TIC
     Route::post('/admin/show-user', [UserAdminController::class, 'findUser']);
     Route::put('/update/codigo-biometrico/{cdgo_usrio}', [UserAdminController::class, 'setCodigoBiometrico']);
 
+    /* ÁREAS TIC */
+    Route::get('/areas-tic', [AreaTicController::class, 'getAreasTic']);
+    Route::get('/areas-tic/all', [AreaTicController::class, 'getAllAreasTic']);
+    Route::get('/areas-tic/{id}', [AreaTicController::class, 'show']);
+    Route::post('/areas-tic/store', [AreaTicController::class, 'store']);
+    Route::put('/areas-tic/update/{id}', [AreaTicController::class, 'update']);
+    Route::delete('/areas-tic/destroy/{id}', [AreaTicController::class, 'destroy']);
 
     /* TECNICOS */
     Route::post('/admin/tecnicos', [TecnicoController::class, 'getTecnicosAdmin']);
     Route::put('/update/tecnico/{cdgo_usrio}', [TecnicoController::class, 'updateTecnico']);
+
+    Route::get('/tecnicos-con-areas', [TecnicoController::class, 'getTecnicosConAreas']);
+    Route::get('/tecnico/{tecnico_id}/areas', [TecnicoController::class, 'getAreasTecnico']);
+    Route::get('/area/{area_id}/tecnicos', [TecnicoController::class, 'getTecnicosArea']);
+    Route::post('/tecnico-area/asignar', [TecnicoController::class, 'asignarArea']);
+    Route::put('/tecnico-area/update/{id}', [TecnicoController::class, 'updateAsignacion']);
+    Route::delete('/tecnico-area/remover/{id}', [TecnicoController::class, 'removerArea']);
+
+    /* NOTIFICACIONES TELEGRAM (ADMIN) */
+    Route::post('/telegram/notificar-soporte/{soporte_id}', [TelegramController::class, 'notificarSoporteAsignado']);
 
     /* DEPARTAMENTOS Y DIRECCION */
     Route::post('/departamentos', [DireccionAdminController::class, 'getDepartamentos']);
@@ -207,6 +228,7 @@ Route::group(['prefix' => 'gerencia', 'middleware' => ['auth:sanctum', 'role:TIC
     Route::put('/inventario/consumible/incrementar/{id}', [InvConsumibleController::class, 'incrementarStock']);
     Route::post('/inventario/solicitar-consumible', [InvConsumibleController::class, 'solicitarConsumible']);
     Route::post('/inventario/historial-consumible', [InvConsumibleController::class, 'historialConsumible']);
+
 });
 
 /* RUTAS: GERENTE O TECNICO */
@@ -245,6 +267,9 @@ Route::group(['prefix' => 'general', 'middleware' => ['auth:sanctum', 'role:TIC_
 
     /* EQUIPOS NUEVA TABLA */
     Route::get('/inventario/tipos-equipos', [InvEquipoController::class, 'getEquipos']);
+
+    /* ÁREAS DE TIC (CONSULTA) */
+    Route::get('/areas-tic', [AreaTicController::class, 'getAreasTic']);
 });
 
 
@@ -317,8 +342,19 @@ Route::group(['prefix' => 'usuario', 'middleware' => ['auth:sanctum']], function
     Route::post('/periodos-vacacionales', [UserAdminController::class, 'getConsultarPeriodos']);
     Route::post('/vacaciones/dias-disponibles/{cdgo_usrio}', [NomPeriodoVacacionesController::class, 'obtenerDiasDisponiblesPorUsuario']);
 
+    /* TELEGRAM - CONFIGURACIÓN PERSONAL */
+    Route::post('/telegram/configurar', [TelegramController::class, 'configurarTelegram']);
+    Route::get('/telegram/configuracion', [TelegramController::class, 'getConfiguracion']);
+    Route::put('/telegram/desactivar', [TelegramController::class, 'desactivarNotificaciones']);
+
     /* RUTAS */
     Route::post('/fichas-ingresos/buscar', [RutaController::class, 'buscarFichasIngresos']);
+
+    /* DENUNCIAS */
+    Route::post('/denuncias/verificar-cedula', [DenunciaController::class, 'verificarCedula']);
+    Route::post('/denuncias/crear', [DenunciaController::class, 'store']);
+    Route::get('/denuncias/mis-denuncias', [DenunciaController::class, 'getMisDenuncias']);
+    Route::get('/denuncias/{numero_denuncia}', [DenunciaController::class, 'show']);
 });
 
 
@@ -356,3 +392,20 @@ Route::group(['prefix' => 'tthh/asistencia', 'middleware' => ['auth:sanctum', 'r
     Route::put('/update/descuento/{id}', [NomVacacionesDescuentoController::class, 'update']);
     Route::delete('/delete/descuento/{id}', [NomVacacionesDescuentoController::class, 'destroy']);
 });
+
+
+
+Route::group(['prefix' => 'tthh/gerencia', 'middleware' => ['auth:sanctum', 'role:NOM_DENUNCIAS']], function () {
+
+    /* DENUNCIAS - ADMIN */
+    Route::post('/denuncias', [DenunciaAdminController::class, 'index']);
+    Route::get('/denuncias/estadisticas', [DenunciaAdminController::class, 'estadisticas']);
+    Route::get('/denuncias/{id}', [DenunciaAdminController::class, 'show']);
+    Route::put('/denuncias/{id}/responder', [DenunciaAdminController::class, 'responder']);
+    Route::put('/denuncias/{id}/estado', [DenunciaAdminController::class, 'updateEstado']);
+    Route::get('/denuncias/archivo/{archivo_id}/descargar', [DenunciaAdminController::class, 'descargarArchivo']);
+});
+
+
+
+

@@ -243,6 +243,14 @@ import { FichaIngresoCard } from "./rutas/card/FichaIngresoCard";
 import { DespachosTable } from "./rutas/table/DespachosTable";
 import { InformacionTramiteModal } from "./rutas/modal/InformacionTramiteModal";
 
+/* Denuncias */
+import { ModalVerificarCedula } from "./denuncia/modal/ModalVerificarCedula";
+import { ModalCrearDenuncia } from "./denuncia/modal/ModalCrearDenuncia";
+import { ModalDetalleDenuncia } from "./denuncia/modal/ModalDetalleDenuncia";
+import { ModalResponderDenuncia } from "./denuncia/modal/ModalResponderDenuncia";
+import { MisDenunciasTable } from "./denuncia/table/MisDenunciasTable";
+import { DenunciasAdminTable } from "./denuncia/table/DenunciasAdminTable";
+
 /* Elementos */
 import { Logo } from "./elements/application/Logo";
 import { TitlePage } from "./elements/titles/TitlePage";
@@ -507,6 +515,14 @@ export {
     FichaIngresoCard,
     DespachosTable,
     InformacionTramiteModal,
+
+    /* Denuncias */
+    ModalVerificarCedula,
+    ModalCrearDenuncia,
+    ModalDetalleDenuncia,
+    ModalResponderDenuncia,
+    MisDenunciasTable,
+    DenunciasAdminTable,
 
     /* Elements */
     Logo,

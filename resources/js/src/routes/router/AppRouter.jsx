@@ -115,6 +115,15 @@ export const AppRouter = () => {
                     </RoutesNotFound>
                 }
             />
+
+            <Route
+                path="/denuncias/gerencia/*"
+                element={
+                    <RoutesNotFound>
+                        {renderRoutes(routes.NOM_DENUNCIAS)}
+                    </RoutesNotFound>
+                }
+            />
             {/* </Route> */}
         </Routes>
     );
