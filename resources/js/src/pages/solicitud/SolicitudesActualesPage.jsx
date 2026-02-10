@@ -10,6 +10,7 @@ import {
     TextSection,
     TitlePage,
 } from "../../components";
+import { TopTecnicosStats } from "../../components/soportes/stats/TopTecnicosStats";
 import { useSoporteStore, useTitlePage, useUiSoporte } from "../../hooks";
 import { useDispatch } from "react-redux";
 import { onLoadSoportes } from "../../store/soporte/soporteSlice";
@@ -36,7 +37,7 @@ const SolicitudesActualesPage = () => {
     const { data, error, isLoading } = useSWR(
         usuario,
         startLoadSoportesActuales,
-        { refreshInterval: 6000 }
+        { refreshInterval: 6000 },
     );
 
     useEffect(() => {
@@ -48,7 +49,7 @@ const SolicitudesActualesPage = () => {
             mutate(
                 (key) => true, // which cache keys are updated
                 undefined, // update cache data to `undefined`
-                { revalidate: false } // do not revalidate
+                { revalidate: false }, // do not revalidate
             );
             clearSoportes();
         };
@@ -78,6 +79,21 @@ const SolicitudesActualesPage = () => {
         }
     }, [errores]);
 
+    useEffect(() => {
+        if (loadPDF === true) {
+            Swal.fire({
+                title: "Generando reporte...",
+                text: "Por favor espere",
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                },
+            });
+        } else {
+            Swal.close(); // Cierra el modal cuando loadPDF es false
+        }
+    }, [loadPDF]);
+
     const handleOpenModal = () => {
         modalActionAddSolicitud(1);
     };
@@ -104,12 +120,11 @@ const SolicitudesActualesPage = () => {
                 </TextSection>
             </Group>
             {/*  {soportes.length !== 0 ? ( */}
+
+            {/* Estadísticas de Técnicos */}
+            <TopTecnicosStats />
+
             <Divider my="md" />
-            <LoadingOverlay
-                visible={loadPDF}
-                zIndex={1000}
-                overlayProps={{ radius: "sm", blur: 2 }}
-            />
             <SolicitudesTable
                 menu={usuario.role_id === 1 ? 1 : 2}
                 isLoading={isLoading}

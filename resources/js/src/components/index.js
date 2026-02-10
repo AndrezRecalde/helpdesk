@@ -84,6 +84,14 @@ import { ModalAddTecnico } from "./gerencia/tecnico/modal/ModalAddTecnico";
 import { ModalDesempTecnicos } from "./gerencia/tecnico/modal/ModalDesempTecnicos";
 import { TecnicosTable } from "./gerencia/tecnico/table/TecnicosTable";
 
+/* AREAS TIC */
+import { AreasTable } from "./areaTic/table/AreasTable";
+import { MenuTableArea } from "./areaTic/table/MenuTableArea";
+import { ModalActionArea } from "./areaTic/modal/ModalActionArea";
+import { ModalDeleteArea } from "./areaTic/modal/ModalDeleteArea";
+import { ModalAsignarTecnicos } from "./areaTic/modal/ModalAsignarTecnicos";
+import { ModalEstadisticasArea } from "./areaTic/modal/ModalEstadisticasArea";
+
 /* Usuario */
 import { ActivateUserBtn } from "./gerencia/user/btn/ActivateUserBtn";
 import { FilterFormUsers } from "./gerencia/user/filter/FilterFormUsers";
@@ -370,6 +378,14 @@ export {
     ModalAddTecnico,
     ModalDesempTecnicos,
     TecnicosTable,
+
+    /* AREAS TIC */
+    AreasTable,
+    MenuTableArea,
+    ModalActionArea,
+    ModalDeleteArea,
+    ModalAsignarTecnicos,
+    ModalEstadisticasArea,
 
     /* Usuario */
     ActivateUserBtn,

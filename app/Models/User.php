@@ -59,7 +59,10 @@ class User extends Authenticatable
         'paswrd',
         'asi_id_reloj',
 
-        'usu_fi_institucion'
+        'usu_fi_institucion',
+
+        'telegram_chat_id',
+        'notificar_telegram',
     ];
 
     /**
@@ -81,13 +84,19 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         //'paswrd' => 'string',
         'usu_f_f_contrato' => 'date',
-        'usu_fi_institucion' => 'date'
+        'usu_fi_institucion' => 'date',
+        'notificar_telegram' => 'boolean',
     ];
 
 
     public function isGerenteTic(): bool
     {
         return $this->hasRole('TIC_GERENTE');
+    }
+
+    public function isTecnicoTic(): bool
+    {
+        return $this->hasRole('TIC_TECNICO');
     }
 
     //Permisos
@@ -112,6 +121,73 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(InvEquipo::class, 'usuario_equipo', 'usuario_id', 'equipo_id')
             ->withPivot('direccion_id', 'concepto_id');;
+    }
+
+    function denuncias(): HasMany
+    {
+        return $this->hasMany(NomDenuncia::class, 'usuario_id', 'cdgo_usrio');
+    }
+
+
+    public function areasTic(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            AreaTic::class,
+            'sop_tecnico_areas',
+            'tecnico_id',
+            'area_tic_id',
+            'cdgo_usrio',
+            'id_areas_tic'
+        )
+            ->withPivot(['principal', 'activo'])
+            ->withTimestamps();
+    }
+
+    public function areasTicActivas(): BelongsToMany
+    {
+        return $this->areasTic()->wherePivot('activo', true);
+    }
+
+    /**
+     * Obtener el área principal del técnico
+     */
+    public function areaTicPrincipal(): BelongsToMany
+    {
+        return $this->areasTic()
+            ->wherePivot('principal', true)
+            ->wherePivot('activo', true);
+    }
+
+    /**
+     * Soportes asignados como técnico
+     */
+    public function soportesAsignados(): HasMany
+    {
+        return $this->hasMany(Soporte::class, 'id_usu_tecnico_asig', 'cdgo_usrio');
+    }
+
+    /**
+     * Verificar si el técnico tiene Telegram configurado
+     */
+    public function tieneTelegramConfigurado(): bool
+    {
+        return !empty($this->telegram_chat_id) && $this->notificar_telegram;
+    }
+
+    public function scopeTecnicosTic($query)
+    {
+        return $query->whereHas('roles', function ($q) {
+            $q->where('name', 'TIC_TECNICO');
+        });
+    }
+
+    /**
+     * Scope para técnicos con Telegram configurado
+     */
+    public function scopeConTelegram($query)
+    {
+        return $query->where('notificar_telegram', true)
+            ->whereNotNull('telegram_chat_id');
     }
 
     static function create(array $attributes = []): object

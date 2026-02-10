@@ -1,27 +1,20 @@
 import { useDispatch, useSelector } from "react-redux";
 import {
-    onCloseModalActivateTecnico,
-    onCloseModalAddTecnico,
-    onOpenModalActivateTecnico,
-    onOpenModalAddTecnico,
+    onToggleModalActivateTecnico,
+    onToggleModalAddTecnico,
 } from "../../store/tecnico/uiTecnicoSlice";
 
 export const useUiTecnico = () => {
-    const { isOpenModalAddTecnico, isOpenModalActivateTecnico, disabledInput } = useSelector(
-        (state) => state.uiTecnico
-    );
+    const { isOpenModalAddTecnico, isOpenModalActivateTecnico, disabledInput } =
+        useSelector((state) => state.uiTecnico);
     const dispatch = useDispatch();
 
-    const modalActionTecnico = (behavior, disabled = false) => {
-        behavior === 1
-            ? dispatch(onOpenModalAddTecnico(disabled))
-            : dispatch(onCloseModalAddTecnico());
+    const toggleModalTecnico = (disabled = false) => {
+        dispatch(onToggleModalAddTecnico(disabled));
     };
 
-    const modalActionActivateTecnico = (behavior) => {
-        behavior === 1
-            ? dispatch(onOpenModalActivateTecnico())
-            : dispatch(onCloseModalActivateTecnico());
+    const toggleModalActivateTecnico = () => {
+        dispatch(onToggleModalActivateTecnico());
     };
 
     return {
@@ -29,7 +22,7 @@ export const useUiTecnico = () => {
         isOpenModalActivateTecnico,
         disabledInput,
 
-        modalActionTecnico,
-        modalActionActivateTecnico,
+        toggleModalTecnico,
+        toggleModalActivateTecnico,
     };
 };

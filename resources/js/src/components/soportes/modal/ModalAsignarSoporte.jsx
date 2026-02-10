@@ -54,7 +54,11 @@ export const ModalAsignarSoporte = () => {
         <Modal
             opened={isOpenModalAsignarSoporte}
             onClose={handleCloseModal}
-            title={<TextSection tt="" fw={500} fz={16}>Asignar soporte</TextSection>}
+            title={
+                <TextSection tt="" fw={500} fz={16}>
+                    (Re) Asignar soporte
+                </TextSection>
+            }
             size="xl"
             overlayProps={{
                 backgroundOpacity: 0.55,

@@ -1,4 +1,5 @@
 import { useCallback, useMemo } from "react";
+import { Badge, useMantineColorScheme } from "@mantine/core";
 import { useMantineReactTable } from "mantine-react-table";
 import { MRT_Localization_ES } from "mantine-react-table/locales/es/index.cjs";
 import {
@@ -8,7 +9,6 @@ import {
     TableContent,
     TextSection,
 } from "../../../../components";
-import { Badge, useMantineColorScheme } from "@mantine/core";
 import { useSoporteStore, useUiSoporte } from "../../../../hooks";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
@@ -68,7 +68,7 @@ export const SolicitudesTable = ({ menu, isLoading }) => {
                 filterVariant: "autocomplete",
             },
         ],
-        []
+        [],
     );
 
     const handleAsignar = useCallback((selected) => {
@@ -120,18 +120,18 @@ export const SolicitudesTable = ({ menu, isLoading }) => {
                     cell.row.original.tecnico_asignado === null
                         ? "#fa6e70"
                         : cell.row.original.id_estado == 5
-                        ? "#fcb281"
-                        : "",
+                          ? "#fcb281"
+                          : "",
                 color:
                     cell.row.original.tecnico_asignado === null
                         ? "white"
                         : cell.row.original.id_estado == 5 &&
-                          colorScheme === "dark"
-                        ? "white"
-                        : cell.row.original.id_estado == 5 &&
-                          colorScheme === "light"
-                        ? "black"
-                        : "",
+                            colorScheme === "dark"
+                          ? "white"
+                          : cell.row.original.id_estado == 5 &&
+                              colorScheme === "light"
+                            ? "black"
+                            : "",
             },
         }),
         renderDetailPanel: ({ row }) => (

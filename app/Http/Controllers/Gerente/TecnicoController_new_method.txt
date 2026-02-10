@@ -1,0 +1,59 @@
+
+    /**
+     * Obtener estadísticas de Top 6 técnicos del área SOPORTE TÉCNICO (día actual)
+     */
+    function getEstadisticasTecnicos(): JsonResponse
+    {
+        try {
+            $fechaActual = now()->toDateString(); // Fecha actual (YYYY-MM-DD)
+            
+            // Obtener técnicos del área SOPORTE TÉCNICO (id_areas_tic = 5)
+            $tecnicosArea = TecnicoArea::where('area_tic_id', 5)
+                ->where('activo', true)
+                ->with(['tecnico:cdgo_usrio,nmbre_usrio'])
+                ->get();
+
+            $estadisticas = $tecnicosArea->map(function ($ta) use ($fechaActual) {
+                $tecnicoId = $ta->tecnico_id;
+
+                // Contar tickets del día actual por estado
+                $asignados = \App\Models\Soporte::where('id_usu_tecnico_asig', $tecnicoId)
+                    ->where('id_estado', 5) // Asignado
+                    ->whereDate('fecha_ini', $fechaActual)
+                    ->count();
+
+                $sinCerrar = \App\Models\Soporte::where('id_usu_tecnico_asig', $tecnicoId)
+                    ->where('id_estado', 3) // Sin Cerrar
+                    ->whereDate('fecha_ini', $fechaActual)
+                    ->count();
+
+                $finalizados = \App\Models\Soporte::where('id_usu_tecnico_asig', $tecnicoId)
+                    ->where('id_estado', 4) // Finalizado
+                    ->whereDate('fecha_ini', $fechaActual)
+                    ->count();
+
+                return [
+                    'tecnico_id' => $tecnicoId,
+                    'nombre' => $ta->tecnico->nmbre_usrio,
+                    'asignados' => $asignados,
+                    'sin_cerrar' => $sinCerrar,
+                    'finalizados' => $finalizados,
+                    'total' => $asignados + $sinCerrar + $finalizados
+                ];
+            })
+                ->sortByDesc('total')
+                ->take(6)
+                ->values();
+
+            return response()->json([
+                'status' => MsgStatus::Success,
+                'tecnicos' => $estadisticas
+            ], 200);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => MsgStatus::Error,
+                'msg' => $th->getMessage()
+            ], 500);
+        }
+    }
+}

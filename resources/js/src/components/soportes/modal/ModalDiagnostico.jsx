@@ -34,22 +34,25 @@ export const ModalDiagnostico = ({ option }) => {
             id_tipo_soporte: isNotEmpty("Por favor ingrese el tipo"),
             solucion: hasLength(
                 { min: 10, max: 600 },
-                "La solución debe tener entre 10 y 600 caracteres"
+                "La solución debe tener entre 10 y 600 caracteres",
             ),
             id_equipo: (value, values) =>
-                values.id_tipo_soporte == 1 && value === null
+                values.activo_informatico === true && value === null
                     ? "En soporte a hardware es obligatorio el código del activo"
                     : null,
         },
         transformValues: (values) => ({
             ...values,
-            fecha_fin: dayjs(values.fecha_fin).isValid() ? dayjs(values.fecha_fin).tz("America/Guayaquil").format("YYYY-MM-DD HH:mm") : null,
+            fecha_fin: dayjs(values.fecha_fin).isValid()
+                ? dayjs(values.fecha_fin)
+                      .tz("America/Guayaquil")
+                      .format("YYYY-MM-DD HH:mm")
+                : null,
             id_area_tic: Number(values.id_area_tic) || null,
             id_tipo_soporte: Number(values.id_tipo_soporte) || null,
             id_equipo: Number(values.id_equipo) || null,
         }),
     });
-
 
     const handleCloseModal = () => {
         modalActionDiagnosticar(0);

@@ -25,7 +25,7 @@ import {
     IconRosetteDiscountCheck,
 } from "@tabler/icons-react";
 import classes from "../../../assets/styles/modules/soporte/CardDiagnostico.module.css";
-import classess from "../../../assets/styles/modules/layout/input/LabelsInputs.module.css"
+import classess from "../../../assets/styles/modules/layout/input/LabelsInputs.module.css";
 import dayjs from "dayjs";
 
 export const FormDiagnosticar = ({ form, option }) => {
@@ -42,15 +42,15 @@ export const FormDiagnosticar = ({ form, option }) => {
             form.setFieldValue("id_sop", activateSoporte?.id_sop);
             form.setFieldValue(
                 "id_area_tic",
-                activateSoporte?.id_area_tic.toString() ?? null
+                activateSoporte?.id_area_tic.toString() ?? null,
             );
             form.setFieldValue(
                 "id_area_tic",
-                activateSoporte?.id_area_tic.toString() ?? null
+                activateSoporte?.id_area_tic.toString() ?? null,
             );
             form.setFieldValue(
                 "id_tipo_soporte",
-                activateSoporte?.id_tipo_soporte.toString() ?? null
+                activateSoporte?.id_tipo_soporte.toString() ?? null,
             );
             return;
         }
@@ -67,7 +67,7 @@ export const FormDiagnosticar = ({ form, option }) => {
             setCheckEstado(true);
         } else {
             form.setFieldValue("activo_informatico", false);
-            setCheckEstado(false);
+            setCheckEstado(true);
         }
     }, [id_tipo_soporte]);
 
@@ -91,7 +91,7 @@ export const FormDiagnosticar = ({ form, option }) => {
             startDiagnosticarSoporte(
                 form.getTransformedValues(),
                 option,
-                storageFields
+                storageFields,
             );
             form.reset();
             modalActionDiagnosticar(0);
@@ -173,7 +173,7 @@ export const FormDiagnosticar = ({ form, option }) => {
                     <Group gap={5}>
                         <TextSection tt="" fz={14} color="dimmed">
                             {dayjs(activateSoporte?.fecha_ini).format(
-                                "YYYY-MM-DD HH:mm"
+                                "YYYY-MM-DD HH:mm",
                             )}
                         </TextSection>
                         <IconCalendarMonth

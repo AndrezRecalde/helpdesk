@@ -41,6 +41,16 @@ const AdminTecnicosPage = lazy(() =>
         /* webpackChunkName: "AdminTecnicosPage" */ "../../pages/gerencia/AdminTecnicosPage"
     )
 );
+const AdminAreasPage = lazy(() =>
+    import(
+        /* webpackChunkName: "AdminAreasPage" */ "../../pages/gerencia/AdminAreasPage"
+    )
+);
+const DashboardAreasPage = lazy(() =>
+    import(
+        /* webpackChunkName: "DashboardAreasPage" */ "../../pages/gerencia/DashboardAreasPage"
+    )
+);
 const SolicitudesActualesPage = lazy(() =>
     import(
         /* webpackChunkName: "SolicitudesActualesPage" */ "../../pages/solicitud/SolicitudesActualesPage"
@@ -236,6 +246,8 @@ const helpdeskGerenciaRoutes = generateRoutes(
         { path: "usuarios", Component: AdminUsersPage },
         { path: "direcciones", Component: AdminDireccionesPage },
         { path: "tecnicos", Component: AdminTecnicosPage },
+        { path: "areas-tic", Component: AdminAreasPage },
+        { path: "dashboard-areas", Component: DashboardAreasPage },
         {
             path: "configuracion-inventario/:tabValue/*",
             Component: ConfigInventarioPage,

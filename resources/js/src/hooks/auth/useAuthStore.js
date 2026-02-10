@@ -16,7 +16,7 @@ import helpdeskApi from "../../api/helpdeskApi";
 export const useAuthStore = () => {
     const { clearColorScheme } = useMantineColorScheme();
     const { isLoading, user, token, profile, validate, errores } = useSelector(
-        (state) => state.auth
+        (state) => state.auth,
     );
     const { ExceptionMessageError } = useErrorException(onLoadErrores);
 
@@ -36,20 +36,17 @@ export const useAuthStore = () => {
             dispatch(onLoadToken(access_token));
             dispatch(onAuthenticate(user));
         } catch (error) {
-            //console.log(error);
             error.response.data.errores
                 ? dispatch(onValidate(error.response.data.errores))
                 : dispatch(onLogout(error.response.data.msg));
 
             setTimeout(() => {
-                //dispatch(onClearValidates());
                 dispatch(onClearErrores());
             }, 2000);
         }
     };
 
     const checkAuthToken = async () => {
-        //const token = localStorage.getItem("auth_token");
         if (!token) return dispatch(onLogout());
 
         try {
@@ -61,7 +58,6 @@ export const useAuthStore = () => {
             dispatch(onAuthenticate(user));
             dispatch(onLoadToken(access_token));
         } catch (error) {
-            //console.log(error);
             localStorage.clear();
             dispatch(onLogout());
         }
@@ -70,12 +66,10 @@ export const useAuthStore = () => {
     const startProfile = async () => {
         try {
             dispatch(onLoading(true));
-            //const user = await JSON.parse(localStorage.getItem("service_user"));
             const { data } = await helpdeskApi.get("/profile");
             const { profile } = data;
             dispatch(onLoadProfile(profile));
         } catch (error) {
-            //console.log(error);
             ExceptionMessageError(error);
         }
     };
@@ -87,14 +81,10 @@ export const useAuthStore = () => {
     const startLogout = async () => {
         try {
             await helpdeskApi.post("/auth/logout");
-            //localStorage.clear();
-            localStorage.removeItem("service_user");
-            localStorage.removeItem("auth_token");
-            localStorage.removeItem("token_init_date");
-            dispatch(onLogout());
-            clearColorScheme();
         } catch (error) {
-            //localStorage.clear();
+            console.error("Error al cerrar sesión en el servidor:", error);
+        } finally {
+            // Ejecutar siempre, sin importar si la API falló
             localStorage.removeItem("service_user");
             localStorage.removeItem("auth_token");
             localStorage.removeItem("token_init_date");

@@ -17,6 +17,7 @@ use App\Http\Controllers\General\UserController;
 use App\Http\Controllers\General\TelegramController;
 use App\Http\Controllers\Gerente\AppController;
 use App\Http\Controllers\Gerente\AreaTicController;
+use App\Http\Controllers\Gerente\AsignacionController;
 use App\Http\Controllers\Gerente\CargoController;
 use App\Http\Controllers\Gerente\DashGerenteController;
 use App\Http\Controllers\Gerente\DenunciaAdminController;
@@ -105,6 +106,7 @@ Route::group(['prefix' => 'gerencia', 'middleware' => ['auth:sanctum', 'role:TIC
     /* TECNICOS */
     Route::post('/admin/tecnicos', [TecnicoController::class, 'getTecnicosAdmin']);
     Route::put('/update/tecnico/{cdgo_usrio}', [TecnicoController::class, 'updateTecnico']);
+    Route::get('/estadisticas/tecnicos', [TecnicoController::class, 'getEstadisticasTecnicos']);
 
     Route::get('/tecnicos-con-areas', [TecnicoController::class, 'getTecnicosConAreas']);
     Route::get('/tecnico/{tecnico_id}/areas', [TecnicoController::class, 'getAreasTecnico']);
@@ -112,6 +114,11 @@ Route::group(['prefix' => 'gerencia', 'middleware' => ['auth:sanctum', 'role:TIC
     Route::post('/tecnico-area/asignar', [TecnicoController::class, 'asignarArea']);
     Route::put('/tecnico-area/update/{id}', [TecnicoController::class, 'updateAsignacion']);
     Route::delete('/tecnico-area/remover/{id}', [TecnicoController::class, 'removerArea']);
+
+    /* ESTADÍSTICAS DE ASIGNACIÓN */
+    Route::get('/asignacion/estadisticas-area/{area_id}', [AsignacionController::class, 'getEstadisticasArea']);
+    Route::post('/asignacion/verificar-capacidad', [AsignacionController::class, 'verificarCapacidad']);
+    Route::get('/asignacion/resumen-areas', [AsignacionController::class, 'getResumenAreas']);
 
     /* NOTIFICACIONES TELEGRAM (ADMIN) */
     Route::post('/telegram/notificar-soporte/{soporte_id}', [TelegramController::class, 'notificarSoporteAsignado']);
@@ -405,6 +412,7 @@ Route::group(['prefix' => 'tthh/gerencia', 'middleware' => ['auth:sanctum', 'rol
     Route::put('/denuncias/{id}/estado', [DenunciaAdminController::class, 'updateEstado']);
     Route::get('/denuncias/archivo/{archivo_id}/descargar', [DenunciaAdminController::class, 'descargarArchivo']);
 });
+
 
 
 

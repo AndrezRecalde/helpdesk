@@ -12,20 +12,23 @@ import Swal from "sweetalert2";
 export const ModalAddTecnico = () => {
     const { startLoadUsersGeneral, clearUsers } = useUsersStore();
     const { setActivateTecnico, message, errores } = useTecnicoStore();
-    const { isOpenModalAddTecnico, modalActionTecnico } = useUiTecnico();
+    const { isOpenModalAddTecnico, toggleModalTecnico } = useUiTecnico();
 
     const form = useForm({
         initialValues: {
             cdgo_usrio: null,
             roles: null,
+            areas: [],
+            area_principal: null,
         },
         validate: {
             cdgo_usrio: isNotEmpty("Por favor seleccione un usuario"),
-            //roles: isNotEmpty("Por favor seleccione un role"),
         },
         transformValues: (values) => ({
             cdgo_usrio: Number(values.cdgo_usrio) || null,
             roles: Number(values.roles) || null,
+            areas: values.areas?.map((a) => Number(a)) || [],
+            area_principal: Number(values.area_principal) || null,
         }),
     });
 
@@ -63,7 +66,7 @@ export const ModalAddTecnico = () => {
     }, [errores]);
 
     const handleCloseModal = () => {
-        modalActionTecnico(0);
+        toggleModalTecnico();
         setActivateTecnico(null);
         form.reset();
     };

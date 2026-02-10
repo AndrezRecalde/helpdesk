@@ -232,7 +232,8 @@ export const MenuTable_T = ({ row, handleDiagnosticar, handleExport }) => {
             <Menu.Item
                 disabled={
                     row.original.tecnico_asignado === null ||
-                    row.original.id_estado === 2
+                    row.original.id_estado === 2 ||
+                    row.original.id_estado === 5
                         ? true
                         : false
                 }
@@ -297,7 +298,8 @@ export const MenuSolicitudTable = ({
             <Menu.Item
                 disabled={
                     row.original.tecnico_asignado === null ||
-                    row.original.id_estado === 2
+                    row.original.id_estado === 2 ||
+                    row.original.id_estado === 5
                         ? true
                         : false
                 }
@@ -486,7 +488,6 @@ export const MenuTable_AutorizarVacacion = ({
         </>
     );
 };
-
 
 export const MenuTable_PV = ({ row, handleEdit, handleDescuento }) => {
     return (

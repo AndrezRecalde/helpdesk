@@ -27,17 +27,32 @@ class SoporteRequest extends FormRequest
             'id_estado'         => 'required',
             'fecha_ini'         => 'required',
             'id_tipo_solicitud' => 'required',
-            'numero_escrito'    => '',
+            'numero_escrito'    => 'nullable',
             'id_usu_tecnico_asig' => 'required',
             'id_direccion'      =>  'required',
             'id_usu_recibe'     =>  'required',
             'id_tipo_soporte'   =>  'required',
             'id_area_tic'       =>  'required',
             'incidente'         =>  'required',
-            'solucion'          =>  '',
-            'id_equipo'         =>  '',
-            'fecha_fin'         =>  '',
+            'solucion'          =>  'nullable',
+            'id_equipo'         =>  'nullable',
+            'fecha_fin'         =>  'nullable',
 
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'id_estado.required'         => 'El campo estado es obligatorio.',
+            'fecha_ini.required'         => 'El campo fecha de inicio es obligatorio.',
+            'id_tipo_solicitud.required' => 'El campo tipo de solicitud es obligatorio.',
+            'id_usu_tecnico_asig.required' => 'El campo técnico asignado es obligatorio.',
+            'id_direccion.required'      =>  'El campo dirección es obligatorio.',
+            'id_usu_recibe.required'     =>  'El campo usuario que recibe es obligatorio.',
+            'id_tipo_soporte.required'   =>  'El campo tipo de soporte es obligatorio.',
+            'id_area_tic.required'       =>  'El campo área TIC es obligatorio.',
+            'incidente.required'         =>  'El campo incidente es obligatorio.',
         ];
     }
 

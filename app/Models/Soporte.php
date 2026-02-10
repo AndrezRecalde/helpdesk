@@ -54,6 +54,21 @@ class Soporte extends Model
         return $soporte;
     }
 
+    public function areaTic(): BelongsTo
+    {
+        return $this->belongsTo(AreaTic::class, 'id_area_tic', 'id_areas_tic');
+    }
+
+    public function tecnicoAsignado(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'id_usu_tecnico_asig', 'cdgo_usrio');
+    }
+
+    public function usuarioRecibe(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'id_usu_recibe', 'cdgo_usrio');
+    }
+
     function scopeTecnico($query, $id_usu_tecnico_asig)
     {
         if ($id_usu_tecnico_asig) {
@@ -96,5 +111,12 @@ class Soporte extends Model
         }
 
         return $query;
+    }
+
+    public function scopeAreaTic($query, $id_area_tic)
+    {
+        if ($id_area_tic) {
+            return $query->where('ss.id_area_tic', $id_area_tic);
+        }
     }
 }

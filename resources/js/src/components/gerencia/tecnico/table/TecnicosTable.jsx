@@ -1,11 +1,12 @@
 import { useCallback, useMemo } from "react";
+import { Badge, Group, Text } from "@mantine/core";
 import { useMantineReactTable } from "mantine-react-table";
 import { ActivateUserBtn, TableContent } from "../../..";
 import { useTecnicoStore, useUiTecnico } from "../../../../hooks";
 
 export const TecnicosTable = () => {
     const { isLoading, tecnicos, setActivateTecnico } = useTecnicoStore();
-    const { modalActionTecnico } = useUiTecnico();
+    const { toggleModalTecnico } = useUiTecnico();
     const columns = useMemo(
         () => [
             {
@@ -26,6 +27,45 @@ export const TecnicosTable = () => {
                 header: "Total Soportes Año Actual",
             },
             {
+                accessorKey: "areas",
+                header: "Áreas Asignadas",
+                Cell: ({ row }) => {
+                    const areas = row.original.areas || [];
+                    return areas.length > 0 ? (
+                        <Group gap="xs">
+                            {areas.map((area) => (
+                                <Badge
+                                    key={area.id_areas_tic}
+                                    size="sm"
+                                    variant="light"
+                                    color="blue"
+                                >
+                                    {area.nombre}
+                                    {area.principal && " ⭐"}
+                                </Badge>
+                            ))}
+                        </Group>
+                    ) : (
+                        <Text c="dimmed" size="sm">
+                            Sin áreas
+                        </Text>
+                    );
+                },
+            },
+            {
+                accessorKey: "notificar_telegram",
+                header: "Telegram",
+                Cell: ({ cell }) => (
+                    <Badge
+                        color={cell.getValue() ? "green" : "gray"}
+                        variant="dot"
+                        radius="xl"
+                    >
+                        {cell.getValue() ? "Activo" : "Inactivo"}
+                    </Badge>
+                ),
+            },
+            {
                 accessorKey: "actvo",
                 header: "Activo",
                 Cell: ({ cell }) => (
@@ -33,15 +73,15 @@ export const TecnicosTable = () => {
                 ),
             },
         ],
-        [tecnicos]
+        [tecnicos],
     );
 
     const handleActive = useCallback(
         (selected) => {
             setActivateTecnico(selected);
-            modalActionTecnico(1, true);
+            toggleModalTecnico(true);
         },
-        [tecnicos]
+        [tecnicos],
     );
 
     const table = useMantineReactTable({

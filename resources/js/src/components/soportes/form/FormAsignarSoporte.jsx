@@ -1,15 +1,27 @@
 import { useEffect } from "react";
 import { Box, Divider, Select, SimpleGrid, Stack, Text } from "@mantine/core";
-import { useSoporteStore, useTecnicoStore, useUiSoporte } from "../../../hooks";
+import {
+    useAreaTicStore,
+    useSoporteStore,
+    useTecnicoStore,
+    useUiSoporte,
+} from "../../../hooks";
 import { BtnSubmit } from "../../../components";
 import { IconBrandTelegram } from "@tabler/icons-react";
 
 export const FormAsignarSoporte = ({ form }) => {
     const usuario = JSON.parse(localStorage.getItem("service_user"));
     const { tecnicos } = useTecnicoStore();
+    const { areas, startLoadAreas } = useAreaTicStore();
     const { isLoading, activateSoporte, startAsignarSoporte } =
         useSoporteStore();
     const { modalActionAsignarSoporte } = useUiSoporte();
+    const { id_usu_tecnico_asig } = form.values;
+
+    // Cargar áreas TIC activas
+    useEffect(() => {
+        startLoadAreas(true);
+    }, []);
 
     useEffect(() => {
         if (activateSoporte !== null) {
@@ -28,6 +40,34 @@ export const FormAsignarSoporte = ({ form }) => {
             return;
         }
     }, [activateSoporte]);
+
+    // Auto-seleccionar área principal del técnico
+    useEffect(() => {
+        if (id_usu_tecnico_asig !== null && tecnicos.length > 0) {
+            const tecnicoSeleccionado = tecnicos.find(
+                (tecnico) => tecnico.cdgo_usrio == id_usu_tecnico_asig,
+            );
+
+            if (
+                tecnicoSeleccionado?.areas &&
+                tecnicoSeleccionado.areas.length > 0
+            ) {
+                const areaPrincipal = tecnicoSeleccionado.areas.find(
+                    (area) => area.principal === true || area.principal === 1,
+                );
+
+                const areaASeleccionar =
+                    areaPrincipal || tecnicoSeleccionado.areas[0];
+
+                if (areaASeleccionar) {
+                    form.setFieldValue(
+                        "id_area_tic",
+                        areaASeleccionar.id_areas_tic.toString(),
+                    );
+                }
+            }
+        }
+    }, [id_usu_tecnico_asig, tecnicos]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -67,14 +107,12 @@ export const FormAsignarSoporte = ({ form }) => {
                         label="Área del soporte"
                         placeholder="Seleccione el área"
                         {...form.getInputProps("id_area_tic")}
-                        data={[
-                            { value: "1", label: "SISTEMAS Y APLICACIONES" },
-                            {
-                                value: "2",
-                                label: "INFRAESTRUCTURA TECNOLÓGICA",
-                            },
-                            { value: "5", label: "SOPORTE TÉCNICO" },
-                        ]}
+                        data={areas
+                            .filter((area) => area.activo)
+                            .map((area) => ({
+                                value: area.id_areas_tic.toString(),
+                                label: area.nombre,
+                            }))}
                     />
 
                     <Select

@@ -4,25 +4,34 @@ export const tecnicoSlice = createSlice({
     name: "tecnico",
     initialState: {
         isLoading: false,
+        isLoadingEstadisticas: false,
         tecnicos: [],
+        estadisticas: [],
         activateTecnico: null,
         infoSoportes: undefined,
         message: undefined,
         errores: undefined,
     },
     reducers: {
-        onLoading: (state) => {
-            state.isLoading = true;
+        onLoading: (state, { payload = false }) => {
+            state.isLoading = payload;
+        },
+        onLoadingEstadisticas: (state, { payload = false }) => {
+            state.isLoadingEstadisticas = payload;
         },
         onLoadTecnicos: (state, { payload }) => {
             state.tecnicos = payload;
             state.isLoading = false;
         },
+        onLoadEstadisticas: (state, { payload }) => {
+            state.estadisticas = payload;
+            state.isLoadingEstadisticas = false;
+        },
         onDeleteTecnico: (state) => {
             if (state.activateTecnico) {
                 state.tecnicos = state.tecnicos.filter(
                     (tecnico) =>
-                        tecnico.cdgo_usrio !== state.activateTecnico.cdgo_usrio
+                        tecnico.cdgo_usrio !== state.activateTecnico.cdgo_usrio,
                 );
             }
             state.activateTecnico = null;
@@ -56,7 +65,9 @@ export const tecnicoSlice = createSlice({
 
 export const {
     onLoading,
+    onLoadingEstadisticas,
     onLoadTecnicos,
+    onLoadEstadisticas,
     onDeleteTecnico,
     onSetActivateTecnico,
     onSetInfoSoportes,

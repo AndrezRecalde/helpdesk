@@ -8,12 +8,22 @@ import {
     onSetActivateTecnico,
     onLoading,
     onSetInfoSoportes,
+    onLoadingEstadisticas,
+    onLoadEstadisticas,
 } from "../../store/tecnico/tecnicoSlice";
 import helpdeskApi from "../../api/helpdeskApi";
 
 export const useTecnicoStore = () => {
-    const { isLoading, tecnicos, activateTecnico, infoSoportes, message, errores } =
-        useSelector((state) => state.tecnico);
+    const {
+        isLoading,
+        isLoadingEstadisticas,
+        tecnicos,
+        estadisticas,
+        activateTecnico,
+        infoSoportes,
+        message,
+        errores,
+    } = useSelector((state) => state.tecnico);
 
     const { ExceptionMessageError } = useErrorException(onLoadErrores);
 
@@ -33,21 +43,23 @@ export const useTecnicoStore = () => {
     };
 
     const startLoadTecnicosAdmin = async (
-        current_year = new Date().getFullYear()
+        current_year = new Date().getFullYear(),
     ) => {
         try {
-            dispatch(onLoading());
+            dispatch(onLoading(true));
             const { data } = await helpdeskApi.post(
                 "/gerencia/admin/tecnicos",
                 {
                     current_year,
-                }
+                },
             );
             const { tecnicos } = data;
             dispatch(onLoadTecnicos(tecnicos));
         } catch (error) {
-            //console.log(error);
+            console.log(error);
             ExceptionMessageError(error);
+        } finally {
+            dispatch(onLoading(false));
         }
     };
 
@@ -55,7 +67,7 @@ export const useTecnicoStore = () => {
         try {
             const { data } = await helpdeskApi.put(
                 `/gerencia/update/tecnico/${tecnico.cdgo_usrio}`,
-                tecnico
+                tecnico,
             );
             //dispatch(onDeleteTecnico());
             startLoadTecnicosAdmin();
@@ -72,15 +84,34 @@ export const useTecnicoStore = () => {
 
     const startLoadInfoTecnicosSoporte = async (user_id) => {
         try {
-            dispatch(onLoading());
-            const { data } = await helpdeskApi.post("/general/info-soportes", { user_id });
+            dispatch(onLoading(true));
+            const { data } = await helpdeskApi.post("/general/info-soportes", {
+                user_id,
+            });
             const { info } = data;
             dispatch(onSetInfoSoportes(info));
         } catch (error) {
             //console.log(error);
             ExceptionMessageError(error);
+        } finally {
+            dispatch(onLoading(false));
         }
-    }
+    };
+
+    const loadEstadisticas = async () => {
+        try {
+            dispatch(onLoadingEstadisticas(true));
+            const { data } = await helpdeskApi.get(
+                "/gerencia/estadisticas/tecnicos",
+            );
+            dispatch(onLoadEstadisticas(data.estadisticas || []));
+        } catch (err) {
+            //console.error("Error loading estadísticas:", err);
+            ExceptionMessageError(err);
+        } finally {
+            dispatch(onLoadingEstadisticas(false));
+        }
+    };
 
     const setActivateTecnico = (tecnico) => {
         dispatch(onSetActivateTecnico(tecnico));
@@ -88,7 +119,7 @@ export const useTecnicoStore = () => {
 
     const clearInfoSoportesTecnico = () => {
         dispatch(onSetInfoSoportes(undefined));
-    }
+    };
 
     const clearTecnicos = () => {
         dispatch(onClearTecnicos());
@@ -96,7 +127,9 @@ export const useTecnicoStore = () => {
 
     return {
         isLoading,
+        isLoadingEstadisticas,
         tecnicos,
+        estadisticas,
         activateTecnico,
         infoSoportes,
         message,
@@ -106,6 +139,7 @@ export const useTecnicoStore = () => {
         startLoadTecnicosAdmin,
         startAddUpdateTecnico,
         startLoadInfoTecnicosSoporte,
+        loadEstadisticas,
         setActivateTecnico,
         clearInfoSoportesTecnico,
         clearTecnicos,

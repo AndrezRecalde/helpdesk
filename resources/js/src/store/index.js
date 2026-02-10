@@ -16,6 +16,10 @@ import { uiHeaderMenuSlice } from "./layout/header/uiHeaderMenuSlice";
 import { tecnicoSlice } from "./tecnico/tecnicoSlice";
 import { uiTecnicoSlice } from "./tecnico/uiTecnicoSlice";
 
+/* Areas TIC */
+import { areaTicSlice } from "./areaTic/areaTicSlice";
+import { uiAreaTicSlice } from "./areaTic/uiAreaTicSlice";
+
 /* Empresas */
 import { empresaSlice } from "./empresa/empresaSlice";
 
@@ -157,6 +161,10 @@ export {
     /* Tecnico */
     tecnicoSlice,
     uiTecnicoSlice,
+
+    /* Areas TIC */
+    areaTicSlice,
+    uiAreaTicSlice,
 
     /* Empresas */
     empresaSlice,

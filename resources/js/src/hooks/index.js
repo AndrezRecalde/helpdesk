@@ -20,6 +20,11 @@ import { useUiUser } from "./user/useUiUser";
 import { useTecnicoStore } from "./tecnico/useTecnicoStore";
 import { useUiTecnico } from "./tecnico/useUiTecnico";
 
+/* Areas TIC */
+import { useAreaTicStore } from "./areaTic/useAreaTicStore";
+import { useUiAreaTic } from "./areaTic/useUiAreaTic";
+import { useTecnicoAreaStore } from "./tecnicoArea/useTecnicoAreaStore";
+
 /* Empresas */
 import { useEmpresaStore } from "./empresa/useEmpresaStore";
 
@@ -104,7 +109,6 @@ import { useInvUiCategoria } from "./inventario/categoria/useInvUiCategoria";
 import { useInvMarcaStore } from "./inventario/marca/useInvMarcaStore";
 import { useInvUiMarca } from "./inventario/marca/useInvUiMarca";
 
-
 /* Inventario: Estados */
 import { useInvEstadoStore } from "./inventario/estado/useInvEstadoStore";
 import { useInvUiEstado } from "./inventario/estado/useInvUiEstado";
@@ -112,7 +116,6 @@ import { useInvUiEstado } from "./inventario/estado/useInvUiEstado";
 /* Inventario: Conceptos */
 import { useInvConceptoStore } from "./inventario/concepto/useInvConceptoStore";
 import { useInvUiConcepto } from "./inventario/concepto/useInvUiConcepto";
-
 
 /* Inventario: Equipos */
 import { useInvEquipoStore } from "./inventario/equipo/useInvEquipoStore";
@@ -142,109 +145,71 @@ import useFechaHoraEcuador from "./date/useFechaHoraEcuador";
 /* Storage */
 import { useStorageField } from "./storage/useStorageField";
 
-
 export {
     useAppStore,
     useUiApp,
-
     useAuthStore,
-
     useUiHeaderMenu,
-
     useUsersStore,
     useUiUser,
-
     useTecnicoStore,
     useUiTecnico,
-
+    useAreaTicStore,
+    useUiAreaTic,
+    useTecnicoAreaStore,
     useEmpresaStore,
-
     useDireccionStore,
-
     useDirectorStore,
     useUiDirector,
-
     useSexoStore,
-
     useDepartamentoStore,
-
     useCargoStore,
-
     useTipoUsuarioStore,
-
     useTipoContratoStore,
-
     useTipoSolicitudStore,
-
     useDiagnosticoStore,
-
     useEquipoStore,
-
     useEstadoStore,
-
     useSoporteStore,
     useUiSoporte,
-
     useIndicadorStore,
     useUiIndicador,
-
     useDashGerenciaStore,
-
     useActividadStore,
     useUiActividad,
-
     usePermisoStore,
     useUiPermiso,
-
     useVacacionesStore,
     useUiVacaciones,
-
     useDescuentoStore,
     useUiDescuento,
-
     usePeriodoStore,
     useUiPeriodo,
-
     useMarcacionStore,
     useUiMarcacion,
-
     useInvTipocategoriaStore,
     useInvUiTipocategoria,
-
     useInvCategoriaStore,
     useInvUiCategoria,
-
     useInvMarcaStore,
     useInvUiMarca,
-
     useInvEstadoStore,
     useInvUiEstado,
-
     useInvConceptoStore,
     useInvUiConcepto,
-
     useInvEquipoStore,
     useInvUiEquipo,
-
     useInvUbicacionStore,
     useInvUiUbicacion,
-
     useInvConsumibleStore,
     useUiInvConsumible,
-
     useUiInvCustodio,
-
     useRutaStore,
     useUiRuta,
-
     useDenunciaStore,
     useUiDenuncia,
-
     useTitlePage,
     useErrorException,
-
     useFechaHoraEcuador,
-
-    useStorageField
-
-}
+    useStorageField,
+};

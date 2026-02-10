@@ -14,7 +14,7 @@ const AdminTecnicosPage = () => {
     useTitlePage("Gestionar Técnicos - Helpdesk");
     const { tecnicos, startLoadTecnicosAdmin, clearTecnicos } =
         useTecnicoStore();
-    const { modalActionTecnico } = useUiTecnico();
+    const { toggleModalTecnico } = useUiTecnico();
 
     useEffect(() => {
         startLoadTecnicosAdmin();
@@ -26,7 +26,7 @@ const AdminTecnicosPage = () => {
 
     const handleOpenModal = (e) => {
         e.preventDefault();
-        modalActionTecnico(1, false);
+        toggleModalTecnico();
     };
 
     return (

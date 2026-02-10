@@ -8,26 +8,16 @@ export const uiTecnicoSlice = createSlice({
         disabledInput: false,
     },
     reducers: {
-        onOpenModalAddTecnico: (state, { payload }) => {
-            state.isOpenModalAddTecnico = true;
+        onToggleModalAddTecnico: (state, { payload }) => {
+            state.isOpenModalAddTecnico = !state.isOpenModalAddTecnico;
             state.disabledInput = payload;
         },
-        onCloseModalAddTecnico: (state) => {
-            state.isOpenModalAddTecnico = false;
-            state.disabledInput = false;
-        },
-        onOpenModalActivateTecnico: (state) => {
-            state.isOpenModalActivateTecnico = true;
-        },
-        onCloseModalActivateTecnico: (state) => {
-            state.isOpenModalActivateTecnico = false;
+        onToggleModalActivateTecnico: (state) => {
+            state.isOpenModalActivateTecnico =
+                !state.isOpenModalActivateTecnico;
         },
     },
 });
 
-export const {
-    onOpenModalAddTecnico,
-    onCloseModalAddTecnico,
-    onOpenModalActivateTecnico,
-    onCloseModalActivateTecnico,
-} = uiTecnicoSlice.actions;
+export const { onToggleModalAddTecnico, onToggleModalActivateTecnico } =
+    uiTecnicoSlice.actions;

@@ -13,8 +13,8 @@ use App\Http\Requests\SoporteAsignarcionRequest;
 use App\Http\Requests\SoporteRequest;
 use App\Models\Soporte;
 use App\Models\User;
+use App\Services\TelegramService;
 use Barryvdh\DomPDF\Facade\Pdf;
-//use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
@@ -24,8 +24,12 @@ use Illuminate\Support\Facades\Log;
 class SoporteAdminController extends Controller
 {
 
-    //SE ENVÍA AL CORREO AL TECNICO
-    //Mail::to($tecnico->email)->send(new SoporteMail($request));
+    protected $telegramService;
+
+    public function __construct(TelegramService $telegramService)
+    {
+        $this->telegramService = $telegramService;
+    }
 
     function getSoporteForNumero(Request $request): JsonResponse
     {
@@ -52,7 +56,7 @@ class SoporteAdminController extends Controller
             if (!$soporte) {
                 return response()->json([
                     'status' => MsgStatus::Error,
-                    'msg'    => MsgStatus::SoporteNotFound
+                    'msg' => MsgStatus::SoporteNotFound
                 ], 404);
             }
 
@@ -64,38 +68,46 @@ class SoporteAdminController extends Controller
 
             $soporte->update($data);
 
-            // Cargar información para el correo
+            // Cargar información para el correo y telegram
             $asignacion = Soporte::from('sop_soporte as ss')
                 ->selectRaw('ss.id_sop, ss.numero_sop,
                         ss.id_direccion, d.nmbre_dprtmnto as direccion,
                         ss.id_usu_tecnico_asig, u.nmbre_usrio as tecnico, u.email as email_tecnico,
+                        u.telegram_chat_id, u.notificar_telegram,
                         ss.id_usu_recibe, us.nmbre_usrio as solicitante, us.email as email_solicitante,
-                        ss.incidente, ss.fecha_ini')
+                        ss.incidente, ss.fecha_ini,
+                        sat.nombre as area_tic')
                 ->join('dprtmntos as d', 'd.cdgo_dprtmnto', 'ss.id_direccion')
                 ->join('usrios_sstma as u', 'u.cdgo_usrio', 'ss.id_usu_tecnico_asig')
                 ->join('usrios_sstma as us', 'us.cdgo_usrio', 'ss.id_usu_recibe')
+                ->leftJoin('sop_areas_tic as sat', 'sat.id_areas_tic', 'ss.id_area_tic')
                 ->where('ss.id_sop', $id_sop)
                 ->first();
 
-            // Verificar correos válidos antes de enviar
-            if (!empty($asignacion->email_tecnico)) {
-                Mail::to($asignacion->email_tecnico)->send(new TecnicoMail($asignacion));
-            }
+            if ($asignacion) {
+                // ENVIAR NOTIFICACIÓN A TELEGRAM
+                $this->telegramService->notificarSoporteAsignado($asignacion);
 
-            if (!empty($asignacion->email_solicitante)) {
-                Mail::to($asignacion->email_solicitante)->send(new UsuarioMail($asignacion));
+                // Enviar correo al técnico
+                if (!empty($asignacion->email_tecnico)) {
+                    Mail::to($asignacion->email_tecnico)->send(new TecnicoMail($asignacion));
+                }
+
+                // Enviar correo al solicitante
+                if (!empty($asignacion->email_solicitante)) {
+                    Mail::to($asignacion->email_solicitante)->send(new UsuarioMail($asignacion));
+                }
             }
 
             return response()->json([
                 'status' => MsgStatus::Success,
-                'msg'    => MsgStatus::SoporteAsignado
+                'msg' => MsgStatus::SoporteAsignado
             ], 200);
         } catch (\Throwable $th) {
-            Log::error("Error al asignar soporte ID {$id_sop}: " . $th->getMessage());
-
+            Log::error('Error al asignar soporte: ' . $th->getMessage());
             return response()->json([
-                'status'  => MsgStatus::Error,
-                'message' => 'Error al crear la solicitud: ' . $th->getMessage()
+                'status' => MsgStatus::Error,
+                'message' => $th->getMessage()
             ], 500);
         }
     }
@@ -162,15 +174,22 @@ class SoporteAdminController extends Controller
                     ->selectRaw('ss.id_sop, ss.numero_sop,
                              ss.id_direccion, d.nmbre_dprtmnto as direccion,
                              ss.id_usu_tecnico_asig, ut.nmbre_usrio as tecnico, ut.email as email_tecnico,
+                             ut.telegram_chat_id, ut.notificar_telegram,
                              ss.id_usu_recibe, ur.nmbre_usrio as solicitante, ur.email as email_solicitante,
-                             ss.incidente, ss.fecha_ini')
+                             ss.incidente, ss.fecha_ini,
+                             sat.nombre as area_tic')
                     ->join('dprtmntos as d', 'd.cdgo_dprtmnto', '=', 'ss.id_direccion')
                     ->join('usrios_sstma as ut', 'ut.cdgo_usrio', '=', 'ss.id_usu_tecnico_asig')
                     ->join('usrios_sstma as ur', 'ur.cdgo_usrio', '=', 'ss.id_usu_recibe')
+                    ->leftJoin('sop_areas_tic as sat', 'sat.id_areas_tic', 'ss.id_area_tic')
                     ->where('ss.id_sop', $soporte->id_sop)
                     ->first();
 
                 if ($asignacion) {
+
+                    // ENVIAR NOTIFICACIÓN A TELEGRAM
+                    $this->telegramService->notificarSoporteAsignado($asignacion);
+
                     // Enviar correos
                     if (!empty($asignacion->email_solicitante)) {
                         Mail::to($asignacion->email_solicitante)->send(new UsuarioMail($asignacion));
@@ -179,28 +198,19 @@ class SoporteAdminController extends Controller
                     if (!empty($asignacion->email_tecnico)) {
                         Mail::to($asignacion->email_tecnico)->send(new TecnicoMail($asignacion));
                     }
+
                 }
-
-                return response()->json([
-                    'status'     => MsgStatus::Success,
-                    'msg'        => MsgStatus::SoporteCreatedSuccess,
-                    'asignacion' => $asignacion ?? null,
-                ], 200);
             }
-
-            // Si no se asignó técnico
-            $soporte->id_estado = 1;
-            $soporte->save();
 
             return response()->json([
                 'status' => MsgStatus::Success,
-                'msg'    => MsgStatus::SoporteCreatedSuccess
+                'msg' => MsgStatus::Created
             ], 200);
         } catch (\Throwable $th) {
-            Log::error('Error creando solicitud de soporte: ' . $th->getMessage());
+            Log::error('Error al crear solicitud: ' . $th->getMessage());
             return response()->json([
-                'status'  => MsgStatus::Error,
-                'message' => 'Error al crear la solicitud: ' . $th->getMessage()
+                'status' => MsgStatus::Error,
+                'message' => $th->getMessage()
             ], 500);
         }
     }
@@ -225,7 +235,7 @@ class SoporteAdminController extends Controller
     function getIndicadoresSoportes(Request $request): JsonResponse
     {
         $desempenoForEstados = DB::select('CALL sop_get_desempeno_for_estados(?,?)', [$request->fecha_inicio, $request->fecha_fin]);
-        $desempenoForAreas =   DB::select('CALL sop_get_desempeno_for_areas(?,?)', [$request->fecha_inicio, $request->fecha_fin]);
+        $desempenoForAreas = DB::select('CALL sop_get_desempeno_for_areas(?,?)', [$request->fecha_inicio, $request->fecha_fin]);
         $desempenoForTecnicos = DB::select('CALL sop_get_desempeno_for_tecnicos(?,?)', [$request->fecha_inicio, $request->fecha_fin]);
         $efectividadForAreas = DB::select('CALL sop_get_efectividad_for_areas(?,?)', [$request->fecha_inicio, $request->fecha_fin]);
         $efectividadForTecnicos = DB::select('CALL sop_get_efectividad_for_tecnicos(?,?)', [$request->fecha_inicio, $request->fecha_fin]);
@@ -241,22 +251,22 @@ class SoporteAdminController extends Controller
         }
 
         return response()->json([
-            'status'                  => MsgStatus::Success,
-            'desempenoForEstados'     => $desempenoForEstados,
+            'status' => MsgStatus::Success,
+            'desempenoForEstados' => $desempenoForEstados,
             'sumaDesempenoForEstados' => $sumaDesempenoForEstados,
-            'desempenoForAreas'       => $desempenoForAreas,
-            'desempenoForTecnicos'    => $desempenoForTecnicos,
-            'efectividadForAreas'     => $efectividadForAreas,
-            'efectividadForTecnicos'  => $efectividadForTecnicos,
-            'sumaDiasHabiles'         => $sumaDiasHabiles,
-            'promedioCalificacion'    => $promedioCalificacion,
+            'desempenoForAreas' => $desempenoForAreas,
+            'desempenoForTecnicos' => $desempenoForTecnicos,
+            'efectividadForAreas' => $efectividadForAreas,
+            'efectividadForTecnicos' => $efectividadForTecnicos,
+            'sumaDiasHabiles' => $sumaDiasHabiles,
+            'promedioCalificacion' => $promedioCalificacion,
         ], 200);
     }
 
     function exportPDFIndicadores(Request $request)
     {
         $desempenoForEstados = DB::select('CALL sop_get_desempeno_for_estados(?,?)', [$request->fecha_inicio, $request->fecha_fin]);
-        $desempenoForAreas =   DB::select('CALL sop_get_desempeno_for_areas(?,?)', [$request->fecha_inicio, $request->fecha_fin]);
+        $desempenoForAreas = DB::select('CALL sop_get_desempeno_for_areas(?,?)', [$request->fecha_inicio, $request->fecha_fin]);
         $desempenoForTecnicos = DB::select('CALL sop_get_desempeno_for_tecnicos(?,?)', [$request->fecha_inicio, $request->fecha_fin]);
         $efectividadForAreas = DB::select('CALL sop_get_efectividad_for_areas(?,?)', [$request->fecha_inicio, $request->fecha_fin]);
         $efectividadForTecnicos = DB::select('CALL sop_get_efectividad_for_tecnicos(?,?)', [$request->fecha_inicio, $request->fecha_fin]);
@@ -319,21 +329,21 @@ class SoporteAdminController extends Controller
 
 
         $data = [
-            'direccion'     =>  'Dirección de Técnologias de Información y Comunicación',
-            'titulo'        =>  'Reporte General de Indicadores',
-            'fecha_inicio'  =>  $request->fecha_inicio,
-            'fecha_fin'     =>  $request->fecha_fin,
-            'desempenoForEstados'     => $desempenoForEstados,
+            'direccion' => 'Dirección de Técnologias de Información y Comunicación',
+            'titulo' => 'Reporte General de Indicadores',
+            'fecha_inicio' => $request->fecha_inicio,
+            'fecha_fin' => $request->fecha_fin,
+            'desempenoForEstados' => $desempenoForEstados,
             'sumaDesempenoForEstados' => $sumaDesempenoForEstados,
-            'desempenoForAreas'       => $desempenoForAreas,
-            'desempenoForTecnicos'    => $desempenoForTecnicos,
-            'efectividadForAreas'     => $efectividadForAreas,
-            'efectividadForTecnicos'  => $efectividadForTecnicos,
-            'sumaDiasHabiles'         => $sumaDiasHabiles,
-            'promedioCalificacion'    => $promedioCalificacion,
-            'usuarioGenerador'        => $usuarioGenerador,
-            'chartUrl'                => $url,
-            'chartUrl2'               => $url2
+            'desempenoForAreas' => $desempenoForAreas,
+            'desempenoForTecnicos' => $desempenoForTecnicos,
+            'efectividadForAreas' => $efectividadForAreas,
+            'efectividadForTecnicos' => $efectividadForTecnicos,
+            'sumaDiasHabiles' => $sumaDiasHabiles,
+            'promedioCalificacion' => $promedioCalificacion,
+            'usuarioGenerador' => $usuarioGenerador,
+            'chartUrl' => $url,
+            'chartUrl2' => $url2
         ];
         $pdf = Pdf::loadView('pdf.soporte.indicador', $data);
         return $pdf->setPaper('a4', 'portrait')->download('indicador.pdf');
@@ -346,9 +356,9 @@ class SoporteAdminController extends Controller
         $url = '{';
         $url .= '"type":"pie",';
         $url .= '"data":{';
-        $url .=     '"labels":' . json_encode($labels) . ',';
-        $url .=     '"datasets":[{"data":' . json_encode($data) . '}]';
-        $url .=     '}';
+        $url .= '"labels":' . json_encode($labels) . ',';
+        $url .= '"datasets":[{"data":' . json_encode($data) . '}]';
+        $url .= '}';
         $url .= '}';
 
         return $url;
@@ -360,11 +370,11 @@ class SoporteAdminController extends Controller
         $url = '{';
         $url .= '"type":"pie",';
         $url .= '"data":{';
-        $url .=         '"labels":' . json_encode($labels) . ',';
-        $url .=         '"datasets":[{';
-        $url .=             '"data":' . json_encode($data)  . ',';
-        $url .=         '}]';
-        $url .=     '},';
+        $url .= '"labels":' . json_encode($labels) . ',';
+        $url .= '"datasets":[{';
+        $url .= '"data":' . json_encode($data) . ',';
+        $url .= '}]';
+        $url .= '},';
         /*  $url .= '"options":{';
         $url .=     '"plugins":{';
         $url .=         '"legend": false,';

@@ -35,7 +35,8 @@ export const AppRouter = () => {
 
     useEffect(() => {
         const load = async () => {
-            if (imagenes !== null || imagenes.length > 0) {
+            // Cargar imágenes solo si no están cargadas o el array está vacío
+            if (!imagenes || imagenes.length === 0) {
                 await startLoadImagenes();
             }
         };

@@ -11,33 +11,62 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
+    /**
+     * Método privado reutilizable para obtener usuario con rol
+     * Consolida query SQL usado en login, refresh y profile
+     */
+    private function getUserWithRole($userId = null, $login = null, $password = null)
+    {
+        $query = User::from('usrios_sstma as u')
+            ->selectRaw('u.cdgo_usrio, u.lgin, u.nmbre_usrio, u.asi_id_reloj, u.usu_alias, u.email, u.crgo_id,
+                        d.cdgo_dprtmnto, d.nmbre_dprtmnto as direccion, d.cdgo_lrgo, d.id_empresa,
+                        CAST((IFNULL(r.id, 3)) AS UNSIGNED) as role_id,
+                        CAST((IFNULL(r.name, "USUARIO")) AS NCHAR) as role')
+            ->join('dprtmntos as d', 'd.cdgo_dprtmnto', 'u.cdgo_direccion')
+            ->leftJoin('model_has_roles as mh', 'mh.model_id', 'u.cdgo_usrio')
+            ->leftJoin('roles as r', 'r.id', 'mh.role_id')
+            ->where('u.actvo', 1);
+
+        if ($userId) {
+            $query->where('u.cdgo_usrio', $userId);
+        }
+
+        if ($login) {
+            $query->where('u.lgin', $login);
+        }
+
+        if ($password) {
+            $query->where('u.paswrd', md5($password));
+        }
+
+        return $query->first();
+    }
+
     function login(Request $request): JsonResponse
     {
+        // Validar entrada
+        $validated = $request->validate([
+            'lgin' => 'required|string|max:255',
+            'paswrd' => 'required|string|min:4',
+        ]);
+
         try {
-            $user = User::from('usrios_sstma as u')
-                ->selectRaw('u.cdgo_usrio, u.lgin, u.nmbre_usrio, u.asi_id_reloj, u.usu_alias, u.email, u.crgo_id,
-                            d.cdgo_dprtmnto, d.nmbre_dprtmnto as direccion, d.cdgo_lrgo, d.id_empresa,
-                            CAST((IFNULL(r.id, 3)) AS UNSIGNED) as role_id,
-                            CAST((IFNULL(r.name, "USUARIO")) AS NCHAR) as role')
-                ->join('dprtmntos as d', 'd.cdgo_dprtmnto', 'u.cdgo_direccion')
-                ->leftJoin('model_has_roles as mh', 'mh.model_id', 'u.cdgo_usrio')
-                ->leftJoin('roles as r', 'r.id', 'mh.role_id')
-                ->where('u.lgin', $request->lgin)
-                ->where('u.paswrd', md5($request->paswrd))
-                ->where('u.actvo', 1)
-                ->first();
+            $user = $this->getUserWithRole(
+                login: $validated['lgin'],
+                password: $validated['paswrd']
+            );
+
             if ($user) {
                 // Generar un nuevo token con un nombre único por dispositivo
-                // $token = $user->createToken($request->userAgent())->plainTextToken;
                 $token = $user->createToken($request->userAgent())->plainTextToken;
                 $user->tokens()->latest()->first()->update([
                     'expires_at' => now()->addDays(3)
                 ]);
                 return response()->json([
-                    'status'        =>  MsgStatus::Success,
-                    'token_type'    =>  MsgStatus::TokenBearer,
-                    'access_token'  =>  $token,
-                    'user'          =>  $user
+                    'status' => MsgStatus::Success,
+                    'token_type' => MsgStatus::TokenBearer,
+                    'access_token' => $token,
+                    'user' => $user
                 ]);
             } else {
                 return response()->json(['status' => MsgStatus::Error, 'msg' => MsgStatus::IncorrectCredentials], 404);
@@ -49,56 +78,45 @@ class AuthController extends Controller
 
     function refresh(Request $request): JsonResponse
     {
-        $authUserId = Auth::user()->cdgo_usrio; // Laravel debe reconocer 'cdgo_usrio' como clave
+        $authUserId = Auth::user()->cdgo_usrio;
 
-        $user = User::from('usrios_sstma as u')
-            ->selectRaw('u.cdgo_usrio, u.lgin, u.nmbre_usrio, u.asi_id_reloj, u.usu_alias, u.email, u.crgo_id,
-                d.cdgo_dprtmnto, d.nmbre_dprtmnto as direccion, d.cdgo_lrgo, d.id_empresa,
-                CAST((IFNULL(r.id, 3)) AS UNSIGNED) as role_id,
-                CAST((IFNULL(r.name, "USUARIO")) AS NCHAR) as role')
-            ->join('dprtmntos as d', 'd.cdgo_dprtmnto', 'u.cdgo_direccion')
-            ->leftJoin('model_has_roles as mh', 'mh.model_id', 'u.cdgo_usrio')
-            ->leftJoin('roles as r', 'r.id', 'mh.role_id')
-            ->where('u.cdgo_usrio', $authUserId)
-            ->where('u.actvo', 1)
-            ->first();
+        $user = $this->getUserWithRole(userId: $authUserId);
 
         if (!$user) {
             return response()->json(['status' => MsgStatus::Error, 'msg' => MsgStatus::UserNotActive], 404);
         }
 
-        // 🔥 Obtener manualmente el token del usuario en la tabla 'personal_access_tokens'
-        $currentToken = $user->tokens()->where('tokenable_id', $user->cdgo_usrio)->latest()->first();
+        // Obtener el token actual (el que se usó en esta petición)
+        $currentToken = $request->user()->currentAccessToken();
 
         if (!$currentToken) {
-            return response()->json(['status' => MsgStatus::Error, 'msg' => 'No se encontró un token para este usuario.'], 404);
+            return response()->json(['status' => MsgStatus::Error, 'msg' => 'Token no encontrado.'], 404);
         }
 
-        // Si el token ha expirado, eliminarlo
+        // Verificar si el token ha expirado
         if ($currentToken->expires_at < now()) {
             $currentToken->delete();
-            return response()->json(['status' => MsgStatus::Error, 'msg' => 'El token ha expirado. Inicia sesión nuevamente.'], 401);
+            return response()->json(['status' => MsgStatus::Error, 'msg' => 'Token expirado. Inicia sesión nuevamente.'], 401);
         }
 
-        // Generar un nuevo token
-        $newToken = $user->createToken($request->userAgent())->plainTextToken;
-
-        // Actualizar la fecha de expiración del nuevo token
-        $user->tokens()->latest()->first()->update([
+        // Actualizar la expiración del token ACTUAL (no crear uno nuevo)
+        // Esto permite múltiples sesiones simultáneas, cada una renueva su propio token
+        $currentToken->update([
             'expires_at' => now()->addDays(3)
         ]);
 
         return response()->json([
             'status' => MsgStatus::Success,
             'token_type' => MsgStatus::TokenBearer,
-            'access_token' => $newToken,
+            'access_token' => $request->bearerToken(), // Mismo token
             'user' => $user
-        ], 201);
+        ], 200);
     }
 
 
     function profile(): JsonResponse
     {
+        // Usar query base y agregar joins adicionales para perfil completo
         $profile = User::from('usrios_sstma as u')
             ->selectRaw('u.cdgo_usrio, u.lgin, u.nmbre_usrio, u.asi_id_reloj, u.usu_alias, u.email,
                     d.cdgo_dprtmnto, d.nmbre_dprtmnto as direccion, d.cdgo_lrgo,
@@ -115,6 +133,7 @@ class AuthController extends Controller
             ->leftJoin('nom_tipo_contrato as ntc', 'ntc.idnom_tipo_contrato', 'u.usu_ult_tipo_contrato')
             ->join('nom_regimen_laboral as rgl', 'rgl.id', 'ntc.regimen_laboral_id')
             ->where('u.cdgo_usrio', Auth::user()->cdgo_usrio)
+            ->where('u.actvo', 1)
             ->first();
 
         return response()->json(['status' => MsgStatus::Success, 'profile' => $profile], 200);
@@ -126,7 +145,7 @@ class AuthController extends Controller
 
         return response()->json([
             'status' => MsgStatus::Success,
-            'msg'    => MsgStatus::Logout
+            'msg' => MsgStatus::Logout
         ], 200);
     }
 }
