@@ -7,16 +7,30 @@ import {
     onLoading,
     onLoadMessage,
     onSetActivateDescuento,
+    onSetPaginacion,
+    onSetUltimosFiltros,
 } from "../../../store/vacaciones/descuento/descuentoSlice";
 import helpdeskApi from "../../../api/helpdeskApi";
 
 export const useDescuentoStore = () => {
-    const { isLoading, descuentos, activateDescuento, message, errores } =
-        useSelector((state) => state.descuento);
+    const {
+        isLoading,
+        descuentos,
+        activateDescuento,
+        message,
+        errores,
+        paginacion,
+        ultimosFiltros,
+    } = useSelector((state) => state.descuento);
     const dispatch = useDispatch();
     const { ExceptionMessageError } = useErrorException(onLoadErrores);
 
-    const startLoadDescuentos = async ({ usuario_id = null, anio }) => {
+    const startLoadDescuentos = async ({
+        usuario_id = null,
+        anio,
+        por_pagina = 15,
+        pagina = 1,
+    }) => {
         try {
             dispatch(onLoading(true));
             const { data } = await helpdeskApi.post(
@@ -24,10 +38,14 @@ export const useDescuentoStore = () => {
                 {
                     usuario_id,
                     anio,
+                    por_pagina,
+                    pagina,
                 },
             );
-            const { descuentos } = data;
+            const { descuentos, paginacion } = data;
+            dispatch(onSetUltimosFiltros({ usuario_id, anio }));
             dispatch(onLoadDescuentos(descuentos));
+            dispatch(onSetPaginacion(paginacion));
         } catch (error) {
             //console.log(error);
             dispatch(onLoading(false));
@@ -77,6 +95,8 @@ export const useDescuentoStore = () => {
         activateDescuento,
         message,
         errores,
+        paginacion,
+        ultimosFiltros,
 
         startLoadDescuentos,
         startAddDescuento,

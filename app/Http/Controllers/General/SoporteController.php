@@ -8,6 +8,7 @@ use App\Http\Requests\DiagnosticoRequest;
 use App\Http\Requests\SolicitudRequest;
 use App\Http\Requests\SoporteRequest;
 use App\Models\Departamento;
+use App\Models\InvEquipo;
 use App\Models\Soporte;
 //use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -186,14 +187,14 @@ class SoporteController extends Controller
             $soporte = Soporte::create($data);
 
             return response()->json([
-                'status'      => 'success',
-                'msg'         => 'Soporte creado con éxito',
-                'numero_sop'  => $soporte->numero_sop,
+                'status' => 'success',
+                'msg' => 'Soporte creado con éxito',
+                'numero_sop' => $soporte->numero_sop,
             ], 200);
         } catch (\Throwable $th) {
             Log::error('Error al crear soporte: ' . $th->getMessage());
             return response()->json([
-                'status'  => 'error',
+                'status' => 'error',
                 'message' => 'Ocurrió un error al crear el soporte: ' . $th->getMessage()
             ], 500);
         }
@@ -213,12 +214,12 @@ class SoporteController extends Controller
 
             return response()->json([
                 'status' => 'success',
-                'msg'    => MsgStatus::SoporteSendSuccess
+                'msg' => MsgStatus::SoporteSendSuccess
             ], 200);
         } catch (\Throwable $th) {
             Log::error('Error al enviar solicitud: ' . $th->getMessage());
             return response()->json([
-                'status'  => 'error',
+                'status' => 'error',
                 'message' => 'Ocurrió un error al enviar la solicitud.'
             ], 500);
         }
@@ -233,9 +234,18 @@ class SoporteController extends Controller
                 $soporte->id_estado = 3; // Estado: Atendido
                 $soporte->save();
 
+                // Actualizar el estado del equipo si se proporcionó
+                if ($request->filled('id_equipo') && $request->filled('id_estado_equipo')) {
+                    $equipo = InvEquipo::find($request->id_equipo);
+                    if ($equipo) {
+                        $equipo->estado_id = $request->id_estado_equipo;
+                        $equipo->save();
+                    }
+                }
+
                 return response()->json([
                     'status' => MsgStatus::Success,
-                    'msg'    => MsgStatus::SoporteDiagnosed
+                    'msg' => MsgStatus::SoporteDiagnosed
                 ], 200);
             } else {
                 return response()->json(['status' => MsgStatus::Error, 'msg' => MsgStatus::SoporteNotFound], 404);
@@ -298,10 +308,10 @@ class SoporteController extends Controller
 
         if ($soporte) {
             $data = [
-                'titulo'      => 'Registro de Soporte al Usuario',
+                'titulo' => 'Registro de Soporte al Usuario',
                 'institucion' => 'Gobierno Autónomo Descentralizado Provincial de Esmeraldas',
-                'direccion'   => 'Dirección de Tecnologías de Información y Comunicación (TIC)',
-                'soporte'     => $soporte
+                'direccion' => 'Dirección de Tecnologías de Información y Comunicación (TIC)',
+                'soporte' => $soporte
             ];
             $pdf = Pdf::loadView('pdf.soporte.soporte', $data);
             return $pdf->setPaper('a4', 'portrait')->download('soporte.pdf');
@@ -334,11 +344,11 @@ class SoporteController extends Controller
 
         if (sizeof($soportes) > 0) {
             $data = [
-                'direccion'    => 'Dirección de Técnologias de la Información y Comunicación',
-                'titulo'       => 'Informe de Actividades por Servidor',
+                'direccion' => 'Dirección de Técnologias de la Información y Comunicación',
+                'titulo' => 'Informe de Actividades por Servidor',
                 'fecha_inicio' => $request->fecha_inicio,
-                'fecha_fin'    => (new Carbon($request->fecha_fin))->addDays(-1)->format('Y-m-d'),
-                'soportes'     => $soportes,
+                'fecha_fin' => (new Carbon($request->fecha_fin))->addDays(-1)->format('Y-m-d'),
+                'soportes' => $soportes,
                 'jefe_departamento' => $jefe_departamento
             ];
             $pdf = Pdf::loadView('pdf.soporte.reporte_soportes', $data);

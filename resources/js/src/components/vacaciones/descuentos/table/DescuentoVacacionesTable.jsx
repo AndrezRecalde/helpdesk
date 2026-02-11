@@ -1,10 +1,37 @@
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useMantineReactTable } from "mantine-react-table";
+import { MRT_Localization_ES } from "mantine-react-table/locales/es/index.cjs";
 import { TableContent } from "../../../../components";
 import { useDescuentoStore } from "../../../../hooks";
 
 export const DescuentoVacacionesTable = () => {
-    const { isLoading, descuentos } = useDescuentoStore();
+    const {
+        isLoading,
+        descuentos,
+        paginacion,
+        ultimosFiltros,
+        startLoadDescuentos,
+    } = useDescuentoStore();
+    const usuario = JSON.parse(localStorage.getItem("service_user"));
+
+    const [pagination, setPagination] = useState({
+        pageIndex: 0,
+        pageSize: 15,
+    });
+
+    // Cargar datos cuando cambia la paginación (solo si hay filtros aplicados)
+    useEffect(() => {
+        // Solo cargar si hay filtros válidos aplicados (anio no es null)
+        if (ultimosFiltros.anio !== null) {
+            startLoadDescuentos({
+                usuario_id: usuario.cdgo_usrio,
+                anio: ultimosFiltros.anio,
+                por_pagina: pagination.pageSize,
+                pagina: pagination.pageIndex + 1, // Mantine usa índice 0, Laravel usa página 1
+            });
+        }
+    }, [pagination.pageIndex, pagination.pageSize]);
+
     const columns = useMemo(
         () => [
             {
@@ -47,13 +74,21 @@ export const DescuentoVacacionesTable = () => {
                 size: 80,
             },
         ],
-        [descuentos]
+        [],
     );
 
     const table = useMantineReactTable({
         columns,
-        data: descuentos, //must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
-        state: { showProgressBars: isLoading },
+        data: descuentos,
+        state: {
+            showProgressBars: isLoading,
+            pagination,
+        },
+        localization: MRT_Localization_ES,
+        manualPagination: true,
+        rowCount: paginacion.total,
+        pageCount: paginacion.ultima_pagina,
+        onPaginationChange: setPagination,
         enableFacetedValues: false,
         enableColumnDragging: false,
         enableDensityToggle: false,

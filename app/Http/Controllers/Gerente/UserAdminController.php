@@ -72,12 +72,12 @@ class UserAdminController extends Controller
 
             return response()->json([
                 'status' => MsgStatus::Success,
-                'msg'    => MsgStatus::Created
+                'msg' => MsgStatus::Created
             ], 201);
         } catch (\Throwable $th) {
             return response()->json([
                 'status' => MsgStatus::Error,
-                'msg'    => $th->getMessage()
+                'msg' => $th->getMessage()
             ], 500);
         }
     }
@@ -156,11 +156,11 @@ class UserAdminController extends Controller
                 'id_tipo_solicitud' => 7,
                 'id_direccion' => $usuario->cdgo_direccion,
                 'id_usu_recibe' => $usuario->cdgo_usrio,
-                'id_area_tic'   => 5,
+                'id_area_tic' => 5,
                 'id_tipo_soporte' => 3,
                 'id_usu_tecnico_asig' => auth()->id(),
-                'incidente'     =>  'SOLICITUD DE RESETEO DE CONTRASEÑA',
-                'solucion'      =>  'SE RESETEO LA CONTRASEÑA AL USUARIO SOLICITANTE'
+                'incidente' => 'SOLICITUD DE RESETEO DE CONTRASEÑA',
+                'solucion' => 'SE RESETEO LA CONTRASEÑA AL USUARIO SOLICITANTE'
             ]);
             return response()->json(['status' => MsgStatus::Success, 'msg' => MsgStatus::Updated], 200);
         } catch (\Throwable $th) {
@@ -185,11 +185,11 @@ class UserAdminController extends Controller
                 'id_tipo_solicitud' => 7,
                 'id_direccion' => $usuario->cdgo_direccion,
                 'id_usu_recibe' => $usuario->cdgo_usrio,
-                'id_area_tic'   => 5,
+                'id_area_tic' => 5,
                 'id_tipo_soporte' => 3,
                 'id_usu_tecnico_asig' => auth()->id(),
-                'incidente'     => 'SOLICITUD DE ACTIVACIÓN DE USUARIO',
-                'solucion'      => 'SE REALIZÓ LA ACTIVACIÓN DEL USUARIO SOLICITANTE'
+                'incidente' => 'SOLICITUD DE ACTIVACIÓN DE USUARIO',
+                'solucion' => 'SE REALIZÓ LA ACTIVACIÓN DEL USUARIO SOLICITANTE'
             ]);
             return response()->json(['status' => MsgStatus::Success, 'msg' => MsgStatus::Updated], 201);
         } catch (\Throwable $th) {
@@ -237,26 +237,34 @@ class UserAdminController extends Controller
     public function getConsultarPeriodos(Request $request): JsonResponse
     {
         try {
-            $periodos = User::query()
+            // Obtener parámetros de paginación
+            $perPage = $request->input('por_pagina', 15);
+            $page = $request->input('pagina', 1);
+
+            // Consulta principal con paginación
+            $periodosPaginated = User::query()
                 ->selectRaw('usrios_sstma.cdgo_usrio, usrios_sstma.nmbre_usrio, usrios_sstma.nombre_formateado,
                          usrios_sstma.usu_ci, usrios_sstma.email, usrios_sstma.usu_fi_institucion as fecha_ingreso,
                          usrios_sstma.cdgo_direccion, d.nmbre_dprtmnto as departamento,
                          usrios_sstma.crgo_id, nc.nom_cargo as cargo,
                          usrios_sstma.usu_ult_tipo_contrato, ntc.nom_tipo_contrato as tipo_contrato,
                          ntc.regimen_laboral_id, rgl.nombre_regimen')
-                ->with(['periodoVacacionales' => function ($query) {
-                    $query->select('nom_periodo_vacacionales.id',
-                                   'nom_periodo_vacacionales.cdgo_usrio',
-                                   'usrios_sstma.nmbre_usrio',
-                                   'nom_periodo_vacacionales.anio',
-                                   'nom_periodo_vacacionales.dias_total',
-                                   'nom_periodo_vacacionales.dias_tomados',
-                                   'nom_periodo_vacacionales.dias_disponibles',
-                                   'nom_periodo_vacacionales.activo',
-                                   'nom_periodo_vacacionales.observacion',)
-                        ->join('usrios_sstma', 'usrios_sstma.cdgo_usrio', '=', 'nom_periodo_vacacionales.cdgo_usrio')
-                        ->orderBy('anio', 'DESC');
-                }])
+                ->with([
+                    'periodoVacacionales' => function ($query) {
+                        // Eliminado join redundante - la relación ya maneja esto
+                        $query->select(
+                            'nom_periodo_vacacionales.id',
+                            'nom_periodo_vacacionales.cdgo_usrio',
+                            'nom_periodo_vacacionales.anio',
+                            'nom_periodo_vacacionales.dias_total',
+                            'nom_periodo_vacacionales.dias_tomados',
+                            'nom_periodo_vacacionales.dias_disponibles',
+                            'nom_periodo_vacacionales.activo',
+                            'nom_periodo_vacacionales.observacion'
+                        )
+                            ->orderBy('anio', 'DESC');
+                    }
+                ])
                 ->leftJoin('dprtmntos as d', 'd.cdgo_dprtmnto', 'usrios_sstma.cdgo_direccion')
                 ->leftJoin('nom_cargo as nc', 'nc.idnom_cargo', 'usrios_sstma.crgo_id')
                 ->leftJoin('nom_tipo_contrato as ntc', 'ntc.idnom_tipo_contrato', 'usrios_sstma.usu_ult_tipo_contrato')
@@ -264,9 +272,12 @@ class UserAdminController extends Controller
                 ->whereHas('periodoVacacionales')
                 ->byCodigoUsuario($request->cdgo_usrio)
                 ->orderBy('usrios_sstma.nmbre_usrio', 'asc')
-                ->get();
+                ->paginate($perPage, ['*'], 'page', $page);
 
-            // Consultar permisos válidos y agrupar por usuario + año
+            // Obtener solo los IDs de los usuarios en la página actual (optimización)
+            $userIds = $periodosPaginated->pluck('cdgo_usrio')->toArray();
+
+            // Consultar permisos válidos SOLO para usuarios en la página actual
             $permisosAgrupados = DB::table('per_permisos as p')
                 ->join('usrios_sstma as u', 'u.cdgo_usrio', '=', 'p.id_usu_pide')
                 ->join('nom_periodo_vacacionales as pv', function ($join) {
@@ -275,6 +286,7 @@ class UserAdminController extends Controller
                 })
                 ->where('p.id_tipo_motivo', 1)
                 ->whereNotIn('p.id_estado', [3, 6, 7])
+                ->whereIn('u.cdgo_usrio', $userIds) // OPTIMIZACIÓN: solo usuarios de la página actual
                 ->selectRaw('
                 u.cdgo_usrio,
                 pv.anio,
@@ -295,27 +307,32 @@ class UserAdminController extends Controller
             }
 
             // Insertar los permisos en los periodos vacacionales de cada usuario
-            foreach ($periodos as $periodo) {
-                foreach ($periodo->periodoVacacionales as $periodo) {
-                    $anio = $periodo->anio;
-                    // $nom_periodo_vacacional_id = $periodo->id;
-                    if (isset($mapaPermisos[$periodo->cdgo_usrio][$anio])) {
-                        $periodo->tiempo_total_permiso = $mapaPermisos[$periodo->cdgo_usrio][$anio]['tiempo_total'];
-                        $periodo->dias_equivalentes_permiso = (float)$mapaPermisos[$periodo->cdgo_usrio][$anio]['dias_equivalentes'];
-                        $periodo->disponibilidad_vacaciones = (float)$periodo->dias_disponibles - (float)$mapaPermisos[$periodo->cdgo_usrio][$anio]['dias_equivalentes'];
-                        //$periodo->nom_periodo_vacacional_id = $nom_periodo_vacacional_id;
+            foreach ($periodosPaginated->items() as $periodo) {
+                foreach ($periodo->periodoVacacionales as $periodoVac) {
+                    $anio = $periodoVac->anio;
+                    if (isset($mapaPermisos[$periodoVac->cdgo_usrio][$anio])) {
+                        $periodoVac->tiempo_total_permiso = $mapaPermisos[$periodoVac->cdgo_usrio][$anio]['tiempo_total'];
+                        $periodoVac->dias_equivalentes_permiso = (float) $mapaPermisos[$periodoVac->cdgo_usrio][$anio]['dias_equivalentes'];
+                        $periodoVac->disponibilidad_vacaciones = (float) $periodoVac->dias_disponibles - (float) $mapaPermisos[$periodoVac->cdgo_usrio][$anio]['dias_equivalentes'];
                     } else {
-                        $periodo->tiempo_total_permiso = "00:00:00";
-                        $periodo->dias_equivalentes_permiso = (float)0;
-                        $periodo->disponibilidad_vacaciones = (float)0;
-                        //$periodo->nom_periodo_vacacional_id = $nom_periodo_vacacional_id;
+                        $periodoVac->tiempo_total_permiso = "00:00:00";
+                        $periodoVac->dias_equivalentes_permiso = (float) 0;
+                        $periodoVac->disponibilidad_vacaciones = (float) 0;
                     }
                 }
             }
 
             return response()->json([
                 'status' => MsgStatus::Success,
-                'periodos' => $periodos
+                'periodos' => $periodosPaginated->items(),
+                'paginacion' => [
+                    'total' => $periodosPaginated->total(),
+                    'por_pagina' => $periodosPaginated->perPage(),
+                    'pagina_actual' => $periodosPaginated->currentPage(),
+                    'ultima_pagina' => $periodosPaginated->lastPage(),
+                    'desde' => $periodosPaginated->firstItem(),
+                    'hasta' => $periodosPaginated->lastItem(),
+                ]
             ]);
         } catch (\Throwable $th) {
             return response()->json([

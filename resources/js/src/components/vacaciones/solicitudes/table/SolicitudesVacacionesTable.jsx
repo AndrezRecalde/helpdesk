@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { MenuTableActions, TableContent } from "../../../../components";
 import { useMantineReactTable } from "mantine-react-table";
 import { MRT_Localization_ES } from "mantine-react-table/locales/es/index.cjs";
@@ -17,11 +17,31 @@ export const SolicitudesVacacionesTable = ({ usuario }) => {
     const {
         isLoading,
         solicitudes,
+        paginacion,
+        ultimosFiltros,
         setActivateVacacion,
         startExportFichaVacaciones,
+        startLoadSolicitudesVacaciones,
     } = useVacacionesStore();
     const { modalActionSolAnulacion, modalActionGestionarVacacion } =
         useUiVacaciones();
+
+    const [pagination, setPagination] = useState({
+        pageIndex: 0,
+        pageSize: 15,
+    });
+
+    // Cargar datos cuando cambia la paginación (solo si hay filtros aplicados)
+    useEffect(() => {
+        // Solo cargar si hay filtros válidos aplicados (anio no es null)
+        if (ultimosFiltros.anio !== null) {
+            startLoadSolicitudesVacaciones({
+                ...ultimosFiltros,
+                por_pagina: pagination.pageSize,
+                pagina: pagination.pageIndex + 1, // Mantine usa índice 0, Laravel usa página 1
+            });
+        }
+    }, [pagination.pageIndex, pagination.pageSize]);
 
     const columns = useMemo(
         () => [
@@ -60,7 +80,7 @@ export const SolicitudesVacacionesTable = ({ usuario }) => {
                 size: 80,
             },
         ],
-        [solicitudes],
+        [],
     );
 
     const handleAnular = useCallback(
@@ -127,8 +147,15 @@ export const SolicitudesVacacionesTable = ({ usuario }) => {
 
     const table = useMantineReactTable({
         columns,
-        data: solicitudes, //must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
-        state: { showProgressBars: isLoading },
+        data: solicitudes,
+        state: {
+            showProgressBars: isLoading,
+            pagination,
+        },
+        manualPagination: true,
+        rowCount: paginacion.total,
+        pageCount: paginacion.ultima_pagina,
+        onPaginationChange: setPagination,
         enableFacetedValues: true,
         enableRowActions: true,
         localization: MRT_Localization_ES,

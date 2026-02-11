@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from "react";
+import { useEffect } from "react";
 import { Container, Divider, Group } from "@mantine/core";
 import {
     TitlePage,
@@ -8,17 +8,18 @@ import {
     SolAutorizarVacacionModal,
     BtnAddActions,
 } from "../../components";
-import { IconCubePlus, IconEyeSearch, IconOctagonMinus } from "@tabler/icons-react";
+import {
+    IconCubePlus,
+    IconEyeSearch,
+    IconOctagonMinus,
+} from "@tabler/icons-react";
 import { useTitlePage, useVacacionesStore } from "../../hooks";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
 const SolicitudesVacacionesPage = () => {
     useTitlePage("Solicitudes Vacaciones - Intranet");
-    const usuario = useMemo(
-        () => JSON.parse(localStorage.getItem("service_user")),
-        []
-    );
+    const usuario = JSON.parse(localStorage.getItem("service_user")) || {};
     const { isExport, startClearVacaciones, message, errores } =
         useVacacionesStore();
 

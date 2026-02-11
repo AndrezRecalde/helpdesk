@@ -26,6 +26,7 @@ export const ModalDiagnostico = ({ option }) => {
             id_tipo_soporte: null,
             solucion: "",
             id_equipo: null,
+            id_estado_equipo: null,
 
             activo_informatico: false,
         },
@@ -40,6 +41,17 @@ export const ModalDiagnostico = ({ option }) => {
                 values.activo_informatico === true && value === null
                     ? "En soporte a hardware es obligatorio el código del activo"
                     : null,
+            id_estado_equipo: (value, values) => {
+                // Validar solo para tipos de soporte: 1, 4, 5, 6
+                const requiresStatus = [1, 4, 5, 6].includes(
+                    Number(values.id_tipo_soporte),
+                );
+                return values.activo_informatico === true &&
+                    requiresStatus &&
+                    value === null
+                    ? "El estado del equipo es obligatorio para este tipo de soporte"
+                    : null;
+            },
         },
         transformValues: (values) => ({
             ...values,
@@ -51,6 +63,7 @@ export const ModalDiagnostico = ({ option }) => {
             id_area_tic: Number(values.id_area_tic) || null,
             id_tipo_soporte: Number(values.id_tipo_soporte) || null,
             id_equipo: Number(values.id_equipo) || null,
+            id_estado_equipo: Number(values.id_estado_equipo) || null,
         }),
     });
 

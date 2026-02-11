@@ -7,6 +7,18 @@ export const descuentoSlice = createSlice({
         activateDescuento: null,
         message: undefined,
         errores: undefined,
+        paginacion: {
+            total: 0,
+            por_pagina: 15,
+            pagina_actual: 1,
+            ultima_pagina: 1,
+            desde: 0,
+            hasta: 0,
+        },
+        ultimosFiltros: {
+            usuario_id: null,
+            anio: null,
+        },
     },
     reducers: {
         onLoading: (state, { payload }) => {
@@ -22,6 +34,18 @@ export const descuentoSlice = createSlice({
         onClearDescuentos: (state) => {
             state.descuentos = [];
             state.activateDescuento = null;
+            state.ultimosFiltros = {
+                usuario_id: null,
+                anio: null,
+            };
+            state.paginacion = {
+                total: 0,
+                por_pagina: 15,
+                pagina_actual: 1,
+                ultima_pagina: 1,
+                desde: 0,
+                hasta: 0,
+            };
             state.message = undefined;
             state.errores = undefined;
         },
@@ -31,6 +55,12 @@ export const descuentoSlice = createSlice({
         onLoadErrores: (state, { payload }) => {
             state.errores = payload;
             state.isLoading = false;
+        },
+        onSetPaginacion: (state, { payload }) => {
+            state.paginacion = payload;
+        },
+        onSetUltimosFiltros: (state, { payload }) => {
+            state.ultimosFiltros = payload;
         },
     },
 });
@@ -42,4 +72,6 @@ export const {
     onClearDescuentos,
     onLoadMessage,
     onLoadErrores,
+    onSetPaginacion,
+    onSetUltimosFiltros,
 } = descuentoSlice.actions;

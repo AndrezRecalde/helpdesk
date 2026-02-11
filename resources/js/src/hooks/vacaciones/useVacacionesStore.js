@@ -10,6 +10,8 @@ import {
     onLoadMotivosVacaciones,
     onLoadSolicitudesVacaciones,
     onSetActivateVacacion,
+    onSetPaginacion,
+    onSetUltimosFiltros,
 } from "../../store/vacaciones/vacacionesSlice";
 import helpdeskApi from "../../api/helpdeskApi";
 
@@ -23,6 +25,8 @@ export const useVacacionesStore = () => {
         activateVacacion,
         message,
         errores,
+        paginacion,
+        ultimosFiltros,
     } = useSelector((state) => state.vacaciones);
     const dispatch = useDispatch();
     const { ExceptionMessageError } = useErrorException(onLoadErrores);
@@ -48,6 +52,8 @@ export const useVacacionesStore = () => {
         codigo = null,
         fecha_inicio = null,
         fecha_fin = null,
+        por_pagina = 15,
+        pagina = 1,
     }) => {
         try {
             dispatch(onLoading(true));
@@ -60,10 +66,23 @@ export const useVacacionesStore = () => {
                     anio,
                     fecha_inicio,
                     fecha_fin,
+                    por_pagina,
+                    pagina,
                 },
             );
-            const { solicitudes } = data;
+            const { solicitudes, paginacion } = data;
+            dispatch(
+                onSetUltimosFiltros({
+                    cdgo_usrio,
+                    periodo_vacacional_id,
+                    anio,
+                    codigo,
+                    fecha_inicio,
+                    fecha_fin,
+                }),
+            );
             dispatch(onLoadSolicitudesVacaciones(solicitudes));
+            dispatch(onSetPaginacion(paginacion));
             dispatch(onLoading(false));
         } catch (error) {
             //console.log(error);
@@ -179,6 +198,8 @@ export const useVacacionesStore = () => {
         activateVacacion,
         message,
         errores,
+        paginacion,
+        ultimosFiltros,
 
         startLoadMotivosVacaciones,
         startLoadSolicitudesVacaciones,

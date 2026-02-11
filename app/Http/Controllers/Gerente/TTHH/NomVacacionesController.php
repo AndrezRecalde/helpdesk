@@ -60,14 +60,14 @@ class NomVacacionesController extends Controller
 
             if ($user->isGerenteTic() && $user->cdgo_usrio != $vacacion->cdgo_usrio) {
                 Soporte::create([
-                    'id_tipo_solicitud'   => 7,
-                    'id_direccion'        => $vacacion->direccion_id,
-                    'id_usu_recibe'       => $vacacion->cdgo_usrio,
-                    'id_area_tic'         => 5,
-                    'id_tipo_soporte'     => 3,
+                    'id_tipo_solicitud' => 7,
+                    'id_direccion' => $vacacion->direccion_id,
+                    'id_usu_recibe' => $vacacion->cdgo_usrio,
+                    'id_area_tic' => 5,
+                    'id_tipo_soporte' => 3,
                     'id_usu_tecnico_asig' => $user->cdgo_usrio,
-                    'incidente'           => MsgStatus::FichaIncidenciaVacacion,
-                    'solucion'            => MsgStatus::FichaSolucionVacacion,
+                    'incidente' => MsgStatus::FichaIncidenciaVacacion,
+                    'solucion' => MsgStatus::FichaSolucionVacacion,
                 ]);
             }
 
@@ -75,7 +75,7 @@ class NomVacacionesController extends Controller
 
             return response()->json([
                 'status' => MsgStatus::Success,
-                'msg'    => 'Solicitud No. ' . $vacacion->codigo_vacacion . ' generada con éxito',
+                'msg' => 'Solicitud No. ' . $vacacion->codigo_vacacion . ' generada con éxito',
                 'codigo' => $vacacion->codigo_vacacion
             ], 200);
         } catch (\Throwable $th) {
@@ -124,9 +124,9 @@ class NomVacacionesController extends Controller
 
             $data = [
                 'institucion' => 'GOBIERNO AUTÓNOMO DESCENTRALIZADO DE LA PROVINCIA DE ESMERALDAS',
-                'titulo'      => 'CONCESIÓN DE VACACIONES',
-                'vacaciones'  => $vacaciones,
-                'motivos'     => $motivos
+                'titulo' => 'CONCESIÓN DE VACACIONES',
+                'vacaciones' => $vacaciones,
+                'motivos' => $motivos
             ];
             $pdf = Pdf::loadView('pdf.vacaciones.general.new', $data);
             return $pdf->setPaper('a4', 'portrait')->download('vacaciones.pdf');
@@ -147,7 +147,7 @@ class NomVacacionesController extends Controller
                 if ($vacacion->asignaciones()->exists()) {
                     return response()->json([
                         'status' => MsgStatus::Error,
-                        'msg'    => 'Ya se asignaron días a esta solicitud.'
+                        'msg' => 'Ya se asignaron días a esta solicitud.'
                     ], 400);
                 }
 
@@ -162,16 +162,16 @@ class NomVacacionesController extends Controller
                     if ($diasUsados <= 0 || $diasUsados > $periodo->dias_disponibles) {
                         return response()->json([
                             'status' => MsgStatus::Error,
-                            'msg'    => "Los días asignados superan los disponibles o no son válidos para el periodo {$periodo->anio}."
+                            'msg' => "Los días asignados superan los disponibles o no son válidos para el periodo {$periodo->anio}."
                         ], 400);
                     }
 
                     // Crear asignación
                     NomAsignacionVacacionesPeriodo::create([
-                        'nom_vacacion_id'           => $vacacion->id,
+                        'nom_vacacion_id' => $vacacion->id,
                         'nom_periodo_vacacional_id' => $periodo->id,
-                        'dias_usados'               => $diasUsados,
-                        'observacion'               => $observacion
+                        'dias_usados' => $diasUsados,
+                        'observacion' => $observacion
                     ]);
 
                     // Actualizar periodo
@@ -185,7 +185,7 @@ class NomVacacionesController extends Controller
                 if ($diasTotalesAsignados < $vacacion->dias_solicitados) {
                     return response()->json([
                         'status' => MsgStatus::Error,
-                        'msg'    => 'No se asignaron todos los días solicitados.'
+                        'msg' => 'No se asignaron todos los días solicitados.'
                     ], 400);
                 }
             }
@@ -210,12 +210,12 @@ class NomVacacionesController extends Controller
 
             return response()->json([
                 'status' => MsgStatus::Success,
-                'msg'    => 'Solicitud actualizada correctamente'
+                'msg' => 'Solicitud actualizada correctamente'
             ], 200);
         } catch (\Throwable $th) {
             return response()->json([
                 'status' => MsgStatus::Error,
-                'msg'    => $th->getMessage()
+                'msg' => $th->getMessage()
             ], 500);
         }
     }
@@ -226,7 +226,12 @@ class NomVacacionesController extends Controller
     function getSolicitudesVacaciones(Request $request): JsonResponse
     {
         try {
-            $solicitudes = NomVacacion::from('nom_vacaciones as nv')
+            // Obtener parámetros de paginación
+            $perPage = $request->input('por_pagina', 15);
+            $page = $request->input('pagina', 1);
+
+            // Consulta principal con paginación
+            $solicitudesPaginated = NomVacacion::from('nom_vacaciones as nv')
                 ->select(
                     'nv.id',
                     'nv.codigo_vacacion',
@@ -258,11 +263,20 @@ class NomVacacionesController extends Controller
                 ->byUsuarioId($request->cdgo_usrio)
                 ->byCodigo($request->codigo)
                 ->byAnio($request->anio)
-                ->latest('nv.created_at', 'DESC')->get();
+                ->latest('nv.created_at')
+                ->paginate($perPage, ['*'], 'page', $page);
 
             return response()->json([
-                'status'      => MsgStatus::Success,
-                'solicitudes' => $solicitudes
+                'status' => MsgStatus::Success,
+                'solicitudes' => $solicitudesPaginated->items(),
+                'paginacion' => [
+                    'total' => $solicitudesPaginated->total(),
+                    'por_pagina' => $solicitudesPaginated->perPage(),
+                    'pagina_actual' => $solicitudesPaginated->currentPage(),
+                    'ultima_pagina' => $solicitudesPaginated->lastPage(),
+                    'desde' => $solicitudesPaginated->firstItem(),
+                    'hasta' => $solicitudesPaginated->lastItem(),
+                ]
             ], 200);
         } catch (\Throwable $th) {
             return response()->json(['status' => MsgStatus::Error, 'msg' => $th->getMessage()], 500);

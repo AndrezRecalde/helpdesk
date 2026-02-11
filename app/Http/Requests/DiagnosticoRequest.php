@@ -24,11 +24,12 @@ class DiagnosticoRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'id_area_tic'     => 'required',
+            'id_area_tic' => 'required',
             'id_tipo_soporte' => 'required',
-            'solucion'        =>  'required',
-            'id_equipo'       =>  '',
-            'fecha_fin'       =>  'required'
+            'solucion' => 'required',
+            'id_equipo' => '',
+            'id_estado_equipo' => 'nullable|integer|exists:inv_estados,id',
+            'fecha_fin' => 'required'
         ];
     }
 

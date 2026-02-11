@@ -9,7 +9,23 @@ export const vacacionesSlice = createSlice({
         motivos: [],
         activateVacacion: null,
         message: undefined,
-        errores: undefined
+        errores: undefined,
+        paginacion: {
+            total: 0,
+            por_pagina: 15,
+            pagina_actual: 1,
+            ultima_pagina: 1,
+            desde: 0,
+            hasta: 0,
+        },
+        ultimosFiltros: {
+            cdgo_usrio: null,
+            periodo_vacacional_id: null,
+            anio: null,
+            codigo: null,
+            fecha_inicio: null,
+            fecha_fin: null,
+        },
     },
     reducers: {
         onLoading: (state, { payload }) => {
@@ -41,6 +57,22 @@ export const vacacionesSlice = createSlice({
             state.isLoading = false;
             state.isLoadingMotivos = false;
             state.isExport = false;
+            state.paginacion = {
+                total: 0,
+                por_pagina: 15,
+                pagina_actual: 1,
+                ultima_pagina: 1,
+                desde: 0,
+                hasta: 0,
+            };
+            state.ultimosFiltros = {
+                cdgo_usrio: null,
+                periodo_vacacional_id: null,
+                anio: null,
+                codigo: null,
+                fecha_inicio: null,
+                fecha_fin: null,
+            };
         },
         onLoadMessage: (state, { payload }) => {
             state.message = payload;
@@ -49,6 +81,12 @@ export const vacacionesSlice = createSlice({
             state.errores = payload;
             state.isLoading = false;
             state.isLoadingMotivos = false;
+        },
+        onSetPaginacion: (state, { payload }) => {
+            state.paginacion = payload;
+        },
+        onSetUltimosFiltros: (state, { payload }) => {
+            state.ultimosFiltros = payload;
         },
     },
 });
@@ -63,4 +101,6 @@ export const {
     onClearVacaciones,
     onLoadMessage,
     onLoadErrores,
+    onSetPaginacion,
+    onSetUltimosFiltros,
 } = vacacionesSlice.actions;

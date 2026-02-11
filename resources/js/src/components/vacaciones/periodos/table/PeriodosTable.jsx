@@ -10,7 +10,8 @@ import { IconEditCircle } from "@tabler/icons-react";
 
 export const PeriodosTable = () => {
     const usuario = JSON.parse(localStorage.getItem("service_user"));
-    const { isLoading, periodos } = usePeriodoStore();
+    const { isLoading, periodos, paginacion } = usePeriodoStore();
+    const { startLoadPeriodos } = usePeriodoStore();
     const { setActivateUser } = useUsersStore();
     const { modalActionUser } = useUiUser();
     const columns = useMemo(
@@ -81,7 +82,30 @@ export const PeriodosTable = () => {
     const table = useMantineReactTable({
         columns,
         data: periodos, //must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
-        state: { showProgressBars: isLoading },
+        state: {
+            showProgressBars: isLoading,
+            pagination: {
+                pageIndex: paginacion.pagina_actual - 1,
+                pageSize: paginacion.por_pagina,
+            },
+        },
+        manualPagination: true,
+        rowCount: paginacion.total,
+        onPaginationChange: (updater) => {
+            const newPagination =
+                typeof updater === "function"
+                    ? updater({
+                          pageIndex: paginacion.pagina_actual - 1,
+                          pageSize: paginacion.por_pagina,
+                      })
+                    : updater;
+
+            startLoadPeriodos({
+                cdgo_usrio: null,
+                pagina: newPagination.pageIndex + 1,
+                por_pagina: newPagination.pageSize,
+            });
+        },
         enableFacetedValues: false,
         enableColumnDragging: false,
         enableDensityToggle: false,

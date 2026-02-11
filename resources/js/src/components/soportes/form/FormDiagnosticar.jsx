@@ -16,14 +16,12 @@ import { BtnSubmit, TextSection } from "../../../components";
 import {
     //useEquipoStore,
     useInvEquipoStore,
+    useInvEstadoStore,
     useSoporteStore,
     useStorageField,
     useUiSoporte,
 } from "../../../hooks";
-import {
-    IconCalendarMonth,
-    IconRosetteDiscountCheck,
-} from "@tabler/icons-react";
+import { IconRosetteDiscountCheck } from "@tabler/icons-react";
 import classes from "../../../assets/styles/modules/soporte/CardDiagnostico.module.css";
 import classess from "../../../assets/styles/modules/layout/input/LabelsInputs.module.css";
 import dayjs from "dayjs";
@@ -33,6 +31,8 @@ export const FormDiagnosticar = ({ form, option }) => {
     const [checkEstado, setCheckEstado] = useState(false);
     const { startLoadEquiposAgrupados, startClearInvEquipos, invEquipos } =
         useInvEquipoStore();
+    const { startLoadInvEstados, startClearInvEstados, invEstados } =
+        useInvEstadoStore();
     const { modalActionDiagnosticar } = useUiSoporte();
     const { activateSoporte, startDiagnosticarSoporte } = useSoporteStore();
     const { storageFields } = useStorageField();
@@ -75,12 +75,14 @@ export const FormDiagnosticar = ({ form, option }) => {
         if (activo_informatico) {
             //startLoadEquiposInformaticos();
             startLoadEquiposAgrupados();
+            startLoadInvEstados();
             return;
         }
 
         return () => {
             //clearEquiposInformaticos();
             startClearInvEquipos();
+            startClearInvEstados();
         };
     }, [activo_informatico]);
 
@@ -166,14 +168,14 @@ export const FormDiagnosticar = ({ form, option }) => {
                 </Table>
             </Card.Section>
             <Card.Section withBorder inheritPadding py="xs">
-                <TextSection fz={14} fw={600} tt="">
-                    Incidencia del usuario
-                </TextSection>
-                <TextSection fz={13} fw={400} tt="">
+                <TextSection fz={13} fw={400} tt="" fs="italic">
                     Registrado el:{" "}
                     {dayjs(activateSoporte?.fecha_ini).format(
                         "YYYY-MM-DD HH:mm",
                     )}
+                </TextSection>
+                <TextSection fz={14} fw={600} tt="">
+                    Incidencia del usuario:
                 </TextSection>
                 <TextSection mt="xs" mb="xs" color="black" fz={13}>
                     {activateSoporte?.incidente}
@@ -261,25 +263,44 @@ export const FormDiagnosticar = ({ form, option }) => {
                             })}
                         />
                         {activo_informatico ? (
-                            <Select
-                                searchable
-                                clearable
-                                label="Activo Informatico"
-                                placeholder="Seleccione el activo informatico"
-                                {...form.getInputProps("id_equipo")}
-                                data={invEquipos.map((equipo) => {
-                                    return {
-                                        group: equipo.nombre_categoria,
-                                        items: equipo.equipos.map((eq) => {
-                                            return {
-                                                value: eq.id.toString(),
-                                                label: `${eq.codigo_antiguo ?? "SCA"} — ${eq.codigo_nuevo ?? "SCN"} — ${eq.numero_serie ?? "SNS"}`,
-                                            };
-                                        }),
-                                    };
-                                })}
-                                classNames={classess}
-                            />
+                            <>
+                                <Select
+                                    searchable
+                                    clearable
+                                    label="Activo Informatico"
+                                    placeholder="Seleccione el activo informatico"
+                                    {...form.getInputProps("id_equipo")}
+                                    data={invEquipos.map((equipo) => {
+                                        return {
+                                            group: equipo.nombre_categoria,
+                                            items: equipo.equipos.map((eq) => {
+                                                return {
+                                                    value: eq.id.toString(),
+                                                    label: `${eq.codigo_antiguo ?? "SCA"} — ${eq.codigo_nuevo ?? "SCN"} — ${eq.numero_serie ?? "SNS"}`,
+                                                };
+                                            }),
+                                        };
+                                    })}
+                                    classNames={classess}
+                                />
+                                {[1, 4, 5, 6].includes(
+                                    Number(id_tipo_soporte),
+                                ) && (
+                                    <Select
+                                        withAsterisk
+                                        label="Estado del Equipo"
+                                        placeholder="Seleccione el estado del equipo"
+                                        {...form.getInputProps(
+                                            "id_estado_equipo",
+                                        )}
+                                        data={invEstados.map((estado) => ({
+                                            value: estado.id.toString(),
+                                            label: estado.nombre_estado,
+                                        }))}
+                                        classNames={classess}
+                                    />
+                                )}
+                            </>
                         ) : null}
                         <BtnSubmit IconSection={IconRosetteDiscountCheck}>
                             Finalizar soporte

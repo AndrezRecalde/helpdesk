@@ -20,7 +20,7 @@ import Swal from "sweetalert2";
 import { Roles } from "../../helpers/dictionary";
 
 const PeriodoVacacionalesPage = () => {
-    useTitlePage("Helpdesk | Periodos Vacaciones");
+    useTitlePage("Periodos Vacaciones - Intranet");
     const usuario = JSON.parse(localStorage.getItem("service_user"));
     const { startLoadPeriodos, startClearPeriodos, message, errores } =
         usePeriodoStore();

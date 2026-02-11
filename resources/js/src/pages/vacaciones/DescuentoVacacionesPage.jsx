@@ -17,7 +17,7 @@ import { useDescuentoStore, useTitlePage } from "../../hooks";
 import { useNavigate } from "react-router-dom";
 
 const DescuentoVacacionesPage = () => {
-    useTitlePage("Helpdesk | Descuentos Vacaciones");
+    useTitlePage("Descuentos Vacaciones - Intranet");
     const usuario = JSON.parse(localStorage.getItem("service_user"));
     const navigate = useNavigate();
     const { startLoadDescuentos, startClearDescuentos } = useDescuentoStore();

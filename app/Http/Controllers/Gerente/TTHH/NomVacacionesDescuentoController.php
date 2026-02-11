@@ -17,7 +17,12 @@ class NomVacacionesDescuentoController extends Controller
     function getNomVacacionesDescuentos(Request $request): JsonResponse
     {
         try {
-            $descuentos = NomVacacionesDescuento::from('nom_vacaciones_descuentos as nvd')
+            // Obtener parámetros de paginación
+            $perPage = $request->input('por_pagina', 15);
+            $page = $request->input('pagina', 1);
+
+            // Consulta principal con paginación
+            $descuentosPaginated = NomVacacionesDescuento::from('nom_vacaciones_descuentos as nvd')
                 ->join('usrios_sstma as us', 'nvd.usuario_id', '=', 'us.cdgo_usrio')
                 ->join('usrios_sstma as u', 'nvd.usuario_tthh', '=', 'u.cdgo_usrio')
                 ->join('nom_periodo_vacacionales as npv', 'nvd.nom_periodo_vacacional_id', '=', 'npv.id')
@@ -35,11 +40,19 @@ class NomVacacionesDescuentoController extends Controller
                 ->when($request->anio, fn($q) => $q->where('npv.anio', $request->anio))
                 ->orderBy('nvd.id', 'desc')
                 ->orderBy('npv.anio', 'desc')
-                ->get();
+                ->paginate($perPage, ['*'], 'page', $page);
 
             return response()->json([
-                'status'      => MsgStatus::Success,
-                'descuentos' => $descuentos
+                'status' => MsgStatus::Success,
+                'descuentos' => $descuentosPaginated->items(),
+                'paginacion' => [
+                    'total' => $descuentosPaginated->total(),
+                    'por_pagina' => $descuentosPaginated->perPage(),
+                    'pagina_actual' => $descuentosPaginated->currentPage(),
+                    'ultima_pagina' => $descuentosPaginated->lastPage(),
+                    'desde' => $descuentosPaginated->firstItem(),
+                    'hasta' => $descuentosPaginated->lastItem(),
+                ]
             ], 200);
         } catch (\Throwable $th) {
             return response()->json(['status' => MsgStatus::Error, 'msg' => $th->getMessage()], 500);
@@ -53,7 +66,7 @@ class NomVacacionesDescuentoController extends Controller
         if (!$periodo) {
             return response()->json([
                 'status' => MsgStatus::Error,
-                'msg'    => MsgStatus::NotFound
+                'msg' => MsgStatus::NotFound
             ], 404);
         }
 
@@ -63,7 +76,7 @@ class NomVacacionesDescuentoController extends Controller
         if ($diasDescuento > $diasDisponibles) {
             return response()->json([
                 'status' => MsgStatus::Error,
-                'msg'    => 'Los días de descuento no pueden ser mayores a los días disponibles del periodo vacacional.'
+                'msg' => 'Los días de descuento no pueden ser mayores a los días disponibles del periodo vacacional.'
             ], 422);
         }
 
@@ -72,7 +85,7 @@ class NomVacacionesDescuentoController extends Controller
 
             // Actualizar el periodo vacacional
             $periodo->update([
-                'dias_tomados'     => $periodo->dias_tomados + $diasDescuento,
+                'dias_tomados' => $periodo->dias_tomados + $diasDescuento,
                 'dias_disponibles' => max($diasDisponibles - $diasDescuento, 0),
             ]);
 
@@ -86,14 +99,14 @@ class NomVacacionesDescuentoController extends Controller
 
             return response()->json([
                 'status' => MsgStatus::Success,
-                'msg'    => MsgStatus::Created,
+                'msg' => MsgStatus::Created,
             ], 201);
         } catch (\Throwable $e) {
             DB::rollBack();
 
             return response()->json([
                 'status' => MsgStatus::Error,
-                'msg'    => 'Error al registrar el descuento: ' . $e->getMessage()
+                'msg' => 'Error al registrar el descuento: ' . $e->getMessage()
             ], 500);
         }
     }
