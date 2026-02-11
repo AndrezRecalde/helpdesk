@@ -1,7 +1,8 @@
 import { useCallback, useMemo } from "react";
 import { useMantineReactTable } from "mantine-react-table";
-import { MenuTable_E, TableContent } from "../../../../components";
+import { MenuTableActions, TableContent } from "../../../../components";
 import { useDirectorStore, useUiDirector } from "../../../../hooks";
+import { IconEditCircle } from "@tabler/icons-react";
 
 export const DireccionesTable = () => {
     const { isLoading, directores, setActivateDirectores } = useDirectorStore();
@@ -12,7 +13,7 @@ export const DireccionesTable = () => {
             setActivateDirectores(selected);
             modalActionDirector(1);
         },
-        [directores]
+        [directores],
     );
 
     const columns = useMemo(
@@ -31,7 +32,7 @@ export const DireccionesTable = () => {
                 header: "Jefe encargado",
             },
         ],
-        [directores]
+        [directores],
     );
 
     const table = useMantineReactTable({
@@ -41,7 +42,16 @@ export const DireccionesTable = () => {
         enableRowActions: true,
         state: { showProgressBars: isLoading },
         renderRowActionMenuItems: ({ row }) => (
-            <MenuTable_E row={row} handleEdit={handleEdit} />
+            <MenuTableActions
+                row={row}
+                actions={[
+                    {
+                        icon: IconEditCircle,
+                        label: "Editar",
+                        onClick: handleEdit,
+                    },
+                ]}
+            />
         ),
         mantineTableProps: {
             withColumnBorders: true,

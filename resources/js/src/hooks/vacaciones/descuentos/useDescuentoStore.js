@@ -19,10 +19,13 @@ export const useDescuentoStore = () => {
     const startLoadDescuentos = async ({ usuario_id = null, anio }) => {
         try {
             dispatch(onLoading(true));
-            const { data } = await helpdeskApi.post("/tthh/asistencia/descuentos", {
-                usuario_id,
-                anio,
-            });
+            const { data } = await helpdeskApi.post(
+                "/tthh/asistencia/descuentos",
+                {
+                    usuario_id,
+                    anio,
+                },
+            );
             const { descuentos } = data;
             dispatch(onLoadDescuentos(descuentos));
         } catch (error) {
@@ -37,7 +40,7 @@ export const useDescuentoStore = () => {
             if (descuento.id) {
                 const { data } = await helpdeskApi.put(
                     `/tthh/asistencia/update/descuento/${descuento.id}`,
-                    descuento
+                    descuento,
                 );
                 dispatch(onLoadMessage(data));
                 setTimeout(() => {
@@ -47,7 +50,7 @@ export const useDescuentoStore = () => {
             }
             const { data } = await helpdeskApi.post(
                 "/tthh/asistencia/store/descuento",
-                descuento
+                descuento,
             );
             dispatch(onLoadMessage(data));
             setTimeout(() => {

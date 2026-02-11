@@ -75,7 +75,7 @@ const DescuentoVacacionesPage = () => {
                         heigh={45}
                         fontSize={12}
                         IconSection={IconChevronsRight}
-                        handleAction={() => console.log("clic")}
+                        handleAction={handleNavigateSolicitudes}
                     >
                         Ver Solicitudes
                     </BtnSection>

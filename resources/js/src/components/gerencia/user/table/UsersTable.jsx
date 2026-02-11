@@ -1,8 +1,13 @@
 import { useMantineReactTable } from "mantine-react-table";
 import { useCallback, useMemo } from "react";
-import { ActivateUserBtn, MenuUsersTable, TableContent } from "../../..";
+import { ActivateUserBtn, MenuTableActions, TableContent } from "../../..";
 import { useUiUser, useUsersStore } from "../../../../hooks";
 import { Table } from "@mantine/core";
+import {
+    IconEditCircle,
+    IconRestore,
+    IconClockHour2,
+} from "@tabler/icons-react";
 
 export const UsersTable = () => {
     const { isLoading, users, setActivateUser } = useUsersStore();
@@ -47,7 +52,7 @@ export const UsersTable = () => {
                 size: 80,
             },
         ],
-        []
+        [],
     );
 
     const handleEdit = useCallback(
@@ -56,7 +61,7 @@ export const UsersTable = () => {
             setActivateUser(selected);
             modalActionUser(true, true);
         },
-        [users]
+        [users],
     );
 
     const handleActive = useCallback(
@@ -64,7 +69,7 @@ export const UsersTable = () => {
             setActivateUser(selected);
             modalActionActiveUser(true);
         },
-        [users]
+        [users],
     );
 
     const handleResetPassword = useCallback(
@@ -72,7 +77,7 @@ export const UsersTable = () => {
             setActivateUser(selected);
             modalActionResetPwd(true);
         },
-        [users]
+        [users],
     );
 
     const handleCodigoBiometrico = useCallback(
@@ -80,7 +85,7 @@ export const UsersTable = () => {
             setActivateUser(selected);
             modalActionCodigoBiometrico(true);
         },
-        [users]
+        [users],
     );
 
     const table = useMantineReactTable({
@@ -90,11 +95,25 @@ export const UsersTable = () => {
         enableRowActions: true,
         state: { showProgressBars: isLoading },
         renderRowActionMenuItems: ({ row }) => (
-            <MenuUsersTable
+            <MenuTableActions
                 row={row}
-                handleEdit={handleEdit}
-                handleResetPassword={handleResetPassword}
-                handleCodigoBiometrico={handleCodigoBiometrico}
+                actions={[
+                    {
+                        icon: IconEditCircle,
+                        label: "Editar",
+                        onClick: handleEdit,
+                    },
+                    {
+                        icon: IconRestore,
+                        label: "Resetear contraseña",
+                        onClick: handleResetPassword,
+                    },
+                    {
+                        icon: IconClockHour2,
+                        label: "Código Biométrico",
+                        onClick: handleCodigoBiometrico,
+                    },
+                ]}
             />
         ),
         renderDetailPanel: ({ row }) => (

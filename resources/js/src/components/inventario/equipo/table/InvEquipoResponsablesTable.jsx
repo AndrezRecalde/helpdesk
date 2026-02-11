@@ -3,12 +3,12 @@ import { useMantineReactTable } from "mantine-react-table";
 import {
     AlertSection,
     BtnSection,
-    MenuTable_D,
+    MenuTableActions,
     TableContent,
 } from "../../../../components";
 import { Text } from "@mantine/core";
 import { useInvEquipoStore, useInvUiEquipo } from "../../../../hooks";
-import { IconCubePlus, IconInfoCircle } from "@tabler/icons-react";
+import { IconCubePlus, IconInfoCircle, IconTrash } from "@tabler/icons-react";
 import Swal from "sweetalert2";
 
 export const InvEquipoResponsablesTable = () => {
@@ -33,7 +33,7 @@ export const InvEquipoResponsablesTable = () => {
                 accessorKey: "concepto_nombre",
             },
         ],
-        [responsables]
+        [responsables],
     );
 
     const handleDelete = useCallback(
@@ -55,7 +55,7 @@ export const InvEquipoResponsablesTable = () => {
                 }
             });
         },
-        [responsables]
+        [responsables],
     );
 
     const handleAssign = useCallback(() => {
@@ -89,7 +89,16 @@ export const InvEquipoResponsablesTable = () => {
             </div>
         ),
         renderRowActionMenuItems: ({ row }) => (
-            <MenuTable_D row={row} handleDelete={handleDelete} />
+            <MenuTableActions
+                row={row}
+                actions={[
+                    {
+                        icon: IconTrash,
+                        label: "Eliminar",
+                        onClick: handleDelete,
+                    },
+                ]}
+            />
         ),
         renderTopToolbarCustomActions: ({ table }) => (
             <BtnSection
@@ -97,7 +106,10 @@ export const InvEquipoResponsablesTable = () => {
                 fontSize={12}
                 IconSection={IconCubePlus}
                 handleAction={handleAssign}
-                disabled={activateInvEquipo?.estado_id === 4 || activateInvEquipo?.estado_id === 5}
+                disabled={
+                    activateInvEquipo?.estado_id === 4 ||
+                    activateInvEquipo?.estado_id === 5
+                }
             >
                 Agregar
             </BtnSection>

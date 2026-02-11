@@ -12,17 +12,25 @@ import {
 import helpdeskApi from "../../../api/helpdeskApi";
 
 export const usePeriodoStore = () => {
-    const { isLoading, isExport, periodos, activatePeriodo, tableCalculoDias, message, errores } =
-        useSelector((state) => state.periodoVacacional);
+    const {
+        isLoading,
+        isExport,
+        periodos,
+        activatePeriodo,
+        tableCalculoDias,
+        message,
+        errores,
+    } = useSelector((state) => state.periodoVacacional);
     const dispatch = useDispatch();
     const { ExceptionMessageError } = useErrorException(onLoadErrores);
 
+    //Carga los periodos disponibles para el usuario logueado, y todos para el usuario nom vacaciones
     const startLoadPeriodos = async ({ cdgo_usrio = null }) => {
         try {
             dispatch(onLoading(true));
             const { data } = await helpdeskApi.post(
                 "/usuario/periodos-vacacionales",
-                { cdgo_usrio }
+                { cdgo_usrio },
             );
             const { periodos } = data;
             dispatch(onLoadingPeriodos(periodos));
@@ -33,12 +41,13 @@ export const usePeriodoStore = () => {
         }
     };
 
+    //Carga los periodos disponibles por usuario para Autorizar Vacaciones
     const startLoadPeriodosByUser = async (cdgo_usrio) => {
         try {
             dispatch(onLoading(true));
             const { data } = await helpdeskApi.post(
                 "/tthh/asistencia/consulta-periodos",
-                { cdgo_usrio }
+                { cdgo_usrio },
             );
             const { periodos } = data;
             dispatch(onLoadingPeriodos(periodos));
@@ -56,7 +65,7 @@ export const usePeriodoStore = () => {
             // Create new periodo
             const { data } = await helpdeskApi.post(
                 "/tthh/asistencia/store/periodo",
-                periodo
+                periodo,
             );
             const { creados } = data;
             //console.log(creados);
@@ -76,7 +85,7 @@ export const usePeriodoStore = () => {
         try {
             const { data } = await helpdeskApi.put(
                 `/tthh/asistencia/update/periodo/${periodo.id}`,
-                periodo
+                periodo,
             );
             dispatch(onLoadMessage(data));
             setTimeout(() => {
@@ -93,11 +102,14 @@ export const usePeriodoStore = () => {
     const calcularDias = async ({ cdgo_usrio, regimen_laboral_id, anios }) => {
         try {
             //dispatch(onLoading(true));
-            const { data } = await helpdeskApi.post("/tthh/asistencia/calcular-dias", {
-                cdgo_usrio,
-                regimen_laboral_id,
-                anios,
-            });
+            const { data } = await helpdeskApi.post(
+                "/tthh/asistencia/calcular-dias",
+                {
+                    cdgo_usrio,
+                    regimen_laboral_id,
+                    anios,
+                },
+            );
             const { resultados } = data;
             //console.log(resultados);
             dispatch(onSetTableCalculoDias(resultados));

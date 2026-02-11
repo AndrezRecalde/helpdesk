@@ -1,8 +1,16 @@
 import { useCallback, useMemo } from "react";
 import { useInvUbicacionStore, useInvUiUbicacion } from "../../../../hooks";
 import { useMantineReactTable } from "mantine-react-table";
-import { MenuTable_E, BtnSection, TableContent } from "../../../../components";
-import { IconCopyPlus, IconCubePlus } from "@tabler/icons-react";
+import {
+    MenuTableActions,
+    BtnSection,
+    TableContent,
+} from "../../../../components";
+import {
+    IconCopyPlus,
+    IconCubePlus,
+    IconEditCircle,
+} from "@tabler/icons-react";
 
 export const InvUbicacionTable = () => {
     const { isLoading, invUbicaciones, setActivateInvUbicacion } =
@@ -20,7 +28,7 @@ export const InvUbicacionTable = () => {
                 accessorKey: "nombre_ubicacion",
             },
         ],
-        [invUbicaciones]
+        [invUbicaciones],
     );
 
     const handleEditar = useCallback(
@@ -29,7 +37,7 @@ export const InvUbicacionTable = () => {
             setActivateInvUbicacion(selected);
             modalActionUbicacion(true);
         },
-        [invUbicaciones]
+        [invUbicaciones],
     );
 
     const handleAgregar = useCallback(() => {
@@ -45,7 +53,16 @@ export const InvUbicacionTable = () => {
         enableDensityToggle: false,
         enableRowActions: true,
         renderRowActionMenuItems: ({ row }) => (
-            <MenuTable_E row={row} handleEdit={handleEditar} />
+            <MenuTableActions
+                row={row}
+                actions={[
+                    {
+                        icon: IconEditCircle,
+                        label: "Editar",
+                        onClick: handleEditar,
+                    },
+                ]}
+            />
         ),
         renderTopToolbarCustomActions: ({ table }) => (
             <BtnSection

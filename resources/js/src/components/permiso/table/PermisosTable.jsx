@@ -1,10 +1,11 @@
 import { useCallback, useMemo } from "react";
 import { useMantineReactTable } from "mantine-react-table";
 import { MRT_Localization_ES } from "mantine-react-table/locales/es/index.cjs";
-import { MenuTable_Per, TableContent } from "../../../components";
+import { MenuTableActions, TableContent } from "../../../components";
 import { usePermisoStore, useUiPermiso } from "../../../hooks";
 import { Spoiler } from "@mantine/core";
 import dayjs from "dayjs";
+import { IconBan, IconPrinter } from "@tabler/icons-react";
 /* import duration from 'dayjs/plugin/duration';
 dayjs.extend(duration); */
 
@@ -84,7 +85,7 @@ export const PermisosTable = () => {
                 },
             },
         ],
-        [permisos]
+        [permisos],
     );
 
     const handleExport = useCallback((selected) => {
@@ -105,10 +106,28 @@ export const PermisosTable = () => {
         enableRowActions: true,
         localization: MRT_Localization_ES,
         renderRowActionMenuItems: ({ row }) => (
-            <MenuTable_Per
+            <MenuTableActions
                 row={row}
-                handleAnular={handleAnular}
-                handleExport={handleExport}
+                actions={[
+                    {
+                        icon: IconBan,
+                        label: "Anular",
+                        onClick: handleAnular,
+                        disabled:
+                            row.original.id_estado === 8 ||
+                            row.original.id_estado === 7 ||
+                            row.original.id_estado === 6,
+                    },
+                    {
+                        icon: IconPrinter,
+                        label: "Imprimir",
+                        onClick: handleExport,
+                        disabled:
+                            row.original.id_estado === 8 ||
+                            row.original.id_estado === 7 ||
+                            row.original.id_estado === 6,
+                    },
+                ]}
             />
         ),
         mantineTableBodyCellProps: ({ column, cell }) => ({

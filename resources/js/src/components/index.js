@@ -108,7 +108,6 @@ import { UsersTable } from "./gerencia/user/table/UsersTable";
 import { ModalCodigoBiometrico } from "./gerencia/user/modal/ModalCodigoBiometrico";
 import { FormCodigoBiometrico } from "./gerencia/user/form/FormCodigoBiometrico";
 
-
 /* Permisos */
 import { FilterPermiso } from "./permiso/filter/FilterPermiso";
 import { FormAnularPermiso } from "./permiso/form/FormAnularPermiso";
@@ -116,8 +115,6 @@ import { ModalAnularPermiso } from "./permiso/modal/ModalAnularPermiso";
 import { PermisosTable } from "./permiso/table/PermisosTable";
 import { FilterDatesPermiso } from "./permiso/filter/FilterDatesPermiso";
 import { PermisosConsolidadosTable } from "./permiso/table/PermisosConsolidadosTable";
-
-
 
 /* Soportes */
 import { CardIndicadores } from "./soportes/card/indicador/CardIndicadores";
@@ -167,8 +164,6 @@ import { MarcacionEntradaCard } from "./marcacion/card/MarcacionEntradaCard";
 import { MarcacionSalidaCard } from "./marcacion/card/MarcacionSalidaCard";
 import { MarcacionCard } from "./marcacion/card/MarcacionCard";
 
-
-
 /* Inventario: Tipos Categorias */
 import { InvTipocategoriaTable } from "./inventario/tipocategoria/table/InvTipocategoriaTable";
 import { InvTipocategoriaModal } from "./inventario/tipocategoria/modal/InvTipocategoriaModal";
@@ -180,7 +175,6 @@ import { InvCategoriaForm } from "./inventario/categoria/form/InvCategoriaForm";
 import { InvStockCategoriaForm } from "./inventario/categoria/form/InvStockCategoriaForm";
 import { InvCategoriaModal } from "./inventario/categoria/modal/InvCategoriaModal";
 import { InvStockCategoriaModal } from "./inventario/categoria/modal/InvStockCategoriaModal";
-
 
 /* Inventario: Marca */
 import { InvMarcaTable } from "./inventario/marca/table/InvMarcaTable";
@@ -196,7 +190,6 @@ import { InvEstadoForm } from "./inventario/estado/form/InvEstadoForm";
 import { InvConceptoTable } from "./inventario/concepto/table/InvConceptoTable";
 import { InvConceptoModal } from "./inventario/concepto/modal/InvConceptoModal";
 import { InvConceptoForm } from "./inventario/concepto/form/InvConceptoForm";
-
 
 /* Inventario: Ubicacion */
 import { InvUbicacionTable } from "./inventario/ubicacion/table/InvUbicacionTable";
@@ -271,27 +264,11 @@ import {
     BtnServicesApps,
 } from "./elements/buttons/BtnServices";
 import { BtnActivateElement } from "./elements/buttons/BtnActivateElement";
-import {
-    BtnDarkMode,
-    ActionReportPDF,
-} from "./elements/buttons/BtnActions";
+import { BtnDarkMode, ActionReportPDF } from "./elements/buttons/BtnActions";
 import { ModalActivateElement } from "./elements/modal/ModalActivateElement";
 import { InformationActividadList } from "./elements/lists/InformationActividadList";
 import { FormRichText } from "./elements/rte/FormRichText";
-import {
-    MenuUsersTable,
-    MenuTable_E,
-    MenuTable_D,
-    MenuTable_Equipo,
-    MenuTable_Consumible,
-    MenuTable_T,
-    MenuSolicitudTable,
-    MenuTable_Per,
-    MenuTable_AutorizarPermiso,
-    MenuTable_Imprimir,
-    MenuTable_AutorizarVacacion,
-    MenuTable_PV
-} from "./elements/tables/MenuTable";
+import { MenuTableActions } from "./elements/tables/MenuTableActions";
 import { TableContent } from "./elements/tables/TableContent";
 import { StatInfoDepartamento } from "./elements/stats/StatInfoDepartamento";
 
@@ -353,7 +330,6 @@ export {
     FilterVacacionesForm,
     SolAnulacionVacacionModal,
     SolAnulacionForm,
-
     PeriodoCreateModal,
     PeriodoForm,
     PeriodoEditModal,
@@ -555,18 +531,7 @@ export {
     ModalActivateElement,
     InformationActividadList,
     FormRichText,
-    MenuUsersTable,
-    MenuTable_E,
-    MenuTable_D,
-    MenuTable_Equipo,
-    MenuTable_Consumible,
-    MenuTable_Imprimir,
-    MenuTable_AutorizarVacacion,
-    MenuTable_PV,
-    MenuTable_T,
-    MenuSolicitudTable,
-    MenuTable_Per,
-    MenuTable_AutorizarPermiso,
+    MenuTableActions,
     TableContent,
-    StatInfoDepartamento
+    StatInfoDepartamento,
 };

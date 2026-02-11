@@ -3,9 +3,13 @@ import {
     useInvTipocategoriaStore,
     useInvUiTipocategoria,
 } from "../../../../hooks";
-import { BtnSection, MenuTable_E, TableContent } from "../../../../components";
+import {
+    BtnSection,
+    MenuTableActions,
+    TableContent,
+} from "../../../../components";
 import { useMantineReactTable } from "mantine-react-table";
-import { IconCubePlus } from "@tabler/icons-react";
+import { IconCubePlus, IconEditCircle } from "@tabler/icons-react";
 
 export const InvTipocategoriaTable = () => {
     const { isLoading, tiposcategorias, setActivateTipocategoria } =
@@ -19,7 +23,7 @@ export const InvTipocategoriaTable = () => {
                 accessorKey: "nombre_tipocategoria",
             },
         ],
-        [tiposcategorias]
+        [tiposcategorias],
     );
 
     const handleEditar = useCallback(
@@ -28,7 +32,7 @@ export const InvTipocategoriaTable = () => {
             setActivateTipocategoria(selected);
             modalActionTipocategoria(true);
         },
-        [tiposcategorias]
+        [tiposcategorias],
     );
 
     const handleAgregar = useCallback(() => {
@@ -44,7 +48,16 @@ export const InvTipocategoriaTable = () => {
         enableDensityToggle: false,
         enableRowActions: true,
         renderRowActionMenuItems: ({ row }) => (
-            <MenuTable_E row={row} handleEdit={handleEditar} />
+            <MenuTableActions
+                row={row}
+                actions={[
+                    {
+                        icon: IconEditCircle,
+                        label: "Editar",
+                        onClick: handleEditar,
+                    },
+                ]}
+            />
         ),
         renderTopToolbarCustomActions: ({ table }) => (
             <BtnSection

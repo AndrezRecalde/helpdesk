@@ -31,7 +31,7 @@ export const useVacacionesStore = () => {
         try {
             dispatch(onLoadingMotivos(true));
             const { data } = await helpdeskApi.get(
-                "/usuario/motivos-vacaciones"
+                "/usuario/motivos-vacaciones",
             );
             const { motivos } = data;
             dispatch(onLoadMotivosVacaciones(motivos));
@@ -60,7 +60,7 @@ export const useVacacionesStore = () => {
                     anio,
                     fecha_inicio,
                     fecha_fin,
-                }
+                },
             );
             const { solicitudes } = data;
             dispatch(onLoadSolicitudesVacaciones(solicitudes));
@@ -77,7 +77,7 @@ export const useVacacionesStore = () => {
         try {
             const { data } = await helpdeskApi.post(
                 "/usuario/solicitar-vacaciones",
-                solicitud
+                solicitud,
             );
             //console.log(data);
             dispatch(onLoadMessage(data));
@@ -96,7 +96,7 @@ export const useVacacionesStore = () => {
             const response = await helpdeskApi.post(
                 "/usuario/export-vacaciones-pdf",
                 { codigo_vacacion },
-                { responseType: "blob" }
+                { responseType: "blob" },
             );
             const pdfBlob = new Blob([response.data], {
                 type: "application/pdf",
@@ -120,14 +120,19 @@ export const useVacacionesStore = () => {
         }
     };
 
-    const startGestionarVacaciones = async (gestionForm, vacacion) => {
+    const startGestionarVacaciones = async (
+        gestionForm,
+        vacacion,
+        storageFields,
+    ) => {
         try {
+            console.log(vacacion);
             const { data } = await helpdeskApi.put(
                 `/tthh/asistencia/gestionar-vacaciones/${vacacion.id}`,
-                gestionForm
+                gestionForm,
             );
             dispatch(onLoadMessage(data));
-            startLoadSolicitudesVacaciones({});
+            startLoadSolicitudesVacaciones(storageFields);
             setTimeout(() => {
                 dispatch(onLoadMessage(undefined));
             }, 40);
@@ -139,12 +144,12 @@ export const useVacacionesStore = () => {
 
     const startSolicitarAnulacionVacaciones = async (
         solicitud,
-        storageFields = null
+        storageFields = null,
     ) => {
         try {
             const { data } = await helpdeskApi.put(
                 `/usuario/solicitar-anulacion-vacaciones/${solicitud.id}`,
-                solicitud
+                solicitud,
             );
             startLoadSolicitudesVacaciones(storageFields);
             dispatch(onLoadMessage(data));

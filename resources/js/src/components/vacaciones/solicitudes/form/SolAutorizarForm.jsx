@@ -15,6 +15,7 @@ import { randomId } from "@mantine/hooks";
 import { IconCubePlus, IconTrash } from "@tabler/icons-react";
 import {
     usePeriodoStore,
+    useStorageField,
     useUiVacaciones,
     useVacacionesStore,
 } from "../../../../hooks";
@@ -30,6 +31,7 @@ export function SolAutorizarForm({ form }) {
     } = useVacacionesStore();
     const { modalActionGestionarVacacion } = useUiVacaciones();
     const { periodos } = usePeriodoStore();
+    const { storageFields } = useStorageField();
 
     useEffect(() => {
         if (activateVacacion !== null) {
@@ -65,15 +67,15 @@ export function SolAutorizarForm({ form }) {
                     {...form.getInputProps(`periodos.${index}.periodo_id`)}
                     onChange={(value) => {
                         const selectedPeriodo = periodos.find(
-                            (p) => p.id.toString() === value
+                            (p) => p.id.toString() === value,
                         );
                         form.setFieldValue(
                             `periodos.${index}.periodo_id`,
-                            value
+                            value,
                         );
                         form.setFieldValue(
                             `periodos.${index}.dias_disponibles`,
-                            selectedPeriodo?.dias_disponibles || 0
+                            selectedPeriodo?.dias_disponibles || 0,
                         );
                     }}
                     error={form.errors?.periodos?.[index]?.periodo_id}
@@ -107,7 +109,11 @@ export function SolAutorizarForm({ form }) {
     const handleSubmit = (e) => {
         e.preventDefault();
         //console.log(form.getTransformedValues());
-        startGestionarVacaciones(form.getTransformedValues(), activateVacacion);
+        startGestionarVacaciones(
+            form.getTransformedValues(),
+            activateVacacion,
+            storageFields,
+        );
         setActivateVacacion(null); // Reset the activateVacacion state
         modalActionGestionarVacacion(false);
         form.reset();
@@ -179,14 +185,14 @@ export function SolAutorizarForm({ form }) {
                             <Table.Td>
                                 <TextSection fw={400} fz={13}>
                                     {dayjs(
-                                        activateVacacion?.fecha_inicio
+                                        activateVacacion?.fecha_inicio,
                                     ).format("YYYY-MM-DD")}
                                 </TextSection>
                             </Table.Td>
                             <Table.Td>
                                 <TextSection fw={400} fz={13}>
                                     {dayjs(activateVacacion?.fecha_fin).format(
-                                        "YYYY-MM-DD"
+                                        "YYYY-MM-DD",
                                     )}
                                 </TextSection>
                             </Table.Td>

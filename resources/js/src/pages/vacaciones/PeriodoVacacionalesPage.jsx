@@ -33,7 +33,7 @@ const PeriodoVacacionalesPage = () => {
             startLoadUsersGeneral({});
         } else {
             startLoadPeriodos({ cdgo_usrio: usuario.cdgo_usrio });
-            startLoadUsersGeneral({ cdgo_direccion: usuario.cdgo_direccion });
+            //startLoadUsersGeneral({ cdgo_direccion: usuario.cdgo_direccion });
         }
 
         return () => {

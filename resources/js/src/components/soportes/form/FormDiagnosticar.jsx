@@ -166,21 +166,15 @@ export const FormDiagnosticar = ({ form, option }) => {
                 </Table>
             </Card.Section>
             <Card.Section withBorder inheritPadding py="xs">
-                <Group justify="space-between">
-                    <TextSection fz={14} fw={700} tt="">
-                        Incidencia del usuario:
-                    </TextSection>
-                    <Group gap={5}>
-                        <TextSection tt="" fz={14} color="dimmed">
-                            {dayjs(activateSoporte?.fecha_ini).format(
-                                "YYYY-MM-DD HH:mm",
-                            )}
-                        </TextSection>
-                        <IconCalendarMonth
-                            style={{ width: rem(20), height: rem(20) }}
-                        />
-                    </Group>
-                </Group>
+                <TextSection fz={14} fw={600} tt="">
+                    Incidencia del usuario
+                </TextSection>
+                <TextSection fz={13} fw={400} tt="">
+                    Registrado el:{" "}
+                    {dayjs(activateSoporte?.fecha_ini).format(
+                        "YYYY-MM-DD HH:mm",
+                    )}
+                </TextSection>
                 <TextSection mt="xs" mb="xs" color="black" fz={13}>
                     {activateSoporte?.incidente}
                 </TextSection>

@@ -1,7 +1,11 @@
 import { useCallback, useMemo } from "react";
 import { useMantineReactTable } from "mantine-react-table";
-import { BtnSection, MenuTable_E, TableContent } from "../../../../components";
-import { IconCubePlus } from "@tabler/icons-react";
+import {
+    BtnSection,
+    MenuTableActions,
+    TableContent,
+} from "../../../../components";
+import { IconCubePlus, IconEditCircle } from "@tabler/icons-react";
 import { useInvConceptoStore, useInvUiConcepto } from "../../../../hooks";
 
 export const InvConceptoTable = () => {
@@ -16,7 +20,7 @@ export const InvConceptoTable = () => {
                 accessorKey: "nombre_concepto",
             },
         ],
-        [invConceptos]
+        [invConceptos],
     );
 
     const handleEditar = useCallback(
@@ -25,7 +29,7 @@ export const InvConceptoTable = () => {
             setActivateInvConcepto(selected);
             modalActionConcepto(true);
         },
-        [invConceptos]
+        [invConceptos],
     );
 
     const handleAgregar = useCallback(() => {
@@ -41,7 +45,16 @@ export const InvConceptoTable = () => {
         enableDensityToggle: false,
         enableRowActions: true,
         renderRowActionMenuItems: ({ row }) => (
-            <MenuTable_E row={row} handleEdit={handleEditar} />
+            <MenuTableActions
+                row={row}
+                actions={[
+                    {
+                        icon: IconEditCircle,
+                        label: "Editar",
+                        onClick: handleEditar,
+                    },
+                ]}
+            />
         ),
         renderTopToolbarCustomActions: ({ table }) => (
             <BtnSection

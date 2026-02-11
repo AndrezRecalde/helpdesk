@@ -1,33 +1,32 @@
 import { useCallback, useMemo } from "react";
 import { useMantineReactTable } from "mantine-react-table";
-import { MenuTable_Imprimir, TableContent } from "../../../../components";
+import { TableContent } from "../../../../components";
 import { useInvConsumibleStore } from "../../../../hooks";
 
 export const InvConsumibleHistorialTable = () => {
-
     const { isLoading, historial } = useInvConsumibleStore();
 
-     const columns = useMemo(
-            () => [
-                {
-                    header: "Cantidad",
-                    accessorKey: "cantidad_solicitada",
-                    size: 80
-                    //filterVariant: "autocomplete",
-                },
-                {
-                    header: "Departamento",
-                    accessorKey: "direccion",
-                    filterVariant: "autocomplete",
-                },
-                {
-                    header: "Solicitante",
-                    accessorKey: "solicitante",
-                    filterVariant: "autocomplete",
-                },
-            ],
-            [historial]
-        );
+    const columns = useMemo(
+        () => [
+            {
+                header: "Cantidad",
+                accessorKey: "cantidad_solicitada",
+                size: 80,
+                //filterVariant: "autocomplete",
+            },
+            {
+                header: "Departamento",
+                accessorKey: "direccion",
+                filterVariant: "autocomplete",
+            },
+            {
+                header: "Solicitante",
+                accessorKey: "solicitante",
+                filterVariant: "autocomplete",
+            },
+        ],
+        [historial],
+    );
 
     /* const handleImprimir = useCallback(
         (selected) => {

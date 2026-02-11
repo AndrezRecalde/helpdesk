@@ -1,11 +1,12 @@
 import { useCallback, useMemo } from "react";
-import { MenuTable_E, TableContent } from "../../../../components";
+import { MenuTableActions, TableContent } from "../../../../components";
 import { usePeriodoStore, useUiUser, useUsersStore } from "../../../../hooks";
 import { useMantineReactTable } from "mantine-react-table";
 import { MRT_Localization_ES } from "mantine-react-table/locales/es/index.cjs";
 import { PeriodoInfoTable } from "./PeriodoInfoTable";
 import dayjs from "dayjs";
 import { Roles } from "../../../../helpers/dictionary";
+import { IconEditCircle } from "@tabler/icons-react";
 
 export const PeriodosTable = () => {
     const usuario = JSON.parse(localStorage.getItem("service_user"));
@@ -65,7 +66,7 @@ export const PeriodosTable = () => {
                 size: 80,
             },
         ],
-        [periodos]
+        [periodos],
     );
 
     const handleEdit = useCallback(
@@ -74,7 +75,7 @@ export const PeriodosTable = () => {
             setActivateUser(selected);
             modalActionUser(false, true);
         },
-        [periodos]
+        [periodos],
     );
 
     const table = useMantineReactTable({
@@ -86,7 +87,16 @@ export const PeriodosTable = () => {
         enableDensityToggle: false,
         enableRowActions: usuario.role === Roles.NOM_VACACIONES ? true : false,
         renderRowActionMenuItems: ({ row }) => (
-            <MenuTable_E row={row} handleEdit={handleEdit} />
+            <MenuTableActions
+                row={row}
+                actions={[
+                    {
+                        icon: IconEditCircle,
+                        label: "Actualizar Fecha Ingreso",
+                        onClick: handleEdit,
+                    },
+                ]}
+            />
         ),
         renderDetailPanel: ({ row }) => (
             <PeriodoInfoTable data={row} usuario={usuario} />

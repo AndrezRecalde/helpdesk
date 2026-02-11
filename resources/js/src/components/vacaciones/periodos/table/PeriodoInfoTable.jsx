@@ -1,6 +1,6 @@
 import { useCallback, useMemo } from "react";
 import {
-    MenuTable_PV,
+    MenuTableActions,
     TableContent,
     TextSection,
 } from "../../../../components";
@@ -12,6 +12,7 @@ import {
     useUiPeriodo,
 } from "../../../../hooks";
 import { Roles } from "../../../../helpers/dictionary";
+import { IconEditCircle, IconDiscount2 } from "@tabler/icons-react";
 
 export const PeriodoInfoTable = ({ data = {}, usuario }) => {
     const { original = {} } = data ?? {};
@@ -67,7 +68,7 @@ export const PeriodoInfoTable = ({ data = {}, usuario }) => {
                 size: 80,
             },
         ],
-        [periodo_vacacionales]
+        [periodo_vacacionales],
     );
 
     const handleEdit = useCallback(
@@ -75,7 +76,7 @@ export const PeriodoInfoTable = ({ data = {}, usuario }) => {
             setActivatePeriodo(selected);
             modalActionEditPeriodo(true);
         },
-        [periodo_vacacionales]
+        [periodo_vacacionales],
     );
 
     const handleDescuento = useCallback(
@@ -83,7 +84,7 @@ export const PeriodoInfoTable = ({ data = {}, usuario }) => {
             setActivatePeriodo(selected);
             modalActionDescuento(true);
         },
-        [periodo_vacacionales]
+        [periodo_vacacionales],
     );
 
     const table = useMantineReactTable({
@@ -102,10 +103,20 @@ export const PeriodoInfoTable = ({ data = {}, usuario }) => {
         enableBottomToolbar: false,
         enableRowActions: usuario.role === Roles.NOM_VACACIONES ? true : false,
         renderRowActionMenuItems: ({ row }) => (
-            <MenuTable_PV
+            <MenuTableActions
                 row={row}
-                handleEdit={handleEdit}
-                handleDescuento={handleDescuento}
+                actions={[
+                    {
+                        icon: IconEditCircle,
+                        label: "Editar",
+                        onClick: handleEdit,
+                    },
+                    {
+                        icon: IconDiscount2,
+                        label: "Descuento",
+                        onClick: handleDescuento,
+                    },
+                ]}
             />
         ),
         renderTopToolbarCustomActions: ({ table }) => (

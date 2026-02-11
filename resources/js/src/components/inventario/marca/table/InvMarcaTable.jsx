@@ -1,8 +1,12 @@
 import { useCallback, useMemo } from "react";
 import { useMantineReactTable } from "mantine-react-table";
-import { BtnSection, MenuTable_E, TableContent } from "../../../../components";
+import {
+    BtnSection,
+    MenuTableActions,
+    TableContent,
+} from "../../../../components";
 import { useInvMarcaStore, useInvUiMarca } from "../../../../hooks";
-import { IconCubePlus } from "@tabler/icons-react";
+import { IconCubePlus, IconEditCircle } from "@tabler/icons-react";
 
 export const InvMarcaTable = () => {
     const { isLoading, invMarcas, setActivateInvMarca } = useInvMarcaStore();
@@ -15,7 +19,7 @@ export const InvMarcaTable = () => {
                 accessorKey: "nombre_marca",
             },
         ],
-        [invMarcas]
+        [invMarcas],
     );
 
     const handleEditar = useCallback(
@@ -24,7 +28,7 @@ export const InvMarcaTable = () => {
             setActivateInvMarca(selected);
             modalActionMarca(true);
         },
-        [invMarcas]
+        [invMarcas],
     );
 
     const handleAgregar = useCallback(() => {
@@ -40,7 +44,16 @@ export const InvMarcaTable = () => {
         enableDensityToggle: false,
         enableRowActions: true,
         renderRowActionMenuItems: ({ row }) => (
-            <MenuTable_E row={row} handleEdit={handleEditar} />
+            <MenuTableActions
+                row={row}
+                actions={[
+                    {
+                        icon: IconEditCircle,
+                        label: "Editar",
+                        onClick: handleEditar,
+                    },
+                ]}
+            />
         ),
         renderTopToolbarCustomActions: ({ table }) => (
             <BtnSection

@@ -4,8 +4,7 @@ import { useMantineReactTable } from "mantine-react-table";
 import { MRT_Localization_ES } from "mantine-react-table/locales/es/index.cjs";
 import {
     DetailSolicitudesActualesTable,
-    MenuSolicitudTable,
-    MenuTable_T,
+    MenuTableActions,
     TableContent,
 } from "../../../components";
 import {
@@ -16,6 +15,13 @@ import {
     //useUsersStore,
 } from "../../../hooks";
 import dayjs from "dayjs";
+import {
+    IconEditCircle,
+    IconUserPlus,
+    IconBan,
+    IconPrinter,
+    IconTextPlus,
+} from "@tabler/icons-react";
 /* import relativeTime from "dayjs/plugin/relativeTime";
 import "dayjs/locale/es";
 
@@ -96,7 +102,7 @@ export const SoportesTable = () => {
                 size: 80,
             },
         ],
-        [soportes]
+        [soportes],
     );
 
     const handleDiagnosticar = useCallback((selected) => {
@@ -145,47 +151,103 @@ export const SoportesTable = () => {
                     cell.row.original.tecnico_asignado === null
                         ? "#fa6e70"
                         : cell.row.original.id_estado == 3
-                        ? "#71c7f5"
-                        : cell.row.original.id_estado == 4
-                        ? "#9af5b8"
-                        : cell.row.original.id_estado == 5 &&
-                          dayjs(cell.row.original.fecha_ini).isBefore(
-                              dayjs().subtract(2, "day"),
-                              "day"
-                          )
-                        ? "#cf001c" //#fcb281
-                        : "",
+                          ? "#71c7f5"
+                          : cell.row.original.id_estado == 4
+                            ? "#9af5b8"
+                            : cell.row.original.id_estado == 5 &&
+                                dayjs(cell.row.original.fecha_ini).isBefore(
+                                    dayjs().subtract(2, "day"),
+                                    "day",
+                                )
+                              ? "#cf001c" //#fcb281
+                              : "",
                 color:
                     cell.row.original.tecnico_asignado === null ||
                     cell.row.original.id_estado == 3
                         ? "white"
                         : cell.row.original.id_estado == 4
-                        ? "black"
-                        : cell.row.original.id_estado == 5 &&
-                          colorScheme === "dark"
-                        ? "white"
-                        : cell.row.original.id_estado == 5 &&
-                          colorScheme === "light"
-                        ? "black"
-                        : "",
+                          ? "black"
+                          : cell.row.original.id_estado == 5 &&
+                              colorScheme === "dark"
+                            ? "white"
+                            : cell.row.original.id_estado == 5 &&
+                                colorScheme === "light"
+                              ? "black"
+                              : "",
             },
         }),
         renderRowActionMenuItems: ({ row }) =>
             usuario.role_id === 1 ? (
-                <MenuSolicitudTable
+                <MenuTableActions
                     row={row}
-                    isEdit={row.original.id_estado === 2 ? false : true}
-                    handleDiagnosticar={handleDiagnosticar}
-                    handleEditar={handleEditar}
-                    handleAsignar={handleAsignar}
-                    handleAnular={handleAnular}
-                    handleExport={handleExportSoporte}
+                    actions={[
+                        {
+                            icon: IconTextPlus,
+                            label: "Diagnosticar",
+                            onClick: handleDiagnosticar,
+                            disabled:
+                                row.original.tecnico_asignado === null ||
+                                row.original.id_estado === 2 ||
+                                row.original.id_estado === 3 ||
+                                row.original.id_estado === 4,
+                        },
+                        {
+                            icon: IconEditCircle,
+                            label: "Editar",
+                            onClick: handleEditar,
+                            visible: row.original.id_estado !== 2,
+                        },
+                        {
+                            icon: IconUserPlus,
+                            label: "Asignar",
+                            onClick: handleAsignar,
+                            disabled:
+                                row.original.id_estado === 3 ||
+                                row.original.id_estado === 4 ||
+                                row.original.id_estado === 2,
+                        },
+                        {
+                            icon: IconBan,
+                            label: "Anular",
+                            onClick: handleAnular,
+                        },
+                        {
+                            icon: IconPrinter,
+                            label: "Imprimir",
+                            onClick: () =>
+                                handleExportSoporte(row.original.id_sop),
+                            disabled:
+                                row.original.tecnico_asignado === null ||
+                                row.original.id_estado === 2 ||
+                                row.original.id_estado === 5,
+                        },
+                    ]}
                 />
             ) : usuario.role_id === 2 ? (
-                <MenuTable_T
+                <MenuTableActions
                     row={row}
-                    handleDiagnosticar={handleDiagnosticar}
-                    handleExport={handleExportSoporte}
+                    actions={[
+                        {
+                            icon: IconTextPlus,
+                            label: "Diagnosticar",
+                            onClick: handleDiagnosticar,
+                            disabled:
+                                row.original.tecnico_asignado === null ||
+                                row.original.id_estado === 2 ||
+                                row.original.id_estado === 3 ||
+                                row.original.id_estado === 4,
+                        },
+                        {
+                            icon: IconPrinter,
+                            label: "Imprimir",
+                            onClick: () =>
+                                handleExportSoporte(row.original.id_sop),
+                            disabled:
+                                row.original.tecnico_asignado === null ||
+                                row.original.id_estado === 2 ||
+                                row.original.id_estado === 5,
+                        },
+                    ]}
                 />
             ) : null,
         renderDetailPanel: ({ row }) => (

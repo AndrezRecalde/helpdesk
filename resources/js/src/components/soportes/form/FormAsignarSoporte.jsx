@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Box, Divider, Select, SimpleGrid, Stack, Text } from "@mantine/core";
+import { Box, Divider, Select, SimpleGrid, Stack, Table } from "@mantine/core";
 import {
     useAreaTicStore,
     useSoporteStore,
@@ -82,26 +82,24 @@ export const FormAsignarSoporte = ({ form }) => {
             onSubmit={form.onSubmit((_, e) => handleSubmit(e))}
         >
             <Stack>
-                <Divider size="md" label="Incidencia Soporte" />
-                <SimpleGrid cols={{ base: 1, sm: 1, md: 2, lg: 2 }}>
-                    <div>
-                        <Text fz="md" fw={500}>
-                            {activateSoporte?.usuario_recibe}
-                        </Text>
-                        <Text fz="xs" tt="uppercase" fw={700} c="dimmed">
-                            Usuario Solicitante
-                        </Text>
-                    </div>
-                    <div>
-                        <Text fz="md" fw={500}>
-                            {activateSoporte?.incidente}
-                        </Text>
-                        <Text fz="xs" tt="uppercase" fw={700} c="dimmed">
-                            Incidente
-                        </Text>
-                    </div>
-                </SimpleGrid>
-                <Divider size="md" my="md" label="Asignar Técnico" />
+                <Divider size="xs" label="Incidencia Soporte" />
+                <Table variant="vertical" layout="fixed" withTableBorder>
+                    <Table.Tbody>
+                        <Table.Tr>
+                            <Table.Th w={160}>Usuario Solicitante</Table.Th>
+                            <Table.Td>
+                                {activateSoporte?.usuario_recibe}
+                            </Table.Td>
+                        </Table.Tr>
+
+                        <Table.Tr>
+                            <Table.Th>Incidente</Table.Th>
+                            <Table.Td>{activateSoporte?.incidente}</Table.Td>
+                        </Table.Tr>
+                    </Table.Tbody>
+                </Table>
+
+                <Divider size="xs" my="md" label="Asignar Técnico" />
                 <SimpleGrid cols={{ base: 1, sm: 1, md: 2, lg: 2 }}>
                     <Select
                         label="Área del soporte"

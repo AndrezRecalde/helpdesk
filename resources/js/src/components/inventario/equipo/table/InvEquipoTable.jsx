@@ -4,7 +4,7 @@ import { useMantineReactTable } from "mantine-react-table";
 import { MRT_Localization_ES } from "mantine-react-table/locales/es/index.cjs";
 import {
     ActionReportPDF,
-    MenuTable_Equipo,
+    MenuTableActions,
     TableContent,
 } from "../../../../components";
 import {
@@ -14,6 +14,13 @@ import {
     useUiInvCustodio,
 } from "../../../../hooks";
 import Swal from "sweetalert2";
+import {
+    IconEyeCheck,
+    IconEditCircle,
+    IconUserShare,
+    IconUserHexagon,
+    IconTrash,
+} from "@tabler/icons-react";
 
 export const InvEquipoTable = () => {
     const {
@@ -72,7 +79,7 @@ export const InvEquipoTable = () => {
                 accessorKey: "nombre_estado",
             },
         ],
-        [invEquipos]
+        [invEquipos],
     );
 
     const handleEditar = useCallback(
@@ -82,7 +89,7 @@ export const InvEquipoTable = () => {
             startShowInvEquipo(selected);
             //setActivateInvEquipo(selected);
         },
-        [invEquipos]
+        [invEquipos],
     );
 
     const handleShow = useCallback(
@@ -91,7 +98,7 @@ export const InvEquipoTable = () => {
             modalActionViewEquipo(true);
             startShowInvEquipo(selected);
         },
-        [invEquipos]
+        [invEquipos],
     );
 
     /* const handleAssign = useCallback(
@@ -109,7 +116,7 @@ export const InvEquipoTable = () => {
             setActivateInvEquipo(selected);
             modalActionDeleteEquipo(true);
         },
-        [invEquipos]
+        [invEquipos],
     );
 
     const handleRemoveCustodio = useCallback(
@@ -128,7 +135,7 @@ export const InvEquipoTable = () => {
                 }
             });
         },
-        [invEquipos]
+        [invEquipos],
     );
 
     const handleAssignCustodio = useCallback(
@@ -137,7 +144,7 @@ export const InvEquipoTable = () => {
             setActivateInvEquipo(selected);
             modalActionCustodio(true);
         },
-        [invEquipos]
+        [invEquipos],
     );
 
     const handleExportDataPDF = (e) => {
@@ -158,14 +165,44 @@ export const InvEquipoTable = () => {
                 <ActionReportPDF handleExportDataPDF={handleExportDataPDF} />
             ) : null,
         renderRowActionMenuItems: ({ row }) => (
-            <MenuTable_Equipo
+            <MenuTableActions
                 row={row}
-                handleEdit={handleEditar}
-                handleShow={handleShow}
-                //handleAssign={handleAssign}
-                handleDelete={handleDelete}
-                handleRemoveCustodio={handleRemoveCustodio}
-                handleAssignCustodio={handleAssignCustodio} //TODO: REALIZAR FUNCIONES Y MODAL
+                actions={[
+                    {
+                        icon: IconEyeCheck,
+                        label: "Ver",
+                        onClick: handleShow,
+                    },
+                    {
+                        icon: IconEditCircle,
+                        label: "Editar",
+                        onClick: handleEditar,
+                        disabled: (row) =>
+                            row.estado_id === 4 || row.estado_id === 5,
+                    },
+                    {
+                        icon: IconUserShare,
+                        label: "Remover Custodio",
+                        onClick: handleRemoveCustodio,
+                        visible: (row) => row.user_id || row.direccion_id,
+                        disabled: (row) =>
+                            row.estado_id === 4 || row.estado_id === 5,
+                    },
+                    {
+                        icon: IconUserHexagon,
+                        label: "Asignar Custodio",
+                        onClick: handleAssignCustodio,
+                        visible: (row) => !(row.user_id || row.direccion_id),
+                        disabled: (row) =>
+                            row.estado_id === 4 || row.estado_id === 5,
+                    },
+                    {
+                        icon: IconTrash,
+                        label: "Eliminar",
+                        onClick: handleDelete,
+                        disabled: true,
+                    },
+                ]}
             />
         ),
         mantineTableBodyCellProps: ({ column, cell }) => ({

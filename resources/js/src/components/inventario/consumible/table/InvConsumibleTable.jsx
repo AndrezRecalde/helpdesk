@@ -1,9 +1,10 @@
 import { useCallback, useMemo } from "react";
 import { useMantineReactTable } from "mantine-react-table";
 import { MRT_Localization_ES } from "mantine-react-table/locales/es/index.cjs";
-import { MenuTable_Consumible, TableContent } from "../../../../components";
+import { MenuTableActions, TableContent } from "../../../../components";
 import { useInvConsumibleStore, useUiInvConsumible } from "../../../../hooks";
 import { NavLink } from "@mantine/core";
+import { IconEditCircle, IconHistory } from "@tabler/icons-react";
 
 export const InvConsumibleTable = () => {
     const { isLoading, consumibles, setActivateInvConsumible } =
@@ -47,7 +48,7 @@ export const InvConsumibleTable = () => {
                 filterVariant: "autocomplete",
             },
         ],
-        [consumibles]
+        [consumibles],
     );
 
     const handleStock = useCallback(
@@ -55,7 +56,7 @@ export const InvConsumibleTable = () => {
             setActivateInvConsumible(selected);
             modalActionStockConsumible(true);
         },
-        [consumibles]
+        [consumibles],
     );
 
     const handleEditar = useCallback(
@@ -64,7 +65,7 @@ export const InvConsumibleTable = () => {
             setActivateInvConsumible(selected);
             modalActionConsumible(true);
         },
-        [consumibles]
+        [consumibles],
     );
 
     const handleHistorial = useCallback(
@@ -72,7 +73,7 @@ export const InvConsumibleTable = () => {
             setActivateInvConsumible(selected);
             modalActionHistorialConsumible(true);
         },
-        [consumibles]
+        [consumibles],
     );
 
     const table = useMantineReactTable({
@@ -84,10 +85,20 @@ export const InvConsumibleTable = () => {
         enableRowActions: true,
         localization: MRT_Localization_ES,
         renderRowActionMenuItems: ({ row }) => (
-            <MenuTable_Consumible
+            <MenuTableActions
                 row={row}
-                handleEdit={handleEditar}
-                handleHistorial={handleHistorial}
+                actions={[
+                    {
+                        icon: IconEditCircle,
+                        label: "Editar",
+                        onClick: handleEditar,
+                    },
+                    {
+                        icon: IconHistory,
+                        label: "Historial",
+                        onClick: handleHistorial,
+                    },
+                ]}
             />
         ),
         /* renderTopToolbarCustomActions: ({ table }) =>

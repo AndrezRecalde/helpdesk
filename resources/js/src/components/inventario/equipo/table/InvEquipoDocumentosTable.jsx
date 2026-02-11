@@ -3,11 +3,11 @@ import { useMantineReactTable } from "mantine-react-table";
 import {
     BtnDownloadDocumento,
     BtnSection,
-    MenuTable_D,
+    MenuTableActions,
     TableContent,
 } from "../../../../components";
 import { useInvEquipoStore, useInvUiEquipo } from "../../../../hooks";
-import { IconCubePlus } from "@tabler/icons-react";
+import { IconCubePlus, IconTrash } from "@tabler/icons-react";
 import Swal from "sweetalert2";
 
 export const InvEquipoDocumentosTable = () => {
@@ -34,7 +34,7 @@ export const InvEquipoDocumentosTable = () => {
                 ),
             },
         ],
-        [documentos]
+        [documentos],
     );
 
     const handleDownload = useCallback(
@@ -42,7 +42,7 @@ export const InvEquipoDocumentosTable = () => {
             //console.log(selected);
             startDescargarArchivo(selected);
         },
-        [documentos]
+        [documentos],
     );
 
     const handleAgregar = useCallback(() => {
@@ -69,7 +69,7 @@ export const InvEquipoDocumentosTable = () => {
                 }
             });
         },
-        [documentos]
+        [documentos],
     );
 
     const table = useMantineReactTable({
@@ -87,7 +87,16 @@ export const InvEquipoDocumentosTable = () => {
         enableFullScreenToggle: false,
         enableRowActions: true,
         renderRowActionMenuItems: ({ row }) => (
-            <MenuTable_D row={row} handleDelete={handleDelete} />
+            <MenuTableActions
+                row={row}
+                actions={[
+                    {
+                        icon: IconTrash,
+                        label: "Eliminar",
+                        onClick: handleDelete,
+                    },
+                ]}
+            />
         ),
         renderTopToolbarCustomActions: ({ table }) => (
             <BtnSection
@@ -103,17 +112,17 @@ export const InvEquipoDocumentosTable = () => {
             highlightOnHover: false,
             withColumnBorders: true,
             sx: {
-              'thead > tr': {
-                backgroundColor: 'inherit',
-              },
-              'thead > tr > th': {
-                backgroundColor: 'inherit',
-              },
-              'tbody > tr > td': {
-                backgroundColor: 'inherit',
-              },
+                "thead > tr": {
+                    backgroundColor: "inherit",
+                },
+                "thead > tr > th": {
+                    backgroundColor: "inherit",
+                },
+                "tbody > tr > td": {
+                    backgroundColor: "inherit",
+                },
             },
-          },
+        },
     });
 
     return <TableContent table={table} />;

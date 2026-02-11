@@ -24,18 +24,20 @@ export const FilterDescuentoVacacionesForm = ({ startLoadDescuentos }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         const { switch_role } = form.values;
+        console.log(switch_role);
         if (switch_role) {
             startLoadDescuentos({
                 usuario_id: null,
                 anio: form.getTransformedValues(),
             });
+        } else {
+            startLoadDescuentos({
+                usuario_id: usuario.cdgo_usrio,
+                anio: form.getTransformedValues(),
+            });
         }
-        startLoadDescuentos({
-            usuario_id: usuario.cdgo_usuario,
-            anio: form.getTransformedValues(),
-        });
         //console.log(form.getTransformedValues());
-        form.reset();
+        //form.reset();
     };
 
     return (

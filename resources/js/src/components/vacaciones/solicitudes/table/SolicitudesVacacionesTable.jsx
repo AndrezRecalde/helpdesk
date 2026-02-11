@@ -1,14 +1,17 @@
 import { useCallback, useMemo } from "react";
-import {
-    MenuTable_AutorizarVacacion,
-    TableContent,
-} from "../../../../components";
+import { MenuTableActions, TableContent } from "../../../../components";
 import { useMantineReactTable } from "mantine-react-table";
 import { MRT_Localization_ES } from "mantine-react-table/locales/es/index.cjs";
 import { useUiVacaciones, useVacacionesStore } from "../../../../hooks";
 import { Roles } from "../../../../helpers/dictionary";
 import dayjs from "dayjs";
 import Swal from "sweetalert2";
+import {
+    IconChecks,
+    IconBan,
+    IconNotesOff,
+    IconPrinter,
+} from "@tabler/icons-react";
 
 export const SolicitudesVacacionesTable = ({ usuario }) => {
     const {
@@ -57,7 +60,7 @@ export const SolicitudesVacacionesTable = ({ usuario }) => {
                 size: 80,
             },
         ],
-        [solicitudes]
+        [solicitudes],
     );
 
     const handleAnular = useCallback(
@@ -83,7 +86,7 @@ export const SolicitudesVacacionesTable = ({ usuario }) => {
                 }
             });
         },
-        [solicitudes]
+        [solicitudes],
     );
 
     const handleAutorizar = useCallback(
@@ -91,7 +94,7 @@ export const SolicitudesVacacionesTable = ({ usuario }) => {
             setActivateVacacion(selected);
             modalActionGestionarVacacion(true);
         },
-        [solicitudes]
+        [solicitudes],
     );
 
     const handleSolicitarAnulacion = useCallback(
@@ -99,7 +102,7 @@ export const SolicitudesVacacionesTable = ({ usuario }) => {
             setActivateVacacion(selected);
             modalActionSolAnulacion(true);
         },
-        [solicitudes]
+        [solicitudes],
     );
 
     const handleExport = useCallback(
@@ -119,7 +122,7 @@ export const SolicitudesVacacionesTable = ({ usuario }) => {
                 }
             });
         },
-        [solicitudes]
+        [solicitudes],
     );
 
     const table = useMantineReactTable({
@@ -129,18 +132,52 @@ export const SolicitudesVacacionesTable = ({ usuario }) => {
         enableFacetedValues: true,
         enableRowActions: true,
         localization: MRT_Localization_ES,
-        renderRowActionMenuItems: ({ row }) => (
-            <MenuTable_AutorizarVacacion
-                row={row}
-                isAdministrator={
-                    usuario.role === Roles.NOM_VACACIONES ? true : false
-                }
-                handleAnular={handleAnular}
-                handleAutorizar={handleAutorizar}
-                handleSolicitarAnulacion={handleSolicitarAnulacion}
-                handleExport={handleExport}
-            />
-        ),
+        renderRowActionMenuItems: ({ row }) => {
+            const isAdministrator = usuario.role === Roles.NOM_VACACIONES;
+            const estado = row.original.estado;
+            const canAutorizar = estado === "NUEVO";
+            const canAnular =
+                estado === "NUEVO" || estado === "EN PROCESO DE ANULACION";
+            const canImprimir =
+                estado === "NUEVO" ||
+                estado === "APROBADO" ||
+                estado === "EN PROCESO DE ANULACION";
+
+            return (
+                <MenuTableActions
+                    row={row}
+                    actions={[
+                        {
+                            icon: IconChecks,
+                            label: "Autorizar Vacacion",
+                            onClick: handleAutorizar,
+                            disabled: !canAutorizar,
+                            visible: isAdministrator,
+                        },
+                        {
+                            icon: IconBan,
+                            label: "Anular Vacacion",
+                            onClick: handleAnular,
+                            disabled: !canAnular,
+                            visible: isAdministrator,
+                        },
+                        {
+                            icon: IconNotesOff,
+                            label: "Solicitud de Anulacion",
+                            onClick: handleSolicitarAnulacion,
+                            disabled: !canAutorizar,
+                            visible: !isAdministrator,
+                        },
+                        {
+                            icon: IconPrinter,
+                            label: "Imprimir",
+                            onClick: handleExport,
+                            disabled: !canImprimir,
+                        },
+                    ]}
+                />
+            );
+        },
         mantineTableBodyCellProps: ({ column, cell }) => ({
             style:
                 column.id === "estado"

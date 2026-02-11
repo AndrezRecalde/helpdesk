@@ -20,16 +20,16 @@ export const InvAsignarCustodioModal = ({
 
     const form = useForm({
         initialValues: {
-            user_id: null,
-            direccion_id: null,
+            user_id: "",
+            direccion_id: "",
         },
         validate: {
             user_id: isNotEmpty("Seleccione al custodio"),
             direccion_id: isNotEmpty("Seleccione la direccion destino"),
         },
         transformValues: (values) => ({
-            user_id: Number(values.user_id) || null,
-            direccion_id: Number(values.direccion_id) || null,
+            user_id: Number(values.user_id),
+            direccion_id: Number(values.direccion_id),
         }),
     });
 

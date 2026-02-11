@@ -4,8 +4,7 @@ import { useMantineReactTable } from "mantine-react-table";
 import { MRT_Localization_ES } from "mantine-react-table/locales/es/index.cjs";
 import {
     DetailSolicitudesActualesTable,
-    MenuSolicitudTable,
-    MenuTable_T,
+    MenuTableActions,
     TableContent,
     TextSection,
 } from "../../../../components";
@@ -13,6 +12,12 @@ import { useSoporteStore, useUiSoporte } from "../../../../hooks";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import "dayjs/locale/es";
+import {
+    IconUserPlus,
+    IconPrinter,
+    IconTextPlus,
+    IconSquareX,
+} from "@tabler/icons-react";
 
 dayjs.extend(relativeTime); // Extiende Day.js con el plugin
 dayjs.locale("es"); // Configura el idioma a español
@@ -99,19 +104,62 @@ export const SolicitudesTable = ({ menu, isLoading }) => {
         localization: MRT_Localization_ES,
         renderRowActionMenuItems: ({ row }) =>
             menu === 1 ? (
-                <MenuSolicitudTable
+                <MenuTableActions
                     row={row}
-                    isEdit={false}
-                    handleDiagnosticar={handleDiagnosticar}
-                    handleAsignar={handleAsignar}
-                    handleAnular={handleAnular}
-                    handleExport={handleExportSoporte}
+                    actions={[
+                        {
+                            icon: IconTextPlus,
+                            label: "Diagnosticar",
+                            onClick: handleDiagnosticar,
+                            disabled:
+                                row.original.tecnico_asignado === null ||
+                                row.original.id_estado === 2 ||
+                                row.original.id_estado === 3 ||
+                                row.original.id_estado === 4,
+                        },
+                        {
+                            icon: IconUserPlus,
+                            label: "Asignar",
+                            onClick: handleAsignar,
+                            disabled:
+                                row.original.id_estado === 3 ||
+                                row.original.id_estado === 4 ||
+                                row.original.id_estado === 2,
+                        },
+                        {
+                            icon: IconSquareX,
+                            label: "Anular",
+                            onClick: handleAnular,
+                            disabled: row.original.id_estado === 2,
+                        },
+                        {
+                            icon: IconPrinter,
+                            label: "Imprimir",
+                            onClick: () =>
+                                handleExportSoporte(row.original.id_sop),
+                            disabled:
+                                row.original.tecnico_asignado === null ||
+                                row.original.id_estado === 2 ||
+                                row.original.id_estado === 5,
+                        },
+                    ]}
                 />
             ) : (
-                <MenuTable_T
+                <MenuTableActions
                     row={row}
-                    handleDiagnosticar={handleDiagnosticar}
-                    handleExport={handleExportSoporte}
+                    actions={[
+                        {
+                            icon: IconStethoscope,
+                            label: "Diagnosticar",
+                            onClick: handleDiagnosticar,
+                        },
+                        {
+                            icon: IconPrinter,
+                            label: "Imprimir",
+                            onClick: () =>
+                                handleExportSoporte(row.original.id_sop),
+                        },
+                    ]}
                 />
             ),
         mantineTableBodyCellProps: ({ cell }) => ({

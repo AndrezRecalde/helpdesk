@@ -1,14 +1,12 @@
 import { useCallback, useMemo } from "react";
 import { useMantineReactTable } from "mantine-react-table";
 import { MRT_Localization_ES } from "mantine-react-table/locales/es/index.cjs";
-import {
-    MenuTable_AutorizarPermiso,
-    TableContent,
-} from "../../../../components";
+import { MenuTableActions, TableContent } from "../../../../components";
 import { Table } from "@mantine/core";
 import { usePermisoStore } from "../../../../hooks";
 import Swal from "sweetalert2";
 import dayjs from "dayjs";
+import { IconBan, IconChecks } from "@tabler/icons-react";
 
 const ANULAR_PERMISO = 6;
 const AUTORIZAR_PERMISO = 2;
@@ -114,10 +112,29 @@ export const AutorizarPermisoTable = () => {
         enableRowActions: true,
         localization: MRT_Localization_ES,
         renderRowActionMenuItems: ({ row }) => (
-            <MenuTable_AutorizarPermiso
+            <MenuTableActions
                 row={row}
-                handleAnular={handleAnularPermiso}
-                handleAutorizar={handleAutorizarPermiso}
+                actions={[
+                    {
+                        icon: IconChecks,
+                        label: "Autorizar",
+                        onClick: handleAutorizarPermiso,
+                        disabled:
+                            row.original.id_estado === 2 ||
+                            row.original.id_estado === 6 ||
+                            row.original.id_estado === 7 ||
+                            row.original.id_estado === 8,
+                    },
+                    {
+                        icon: IconBan,
+                        label: "Anular",
+                        onClick: handleAnularPermiso,
+                        disabled:
+                            row.original.id_estado === 8 ||
+                            row.original.id_estado === 7 ||
+                            row.original.id_estado === 6,
+                    },
+                ]}
             />
         ),
         renderDetailPanel: ({ row }) => (

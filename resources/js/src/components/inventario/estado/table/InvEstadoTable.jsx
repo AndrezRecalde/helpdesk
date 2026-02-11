@@ -1,8 +1,12 @@
 import { useCallback, useMemo } from "react";
 import { useMantineReactTable } from "mantine-react-table";
-import { BtnSection, MenuTable_E, TableContent } from "../../../../components";
+import {
+    BtnSection,
+    MenuTableActions,
+    TableContent,
+} from "../../../../components";
 import { useInvEstadoStore, useInvUiEstado } from "../../../../hooks";
-import { IconCubePlus } from "@tabler/icons-react";
+import { IconCubePlus, IconEditCircle } from "@tabler/icons-react";
 import { ColorSwatch } from "@mantine/core";
 
 export const InvEstadoTable = () => {
@@ -20,10 +24,10 @@ export const InvEstadoTable = () => {
                 accessorKey: "color",
                 Cell: ({ cell }) => (
                     <ColorSwatch color={cell.row.original.color} />
-                )
+                ),
             },
         ],
-        [invEstados]
+        [invEstados],
     );
 
     const handleEditar = useCallback(
@@ -32,7 +36,7 @@ export const InvEstadoTable = () => {
             setActivateInvEstado(selected);
             modalActionEstado(true);
         },
-        [invEstados]
+        [invEstados],
     );
 
     const handleAgregar = useCallback(() => {
@@ -48,7 +52,16 @@ export const InvEstadoTable = () => {
         enableDensityToggle: false,
         enableRowActions: true,
         renderRowActionMenuItems: ({ row }) => (
-            <MenuTable_E row={row} handleEdit={handleEditar} />
+            <MenuTableActions
+                row={row}
+                actions={[
+                    {
+                        icon: IconEditCircle,
+                        label: "Editar",
+                        onClick: handleEditar,
+                    },
+                ]}
+            />
         ),
         renderTopToolbarCustomActions: ({ table }) => (
             <BtnSection

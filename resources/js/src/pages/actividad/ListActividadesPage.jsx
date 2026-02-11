@@ -6,13 +6,13 @@ import {
     ActionReportPDF,
     BtnSection,
     FilterFormSearchDates,
-    MenuTable_E,
+    MenuTableActions,
     ModalActividad,
     TableContent,
     TitlePage,
 } from "../../components";
 import { useActividadStore, useTitlePage, useUiActividad } from "../../hooks";
-import { IconChevronsRight } from "@tabler/icons-react";
+import { IconChevronsRight, IconEditCircle } from "@tabler/icons-react";
 import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
 import Swal from "sweetalert2";
@@ -70,7 +70,7 @@ const ListActividadesPage = () => {
                 size: 80,
             },
         ],
-        [actividades]
+        [actividades],
     );
 
     const handleSubmit = (e) => {
@@ -78,7 +78,7 @@ const ListActividadesPage = () => {
         startLoadActividades(
             srv_user.cdgo_usrio,
             dayjs(fecha_inicio).format("YYYY-MM-DD"),
-            dayjs(fecha_fin).format("YYYY-MM-DD")
+            dayjs(fecha_fin).format("YYYY-MM-DD"),
         );
     };
 
@@ -87,7 +87,7 @@ const ListActividadesPage = () => {
             setActivateActividad(selected);
             modalActionActividad(1);
         },
-        [actividades]
+        [actividades],
     );
 
     const handleExportDataPDF = (e) => {
@@ -100,7 +100,7 @@ const ListActividadesPage = () => {
             startExportPDFActividades(
                 srv_user.cdgo_usrio,
                 dayjs(fecha_inicio).format("YYYY-MM-DD"),
-                dayjs(fecha_fin).format("YYYY-MM-DD")
+                dayjs(fecha_fin).format("YYYY-MM-DD"),
             );
         }
     };
@@ -171,7 +171,16 @@ const ListActividadesPage = () => {
             <ActionReportPDF handleExportDataPDF={handleExportDataPDF} />
         ),
         renderRowActionMenuItems: ({ row }) => (
-            <MenuTable_E row={row} handleEdit={handleEditActividad} />
+            <MenuTableActions
+                row={row}
+                actions={[
+                    {
+                        icon: IconEditCircle,
+                        label: "Editar",
+                        onClick: handleEditActividad,
+                    },
+                ]}
+            />
         ),
         mantineTableProps: {
             withColumnBorders: true,

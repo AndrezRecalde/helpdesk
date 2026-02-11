@@ -230,8 +230,8 @@ export const MenuRapido = [
     {
         icon: IconList,
         title: "Solicitudes Vacaciones",
-        path: "soportes",
-        link: "/intranet/soportes",
+        path: "solicitudes-vacaciones",
+        link: "/intranet/solicitudes-vacaciones",
         roles: [""],
     },
     {

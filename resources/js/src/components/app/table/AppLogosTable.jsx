@@ -1,8 +1,9 @@
 import { useCallback, useMemo } from "react";
-import { MenuTable_E, TableContent } from "../../../components";
+import { MenuTableActions, TableContent } from "../../../components";
 import { useMantineReactTable } from "mantine-react-table";
 import { useAppStore, useUiApp } from "../../../hooks";
 import { Image } from "@mantine/core";
+import { IconEditCircle } from "@tabler/icons-react";
 
 export const AppLogosTable = () => {
     const { isLoading, imagenes, setActivateImagenes } = useAppStore();
@@ -53,7 +54,7 @@ export const AppLogosTable = () => {
                 ),
             },
         ],
-        [imagenes]
+        [imagenes],
     );
 
     const handleEdit = useCallback(
@@ -62,7 +63,7 @@ export const AppLogosTable = () => {
             setActivateImagenes(selected);
             modalActionApplication(true);
         },
-        [imagenes]
+        [imagenes],
     );
 
     const table = useMantineReactTable({
@@ -74,7 +75,16 @@ export const AppLogosTable = () => {
         enableDensityToggle: false,
         enableRowActions: true,
         renderRowActionMenuItems: ({ row }) => (
-            <MenuTable_E row={row} handleEdit={handleEdit} />
+            <MenuTableActions
+                row={row}
+                actions={[
+                    {
+                        icon: IconEditCircle,
+                        label: "Editar",
+                        onClick: handleEdit,
+                    },
+                ]}
+            />
         ),
         mantineTableProps: {
             withColumnBorders: true,
