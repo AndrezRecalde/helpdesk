@@ -12,6 +12,7 @@ import {
     onLoadSumaDesempenoForEstados,
     onLoadSumaDiasHabiles,
     onLoading,
+    onLoadingPDF,
     onPageLoad,
 } from "../../store/indicador/indicadorSlice";
 import helpdeskApi from "../../api/helpdeskApi";
@@ -19,6 +20,7 @@ import helpdeskApi from "../../api/helpdeskApi";
 export const useIndicadorStore = () => {
     const {
         isLoading,
+        isLoadingPDF,
         pageLoad,
         desempenoForEstados,
         sumaDesempenoForEstados,
@@ -38,7 +40,7 @@ export const useIndicadorStore = () => {
             dispatch(onLoading(true));
             const { data } = await helpdeskApi.post(
                 "/gerencia/indicador-soporte",
-                { fecha_inicio, fecha_fin }
+                { fecha_inicio, fecha_fin },
             );
             const {
                 desempenoForEstados,
@@ -48,7 +50,7 @@ export const useIndicadorStore = () => {
                 efectividadForAreas,
                 efectividadForTecnicos,
                 sumaDiasHabiles,
-                promedioCalificacion
+                promedioCalificacion,
             } = data;
             dispatch(onLoadDesempenoForEstados(desempenoForEstados));
             dispatch(onLoadSumaDesempenoForEstados(sumaDesempenoForEstados));
@@ -59,20 +61,31 @@ export const useIndicadorStore = () => {
             dispatch(onLoadSumaDiasHabiles(sumaDiasHabiles));
             dispatch(onLoadPromedioCalificacion(promedioCalificacion));
             dispatch(onPageLoad(true));
-            dispatch(onLoading(false));
         } catch (error) {
             //console.log(error);
             ExceptionMessageError(error);
+        } finally {
+            dispatch(onLoading(false));
         }
     };
 
-    const startExportPDFIndicadores = async (fecha_inicio, fecha_fin) => {
+    const startExportPDFIndicadores = async (
+        fecha_inicio,
+        fecha_fin,
+        chartTecnicosImage,
+        chartAreasImage,
+    ) => {
         try {
-            dispatch(onLoading(true));
+            dispatch(onLoadingPDF(true));
             const response = await helpdeskApi.post(
                 "/gerencia/reporte-indicador-pdf",
-                { fecha_inicio, fecha_fin },
-                { responseType: "blob" }
+                {
+                    fecha_inicio,
+                    fecha_fin,
+                    chart_tecnicos_image: chartTecnicosImage,
+                    chart_areas_image: chartAreasImage,
+                },
+                { responseType: "blob" },
             );
 
             const pdfBlob = new Blob([response.data], {
@@ -91,22 +104,26 @@ export const useIndicadorStore = () => {
         } catch (error) {
             //console.log(error);
             ExceptionMessageError(error);
+        } finally {
+            dispatch(onLoadingPDF(false));
         }
     };
 
     const startLoadDesempenoTecnicosAnual = async () => {
         try {
             dispatch(onLoading(true));
-            const { data } = await helpdeskApi.get("/gerencia/desempeno-tecnicos-anual");
+            const { data } = await helpdeskApi.get(
+                "/gerencia/desempeno-tecnicos-anual",
+            );
             const { desempenoForTecnicos } = data;
             dispatch(onLoadDesempenoForTecnicos(desempenoForTecnicos));
-            dispatch(onLoading(false));
         } catch (error) {
             //console.log(error);
             ExceptionMessageError(error);
+        } finally {
+            dispatch(onLoading(false));
         }
-    }
-
+    };
 
     const clearIndicadores = () => {
         dispatch(onClearIndicadores());
@@ -115,6 +132,7 @@ export const useIndicadorStore = () => {
 
     return {
         isLoading,
+        isLoadingPDF,
         pageLoad,
         desempenoForEstados,
         sumaDesempenoForEstados,

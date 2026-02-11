@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
@@ -9,328 +9,479 @@
     <style>
         @page {
             size: 21cm 29.7cm;
-            margin: 20px;
+            margin: 15mm;
         }
 
         body {
-            font-family: Arial, sans-serif;
-            color: #333;
+            font-family: 'Arial', 'Helvetica', sans-serif;
+            color: #1a1a1a;
+            line-height: 1.6;
+            font-size: 10pt;
+            margin: 0;
+            padding: 0;
         }
 
-        table {
+        /* HEADER STYLES */
+        .document-header {
             width: 100%;
+            border: 2px solid #000000;
             border-collapse: collapse;
-            border: 0.5px solid gray;
-            /* Corrige el borde */
-            table-layout: auto;
-            /* Cambia a 'auto' para ajustar el ancho según el contenido */
-            margin-bottom: 25px;
-            margin-top: 25px;
+            //margin-bottom: 10px;
+            background-color: #ffffff;
         }
 
-        th,
-        td {
-            padding: 3px;
-            vertical-align: top;
-            border: 1px solid black;
-            font-size: 12px;
-            /* Borde para celdas */
-        }
-
-        th {
-            background-color: #ddd;
-        }
-
-        input {
-            width: 98%;
-            /* Ancho casi completo */
-            box-sizing: border-box;
-            /* Incluye padding y border en el ancho total */
-            font-size: 14px;
-            /* Tamaño de fuente */
+        .document-header td {
+            padding: 12px;
+            vertical-align: middle;
             border: none;
-            outline: none;
         }
 
-        .header-logo {
-            max-width: 150px;
-        }
-
-        .header {
+        .logo-cell {
+            width: 20%;
             text-align: center;
+            border-right: 1px solid #cccccc;
         }
 
-        .header h4,
-        .header h5 {
-            margin: 15px 0;
-            /* Reduce márgenes */
-        }
-
-        .title {
-            font-size: 18px;
-            font-weight: bold;
-            text-transform: uppercase;
-        }
-
-        .img-container {
-            text-align: center;
-        }
-
-        .img-fluid {
-            display: block;
-            margin: 15 auto;
-            width: 170px;
+        .logo-img {
+            max-width: 100px;
             height: auto;
         }
 
-        .firmas {
+        .header-info-cell {
+            width: 80%;
+            padding-left: 15px;
+        }
+
+        .header-title {
+            font-size: 10pt;
+            font-weight: 600;
+            color: #333333;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .header-subtitle {
+            font-size: 12pt;
+            font-weight: 700;
+            color: #000000;
+            margin: 5px 0;
+            line-height: 1.2;
+        }
+
+        .header-period {
+            font-size: 8pt;
+            color: #666666;
+            margin-top: 5px;
+            font-weight: 500;
+        }
+
+        .header-period strong {
+            color: #1a1a1a;
+        }
+
+        /* SECTION STYLES */
+        .section {
+            margin-bottom: 10px;
+            //page-break-inside: avoid;
+        }
+
+        .section-title {
+            background: linear-gradient(135deg, #333333 0%, #1a1a1a 100%);
+            color: #ffffff;
+            padding: 12px 18px;
+            font-size: 11pt;
+            font-weight: 700;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .subsection-title {
+            background-color: #e8e8e8;
+            color: #1a1a1a;
+            padding: 10px 15px;
+            font-size: 10pt;
+            font-weight: 700;
+            margin: 20px 0 12px 0;
+            border-left: 4px solid #333333;
+            border-radius: 3px;
+        }
+
+        /* TABLE STYLES */
+        table.data-table {
             width: 100%;
             border-collapse: collapse;
-            table-layout: fixed;
-            /* fuerza ancho fijo */
+            margin-bottom: 20px;
+            border: 1px solid #cccccc;
+            border-radius: 6px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
         }
 
-        .firmas td {
+        table.data-table thead {
+            background-color: #e0e0e0;
+        }
+
+        table.data-table th {
+            color: #000000;
+            padding: 12px 10px;
+            text-align: center;
+            font-size: 9pt;
+            font-weight: 700;
+            border: 1px solid #cccccc;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        table.data-table th:first-child {
+            text-align: left;
+            padding-left: 15px;
+        }
+
+        table.data-table td {
+            padding: 10px;
+            border-bottom: 1px solid #e0e0e0;
+            font-size: 9pt;
+            vertical-align: middle;
+        }
+
+        table.data-table td:first-child {
+            font-weight: 500;
+            color: #1a1a1a;
+            padding-left: 15px;
+        }
+
+        table.data-table td:not(:first-child) {
+            text-align: center;
+            color: #4a4a4a;
+        }
+
+        table.data-table tbody tr:nth-child(odd) {
+            background-color: #f9f9f9;
+        }
+
+        table.data-table tbody tr:nth-child(even) {
+            background-color: #ffffff;
+        }
+
+        table.data-table tbody tr:hover {
+            background-color: #f0f0f0;
+        }
+
+        table.data-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* METRIC BOX */
+        .metric-box {
+            background: linear-gradient(135deg, #f0f0f0 0%, #e8e8e8 100%);
+            border-left: 5px solid #000000;
+            padding: 15px 20px;
+            margin: 15px 0;
+            font-size: 10pt;
+            border-radius: 5px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+        }
+
+        .metric-box .metric-value {
+            font-weight: 700;
+            color: #000000;
+            font-size: 13pt;
+        }
+
+        .metric-box .metric-label {
+            color: #4a4a4a;
+            font-weight: 400;
+        }
+
+        /* SIGNATURE SECTION */
+        .signature-table {
+            width: 100%;
+            margin-top: 40px;
+            border-collapse: collapse;
+            border-top: 2px solid #000000;
+            padding-top: 20px;
+        }
+
+        .signature-table td {
             width: 50%;
-            /* cada bloque ocupa la mitad */
+            padding: 20px 30px;
             text-align: center;
             vertical-align: top;
-            padding: 5px;
+        }
+
+        .signature-label {
+            font-size: 9pt;
+            font-weight: 600;
+            color: #333333;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 10px;
+        }
+
+        .signature-space {
+            height: 60px;
+            border-bottom: 2px solid #1a1a1a;
+            margin: 15px 20px;
+        }
+
+        .signature-name {
+            font-weight: 700;
+            color: #000000;
+            font-size: 10pt;
+            margin-top: 10px;
+        }
+
+        .signature-position {
+            color: #666666;
+            font-size: 9pt;
+            font-weight: 400;
+            margin-top: 5px;
+        }
+
+        /* UTILITY CLASSES */
+        .font-bold {
+            font-weight: 700;
+        }
+
+        .percentage-value {
+            font-weight: 600;
+            color: #000000;
         }
     </style>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
-
 </head>
 
 <body>
-    <main>
-        <!-- ENCABEZADO -->
-        <table>
-            <tr>
-                <td class="img-container">
-                    <img class="img-fluid" alt="logo" src={{ public_path('/assets/images/LogoCompleto.png') }}>
-                </td>
-                <td colspan="3" class="header">
-                    <h4>{{ Str::upper($direccion) }}</h4>
-                    <hr>
-                    <h4>{{ Str::upper($titulo) }} <br> DEL {{ $fecha_inicio }} al {{ $fecha_fin }} </h4>
+    <!-- HEADER -->
+    <table class="document-header">
+        <tr>
+            <td class="logo-cell">
+                <img class="logo-img" alt="Logo GTIC" src="{{ public_path('/assets/images/LogoCompleto.png') }}">
+            </td>
+            <td class="header-info-cell">
+                <div class="header-title">{{ Str::upper($direccion) }}</div>
+                <div class="header-subtitle">{{ Str::upper($titulo) }}</div>
+                <div class="header-period"><strong>Período:</strong> {{ $fecha_inicio }} al {{ $fecha_fin }}</div>
+            </td>
+        </tr>
+    </table>
 
-                </td>
-            </tr>
+    <!-- A. EFICIENCIA -->
+    <div class="section">
+        <div class="section-title">A. Eficiencia de Desempeño de Actividades</div>
+        
+        <div class="metric-box">
+            <span class="metric-value">{{ $sumaDesempenoForEstados }}</span>
+            <span class="metric-label"> casos totales registrados en el período analizado</span>
+        </div>
+
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th style="width: 50%;">Detalle de los Casos</th>
+                    <th style="width: 25%;">Total de Casos</th>
+                    <th style="width: 25%;">Porcentaje</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Casos {{ $desempenoForEstados[3]->estado }}</td>
+                    <td>{{ $desempenoForEstados[3]->total_estados }} / {{ $sumaDesempenoForEstados }}</td>
+                    <td class="percentage-value">{{ round(($desempenoForEstados[3]->total_estados / $sumaDesempenoForEstados) * 100, 2) }}%</td>
+                </tr>
+                <tr>
+                    <td>Casos Sin Cerrar</td>
+                    <td>{{ $desempenoForEstados[2]->total_estados }} / {{ $sumaDesempenoForEstados }}</td>
+                    <td class="percentage-value">{{ round(($desempenoForEstados[2]->total_estados / $sumaDesempenoForEstados) * 100, 2) }}%</td>
+                </tr>
+                <tr>
+                    <td>Casos {{ $desempenoForEstados[1]->estado }}</td>
+                    <td>{{ $desempenoForEstados[1]->total_estados }} / {{ $sumaDesempenoForEstados }}</td>
+                    <td class="percentage-value">{{ round(($desempenoForEstados[1]->total_estados / $sumaDesempenoForEstados) * 100, 2) }}%</td>
+                </tr>
+                <tr>
+                    <td>Casos {{ $desempenoForEstados[4]->estado }}</td>
+                    <td>{{ $desempenoForEstados[4]->total_estados }} / {{ $sumaDesempenoForEstados }}</td>
+                    <td class="percentage-value">{{ round(($desempenoForEstados[4]->total_estados / $sumaDesempenoForEstados) * 100, 2) }}%</td>
+                </tr>
+                <tr>
+                    <td>Casos {{ $desempenoForEstados[0]->estado }}</td>
+                    <td>{{ $desempenoForEstados[0]->total_estados }} / {{ $sumaDesempenoForEstados }}</td>
+                    <td class="percentage-value">{{ round(($desempenoForEstados[0]->total_estados / $sumaDesempenoForEstados) * 100, 2) }}%</td>
+                </tr>
+            </tbody>
         </table>
-        <!-- FIN ENCABEZADO -->
-        <hr>
-        <!-- A. EFICIENCIA -->
-        <div>
-            <p>A. EFICIENCIA DE DESEMPEÑO DE ACTIVIDADES</p>
-            <p>{{ $sumaDesempenoForEstados }} casos corresponden al 100%</p>
-            <table>
-                <thead>
-                    <tr>
-                        <th>DETALLE DE LOS CASOS</th>
-                        <th>TOTAL DE LOS CASOS/ TOTAL DE CASOS FINALIZADOS</th>
-                        <th>PORCENTAJE</th>
-                    </tr>
-                <tbody>
-                    <tr>
-                        <td>A.1 Casos {{ $desempenoForEstados[3]->estado }}/Casos Totales</td>
-                        <td>{{ $desempenoForEstados[3]->total_estados }}/{{ $sumaDesempenoForEstados }}</td>
-                        <td>{{ round(($desempenoForEstados[3]->total_estados / $sumaDesempenoForEstados) * 100, 2) }}%
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>A.2 Casos Sin Cerrar/Casos Totales</td>
-                        <td>{{ $desempenoForEstados[2]->total_estados }}/{{ $sumaDesempenoForEstados }}</td>
-                        <td>{{ round(($desempenoForEstados[2]->total_estados / $sumaDesempenoForEstados) * 100, 2) }}%
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>A.3 Casos {{ $desempenoForEstados[1]->estado }}/Casos Totales</td>
-                        <td>{{ $desempenoForEstados[1]->total_estados }}/{{ $sumaDesempenoForEstados }}</td>
-                        <td>{{ round(($desempenoForEstados[1]->total_estados / $sumaDesempenoForEstados) * 100, 2) }}%
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>A.4 Casos {{ $desempenoForEstados[4]->estado }}/Casos Totales</td>
-                        <td>{{ $desempenoForEstados[4]->total_estados }}/{{ $sumaDesempenoForEstados }}</td>
-                        <td>{{ round(($desempenoForEstados[4]->total_estados / $sumaDesempenoForEstados) * 100, 2) }}%
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>A.5 Casos {{ $desempenoForEstados[0]->estado }}/Casos Totales</td>
-                        <td>{{ $desempenoForEstados[0]->total_estados }}/{{ $sumaDesempenoForEstados }}</td>
-                        <td>{{ round(($desempenoForEstados[0]->total_estados / $sumaDesempenoForEstados) * 100, 2) }}%
-                        </td>
-                    </tr>
-                </tbody>
-                </thead>
-            </table>
-        </div>
-        <div>
-            <p>CASOS POR ÁREA</p>
-            <table>
-                <thead>
-                    <tr>
-                        <th>AREA</th>
-                        <th>CASOS SIN <br> RESOLVER</th>
-                        <th>CASOS SIN <br> CERRAR</th>
-                        <th>TOTAL <br> FINALIZADOS</th>
-                        <th>TOTAL <br> ANULADOS</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($desempenoForAreas as $desemparea)
-                        <tr>
 
-                            <td>{{ $desemparea->area_tic }}</td>
-                            <td>{{ $desemparea->total_asignados }}</td>
-                            <td>{{ $desemparea->total_atendidos }}</td>
-                            <td>{{ $desemparea->total_finalizados }}</td>
-                            <td>{{ $desemparea->total_anuladas }}</td>
-                        </tr>
-                    @endforeach
-
-                </tbody>
-            </table>
-        </div>
-        <div style="text-align: center;">
-            <img src="{{ url($chartUrl) }}" alt="Chart" style="width: 50%; max-width: 400px;">
-        </div>
-
-        <div>
-            <p>CASOS POR TÉCNICO</p>
-            <table>
-                <thead>
-                    <tr>
-                        <th>NOMBRE DEL TECNICO</th>
-                        <th>CASOS SIN <br> RESOLVER</th>
-                        <th>CASOS SIN <br> CERRAR</th>
-                        <th>TOTAL <br> FINALIZADOS</th>
-                        <th>TOTAL <br> ANULADOS</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($desempenoForTecnicos as $desemptecnico)
-                        <tr>
-                            <td>{{ $desemptecnico->tecnico }}</td>
-                            <td>{{ $desemptecnico->total_asignados }}</td>
-                            <td>{{ $desemptecnico->total_atendidos }}</td>
-                            <td>{{ $desemptecnico->total_finalizados }}</td>
-                            <td>{{ $desemptecnico->total_anulados }}</td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
-        <!-- A. FIN EFICIENCIA -->
-        <div style="text-align: center;">
-            <img src="{{ url($chartUrl2) }}" alt="Chart2" style="width: 70%; max-width: 700px;">
-        </div>
-
-        <!-- B. EFECTIVIDAD -->
-        <div>
-            <p>B. CALIDAD DE LA EFECTIVIDAD EN LA ATENCIÓN A USUARIOS</p>
-            <p>B1. POR AREAS</p>
-            <table>
-                <thead>
-                    <tr>
-                        <th>AREA</th>
-                        <th>TOTAL ASISTENCIA</th>
-                        <th>TOTAL PROMEDIO</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($efectividadForAreas as $efectividadarea)
-                        <tr>
-                            <td>{{ $efectividadarea->area_tic }}</td>
-                            <td>{{ $efectividadarea->total_asistencia }}</td>
-                            <td>{{ $efectividadarea->total_promedio }}</td>
-                        </tr>
-                    @endforeach
-
-                </tbody>
-            </table>
-        </div>
-        <div>
-            <p>B2. POR TECNICOS</p>
-            <table>
-                <thead>
-                    <tr>
-                        <th>NOMBRE DE TECNICOS</th>
-                        <th>TOTAL ASISTENCIA</th>
-                        <th>TOTAL PROMEDIO</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($efectividadForTecnicos as $efectividadtenico)
-                        <tr>
-                            <td>{{ $efectividadtenico->tecnico }}</td>
-                            <td>{{ $efectividadtenico->total_asistencia }}</td>
-                            <td>{{ $efectividadtenico->total_promedio }}</td>
-                        </tr>
-                    @endforeach
-
-
-                </tbody>
-            </table>
-        </div>
-        <!-- B. FIN EFECTIVIDAD -->
-        <!-- C. EFICACIA -->
-        <div>
-            <p>C. EFICACIA</p>
-            <p>
-                C1. CASOS FINALIZADOS/META(30 X DIA, EN {{ $sumaDiasHabiles[0]->dias_habiles }} DIAS):
-                {{ round(($desempenoForEstados[3]->total_estados / 30 / $sumaDiasHabiles[0]->dias_habiles) * 100, 2) }}%
-            </p>
-            <table>
-                <thead>
-                    <tr>
-                        <th>DETALLE</th>
-                        <th>TOTAL</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>META DIARIA DE ATENCION</td>
-                        <td>30</td>
-                    </tr>
-                    <tr>
-                        <td>CASOS FINALIZADOS</td>
-                        <td>{{ $desempenoForEstados[3]->total_estados }}</td>
-                    </tr>
-                    <tr>
-                        <td>PERIODO(NUMERO DE DIAS)</td>
-                        <td>{{ $sumaDiasHabiles[0]->dias_habiles }}</td>
-                    </tr>
-                    <tr>
-                        <td>SATISFACCION DE LOS USUARIOS</td>
-                        <td>{{ $promedioCalificacion[0]->promedio }} / 5 </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <!-- C. FIN EFICACIA -->
-        <table class="firmas">
-            <tr>
-                <td colspan="2">Generado por:</td>
-                <td colspan="2">Aprobado por:</td>
-            </tr>
-            <tr>
-                <td colspan="2"><input type="text" style="height: 50px; width: 100%;"></td>
-                <td colspan="2"><input type="text" style="hheight: 50px; width: 100%;"></td>
-            </tr>
-            <tr>
-                <td colspan="2" class="header">
-                    {{ $usuarioGenerador->generador }} <br>
-                    <strong>{{ $usuarioGenerador->cargo_generador }}</strong>
-                </td>
-                <td colspan="2" class="header">
-                    {{ $usuarioGenerador->director }} <br>
-                    <strong>{{ $usuarioGenerador->cargo_director }}</strong>
-                </td>
-            </tr>
+        <div class="subsection-title">Distribución de Casos por Área</div>
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Área</th>
+                    <th>Sin Resolver</th>
+                    <th>Sin Cerrar</th>
+                    <th>Finalizados</th>
+                    <th>Anulados</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($desempenoForAreas as $desemparea)
+                <tr>
+                    <td>{{ $desemparea->area_tic }}</td>
+                    <td>{{ $desemparea->total_asignados }}</td>
+                    <td>{{ $desemparea->total_atendidos }}</td>
+                    <td>{{ $desemparea->total_finalizados }}</td>
+                    <td>{{ $desemparea->total_anuladas }}</td>
+                </tr>
+                @endforeach
+            </tbody>
         </table>
-    </main>
+
+        <div class="subsection-title">Distribución de Casos por Técnico</div>
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Nombre del Técnico</th>
+                    <th>Sin Resolver</th>
+                    <th>Sin Cerrar</th>
+                    <th>Finalizados</th>
+                    <th>Anulados</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($desempenoForTecnicos as $desemptecnico)
+                <tr>
+                    <td>{{ $desemptecnico->tecnico }}</td>
+                    <td>{{ $desemptecnico->total_asignados }}</td>
+                    <td>{{ $desemptecnico->total_atendidos }}</td>
+                    <td>{{ $desemptecnico->total_finalizados }}</td>
+                    <td>{{ $desemptecnico->total_anulados }}</td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+
+    <!-- B. EFECTIVIDAD -->
+    <div class="section">
+        <div class="section-title">B. Calidad de la Efectividad en la Atención</div>
+
+        <div class="subsection-title">Efectividad por Áreas</div>
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Área</th>
+                    <th>Total Asistencia</th>
+                    <th>Promedio</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($efectividadForAreas as $efectividadarea)
+                <tr>
+                    <td>{{ $efectividadarea->area_tic }}</td>
+                    <td>{{ $efectividadarea->total_asistencia }}</td>
+                    <td class="percentage-value">{{ $efectividadarea->total_promedio }}</td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+
+        <div class="subsection-title">Efectividad por Técnicos</div>
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Nombre del Técnico</th>
+                    <th>Total Asistencia</th>
+                    <th>Promedio</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($efectividadForTecnicos as $efectividadtenico)
+                <tr>
+                    <td>{{ $efectividadtenico->tecnico }}</td>
+                    <td>{{ $efectividadtenico->total_asistencia }}</td>
+                    <td class="percentage-value">{{ $efectividadtenico->total_promedio }}</td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+
+    <!-- C. EFICACIA -->
+    <div class="section">
+        <div class="section-title">C. Eficacia en el Cumplimiento de Metas</div>
+
+        <div class="metric-box">
+            <span class="metric-label">Cumplimiento de Meta: </span>
+            <span class="metric-value">{{ round(($desempenoForEstados[3]->total_estados / 30 / $sumaDiasHabiles[0]->dias_habiles) * 100, 2) }}%</span>
+            <span class="metric-label"> (Meta: 30 casos por día en {{ $sumaDiasHabiles[0]->dias_habiles }} días hábiles)</span>
+        </div>
+
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th style="width: 60%;">Indicador</th>
+                    <th style="width: 40%;">Valor</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Meta Diaria de Atención</td>
+                    <td class="font-bold">30 casos</td>
+                </tr>
+                <tr>
+                    <td>Casos Finalizados</td>
+                    <td class="font-bold">{{ $desempenoForEstados[3]->total_estados }}</td>
+                </tr>
+                <tr>
+                    <td>Período Evaluado</td>
+                    <td class="font-bold">{{ $sumaDiasHabiles[0]->dias_habiles }} días</td>
+                </tr>
+                <tr>
+                    <td>Satisfacción de Usuarios</td>
+                    <td class="font-bold percentage-value">{{ $promedioCalificacion[0]->promedio }} / 5.0</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- FIRMAS -->
+    <table class="signature-table">
+        <tr>
+            <td>
+                <div class="signature-label">Generado por</div>
+                <div class="signature-space"></div>
+                <div class="signature-name">{{ $usuarioGenerador->generador }}</div>
+                <div class="signature-position">{{ $usuarioGenerador->cargo_generador }}</div>
+            </td>
+            <td>
+                <div class="signature-label">Aprobado por</div>
+                <div class="signature-space"></div>
+                <div class="signature-name">{{ $usuarioGenerador->director }}</div>
+                <div class="signature-position">{{ $usuarioGenerador->cargo_director }}</div>
+            </td>
+        </tr>
+    </table>
+
+    {{-- GRÁFICOS DE DESEMPEÑO --}}
+    @if(isset($chartTecnicosImage) && $chartTecnicosImage)
+    <div style="page-break-before: always;"></div>
+    <div class="section-title">GRÁFICO: DESEMPEÑO POR TÉCNICOS</div>
+    <div style="text-align: center; margin: 20px 0;">
+        <img src="{{ $chartTecnicosImage }}" style="max-width: 100%; height: auto; border: 1px solid #e0e0e0; border-radius: 4px;" alt="Gráfico de Desempeño por Técnicos">
+    </div>
+    @endif
+
+    @if(isset($chartAreasImage) && $chartAreasImage)
+    <div style="page-break-before: always;"></div>
+    <div class="section-title">GRÁFICO: DESEMPEÑO POR ÁREAS TÉCNICAS</div>
+    <div style="text-align: center; margin: 20px 0;">
+        <img src="{{ $chartAreasImage }}" style="max-width: 100%; height: auto; border: 1px solid #e0e0e0; border-radius: 4px;" alt="Gráfico de Desempeño por Áreas">
+    </div>
+    @endif
+
 </body>
 
 </html>

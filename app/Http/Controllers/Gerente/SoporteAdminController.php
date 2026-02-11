@@ -288,45 +288,6 @@ class SoporteAdminController extends Controller
                 $sumaDesempenoForEstados += $total_estados->total_estados;
             }
         }
-        $labels_areas = [];
-        $labels_tecnicos = [];
-
-        $datos_finalizados = [];
-        $datos_tecnicos = [];
-
-        $indice_a = 0;
-        $indice_t = 0;
-        foreach ($desempenoForAreas as $area) {
-            $labels_areas[$indice_a] = $area->area_tic;
-            $datos_finalizados[$indice_a] = $area->total_finalizados;
-            $indice_a++;
-        }
-
-        foreach ($desempenoForTecnicos as $tecnico) {
-            $labels_tecnicos[$indice_t] = $tecnico->tecnico;
-            $datos_tecnicos[$indice_t] = $tecnico->total_finalizados;
-            $indice_t++;
-        }
-
-        /* $data = [
-            'type' => 'pie',
-            'data' => [
-                'labels_areas' => $labels_areas,
-                'datasets' => [
-                    [
-                        'data' => $datos_finalizados
-                    ],
-                ]
-            ],
-        ]; */
-
-        $chartUrl = $this->generateQuickChartUrl($labels_areas, $datos_finalizados);
-        $chartUrl2 = $this->generateQuickChartUrl2($labels_tecnicos, $datos_tecnicos);
-
-        $url = 'http://quickchart.io/chart?width=500&height=550&c=' . urlencode($chartUrl);
-        $url2 = 'http://quickchart.io/chart?width=900&height=1100&c=' . urlencode($chartUrl2);
-
-
 
         $data = [
             'direccion' => 'Dirección de Técnologias de Información y Comunicación',
@@ -342,56 +303,12 @@ class SoporteAdminController extends Controller
             'sumaDiasHabiles' => $sumaDiasHabiles,
             'promedioCalificacion' => $promedioCalificacion,
             'usuarioGenerador' => $usuarioGenerador,
-            'chartUrl' => $url,
-            'chartUrl2' => $url2
+            'chartTecnicosImage' => $request->chart_tecnicos_image,
+            'chartAreasImage' => $request->chart_areas_image,
         ];
         $pdf = Pdf::loadView('pdf.soporte.indicador', $data);
         return $pdf->setPaper('a4', 'portrait')->download('indicador.pdf');
         /* return response()->json(['status' => MsgStatus::Success, 'data' => $data]); */
-    }
-
-    private function generateQuickChartUrl($labels, $data)
-    {
-        // Construir el URL del gráfico utilizando QuickChart
-        $url = '{';
-        $url .= '"type":"pie",';
-        $url .= '"data":{';
-        $url .= '"labels":' . json_encode($labels) . ',';
-        $url .= '"datasets":[{"data":' . json_encode($data) . '}]';
-        $url .= '}';
-        $url .= '}';
-
-        return $url;
-    }
-
-    private function generateQuickChartUrl2($labels, $data)
-    {
-        // Construir el URL del gráfico utilizando QuickChart
-        $url = '{';
-        $url .= '"type":"pie",';
-        $url .= '"data":{';
-        $url .= '"labels":' . json_encode($labels) . ',';
-        $url .= '"datasets":[{';
-        $url .= '"data":' . json_encode($data) . ',';
-        $url .= '}]';
-        $url .= '},';
-        /*  $url .= '"options":{';
-        $url .=     '"plugins":{';
-        $url .=         '"legend": false,';
-        $url .=         '"outlabels":{';
-        $url .=             '"backgroundColor": null';
-        $url .=             '"text": "%l %v",';
-        $url .=             '"stretch": 35,';
-        $url .=             '"font":{';
-        $url .=                 '"resizable": true,';
-        $url .=                 '"minSize": 12,';
-        $url .=                 '"maxSize": 18,';
-        $url .=              '}';
-        $url .=           '}';
-        $url .=        '}';
-        $url .=     '}'; */
-        $url .= '}';
-        return $url;
     }
 
     function getSoportesSinCalificacion(): JsonResponse

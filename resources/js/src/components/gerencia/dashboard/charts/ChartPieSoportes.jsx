@@ -22,30 +22,38 @@ export const ChartPieSoportes = ({ data }) => {
             chart: {
                 type: "pie",
                 backgroundColor: "transparent",
-                borderRadius: 8,
-                height: 400,
+                height: 450,
+                spacing: [20, 20, 20, 20],
             },
             title: {
-                text: `Estados de los soportes - ${new Date().getFullYear()}`,
+                text: `Estados de Soportes Técnicos`,
                 align: "center",
                 style: {
-                    fontSize: "18px",
-                    fontWeight: "600",
-                    color: "#333",
+                    fontSize: "20px",
+                    fontWeight: "700",
+                    color: "#1a1a1a",
+                    fontFamily:
+                        "'Segoe UI', 'Helvetica Neue', Arial, sans-serif",
+                    letterSpacing: "0.5px",
                 },
+                margin: 25,
             },
             subtitle: {
-                text: `Total: ${totalSoportes.toLocaleString(
-                    "es-ES"
-                )} soportes`,
+                text: `Período ${new Date().getFullYear()} • Total: ${totalSoportes.toLocaleString(
+                    "es-ES",
+                )} casos`,
                 align: "center",
                 style: {
-                    fontSize: "14px",
-                    color: "#666",
+                    fontSize: "13px",
+                    color: "#666666",
+                    fontWeight: "400",
+                    fontFamily:
+                        "'Segoe UI', 'Helvetica Neue', Arial, sans-serif",
                 },
+                y: 35,
             },
             credits: {
-                enabled: false, // Oculta el logo de Highcharts
+                enabled: false,
             },
             accessibility: {
                 enabled: true,
@@ -54,67 +62,87 @@ export const ChartPieSoportes = ({ data }) => {
                 },
             },
             tooltip: {
-                backgroundColor: "#fff",
-                borderColor: "#ddd",
-                borderRadius: 8,
+                backgroundColor: "rgba(255, 255, 255, 0.98)",
+                borderColor: "#e0e0e0",
+                borderRadius: 10,
                 borderWidth: 1,
                 shadow: {
-                    color: "rgba(0, 0, 0, 0.1)",
+                    color: "rgba(0, 0, 0, 0.12)",
                     offsetX: 0,
-                    offsetY: 2,
-                    opacity: 0.15,
-                    width: 3,
+                    offsetY: 4,
+                    opacity: 0.2,
+                    width: 8,
                 },
                 style: {
-                    color: "#333",
+                    color: "#1a1a1a",
                     fontSize: "13px",
+                    fontWeight: "500",
+                    fontFamily:
+                        "'Segoe UI', 'Helvetica Neue', Arial, sans-serif",
                 },
+                padding: 12,
                 pointFormat:
-                    '<span style="color:{point.color}">●</span> <b>{point.name}</b><br/>' +
-                    "Cantidad: <b>{point.y}</b><br/>" +
-                    "Porcentaje: <b>{point.percentage:.1f}%</b>",
+                    '<div style="padding: 4px 0;">' +
+                    '<span style="color:{point.color}; font-size: 16px;">●</span> ' +
+                    '<span style="font-weight: 600; color: #1a1a1a;">{point.name}</span><br/>' +
+                    '<span style="color: #666;">Cantidad:</span> <span style="font-weight: 700; color: #000;">{point.y}</span><br/>' +
+                    '<span style="color: #666;">Porcentaje:</span> <span style="font-weight: 700; color: #000;">{point.percentage:.1f}%</span>' +
+                    "</div>",
+                useHTML: true,
             },
             plotOptions: {
                 pie: {
                     allowPointSelect: true,
                     cursor: "pointer",
-                    borderWidth: 3,
-                    borderColor: "#fff",
+                    borderWidth: 2,
+                    borderColor: "#ffffff",
                     shadow: {
-                        color: "rgba(0, 0, 0, 0.15)",
+                        color: "rgba(0, 0, 0, 0.08)",
                         offsetX: 0,
-                        offsetY: 4,
-                        opacity: 0.3,
-                        width: 5,
+                        offsetY: 3,
+                        opacity: 0.25,
+                        width: 6,
                     },
                     dataLabels: {
                         enabled: true,
                         format: "<b>{point.name}</b><br>{point.percentage:.1f}%",
-                        distance: 15,
+                        distance: 20,
                         style: {
                             fontSize: "12px",
                             fontWeight: "600",
-                            color: "#000",
-                            textOutline: "2px contrast",
+                            color: "#1a1a1a",
+                            textOutline: "2px #ffffff",
+                            fontFamily:
+                                "'Segoe UI', 'Helvetica Neue', Arial, sans-serif",
                         },
-                        connectorColor: "#666",
-                        connectorWidth: 1,
+                        connectorColor: "#999999",
+                        connectorWidth: 1.5,
+                        connectorPadding: 8,
                     },
                     showInLegend: true,
                     states: {
                         hover: {
-                            brightness: 0.1,
+                            brightness: 0.08,
+                            halo: {
+                                size: 8,
+                                opacity: 0.25,
+                            },
                         },
                         inactive: {
-                            opacity: 0.5,
+                            opacity: 0.4,
+                        },
+                        select: {
+                            color: null,
+                            borderColor: "#1a1a1a",
+                            borderWidth: 3,
                         },
                     },
-                    // Animación suave
                     animation: {
-                        duration: 1000,
+                        duration: 1200,
+                        easing: "easeOutQuart",
                     },
-                    // Espaciado entre porciones
-                    slicedOffset: 15,
+                    slicedOffset: 12,
+                    size: "85%",
                 },
             },
             legend: {
@@ -124,32 +152,37 @@ export const ChartPieSoportes = ({ data }) => {
                 itemStyle: {
                     fontSize: "13px",
                     fontWeight: "500",
-                    color: "#333",
+                    color: "#333333",
+                    fontFamily:
+                        "'Segoe UI', 'Helvetica Neue', Arial, sans-serif",
                 },
                 itemHoverStyle: {
-                    color: "#000",
+                    color: "#000000",
                 },
-                itemMarginBottom: 5,
-                symbolRadius: 6,
+                itemMarginBottom: 8,
+                symbolRadius: 8,
+                symbolHeight: 12,
+                symbolWidth: 12,
+                symbolPadding: 8,
+                padding: 15,
             },
             series: [
                 {
                     name: "Soportes",
                     colorByPoint: true,
-                    innerSize: "0%", // Cambiar a '50%' para donut chart
+                    innerSize: "0%",
                     data:
                         data?.map((soporte) => ({
                             name: soporte.estado,
                             y: soporte.total_estados,
                             color: soporte.color,
-                            borderColor: soporte.border || soporte.color,
-                            // Destacar automáticamente el estado con más soportes
+                            borderColor: "#ffffff",
                             sliced: false,
                         })) || [],
                 },
             ],
         }),
-        [data, totalSoportes]
+        [data, totalSoportes],
     );
 
     // Manejo de estados vacíos o inválidos

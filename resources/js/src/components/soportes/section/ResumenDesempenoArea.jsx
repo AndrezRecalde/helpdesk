@@ -1,4 +1,5 @@
 import { SimpleGrid } from "@mantine/core";
+import { forwardRef } from "react";
 import {
     ChartBarSoportes,
     TableDesempenoAreas,
@@ -6,7 +7,7 @@ import {
 } from "../../../components";
 import { useIndicadorStore } from "../../../hooks";
 
-export const ResumenDesempenoArea = () => {
+export const ResumenDesempenoArea = forwardRef((props, ref) => {
     const { desempenoForAreas } = useIndicadorStore();
     return (
         <>
@@ -15,8 +16,8 @@ export const ResumenDesempenoArea = () => {
             </TitlePage>
             <SimpleGrid cols={{ base: 1, sm: 1, md: 1, lg: 1 }}>
                 <TableDesempenoAreas />
-                <ChartBarSoportes data={desempenoForAreas} />
+                <ChartBarSoportes ref={ref} data={desempenoForAreas} />
             </SimpleGrid>
         </>
     );
-};
+});

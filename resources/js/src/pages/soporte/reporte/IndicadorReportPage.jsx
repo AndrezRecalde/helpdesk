@@ -28,7 +28,7 @@ const IndicadorReportPage = () => {
         },
         validate: {
             fecha_inicio: isNotEmpty(
-                "Por favor seleccione una fecha de inicio"
+                "Por favor seleccione una fecha de inicio",
             ),
             fecha_fin: isNotEmpty("Por favor seleccione una fecha de fin"),
         },
@@ -63,18 +63,21 @@ const IndicadorReportPage = () => {
         startLoadIndicadores(fecha_i, fecha_f);
     };
 
-    const handleExportPDF = (e) => {
+    const handleExportPDF = (e, chartTecnicosImage, chartAreasImage) => {
         e.preventDefault();
         const fecha_i = dayjs(fecha_inicio).format("YYYY-MM-DD");
         const fecha_f = dayjs(fecha_fin).add(1, "days").format("YYYY-MM-DD");
-        startExportPDFIndicadores(fecha_i, fecha_f);
+        startExportPDFIndicadores(
+            fecha_i,
+            fecha_f,
+            chartTecnicosImage,
+            chartAreasImage,
+        );
     };
 
     return (
         <Container size="xl">
-            <TitlePage order={2}>
-                Reporte de indicadores
-            </TitlePage>
+            <TitlePage order={2}>Reporte de indicadores</TitlePage>
             <Divider my="md" />
             <FilterFormSearchDates
                 form={form}

@@ -4,6 +4,7 @@ export const indicadorSlice = createSlice({
     name: "indicador",
     initialState: {
         isLoading: false,
+        isLoadingPDF: false,
         pageLoad: false,
         desempenoForEstados: [],
         sumaDesempenoForEstados: null,
@@ -19,8 +20,11 @@ export const indicadorSlice = createSlice({
         onLoading: (state, { payload }) => {
             state.isLoading = payload; //true oor false
         },
+        onLoadingPDF: (state, { payload }) => {
+            state.isLoadingPDF = payload; //true oor false
+        },
         onPageLoad: (state, { payload }) => {
-            state.pageLoad = payload;  // true or false
+            state.pageLoad = payload; // true or false
         },
         onLoadDesempenoForEstados: (state, { payload }) => {
             state.desempenoForEstados = payload;
@@ -48,6 +52,7 @@ export const indicadorSlice = createSlice({
         },
         onClearIndicadores: (state) => {
             state.isLoading = false;
+            state.isLoadingPDF = false;
             state.desempenoForEstados = [];
             state.sumaDesempenoForEstados = null;
             state.desempenoForAreas = [];
@@ -60,12 +65,14 @@ export const indicadorSlice = createSlice({
         onLoadErrores: (state, { payload }) => {
             state.errores = payload;
             state.isLoading = false;
-        }
+            state.isLoadingPDF = false;
+        },
     },
 });
 
 export const {
     onLoading,
+    onLoadingPDF,
     onPageLoad,
     onLoadDesempenoForEstados,
     onLoadSumaDesempenoForEstados,
