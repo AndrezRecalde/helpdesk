@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class InvConsumible extends Model
 {
@@ -18,9 +20,24 @@ class InvConsumible extends Model
         'estado'
     ];
 
-    public function departamentos()
+    public function departamentos(): BelongsToMany
     {
         return $this->belongsToMany(Departamento::class, 'departamento_consumible', 'consumible_id', 'departamento_id')
+            ->withPivot('cantidad_solicitada')
+            ->withTimestamps();
+    }
+
+    public function categoria(): BelongsTo
+    {
+        return $this->belongsTo(InvCategoria::class, 'categoria_id');
+    }
+
+    /**
+     * Solicitudes que incluyen este consumible
+     */
+    public function solicitudes(): BelongsToMany
+    {
+        return $this->belongsToMany(SolicitudConsumible::class, 'departamento_consumible', 'consumible_id', 'solicitud_id')
             ->withPivot('cantidad_solicitada')
             ->withTimestamps();
     }

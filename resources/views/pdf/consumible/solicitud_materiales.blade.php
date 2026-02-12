@@ -1,315 +1,291 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Solicitud de Materiales de Bodega</title>
+    <title>Solicitud de Materiales - {{ $solicitud->numero_solicitud }}</title>
     <style>
         @page {
-            margin: 10mm;
+            size: 21cm 29.7cm;
+            margin: 20px;
         }
-
+        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-        html,
         body {
-            margin: 0;
-            padding: 0;
-            height: 100%;
+            font-family: Arial, sans-serif;
+            font-size: 9pt;
+            line-height: 1.3;
         }
 
-        body {
-            font-family: Montserrat, Arial, sans-serif;
-            font-size: 13px;
+        .form-container {
+            background-image: url("https://prefecturadeesmeraldas.gob.ec/wp-content/uploads/2026/02/Gemini_Generated_Image_vq6xzavq6xzavq6x-1.png");
+            background-size: cover;
+            background-position: center;
+            opacity: 0.40;
+            border: 2px solid #000;
             padding: 8px;
-        }
-
-        .container {
-            width: 100%;
-            padding: 5px;
-            margin: 0;
-            //background-image: url("https://prefecturadeesmeraldas.gob.ec/wp-content/uploads/2023/11/FondoArchivo7.png");
-           // background-repeat: no-repeat;
-            //background-size: cover;
+            margin-bottom: 8px;
+            page-break-inside: avoid;
+            height: 45%;
         }
 
         .header {
             text-align: center;
-            font-weight: bold;
-            font-size: 15px;
+            border-bottom: 2px solid #000;
+            padding-bottom: 6px;
             margin-bottom: 8px;
-            margin-top: 0;
-            padding: 6px 0;
         }
 
-        .info-table,
+        .header h1 {
+            font-size: 14pt;
+            font-weight: bold;
+            margin-bottom: 3px;
+        }
+
+        .header .numero {
+            font-size: 11pt;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .copy-label {
+            position: static;
+            right: 15px;
+            top: 15px;
+            background: #f0f0f0;
+            padding: 3px 8px;
+            border: 1px solid #666;
+            font-size: 8pt;
+            font-weight: bold;
+        }
+
+        .info-section {
+            margin-bottom: 8px;
+        }
+
+        .info-row {
+            display: table;
+            width: 100%;
+            margin-bottom: 3px;
+        }
+
+        .info-label {
+            display: table-cell;
+            width: 25%;
+            font-weight: bold;
+            padding: 2px 4px;
+            background: #e8e8e8;
+            border: 1px solid #999;
+        }
+
+        .info-value {
+            display: table-cell;
+            width: 75%;
+            padding: 2px 4px;
+            border: 1px solid #999;
+            border-left: none;
+        }
+
         .items-table {
             width: 100%;
             border-collapse: collapse;
-            table-layout: auto;
             margin-bottom: 8px;
-        }
-
-        .info-table td,
-        .items-table th,
-        .items-table td {
-            font-size: 11px;
-            border: 1px solid black;
-            padding: 6px;
-            width: 35%;
+            font-size: 8pt;
         }
 
         .items-table th {
-            background-color: #ddd;
-        }
-
-        .corte {
-            margin-top: 15px;
-            margin-bottom: 15px;
-            border: none;
-            border-top: 3px dashed #333;
-            height: 3px;
-        }
-
-        p {
-            margin: 8px 0;
-        }
-
-        /* Highlight para Código Nuevo */
-        .highlight-codigo {
-            background-color: #fff9c4;
+            background: #333;
+            color: white;
+            padding: 4px;
+            text-align: left;
+            border: 1px solid #000;
             font-weight: bold;
         }
 
-        /* Fondo BODEGA para el primer formulario */
-        .fondo-bodega {
-            position: relative;
+        .items-table td {
+            padding: 3px 4px;
+            border: 1px solid #999;
         }
 
-        .fondo-bodega::before {
-            content: "BODEGA";
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) rotate(-45deg);
-            font-size: 80px;
+        .items-table tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+
+        .signatures {
+            display: table;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .signature-box {
+            display: table-cell;
+            width: 25%;
+            text-align: center;
+            padding: 0 5px;
+        }
+
+        .signature-line {
+            border-top: 1px solid #000;
+            margin-top: 25px;
+            padding-top: 3px;
+            font-size: 7pt;
             font-weight: bold;
-            color: rgba(0, 0, 0, 0.05);
-            z-index: 1;
-            pointer-events: none;
         }
 
-        /* Fondo USUARIO para el segundo formulario */
-        . fondo-usuario {
-            position: relative;
+        .signature-label {
+            font-size: 7pt;
+            color: #666;
+            margin-bottom: 2px;
         }
 
-        .fondo-usuario:: before {
-            content: "USUARIO";
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) rotate(-45deg);
-            font-size: 80px;
+        .observations {
+            margin-top: 6px;
+            padding: 4px;
+            border: 1px solid #999;
+            background: #f9f9f9;
+            min-height: 30px;
+            font-size: 8pt;
+        }
+
+        .observations-label {
             font-weight: bold;
-            color: rgba(0, 0, 0, 0.05);
-            z-index: 1;
-            pointer-events: none;
+            font-size: 8pt;
+            margin-bottom: 2px;
         }
 
-        .container>* {
-            position: relative;
-            z-index: 2;
-        }
-
-        input[type="text"],
-        input[type="date"],
-        input[type="time"],
-        textarea {
-            width: 95%;
-            box-sizing: border-box;
-            font-family: Montserrat, Arial, sans-serif;
-            font-size: 11px;
-            border: none;
-            outline: none;
-            height: 40px;
+        .page-break {
+            page-break-after: always;
         }
     </style>
 </head>
-
 <body>
-    <div class="container fondo-bodega">
-        <div class="header">SOLICITUD DE MATERIALES DE BODEGA</div>
+    @php
+        $copies = [
+            ['label' => 'COPIA USUARIO', 'class' => ''],
+            ['label' => 'COPIA BODEGA', 'class' => '']
+        ];
+    @endphp
 
-        <table class="info-table">
-            <tr>
-                <td><strong>FECHA: </strong> {{ $pdfData['fecha'] }}</td>
-                <td><strong>Pedido Nº:</strong> __________</td>
-            </tr>
-            <tr>
-                <td><strong>Para:</strong> {{ $pdfData['usuario_autoriza'] }}, Director Administrativo</td>
-                <td><strong>De: </strong> {{ $pdfData['usuario_solicita'] }}</td>
-            </tr>
-            <tr>
-                <td colspan="2"><strong>Departamento: </strong> {{ $pdfData['departamento'] }}</td>
-            </tr>
-            <tr>
-                <td colspan="2" class="highlight-codigo"><strong>Código Nuevo:</strong>
-                    {{ $pdfData['codigo_nuevo'] }}</td>
-            </tr>
-        </table>
+    @foreach($copies as $copy)
+    <div class="form-container {{ $copy['class'] }}">
+        <div class="copy-label">{{ $copy['label'] }}</div>
+        
+        <div class="header">
+            <h1>SOLICITUD DE MATERIALES Y CONSUMIBLES</h1>
+            <div class="numero">N° {{ $solicitud->numero_solicitud }}</div>
+        </div>
 
-        <p>Agradeceré disponga al Departamento de Bodega el despacho de los repuestos informáticos que serán utilizados
-            para mi equipo.</p>
+        <div class="info-section">
+            <div class="info-row">
+                <div class="info-label">FECHA:</div>
+                <div class="info-value">{{ \Carbon\Carbon::parse($solicitud->fecha_solicitud)->format('d/m/Y') }}</div>
+            </div>
 
-        <table class="items-table">
-            <thead>
-                <tr>
-                    <th>Item</th>
-                    <th>Código</th>
-                    <th>Descripción</th>
-                    <th>Cantidad Solicitada</th>
-                    <th>Cantidad Despachada</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($pdfData['consumibles'] as $index => $consumible)
-                    <tr>
-                        <td>{{ $index + 1 }}</td>
-                        <td>{{ $consumible['codigo'] }}</td>
-                        <td>{{ $consumible['nombre_consumible'] }}</td>
-                        <td>{{ $consumible['cantidad_solicitada'] }}</td>
-                        <td>________</td>
-                    </tr>
-                @endforeach
-            </tbody>
+            <div class="info-row">
+                <div class="info-label">DEPARTAMENTO:</div>
+                <div class="info-value">{{ $solicitud->departamento->nmbre_dprtmnto ?? 'N/A' }}</div>
+            </div>
 
-        </table>
+            <div class="info-row">
+                <div class="info-label">SOLICITANTE:</div>
+                <div class="info-value">{{ $solicitud->usuarioSolicita->nmbre_usrio ?? 'N/A' }}</div>
+            </div>
 
-        <table class="info-table">
-            <tr>
-                <td>
-                    <input type="text">
-                </td>
-                <td>
-                    <input type="text">
-                </td>
-                <td>
-                    <input type="text">
-                </td>
-            </tr>
-            <tr>
-                <td><strong>Director Área:</strong> {{ $pdfData['director_area'] }}</td>
-                <td><strong>Director TIC:</strong> Ing. {{ $pdfData['director_tic'] }}</td>
-                <td><strong>Autorizado por:</strong> {{ $pdfData['usuario_autoriza'] }}</td>
-            </tr>
-        </table>
-
-        <table class="info-table">
-            <tr>
-                <td>
-                    <input type="text">
-                </td>
-                <td>
-                    <input type="text">
-                </td>
-            </tr>
-            <tr>
-                <td><strong>Solicitado por:</strong> {{ $pdfData['usuario_solicita'] }}</td>
-                <td><strong>Entregado por: </strong></td>
-            </tr>
-        </table>
-    </div>
-
-    <hr class="corte" />
-
-    <div class="container fondo-usuario">
-        <div class="header">SOLICITUD DE MATERIALES DE BODEGA</div>
-
-        <table class="info-table">
-            <tr>
-                <td><strong>FECHA:</strong> {{ $pdfData['fecha'] }}</td>
-                <td><strong>Pedido Nº:</strong> __________</td>
-            </tr>
-            <tr>
-                <td><strong>Para:</strong> {{ $pdfData['usuario_autoriza'] }}, Director Administrativo</td>
-                <td><strong>De:</strong> {{ $pdfData['usuario_solicita'] }}</td>
-            </tr>
-            <tr>
-                <td colspan="2"><strong>Departamento:</strong> {{ $pdfData['departamento'] }}</td>
-            </tr>
-            <tr>
-                <td colspan="2" class="highlight-codigo"><strong>Código Nuevo: </strong>
-                    {{ $pdfData['codigo_nuevo'] }}</td>
-            </tr>
-        </table>
-
-        <p>Agradeceré disponga al Departamento de Bodega el despacho de los repuestos informáticos que serán utilizados
-            para mi equipo.</p>
+            <div class="info-row">
+                <div class="info-label">EQUIPO:</div>
+                <div class="info-value">
+                    @if($solicitud->consumibles->first() && $solicitud->consumibles->first()->pivot->equipo_id)
+                        @php
+                            $equipo = \App\Models\InvEquipo::find($solicitud->consumibles->first()->pivot->equipo_id);
+                        @endphp
+                        {{ $equipo ? ($equipo->codigo_nuevo ?? $equipo->codigo_antiguo) : 'N/A' }}
+                    @else
+                        N/A
+                    @endif
+                </div>
+            </div>
+        </div>
 
         <table class="items-table">
             <thead>
                 <tr>
-                    <th>Item</th>
-                    <th>Código</th>
-                    <th>Descripción</th>
-                    <th>Cantidad Solicitada</th>
-                    <th>Cantidad Despachada</th>
+                    <th style="width: 8%">#</th>
+                    <th style="width: 20%">CÓDIGO</th>
+                    <th style="width: 52%">DESCRIPCIÓN</th>
+                    <th style="width: 10%">CANT.</th>
+                    <th style="width: 10%">UNIDAD</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($pdfData['consumibles'] as $index => $consumible)
-                    <tr>
-                        <td>{{ $index + 1 }}</td>
-                        <td>{{ $consumible['codigo'] }}</td>
-                        <td>{{ $consumible['nombre_consumible'] }}</td>
-                        <td>{{ $consumible['cantidad_solicitada'] }}</td>
-                        <td>________</td>
-                    </tr>
+                @foreach($solicitud->consumibles as $index => $consumible)
+                <tr>
+                    <td style="text-align: center">{{ $index + 1 }}</td>
+                    <td>{{ $consumible->codigo ?? 'N/A' }}</td>
+                    <td>{{ $consumible->nombre_consumible }}</td>
+                    <td style="text-align: center">{{ $consumible->pivot->cantidad_solicitada }}</td>
+                    <td style="text-align: center">{{ $consumible->unidad ?? 'UND' }}</td>
+                </tr>
                 @endforeach
+                
+                @for($i = count($solicitud->consumibles); $i < 5; $i++)
+                <tr>
+                    <td style="text-align: center">{{ $i + 1 }}</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                </tr>
+                @endfor
             </tbody>
-
         </table>
 
-        <table class="info-table">
-            <tr>
-                <td>
-                    <input type="text">
-                </td>
-                <td>
-                    <input type="text">
-                </td>
-                <td>
-                    <input type="text">
-                </td>
-            </tr>
-            <tr>
-                <td><strong>Director Área:</strong> {{ $pdfData['director_area'] }}</td>
-                <td><strong>Director TIC:</strong> Ing. {{ $pdfData['director_tic'] }}</td>
-                <td><strong>Autorizado por: </strong> {{ $pdfData['usuario_autoriza'] }}</td>
-            </tr>
-        </table>
+        @if($solicitud->observaciones)
+        <div class="observations-label">OBSERVACIONES:</div>
+        <div class="observations">
+            {{ $solicitud->observaciones }}
+        </div>
+        @endif
 
-        <table class="info-table">
-            <tr>
-                <td>
-                    <input type="text">
-                </td>
-                <td>
-                    <input type="text">
-                </td>
-            </tr>
-            <tr>
-                <td><strong>Solicitado por:</strong> {{ $pdfData['usuario_solicita'] }}</td>
-                <td><strong>Entregado por:</strong></td>
-            </tr>
-        </table>
+        <div class="signatures">
+            <div class="signature-box">
+                <div class="signature-label">SOLICITANTE</div>
+                <div class="signature-line">
+                    {{ $solicitud->usuarioSolicita->nmbre_usrio ?? '' }}
+                </div>
+            </div>
+            
+            <div class="signature-box">
+                <div class="signature-label">AUTORIZADOR</div>
+                <div class="signature-line">
+                    {{ $solicitud->usuarioAutoriza->nmbre_usrio ?? '' }}
+                </div>
+            </div>
+            
+            <div class="signature-box">
+                <div class="signature-label">DIRECTOR ÁREA</div>
+                <div class="signature-line">
+                    @php
+                        $directorArea = \App\Models\User::find($solicitud->director_area);
+                    @endphp
+                    {{ $directorArea->nmbre_usrio ?? '' }}
+                </div>
+            </div>
+            
+            <div class="signature-box">
+                <div class="signature-label">DIRECTOR TIC</div>
+                <div class="signature-line">
+                    @php
+                        $directorTic = \App\Models\User::find($solicitud->director_tic);
+                    @endphp
+                    {{ $directorTic->nmbre_usrio ?? '' }}
+                </div>
+            </div>
+        </div>
     </div>
+    @endforeach
 </body>
-
 </html>

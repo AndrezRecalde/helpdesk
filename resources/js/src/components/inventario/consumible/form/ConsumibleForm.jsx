@@ -19,7 +19,7 @@ export const ConsumibleForm = ({ form }) => {
         if (activateConsumible !== null) {
             form.setValues({
                 ...activateConsumible,
-                categoria_id: activateConsumible?.categoria_id?.toString(),
+                categoria_id: activateConsumible?.categoria?.id.toString(),
             });
         }
     }, [activateConsumible]);

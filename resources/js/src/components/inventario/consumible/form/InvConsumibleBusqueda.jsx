@@ -5,8 +5,7 @@ import { isNotEmpty, useForm } from "@mantine/form";
 import { useInvConsumibleStore } from "../../../../hooks";
 
 export const InvConsumibleBusqueda = ({ isOpenModal }) => {
-    const { activateConsumible, startLoadHistorialConsumible } =
-        useInvConsumibleStore();
+    const { activateConsumible } = useInvConsumibleStore();
 
     const form = useForm({
         initialValues: {

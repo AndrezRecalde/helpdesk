@@ -37,7 +37,7 @@ export const useInvConsumibleStore = () => {
                 "/gerencia/inventario/consumibles",
                 {
                     categoria_id,
-                }
+                },
             );
             const { consumibles } = data;
             dispatch(onLoadInvConsumibles(consumibles));
@@ -46,24 +46,6 @@ export const useInvConsumibleStore = () => {
             ExceptionMessageError(error);
         }
     };
-
-    const startLoadHistorialConsumible = async ({ consumible_id, anio }) => {
-        try {
-            dispatch(onLoadingHistorial(true));
-            const { data } = await helpdeskApi.post(
-                "/gerencia/inventario/historial-consumible",
-                {
-                    consumible_id,
-                    anio
-                }
-            );
-            const { historial } = data;
-            dispatch(onLoadInvHistorial(historial));
-        } catch (error) {
-            //console.log(error);
-            ExceptionMessageError(error);
-        }
-    }
 
     /* const startLoadInvConsumiblesSelects = async ({ categoria_id = null }) => {
         try {
@@ -87,7 +69,7 @@ export const useInvConsumibleStore = () => {
             if (consumible.id) {
                 const { data } = await helpdeskApi.put(
                     `/gerencia/inventario/update/consumible/${consumible.id}`,
-                    consumible
+                    consumible,
                 );
                 startLoadInvConsumibles({});
                 dispatch(onLoadMessage(data));
@@ -98,7 +80,7 @@ export const useInvConsumibleStore = () => {
             }
             const { data } = await helpdeskApi.post(
                 "/gerencia/inventario/store/consumible",
-                consumible
+                consumible,
             );
             startLoadInvConsumibles({});
             dispatch(onLoadMessage(data));
@@ -114,7 +96,7 @@ export const useInvConsumibleStore = () => {
     const startDeleteInvConsumible = async (consumible) => {
         try {
             const { data } = await helpdeskApi.delete(
-                `/gerencia/inventario/consumible/destroy/${consumible.id}`
+                `/gerencia/inventario/consumible/destroy/${consumible.id}`,
             );
             dispatch(onDeleteInvConsumible());
             dispatch(onLoadMessage(data));
@@ -131,7 +113,7 @@ export const useInvConsumibleStore = () => {
         try {
             const { data } = await helpdeskApi.put(
                 `/gerencia/inventario/consumible/incrementar/${consumible.id}`,
-                consumible
+                consumible,
             );
             startLoadInvConsumibles({});
             dispatch(onLoadMessage(data));
@@ -151,7 +133,7 @@ export const useInvConsumibleStore = () => {
             const response = await helpdeskApi.post(
                 "/gerencia/inventario/solicitar-consumible",
                 solicitud,
-                { responseType: "blob" }
+                { responseType: "blob" },
             );
             const pdfBlob = new Blob([response.data], {
                 type: "application/pdf",
@@ -175,7 +157,7 @@ export const useInvConsumibleStore = () => {
 
     const startClearHistorial = () => {
         dispatch(onClearInvHistorial());
-    }
+    };
 
     return {
         isLoading,
@@ -187,7 +169,6 @@ export const useInvConsumibleStore = () => {
         errores,
 
         startLoadInvConsumibles,
-        startLoadHistorialConsumible,
         //startLoadInvConsumiblesSelects,
         startAddConsumible,
         startDeleteInvConsumible,
@@ -195,6 +176,6 @@ export const useInvConsumibleStore = () => {
         startSolicitarConsumible,
         setActivateInvConsumible,
         startClearInvConsumibles,
-        startClearHistorial
+        startClearHistorial,
     };
 };

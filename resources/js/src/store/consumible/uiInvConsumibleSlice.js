@@ -5,7 +5,6 @@ export const uiInvConsumibleSlice = createSlice({
         isOpenModalInvConsumible: false,
         isOpenModalStockInvConsumible: false,
         isOpenModalSolicitudConsumible: false,
-        isOpenModalHistorialConsumible: false,
     },
     reducers: {
         onOpenModalInvConsumible: (state, { payload }) => {
@@ -17,9 +16,6 @@ export const uiInvConsumibleSlice = createSlice({
         onOpenModalSolicitudConsumible: (state, { payload }) => {
             state.isOpenModalSolicitudConsumible = payload;
         },
-        onOpenModalHistorialConsumible: (state, { payload }) => {
-            state.isOpenModalHistorialConsumible = payload;
-        },
     },
 });
 
@@ -27,5 +23,4 @@ export const {
     onOpenModalInvConsumible,
     onOpenModalStockInvConsumible,
     onOpenModalSolicitudConsumible,
-    onOpenModalHistorialConsumible,
 } = uiInvConsumibleSlice.actions;

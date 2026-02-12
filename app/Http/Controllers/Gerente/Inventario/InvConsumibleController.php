@@ -20,13 +20,27 @@ use Illuminate\Support\Facades\Log;
 class InvConsumibleController extends Controller
 {
     // CRUD
-    public function getInvConsumibles(Request $request): JsonResponse
+    /* public function getInvConsumibles(Request $request): JsonResponse
     {
         $consumibles = InvConsumible::from('inv_consumibles as invcon')
             ->selectRaw('invcon.id, invcon.nombre_consumible, invcon.codigo,
                                  invcon.categoria_id, invc.nombre_categoria, invcon.activo, invcon.stock')
             ->join('inv_categorias as invc', 'invc.id', 'invcon.categoria_id')
             ->byCategoriaId($request->categoria_id)
+            ->latest('invcon.id')->get();
+
+        return response()->json([
+            'status' => MsgStatus::Success,
+            'consumibles' => $consumibles
+        ], 200);
+    } */
+
+    //getInvConsumibles con Eloquent
+    public function getInvConsumibles(Request $request): JsonResponse
+    {
+        $consumibles = InvConsumible::with('categoria')
+            ->byCategoriaId($request->categoria_id)
+            ->latest('id')
             ->get();
 
         return response()->json([
@@ -50,7 +64,7 @@ class InvConsumibleController extends Controller
 
             return response()->json([
                 'status' => MsgStatus::Success,
-                'msg'    => MsgStatus::Created
+                'msg' => MsgStatus::Created
             ], 201);
         } catch (\Throwable $th) {
             DB::rollBack();  // Revertir la transacción en caso de error
@@ -120,12 +134,12 @@ class InvConsumibleController extends Controller
     public function solicitarConsumible(Request $request)
     {
         $request->validate([
-            'departamento_id'   => 'required|exists:dprtmntos,cdgo_dprtmnto',
-            'usuario_solicita'  => 'required|exists:usrios_sstma,cdgo_usrio',
-            'consumibles'       => 'required|array',
-            'consumibles.*.id'  => 'required|exists:inv_consumibles,id',
+            'departamento_id' => 'required|exists:dprtmntos,cdgo_dprtmnto',
+            'usuario_solicita' => 'required|exists:usrios_sstma,cdgo_usrio',
+            'consumibles' => 'required|array',
+            'consumibles.*.id' => 'required|exists:inv_consumibles,id',
             'consumibles.*.cantidad' => 'required|integer|min:1',
-            'usuario_autoriza'  => 'required|exists:usrios_sstma,cdgo_usrio',
+            'usuario_autoriza' => 'required|exists:usrios_sstma,cdgo_usrio',
         ]);
 
         try {
@@ -143,7 +157,7 @@ class InvConsumibleController extends Controller
                 $directorTic = Departamento::where('cdgo_dprtmnto', 22)
                     ->with('jefe:cdgo_usrio,nmbre_usrio')
                     ->first();
-                $equipo = InvEquipo::where('id',  $request->equipo_id)->first(['id', 'codigo_nuevo', 'codigo_antiguo']);
+                $equipo = InvEquipo::where('id', $request->equipo_id)->first(['id', 'codigo_nuevo', 'codigo_antiguo']);
 
                 if (!$director) {
                     throw new \Exception('No se encontró el director del departamento.');
@@ -151,14 +165,14 @@ class InvConsumibleController extends Controller
 
                 // Preparar datos para el PDF
                 $pdfData = [
-                    'fecha'            => $request->fecha === null ? now()->format('Y-m-d') : $request->fecha,
-                    'departamento'     => $departamento->nmbre_dprtmnto,
-                    'consumibles'      => [],
+                    'fecha' => $request->fecha === null ? now()->format('Y-m-d') : $request->fecha,
+                    'departamento' => $departamento->nmbre_dprtmnto,
+                    'consumibles' => [],
                     'usuario_solicita' => $solicita->nmbre_usrio,
                     'usuario_autoriza' => $autoriza->nmbre_usrio,
-                    'director_area'    => $director->jefe->nmbre_usrio,
-                    'director_tic'     => $directorTic->jefe->nmbre_usrio,
-                    'codigo_nuevo'     => $equipo->codigo_nuevo
+                    'director_area' => $director->jefe->nmbre_usrio,
+                    'director_tic' => $directorTic->jefe->nmbre_usrio,
+                    'codigo_nuevo' => $equipo->codigo_nuevo
                 ];
 
                 foreach ($request->consumibles as $item) {
@@ -173,58 +187,34 @@ class InvConsumibleController extends Controller
 
                     // Agregar consumible al array para el PDF
                     $pdfData['consumibles'][] = [
-                        'id'                => $item['id'],
+                        'id' => $item['id'],
                         'nombre_consumible' => $consumible->nombre_consumible,
-                        'codigo'            => $consumible->codigo,
+                        'codigo' => $consumible->codigo,
                         'cantidad_solicitada' => $item['cantidad'],
                         //'fecha'             => $request->fecha === null ? now()->format('d/m/Y') : $request->fecha,
                     ];
 
                     // Registrar en tabla pivote
                     $departamento->consumibles()->attach($item['id'], [
-                        'cantidad_solicitada'  => $item['cantidad'],
-                        'usuario_autoriza' =>  $request->usuario_autoriza,
-                        'usuario_solicita' =>  $request->usuario_solicita,
-                        'equipo_id'        =>  $equipo->id,
-                        'director_area'    =>  $director->jefe->cdgo_usrio,
-                        'director_tic'     =>  $directorTic->jefe->cdgo_usrio,
-                        'fecha'            => $request->fecha === null ? now()->format('Y-m-d') : $request->fecha
+                        'cantidad_solicitada' => $item['cantidad'],
+                        'usuario_autoriza' => $request->usuario_autoriza,
+                        'usuario_solicita' => $request->usuario_solicita,
+                        'equipo_id' => $equipo->id,
+                        'director_area' => $director->jefe->cdgo_usrio,
+                        'director_tic' => $directorTic->jefe->cdgo_usrio,
+                        'fecha' => $request->fecha === null ? now()->format('Y-m-d') : $request->fecha
                     ]);
                 }
             });
 
             // Generar el PDF fuera de la transacción
             /* return response()->json(['status' => 'success', 'data' => $pdfData], 201); */
-            $pdf = Pdf::loadView('pdf.consumible.solicitud_materiales',  compact('pdfData'));
+            $pdf = Pdf::loadView('pdf.consumible.solicitud_materiales', compact('pdfData'));
 
             return $pdf->setPaper('a4', 'portrait')->download('Solicitud_Materiales.pdf');
         } catch (\Exception $e) {
             Log::error('Error al crear solicitud: ' . $e->getMessage());
             return response()->json(['status' => 'error', 'error' => $e->getMessage()], 400);
-        }
-    }
-
-    function historialConsumible(Request $request): JsonResponse
-    {
-        try {
-            $historial = DB::table('departamento_consumible as dc')
-                ->select(
-                    'dc.id',
-                    //'dc.consumible_id', 'invcon.nombre_consumible',
-                    'dc.departamento_id','d.nmbre_dprtmnto as direccion',
-                    'dc.usuario_solicita','us.nmbre_usrio as solicitante',
-                    'dc.fecha', 'dc.cantidad_solicitada'
-                )
-                ->join('usrios_sstma as us', 'us.cdgo_usrio', 'dc.usuario_solicita')
-                ->join('dprtmntos as d', 'd.cdgo_dprtmnto', 'dc.departamento_id')
-                //->join('inv_consumibles as invcon', 'invcon.id', 'dc.consumible_id')
-                ->where('dc.consumible_id', $request->consumible_id)
-                ->where('dc.fecha', 'LIKE', '%' . $request->anio . '%')
-                ->orderBy('dc.id', 'DESC')
-                ->get();
-            return response()->json(['status' => MsgStatus::Success, 'historial' => $historial], 200);
-        } catch (\Throwable $th) {
-            return response()->json(['status' => 'error', 'message' => $th->getMessage()], 500);
         }
     }
 }

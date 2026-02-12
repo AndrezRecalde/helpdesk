@@ -1,6 +1,8 @@
 import {
     IconBeach,
+    IconBrandTelegram,
     IconBuilding,
+    IconCategory,
     IconCertificate,
     IconChartBar,
     IconCopyCheck,
@@ -97,6 +99,13 @@ export const NavMenuTics = {
             link: "/helpdesk/gerencia/inventario/consumibles",
             roles: [Roles.TIC_GERENTE],
         },
+        {
+            icon: IconBrandTelegram,
+            title: "Solicitud Consumibles",
+            path: "inventario/solicitudes-consumibles",
+            link: "/helpdesk/gerencia/inventario/solicitudes-consumibles",
+            roles: [Roles.TIC_GERENTE],
+        },
     ],
 };
 /* Menu de Admin TICs */
@@ -121,6 +130,13 @@ export const NavMenuAdminTics = {
             title: "Gestionar Tecnicos",
             path: "tecnicos",
             link: "/helpdesk/gerencia/tecnicos",
+            roles: [Roles.TIC_GERENTE],
+        },
+        {
+            icon: IconCategory,
+            title: "Gestionar Áreas Informáticas",
+            path: "areas",
+            link: "/helpdesk/gerencia/areas-tic",
             roles: [Roles.TIC_GERENTE],
         },
     ],

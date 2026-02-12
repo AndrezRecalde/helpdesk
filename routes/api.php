@@ -27,6 +27,7 @@ use App\Http\Controllers\Gerente\Inventario\InvBajaController;
 use App\Http\Controllers\Gerente\Inventario\InvCategoriaController;
 use App\Http\Controllers\Gerente\Inventario\InvConceptoController;
 use App\Http\Controllers\Gerente\Inventario\InvConsumibleController;
+use App\Http\Controllers\Gerente\Inventario\SolicitudConsumibleController;
 use App\Http\Controllers\Gerente\Inventario\InvDocumentoController;
 use App\Http\Controllers\Gerente\Inventario\InvEquipoController;
 use App\Http\Controllers\Gerente\Inventario\InvEstadoController;
@@ -234,7 +235,13 @@ Route::group(['prefix' => 'gerencia', 'middleware' => ['auth:sanctum', 'role:TIC
     Route::delete('/inventario/consumible/destroy/{id}', [InvConsumibleController::class, 'destroy']);
     Route::put('/inventario/consumible/incrementar/{id}', [InvConsumibleController::class, 'incrementarStock']);
     Route::post('/inventario/solicitar-consumible', [InvConsumibleController::class, 'solicitarConsumible']);
-    Route::post('/inventario/historial-consumible', [InvConsumibleController::class, 'historialConsumible']);
+
+    /* SOLICITUDES DE CONSUMIBLES */
+    Route::post('/inventario/solicitudes-consumibles', [SolicitudConsumibleController::class, 'index']);
+    Route::post('/inventario/solicitud-consumible/store', [SolicitudConsumibleController::class, 'store']);
+    Route::get('/inventario/solicitud-consumible/{id}', [SolicitudConsumibleController::class, 'show']);
+    Route::get('/inventario/solicitud-consumible/{id}/pdf', [SolicitudConsumibleController::class, 'exportPDF']);
+    Route::post('/inventario/solicitud-consumible/historial', [SolicitudConsumibleController::class, 'historialPorConsumible']);
 
 });
 

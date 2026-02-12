@@ -4,16 +4,13 @@ import { MRT_Localization_ES } from "mantine-react-table/locales/es/index.cjs";
 import { MenuTableActions, TableContent } from "../../../../components";
 import { useInvConsumibleStore, useUiInvConsumible } from "../../../../hooks";
 import { NavLink } from "@mantine/core";
-import { IconEditCircle, IconHistory } from "@tabler/icons-react";
+import { IconEditCircle } from "@tabler/icons-react";
 
 export const InvConsumibleTable = () => {
     const { isLoading, consumibles, setActivateInvConsumible } =
         useInvConsumibleStore();
-    const {
-        modalActionConsumible,
-        modalActionStockConsumible,
-        modalActionHistorialConsumible,
-    } = useUiInvConsumible();
+    const { modalActionConsumible, modalActionStockConsumible } =
+        useUiInvConsumible();
 
     const columns = useMemo(
         () => [
@@ -29,7 +26,7 @@ export const InvConsumibleTable = () => {
             },
             {
                 header: "Categoría",
-                accessorKey: "nombre_categoria",
+                accessorKey: "categoria.nombre_categoria",
                 filterVariant: "autocomplete",
             },
             {
@@ -68,14 +65,6 @@ export const InvConsumibleTable = () => {
         [consumibles],
     );
 
-    const handleHistorial = useCallback(
-        (selected) => {
-            setActivateInvConsumible(selected);
-            modalActionHistorialConsumible(true);
-        },
-        [consumibles],
-    );
-
     const table = useMantineReactTable({
         columns,
         data: consumibles, //must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
@@ -93,27 +82,9 @@ export const InvConsumibleTable = () => {
                         label: "Editar",
                         onClick: handleEditar,
                     },
-                    {
-                        icon: IconHistory,
-                        label: "Historial",
-                        onClick: handleHistorial,
-                    },
                 ]}
             />
         ),
-        /* renderTopToolbarCustomActions: ({ table }) =>
-            consumibles.length !== 0 ? (
-                <ActionReportPDF handleExportDataPDF={handleExportDataPDF} />
-            ) : null, */
-        /* mantineTableBodyCellProps: ({ column, cell }) => ({
-            style:
-                column.id === "nombre_estado"
-                    ? {
-                          backgroundColor: cell.row.original.color,
-                          color: "white",
-                      }
-                    : {},
-        }), */
         mantineTableProps: {
             withColumnBorders: true,
             withTableBorder: true,

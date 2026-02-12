@@ -129,6 +129,10 @@ import { useInvUiUbicacion } from "./inventario/ubicacion/useInvUiUbicacion";
 import { useInvConsumibleStore } from "./inventario/consumible/useInvConsumibleStore";
 import { useUiInvConsumible } from "./inventario/consumible/useUiInvConsumible";
 
+/* Inventario: Solicitudes Consumibles */
+import { useSolicitudConsumibleStore } from "./inventario/solicitudConsumible/useSolicitudConsumibleStore";
+import { useUiSolicitudConsumible } from "./inventario/solicitudConsumible/useUiSolicitudConsumible";
+
 /* Inventario: UI Custodio */
 import { useUiInvCustodio } from "./inventario/custodio/useUiInvCustodio";
 
@@ -203,6 +207,8 @@ export {
     useInvUiUbicacion,
     useInvConsumibleStore,
     useUiInvConsumible,
+    useSolicitudConsumibleStore,
+    useUiSolicitudConsumible,
     useUiInvCustodio,
     useRutaStore,
     useUiRuta,

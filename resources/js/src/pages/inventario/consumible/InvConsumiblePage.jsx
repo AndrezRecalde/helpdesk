@@ -1,14 +1,12 @@
 import { Container, Divider, Group } from "@mantine/core";
 import {
-    BtnAddActions,
     InvConsumibleModal,
     ConsumibleStockModal,
     InvConsumibleTable,
-    InvSolicitudConsumibleModal,
     TitlePage,
-    InvConsumibleHistorialModal,
+    BtnSection,
 } from "../../../components";
-import { IconBrandTelegram, IconCubePlus } from "@tabler/icons-react";
+import { IconCubePlus } from "@tabler/icons-react";
 import {
     useInvConsumibleStore,
     useTitlePage,
@@ -27,8 +25,7 @@ const InvConsumiblePage = () => {
         message,
         errores,
     } = useInvConsumibleStore();
-    const { modalActionConsumible, modalActionSolicitudConsumible } =
-        useUiInvConsumible();
+    const { modalActionConsumible } = useUiInvConsumible();
 
     useEffect(() => {
         startLoadInvConsumibles({});
@@ -83,30 +80,16 @@ const InvConsumiblePage = () => {
         modalActionConsumible(true);
     };
 
-    const handleSolicitar = () => {
-        modalActionSolicitudConsumible(true);
-    };
-
-    const menuActions = [
-        {
-            label: "Nuevo Consumible",
-            icon: IconCubePlus,
-            onClick: handleAgregar,
-            color: "teal",
-        },
-        {
-            label: "Solicitar Consumible",
-            icon: IconBrandTelegram,
-            onClick: handleSolicitar,
-            color: "red",
-        },
-    ];
-
     return (
         <Container size="xl">
             <Group justify="space-between">
                 <TitlePage order={2}>Inventario de Consumibles</TitlePage>
-                <BtnAddActions actions={menuActions}>Crear nuevo</BtnAddActions>
+                <BtnSection
+                    IconSection={IconCubePlus}
+                    handleAction={handleAgregar}
+                >
+                    Nuevo Consumible
+                </BtnSection>
             </Group>
             <Divider my="sm" />
 
@@ -114,8 +97,6 @@ const InvConsumiblePage = () => {
 
             <InvConsumibleModal />
             <ConsumibleStockModal />
-            <InvSolicitudConsumibleModal />
-            <InvConsumibleHistorialModal />
         </Container>
     );
 };

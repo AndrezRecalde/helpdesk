@@ -1,137 +1,171 @@
 import { lazy } from "react";
 import { Roles } from "../../helpers/dictionary";
 
-const AuthPage = lazy(() =>
-    import(/* webpackChunkName: "AuthPage" */ "../../pages/auth/AuthPage")
+const AuthPage = lazy(
+    () =>
+        import(/* webpackChunkName: "AuthPage" */ "../../pages/auth/AuthPage"),
 );
 
-const AppLogosPage = lazy(() =>
-    import(
-        /* webpackChunkName: "AppLogosPage" */ "../../pages/app/AppLogosPage"
-    )
+const AppLogosPage = lazy(
+    () =>
+        import(
+            /* webpackChunkName: "AppLogosPage" */ "../../pages/app/AppLogosPage"
+        ),
 );
 
-const ConsultaTramiteRutaPage = lazy(() =>
-    import(
-        /* webpackChunkName: "ConsultaTramiteRutaPage" */ "../../pages/ruta/ConsultaTramiteRutaPage"
-    )
+const ConsultaTramiteRutaPage = lazy(
+    () =>
+        import(
+            /* webpackChunkName: "ConsultaTramiteRutaPage" */ "../../pages/ruta/ConsultaTramiteRutaPage"
+        ),
 );
 
-const HomePage = lazy(() =>
-    import(/* webpackChunkName: "HomePage" */ "../../pages/home/HomePage")
+const HomePage = lazy(
+    () =>
+        import(/* webpackChunkName: "HomePage" */ "../../pages/home/HomePage"),
 );
 
-const DashGerenciaPage = lazy(() =>
-    import(
-        /* webpackChunkName: "DashGerenciaPage" */ "../../pages/dashboard/gerencia/DashGerenciaPage"
-    )
+const DashGerenciaPage = lazy(
+    () =>
+        import(
+            /* webpackChunkName: "DashGerenciaPage" */ "../../pages/dashboard/gerencia/DashGerenciaPage"
+        ),
 );
-const AdminUsersPage = lazy(() =>
-    import(
-        /* webpackChunkName: "AdminUsersPage" */ "../../pages/gerencia/AdminUsersPage"
-    )
+const AdminUsersPage = lazy(
+    () =>
+        import(
+            /* webpackChunkName: "AdminUsersPage" */ "../../pages/gerencia/AdminUsersPage"
+        ),
 );
-const AdminDireccionesPage = lazy(() =>
-    import(
-        /* webpackChunkName: "AdminDireccionesPage" */ "../../pages/gerencia/AdminDireccionesPage"
-    )
+const AdminDireccionesPage = lazy(
+    () =>
+        import(
+            /* webpackChunkName: "AdminDireccionesPage" */ "../../pages/gerencia/AdminDireccionesPage"
+        ),
 );
-const AdminTecnicosPage = lazy(() =>
-    import(
-        /* webpackChunkName: "AdminTecnicosPage" */ "../../pages/gerencia/AdminTecnicosPage"
-    )
+const AdminTecnicosPage = lazy(
+    () =>
+        import(
+            /* webpackChunkName: "AdminTecnicosPage" */ "../../pages/gerencia/AdminTecnicosPage"
+        ),
 );
-const AdminAreasPage = lazy(() =>
-    import(
-        /* webpackChunkName: "AdminAreasPage" */ "../../pages/gerencia/AdminAreasPage"
-    )
+const AdminAreasPage = lazy(
+    () =>
+        import(
+            /* webpackChunkName: "AdminAreasPage" */ "../../pages/gerencia/AdminAreasPage"
+        ),
 );
-const DashboardAreasPage = lazy(() =>
-    import(
-        /* webpackChunkName: "DashboardAreasPage" */ "../../pages/gerencia/DashboardAreasPage"
-    )
+const DashboardAreasPage = lazy(
+    () =>
+        import(
+            /* webpackChunkName: "DashboardAreasPage" */ "../../pages/gerencia/DashboardAreasPage"
+        ),
 );
-const SolicitudesActualesPage = lazy(() =>
-    import(
-        /* webpackChunkName: "SolicitudesActualesPage" */ "../../pages/solicitud/SolicitudesActualesPage"
-    )
+const SolicitudesActualesPage = lazy(
+    () =>
+        import(
+            /* webpackChunkName: "SolicitudesActualesPage" */ "../../pages/solicitud/SolicitudesActualesPage"
+        ),
 );
-const SoportesPage = lazy(() =>
-    import(
-        /* webpackChunkName: "SoportesPage" */ "../../pages/soporte/SoportesPage"
-    )
+const SoportesPage = lazy(
+    () =>
+        import(
+            /* webpackChunkName: "SoportesPage" */ "../../pages/soporte/SoportesPage"
+        ),
 );
-const SoporteCalificacionPage = lazy(() =>
-    import(
-        /* webpackChunkName: "SoporteCalificacionPage" */ "../../pages/soporte/SoporteCalificacionPage"
-    )
+const SoporteCalificacionPage = lazy(
+    () =>
+        import(
+            /* webpackChunkName: "SoporteCalificacionPage" */ "../../pages/soporte/SoporteCalificacionPage"
+        ),
 );
-const IndicadorReportPage = lazy(() =>
-    import(
-        /* webpackChunkName: "IndicadorReportPage" */ "../../pages/soporte/reporte/IndicadorReportPage"
-    )
+const IndicadorReportPage = lazy(
+    () =>
+        import(
+            /* webpackChunkName: "IndicadorReportPage" */ "../../pages/soporte/reporte/IndicadorReportPage"
+        ),
 );
-const ReporteSoportes = lazy(() =>
-    import(
-        /* webpackChunkName: "ReporteSoportes" */ "../../pages/soporte/reporte/ReporteSoportes"
-    )
+const ReporteSoportes = lazy(
+    () =>
+        import(
+            /* webpackChunkName: "ReporteSoportes" */ "../../pages/soporte/reporte/ReporteSoportes"
+        ),
 );
-const ConfigInventarioPage = lazy(() =>
-    import(
-        /* webpackChunkName: "ConfigInventarioPage" */ "../../pages/inventario/ConfigInventarioPage"
-    )
+const ConfigInventarioPage = lazy(
+    () =>
+        import(
+            /* webpackChunkName: "ConfigInventarioPage" */ "../../pages/inventario/ConfigInventarioPage"
+        ),
 );
-const InvEquiposPage = lazy(() =>
-    import(
-        /* webpackChunkName: "InvEquiposPage" */ "../../pages/inventario/equipo/InvEquiposPage"
-    )
+const InvEquiposPage = lazy(
+    () =>
+        import(
+            /* webpackChunkName: "InvEquiposPage" */ "../../pages/inventario/equipo/InvEquiposPage"
+        ),
 );
-const InvConsumiblePage = lazy(() =>
-    import(
-        /* webpackChunkName: "InvConsumiblePage" */ "../../pages/inventario/consumible/InvConsumiblePage"
-    )
+const InvConsumiblePage = lazy(
+    () =>
+        import(
+            /* webpackChunkName: "InvConsumiblePage" */ "../../pages/inventario/consumible/InvConsumiblePage"
+        ),
 );
-
-const ListPermisosAdminPage = lazy(() =>
-    import(
-        /* webpackChunkName: "ListPermisosAdminPage" */ "../../pages/permisos/ListPermisosAdminPage"
-    )
-);
-const ConsolidadoPermisosPage = lazy(() =>
-    import(
-        /* webpackChunkName: "ConsolidadoPermisosPage" */ "../../pages/permisos/ConsolidadoPermisosPage"
-    )
-);
-
-const SolicitudPage = lazy(() =>
-    import(
-        /* webpackChunkName: "SolicitudPage" */ "../../pages/solicitud/SolicitudPage"
-    )
-);
-const UserSoportesPage = lazy(() =>
-    import(
-        /* webpackChunkName: "UserSoportesPage" */ "../../pages/soporte/UserSoportesPage"
-    )
+const SolicitudesConsumiblesPage = lazy(
+    () =>
+        import(
+            /* webpackChunkName: "SolicitudesConsumiblesPage" */ "../../pages/inventario/solicitudConsumible/SolicitudesConsumiblesPage"
+        ),
 );
 
-const ProfilePage = lazy(() =>
-    import(/* webpackChunkName: "ProfilePage" */ "../../pages/user/ProfilePage")
+const ListPermisosAdminPage = lazy(
+    () =>
+        import(
+            /* webpackChunkName: "ListPermisosAdminPage" */ "../../pages/permisos/ListPermisosAdminPage"
+        ),
 );
-const ChangePwdPage = lazy(() =>
-    import(
-        /* webpackChunkName: "ChangePwdPage" */ "../../pages/user/ChangePwdPage"
-    )
-);
-const MarcacionPage = lazy(() =>
-    import(
-        /* webpackChunkName: "MarcacionPage" */ "../../pages/marcacion/MarcacionPage"
-    )
+const ConsolidadoPermisosPage = lazy(
+    () =>
+        import(
+            /* webpackChunkName: "ConsolidadoPermisosPage" */ "../../pages/permisos/ConsolidadoPermisosPage"
+        ),
 );
 
-const MarcacionesBiometricos = lazy(() =>
-    import(
-        /* webpackChunkName: "MarcacionesBiometricos" */ "../../pages/marcacion/MarcacionesBiometricos"
-    )
+const SolicitudPage = lazy(
+    () =>
+        import(
+            /* webpackChunkName: "SolicitudPage" */ "../../pages/solicitud/SolicitudPage"
+        ),
+);
+const UserSoportesPage = lazy(
+    () =>
+        import(
+            /* webpackChunkName: "UserSoportesPage" */ "../../pages/soporte/UserSoportesPage"
+        ),
+);
+
+const ProfilePage = lazy(
+    () =>
+        import(
+            /* webpackChunkName: "ProfilePage" */ "../../pages/user/ProfilePage"
+        ),
+);
+const ChangePwdPage = lazy(
+    () =>
+        import(
+            /* webpackChunkName: "ChangePwdPage" */ "../../pages/user/ChangePwdPage"
+        ),
+);
+const MarcacionPage = lazy(
+    () =>
+        import(
+            /* webpackChunkName: "MarcacionPage" */ "../../pages/marcacion/MarcacionPage"
+        ),
+);
+
+const MarcacionesBiometricos = lazy(
+    () =>
+        import(
+            /* webpackChunkName: "MarcacionesBiometricos" */ "../../pages/marcacion/MarcacionesBiometricos"
+        ),
 );
 
 //const MarcacionOnlinePage = lazy(() =>
@@ -140,79 +174,92 @@ const MarcacionesBiometricos = lazy(() =>
 //    )
 //);
 
-const ActividadPage = lazy(() =>
-    import(
-        /* webpackChunkName: "ActividadPage" */ "../../pages/actividad/ActividadPage"
-    )
+const ActividadPage = lazy(
+    () =>
+        import(
+            /* webpackChunkName: "ActividadPage" */ "../../pages/actividad/ActividadPage"
+        ),
 );
-const ListActividadesPage = lazy(() =>
-    import(
-        /* webpackChunkName: "ListActividadesPage" */ "../../pages/actividad/ListActividadesPage"
-    )
+const ListActividadesPage = lazy(
+    () =>
+        import(
+            /* webpackChunkName: "ListActividadesPage" */ "../../pages/actividad/ListActividadesPage"
+        ),
 );
-const PermisosPage = lazy(() =>
-    import(
-        /* webpackChunkName: "PermisosPage" */ "../../pages/permisos/PermisosPage"
-    )
+const PermisosPage = lazy(
+    () =>
+        import(
+            /* webpackChunkName: "PermisosPage" */ "../../pages/permisos/PermisosPage"
+        ),
 );
-const ListPermisosPage = lazy(() =>
-    import(
-        /* webpackChunkName: "ListPermisosPage" */ "../../pages/permisos/ListPermisosPage"
-    )
-);
-
-const AutorizarPermisosPage = lazy(() =>
-    import(
-        /* webpackChunkName: "AutorizarPermisosPage" */ "../../pages/permisos/AutorizarPermisosPage"
-    )
+const ListPermisosPage = lazy(
+    () =>
+        import(
+            /* webpackChunkName: "ListPermisosPage" */ "../../pages/permisos/ListPermisosPage"
+        ),
 );
 
-const SolicitudVacacionesPage = lazy(() =>
-    import(
-        /* webpackChunkName: "SolicitudVacacionesPage" */ "../../pages/vacaciones/SolicitudVacacionesPage"
-    )
+const AutorizarPermisosPage = lazy(
+    () =>
+        import(
+            /* webpackChunkName: "AutorizarPermisosPage" */ "../../pages/permisos/AutorizarPermisosPage"
+        ),
 );
 
-const SolicitudesVacacionesPage = lazy(() =>
-    import(
-        /* webpackChunkName: "SolicitudesVacacionesPage" */ "../../pages/vacaciones/SolicitudesVacacionesPage"
-    )
+const SolicitudVacacionesPage = lazy(
+    () =>
+        import(
+            /* webpackChunkName: "SolicitudVacacionesPage" */ "../../pages/vacaciones/SolicitudVacacionesPage"
+        ),
 );
 
-const PeriodoVacacionalesPage = lazy(() =>
-    import(
-        /* webpackChunkName: "PeriodoVacacionalesPage" */ "../../pages/vacaciones/PeriodoVacacionalesPage"
-    )
+const SolicitudesVacacionesPage = lazy(
+    () =>
+        import(
+            /* webpackChunkName: "SolicitudesVacacionesPage" */ "../../pages/vacaciones/SolicitudesVacacionesPage"
+        ),
 );
 
-const DescuentoVacacionesPage = lazy(() =>
-    import(
-        /* webpackChunkName: "DescuentoVacacionesPage" */ "../../pages/vacaciones/DescuentoVacacionesPage"
-    )
+const PeriodoVacacionalesPage = lazy(
+    () =>
+        import(
+            /* webpackChunkName: "PeriodoVacacionalesPage" */ "../../pages/vacaciones/PeriodoVacacionalesPage"
+        ),
 );
 
-const BusquedaTramiteRutaPage = lazy(() =>
-    import(
-        /* webpackChunkName: "BusquedaTramiteRutaPage" */ "../../pages/ruta/admin/BusquedaTramiteRutaPage"
-    )
+const DescuentoVacacionesPage = lazy(
+    () =>
+        import(
+            /* webpackChunkName: "DescuentoVacacionesPage" */ "../../pages/vacaciones/DescuentoVacacionesPage"
+        ),
 );
 
-const MisDenunciasPage = lazy(() =>
-    import(
-        /* webpackChunkName: "MisDenunciasPage" */ "../../pages/denuncia/MisDenunciasPage"
-    )
+const BusquedaTramiteRutaPage = lazy(
+    () =>
+        import(
+            /* webpackChunkName: "BusquedaTramiteRutaPage" */ "../../pages/ruta/admin/BusquedaTramiteRutaPage"
+        ),
 );
 
-const DenunciasAdminPage = lazy(() =>
-    import(
-        /* webpackChunkName: "DenunciasAdminPage" */ "../../pages/denuncia/DenunciasAdminPage"
-    )
+const MisDenunciasPage = lazy(
+    () =>
+        import(
+            /* webpackChunkName: "MisDenunciasPage" */ "../../pages/denuncia/MisDenunciasPage"
+        ),
 );
 
-const ErrorNotFound = lazy(() =>
-    import(
-        /* webpackChunkName: "ErrorNotFound" */ "../../pages/error/ErrorNotFound"
-    )
+const DenunciasAdminPage = lazy(
+    () =>
+        import(
+            /* webpackChunkName: "DenunciasAdminPage" */ "../../pages/denuncia/DenunciasAdminPage"
+        ),
+);
+
+const ErrorNotFound = lazy(
+    () =>
+        import(
+            /* webpackChunkName: "ErrorNotFound" */ "../../pages/error/ErrorNotFound"
+        ),
 );
 //const ErrorAccessDenied = lazy(() => import(/* webpackChunkName: "ErrorNotFound" */ '../../pages/error/ErrorAccessDenied'));
 
@@ -254,8 +301,12 @@ const helpdeskGerenciaRoutes = generateRoutes(
         },
         { path: "inventario/equipos", Component: InvEquiposPage },
         { path: "inventario/consumibles", Component: InvConsumiblePage },
+        {
+            path: "inventario/solicitudes-consumibles",
+            Component: SolicitudesConsumiblesPage,
+        },
     ],
-    [Roles.TIC_GERENTE]
+    [Roles.TIC_GERENTE],
 );
 
 const helpdeskTecnicoRoutes = generateRoutes(
@@ -265,7 +316,7 @@ const helpdeskTecnicoRoutes = generateRoutes(
         { path: "soportes", Component: SoportesPage },
         { path: "reporte-soportes", Component: ReporteSoportes },
     ],
-    [Roles.TIC_GERENTE, Roles.TIC_TECNICO]
+    [Roles.TIC_GERENTE, Roles.TIC_TECNICO],
 );
 
 const permisosAdminRoutes = generateRoutes(
@@ -275,7 +326,7 @@ const permisosAdminRoutes = generateRoutes(
         { path: "consolidado-permisos", Component: ConsolidadoPermisosPage },
         { path: "autorizar-permisos", Component: AutorizarPermisosPage },
     ],
-    [Roles.TIC_GERENTE, Roles.NOM_ASISTENCIA]
+    [Roles.TIC_GERENTE, Roles.NOM_ASISTENCIA],
 );
 
 const peerRoutes = generateRoutes(
@@ -309,17 +360,15 @@ const peerRoutes = generateRoutes(
 
         { path: "reportar-abuso", Component: MisDenunciasPage },
 
-        { path: "busqueda-tramite", Component: BusquedaTramiteRutaPage }
+        { path: "busqueda-tramite", Component: BusquedaTramiteRutaPage },
     ],
-    [""]
+    [""],
 );
 
 const denunciasAdminRoutes = generateRoutes(
     "denuncias/gerencia",
-    [
-        { path: "gestionar-denuncias", Component: DenunciasAdminPage },
-    ],
-    [Roles.NOM_DENUNCIAS]
+    [{ path: "gestionar-denuncias", Component: DenunciasAdminPage }],
+    [Roles.NOM_DENUNCIAS],
 );
 
 export const routes = {

@@ -19,6 +19,7 @@ import {
     invCategoriaSlice,
     invConceptoSlice,
     invConsumibleSlice,
+    solicitudConsumibleSlice,
     invEquipoSlice,
     invEstadoSlice,
     invMarcaSlice,
@@ -45,6 +46,7 @@ import {
     uiInvCategoriaSlice,
     uiInvConceptoSlice,
     uiInvConsumibleSlice,
+    uiSolicitudConsumibleSlice,
     uiInvCustodioSlice,
     uiInvEquipoSlice,
     uiInvEstadoSlice,
@@ -136,6 +138,9 @@ export const store = configureStore({
         invConsumible: invConsumibleSlice.reducer,
         uiInvConsumible: uiInvConsumibleSlice.reducer,
 
+        solicitudConsumible: solicitudConsumibleSlice.reducer,
+        uiSolicitudConsumible: uiSolicitudConsumibleSlice.reducer,
+
         uiInvCustodio: uiInvCustodioSlice.reducer,
 
         ruta: rutaSlice.reducer,
@@ -144,9 +149,10 @@ export const store = configureStore({
         denuncia: denunciaSlice.reducer,
         uiDenuncia: uiDenunciaSlice.reducer,
 
-        storageField: storageFieldsSlice.reducer
+        storageField: storageFieldsSlice.reducer,
     },
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware({
-        serializableCheck: false
-    })
+    middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware({
+            serializableCheck: false,
+        }),
 });

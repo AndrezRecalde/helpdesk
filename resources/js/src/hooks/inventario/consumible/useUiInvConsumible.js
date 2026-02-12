@@ -1,6 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
 import {
-    onOpenModalHistorialConsumible,
     onOpenModalInvConsumible,
     onOpenModalSolicitudConsumible,
     onOpenModalStockInvConsumible,
@@ -11,7 +10,6 @@ export const useUiInvConsumible = () => {
         isOpenModalInvConsumible,
         isOpenModalStockInvConsumible,
         isOpenModalSolicitudConsumible,
-        isOpenModalHistorialConsumible
     } = useSelector((state) => state.uiInvConsumible);
 
     const dispatch = useDispatch();
@@ -26,21 +24,15 @@ export const useUiInvConsumible = () => {
 
     const modalActionSolicitudConsumible = (behavior = false) => {
         dispatch(onOpenModalSolicitudConsumible(behavior));
-    }
-
-    const modalActionHistorialConsumible = (behavior = false) => {
-        dispatch(onOpenModalHistorialConsumible(behavior));
-    }
+    };
 
     return {
         isOpenModalInvConsumible,
         isOpenModalStockInvConsumible,
         isOpenModalSolicitudConsumible,
-        isOpenModalHistorialConsumible,
 
         modalActionConsumible,
         modalActionStockConsumible,
         modalActionSolicitudConsumible,
-        modalActionHistorialConsumible
     };
 };

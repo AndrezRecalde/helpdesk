@@ -232,11 +232,6 @@ import { InvConsumibleTable } from "./inventario/consumible/table/InvConsumibleT
 import { ConsumibleForm } from "./inventario/consumible/form/ConsumibleForm";
 import { ConsumibleStockModal } from "./inventario/consumible/modal/ConsumibleStockModal";
 import { InvStockConsumibleForm } from "./inventario/consumible/form/InvStockConsumibleForm";
-import { InvSolicitudConsumibleModal } from "./inventario/consumible/modal/InvSolicitudConsumibleModal";
-import { InvConsumibleSolicitudForm } from "./inventario/consumible/form/InvConsumibleSolicitudForm";
-import { InvConsumibleHistorialModal } from "./inventario/consumible/modal/InvConsumibleHistorialModal";
-import { InvConsumibleBusqueda } from "./inventario/consumible/form/InvConsumibleBusqueda";
-import { InvConsumibleHistorialTable } from "./inventario/consumible/table/InvConsumibleHistorialTable";
 
 /* Ruta de Archivos */
 import { ConsultaTramiteForm } from "./rutas/form/ConsultaTramiteForm";
@@ -496,11 +491,6 @@ export {
     ConsumibleForm,
     ConsumibleStockModal,
     InvStockConsumibleForm,
-    InvSolicitudConsumibleModal,
-    InvConsumibleSolicitudForm,
-    InvConsumibleHistorialModal,
-    InvConsumibleBusqueda,
-    InvConsumibleHistorialTable,
 
     /* Ruta de archivos */
     ConsultaTramiteForm,

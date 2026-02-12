@@ -86,7 +86,6 @@ import { uiPeriodoSlice } from "./vacaciones/periodo/uiPeriodoSlice";
 import { descuentoSlice } from "./vacaciones/descuento/descuentoSlice";
 import { uiDescuentoSlice } from "./vacaciones/descuento/uiDescuentoSlice";
 
-
 /* Marcaciones */
 import { marcacionSlice } from "./marcacion/marcacionSlice";
 import { uiMarcacionSlice } from "./marcacion/uiMarcacionSlice";
@@ -123,6 +122,10 @@ import { uiInvConceptoSlice } from "./inventario/concepto/uiInvConceptoSlice";
 import { invConsumibleSlice } from "./consumible/invConsumibleSlice";
 import { uiInvConsumibleSlice } from "./consumible/uiInvConsumibleSlice";
 
+/* Inventario: Solicitudes Consumibles */
+import { solicitudConsumibleSlice } from "./solicitudConsumible/solicitudConsumibleSlice";
+import { uiSolicitudConsumibleSlice } from "./solicitudConsumible/uiSolicitudConsumibleSlice";
+
 /* Inventario: Ui Custodios */
 import { uiInvCustodioSlice } from "./inventario/custodio/uiInvCustodioSlice";
 
@@ -138,8 +141,6 @@ import { uiDenunciaSlice } from "./denuncia/uiDenunciaSlice";
 import { storageFieldsSlice } from "./fields/storageFieldsSlice";
 
 import { store } from "./store";
-
-
 
 export {
     store,
@@ -268,6 +269,10 @@ export {
     invConsumibleSlice,
     uiInvConsumibleSlice,
 
+    /* Inventario: Solicitudes Consumibles */
+    solicitudConsumibleSlice,
+    uiSolicitudConsumibleSlice,
+
     /* Inventario: Ui Custodio */
     uiInvCustodioSlice,
 
@@ -280,5 +285,5 @@ export {
     uiDenunciaSlice,
 
     /* Storage */
-    storageFieldsSlice
- };
+    storageFieldsSlice,
+};
