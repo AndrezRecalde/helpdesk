@@ -36,6 +36,10 @@ class DenunciaAdminController extends Controller
             $query->byFechas($request->fecha_desde, $request->fecha_hasta);
         }
 
+        if ($request->has('anio') && $request->anio) {
+            $query->whereYear('created_at', $request->anio);
+        }
+
         // Ordenar por más recientes
         $query->orderBy('created_at', 'desc');
 
@@ -226,15 +230,23 @@ class DenunciaAdminController extends Controller
     /**
      * Obtener estadísticas de denuncias
      */
-    public function estadisticas()
+    public function estadisticas(Request $request)
     {
-        $total = NomDenuncia::count();
-        $pendientes = NomDenuncia::where('estado', 'PENDIENTE')->count();
-        $enProceso = NomDenuncia::where('estado', 'EN_PROCESO')->count();
-        $resueltas = NomDenuncia::where('estado', 'RESUELTO')->count();
-        $rechazadas = NomDenuncia::where('estado', 'RECHAZADO')->count();
+        $year = $request->get('anio');
 
-        $porTipo = NomDenuncia::select('tipo_denuncia', \DB::raw('count(*) as total'))
+        $query = NomDenuncia::query();
+
+        if ($year) {
+            $query->whereYear('created_at', $year);
+        }
+
+        $total = (clone $query)->count();
+        $pendientes = (clone $query)->where('estado', 'PENDIENTE')->count();
+        $enProceso = (clone $query)->where('estado', 'EN_PROCESO')->count();
+        $resueltas = (clone $query)->where('estado', 'RESUELTO')->count();
+        $rechazadas = (clone $query)->where('estado', 'RECHAZADO')->count();
+
+        $porTipo = (clone $query)->select('tipo_denuncia', \DB::raw('count(*) as total'))
             ->groupBy('tipo_denuncia')
             ->get()
             ->pluck('total', 'tipo_denuncia');

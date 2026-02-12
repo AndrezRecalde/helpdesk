@@ -11,17 +11,37 @@ export const denunciaSlice = createSlice({
         message: undefined,
         errores: undefined,
         cedulaVerificada: false,
+        paginationDenuncias: {
+            current_page: 1,
+            per_page: 10,
+            total: 0,
+        },
+        paginationMisDenuncias: {
+            current_page: 1,
+            per_page: 10,
+            total: 0,
+        },
     },
     reducers: {
         onLoading: (state, { payload }) => {
             state.isLoading = payload;
         },
         onLoadDenuncias: (state, { payload }) => {
-            state.denuncias = payload;
+            state.denuncias = payload.data || payload;
+            state.paginationDenuncias = {
+                current_page: payload.current_page || 1,
+                per_page: payload.per_page || 10,
+                total: payload.total || 0,
+            };
             state.isLoading = false;
         },
         onLoadMisDenuncias: (state, { payload }) => {
-            state.misDenuncias = payload;
+            state.misDenuncias = payload.data || payload;
+            state.paginationMisDenuncias = {
+                current_page: payload.current_page || 1,
+                per_page: payload.per_page || 10,
+                total: payload.total || 0,
+            };
             state.isLoading = false;
         },
         onSetActivateDenuncia: (state, { payload }) => {
@@ -54,6 +74,16 @@ export const denunciaSlice = createSlice({
             state.estadisticas = null;
             state.errores = undefined;
             state.cedulaVerificada = false;
+            state.paginationDenuncias = {
+                current_page: 1,
+                per_page: 10,
+                total: 0,
+            };
+            state.paginationMisDenuncias = {
+                current_page: 1,
+                per_page: 10,
+                total: 0,
+            };
         },
         onLoadMessage: (state, { payload }) => {
             state.message = payload;

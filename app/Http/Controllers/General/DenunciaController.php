@@ -112,9 +112,15 @@ class DenunciaController extends Controller
         $user = Auth::user();
 
         // Obtener todas las denuncias y filtrar por usuario_id desencriptado
-        $denuncias = NomDenuncia::with('archivos')
-            ->orderBy('created_at', 'desc')
-            ->get()
+        $query = NomDenuncia::with('archivos')
+            ->orderBy('created_at', 'desc');
+
+        // Filtrar por año si existe
+        if ($request->has('anio') && $request->anio) {
+            $query->whereYear('created_at', $request->anio);
+        }
+
+        $denuncias = $query->get()
             ->filter(function ($denuncia) use ($user) {
                 return $denuncia->usuario_id == $user->cdgo_usrio;
             })

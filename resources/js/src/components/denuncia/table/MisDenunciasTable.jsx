@@ -1,5 +1,7 @@
-import { Badge, Table, ActionIcon, Group, Text, Tooltip } from "@mantine/core";
-import { IconEye, IconFileText } from "@tabler/icons-react";
+import { useMemo } from "react";
+import { MantineReactTable, useMantineReactTable } from "mantine-react-table";
+import { Badge, ActionIcon, Group, Text, Tooltip } from "@mantine/core";
+import { IconEye } from "@tabler/icons-react";
 import { useDenunciaStore, useUiDenuncia } from "../../../hooks";
 
 const getEstadoColor = (estado) => {
@@ -32,8 +34,13 @@ const getTipoLabel = (tipo) => {
     return labels[tipo] || tipo;
 };
 
-export const MisDenunciasTable = () => {
-    const { misDenuncias, isLoading, startLoadMiDenuncia } = useDenunciaStore();
+export const MisDenunciasTable = ({ onPageChange }) => {
+    const {
+        misDenuncias,
+        isLoading,
+        paginationMisDenuncias,
+        startLoadMiDenuncia,
+    } = useDenunciaStore();
     const { handleOpenModalDetalleDenuncia } = useUiDenuncia();
 
     const handleVerDetalle = async (numeroDenuncia) => {
@@ -41,91 +48,127 @@ export const MisDenunciasTable = () => {
         handleOpenModalDetalleDenuncia();
     };
 
-    if (isLoading) {
-        return (
-            <Text ta="center" c="dimmed">
-                Cargando...
-            </Text>
-        );
-    }
-
-    if (!misDenuncias || misDenuncias.length === 0) {
-        return (
-            <Text ta="center" c="dimmed" py="xl">
-                No tienes denuncias registradas
-            </Text>
-        );
-    }
-
-    const rows = misDenuncias.map((denuncia) => (
-        <Table.Tr key={denuncia.id}>
-            <Table.Td>
-                <Text size="sm" fw={500}>
-                    {denuncia.numero_denuncia}
-                </Text>
-            </Table.Td>
-            <Table.Td>
-                <Badge size="sm" variant="light">
-                    {getTipoLabel(denuncia.tipo_denuncia)}
-                </Badge>
-            </Table.Td>
-            <Table.Td>
-                <Badge
-                    size="sm"
-                    variant="dot"
-                    color={getEstadoColor(denuncia.estado)}
-                >
-                    {getEstadoLabel(denuncia.estado)}
-                </Badge>
-            </Table.Td>
-            <Table.Td>
-                <Text size="sm">
-                    {new Date(denuncia.fecha_creacion).toLocaleDateString(
-                        "es-EC",
-                    )}
-                </Text>
-            </Table.Td>
-            <Table.Td>
-                <Group gap="xs">
+    const columns = useMemo(
+        () => [
+            {
+                accessorKey: "numero_denuncia",
+                header: "Número",
+                size: 150,
+                Cell: ({ cell }) => (
+                    <Text size="sm" fw={500}>
+                        {cell.getValue()}
+                    </Text>
+                ),
+            },
+            {
+                accessorKey: "tipo_denuncia",
+                header: "Tipo",
+                size: 180,
+                Cell: ({ cell }) => (
+                    <Badge size="sm" variant="light">
+                        {getTipoLabel(cell.getValue())}
+                    </Badge>
+                ),
+            },
+            {
+                accessorKey: "estado",
+                header: "Estado",
+                size: 150,
+                Cell: ({ cell }) => (
                     <Badge
                         size="sm"
                         variant="dot"
-                        color={denuncia.archivos_count > 0 ? "blue" : "gray"}
+                        color={getEstadoColor(cell.getValue())}
                     >
-                        {denuncia.archivos_count} archivo(s)
+                        {getEstadoLabel(cell.getValue())}
                     </Badge>
-                </Group>
-            </Table.Td>
-            <Table.Td>
-                <Group gap="xs">
-                    <Tooltip label="Ver Detalle">
-                        <ActionIcon
-                            variant="light"
-                            onClick={() =>
-                                handleVerDetalle(denuncia.numero_denuncia)
-                            }
-                        >
-                            <IconEye size={16} />
-                        </ActionIcon>
-                    </Tooltip>
-                </Group>
-            </Table.Td>
-        </Table.Tr>
-    ));
-
-    return (
-        <Table striped highlightOnHover withTableBorder withColumnBorders>
-            <Table.Thead>
-                <Table.Tr>
-                    <Table.Th>Número</Table.Th>
-                    <Table.Th>Tipo</Table.Th>
-                    <Table.Th>Estado</Table.Th>
-                    <Table.Th>Fecha</Table.Th>
-                    <Table.Th>Archivos</Table.Th>
-                    <Table.Th>Acciones</Table.Th>
-                </Table.Tr>
-            </Table.Thead>
-            <Table.Tbody>{rows}</Table.Tbody>
-        </Table>
+                ),
+            },
+            {
+                accessorKey: "fecha_creacion",
+                header: "Fecha",
+                size: 150,
+                Cell: ({ cell }) => (
+                    <Text size="sm">
+                        {new Date(cell.getValue()).toLocaleDateString("es-EC")}
+                    </Text>
+                ),
+            },
+            {
+                accessorKey: "archivos_count",
+                header: "Archivos",
+                size: 150,
+                Cell: ({ cell }) => (
+                    <Badge
+                        size="sm"
+                        variant="dot"
+                        color={cell.getValue() > 0 ? "blue" : "gray"}
+                    >
+                        {cell.getValue()} archivo(s)
+                    </Badge>
+                ),
+            },
+            {
+                accessorKey: "actions",
+                header: "Acciones",
+                size: 120,
+                enableSorting: false,
+                Cell: ({ row }) => (
+                    <Group gap="xs">
+                        <Tooltip label="Ver Detalle">
+                            <ActionIcon
+                                variant="light"
+                                onClick={() =>
+                                    handleVerDetalle(
+                                        row.original.numero_denuncia,
+                                    )
+                                }
+                            >
+                                <IconEye size={16} />
+                            </ActionIcon>
+                        </Tooltip>
+                    </Group>
+                ),
+            },
+        ],
+        [handleVerDetalle],
     );
+
+    const table = useMantineReactTable({
+        columns,
+        data: misDenuncias,
+        enableColumnActions: false,
+        enableColumnFilters: false,
+        enableSorting: false,
+        enableTopToolbar: false,
+        enableBottomToolbar: true,
+        manualPagination: true,
+        rowCount: paginationMisDenuncias.total || 0,
+        state: {
+            showProgressBars: isLoading,
+            pagination: {
+                pageIndex: (paginationMisDenuncias.current_page || 1) - 1,
+                pageSize: paginationMisDenuncias.per_page || 10,
+            },
+        },
+        onPaginationChange: (updater) => {
+            if (typeof updater === "function") {
+                const newPagination = updater({
+                    pageIndex: (paginationMisDenuncias.current_page || 1) - 1,
+                    pageSize: paginationMisDenuncias.per_page || 10,
+                });
+                onPageChange?.(newPagination.pageIndex + 1);
+            }
+        },
+        mantineTableProps: {
+            striped: true,
+            highlightOnHover: true,
+            withTableBorder: true,
+        },
+        mantinePaginationProps: {
+            showRowsPerPage: false,
+        },
+    });
+
+    return <MantineReactTable table={table} />;
 };

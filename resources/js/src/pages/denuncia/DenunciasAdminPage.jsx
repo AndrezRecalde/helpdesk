@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import {
     Container,
     Title,
@@ -10,9 +10,7 @@ import {
     Button,
     Grid,
     Card,
-    Badge,
     Drawer,
-    TextInput,
 } from "@mantine/core";
 import {
     IconFilter,
@@ -22,7 +20,8 @@ import {
     IconCheck,
     IconX,
 } from "@tabler/icons-react";
-import { DatePickerInput } from "@mantine/dates";
+import { YearPickerInput } from "@mantine/dates";
+import { useForm } from "@mantine/form";
 import { useDenunciaStore, useUiDenuncia, useTitlePage } from "../../hooks";
 import {
     DenunciasAdminTable,
@@ -60,12 +59,13 @@ const DenunciasAdminPage = () => {
         handleCloseDrawerFiltros,
     } = useUiDenuncia();
 
-    const [filters, setFilters] = useState({
-        estado: "",
-        tipo_denuncia: "",
-        fecha_desde: null,
-        fecha_hasta: null,
-        per_page: 15,
+    const form = useForm({
+        initialValues: {
+            estado: "",
+            tipo_denuncia: "",
+            anio: null,
+            page: 1,
+        },
     });
 
     useEffect(() => {
@@ -74,32 +74,33 @@ const DenunciasAdminPage = () => {
         return () => clearDenuncias();
     }, []);
 
-    const loadData = () => {
+    const loadData = (page = 1) => {
         const filterData = {
-            ...filters,
-            fecha_desde: filters.fecha_desde
-                ? filters.fecha_desde.toISOString().split("T")[0]
-                : undefined,
-            fecha_hasta: filters.fecha_hasta
-                ? filters.fecha_hasta.toISOString().split("T")[0]
-                : undefined,
+            estado: form.values.estado || undefined,
+            tipo_denuncia: form.values.tipo_denuncia || undefined,
+            anio: form.values.anio ? form.values.anio.getFullYear() : undefined,
+            page,
         };
         startLoadDenuncias(filterData);
     };
 
     const handleApplyFilters = () => {
-        loadData();
+        form.setFieldValue("page", 1);
+        loadData(1);
+        const anio = form.values.anio ? form.values.anio.getFullYear() : null;
+        startLoadEstadisticas(anio);
         handleCloseDrawerFiltros();
     };
 
     const handleClearFilters = () => {
-        setFilters({
-            estado: "",
-            tipo_denuncia: "",
-            fecha_desde: null,
-            fecha_hasta: null,
-            per_page: 15,
-        });
+        form.reset();
+        loadData(1);
+        startLoadEstadisticas();
+    };
+
+    const handlePageChange = (newPage) => {
+        form.setFieldValue("page", newPage);
+        loadData(newPage);
     };
 
     return (
@@ -124,7 +125,7 @@ const DenunciasAdminPage = () => {
                             <Button
                                 variant="subtle"
                                 leftSection={<IconRefresh size={16} />}
-                                onClick={loadData}
+                                onClick={() => loadData(form.values.page)}
                             >
                                 Actualizar
                             </Button>
@@ -221,7 +222,7 @@ const DenunciasAdminPage = () => {
                 )}
 
                 <Paper p="md" withBorder>
-                    <DenunciasAdminTable />
+                    <DenunciasAdminTable onPageChange={handlePageChange} />
                 </Paper>
             </Stack>
 
@@ -233,47 +234,25 @@ const DenunciasAdminPage = () => {
                 size="md"
             >
                 <Stack>
+                    <YearPickerInput
+                        label="Año"
+                        placeholder="Selecciona un año"
+                        {...form.getInputProps("anio")}
+                        clearable
+                    />
+
                     <Select
                         label="Estado"
                         placeholder="Selecciona un estado"
                         data={ESTADOS}
-                        value={filters.estado}
-                        onChange={(value) =>
-                            setFilters({ ...filters, estado: value || "" })
-                        }
+                        {...form.getInputProps("estado")}
                     />
 
                     <Select
                         label="Tipo de Denuncia"
                         placeholder="Selecciona un tipo"
                         data={TIPOS}
-                        value={filters.tipo_denuncia}
-                        onChange={(value) =>
-                            setFilters({
-                                ...filters,
-                                tipo_denuncia: value || "",
-                            })
-                        }
-                    />
-
-                    <DatePickerInput
-                        label="Fecha Desde"
-                        placeholder="Selecciona fecha"
-                        value={filters.fecha_desde}
-                        onChange={(value) =>
-                            setFilters({ ...filters, fecha_desde: value })
-                        }
-                        clearable
-                    />
-
-                    <DatePickerInput
-                        label="Fecha Hasta"
-                        placeholder="Selecciona fecha"
-                        value={filters.fecha_hasta}
-                        onChange={(value) =>
-                            setFilters({ ...filters, fecha_hasta: value })
-                        }
-                        clearable
+                        {...form.getInputProps("tipo_denuncia")}
                     />
 
                     <Group justify="space-between" mt="md">

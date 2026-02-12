@@ -24,6 +24,8 @@ export const useDenunciaStore = () => {
         message,
         errores,
         cedulaVerificada,
+        paginationDenuncias,
+        paginationMisDenuncias,
     } = useSelector((state) => state.denuncia);
 
     const { ExceptionMessageError } = useErrorException(onLoadErrores);
@@ -35,7 +37,7 @@ export const useDenunciaStore = () => {
             dispatch(onLoading(true));
             const { data } = await helpdeskApi.post(
                 "/usuario/denuncias/verificar-cedula",
-                { cedula }
+                { cedula },
             );
             dispatch(onSetCedulaVerificada(true));
             dispatch(onLoadMessage(data));
@@ -61,7 +63,7 @@ export const useDenunciaStore = () => {
                     headers: {
                         "Content-Type": "multipart/form-data",
                     },
-                }
+                },
             );
             dispatch(onLoadMessage(data));
             dispatch(onSetCedulaVerificada(false));
@@ -76,13 +78,17 @@ export const useDenunciaStore = () => {
     };
 
     /* USUARIO - Obtener mis denuncias */
-    const startLoadMisDenuncias = async () => {
+    const startLoadMisDenuncias = async (filters = {}) => {
         try {
             dispatch(onLoading(true));
+            const params = new URLSearchParams();
+            if (filters.anio) params.append("anio", filters.anio);
+            params.append("page", filters.page || 1);
+
             const { data } = await helpdeskApi.get(
-                "/usuario/denuncias/mis-denuncias"
+                `/usuario/denuncias/mis-denuncias?${params.toString()}`,
             );
-            dispatch(onLoadMisDenuncias(data.data));
+            dispatch(onLoadMisDenuncias(data));
         } catch (error) {
             ExceptionMessageError(error);
         }
@@ -93,7 +99,7 @@ export const useDenunciaStore = () => {
         try {
             dispatch(onLoading(true));
             const { data } = await helpdeskApi.get(
-                `/usuario/denuncias/${numeroDenuncia}`
+                `/usuario/denuncias/${numeroDenuncia}`,
             );
             dispatch(onSetActivateDenuncia(data.data));
         } catch (error) {
@@ -107,9 +113,14 @@ export const useDenunciaStore = () => {
             dispatch(onLoading(true));
             const { data } = await helpdeskApi.post(
                 "/tthh/gerencia/denuncias",
-                filters
+                {
+                    estado: filters.estado,
+                    tipo_denuncia: filters.tipo_denuncia,
+                    anio: filters.anio,
+                    page: filters.page || 1,
+                },
             );
-            dispatch(onLoadDenuncias(data.data));
+            dispatch(onLoadDenuncias(data));
             return data.pagination;
         } catch (error) {
             ExceptionMessageError(error);
@@ -121,7 +132,9 @@ export const useDenunciaStore = () => {
     const startLoadDenuncia = async (id) => {
         try {
             dispatch(onLoading(true));
-            const { data } = await helpdeskApi.get(`/tthh/gerencia/denuncias/${id}`);
+            const { data } = await helpdeskApi.get(
+                `/tthh/gerencia/denuncias/${id}`,
+            );
             dispatch(onSetActivateDenuncia(data.data));
         } catch (error) {
             ExceptionMessageError(error);
@@ -134,7 +147,7 @@ export const useDenunciaStore = () => {
             dispatch(onLoading(true));
             const { data } = await helpdeskApi.put(
                 `/tthh/gerencia/denuncias/${id}/responder`,
-                respuestaData
+                respuestaData,
             );
             dispatch(onUpdateDenuncia(data.data));
             dispatch(onLoadMessage(data));
@@ -154,7 +167,7 @@ export const useDenunciaStore = () => {
             dispatch(onLoading(true));
             const { data } = await helpdeskApi.put(
                 `/tthh/gerencia/denuncias/${id}/estado`,
-                { estado }
+                { estado },
             );
             dispatch(onUpdateDenuncia(data.data));
             dispatch(onLoadMessage(data));
@@ -173,7 +186,7 @@ export const useDenunciaStore = () => {
         try {
             const response = await helpdeskApi.get(
                 `/tthh/gerencia/denuncias/archivo/${archivoId}/descargar`,
-                { responseType: "blob" }
+                { responseType: "blob" },
             );
 
             const url = window.URL.createObjectURL(new Blob([response.data]));
@@ -190,11 +203,15 @@ export const useDenunciaStore = () => {
     };
 
     /* ADMIN - Obtener estadísticas */
-    const startLoadEstadisticas = async () => {
+    const startLoadEstadisticas = async (anio = null) => {
         try {
-            dispatch(onLoading(true));
+            // No activamos loading global para estadísticas para no bloquear la tabla
+            // dispatch(onLoading(true));
+            const params = new URLSearchParams();
+            if (anio) params.append("anio", anio);
+
             const { data } = await helpdeskApi.get(
-                "/tthh/gerencia/denuncias/estadisticas"
+                `/tthh/gerencia/denuncias/estadisticas?${params.toString()}`,
             );
             dispatch(onLoadEstadisticas(data.data));
         } catch (error) {
@@ -226,6 +243,8 @@ export const useDenunciaStore = () => {
         message,
         errores,
         cedulaVerificada,
+        paginationDenuncias,
+        paginationMisDenuncias,
 
         startVerificarCedula,
         startCrearDenuncia,
