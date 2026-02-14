@@ -227,6 +227,28 @@ export const usePermisoStore = () => {
             dispatch(onExport(false));
         }
     };
+    const startExportExcelConsolidadosPermisos = async (seleccion) => {
+        try {
+            dispatch(onExport(true));
+            const response = await helpdeskApi.post(
+                "/tthh/asistencia/export/consolidado-permisos-excel",
+                seleccion,
+                { responseType: "blob" },
+            );
+            const blob = new Blob([response.data], {
+                type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+            });
+            const url = window.open(URL.createObjectURL(blob));
+            window.URL.revokeObjectURL(url);
+            //dispatch(onExport(false));
+        } catch (error) {
+            //console.log(error);
+            //dispatch(onExport(false));
+            ExceptionMessageError(error);
+        } finally {
+            dispatch(onExport(false));
+        }
+    };
 
     const startUpdateEstadoPermiso = async (permiso, id_estado) => {
         try {
@@ -285,6 +307,7 @@ export const usePermisoStore = () => {
         startLoadInfoPermisos,
         startLoadConsolidadosPermisos,
         startExportConsolidadosPermisos,
+        startExportExcelConsolidadosPermisos,
         startUpdateEstadoPermiso,
         setActivatePermiso,
         setActivateStatsUsuarioPermiso,

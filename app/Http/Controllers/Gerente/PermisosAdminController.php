@@ -25,7 +25,7 @@ class PermisosAdminController extends Controller
                 ->whereIn('idper_estado_permiso', [2, 6])
                 ->get();
             return response()->json([
-                'status'  => MsgStatus::Success,
+                'status' => MsgStatus::Success,
                 'estados' => $estados
             ], 200);
         } catch (\Throwable $th) {
@@ -104,14 +104,14 @@ class PermisosAdminController extends Controller
 
             if ($user->isGerenteTic() && $user->cdgo_usrio != $permiso->id_usu_pide) {
                 Soporte::create([
-                    'id_tipo_solicitud'   => 7,
-                    'id_direccion'        => $permiso->id_direccion_pide,
-                    'id_usu_recibe'       => $permiso->id_usu_pide,
-                    'id_area_tic'         => 5,
-                    'id_tipo_soporte'     => 3,
+                    'id_tipo_solicitud' => 7,
+                    'id_direccion' => $permiso->id_direccion_pide,
+                    'id_usu_recibe' => $permiso->id_usu_pide,
+                    'id_area_tic' => 5,
+                    'id_tipo_soporte' => 3,
                     'id_usu_tecnico_asig' => $user->cdgo_usrio,
-                    'incidente'           => MsgStatus::FichaIncidentePermiso,
-                    'solucion'            => MsgStatus::FichaSolucionPermiso,
+                    'incidente' => MsgStatus::FichaIncidentePermiso,
+                    'solucion' => MsgStatus::FichaSolucionPermiso,
                 ]);
             }
 
@@ -123,7 +123,7 @@ class PermisosAdminController extends Controller
 
             return response()->json([
                 'status' => MsgStatus::Success,
-                'msg'    => 'Permiso #' . $permiso->idper_permisos . ' creado con éxito',
+                'msg' => 'Permiso #' . $permiso->idper_permisos . ' creado con éxito',
                 'idper_permisos' => $permiso->idper_permisos
             ], 200);
         } catch (\Throwable $th) {
@@ -151,8 +151,8 @@ class PermisosAdminController extends Controller
 
         $data = [
             'institucion' => 'GOBIERNO AUTÓNOMO DESCENTRALIZADO DE LA PROVINCIA DE ESMERALDAS',
-            'titulo'      =>  'CONCESIÓN DE PERMISO HASTA 4 HORAS',
-            'permisos'    => $permisos
+            'titulo' => 'CONCESIÓN DE PERMISO HASTA 4 HORAS',
+            'permisos' => $permisos
         ];
         $pdf = Pdf::loadView('pdf.permisos.general.new', $data);
         return $pdf->setPaper('a4', 'portrait')->download('permiso.pdf');
@@ -177,8 +177,8 @@ class PermisosAdminController extends Controller
 
         $data = [
             'institucion' => 'GOBIERNO AUTÓNOMO DESCENTRALIZADO DE LA PROVINCIA DE ESMERALDAS',
-            'titulo'      =>  'CONCESIÓN DE PERMISO HASTA 4 HORAS',
-            'permisos'    => $permisos
+            'titulo' => 'CONCESIÓN DE PERMISO HASTA 4 HORAS',
+            'permisos' => $permisos
         ];
         $pdf = Pdf::loadView('pdf.permisos.gerencia.permiso', $data);
         return $pdf->setPaper('a4', 'portrait')->download('permiso.pdf');
@@ -216,12 +216,12 @@ class PermisosAdminController extends Controller
     {
         $permisos = DB::select('CALL get_consolidados_permisos(?,?,?)', [$request->fecha_inicio, $request->fecha_fin, $request->motivo_id]);
         $data = [
-            'permisos'      => $permisos,
-            'institucion'   => 'GOBIERNO AUTÓNOMO DESCENTRALIZADO DE LA PROVINCIA DE ESMERALDAS',
-            'titulo'        => 'CONSOLIDADO DE PERMISOS',
-            'fecha_inicio'  => $request->fecha_inicio,
-            'fecha_fin'     => $request->fecha_fin,
-            'motivo_id'     => $request->motivo_id
+            'permisos' => $permisos,
+            'institucion' => 'GOBIERNO AUTÓNOMO DESCENTRALIZADO DE LA PROVINCIA DE ESMERALDAS',
+            'titulo' => 'CONSOLIDADO DE PERMISOS',
+            'fecha_inicio' => $request->fecha_inicio,
+            'fecha_fin' => $request->fecha_fin,
+            'motivo_id' => $request->motivo_id
         ];
         $pdf = Pdf::loadView('pdf.permisos.gerencia.consolidado', $data);
         return $pdf->setPaper('a4', 'landscape')->download('consolidado_permisos.pdf');
@@ -245,5 +245,10 @@ class PermisosAdminController extends Controller
         } catch (\Throwable $th) {
             return response()->json(['status' => MsgStatus::Error, 'msg' => $th->getMessage()], 500);
         }
+    }
+    function getExportConsolidadoPermisosExcel(Request $request)
+    {
+        $permisos = DB::select('CALL get_consolidados_permisos(?,?,?)', [$request->fecha_inicio, $request->fecha_fin, $request->motivo_id]);
+        return \Maatwebsite\Excel\Facades\Excel::download(new \App\Exports\ConsolidadoPermisosExport($permisos), 'consolidado_permisos.xlsx');
     }
 }

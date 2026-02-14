@@ -385,6 +385,7 @@ Route::group(['prefix' => 'tthh/asistencia', 'middleware' => ['auth:sanctum', 'r
 
     Route::post('/consolidado-permisos', [PermisosAdminController::class, 'getConsolidadoPermisos']);
     Route::post('/export/consolidado-permisos', [PermisosAdminController::class, 'getExportConsolidadoPermisos']);
+    Route::post('/export/consolidado-permisos-excel', [PermisosAdminController::class, 'getExportConsolidadoPermisosExcel']);
 
 
     /* ESTADOS DE PERMISOS: APROBADO, ANULADO */

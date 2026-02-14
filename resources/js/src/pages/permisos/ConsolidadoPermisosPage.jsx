@@ -1,12 +1,17 @@
 import { useEffect, useState } from "react";
 import { Container, Divider, Group } from "@mantine/core";
 import {
+    BtnAddActions,
     BtnSection,
     FilterDatesPermiso,
     PermisosConsolidadosTable,
     TitlePage,
 } from "../../components";
-import { IconPrinter } from "@tabler/icons-react";
+import {
+    IconDownload,
+    IconFileSpreadsheet,
+    IconPrinter,
+} from "@tabler/icons-react";
 import { usePermisoStore, useTitlePage } from "../../hooks";
 import { isNotEmpty, useForm } from "@mantine/form";
 import dayjs from "dayjs";
@@ -18,6 +23,7 @@ const ConsolidadoPermisosPage = () => {
         isExport,
         startLoadConsolidadosPermisos,
         startExportConsolidadosPermisos,
+        startExportExcelConsolidadosPermisos,
         clearPermisos,
     } = usePermisoStore();
     const [disabled, setDisabled] = useState(true);
@@ -74,21 +80,40 @@ const ConsolidadoPermisosPage = () => {
         }
     }, [isExport]);
 
-    const handleExport = () => {
+    const handleExportPDF = () => {
         startExportConsolidadosPermisos(form.getTransformedValues());
+    };
+
+    const handleExportExcel = () => {
+        startExportExcelConsolidadosPermisos(form.getTransformedValues());
     };
 
     return (
         <Container size="xl">
             <Group justify="space-between">
                 <TitlePage order={2}>Consolidado de Permisos</TitlePage>
-                <BtnSection
-                    disabled={disabled}
-                    IconSection={IconPrinter}
-                    handleAction={handleExport}
-                >
-                    Imprimir
-                </BtnSection>
+                {disabled ? (
+                    <BtnSection disabled={disabled} IconSection={IconDownload}>
+                        Exportar
+                    </BtnSection>
+                ) : (
+                    <BtnAddActions
+                        actions={[
+                            {
+                                label: "Imprimir PDF",
+                                icon: IconPrinter,
+                                onClick: handleExportPDF,
+                            },
+                            {
+                                label: "Exportar Excel",
+                                icon: IconFileSpreadsheet,
+                                onClick: handleExportExcel,
+                            },
+                        ]}
+                    >
+                        Exportar
+                    </BtnAddActions>
+                )}
             </Group>
             <Divider my="md" />
             <FilterDatesPermiso
