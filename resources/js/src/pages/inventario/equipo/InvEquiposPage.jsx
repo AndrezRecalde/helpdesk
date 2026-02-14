@@ -68,7 +68,8 @@ const InvEquiposPage = () => {
     useEffect(() => {
         if (isExport === true) {
             Swal.fire({
-                icon: "warning",
+                icon: "info",
+                title: "Exportando...",
                 text: "Un momento porfavor, se está exportando",
                 showConfirmButton: false,
                 didOpen: () => {
@@ -86,7 +87,7 @@ const InvEquiposPage = () => {
 
     const handleBajaEquipo = () => {
         modalActionBajaEquipo(true);
-    }
+    };
 
     const menuActions = [
         {
@@ -106,7 +107,9 @@ const InvEquiposPage = () => {
     return (
         <Container size="xl">
             <Group justify="space-between">
-                <TitlePage order={2}>Inventario de Equipos Informáticos</TitlePage>
+                <TitlePage order={2}>
+                    Inventario de Equipos Informáticos
+                </TitlePage>
                 <BtnAddActions actions={menuActions}>Crear nuevo</BtnAddActions>
             </Group>
             <Divider my="md" />

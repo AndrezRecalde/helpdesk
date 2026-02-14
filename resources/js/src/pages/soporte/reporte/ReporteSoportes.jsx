@@ -47,13 +47,13 @@ const ReporteSoportes = () => {
             {
                 accessorKey: "numero_sop", //normal accessorKey
                 header: "No. Soporte",
-                size: 80
+                size: 80,
             },
             {
                 accessorFn: (row) =>
                     dayjs(row.fecha_ini).format("YYYY-MM-DD HH:mm"),
                 header: "Fecha",
-                size: 80
+                size: 80,
             },
             {
                 accessorKey: "incidente", //normal accessorKey
@@ -70,7 +70,7 @@ const ReporteSoportes = () => {
                 header: "Usuario final",
             },
         ],
-        [soportes]
+        [soportes],
     );
 
     useEffect(() => {
@@ -100,7 +100,8 @@ const ReporteSoportes = () => {
     useEffect(() => {
         if (loadPDF === true) {
             Swal.fire({
-                icon: "warning",
+                icon: "info",
+                title: "Exportando...",
                 text: "Un momento porfavor, se está exportando",
                 showConfirmButton: false,
                 didOpen: () => {

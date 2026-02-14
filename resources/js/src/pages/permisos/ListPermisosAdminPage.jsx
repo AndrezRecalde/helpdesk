@@ -84,7 +84,8 @@ const ListPermisosAdminPage = () => {
     useEffect(() => {
         if (isExport === true) {
             Swal.fire({
-                icon: "warning",
+                icon: "info",
+                title: "Exportando...",
                 text: "Un momento porfavor, se está exportando",
                 showConfirmButton: false,
                 didOpen: () => {

@@ -132,7 +132,8 @@ const SoportesPage = () => {
     useEffect(() => {
         if (loadPDF === true) {
             Swal.fire({
-                icon: "warning",
+                icon: "info",
+                title: "Exportando...",
                 text: "Un momento porfavor, se está exportando",
                 showConfirmButton: false,
                 didOpen: () => {
@@ -163,7 +164,9 @@ const SoportesPage = () => {
         <Container size="xl">
             <Group justify="space-between">
                 <div>
-                    <TitlePage order={2}>Gestión De Soportes Técnicos</TitlePage>
+                    <TitlePage order={2}>
+                        Gestión De Soportes Técnicos
+                    </TitlePage>
                     <TextSection fw={700} tt="" fz={16}>
                         Tienes {soportes.length ?? 0} soportes
                     </TextSection>
