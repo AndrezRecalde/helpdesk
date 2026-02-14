@@ -160,7 +160,7 @@ class RutaController extends Controller
             ]);
 
             // Validar que si viene numero_ruta, también venga anio
-            if ($request->filled('numero_ruta') && ! $request->filled('anio')) {
+            if ($request->filled('numero_ruta') && !$request->filled('anio')) {
                 return response()->json([
                     'status' => MsgStatus::Error,
                     'message' => 'El año es requerido cuando se proporciona el número de ruta.',
@@ -229,7 +229,7 @@ class RutaController extends Controller
                 'errors' => $e->errors(),
             ], 422);
         } catch (\Throwable $th) {
-            Log::error('Error en buscarFichasIngresos: ' .  $th->getMessage(), [
+            Log::error('Error en buscarFichasIngresos: ' . $th->getMessage(), [
                 'request' => $request->all(),
                 'trace' => $th->getTraceAsString()
             ]);
@@ -273,6 +273,6 @@ class RutaController extends Controller
             default => ''
         };
 
-        return $anio .  $ceros . $numero_ruta;
+        return $anio . $ceros . $numero_ruta;
     }
 }
