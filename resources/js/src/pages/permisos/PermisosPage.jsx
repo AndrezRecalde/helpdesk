@@ -42,7 +42,7 @@ const PermisosPage = () => {
         () =>
             usuario.role === Roles.TIC_GERENTE ||
             usuario.role === Roles.NOM_ASISTENCIA,
-        [usuario.role]
+        [usuario.role],
     );
 
     const form = useForm({
@@ -158,7 +158,7 @@ const PermisosPage = () => {
         ) {
             form.setFieldValue(
                 "id_jefe_inmediato",
-                directores[0]?.id_jefe?.toString()
+                directores[0]?.id_jefe?.toString(),
             );
         }
     }, [directores, canEdit]);
@@ -221,7 +221,7 @@ const PermisosPage = () => {
     }, [navigate]);
 
     return (
-        <Container size="md">
+        <Container size="xl">
             <Group justify="space-between" mb="md">
                 <TitlePage order={2}>Generar Permiso 4 Horas</TitlePage>
                 <BtnSection

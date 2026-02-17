@@ -28,6 +28,8 @@ import {
     marcacionSlice,
     periodoSlice,
     permisoSlice,
+    roleSlice,
+    accessPermissionSlice,
     rutaSlice,
     sexoSlice,
     soporteSlice,
@@ -98,6 +100,10 @@ export const store = configureStore({
         actividad: actividadSlice.reducer,
         permiso: permisoSlice.reducer,
         uiPermiso: uiPermisoSlice.reducer,
+
+        /* Access Control - Roles & Permissions Spatie */
+        role: roleSlice.reducer,
+        accessPermission: accessPermissionSlice.reducer,
 
         vacaciones: vacacionesSlice.reducer,
         uiVacaciones: uiVacacionesSlice.reducer,

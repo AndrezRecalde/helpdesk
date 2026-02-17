@@ -5,6 +5,10 @@ import { uiAppSlice } from "./app/uiAppSlice";
 /* Auth */
 import { authSlice } from "./auth/authSlice";
 
+/* Permisiones y Roles */
+import { roleSlice } from "./accessControl/roleSlice";
+import { accessPermissionSlice } from "./accessControl/accessPermissionSlice";
+
 /* Usuarios */
 import { usersSlice } from "./user/usersSlice";
 import { uiUserSlice } from "./user/uiUserSlice";
@@ -151,6 +155,10 @@ export {
 
     /* Auth */
     authSlice,
+
+    /* Permisiones y Roles */
+    roleSlice,
+    accessPermissionSlice,
 
     /*User */
     usersSlice,

@@ -7,11 +7,19 @@ const initialState = {
     activateUser: null,
     activateResponsable: null,
     storageField: null,
-    userVerified: null,  //Aqui
+    userVerified: null, //Aqui
     infoSoportes: undefined,
     validate: undefined,
     message: undefined,
     errores: undefined,
+    paginacion: {
+        total: 0,
+        por_pagina: 15,
+        pagina_actual: 1,
+        ultima_pagina: 1,
+        desde: 0,
+        hasta: 0,
+    },
 };
 
 export const usersSlice = createSlice({
@@ -50,12 +58,23 @@ export const usersSlice = createSlice({
         onSetStorageFields: (state, { payload }) => {
             state.storageField = payload;
         },
-        onSetUserVerified: (state, { payload }) => {  // AQUI
+        onSetUserVerified: (state, { payload }) => {
+            // AQUI
             state.userVerified = payload;
         },
         onSetInfoSoportes: (state, { payload }) => {
             state.infoSoportes = payload;
             state.isLoading = false;
+        },
+        onSetPagination: (state, { payload }) => {
+            state.paginacion = {
+                total: payload.total || 0,
+                por_pagina: payload.por_pagina || 15,
+                pagina_actual: payload.pagina_actual || 1,
+                ultima_pagina: payload.ultima_pagina || 1,
+                desde: payload.desde || 0,
+                hasta: payload.hasta || 0,
+            };
         },
         onClearUsers: (state) => {
             state.users = [];
@@ -97,6 +116,7 @@ export const {
     onSetStorageFields,
     onSetUserVerified,
     onSetInfoSoportes,
+    onSetPagination,
     onClearUsers,
     onValidate,
     onLoadMessage,

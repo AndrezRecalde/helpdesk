@@ -10,6 +10,7 @@ import {
     onSetActivateResponsable,
     onSetActivateUser,
     onSetInfoSoportes,
+    onSetPagination,
     onSetUserVerified,
     onUpdateUsers,
 } from "../../store/user/usersSlice";
@@ -27,6 +28,7 @@ export const useUsersStore = () => {
         infoSoportes,
         message,
         errores,
+        paginacion,
     } = useSelector((state) => state.users);
 
     const dispatch = useDispatch();
@@ -57,7 +59,7 @@ export const useUsersStore = () => {
                 "/usuario/usuarios-extrict",
                 {
                     cdgo_direccion,
-                }
+                },
             );
             const { usuarios } = data;
             dispatch(onLoadUsers(usuarios));
@@ -73,23 +75,28 @@ export const useUsersStore = () => {
         cdgo_direccion = null,
         nmbre_usrio = "",
         lgin = "",
+        pagina = 1,
+        por_pagina = 10,
     }) => {
         try {
             dispatch(onLoading(true));
-            const { data } = await helpdeskApi.post(
-                "/gerencia/admin/usuarios",
-                {
+            const { data } = await helpdeskApi.get("/gerencia/admin/usuarios", {
+                params: {
                     cdgo_direccion,
                     nmbre_usrio,
                     lgin,
-                }
-            );
-            const { usuarios } = data;
+                    pagina,
+                    por_pagina,
+                },
+            });
+            const { usuarios, paginacion } = data;
             dispatch(onLoadUsers(usuarios));
+            dispatch(onSetPagination(paginacion));
         } catch (error) {
             //console.log(error);
-            dispatch(onLoading(false));
             ExceptionMessageError(error);
+        } finally {
+            dispatch(onLoading(false));
         }
     };
 
@@ -101,8 +108,9 @@ export const useUsersStore = () => {
             dispatch(onLoadBirthdays(birthdays));
         } catch (error) {
             //console.log(error);
-            dispatch(onLoading(false));
             ExceptionMessageError(error);
+        } finally {
+            dispatch(onLoading(false));
         }
     };
 
@@ -110,7 +118,7 @@ export const useUsersStore = () => {
         try {
             const { data } = await helpdeskApi.put(
                 `/gerencia/update/usuario/activo/${usuario.cdgo_usrio}`,
-                usuario
+                usuario,
             );
             dispatch(onUpdateUsers(usuario));
             dispatch(onLoadMessage(data));
@@ -128,7 +136,7 @@ export const useUsersStore = () => {
         try {
             const { data } = await helpdeskApi.put(
                 `/tthh/asistencia/update/fecha-ingreso/${usuario.cdgo_usrio}`,
-                values
+                values,
             );
             dispatch(onLoadMessage(data));
             dispatch(onSetActivateUser(null));
@@ -145,7 +153,7 @@ export const useUsersStore = () => {
         try {
             const { data } = await helpdeskApi.post(
                 "/gerencia/verified/usuario",
-                { lgin }
+                { lgin },
             );
             if (data.status === "success") {
                 const { usuario } = data;
@@ -163,7 +171,7 @@ export const useUsersStore = () => {
         try {
             const { data } = await helpdeskApi.post(
                 "/gerencia/admin/show-user",
-                { cdgo_usrio }
+                { cdgo_usrio },
             );
             const { usuario } = data;
             //console.log(usuario)
@@ -178,7 +186,7 @@ export const useUsersStore = () => {
         try {
             const { data } = await helpdeskApi.put(
                 `/gerencia/usuario/reset-password/${user.cdgo_usrio}`,
-                user
+                user,
             );
             dispatch(onLoadMessage(data));
             dispatch(onSetActivateUser(null));
@@ -196,7 +204,7 @@ export const useUsersStore = () => {
             if (user.cdgo_usrio) {
                 const { data } = await helpdeskApi.put(
                     `/gerencia/update/usuario/${user.cdgo_usrio}`,
-                    user
+                    user,
                 );
                 dispatch(onLoadMessage(data));
                 setTimeout(() => {
@@ -208,7 +216,7 @@ export const useUsersStore = () => {
 
             const { data } = await helpdeskApi.post(
                 "/gerencia/store/usuario",
-                user
+                user,
             );
             dispatch(onLoadMessage(data));
             setTimeout(() => {
@@ -224,12 +232,12 @@ export const useUsersStore = () => {
     const startAddCodigoBiometrico = async (
         cdgo_usrio,
         asi_id_reloj,
-        storageFields = null
+        storageFields = null,
     ) => {
         try {
             const { data } = await helpdeskApi.put(
                 `/gerencia/update/codigo-biometrico/${cdgo_usrio}`,
-                { asi_id_reloj }
+                { asi_id_reloj },
             );
             dispatch(onLoadMessage(data));
             setTimeout(() => {
@@ -248,7 +256,7 @@ export const useUsersStore = () => {
                 {
                     roles,
                     actvo,
-                }
+                },
             );
             dispatch(onLoadMessage(data));
             setTimeout(() => {
@@ -264,7 +272,7 @@ export const useUsersStore = () => {
         try {
             const { data } = await helpdeskApi.put(
                 `/change-password/${cdgo_usrio}`,
-                { paswrd }
+                { paswrd },
             );
             dispatch(onLoadMessage(data));
             setTimeout(() => {
@@ -286,8 +294,36 @@ export const useUsersStore = () => {
             dispatch(onSetInfoSoportes(info));
         } catch (error) {
             //console.log(error);
-            dispatch(onLoading(false));
             ExceptionMessageError(error);
+        } finally {
+            dispatch(onLoading(false));
+        }
+    };
+
+    const startLoadUsersWithRolesOrPermissions = async ({
+        pagina = 1,
+        por_pagina = 10,
+        search = "",
+    } = {}) => {
+        try {
+            dispatch(onLoading(true));
+            const { data } = await helpdeskApi.get(
+                "/gerencia/users-with-roles-permissions",
+                {
+                    params: {
+                        pagina,
+                        por_pagina,
+                        search,
+                    },
+                },
+            );
+            const { usuarios, paginacion } = data;
+            dispatch(onLoadUsers(usuarios));
+            dispatch(onSetPagination(paginacion));
+        } catch (error) {
+            ExceptionMessageError(error);
+        } finally {
+            dispatch(onLoading(false));
         }
     };
 
@@ -317,8 +353,10 @@ export const useUsersStore = () => {
         userVerified, //aqui
         infoSoportes,
         validate,
+        validate,
         errores,
         message,
+        paginacion,
 
         startAddUser,
         startLoadUsersGeneral,
@@ -332,6 +370,7 @@ export const useUsersStore = () => {
         startUpdatePassword,
         startChangePwdUser,
         startLoadInfoUsersSoporte,
+        startLoadUsersWithRolesOrPermissions,
         startAddCodigoBiometrico,
         clearInfoSoportes,
         clearUsers,

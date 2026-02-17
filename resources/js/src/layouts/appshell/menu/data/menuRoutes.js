@@ -139,6 +139,13 @@ export const NavMenuAdminTics = {
             link: "/helpdesk/gerencia/areas-tic",
             roles: [Roles.TIC_GERENTE],
         },
+        {
+            icon: IconLicense,
+            title: "Gestionar Roles y Permisos",
+            path: "roles-permisos",
+            link: "/helpdesk/gerencia/roles-permisos",
+            roles: [Roles.TIC_GERENTE],
+        },
     ],
     Aplicacion: [
         {

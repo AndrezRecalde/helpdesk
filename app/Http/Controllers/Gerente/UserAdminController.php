@@ -18,6 +18,8 @@ class UserAdminController extends Controller
 {
     function getUsuariosAdmin(Request $request): JsonResponse
     {
+        $por_pagina = $request->por_pagina ?? 10;
+        $pagina = $request->pagina ?? 1;
         $usuarios = User::from('usrios_sstma as us')
             ->selectRaw('us.cdgo_usrio, us.usu_ci,
                         us.asi_id_reloj, us.titulo, us.nmbre_usrio,
@@ -40,12 +42,29 @@ class UserAdminController extends Controller
             ->direccion($request->cdgo_direccion)
             ->nombres($request->nmbre_usrio)
             ->usuario($request->lgin)
-            ->get();
+            ->paginate($por_pagina, ['*'], 'pagina', $pagina);
 
         if (sizeof($usuarios) >= 1) {
-            return response()->json(['status' => MsgStatus::Success, 'usuarios' => $usuarios], 200);
+            return response()->json([
+                'status' => MsgStatus::Success,
+                'usuarios' => $usuarios->items(),
+                'paginacion' => [
+                    'total' => $usuarios->total(),
+                    'por_pagina' => $usuarios->perPage(),
+                    'pagina_actual' => $usuarios->currentPage(),
+                    'ultima_pagina' => $usuarios->lastPage(),
+                    'desde' => $usuarios->firstItem(),
+                    'hasta' => $usuarios->lastItem(),
+                ]
+            ], 200);
         } else {
-            return response()->json(['status' => MsgStatus::Error, 'msg' => MsgStatus::UsersFilterNotFound], 404);
+            return response()->json(
+                [
+                    'status' => MsgStatus::Error,
+                    'msg' => MsgStatus::UsersFilterNotFound
+                ],
+                404
+            );
         }
     }
 
@@ -334,6 +353,45 @@ class UserAdminController extends Controller
                     'hasta' => $periodosPaginated->lastItem(),
                 ]
             ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => MsgStatus::Error,
+                'msg' => $th->getMessage()
+            ], 500);
+        }
+    }
+    /* Obtener usuarios que tienen Roles o Permisos Asignados */
+    public function getUsersWithRolesOrPermissions(Request $request): JsonResponse
+    {
+        try {
+            $perPage = $request->input('por_pagina', 10);
+            $page = $request->input('pagina', 1);
+            $search = $request->input('search', '');
+
+            $usuarios = User::with(['roles', 'permissions'])
+                ->where(function ($query) {
+                    $query->has('roles')->orHas('permissions');
+                })
+                ->where(function ($query) use ($search) {
+                    if ($search) {
+                        $query->where('nmbre_usrio', 'like', "%{$search}%")
+                            ->orWhere('usuario', 'like', "%{$search}%");
+                    }
+                })
+                ->paginate($perPage, ['*'], 'page', $page);
+
+            return response()->json([
+                'status' => MsgStatus::Success,
+                'usuarios' => $usuarios->items(),
+                'paginacion' => [
+                    'total' => $usuarios->total(),
+                    'por_pagina' => $usuarios->perPage(),
+                    'pagina_actual' => $usuarios->currentPage(),
+                    'ultima_pagina' => $usuarios->lastPage(),
+                    'desde' => $usuarios->firstItem(),
+                    'hasta' => $usuarios->lastItem(),
+                ]
+            ], 200);
         } catch (\Throwable $th) {
             return response()->json([
                 'status' => MsgStatus::Error,

@@ -129,6 +129,13 @@ const ConsolidadoPermisosPage = lazy(
         ),
 );
 
+const RolesPermissionsPage = lazy(
+    () =>
+        import(
+            /* webpackChunkName: "RolesPermissionsPage" */ "../../pages/gerencia/RolesPermissionsPage"
+        ),
+);
+
 const SolicitudPage = lazy(
     () =>
         import(
@@ -295,6 +302,7 @@ const helpdeskGerenciaRoutes = generateRoutes(
         { path: "tecnicos", Component: AdminTecnicosPage },
         { path: "areas-tic", Component: AdminAreasPage },
         { path: "dashboard-areas", Component: DashboardAreasPage },
+        { path: "roles-permisos", Component: RolesPermissionsPage },
         {
             path: "configuracion-inventario/:tabValue/*",
             Component: ConfigInventarioPage,

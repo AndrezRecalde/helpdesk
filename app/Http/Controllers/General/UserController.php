@@ -31,7 +31,10 @@ class UserController extends Controller
             ->where('us.actvo', 1)
             ->get();
 
-        return response()->json(['status' => MsgStatus::Success, 'usuarios' => $usuarios], 200);
+        return response()->json([
+            'status' => MsgStatus::Success,
+            'usuarios' => $usuarios,
+        ], 200);
     }
 
     function getUsuariosExtrict(Request $request): JsonResponse

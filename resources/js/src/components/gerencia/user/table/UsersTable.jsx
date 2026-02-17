@@ -1,6 +1,10 @@
 import { useMantineReactTable } from "mantine-react-table";
-import { useCallback, useMemo } from "react";
-import { ActivateUserBtn, MenuTableActions, TableContent } from "../../..";
+import { useCallback, useMemo, useState, useEffect } from "react";
+import {
+    ActivateUserBtn,
+    MenuTableActions,
+    TableContent,
+} from "../../../../components";
 import { useUiUser, useUsersStore } from "../../../../hooks";
 import { Table } from "@mantine/core";
 import {
@@ -10,13 +14,29 @@ import {
 } from "@tabler/icons-react";
 
 export const UsersTable = () => {
-    const { isLoading, users, setActivateUser } = useUsersStore();
+    const { isLoading, users, setActivateUser, paginacion, startLoadUsers } =
+        useUsersStore();
     const {
         modalActionUser,
         modalActionActiveUser,
         modalActionResetPwd,
         modalActionCodigoBiometrico,
     } = useUiUser();
+
+    const [paginationState, setPaginationState] = useState({
+        pageIndex: 0,
+        pageSize: 10,
+    });
+
+    const { pageIndex, pageSize } = paginationState;
+
+    useEffect(() => {
+        startLoadUsers({
+            pagina: pageIndex + 1,
+            por_pagina: pageSize,
+        });
+    }, [pageIndex, pageSize]);
+
     const columns = useMemo(
         () => [
             {
@@ -93,7 +113,13 @@ export const UsersTable = () => {
         data: users, //must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
         enableFacetedValues: true,
         enableRowActions: true,
-        state: { showProgressBars: isLoading },
+        manualPagination: true,
+        rowCount: paginacion?.total ?? 0,
+        onPaginationChange: setPaginationState,
+        state: {
+            showProgressBars: isLoading,
+            pagination: paginationState,
+        },
         renderRowActionMenuItems: ({ row }) => (
             <MenuTableActions
                 row={row}

@@ -3,7 +3,6 @@ import { Badge, Box } from "@mantine/core";
 import { MantineReactTable, useMantineReactTable } from "mantine-react-table";
 import { MenuTableArea } from "./MenuTableArea";
 import { useAreaTicStore } from "../../../hooks";
-import { useUiAreaTic } from "../../../hooks/areaTic/useUiAreaTic";
 
 export const AreasTable = () => {
     const { areas, isLoading } = useAreaTicStore();

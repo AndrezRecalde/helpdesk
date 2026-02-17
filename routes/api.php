@@ -45,6 +45,8 @@ use App\Http\Controllers\Gerente\TTHH\NomPeriodoVacacionesController;
 use App\Http\Controllers\Gerente\TTHH\NomVacacionesController;
 use App\Http\Controllers\Gerente\TTHH\NomVacacionesDescuentoController;
 use App\Http\Controllers\Gerente\UserAdminController;
+use App\Http\Controllers\Gerente\RoleController;
+use App\Http\Controllers\Gerente\PermissionController;
 //use App\Models\InvDocumentoEquipo;
 //use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -87,7 +89,8 @@ Route::group(['prefix' => 'gerencia', 'middleware' => ['auth:sanctum', 'role:TIC
     Route::put('/app/imagenes/update/{id}', [AppController::class, 'update']);
 
     /* USUARIOS */
-    Route::post('/admin/usuarios', [UserAdminController::class, 'getUsuariosAdmin']);
+    Route::get('/admin/usuarios', [UserAdminController::class, 'getUsuariosAdmin']);
+    Route::get('/users-with-roles-permissions', [UserAdminController::class, 'getUsersWithRolesOrPermissions']);
     Route::post('/store/usuario', [UserAdminController::class, 'store']);
     Route::put('/update/usuario/{cdgo_usrio}', [UserAdminController::class, 'update']);
     Route::put('/update/usuario/activo/{cdgo_usrio}', [UserAdminController::class, 'updateActivoUser']);
@@ -242,6 +245,11 @@ Route::group(['prefix' => 'gerencia', 'middleware' => ['auth:sanctum', 'role:TIC
     Route::get('/inventario/solicitud-consumible/{id}', [SolicitudConsumibleController::class, 'show']);
     Route::get('/inventario/solicitud-consumible/{id}/pdf', [SolicitudConsumibleController::class, 'exportPDF']);
     Route::post('/inventario/solicitud-consumible/historial', [SolicitudConsumibleController::class, 'historialPorConsumible']);
+
+    /* ROLES Y PERMISOS */
+    Route::apiResource('roles', RoleController::class);
+    Route::apiResource('permissions', PermissionController::class);
+    Route::post('permissions/assign-user', [PermissionController::class, 'assignSpecialPermissions']);
 
 });
 
