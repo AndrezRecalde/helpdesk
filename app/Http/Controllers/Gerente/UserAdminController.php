@@ -360,6 +360,37 @@ class UserAdminController extends Controller
             ], 500);
         }
     }
+    /* Asignar Roles y Permisos Spatie a un Usuario */
+    public function assignRolesPermissions(Request $request, int $cdgo_usrio): JsonResponse
+    {
+        $usuario = User::find($cdgo_usrio);
+
+        if (!$usuario) {
+            return response()->json([
+                'status' => MsgStatus::Error,
+                'msg' => MsgStatus::UserNotFound
+            ], 404);
+        }
+
+        try {
+            $roles = $request->input('roles', []);
+            $permissions = $request->input('permissions', []);
+
+            $usuario->syncRoles($roles);
+            $usuario->syncPermissions($permissions);
+
+            return response()->json([
+                'status' => MsgStatus::Success,
+                'msg' => 'Roles y permisos asignados correctamente'
+            ], 200);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => MsgStatus::Error,
+                'msg' => $th->getMessage()
+            ], 500);
+        }
+    }
+
     /* Obtener usuarios que tienen Roles o Permisos Asignados */
     public function getUsersWithRolesOrPermissions(Request $request): JsonResponse
     {
