@@ -8,9 +8,6 @@ import {
     BtnAddActions,
     ModalSolicitudAdminSoporte,
     ModalCreateSoporte,
-    ModalAsignarSoporte,
-    ModalAnularSoporte,
-    ModalDiagnostico,
 } from "../../components";
 import {
     useDireccionStore,
@@ -182,9 +179,6 @@ const SoportesPage = () => {
             {soportes.length !== 0 ? <SoportesTable /> : null}
             <ModalSolicitudAdminSoporte />
             <ModalCreateSoporte role={switch_role} />
-            <ModalAsignarSoporte />
-            <ModalAnularSoporte />
-            <ModalDiagnostico option={2} />
         </Container>
     );
 };

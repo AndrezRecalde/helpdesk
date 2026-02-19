@@ -98,6 +98,8 @@ Route::group(['prefix' => 'gerencia', 'middleware' => ['auth:sanctum', 'role:TIC
     Route::put('/usuario/reset-password/{cdgo_usrio}', [UserAdminController::class, 'resetPasword']);
     Route::post('/admin/show-user', [UserAdminController::class, 'findUser']);
     Route::put('/update/codigo-biometrico/{cdgo_usrio}', [UserAdminController::class, 'setCodigoBiometrico']);
+    Route::post('/user/{cdgo_usrio}/assign-roles-permissions', [UserAdminController::class, 'assignRolesPermissions']);
+
 
     /* ÁREAS TIC */
     Route::get('/areas-tic', [AreaTicController::class, 'getAreasTic']);
@@ -249,7 +251,6 @@ Route::group(['prefix' => 'gerencia', 'middleware' => ['auth:sanctum', 'role:TIC
     /* ROLES Y PERMISOS */
     Route::apiResource('roles', RoleController::class);
     Route::apiResource('permissions', PermissionController::class);
-    Route::post('permissions/assign-user', [PermissionController::class, 'assignSpecialPermissions']);
 
 });
 

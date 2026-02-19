@@ -4,6 +4,13 @@ import { useMantineReactTable } from "mantine-react-table";
 import { MRT_Localization_ES } from "mantine-react-table/locales/es/index.cjs";
 import {
     ActionReportPDF,
+    InvAsignarCustodioModal,
+    InvBajaEquipoModal,
+    InvDeleteEquipoModal,
+    InvEquipoAsignacionModal,
+    InvEquipoDocumentoModal,
+    InvEquipoModal,
+    InvShowEquipoModal,
     MenuTableActions,
     TableContent,
 } from "../../../../components";
@@ -26,8 +33,10 @@ export const InvEquipoTable = () => {
     const {
         isLoading,
         invEquipos,
+        activateInvEquipo,
         startShowInvEquipo,
         setActivateInvEquipo,
+        startAsignarCustodio,
         startRemoverCustodio,
         startExportEquipos,
     } = useInvEquipoStore();
@@ -85,8 +94,8 @@ export const InvEquipoTable = () => {
     const handleEditar = useCallback(
         (selected) => {
             //console.log("editar");
-            modalActionEquipo(true);
             startShowInvEquipo(selected);
+            modalActionEquipo(true);
             //setActivateInvEquipo(selected);
         },
         [invEquipos],
@@ -95,8 +104,8 @@ export const InvEquipoTable = () => {
     const handleShow = useCallback(
         (selected) => {
             //console.log(selected);
-            modalActionViewEquipo(true);
             startShowInvEquipo(selected);
+            modalActionViewEquipo(true);
         },
         [invEquipos],
     );
@@ -237,20 +246,23 @@ export const InvEquipoTable = () => {
             withColumnBorders: true,
             striped: true,
             withTableBorder: true,
-            //withTableBorder: colorScheme === "light",
-            sx: {
-                "thead > tr": {
-                    backgroundColor: "inherit",
-                },
-                "thead > tr > th": {
-                    backgroundColor: "inherit",
-                },
-                "tbody > tr > td": {
-                    backgroundColor: "inherit",
-                },
-            },
         },
     });
 
-    return <TableContent table={table} />;
+    return (
+        <>
+            <TableContent table={table} />
+            <InvEquipoModal />
+            <InvShowEquipoModal />
+            <InvEquipoAsignacionModal />
+            <InvDeleteEquipoModal />
+            <InvBajaEquipoModal />
+            <InvEquipoDocumentoModal />
+            <InvAsignarCustodioModal
+                setActivateElement={setActivateInvEquipo}
+                activateElement={activateInvEquipo}
+                startAsignarCustodioFn={startAsignarCustodio}
+            />
+        </>
+    );
 };

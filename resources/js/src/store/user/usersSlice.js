@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
     isLoading: false,
     users: [],
+    usersRolesPermissions: [],
     birthdays: [],
     activateUser: null,
     activateResponsable: null,
@@ -31,6 +32,10 @@ export const usersSlice = createSlice({
         },
         onLoadUsers: (state, { payload }) => {
             state.users = payload;
+            state.isLoading = false;
+        },
+        onLoadUsersRolesPermissions: (state, { payload }) => {
+            state.usersRolesPermissions = payload;
             state.isLoading = false;
         },
         onLoadBirthdays: (state, { payload }) => {
@@ -109,6 +114,7 @@ export const usersSlice = createSlice({
 export const {
     onLoading,
     onLoadUsers,
+    onLoadUsersRolesPermissions,
     onLoadBirthdays,
     onUpdateUsers,
     onSetActivateUser,

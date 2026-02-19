@@ -1,22 +1,21 @@
+import { useState, useEffect } from "react";
 import { Box, Container, Divider, Tabs, rem } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import {
-    IconAdjustments,
-    IconCubePlus,
-    IconLock,
-    IconUserBolt,
-} from "@tabler/icons-react";
-import { useState, useEffect } from "react";
-import { RolesTable } from "../../components/accessControl/RolesTable";
-import { PermissionsTable } from "../../components/accessControl/PermissionsTable";
-import { UsersRolesPermissionsTable } from "../../components/accessControl/UsersRolesPermissionsTable";
-import { RoleModal } from "../../components/accessControl/RoleModal";
-import { PermissionModal } from "../../components/accessControl/PermissionModal";
-import { useRoleStore } from "../../hooks/accessControl/useRoleStore";
-import { useAccessPermissionStore } from "../../hooks/accessControl/useAccessPermissionStore";
-import { useUsersStore } from "../../hooks/user/useUsersStore";
-import { BtnSection, TitlePage } from "../../components";
-import { useTitlePage } from "../../hooks";
+    TitlePage,
+    RolesTable,
+    PermissionsTable,
+    PermissionModal,
+    RoleModal,
+    UsersRolesPermissionsTable,
+} from "../../components";
+import {
+    useTitlePage,
+    useUsersStore,
+    useRoleStore,
+    useAccessPermissionStore,
+} from "../../hooks";
+import { IconAdjustments, IconLock, IconShieldPlus } from "@tabler/icons-react";
 
 const RolesPermissionsPage = () => {
     useTitlePage("Administración de Roles y Permisos - Intranet");
@@ -79,44 +78,24 @@ const RolesPermissionsPage = () => {
                     </Tabs.Tab>
                     <Tabs.Tab
                         value="user-roles-permissions"
-                        leftSection={<IconUserBolt style={iconStyle} />}
+                        leftSection={<IconShieldPlus style={iconStyle} />}
                     >
                         Usuarios con Roles y Permisos
                     </Tabs.Tab>
                 </Tabs.List>
 
                 <Tabs.Panel value="roles" pt="xs">
-                    <Box
-                        mb="md"
-                        mt="md"
-                        display="flex"
-                        style={{ justifyContent: "flex-end" }}
-                    >
-                        <BtnSection
-                            IconSection={IconCubePlus}
-                            handleAction={handleOpenRoleModal}
-                        >
-                            Agregar Rol
-                        </BtnSection>
-                    </Box>
-                    <RolesTable setModalVisible={openRole} />
+                    <RolesTable
+                        setModalVisible={openRole}
+                        handleOpenRoleModal={handleOpenRoleModal}
+                    />
                 </Tabs.Panel>
 
                 <Tabs.Panel value="permissions" pt="xs">
-                    <Box
-                        mb="md"
-                        mt="md"
-                        display="flex"
-                        style={{ justifyContent: "flex-end" }}
-                    >
-                        <BtnSection
-                            IconSection={IconCubePlus}
-                            handleAction={handleOpenPermissionModal}
-                        >
-                            Agregar Permiso
-                        </BtnSection>
-                    </Box>
-                    <PermissionsTable setModalVisible={openPermission} />
+                    <PermissionsTable
+                        setModalVisible={openPermission}
+                        handleOpenPermissionModal={handleOpenPermissionModal}
+                    />
                 </Tabs.Panel>
 
                 <Tabs.Panel value="user-roles-permissions" pt="xs">

@@ -3,6 +3,7 @@ import { useCallback, useMemo } from "react";
 import { useMantineReactTable } from "mantine-react-table";
 import {
     BtnSection,
+    InvCategoriaModal,
     MenuTableActions,
     TableContent,
 } from "../../../../components";
@@ -96,5 +97,10 @@ export const InvCategoriaTable = () => {
         },
     });
 
-    return <TableContent table={table} />;
+    return (
+        <>
+            <TableContent table={table} />
+            <InvCategoriaModal />
+        </>
+    );
 };

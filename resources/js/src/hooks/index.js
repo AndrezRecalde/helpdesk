@@ -5,6 +5,10 @@ import { useUiApp } from "./app/useUiApp";
 /* Authenticacion */
 import { useAuthStore } from "./auth/useAuthStore";
 
+/* Roles y Permisos */
+import { useRoleStore } from "./accessControl/useRoleStore";
+import { useAccessPermissionStore } from "./accessControl/useAccessPermissionStore";
+
 /* Ruta de Tramite */
 import { useRutaStore } from "./ruta/useRutaStore";
 import { useUiRuta } from "./ruta/useUiRuta";
@@ -153,6 +157,8 @@ export {
     useAppStore,
     useUiApp,
     useAuthStore,
+    useRoleStore,
+    useAccessPermissionStore,
     useUiHeaderMenu,
     useUsersStore,
     useUiUser,

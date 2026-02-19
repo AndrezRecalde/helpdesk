@@ -1,10 +1,13 @@
-import { IconEdit } from "@tabler/icons-react";
-import { MantineReactTable, useMantineReactTable } from "mantine-react-table";
 import { useMemo } from "react";
-import { useAccessPermissionStore } from "../../hooks/accessControl/useAccessPermissionStore";
-import { MenuTableActions } from "../elements/tables/MenuTableActions";
+import { MantineReactTable, useMantineReactTable } from "mantine-react-table";
+import { useAccessPermissionStore } from "../../hooks";
+import { MenuTableActions, BtnSection } from "../../components";
+import { IconCubePlus, IconEdit } from "@tabler/icons-react";
 
-export const PermissionsTable = ({ setModalVisible }) => {
+export const PermissionsTable = ({
+    setModalVisible,
+    handleOpenPermissionModal,
+}) => {
     const { setActivePermission, permissions, isLoading } =
         useAccessPermissionStore();
 
@@ -41,6 +44,14 @@ export const PermissionsTable = ({ setModalVisible }) => {
                     },
                 ]}
             />
+        ),
+        renderTopToolbarCustomActions: () => (
+            <BtnSection
+                IconSection={IconCubePlus}
+                handleAction={handleOpenPermissionModal}
+            >
+                Crear Permiso
+            </BtnSection>
         ),
         localization: {
             actions: "Acciones",

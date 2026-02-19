@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { Divider } from "@mantine/core";
-import { InvConceptoModal, InvConceptoTable, TitlePage } from "../../../components";
+import { InvConceptoTable, TitlePage } from "../../../components";
 import { useInvConceptoStore } from "../../../hooks";
 import Swal from "sweetalert2";
 
@@ -10,7 +10,7 @@ const InvConceptoPage = ({ tabValue }) => {
 
     useEffect(() => {
         if (tabValue === "estados") {
-        startLoadInvConceptos();
+            startLoadInvConceptos();
         }
 
         return () => {
@@ -47,7 +47,6 @@ const InvConceptoPage = ({ tabValue }) => {
             <TitlePage order={4}>Estados de Uso</TitlePage>
             <Divider my="sm" />
             <InvConceptoTable />
-            <InvConceptoModal />
         </div>
     );
 };

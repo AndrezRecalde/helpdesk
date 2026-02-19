@@ -5,6 +5,9 @@ import { MRT_Localization_ES } from "mantine-react-table/locales/es/index.cjs";
 import {
     DetailSolicitudesActualesTable,
     MenuTableActions,
+    ModalAnularSoporte,
+    ModalAsignarSoporte,
+    ModalDiagnostico,
     TableContent,
 } from "../../../components";
 import {
@@ -270,5 +273,12 @@ export const SoportesTable = () => {
         },
     });
 
-    return <TableContent table={table} />;
+    return (
+        <>
+            <TableContent table={table} />
+            <ModalDiagnostico option={2} />
+            <ModalAsignarSoporte />
+            <ModalAnularSoporte />
+        </>
+    );
 };

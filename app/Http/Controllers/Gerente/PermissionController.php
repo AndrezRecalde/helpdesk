@@ -142,42 +142,4 @@ class PermissionController extends Controller
             ], 500);
         }
     }
-    /**
-     * Asignar permisos especiales a un usuario.
-     */
-    public function assignSpecialPermissions(Request $request): JsonResponse
-    {
-        $request->validate([
-            'user_id' => ['required', 'exists:usrios_sstma,cdgo_usrio'],
-            'permissions' => ['required', 'array'],
-            'permissions.*' => ['exists:permissions,name'] // Valida que los permisos existan por nombre
-        ]);
-
-        try {
-            $user = User::find($request->user_id);
-
-            if (!$user) {
-                return response()->json([
-                    'status' => MsgStatus::Error,
-                    'msg' => 'Usuario no encontrado'
-                ], 404);
-            }
-
-            // Sincronizar permisos (esto reemplaza los permisos anteriores especiales del usuario)
-            // Si se desea agregar sin borrar los anteriores, usar $user->givePermissionTo($permissions);
-            $user->syncPermissions($request->permissions);
-
-            return response()->json([
-                'status' => MsgStatus::Success,
-                'msg' => 'Permisos asignados exitosamente al usuario',
-                'permissions' => $user->getDirectPermissions() // Devuelve los permisos directos
-            ], 200);
-
-        } catch (\Throwable $th) {
-            return response()->json([
-                'status' => MsgStatus::Error,
-                'message' => 'Error al asignar permisos: ' . $th->getMessage()
-            ], 500);
-        }
-    }
 }

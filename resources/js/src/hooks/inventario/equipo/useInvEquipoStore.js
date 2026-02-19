@@ -34,7 +34,7 @@ export const useInvEquipoStore = () => {
         try {
             dispatch(onLoading(true));
             const { data } = await helpdeskApi.get(
-                "/general/inventario/tipos-equipos"
+                "/general/inventario/tipos-equipos",
             );
             const { equipos } = data;
             dispatch(onLoadInvEquipos(equipos));
@@ -52,7 +52,7 @@ export const useInvEquipoStore = () => {
                 {
                     campo,
                     valor,
-                }
+                },
             );
             const { equipos } = data;
             dispatch(onLoadInvEquipos(equipos));
@@ -73,7 +73,7 @@ export const useInvEquipoStore = () => {
                 {
                     user_id,
                     direccion_id,
-                }
+                },
             );
             const { equipos } = data;
             dispatch(onLoadInvEquiposBaja(equipos));
@@ -88,7 +88,7 @@ export const useInvEquipoStore = () => {
             if (equipo.id) {
                 const { data } = await helpdeskApi.put(
                     `/gerencia/inventario/equipo/update/${equipo.id}`,
-                    equipo
+                    equipo,
                 );
                 dispatch(onLoadMessage(data));
                 setTimeout(() => {
@@ -102,7 +102,7 @@ export const useInvEquipoStore = () => {
             }
             const { data } = await helpdeskApi.post(
                 "/gerencia/inventario/equipo/store",
-                equipo
+                equipo,
             );
             dispatch(onLoadMessage(data));
             setTimeout(() => {
@@ -121,20 +121,23 @@ export const useInvEquipoStore = () => {
         try {
             dispatch(onLoading(true));
             const { data } = await helpdeskApi.get(
-                `/gerencia/inventario/equipo/${equipo.id}`
+                `/gerencia/inventario/equipo/${equipo.id}`,
             );
             const { equipo: invEquipo } = data;
+            console.log(invEquipo);
             dispatch(onSetActivateInvEquipo(invEquipo));
         } catch (error) {
             //console.log(error);
             ExceptionMessageError(error);
+        } finally {
+            dispatch(onLoading(false));
         }
     };
 
     const startDeleteInvEquipo = async (equipo) => {
         try {
             const { data } = await helpdeskApi.delete(
-                `/gerencia/inventario/equipo/destroy/${equipo.id}`
+                `/gerencia/inventario/equipo/destroy/${equipo.id}`,
             );
             dispatch(onDeleteInvEquipo());
             dispatch(onLoadMessage(data));
@@ -160,7 +163,7 @@ export const useInvEquipoStore = () => {
             dispatch(onLoading(true));
             const { data } = await helpdeskApi.put(
                 `/gerencia/inventario/asignar/${equipo.id}`,
-                equipo
+                equipo,
             );
             startShowInvEquipo(equipo);
             dispatch(onLoadMessage(data));
@@ -177,7 +180,7 @@ export const useInvEquipoStore = () => {
         try {
             dispatch(onLoading(true));
             const { data } = await helpdeskApi.delete(
-                `/gerencia/inventario/equipo/${equipo_id}/${id}`
+                `/gerencia/inventario/equipo/${equipo_id}/${id}`,
             );
             dispatch(onRemoveUserFromEquipo(id));
             dispatch(onLoadMessage(data));
@@ -199,7 +202,7 @@ export const useInvEquipoStore = () => {
                     headers: {
                         "Content-Type": "multipart/form-data",
                     },
-                }
+                },
             );
             startShowInvEquipo(equipo);
             dispatch(onLoadMessage(data));
@@ -215,7 +218,7 @@ export const useInvEquipoStore = () => {
     const startEliminarArchivo = async (documento) => {
         try {
             const { data } = await helpdeskApi.delete(
-                `/gerencia/equipo/documento/${documento.id}/eliminar`
+                `/gerencia/equipo/documento/${documento.id}/eliminar`,
             );
             dispatch(onRemoveDocumentoFromEquipo(documento.id));
             dispatch(onLoadMessage(data));
@@ -231,7 +234,7 @@ export const useInvEquipoStore = () => {
     const startRemoverCustodio = async (equipo, storageFields = {}) => {
         try {
             const { data } = await helpdeskApi.post(
-                `/gerencia/inventario/equipo/remover-custodio/${equipo.id}`
+                `/gerencia/inventario/equipo/remover-custodio/${equipo.id}`,
             );
             dispatch(onLoadMessage(data));
             setTimeout(() => {
@@ -248,7 +251,7 @@ export const useInvEquipoStore = () => {
         try {
             const { data } = await helpdeskApi.put(
                 `/gerencia/inventario/equipo/${equipo.id}/custodio`,
-                values
+                values,
             );
             dispatch(onLoadMessage(data));
             setTimeout(() => {
@@ -266,7 +269,7 @@ export const useInvEquipoStore = () => {
             dispatch(onExport(true));
             const response = await helpdeskApi.get(
                 `/gerencia/equipo/descargar-documento/${documento.id}`,
-                { responseType: "blob" } // Esto es importante para manejar el archivo correctamente
+                { responseType: "blob" }, // Esto es importante para manejar el archivo correctamente
             );
 
             // Crear un blob del PDF y asignarlo a una URL
@@ -299,7 +302,7 @@ export const useInvEquipoStore = () => {
             const response = await helpdeskApi.post(
                 "/gerencia/inventario/export/equipos",
                 { equipos },
-                { responseType: "blob" }
+                { responseType: "blob" },
             );
             const pdfBlob = new Blob([response.data], {
                 type: "application/pdf",
@@ -319,7 +322,7 @@ export const useInvEquipoStore = () => {
             const response = await helpdeskApi.post(
                 "/gerencia/inventario/equipo/baja",
                 values,
-                { responseType: "blob" }
+                { responseType: "blob" },
             );
             const pdfBlob = new Blob([response.data], {
                 type: "application/pdf",

@@ -4,7 +4,8 @@ import { IconBan } from "@tabler/icons-react";
 import { usePermisoStore, useStorageField, useUiPermiso } from "../../../hooks";
 
 export const FormAnularPermiso = ({ form }) => {
-    const { isLoading, startAnularPermiso, setActivatePermiso } = usePermisoStore();
+    const { isLoading, startAnularPermiso, setActivatePermiso } =
+        usePermisoStore();
     const { modalActionAnularPermiso } = useUiPermiso();
     const { storagePermisoFields } = useStorageField();
 
@@ -24,8 +25,8 @@ export const FormAnularPermiso = ({ form }) => {
         >
             <Stack>
                 <Textarea
-                    label="Motivo de anulación"
-                    placeholder="Describa su motivo"
+                    label="Motivo de anulación del permiso"
+                    placeholder="Describa su mótivo"
                     {...form.getInputProps("per_observacion_anulado")}
                 />
                 <BtnSubmit IconSection={IconBan} loading={isLoading}>

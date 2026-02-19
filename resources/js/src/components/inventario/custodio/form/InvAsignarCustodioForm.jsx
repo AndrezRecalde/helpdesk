@@ -23,7 +23,7 @@ export const InvAsignarCustodioForm = ({
         startAsignarCustodioFn(
             activateElement,
             form.getTransformedValues(),
-            storageFields
+            storageFields,
         );
         if (activateElement !== null) {
             setActivateElement(null);
@@ -43,42 +43,38 @@ export const InvAsignarCustodioForm = ({
                 justify="center"
                 gap="lg"
             >
-                <SimpleGrid cols={{ base: 1, sm: 1, md: 2, lg: 2 }}>
-                    <Select
-                        searchable
-                        label="Usuario"
-                        placeholder="Seleccione el custodio"
-                        {...form.getInputProps("user_id")}
-                        rightSection={
-                            loadingUsers ? <Loader size={18} /> : null
-                        }
-                        data={
-                            users
-                                ? users.map((user) => ({
-                                      value: user.cdgo_usrio.toString(),
-                                      label: user.nmbre_usrio,
-                                  }))
-                                : "Cargando"
-                        }
-                    />
-                    <Select
-                        searchable
-                        label="Dirección"
-                        placeholder="Seleccione la dirección de ubicación"
-                        {...form.getInputProps("direccion_id")}
-                        rightSection={
-                            loadingDirecciones ? <Loader size={18} /> : null
-                        }
-                        data={
-                            direcciones
-                                ? direcciones.map((direccion) => ({
-                                      value: direccion.cdgo_dprtmnto.toString(),
-                                      label: direccion.nmbre_dprtmnto,
-                                  }))
-                                : "Cargando"
-                        }
-                    />
-                </SimpleGrid>
+                <Select
+                    searchable
+                    label="Usuario"
+                    placeholder="Seleccione el custodio"
+                    {...form.getInputProps("user_id")}
+                    rightSection={loadingUsers ? <Loader size={18} /> : null}
+                    data={
+                        users
+                            ? users.map((user) => ({
+                                  value: user.cdgo_usrio.toString(),
+                                  label: user.nmbre_usrio,
+                              }))
+                            : "Cargando"
+                    }
+                />
+                <Select
+                    searchable
+                    label="Dirección"
+                    placeholder="Seleccione la dirección de ubicación"
+                    {...form.getInputProps("direccion_id")}
+                    rightSection={
+                        loadingDirecciones ? <Loader size={18} /> : null
+                    }
+                    data={
+                        direcciones
+                            ? direcciones.map((direccion) => ({
+                                  value: direccion.cdgo_dprtmnto.toString(),
+                                  label: direccion.nmbre_dprtmnto,
+                              }))
+                            : "Cargando"
+                    }
+                />
                 <BtnSubmit>Guardar</BtnSubmit>
             </Stack>
         </Box>

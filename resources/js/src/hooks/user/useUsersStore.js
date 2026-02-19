@@ -6,6 +6,7 @@ import {
     onLoadErrores,
     onLoadMessage,
     onLoadUsers,
+    onLoadUsersRolesPermissions,
     onLoading,
     onSetActivateResponsable,
     onSetActivateUser,
@@ -20,6 +21,7 @@ export const useUsersStore = () => {
     const {
         isLoading,
         users,
+        usersRolesPermissions,
         birthdays,
         activateUser,
         activateResponsable,
@@ -318,8 +320,32 @@ export const useUsersStore = () => {
                 },
             );
             const { usuarios, paginacion } = data;
-            dispatch(onLoadUsers(usuarios));
+            dispatch(onLoadUsersRolesPermissions(usuarios));
             dispatch(onSetPagination(paginacion));
+        } catch (error) {
+            ExceptionMessageError(error);
+        } finally {
+            dispatch(onLoading(false));
+        }
+    };
+
+    const startAssignUserRolesPermissions = async (
+        cdgo_usrio,
+        roles = [],
+        permissions = [],
+        paginationParams = {},
+    ) => {
+        try {
+            dispatch(onLoading(true));
+            const { data } = await helpdeskApi.post(
+                `/gerencia/user/${cdgo_usrio}/assign-roles-permissions`,
+                { roles, permissions },
+            );
+            dispatch(onLoadMessage(data));
+            setTimeout(() => {
+                dispatch(onLoadMessage(undefined));
+            }, 40);
+            await startLoadUsersWithRolesOrPermissions(paginationParams);
         } catch (error) {
             ExceptionMessageError(error);
         } finally {
@@ -347,6 +373,7 @@ export const useUsersStore = () => {
     return {
         isLoading,
         users,
+        usersRolesPermissions,
         birthdays,
         activateUser,
         activateResponsable,
@@ -371,6 +398,7 @@ export const useUsersStore = () => {
         startChangePwdUser,
         startLoadInfoUsersSoporte,
         startLoadUsersWithRolesOrPermissions,
+        startAssignUserRolesPermissions,
         startAddCodigoBiometrico,
         clearInfoSoportes,
         clearUsers,

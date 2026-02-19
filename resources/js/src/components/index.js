@@ -20,6 +20,14 @@ import { AppLogosTable } from "./app/table/AppLogosTable";
 import { AppLogosModal } from "./app/modal/AppLogosModal";
 import { AppLogosForm } from "./app/form/AppLogosForm";
 
+/* ACCESS CONTROL */
+import { PermissionModal } from "./accessControl/PermissionModal";
+import { PermissionsTable } from "./accessControl/PermissionsTable";
+import { RoleModal } from "./accessControl/RoleModal";
+import { RolesTable } from "./accessControl/RolesTable";
+import { UsersRolesPermissionsTable } from "./accessControl/UsersRolesPermissionsTable";
+import { ModalAsignarRolesPermisos } from "./accessControl/modal/ModalAsignarRolesPermisos";
+
 /* HOME */
 import { ServiceSection } from "./home/section/ServiceSection";
 import { BirthdaySection } from "./home/section/BirthdaySection";
@@ -209,7 +217,6 @@ import { InvAsignacionForm } from "./inventario/equipo/form/InvAsignacionForm";
 import { InvEquipoGeneralForm } from "./inventario/equipo/form/stepper/InvEquipoGeneralForm";
 import { InvEquipoStepperFinal } from "./inventario/equipo/form/stepper/InvEquipoStepperFinal";
 import { InvEquipoComplementaria } from "./inventario/equipo/form/stepper/InvEquipoComplementaria";
-import { InvInfoGeneralEquipo } from "./inventario/equipo/form/elements/InvInfoGeneralEquipo";
 import { InvTabsDetalleEquipo } from "./inventario/equipo/form/elements/tabs/InvTabsDetalleEquipo";
 import { InvTabGeneralEquipo } from "./inventario/equipo/form/elements/tabs/InvTabGeneralEquipo";
 import { InvTabUbicacionEquipo } from "./inventario/equipo/form/elements/tabs/InvTabUbicacionEquipo";
@@ -289,6 +296,14 @@ export {
     AppLogosTable,
     AppLogosModal,
     AppLogosForm,
+
+    /* ACCESS CONTROL */
+    PermissionModal,
+    PermissionsTable,
+    RoleModal,
+    RolesTable,
+    UsersRolesPermissionsTable,
+    ModalAsignarRolesPermisos,
 
     /* HOME */
     ServiceSection,
@@ -468,7 +483,6 @@ export {
     InvEquipoGeneralForm,
     InvEquipoStepperFinal,
     InvEquipoComplementaria,
-    InvInfoGeneralEquipo,
     InvTabsDetalleEquipo,
     InvTabGeneralEquipo,
     InvTabUbicacionEquipo,

@@ -63,18 +63,18 @@ class InvEquipoController extends Controller
 
         // Mapear los nombres de campo con sus relaciones
         $mapaCampos = [
-            'direccion'     => 'd.nmbre_dprtmnto',
-            'usuario'       => 'us.nmbre_usrio',
-            'codigo'        => ['inve.codigo_nuevo', 'inve.codigo_antiguo'], // Buscar en ambos códigos
-            'categoria'     => 'invc.nombre_categoria',
-            'numero_serie'  => 'inve.numero_serie',
-            'estado'        => 'inves.nombre_estado',
+            'direccion' => 'd.nmbre_dprtmnto',
+            'usuario' => 'us.nmbre_usrio',
+            'codigo' => ['inve.codigo_nuevo', 'inve.codigo_antiguo'], // Buscar en ambos códigos
+            'categoria' => 'invc.nombre_categoria',
+            'numero_serie' => 'inve.numero_serie',
+            'estado' => 'inves.nombre_estado',
         ];
 
         if (!array_key_exists($campo, $mapaCampos)) {
             return response()->json([
                 'status' => MsgStatus::Success,
-                'msg'    => 'Campo no valido'
+                'msg' => 'Campo no valido'
             ], 400);
         }
 
@@ -135,7 +135,7 @@ class InvEquipoController extends Controller
                 'usuarios',
                 'documentos'
             ])
-            ->join('inv_ubicaciones as invu', 'invu.id', 'inve.ubicacion_id')
+            ->leftJoin('inv_ubicaciones as invu', 'invu.id', 'inve.ubicacion_id')
             ->join('inv_categorias as invc', 'invc.id', 'inve.categoria_id')
             ->join('inv_tipocategorias as invt', 'invt.id', 'invc.tipocategoria_id')
             ->join('inv_estados as inves', 'inves.id', 'inve.estado_id')
@@ -149,7 +149,7 @@ class InvEquipoController extends Controller
 
         return response()->json([
             'status' => MsgStatus::Success,
-            'equipo' =>  $equipo
+            'equipo' => $equipo
         ], 200);
     }
 
@@ -164,8 +164,8 @@ class InvEquipoController extends Controller
             if ($request->filled('usuario_id') && $request->filled('direccion_id')) {
                 $equipo->usuarios()->attach($request->usuario_id, [
                     'direccion_id' => $request->direccion_id,
-                    'concepto_id'  => $request->concepto_id,
-                    'observacion' =>  $request->observacion
+                    'concepto_id' => $request->concepto_id,
+                    'observacion' => $request->observacion
                 ]);
             }
 
@@ -176,7 +176,7 @@ class InvEquipoController extends Controller
 
             return response()->json([
                 'status' => 'success',
-                'msg'    => MsgStatus::Created,
+                'msg' => MsgStatus::Created,
             ], 200);
         } catch (\Throwable $th) {
             DB::rollBack();  // Revertir la transacción en caso de error
@@ -198,11 +198,13 @@ class InvEquipoController extends Controller
 
                 // Actualizar la relación de usuario si se incluyen los campos correspondientes
                 if ($request->filled('usuario_id') && $request->filled('direccion_id')) {
-                    $equipo->usuarios()->syncWithoutDetaching([$request->usuario_id => [
-                        'direccion_id' => $request->direccion_id,
-                        'concepto_id'  => $request->concepto_id,
-                        'observacion'  => $request->observacion,
-                    ]]);
+                    $equipo->usuarios()->syncWithoutDetaching([
+                        $request->usuario_id => [
+                            'direccion_id' => $request->direccion_id,
+                            'concepto_id' => $request->concepto_id,
+                            'observacion' => $request->observacion,
+                        ]
+                    ]);
                 }
 
                 /* if ($categoria->id != $equipo->categoria_id) {
@@ -231,8 +233,8 @@ class InvEquipoController extends Controller
                 if ($request->filled('usuario_id') && $request->filled('direccion_id')) {
                     $equipo->usuarios()->attach($request->usuario_id, [
                         'direccion_id' => $request->direccion_id,
-                        'concepto_id'  => $request->concepto_id,
-                        'observacion'  =>  $request->observacion
+                        'concepto_id' => $request->concepto_id,
+                        'observacion' => $request->observacion
                     ]);
                 }
 
@@ -294,8 +296,8 @@ class InvEquipoController extends Controller
                 $documentoEquipo->save();
 
                 return response()->json([
-                    'status'    => 'success',
-                    'msg'       => 'Documento cargado exitosamente.',
+                    'status' => 'success',
+                    'msg' => 'Documento cargado exitosamente.',
                     //'ruta'      => $archivoPath,
                 ], 201);
             }
@@ -354,7 +356,7 @@ class InvEquipoController extends Controller
         if (!$equipo) {
             return response()->json([
                 'status' => MsgStatus::Error,
-                'msg'    => 'El equipo no fue encontrado.'
+                'msg' => 'El equipo no fue encontrado.'
             ], 404);
         }
 

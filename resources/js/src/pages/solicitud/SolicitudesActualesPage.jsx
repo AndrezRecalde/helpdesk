@@ -1,10 +1,7 @@
 import { useEffect } from "react";
-import { Container, Divider, Group, LoadingOverlay } from "@mantine/core";
+import { Container, Divider, Group } from "@mantine/core";
 import {
     BtnSection,
-    ModalAnularSoporte,
-    ModalAsignarSoporte,
-    ModalDiagnostico,
     ModalSolicitudAdminSoporte,
     SolicitudesTable,
     TextSection,
@@ -132,9 +129,6 @@ const SolicitudesActualesPage = () => {
 
             {/* ) : null} */}
             <ModalSolicitudAdminSoporte />
-            <ModalAsignarSoporte />
-            <ModalAnularSoporte />
-            <ModalDiagnostico option={1} />
         </Container>
     );
 };

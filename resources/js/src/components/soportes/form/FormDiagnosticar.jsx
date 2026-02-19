@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
 import {
     Card,
-    Group,
-    rem,
     Textarea,
     Select,
     SimpleGrid,
@@ -14,7 +12,6 @@ import {
 import { DateTimePicker } from "@mantine/dates";
 import { BtnSubmit, TextSection } from "../../../components";
 import {
-    //useEquipoStore,
     useInvEquipoStore,
     useInvEstadoStore,
     useSoporteStore,

@@ -3,14 +3,7 @@ import { Container, Divider, Group } from "@mantine/core";
 import {
     BtnAddActions,
     FilterFormEquipos,
-    InvAsignarCustodioModal,
-    InvBajaEquipoModal,
-    InvDeleteEquipoModal,
-    InvEquipoAsignacionModal,
-    InvEquipoDocumentoModal,
-    InvEquipoModal,
     InvEquipoTable,
-    InvShowEquipoModal,
     TitlePage,
 } from "../../../components";
 import { IconCubePlus, IconDeviceDesktopDown } from "@tabler/icons-react";
@@ -24,15 +17,8 @@ import Swal from "sweetalert2";
 const InvEquiposPage = () => {
     useTitlePage("Inventario de Equipos Informáticos - Helpdesk");
 
-    const {
-        isExport,
-        activateInvEquipo,
-        setActivateInvEquipo,
-        message,
-        errores,
-        startClearInvEquipos,
-        startAsignarCustodio,
-    } = useInvEquipoStore();
+    const { isExport, message, errores, startClearInvEquipos } =
+        useInvEquipoStore();
     const { modalActionEquipo, modalActionBajaEquipo } = useInvUiEquipo();
 
     useEffect(() => {
@@ -115,18 +101,6 @@ const InvEquiposPage = () => {
             <Divider my="md" />
             <FilterFormEquipos />
             <InvEquipoTable />
-
-            <InvEquipoModal />
-            <InvShowEquipoModal />
-            <InvEquipoAsignacionModal />
-            <InvDeleteEquipoModal />
-            <InvBajaEquipoModal />
-            <InvEquipoDocumentoModal />
-            <InvAsignarCustodioModal
-                setActivateElement={setActivateInvEquipo}
-                activateElement={activateInvEquipo}
-                startAsignarCustodioFn={startAsignarCustodio}
-            />
         </Container>
     );
 };

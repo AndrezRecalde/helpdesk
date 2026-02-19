@@ -1,11 +1,11 @@
 import { useMemo } from "react";
 import { Box } from "@mantine/core";
-import { IconEdit } from "@tabler/icons-react";
 import { MantineReactTable, useMantineReactTable } from "mantine-react-table";
-import { useRoleStore } from "../../hooks/accessControl/useRoleStore";
-import { MenuTableActions } from "../elements/tables/MenuTableActions";
+import { MenuTableActions, BtnSection } from "../../components";
+import { useRoleStore } from "../../hooks";
+import { IconCubePlus, IconEdit } from "@tabler/icons-react";
 
-export const RolesTable = ({ setModalVisible }) => {
+export const RolesTable = ({ setModalVisible, handleOpenRoleModal }) => {
     const { setActiveRole, roles, isLoading } = useRoleStore();
 
     const columns = useMemo(
@@ -51,6 +51,14 @@ export const RolesTable = ({ setModalVisible }) => {
                     },
                 ]}
             />
+        ),
+        renderTopToolbarCustomActions: () => (
+            <BtnSection
+                IconSection={IconCubePlus}
+                handleAction={handleOpenRoleModal}
+            >
+                Crear Rol
+            </BtnSection>
         ),
         localization: {
             actions: "Acciones",

@@ -6,7 +6,6 @@ import {
     BtnSection,
     CardInfoStatsUser,
     FilterPermiso,
-    ModalAnularPermiso,
     PermisosTable,
     TitlePage,
 } from "../../components";
@@ -199,7 +198,8 @@ const ListPermisosPage = () => {
 
             <Divider my="md" />
 
-            {(activateStatsUsuarioPermiso ?? activateStatsUsuarioPermiso?.total_permisos > 0) ? (
+            {(activateStatsUsuarioPermiso ??
+            activateStatsUsuarioPermiso?.total_permisos > 0) ? (
                 <CardInfoStatsUser year={currentYear} />
             ) : null}
 
@@ -226,8 +226,6 @@ const ListPermisosPage = () => {
                     No se encontraron permisos con los filtros aplicados.
                 </AlertSection>
             )}
-
-            <ModalAnularPermiso />
         </Container>
     );
 };

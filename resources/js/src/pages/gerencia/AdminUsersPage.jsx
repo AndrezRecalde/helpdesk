@@ -3,12 +3,9 @@ import { Container, Divider, Group } from "@mantine/core";
 import {
     BtnSection,
     FilterFormUsers,
-    ModalActivateUser,
-    ModalResetPwdUser,
     ModalUser,
     TitlePage,
     UsersTable,
-    ModalCodigoBiometrico,
 } from "../../components";
 import {
     useCargoStore,
@@ -92,9 +89,6 @@ const AdminUsersPage = () => {
             <FilterFormUsers />
             <UsersTable />
             <ModalUser />
-            <ModalActivateUser />
-            <ModalResetPwdUser />
-            <ModalCodigoBiometrico />
         </Container>
     );
 };

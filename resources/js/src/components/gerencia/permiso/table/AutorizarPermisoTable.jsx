@@ -12,13 +12,7 @@ const ANULAR_PERMISO = 6;
 const AUTORIZAR_PERMISO = 2;
 
 export const AutorizarPermisoTable = () => {
-    const {
-        isLoading,
-        permisos,
-        startLoadPermisos,
-        setActivatePermiso,
-        startUpdateEstadoPermiso,
-    } = usePermisoStore();
+    const { isLoading, permisos, startUpdateEstadoPermiso } = usePermisoStore();
 
     const columns = useMemo(
         () => [
@@ -65,9 +59,11 @@ export const AutorizarPermisoTable = () => {
             //setActivatePermiso(selected);
             Swal.fire({
                 title: "¿Estas seguro?",
-                text: `¿Confirmas en anular el permiso
-                        ${selected.idper_permisos} perteneciente
-                        a ${selected.usuario_pide}?`,
+                html: `
+                <p>¿Confirmas en <u>anular</u> el permiso
+                        <b>${selected.idper_permisos}</b> perteneciente
+                        a <b>${selected.usuario_pide}</b>?</p>
+                `,
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#20c997",
@@ -87,9 +83,11 @@ export const AutorizarPermisoTable = () => {
             //setActivatePermiso(selected);
             Swal.fire({
                 title: "¿Estas seguro?",
-                text: `¿Confirmas en autorizar el permiso
-                        ${selected.idper_permisos} perteneciente
-                        a ${selected.usuario_pide}?`,
+                html: `
+                <p>¿Confirmas en <u>autorizar</u> el permiso
+                        <b>${selected.idper_permisos}</b> perteneciente
+                        a <b>${selected.usuario_pide}</b>?</p>
+                `,
                 icon: "info",
                 showCancelButton: true,
                 confirmButtonColor: "#20c997",

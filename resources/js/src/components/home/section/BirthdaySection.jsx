@@ -30,7 +30,7 @@ export const BirthdaySection = () => {
     const formatName = (name) => {
         return name
             .toLowerCase()
-            .replace(/\b\w/g, (char) => char.toUpperCase());
+            .replace(/(^|\s)\p{L}/gu, (char) => char.toUpperCase());
     };
 
     if (!birthdays || birthdays.length === 0) {
@@ -79,7 +79,7 @@ export const BirthdaySection = () => {
                                                 variant="light"
                                             >
                                                 {getInitials(
-                                                    employee.nmbre_usrio
+                                                    employee.nmbre_usrio,
                                                 )}
                                             </Avatar>
                                             <Box
@@ -105,7 +105,7 @@ export const BirthdaySection = () => {
                                                 tt="capitalize"
                                             >
                                                 {formatName(
-                                                    employee.nmbre_usrio
+                                                    employee.nmbre_usrio,
                                                 )}
                                             </TextSection>
                                             <Group gap={6}>
@@ -116,7 +116,7 @@ export const BirthdaySection = () => {
                                                 />
                                                 <TextSection fz={12} tt="">
                                                     {formatBirthday(
-                                                        employee.usu_fec_nac
+                                                        employee.usu_fec_nac,
                                                     )}
                                                 </TextSection>
                                                 <Badge
@@ -150,7 +150,7 @@ export const BirthdaySection = () => {
                                             ta="center"
                                         >
                                             {`¡Feliz cumpleaños ${formatName(
-                                                firstName
+                                                firstName,
                                             )}! 🎉 La institución te desea un día maravilloso lleno de bendiciones y éxitos.`}
                                         </TextSection>
                                     </Paper>

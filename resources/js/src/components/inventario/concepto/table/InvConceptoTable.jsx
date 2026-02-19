@@ -2,6 +2,7 @@ import { useCallback, useMemo } from "react";
 import { useMantineReactTable } from "mantine-react-table";
 import {
     BtnSection,
+    InvConceptoModal,
     MenuTableActions,
     TableContent,
 } from "../../../../components";
@@ -69,19 +70,13 @@ export const InvConceptoTable = () => {
         mantineTableProps: {
             withColumnBorders: true,
             withTableBorder: true,
-            sx: {
-                "thead > tr": {
-                    backgroundColor: "inherit",
-                },
-                "thead > tr > th": {
-                    backgroundColor: "inherit",
-                },
-                "tbody > tr > td": {
-                    backgroundColor: "inherit",
-                },
-            },
         },
     });
 
-    return <TableContent table={table} />;
+    return (
+        <>
+            <TableContent table={table} />
+            <InvConceptoModal />
+        </>
+    );
 };

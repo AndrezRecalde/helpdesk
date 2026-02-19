@@ -16,7 +16,7 @@ export const ModalAnularPermiso = () => {
         },
         validate: {
             per_observacion_anulado: isNotEmpty(
-                "Por favor señale el motivo de su anulación"
+                "Por favor señale el motivo de su anulación",
             ),
         },
     });
@@ -25,7 +25,7 @@ export const ModalAnularPermiso = () => {
         if (activatePermiso !== null) {
             form.setFieldValue(
                 "idper_permisos",
-                activatePermiso?.idper_permisos
+                activatePermiso?.idper_permisos,
             );
         }
     }, [activatePermiso]);
@@ -40,6 +40,7 @@ export const ModalAnularPermiso = () => {
 
     return (
         <Modal
+            size="lg"
             opened={isOpenModalAnularPermiso}
             onClose={handleCloseModal}
             title="Anular Permiso"

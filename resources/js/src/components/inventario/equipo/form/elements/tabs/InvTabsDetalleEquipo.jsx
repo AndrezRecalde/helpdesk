@@ -1,9 +1,5 @@
 import { Box, rem, Tabs } from "@mantine/core";
-import {
-    IconAdjustments,
-    IconFiles,
-    IconUserCheck,
-} from "@tabler/icons-react";
+import { IconAdjustments, IconFiles, IconUserCheck } from "@tabler/icons-react";
 import {
     InvEquipoDocumentosTable,
     InvEquipoResponsablesTable,
@@ -14,7 +10,7 @@ export const InvTabsDetalleEquipo = () => {
     const iconStyle = { width: rem(18), height: rem(18) };
 
     return (
-        <Tabs mt={30} variant="outline" defaultValue="general">
+        <Tabs mt={20} defaultValue="general">
             <Tabs.List grow>
                 <Tabs.Tab
                     value="general"

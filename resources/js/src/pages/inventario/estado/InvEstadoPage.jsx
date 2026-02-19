@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { Divider } from "@mantine/core";
-import { InvEstadoModal, InvEstadoTable, TitlePage } from "../../../components";
+import { InvEstadoTable, TitlePage } from "../../../components";
 import { useInvEstadoStore } from "../../../hooks";
 import Swal from "sweetalert2";
 
@@ -47,7 +47,6 @@ const InvEstadoPage = ({ tabValue }) => {
             <TitlePage order={4}>Estados de Equipos</TitlePage>
             <Divider my="sm" />
             <InvEstadoTable />
-            <InvEstadoModal />
         </div>
     );
 };

@@ -1,19 +1,12 @@
 import { useEffect } from "react";
 import { useInvTipocategoriaStore } from "../../../hooks";
-import {
-    InvTipocategoriaModal,
-    InvTipocategoriaTable,
-    TitlePage,
-} from "../../../components";
+import { InvTipocategoriaTable, TitlePage } from "../../../components";
 import Swal from "sweetalert2";
 import { Divider } from "@mantine/core";
 
 const InvTipocategoriasPage = ({ tabValue }) => {
-    const {
-        startLoadTiposcategorias,
-        message,
-        errores,
-    } = useInvTipocategoriaStore();
+    const { startLoadTiposcategorias, message, errores } =
+        useInvTipocategoriaStore();
 
     useEffect(() => {
         if (tabValue === "categorias") {
@@ -52,15 +45,11 @@ const InvTipocategoriasPage = ({ tabValue }) => {
 
     return (
         <div>
-            <TitlePage order={4}>
-                Tipos de categorías
-            </TitlePage>
+            <TitlePage order={4}>Tipos de categorías</TitlePage>
             <Divider my="sm" />
             <InvTipocategoriaTable />
-            <InvTipocategoriaModal />
         </div>
     );
 };
-
 
 export default InvTipocategoriasPage;

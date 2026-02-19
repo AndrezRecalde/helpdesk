@@ -5,6 +5,7 @@ import {
     MenuTableActions,
     BtnSection,
     TableContent,
+    InvUbicacionModal,
 } from "../../../../components";
 import {
     IconCopyPlus,
@@ -77,19 +78,13 @@ export const InvUbicacionTable = () => {
         mantineTableProps: {
             withColumnBorders: true,
             withTableBorder: true,
-            sx: {
-                "thead > tr": {
-                    backgroundColor: "inherit",
-                },
-                "thead > tr > th": {
-                    backgroundColor: "inherit",
-                },
-                "tbody > tr > td": {
-                    backgroundColor: "inherit",
-                },
-            },
         },
     });
 
-    return <TableContent table={table} />;
+    return (
+        <>
+            <TableContent table={table} />
+            <InvUbicacionModal />
+        </>
+    );
 };

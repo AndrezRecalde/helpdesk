@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { Divider } from "@mantine/core";
-import { InvMarcaModal, InvMarcaTable, TitlePage } from "../../../components";
+import { InvMarcaTable, TitlePage } from "../../../components";
 import { useInvMarcaStore, useTitlePage } from "../../../hooks";
 import Swal from "sweetalert2";
 
@@ -48,7 +48,6 @@ const InvMarcaPage = ({ tabValue }) => {
             <TitlePage order={4}>Marcas de Equipos</TitlePage>
             <Divider my="sm" />
             <InvMarcaTable />
-            <InvMarcaModal />
         </div>
     );
 };

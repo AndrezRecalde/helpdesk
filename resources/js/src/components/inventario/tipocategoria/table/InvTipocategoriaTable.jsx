@@ -5,6 +5,7 @@ import {
 } from "../../../../hooks";
 import {
     BtnSection,
+    InvTipocategoriaModal,
     MenuTableActions,
     TableContent,
 } from "../../../../components";
@@ -72,19 +73,13 @@ export const InvTipocategoriaTable = () => {
         mantineTableProps: {
             withColumnBorders: true,
             withTableBorder: true,
-            sx: {
-                "thead > tr": {
-                    backgroundColor: "inherit",
-                },
-                "thead > tr > th": {
-                    backgroundColor: "inherit",
-                },
-                "tbody > tr > td": {
-                    backgroundColor: "inherit",
-                },
-            },
         },
     });
 
-    return <TableContent table={table} />;
+    return (
+        <>
+            <TableContent table={table} />
+            <InvTipocategoriaModal />
+        </>
+    );
 };

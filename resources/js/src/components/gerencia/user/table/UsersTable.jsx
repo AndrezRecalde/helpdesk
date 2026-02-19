@@ -3,6 +3,9 @@ import { useCallback, useMemo, useState, useEffect } from "react";
 import {
     ActivateUserBtn,
     MenuTableActions,
+    ModalActivateUser,
+    ModalCodigoBiometrico,
+    ModalResetPwdUser,
     TableContent,
 } from "../../../../components";
 import { useUiUser, useUsersStore } from "../../../../hooks";
@@ -172,19 +175,15 @@ export const UsersTable = () => {
         mantineTableProps: {
             withColumnBorders: true,
             withTableBorder: true,
-            sx: {
-                "thead > tr": {
-                    backgroundColor: "inherit",
-                },
-                "thead > tr > th": {
-                    backgroundColor: "inherit",
-                },
-                "tbody > tr > td": {
-                    backgroundColor: "inherit",
-                },
-            },
         },
     });
 
-    return <TableContent table={table} />;
+    return (
+        <>
+            <TableContent table={table} />
+            <ModalActivateUser />
+            <ModalResetPwdUser />
+            <ModalCodigoBiometrico />
+        </>
+    );
 };

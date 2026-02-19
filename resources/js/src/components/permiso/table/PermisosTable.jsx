@@ -1,7 +1,11 @@
 import { useCallback, useMemo } from "react";
 import { useMantineReactTable } from "mantine-react-table";
 import { MRT_Localization_ES } from "mantine-react-table/locales/es/index.cjs";
-import { MenuTableActions, TableContent } from "../../../components";
+import {
+    MenuTableActions,
+    ModalAnularPermiso,
+    TableContent,
+} from "../../../components";
 import { usePermisoStore, useUiPermiso } from "../../../hooks";
 import { Spoiler } from "@mantine/core";
 import dayjs from "dayjs";
@@ -142,19 +146,13 @@ export const PermisosTable = () => {
         mantineTableProps: {
             withColumnBorders: true,
             withTableBorder: true,
-            sx: {
-                "thead > tr": {
-                    backgroundColor: "inherit",
-                },
-                "thead > tr > th": {
-                    backgroundColor: "inherit",
-                },
-                "tbody > tr > td": {
-                    backgroundColor: "inherit",
-                },
-            },
         },
     });
 
-    return <TableContent table={table} />;
+    return (
+        <>
+            <TableContent table={table} />
+            <ModalAnularPermiso />
+        </>
+    );
 };

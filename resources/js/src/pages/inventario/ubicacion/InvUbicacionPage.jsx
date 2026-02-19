@@ -1,7 +1,11 @@
 import { useEffect } from "react";
 import { Divider } from "@mantine/core";
 import { useInvUbicacionStore } from "../../../hooks";
-import { InvUbicacionModal, InvUbicacionTable, TitlePage } from "../../../components";
+import {
+    InvUbicacionModal,
+    InvUbicacionTable,
+    TitlePage,
+} from "../../../components";
 import Swal from "sweetalert2";
 
 const InvUbicacionPage = ({ tabValue }) => {
@@ -51,7 +55,6 @@ const InvUbicacionPage = ({ tabValue }) => {
             <TitlePage order={4}>Ubicaciones Físicas</TitlePage>
             <Divider my="sm" />
             <InvUbicacionTable />
-            <InvUbicacionModal />
         </div>
     );
 };

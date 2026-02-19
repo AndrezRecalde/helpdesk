@@ -1,12 +1,7 @@
 import { useEffect } from "react";
 import { Divider } from "@mantine/core";
 import { useInvCategoriaStore, useTitlePage } from "../../../hooks";
-import {
-    InvCategoriaModal,
-    InvCategoriaTable,
-    //InvStockCategoriaModal,
-    TitlePage,
-} from "../../../components";
+import { InvCategoriaTable, TitlePage } from "../../../components";
 import Swal from "sweetalert2";
 
 const InvCategoriasPage = ({ tabValue }) => {
@@ -57,8 +52,6 @@ const InvCategoriasPage = ({ tabValue }) => {
             <TitlePage order={4}>Categorías</TitlePage>
             <Divider my="sm" />
             <InvCategoriaTable />
-            <InvCategoriaModal />
-            {/* <InvStockCategoriaModal /> */}
         </div>
     );
 };
