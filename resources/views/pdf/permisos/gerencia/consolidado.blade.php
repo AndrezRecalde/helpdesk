@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <title>Consolidado de Permisos</title>
@@ -8,7 +9,7 @@
             size: 21cm 29.7cm;
             margin: 10px;
         }
-        
+
         * {
             margin: 5px 5px 5px 5px;
             padding: 0;
@@ -22,7 +23,7 @@
         }
 
         .form-container {
-            background-image: url("https://prefecturadeesmeraldas.gob.ec/wp-content/uploads/2026/02/Gemini_Generated_Image_vq6xzavq6xzavq6x-1.png");
+            background-image: url('{{ public_path('/assets/images/fondo_tthh_consolidado.png') }}');
             background-size: cover;
             background-position: center;
             opacity: 0.40;
@@ -30,7 +31,8 @@
             padding: 8px;
             margin-bottom: 8px;
             //page-break-inside: avoid;
-            height: 98%; /* Full height for the report */
+            height: 98%;
+            /* Full height for the report */
         }
 
         .header {
@@ -79,6 +81,7 @@
         }
     </style>
 </head>
+
 <body>
     <div class="form-container">
         <div class="header">
@@ -105,7 +108,7 @@
                         $hours = (int) $timeParts[0];
                         $minutes = (int) $timeParts[1];
                         $seconds = (int) $timeParts[2];
-        
+
                         $totalMinutes = $hours * 60 + $minutes + $seconds / 60; // Total en minutos
                         $totalDays = $totalMinutes / (24 * 60); // Total en días (asumiendo 24h) - adjust if needed for 8h workday
                     @endphp
@@ -122,4 +125,5 @@
         </table>
     </div>
 </body>
+
 </html>

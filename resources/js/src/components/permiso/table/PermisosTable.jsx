@@ -14,7 +14,7 @@ import { IconBan, IconPrinter } from "@tabler/icons-react";
 dayjs.extend(duration); */
 
 export const PermisosTable = () => {
-    const { isLoading, permisos, startCardPermiso, setActivatePermiso } =
+    const { isLoading, permisos, startExportPermiso, setActivatePermiso } =
         usePermisoStore();
     const { modalActionAnularPermiso } = useUiPermiso();
     const columns = useMemo(
@@ -94,7 +94,7 @@ export const PermisosTable = () => {
 
     const handleExport = useCallback((selected) => {
         //setActivatePermiso(selected);
-        startCardPermiso(selected.idper_permisos);
+        startExportPermiso(selected.idper_permisos);
     }, []);
 
     const handleAnular = useCallback((selected) => {

@@ -134,53 +134,42 @@ class PermisosAdminController extends Controller
 
     function exportCardPDFPermiso(Request $request)
     {
-        $permisos = Permiso::from('per_permisos as pp')
+        $request->validate([
+            'idper_permisos' => 'required|integer|min:1',
+        ]);
+
+        $permiso = DB::table('per_permisos as pp')
             ->selectRaw('pp.idper_permisos,
                             pp.id_usu_pide, us.nmbre_usrio as usuario_pide,
                             pp.id_direccion_pide, d.nmbre_dprtmnto as direccion_pide,
                             pp.id_tipo_motivo, ptp.tip_per_nombre as motivo,
-                            pp.per_fecha_salida, pp.per_fecha_llegada, pp.fecha_ing,
+                            pp.per_fecha_salida, pp.per_fecha_llegada, pp.fecha_ing, pp.fecha_um,
                             pp.id_jefe_inmediato, u.nmbre_usrio as jefe_inmediato,
                             pp.per_observaciones')
-            ->join('usrios_sstma as us', 'us.cdgo_usrio', 'pp.id_usu_pide')
-            ->join('dprtmntos as d', 'd.cdgo_dprtmnto', 'pp.id_direccion_pide')
-            ->join('per_tipo_permiso as ptp', 'ptp.idper_tipo_permiso', 'pp.id_tipo_motivo')
-            ->join('usrios_sstma as u', 'u.cdgo_usrio', 'pp.id_jefe_inmediato')
+            ->join('usrios_sstma as us', 'us.cdgo_usrio', '=', 'pp.id_usu_pide')
+            ->join('dprtmntos as d', 'd.cdgo_dprtmnto', '=', 'pp.id_direccion_pide')
+            ->join('per_tipo_permiso as ptp', 'ptp.idper_tipo_permiso', '=', 'pp.id_tipo_motivo')
+            ->join('usrios_sstma as u', 'u.cdgo_usrio', '=', 'pp.id_jefe_inmediato')
             ->where('pp.idper_permisos', $request->idper_permisos)
             ->first();
 
+        if (!$permiso) {
+            return response()->json([
+                'status' => MsgStatus::Error,
+                'msg' => 'Permiso no encontrado'
+            ], 404);
+        }
+
+        // Pre-parsear fechas aquí para no repetir Carbon::parse() múltiples veces en la vista
         $data = [
-            'institucion' => 'GOBIERNO AUTÓNOMO DESCENTRALIZADO DE LA PROVINCIA DE ESMERALDAS',
-            'titulo' => 'CONCESIÓN DE PERMISO HASTA 4 HORAS',
-            'permisos' => $permisos
+            'permiso' => $permiso,
+            'fecha_permiso' => Carbon::parse($permiso->per_fecha_salida)->format('Y-m-d'),
+            'hora_inicio' => Carbon::parse($permiso->per_fecha_salida)->toTimeString(),
+            'hora_fin' => Carbon::parse($permiso->per_fecha_llegada)->toTimeString(),
+            'fecha_creacion' => Carbon::parse($permiso->fecha_um)->format('Y-m-d H:i:s'),
         ];
+
         $pdf = Pdf::loadView('pdf.permisos.general.new', $data);
-        return $pdf->setPaper('a4', 'portrait')->download('permiso.pdf');
-    }
-
-    function exportPDFPermiso(Request $request)
-    {
-        $permisos = Permiso::from('per_permisos as pp')
-            ->selectRaw('pp.idper_permisos,
-                            pp.id_usu_pide, us.nmbre_usrio as usuario_pide,
-                            pp.id_direccion_pide, d.nmbre_dprtmnto as direccion_pide,
-                            pp.id_tipo_motivo, ptp.tip_per_nombre as motivo,
-                            pp.per_fecha_salida, pp.per_fecha_llegada, pp.fecha_ing,
-                            pp.id_jefe_inmediato, u.nmbre_usrio as jefe_inmediato,
-                            pp.per_observaciones')
-            ->join('usrios_sstma as us', 'us.cdgo_usrio', 'pp.id_usu_pide')
-            ->join('dprtmntos as d', 'd.cdgo_dprtmnto', 'pp.id_direccion_pide')
-            ->join('per_tipo_permiso as ptp', 'ptp.idper_tipo_permiso', 'pp.id_tipo_motivo')
-            ->join('usrios_sstma as u', 'u.cdgo_usrio', 'pp.id_jefe_inmediato')
-            ->where('pp.idper_permisos', $request->idper_permisos)
-            ->first();
-
-        $data = [
-            'institucion' => 'GOBIERNO AUTÓNOMO DESCENTRALIZADO DE LA PROVINCIA DE ESMERALDAS',
-            'titulo' => 'CONCESIÓN DE PERMISO HASTA 4 HORAS',
-            'permisos' => $permisos
-        ];
-        $pdf = Pdf::loadView('pdf.permisos.gerencia.permiso', $data);
         return $pdf->setPaper('a4', 'portrait')->download('permiso.pdf');
     }
 

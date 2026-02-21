@@ -344,7 +344,6 @@ Route::group(['prefix' => 'usuario', 'middleware' => ['auth:sanctum']], function
 
     Route::post('/crear-permiso', [PermisosAdminController::class, 'store']);
     Route::post('/export-permiso-pdf', [PermisosAdminController::class, 'exportCardPDFPermiso']);
-    Route::post('/permiso-pdf', [PermisosAdminController::class, 'exportPDFPermiso']);
     Route::put('/anular-permiso/{idper_permisos}', [PermisosAdminController::class, 'anularPermisos']);
     Route::get('/{usuario_id}/info-permisos', [PermisosAdminController::class, 'getInfoPermisosForUser']);
 

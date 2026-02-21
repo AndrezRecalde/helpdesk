@@ -128,9 +128,8 @@ export const AutorizarPermisoTable = () => {
                         label: "Anular",
                         onClick: handleAnularPermiso,
                         disabled:
-                            row.original.id_estado === 8 ||
-                            row.original.id_estado === 7 ||
-                            row.original.id_estado === 6,
+                            row.original.id_estado === 6 ||
+                            row.original.id_estado === 7,
                     },
                 ]}
             />

@@ -3,179 +3,380 @@
 
 <head>
     <meta charset="UTF-8">
+    <title>Memorando de Baja de Equipos</title>
     <style>
         @page {
             size: 21cm 29.7cm;
-            margin: 30px;
+            margin: 0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
         body {
-            font-family: Montserrat, Arial, sans-serif;
-            font-size: 14px;
-            background-image: url("http://prefecturadeesmeraldas.gob.ec/wp-content/uploads/2023/11/FondoArchivo7.png");
+            font-family: Arial, sans-serif;
+            font-size: 10pt;
+            color: #111111;
+            line-height: 1.5;
+            background-image: url({{ public_path('/assets/images/FondoArchivo.png') }});
             background-repeat: no-repeat;
             background-size: cover;
         }
 
+        .page-wrapper {
+            padding: 10mm 10mm 10mm 10mm;
+        }
+
+        /* ─── ENCABEZADO ─────────────────────────────── */
         .header {
             text-align: center;
-            margin-bottom: 10px;
+            margin-bottom: 18px;
+            padding-bottom: 10px;
         }
 
-        .logo {
-            width: 100px;
+        .header img {
+            max-width: 210px;
+            height: auto;
+            margin-bottom: 6px;
         }
 
-        h3,
-        h6 {
-            margin: 5px 0;
-            /* Reduce la separación entre h3 y h6 */
+        .institution-name {
+            font-size: 10pt;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+            color: #222;
+            margin-bottom: 2px;
         }
 
-        h3 {
-            font-size: 18px;
+        .doc-number {
+            font-size: 10pt;
+            font-weight: bold;
+            text-transform: uppercase;
+            color: #111;
+            letter-spacing: 0.2px;
+        }
+
+        /* ─── BLOQUE DE DATOS DEL MEMORANDO ─────────── */
+        .memo-data {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 14px;
+            font-size: 9.5pt;
+        }
+
+        .memo-data td {
+            border: none;
+            padding: 3px 0;
+            vertical-align: top;
+        }
+
+        .memo-label {
+            width: 90px;
+            font-weight: bold;
+            text-transform: uppercase;
+            color: #111;
+            padding-right: 6px;
+        }
+
+        .memo-sep {
+            width: 8px;
             font-weight: bold;
         }
 
-        h6 {
-            font-size: 14px;
-            font-weight: normal;
+        .memo-value {
+            color: #111;
         }
 
-        p {
-            font-size: 13px;
-            line-height: 1.5;
-            margin-bottom: 5px;
+        .memo-value em {
+            font-size: 8.5pt;
+            color: #444;
         }
 
-        .table {
+        /* ─── SEPARADOR ──────────────────────────────── */
+        .divider {
+            border: none;
+            border-top: 1px solid #bbb;
+            margin: 10px 0 12px;
+        }
+
+        /* ─── CUERPO DEL MEMORANDO ───────────────────── */
+        .memo-body {
+            font-size: 9.5pt;
+            line-height: 1.7;
+            text-align: justify;
+            margin-bottom: 10px;
+        }
+
+        .memo-body .ref {
+            font-style: italic;
+            font-weight: bold;
+        }
+
+        /* ─── TABLA DE EQUIPOS ───────────────────────── */
+        .equipos-table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 10px;
-            font-size: 13px;
+            margin: 12px 0 14px;
+            font-size: 8pt;
         }
 
-        .table th,
-        .table td {
-            border: 1px solid black;
-            padding: 6px;
-            text-align: left;
-            font-size: 12px;
+        .equipos-table thead tr {
+            background: #888888;
+            color: #ffffff;
         }
 
-        .signature {
-            margin-top: 40px;
-            text-align: left;
+        .equipos-table th {
+            padding: 5px 4px;
+            text-align: center;
+            font-size: 7.5pt;
+            font-weight: bold;
+            border: 1px solid #777;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
         }
 
-        .signature div {
-            display: inline-block;
-            width: 40%;
+        .equipos-table td {
+            padding: 4px 5px;
+            font-size: 7.5pt;
+            border: 1px solid #aaaaaa;
+            vertical-align: middle;
         }
 
-        .small-text {
-            font-size: 12px;
+        .equipos-table tbody tr:nth-child(even) {
+            background-color: #eeeeee;
         }
 
-        .signature p {
+        .equipos-table tbody tr:nth-child(odd) {
+            background-color: #ffffff;
+        }
+
+        .equipos-table tbody tr:last-child td {
+            border-bottom: 2px solid #888;
+        }
+
+        .col-num {
+            width: 4%;
+            text-align: center;
+        }
+
+        .col-det {
+            width: 16%;
+        }
+
+        .col-marca {
+            width: 11%;
+            text-align: center;
+        }
+
+        .col-serie {
+            width: 15%;
+            font-family: 'Courier New', monospace;
+            font-size: 7pt;
+        }
+
+        .col-fadq {
+            width: 13%;
+            text-align: center;
+        }
+
+        .col-cant {
+            width: 10%;
+            text-align: center;
+        }
+
+        .col-cant2 {
+            width: 10%;
+            text-align: center;
+        }
+
+        .col-cust {
+            width: 21%;
+        }
+
+        .years-badge {
+            font-size: 6.5pt;
+            color: #555;
+            font-style: italic;
+        }
+
+        /* ─── CIERRE Y FIRMA ─────────────────────────── */
+        .closing {
+            font-size: 9.5pt;
+            margin-top: 8px;
+            margin-bottom: 6px;
+        }
+
+        .signature-section {
+            margin-top: 45px;
+        }
+
+        .sig-line {
+            width: 200px;
+            border-top: 1px solid #000;
+            margin-bottom: 2px;
+        }
+
+        .sig-name {
+            font-size: 9.5pt;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .sig-title {
+            font-size: 8pt;
+            color: #333;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        /* ─── CC ─────────────────────────────────────── */
+        .cc-section {
+            margin-top: 20px;
+            padding-top: 8px;
+            font-size: 7pt;
+            color: #333;
+        }
+
+        .cc-section strong {
+            color: #111;
+        }
+
+        .cc-item {
             margin: 2px 0;
-            /* Reduce el espacio arriba y abajo */
-            line-height: 1.2;
-            /* Ajusta la altura de línea si es necesario */
-        }
-
-        .info p {
-            margin: 2px 0;
-            /* Reduce el espacio arriba y abajo */
-            line-height: 1.2;
-            /* Ajusta la altura de línea si es necesario */
-            font-size: 11px;
+            padding-left: 8px;
+            font-style: italic;
         }
     </style>
 </head>
 
 <body>
-    <div class="header">
-        <img class="img-fluid" alt="Logo del GAD Esmeraldas" src="{{ public_path('/assets/images/LogoTransparente.png') }}"
-            height="100" width="320">
-        <h3>MEMORANDO No. {{ $numero_memorando }} GADPE-HAP-GTIC-{{ $anio }}</h3>
-        <h6>Esmeraldas, {{ $fecha }}</h6>
-    </div>
 
-    <p><strong>PARA:</strong> {{ strtoupper($directores[0]->jefe->nmbre_usrio) }}
-        <sub><strong><i>DIRECTOR ADMINISTRATIVO</i></strong></sub>
-    </p>
-    <p><strong>ASUNTO:</strong> BIEN INFORMÁTICO EN MAL ESTADO</p>
+    @php
+        $logoPath = public_path('/assets/images/LogoTransparente.png');
+        $logoBase64 = 'data:image/png;base64,' . base64_encode(file_get_contents($logoPath));
+        $total = count($equipos);
+    @endphp
 
-    <p>
-        Por medio del presente informe, se comunica que los bienes informáticos detallados a continuación presentan
-        fallas que afectan su operatividad, conforme al análisis técnico realizado por el Ing. {{ $tecnico }}.
-        Dicho informe señala que los equipos presenta: {{ $motivo }}.
-        En cumplimiento del principio de vigencia tecnológica, según lo dispuesto en la Resolución No.
-        <strong><i>RE-SERCOP-2016-000657, Capítulo III</i></strong>, Artículo 6 - Vida Útil de Equipos Informáticos y
-        Proyectores, se procede con la entrega de los bienes informáticos, cuya vida útil de cada equipo se detalla en
-        la siguiente tabla:
+    <div class="page-wrapper">
 
-    </p>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>No.</th>
-                <th>Detalle</th>
-                <th>Marca</th>
-                <th>Serie</th>
-                <th>Fecha Adquisición</th>
-                <th>Código Antiguo</th>
-                <th>Código Nuevo</th>
-                <th>Custodio</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($equipos as $index => $equipo)
-                <tr>
-                    <td>{{ $index + 1 }}</td>
-                    <td>{{ $equipo->modelo }}</td>
-                    <td>{{ $equipo->nombre_marca }}</td>
-                    <td>{{ $equipo->numero_serie ?? 'SIN SERIE' }}</td>
-                    <td>
-                        {{ \Carbon\Carbon::parse($equipo->fecha_adquisicion)->format('Y-m-d') }} - <br>
-                        <i>{{ \Carbon\Carbon::parse($equipo->fecha_adquisicion)->diffInYears(now()) }} años de uso</i>
-                    </td>
-                    <td>{{ $equipo->codigo_antiguo ?? 'SIN CODIGO' }}</td>
-                    <td>{{ $equipo->codigo_nuevo }}</td>
-                    <td>{{ $equipo->custodio }}</td>
-                </tr>
-            @endforeach
-        </tbody>
-    </table>
-
-    <p>Adjunto la ficha No. <mark>{{ $numero_sop }}</mark> de soporte técnico que indican el detalle del daño del
-        equipo.
-        Particular que pongo en su consideración para los fines pertinentes.</p>
-
-    <p>Atentamente,</p>
-    <br>
-    <br>
-    <br>
-
-    <div class="signature">
-        <div>
-            <p>_____________________________</p>
-            <p>Ing. {{ $directores[1]->jefe->nmbre_usrio }}</p>
-            <p><strong>DIRECTOR DE TECNOLOGÍAS DE INFORMACIÓN Y COMUNICACIÓN</strong></p>
+        {{-- ══ ENCABEZADO ══ --}}
+        <div class="header">
+            <img src="{{ $logoBase64 }}" alt="Logo Institución" />
+            <div class="institution-name">Gobierno Autónomo Descentralizado Provincial de Esmeraldas</div>
+            <div class="doc-number">
+                Memorando No. {{ $numero_memorando }}-GADPE-HAP-GTIC-{{ $anio }}
+            </div>
         </div>
-    </div>
-    <br>
 
-    <div class="info">
-        <p class="small-text"><strong>cc: </strong>Ing. {{ $equipos[0]->custodio }},</p>
-        <p><sub><strong><i>{{ $direccion_solicitante }}</i></strong></sub></p>
-        <p class="small-text">BODEGA</p>
-        <p class="small-text">Archivo/PC</p>
-    </div>
+        {{-- ══ DATOS DEL MEMORANDO ══ --}}
+        <table class="memo-data">
+            <tr>
+                <td class="memo-label">Para</td>
+                <td class="memo-sep">:</td>
+                <td class="memo-value">
+                    <strong>{{ Str::upper($directores[0]->jefe->nmbre_usrio) }}</strong>
+                    <br><em>DIRECTOR DE LA GESTIÓN ADMINISTRATIVA</em>
+                </td>
+            </tr>
+            <tr>
+                <td class="memo-label">Asunto</td>
+                <td class="memo-sep">:</td>
+                <td class="memo-value">
+                    <strong>BIEN INFORMÁTICO EN MAL ESTADO &mdash; INFORME TÉCNICO</strong>
+                </td>
+            </tr>
+            <tr>
+                <td class="memo-label">Fecha</td>
+                <td class="memo-sep">:</td>
+                <td class="memo-value">{{ $fecha }}</td>
+            </tr>
+        </table>
 
-    {{-- <p class="small-text">Fecha y hora de emisión: {{ $fecha }} - {{ $hora }}</p> --}}
+        {{-- ══ CUERPO DEL MEMORANDO ══ --}}
+        <p class="memo-body">
+            Por medio del presente informe, se comunica que los bienes informáticos detallados a continuación
+            presentan fallas que afectan su operatividad, conforme al análisis técnico realizado por el
+            <strong>Ing. {{ $tecnico }}</strong>. Dicho informe señala que los equipos presentan:
+            <em>{{ $motivo }}</em>.
+        </p>
+
+        <p class="memo-body">
+            En cumplimiento del principio de vigencia tecnológica, según lo dispuesto en la Resolución No.
+            <span class="ref">RE-SERCOP-2016-000657, Capítulo III</span>, Artículo 6 &mdash; Vida Útil de
+            Equipos Informáticos y Proyectores, se procede con la entrega de los bienes informáticos,
+            cuya vida útil de cada equipo se detalla en la siguiente tabla ({{ $total }}
+            {{ $total === 1 ? 'equipo' : 'equipos' }} en total):
+        </p>
+
+        {{-- ══ TABLA DE EQUIPOS ══ --}}
+        <table class="equipos-table">
+            <thead>
+                <tr>
+                    <th class="col-num">#</th>
+                    <th class="col-det">Detalle / Modelo</th>
+                    <th class="col-marca">Marca</th>
+                    <th class="col-serie">N° de Serie</th>
+                    <th class="col-fadq">Fecha Adquisición</th>
+                    <th class="col-cant">Cód. Antiguo</th>
+                    <th class="col-cant2">Cód. Nuevo</th>
+                    <th class="col-cust">Custodio</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($equipos as $index => $equipo)
+                    @php
+                        $fechaAdq = \Carbon\Carbon::parse($equipo->fecha_adquisicion);
+                        $aniosUso = $fechaAdq->diffInYears(now());
+                    @endphp
+                    <tr>
+                        <td class="col-num" style="color: #888; font-size: 6.5pt;">{{ $index + 1 }}</td>
+                        <td class="col-det">{{ $equipo->modelo }}</td>
+                        <td class="col-marca">{{ $equipo->nombre_marca }}</td>
+                        <td class="col-serie">{{ $equipo->numero_serie ?? 'SIN SERIE' }}</td>
+                        <td class="col-fadq" style="text-align: center;">
+                            {{ $fechaAdq->format('d/m/Y') }}
+                            <br><span class="years-badge">{{ $aniosUso }} {{ $aniosUso === 1 ? 'año' : 'años' }}
+                                de
+                                uso</span>
+                        </td>
+                        <td class="col-cant">{{ $equipo->codigo_antiguo ?? '—' }}</td>
+                        <td class="col-cant2">{{ $equipo->codigo_nuevo ?? '—' }}</td>
+                        <td class="col-cust">{{ Str::upper($equipo->custodio ?? 'SIN CUSTODIO') }}</td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+
+        {{-- ══ CIERRE ══ --}}
+        <p class="memo-body">
+            Se adjunta la ficha N° <strong>{{ $numero_sop }}</strong> de soporte técnico que registra el detalle
+            del daño de cada equipo. Particular que pongo en su consideración para los fines pertinentes.
+        </p>
+
+        <p class="closing">Atentamente,</p>
+
+        {{-- ══ FIRMA ══ --}}
+        <div class="signature-section">
+            <div class="sig-line"></div>
+            <div class="sig-name">Ing. {{ $directores[1]->jefe->nmbre_usrio }}</div>
+            <div class="sig-title">Director de Tecnologías de Información y Comunicación</div>
+        </div>
+
+        {{-- ══ CC ══ --}}
+        <div class="cc-section">
+            <div class="cc-item"><strong>cc:</strong> Ing. {{ Str::upper($equipos[0]->custodio) }} &mdash;
+                <em>{{ $direccion_solicitante }}</em>
+            </div>
+            <div class="cc-item">Bodega</div>
+            <div class="cc-item">Archivo / PC</div>
+        </div>
+
+    </div>{{-- /page-wrapper --}}
+
 </body>
 
 </html>

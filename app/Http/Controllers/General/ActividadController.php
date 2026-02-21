@@ -61,8 +61,8 @@ class ActividadController extends Controller
                     'id_direccion' => 22,
                     'id_usu_recibe' => 701,
                     'id_tipo_soporte' => '3',
-                    'incidente'   => 'SOLICITUD INTERNA DEL ÁREA DE TIC',
-                    'solucion'    => Str::upper($actividad->actividad),
+                    'incidente' => 'SOLICITUD INTERNA DEL ÁREA DE TIC',
+                    'solucion' => Str::upper($actividad->actividad),
                     'id_area_tic' => 5,
                     'id_usu_tecnico_asig' => $user->cdgo_usrio
                 ]);
@@ -70,13 +70,13 @@ class ActividadController extends Controller
 
             return response()->json([
                 'status' => MsgStatus::Success,
-                'msg'    => MsgStatus::ActivityRegistred,
-                'role'   => $role
+                'msg' => MsgStatus::ActivityRegistred,
+                'role' => $role
             ], 201);
         } catch (\Throwable $th) {
             return response()->json([
                 'status' => MsgStatus::Error,
-                'msg'    => $th->getMessage()
+                'msg' => $th->getMessage()
             ], 500);
         }
     }
@@ -89,7 +89,7 @@ class ActividadController extends Controller
             if (!$actividad) {
                 return response()->json([
                     'status' => MsgStatus::Error,
-                    'msg'    => MsgStatus::ActivitiesNotFound
+                    'msg' => MsgStatus::ActivitiesNotFound
                 ], 404);
             }
 
@@ -111,9 +111,9 @@ class ActividadController extends Controller
                 if ($soporte) {
                     // Actualizar el soporte existente
                     $soporte->update([
-                        'fecha_fin'  => $actividad->fecha_actividad,
+                        'fecha_fin' => $actividad->fecha_actividad,
                         'fecha_asig' => $actividad->fecha_actividad,
-                        'solucion'   => Str::upper($actividad->actividad),
+                        'solucion' => Str::upper($actividad->actividad),
                     ]);
                 } else {
                     // Crear un nuevo registro en soporte si no existe
@@ -125,8 +125,8 @@ class ActividadController extends Controller
                         'id_direccion' => 22,
                         'id_usu_recibe' => 701,
                         'id_tipo_soporte' => '3',
-                        'incidente'   => 'SOLICITUD INTERNA DEL ÁREA DE TIC',
-                        'solucion'    => Str::upper($actividad->actividad),
+                        'incidente' => 'SOLICITUD INTERNA DEL ÁREA DE TIC',
+                        'solucion' => Str::upper($actividad->actividad),
                         'id_area_tic' => 5,
                         'id_usu_tecnico_asig' => $user->cdgo_usrio
                     ]);
@@ -135,12 +135,12 @@ class ActividadController extends Controller
 
             return response()->json([
                 'status' => MsgStatus::Success,
-                'msg'    => MsgStatus::ActivityUpdated
+                'msg' => MsgStatus::ActivityUpdated
             ], 201);
         } catch (\Throwable $th) {
             return response()->json([
                 'status' => MsgStatus::Error,
-                'msg'    => $th->getMessage()
+                'msg' => $th->getMessage()
             ], 500);
         }
     }
@@ -168,19 +168,25 @@ class ActividadController extends Controller
             ->orderBy('current_fecha', 'ASC')
             ->get();
 
-        if (sizeof($actividades) >= 1) {
-            $data = [
-                'title' => 'Informe de reporte de actividades',
-                'actividades' => $actividades,
-                'fecha_inicio' => $request->fecha_inicio,
-                'fecha_fin' => $request->fecha_fin,
-                'current_fecha' => Carbon::now()->format('Y-m-d')
-            ];
-
-            $pdf = Pdf::loadView('pdf.actividades.reporte', $data);
-            return $pdf->setPaper('a4', 'portrait')->download('actividades.pdf');
-        } else {
+        if ($actividades->isEmpty()) {
             return response()->json(['status' => MsgStatus::Error, 'msg' => MsgStatus::ActivitiesNotFound], 404);
         }
+
+        $fechaInicio = Carbon::parse($request->fecha_inicio);
+        $fechaFin = Carbon::parse($request->fecha_fin);
+        $anio = $fechaFin->year;
+        $periodo = $fechaInicio->translatedFormat('d \de F') . ' al ' . $fechaFin->translatedFormat('d \de F \de Y');
+
+        $data = [
+            'actividades' => $actividades,
+            'fecha_inicio' => $request->fecha_inicio,
+            'fecha_fin' => $request->fecha_fin,
+            'periodo' => $periodo,
+            'current_fecha' => Carbon::now()->translatedFormat('d \de F \de Y'),
+            'total' => $actividades->count(),
+        ];
+
+        $pdf = Pdf::loadView('pdf.actividades.reporte', $data);
+        return $pdf->setPaper('a4', 'portrait')->download("actividades_{$anio}.pdf");
     }
 }

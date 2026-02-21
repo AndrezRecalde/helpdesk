@@ -25,7 +25,8 @@ const PermisosPage = () => {
     const usuario = JSON.parse(localStorage.getItem("service_user"));
     const isInitialMount = useRef(true);
 
-    const { message, errores, isExport, startCardPermiso } = usePermisoStore();
+    const { message, errores, isExport, startExportPermiso } =
+        usePermisoStore();
     const { startLoadDirecciones, clearDirecciones } = useDireccionStore();
     const { startLoadUsersExtrict, clearUsers } = useUsersStore();
     const {
@@ -181,7 +182,7 @@ const PermisosPage = () => {
                 cancelButtonText: "No, gracias",
             }).then((result) => {
                 if (result.isConfirmed && message.idper_permisos) {
-                    startCardPermiso(message.idper_permisos);
+                    startExportPermiso(message.idper_permisos);
                 }
             });
         }

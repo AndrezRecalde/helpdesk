@@ -3,65 +3,239 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reporte de Equipos</title>
     <style>
-        body {
-            background-image: url("http://prefecturadeesmeraldas.gob.ec/wp-content/uploads/2023/11/FondoArchivo7.png");
-            background-repeat: no-repeat;
-            background-size: cover;
-            font-family: Arial, sans-serif;
+        @page {
+            size: a4 landscape;
+            margin: 12mm 10mm 10mm 10mm;
         }
 
-        .header {
-            text-align: center;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 8.5pt;
+            color: #1a1a2e;
+            line-height: 1.3;
+        }
+
+        /* ─── HEADER ─────────────────────────────────────── */
+        .header-wrapper {
+            width: 100%;
+            border-bottom: 3px solid #000000;
+            padding-bottom: 8px;
             margin-bottom: 10px;
         }
 
-        .logo {
-            max-width: 180px;
+        .header-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .header-table td {
+            vertical-align: middle;
+            border: none;
+            padding: 0;
+        }
+
+        .header-logo {
+            width: 14%;
+            text-align: center;
+        }
+
+        .header-logo img {
+            max-width: 90px;
             height: auto;
         }
 
-        h2, h4 {
+        .header-info {
+            width: 72%;
             text-align: center;
-            margin: 5px 0;
+            padding: 0 10px;
         }
 
-        table {
+        .header-info .institution {
+            font-size: 9.5pt;
+            font-weight: bold;
+            color: #222222;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .header-info .report-title {
+            font-size: 13pt;
+            font-weight: bold;
+            color: #1a1a2e;
+            margin: 3px 0 2px;
+        }
+
+        .header-info .report-subtitle {
+            font-size: 8pt;
+            color: #555;
+        }
+
+        .header-meta {
+            width: 14%;
+            text-align: right;
+        }
+
+        .meta-box {
+            border: 1px solid #bbbbbb;
+            padding: 5px 8px;
+            background: #f2f2f2;
+        }
+
+        .meta-box .meta-label {
+            font-size: 6.5pt;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+        }
+
+        .meta-box .meta-value {
+            font-size: 8pt;
+            font-weight: bold;
+            color: #222222;
+        }
+
+        /* ─── SUMMARY BAR ────────────────────────────────── */
+        .summary-bar {
+            width: 100%;
+            background: #222222;
+            color: #fff;
+            padding: 4px 10px;
+            margin-bottom: 8px;
+        }
+
+        .summary-bar span {
+            font-size: 7.5pt;
+            margin-right: 16px;
+        }
+
+        .summary-bar strong {
+            font-size: 9pt;
+        }
+
+        /* ─── TABLE ──────────────────────────────────────── */
+        .equipos-table {
             width: 100%;
             border-collapse: collapse;
-            border: 1px solid black;
-            margin: 20px 0;
+            margin-bottom: 12px;
         }
 
-        th, td {
-            padding: 6px;
-            text-align: left;
-            border: 1px solid black;
-            font-size: 12px;
+        .equipos-table thead tr {
+            background: #222222;
+            color: #ffffff;
         }
 
-        th {
-            background-color: #f2f2f2;
+        .equipos-table th {
+            padding: 5px 4px;
+            text-align: center;
+            font-size: 7.5pt;
             font-weight: bold;
+            border: 1px solid #000000;
+            letter-spacing: 0.3px;
+            text-transform: uppercase;
+        }
+
+        .equipos-table td {
+            padding: 4px 5px;
+            font-size: 7.5pt;
+            border: 1px solid #bbbbbb;
+            vertical-align: middle;
+        }
+
+        .equipos-table tbody tr:nth-child(even) {
+            background-color: #eeeeee;
+        }
+
+        .equipos-table tbody tr:nth-child(odd) {
+            background-color: #ffffff;
+        }
+
+        .equipos-table tbody tr:last-child td {
+            border-bottom: 2px solid #000000;
+        }
+
+        /* Column widths */
+        .col-num {
+            width: 3%;
             text-align: center;
         }
 
-        tr:nth-child(even) {
-            background-color: #f9f9f9;
+        .col-codigo {
+            width: 10%;
+            text-align: center;
         }
 
-          /* Definir anchos proporcionales */
-        th:nth-child(1), td:nth-child(1) { width: 10%; } /* Código Nuevo */
-        th:nth-child(2), td:nth-child(2) { width: 10%; } /* Modelo */
-        th:nth-child(2), td:nth-child(2) { width: 10%; } /* Marca */
-        th:nth-child(4), td:nth-child(4) { width: 15%; } /* Número de Serie */
-        th:nth-child(5), td:nth-child(5) { width: 10%; } /* Estado */
-        th:nth-child(6), td:nth-child(6) { width: 22%; } /* Custodio */
-        th:nth-child(7), td:nth-child(7) { width: 23%; } /* Direccion */
+        .col-modelo {
+            width: 12%;
+        }
 
-        .right {
+        .col-marca {
+            width: 10%;
+            text-align: center;
+        }
+
+        .col-serie {
+            width: 14%;
+        }
+
+        .col-estado {
+            width: 9%;
+            text-align: center;
+        }
+
+        .col-custodio {
+            width: 22%;
+        }
+
+        .col-dir {
+            width: 20%;
+        }
+
+        /* ─── STATUS BADGE ───────────────────────────────── */
+        .badge {
+            display: inline-block;
+            padding: 1px 6px;
+            font-size: 7pt;
+            font-weight: bold;
+            color: #fff;
+            text-align: center;
+        }
+
+        /* ─── EMPTY / NULL TEXT ──────────────────────────── */
+        .text-muted {
+            color: #aaa;
+            font-style: italic;
+            font-size: 7pt;
+        }
+
+        /* ─── FOOTER ─────────────────────────────────────── */
+        .footer {
+            width: 100%;
+            border-top: 1px solid #c0c0e0;
+            padding-top: 5px;
+            margin-top: 4px;
+        }
+
+        .footer-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .footer-table td {
+            border: none;
+            font-size: 6.5pt;
+            color: #888;
+            padding: 0;
+        }
+
+        .footer-right {
             text-align: right;
         }
     </style>
@@ -69,43 +243,108 @@
 
 <body>
 
-    <div class="header">
-        @php
-            $logoPath = public_path('/assets/images/LogoTransparente.png');
-            $logoBase64 = 'data:image/png;base64,' . base64_encode(file_get_contents($logoPath));
-        @endphp
-        <img src="{{ $logoBase64 }}" class="logo" alt="Logo de la Institución" />
+    @php
+        $logoPath = public_path('/assets/images/LogoTransparente.png');
+        $logoBase64 = 'data:image/png;base64,' . base64_encode(file_get_contents($logoPath));
+        $total = count($equipos);
+        $fechaGen = date('d/m/Y', strtotime($current_fecha));
+    @endphp
+
+    {{-- ══ ENCABEZADO ══ --}}
+    <div class="header-wrapper">
+        <table class="header-table">
+            <tr>
+                <td class="header-logo">
+                    <img src="{{ $logoBase64 }}" alt="Logo Institución" />
+                </td>
+                <td class="header-info">
+                    <div class="institution">Gobierno Autónomo Descentralizado Provincial</div>
+                    <div class="report-title">{{ $title }}</div>
+                    <div class="report-subtitle">Departamento de Tecnologías de la Información y Comunicación</div>
+                </td>
+                <td class="header-meta">
+                    <div class="meta-box">
+                        <div class="meta-label">Fecha de emisión</div>
+                        <div class="meta-value">{{ $fechaGen }}</div>
+                    </div>
+                </td>
+            </tr>
+        </table>
     </div>
 
-    <h2>{{ $title }}</h2>
-    <h4>Fecha de Generación: {{ date('d-m-Y', strtotime($current_fecha)) }}</h4>
+    {{-- ══ BARRA DE RESUMEN ══ --}}
+    <div class="summary-bar">
+        <span>Total de equipos: <strong>{{ $total }}</strong></span>
+    </div>
 
-    <table>
+    {{-- ══ TABLA DE EQUIPOS ══ --}}
+    <table class="equipos-table">
         <thead>
             <tr>
-                <th>Código Nuevo</th>
-                <th>Modelo</th>
-                <th>Marca</th>
-                <th>Número de Serie</th>
-                <th>Estado</th>
-                <th>Custodio</th>
-                <th>Dirección</th>
+                <th class="col-num">#</th>
+                <th class="col-codigo">Código</th>
+                <th class="col-modelo">Modelo</th>
+                <th class="col-marca">Marca</th>
+                <th class="col-serie">N° de Serie</th>
+                <th class="col-estado">Estado</th>
+                <th class="col-custodio">Custodio</th>
+                <th class="col-dir">Dirección</th>
             </tr>
         </thead>
         <tbody>
-            @foreach ($equipos as $equipo)
+            @foreach ($equipos as $index => $equipo)
+                @php
+                    $color = !empty($equipo['color']) ? $equipo['color'] : '#6c757d';
+                    $codNuevo = $equipo['codigo_nuevo'] ?? '—';
+                    $codAntiguo = $equipo['codigo_antiguo'] ?? '';
+                    $codigoLabel = $codNuevo !== '—' ? $codNuevo : ($codAntiguo ?: '—');
+                @endphp
                 <tr>
-                    <td>{{ $equipo['codigo_nuevo'] }}</td>
-                    <td>{{ $equipo['modelo'] }}</td>
-                    <td>{{ $equipo['nombre_marca'] }}</td>
-                    <td>{{ $equipo['numero_serie'] }}</td>
-                    <td>{{ $equipo['nombre_estado'] }}</td>
-                    <td>{{ $equipo['responsable'] ?? 'Sin Custodio' }}</td>
-                    <td>{{ $equipo['direccion'] ?? 'Sin Dirección' }}</td>
+                    <td class="col-num" style="color:#999; font-size:6.5pt;">{{ $index + 1 }}</td>
+                    <td class="col-codigo">
+                        {{ $codigoLabel }}
+                        @if ($codAntiguo && $codNuevo !== '—' && $codAntiguo !== $codNuevo)
+                            <br><span style="font-size:6pt; color:#aaa;">{{ $codAntiguo }}</span>
+                        @endif
+                    </td>
+                    <td class="col-modelo">{{ $equipo['modelo'] ?? '—' }}</td>
+                    <td class="col-marca">{{ $equipo['nombre_marca'] ?? '—' }}</td>
+                    <td class="col-serie" style="font-size:7pt; font-family: 'Courier New', monospace;">
+                        {{ $equipo['numero_serie'] ?? '—' }}
+                    </td>
+                    <td class="col-estado">
+                        <span class="badge" style="background-color: {{ $color }};">
+                            {{ $equipo['nombre_estado'] ?? '—' }}
+                        </span>
+                    </td>
+                    <td class="col-custodio">
+                        @if (!empty($equipo['responsable']))
+                            {{ Str::upper($equipo['responsable']) }}
+                        @else
+                            <span class="text-muted">SIN CUSTODIO</span>
+                        @endif
+                    </td>
+                    <td class="col-dir">
+                        @if (!empty($equipo['direccion']))
+                            {{ $equipo['direccion'] }}
+                        @else
+                            <span class="text-muted">SIN DIRECCIÓN</span>
+                        @endif
+                    </td>
                 </tr>
             @endforeach
         </tbody>
     </table>
+
+    {{-- ══ PIE DE PÁGINA ══ --}}
+    <div class="footer">
+        <table class="footer-table">
+            <tr>
+                <td>Sistema de Help Desk &mdash; Reporte generado automáticamente</td>
+                <td class="footer-right">{{ $fechaGen }} &mdash; Total registros: {{ $total }}</td>
+            </tr>
+        </table>
+    </div>
 
 </body>
 

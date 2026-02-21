@@ -45,7 +45,7 @@ export const usePermisoStore = () => {
         }
     };
 
-    const startCardPermiso = async (idper_permisos) => {
+    const startExportPermiso = async (idper_permisos) => {
         try {
             dispatch(onExport(true));
             const response = await helpdeskApi.post(
@@ -67,37 +67,6 @@ export const usePermisoStore = () => {
             document.body.removeChild(tempLink); */
             window.URL.revokeObjectURL(url);
             //dispatch(onLoadMessage(data));
-            //dispatch(onExport(false));
-            dispatch(onSetActivatePermiso(null));
-        } catch (error) {
-            //console.log(error);
-            ExceptionMessageError(error);
-        } finally {
-            dispatch(onExport(false));
-        }
-    };
-
-    const startExportPermiso = async ({ idper_permisos }) => {
-        try {
-            dispatch(onExport(true));
-            const response = await helpdeskApi.post(
-                "/usuario/permiso-pdf",
-                { idper_permisos },
-                { responseType: "blob" },
-            );
-            const pdfBlob = new Blob([response.data], {
-                type: "application/pdf",
-            });
-            const url = window.open(URL.createObjectURL(pdfBlob));
-            //console.log(url);
-            /*  const tempLink = document.createElement("a");
-            tempLink.href = url;
-            tempLink.setAttribute("download", "permiso.pdf");
-            document.body.appendChild(tempLink);
-            tempLink.click();
-
-            document.body.removeChild(tempLink); */
-            window.URL.revokeObjectURL(url);
             //dispatch(onExport(false));
             dispatch(onSetActivatePermiso(null));
         } catch (error) {
@@ -300,7 +269,6 @@ export const usePermisoStore = () => {
         errores,
 
         startAddPermiso,
-        startCardPermiso,
         startExportPermiso,
         startAnularPermiso,
         startLoadPermisos,

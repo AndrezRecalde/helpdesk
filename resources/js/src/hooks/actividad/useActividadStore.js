@@ -35,7 +35,7 @@ export const useActividadStore = () => {
                     user_id,
                     fecha_inicio,
                     fecha_fin,
-                }
+                },
             );
             const { actividades } = data;
             dispatch(onLoadActividades(actividades));
@@ -52,7 +52,7 @@ export const useActividadStore = () => {
             if (actividad.id) {
                 const { data } = await helpdeskApi.put(
                     `/usuario/update/actividad/${actividad.id}`,
-                    actividad
+                    actividad,
                 );
                 dispatch(onLoadMessage(data));
                 setTimeout(() => {
@@ -61,14 +61,14 @@ export const useActividadStore = () => {
                 startLoadActividades(
                     actividad.cdgo_usrio,
                     dayjs(fecha_inicio).format("YYYY-MM-DD"),
-                    dayjs(fecha_fin).format("YYYY-MM-DD")
+                    dayjs(fecha_fin).format("YYYY-MM-DD"),
                 );
                 setClearActivateActividad();
                 return;
             }
             const { data } = await helpdeskApi.post(
                 "/usuario/create/actividad",
-                actividad
+                actividad,
             );
             dispatch(onLoadMessage(data));
             setTimeout(() => {
@@ -83,7 +83,7 @@ export const useActividadStore = () => {
     const startExportPDFActividades = async (
         user_id,
         fecha_inicio,
-        fecha_fin
+        fecha_fin,
     ) => {
         try {
             dispatch(onLoadPDF(true));
@@ -91,7 +91,7 @@ export const useActividadStore = () => {
             const { data } = await helpdeskApi.post(
                 "/usuario/export/pdf/actividades",
                 { user_id, fecha_inicio, fecha_fin },
-                { responseType: "blob" }
+                { responseType: "blob" },
             );
 
             const blob = new Blob([data], { type: "application/pdf" });
@@ -115,6 +115,7 @@ export const useActividadStore = () => {
             link.remove();
             URL.revokeObjectURL(url);
         } catch (error) {
+            console.log(error);
             ExceptionMessageError(error);
         } finally {
             dispatch(onLoadPDF(false));

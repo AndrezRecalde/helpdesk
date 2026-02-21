@@ -329,11 +329,15 @@ class SoporteController extends Controller
                                  u.nmbre_usrio as usuario_recibe')
             ->leftJoin('usrios_sstma as us', 'us.cdgo_usrio', 'ss.id_usu_tecnico_asig')
             ->leftJoin('usrios_sstma as u', 'u.cdgo_usrio', 'ss.id_usu_recibe')
-            ->leftjoin('nom_cargo as nc', 'nc.idnom_cargo', 'us.crgo_id')
+            ->leftJoin('nom_cargo as nc', 'nc.idnom_cargo', 'us.crgo_id')
             ->fechas($request->fecha_inicio, $request->fecha_fin)
             ->tecnico($request->cdgo_usrio)
             ->orderBy('ss.fecha_ini', 'ASC')
             ->get();
+
+        if ($soportes->isEmpty()) {
+            return response()->json(['status' => MsgStatus::Error, 'msg' => MsgStatus::SoporteNotFound], 404);
+        }
 
         $jefe_departamento = Departamento::from('dprtmntos as d')
             ->selectRaw('d.cdgo_dprtmnto, us.nmbre_usrio as jefe, nc.nom_cargo as cargo_jefe')
@@ -342,20 +346,23 @@ class SoporteController extends Controller
             ->where('d.cdgo_dprtmnto', 22)
             ->first();
 
-        if (sizeof($soportes) > 0) {
-            $data = [
-                'direccion' => 'Dirección de Técnologias de la Información y Comunicación',
-                'titulo' => 'Informe de Actividades por Servidor',
-                'fecha_inicio' => $request->fecha_inicio,
-                'fecha_fin' => (new Carbon($request->fecha_fin))->addDays(-1)->format('Y-m-d'),
-                'soportes' => $soportes,
-                'jefe_departamento' => $jefe_departamento
-            ];
-            $pdf = Pdf::loadView('pdf.soporte.reporte_soportes', $data);
-            return $pdf->setPaper('a4', 'portrait')->download('reporte_soportes.pdf');
-        } else {
-            return response()->json(['status' => MsgStatus::Error, 'msg' => MsgStatus::SoporteNotFound], 404);
-        }
+        $fechaInicio = Carbon::parse($request->fecha_inicio);
+        $fechaFin = Carbon::parse($request->fecha_fin)->subDay();
+        $anio = $fechaFin->year;
+        $periodo = $fechaInicio->translatedFormat('d \de F') . ' al ' . $fechaFin->translatedFormat('d \de F \de Y');
+
+        $data = [
+            'soportes' => $soportes,
+            'jefe_departamento' => $jefe_departamento,
+            'fecha_inicio' => $request->fecha_inicio,
+            'fecha_fin' => $fechaFin->format('Y-m-d'),
+            'periodo' => $periodo,
+            'current_fecha' => Carbon::now()->translatedFormat('d \de F \de Y'),
+            'total' => $soportes->count(),
+        ];
+
+        $pdf = Pdf::loadView('pdf.soporte.reporte_soportes', $data);
+        return $pdf->setPaper('a4', 'portrait')->download("reporte_soportes_{$anio}.pdf");
     }
 
     function getActividadesSoportes(Request $request): JsonResponse
