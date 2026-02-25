@@ -9,16 +9,14 @@ import {
 } from "@mantine/core";
 import { DateInput, YearPickerInput } from "@mantine/dates";
 import { BtnSubmit, TextSection } from "../../../../components";
-import { useStorageField, useVacacionesStore } from "../../../../hooks";
+import { useVacacionesStore } from "../../../../hooks";
 import { useForm } from "@mantine/form";
 import { IconSearch } from "@tabler/icons-react";
 import dayjs from "dayjs";
 import classes from "../../../../assets/styles/modules/layout/input/LabelsInputs.module.css";
-import { Roles } from "../../../../helpers/dictionary";
 
 export const FilterVacacionesForm = ({ usuario }) => {
     const { isLoading, startLoadSolicitudesVacaciones } = useVacacionesStore();
-    const { setStorageFields } = useStorageField();
 
     const form = useForm({
         initialValues: {
@@ -50,15 +48,9 @@ export const FilterVacacionesForm = ({ usuario }) => {
         if (switch_role) {
             //console.log(form.getTransformedValues());
             startLoadSolicitudesVacaciones(form.getTransformedValues());
-            setStorageFields(form.getTransformedValues());
         } else {
             //console.log(form.getTransformedValues());
             startLoadSolicitudesVacaciones({
-                ...form.getTransformedValues(),
-                cdgo_usrio: JSON.parse(localStorage.getItem("service_user"))
-                    .cdgo_usrio,
-            });
-            setStorageFields({
                 ...form.getTransformedValues(),
                 cdgo_usrio: JSON.parse(localStorage.getItem("service_user"))
                     .cdgo_usrio,
@@ -80,7 +72,7 @@ export const FilterVacacionesForm = ({ usuario }) => {
                 component="form"
                 onSubmit={form.onSubmit((_, e) => handleSubmit(e))}
             >
-                {usuario.role === Roles.NOM_VACACIONES && (
+                {usuario.permissions?.includes("tthh.vacaciones.gestionar") && (
                     <Group justify="flex-end" mb={10}>
                         <Switch
                             size="xl"

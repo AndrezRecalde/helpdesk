@@ -130,31 +130,6 @@ class SoporteAdminController extends Controller
         }
     }
 
-    function getSoporteAnulados(Request $request): JsonResponse
-    {
-        $soportes = Soporte::from('sop_soporte as ss')
-            ->selectRaw('ss.id_sop, ss.anio, ss.numero_sop,
-                        ss.id_direccion, d.nmbre_dprtmnto as direccion,
-                        ss.id_usu_recibe, u.nmbre_usrio as usuario_recibe,
-                        ss.fecha_ini, ss.incidente, ss.obs_anulado,
-                        ss.id_area_tic, sat.nombre as area_tic,
-                        ss.id_estado, se.nombre as estado')
-            ->join('dprtmntos as d', 'd.cdgo_dprtmnto', 'ss.id_direccion')
-            ->join('usrios_sstma as u', 'u.cdgo_usrio', 'ss.id_usu_recibe')
-            ->join('sop_estado as se', 'se.id_estado_caso', 'ss.id_estado')
-            ->leftJoin('sop_areas_tic as sat', 'sat.id_areas_tic', 'ss.id_area_tic')
-            ->where('ss.id_estado', 2)
-            ->fechas($request->fecha_inicio, $request->fecha_fin)
-            ->orderBy('ss.numero_sop', 'DESC')
-            ->get();
-
-        if (sizeof($soportes) >= 1) {
-            return response()->json(['status' => MsgStatus::Success, 'soportes' => $soportes], 200);
-        } else {
-            return response()->json(['status' => MsgStatus::Error, 'msg' => MsgStatus::SoportesAnuladosNotFound], 404);
-        }
-    }
-
     public function crearSolicitudAdmin(SolicitudAdminRequest $request): JsonResponse
     {
         try {
@@ -188,17 +163,16 @@ class SoporteAdminController extends Controller
                 if ($asignacion) {
 
                     // ENVIAR NOTIFICACIÓN A TELEGRAM
-                    $this->telegramService->notificarSoporteAsignado($asignacion);
+                    if ($asignacion->notificar_telegram && !empty($asignacion->telegram_chat_id)) {
+                        $this->telegramService->notificarSoporteAsignado($asignacion);
+                    } else {
+                        Mail::to($asignacion->email_tecnico)->send(new TecnicoMail($asignacion));
+                    }
 
                     // Enviar correos
                     if (!empty($asignacion->email_solicitante)) {
                         Mail::to($asignacion->email_solicitante)->send(new UsuarioMail($asignacion));
                     }
-
-                    if (!empty($asignacion->email_tecnico)) {
-                        Mail::to($asignacion->email_tecnico)->send(new TecnicoMail($asignacion));
-                    }
-
                 }
             }
 
@@ -272,6 +246,7 @@ class SoporteAdminController extends Controller
         $efectividadForTecnicos = DB::select('CALL sop_get_efectividad_for_tecnicos(?,?)', [$request->fecha_inicio, $request->fecha_fin]);
         $sumaDiasHabiles = DB::select('CALL sop_get_dias_habiles(?,?)', [$request->fecha_inicio, $request->fecha_fin]);
         $promedioCalificacion = DB::select('CALL sop_promedio_calificacion_por_fecha(?,?)', [$request->fecha_inicio, $request->fecha_fin]);
+
         $usuarioGenerador = User::from('usrios_sstma as us')
             ->selectRaw('us.cdgo_usrio, us.nmbre_usrio as generador, nc.nom_cargo as cargo_generador,
                                         u.nmbre_usrio as director, ncd.nom_cargo as cargo_director')
@@ -281,17 +256,16 @@ class SoporteAdminController extends Controller
             ->join('nom_cargo as ncd', 'ncd.idnom_cargo', 'u.crgo_id')
             ->where('us.cdgo_usrio', auth()->id())->first();
 
-        /* SUMATORIA DE TOTAL DE CASOS EN DESEMPEÑO */
-        $sumaDesempenoForEstados = 0;
-        if (sizeof($desempenoForEstados) > 0) {
-            foreach ($desempenoForEstados as $total_estados) {
-                $sumaDesempenoForEstados += $total_estados->total_estados;
-            }
-        }
+        $sumaDesempenoForEstados = collect($desempenoForEstados)->sum('total_estados');
+
+        $fechaInicio = \Carbon\Carbon::parse($request->fecha_inicio);
+        $fechaFin = \Carbon\Carbon::parse($request->fecha_fin);
+        $anio = $fechaFin->year;
+        $periodo = $fechaInicio->translatedFormat('d \de F') . ' al ' . $fechaFin->translatedFormat('d \de F \de Y');
 
         $data = [
-            'direccion' => 'Dirección de Técnologias de Información y Comunicación',
-            'titulo' => 'Reporte General de Indicadores',
+            'periodo' => $periodo,
+            'current_fecha' => \Carbon\Carbon::now()->translatedFormat('d \de F \de Y'),
             'fecha_inicio' => $request->fecha_inicio,
             'fecha_fin' => $request->fecha_fin,
             'desempenoForEstados' => $desempenoForEstados,
@@ -306,9 +280,9 @@ class SoporteAdminController extends Controller
             'chartTecnicosImage' => $request->chart_tecnicos_image,
             'chartAreasImage' => $request->chart_areas_image,
         ];
+
         $pdf = Pdf::loadView('pdf.soporte.indicador', $data);
-        return $pdf->setPaper('a4', 'portrait')->download('indicador.pdf');
-        /* return response()->json(['status' => MsgStatus::Success, 'data' => $data]); */
+        return $pdf->setPaper('a4', 'portrait')->download("indicadores_{$anio}.pdf");
     }
 
     function getSoportesSinCalificacion(): JsonResponse

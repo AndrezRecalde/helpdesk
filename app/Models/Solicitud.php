@@ -50,13 +50,10 @@ class Solicitud extends Model
 
     public function scopeAllowed($query)
     {
-        if (auth()->user()->hasRole(RoleNames::TIC_GERENTE))
-        {
+        if (auth()->user()->hasRole(RoleNames::GERENTE)) {
             return $query;
-        }
-        else
-        {
-        return $query->where('usuario_id', auth()->id());
+        } else {
+            return $query->where('usuario_id', auth()->id());
         }
     }
 

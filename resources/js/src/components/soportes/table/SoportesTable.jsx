@@ -25,6 +25,7 @@ import {
     IconPrinter,
     IconTextPlus,
 } from "@tabler/icons-react";
+import { Roles } from "../../../helpers/dictionary";
 /* import relativeTime from "dayjs/plugin/relativeTime";
 import "dayjs/locale/es";
 
@@ -180,7 +181,7 @@ export const SoportesTable = () => {
             },
         }),
         renderRowActionMenuItems: ({ row }) =>
-            usuario.role_id === 1 ? (
+            usuario.roles?.includes(Roles.GERENTE) ? (
                 <MenuTableActions
                     row={row}
                     actions={[
@@ -226,7 +227,7 @@ export const SoportesTable = () => {
                         },
                     ]}
                 />
-            ) : usuario.role_id === 2 ? (
+            ) : usuario.roles?.includes(Roles.TIC) ? (
                 <MenuTableActions
                     row={row}
                     actions={[

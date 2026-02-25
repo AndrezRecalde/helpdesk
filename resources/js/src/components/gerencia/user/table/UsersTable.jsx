@@ -15,8 +15,9 @@ import {
     IconRestore,
     IconClockHour2,
 } from "@tabler/icons-react";
+import { Roles } from "../../../../helpers/dictionary";
 
-export const UsersTable = () => {
+export const UsersTable = ({ usuario }) => {
     const { isLoading, users, setActivateUser, paginacion, startLoadUsers } =
         useUsersStore();
     const {
@@ -31,14 +32,41 @@ export const UsersTable = () => {
         pageSize: 10,
     });
 
-    const { pageIndex, pageSize } = paginationState;
-
+    // Sincronizar el estado del paginador con la respuesta del backend
     useEffect(() => {
-        startLoadUsers({
-            pagina: pageIndex + 1,
-            por_pagina: pageSize,
-        });
-    }, [pageIndex, pageSize]);
+        if (paginacion) {
+            setPaginationState((prev) => {
+                const newPageIndex = Number(paginacion.pagina_actual || 1) - 1;
+                const newPageSize = Number(paginacion.por_pagina || 10);
+
+                if (
+                    prev.pageIndex !== newPageIndex ||
+                    prev.pageSize !== newPageSize
+                ) {
+                    return { pageIndex: newPageIndex, pageSize: newPageSize };
+                }
+                return prev;
+            });
+        }
+    }, [paginacion]);
+
+    // Cargar datos cuando cambia la paginación (solo si hay filtros aplicados)
+    useEffect(() => {
+        // Evitar petición duplicada si el estado de paginación coincide con el de Redux
+        const isSyncedWithRedux =
+            paginacion &&
+            paginationState.pageIndex + 1 ===
+                Number(paginacion.pagina_actual || 1) &&
+            paginationState.pageSize === Number(paginacion.por_pagina || 10);
+
+        // Solo cargar si hay filtros válidos aplicados (anio no es null)
+        if (!isSyncedWithRedux) {
+            startLoadUsers({
+                por_pagina: paginationState.pageSize,
+                pagina_actual: paginationState.pageIndex + 1,
+            });
+        }
+    }, [paginationState.pageIndex, paginationState.pageSize]);
 
     const columns = useMemo(
         () => [
@@ -117,7 +145,8 @@ export const UsersTable = () => {
         enableFacetedValues: true,
         enableRowActions: true,
         manualPagination: true,
-        rowCount: paginacion?.total ?? 0,
+        rowCount: paginacion.total,
+        pageCount: paginacion.ultima_pagina,
         onPaginationChange: setPaginationState,
         state: {
             showProgressBars: isLoading,
@@ -131,16 +160,26 @@ export const UsersTable = () => {
                         icon: IconEditCircle,
                         label: "Editar",
                         onClick: handleEdit,
+                        // GERENTE siempre puede editar; TIC con permiso gestionar también
+                        visible: () =>
+                            usuario.roles?.includes(Roles.GERENTE) ||
+                            usuario.permissions?.includes(
+                                "tic.usuarios.gestionar",
+                            ),
                     },
                     {
                         icon: IconRestore,
                         label: "Resetear contraseña",
                         onClick: handleResetPassword,
+                        // Solo GERENTE
+                        visible: () => usuario.roles?.includes(Roles.GERENTE),
                     },
                     {
                         icon: IconClockHour2,
                         label: "Código Biométrico",
                         onClick: handleCodigoBiometrico,
+                        // Solo GERENTE
+                        visible: () => usuario.roles?.includes(Roles.GERENTE),
                     },
                 ]}
             />

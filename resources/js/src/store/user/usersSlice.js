@@ -8,7 +8,7 @@ const initialState = {
     activateUser: null,
     activateResponsable: null,
     storageField: null,
-    userVerified: null, //Aqui
+    userVerified: null, // Booleano: true (existe), false (no existe), null (sin verificar)
     infoSoportes: undefined,
     validate: undefined,
     message: undefined,
@@ -20,6 +20,11 @@ const initialState = {
         ultima_pagina: 1,
         desde: 0,
         hasta: 0,
+    },
+    ultimosFiltros: {
+        cdgo_direccion: "",
+        nmbre_usrio: "",
+        lgin: "",
     },
 };
 
@@ -81,6 +86,9 @@ export const usersSlice = createSlice({
                 hasta: payload.hasta || 0,
             };
         },
+        onSetUltimosFiltros: (state, { payload }) => {
+            state.ultimosFiltros = payload;
+        },
         onClearUsers: (state) => {
             state.users = [];
             state.activateUser = null;
@@ -123,6 +131,7 @@ export const {
     onSetUserVerified,
     onSetInfoSoportes,
     onSetPagination,
+    onSetUltimosFiltros,
     onClearUsers,
     onValidate,
     onLoadMessage,

@@ -101,7 +101,9 @@ export const PeriodoInfoTable = ({ data = {}, usuario }) => {
         enablePagination: false,
         enableSorting: false,
         enableBottomToolbar: false,
-        enableRowActions: usuario.role === Roles.NOM_VACACIONES ? true : false,
+        enableRowActions: usuario.permissions?.includes(
+            "tthh.vacaciones.gestionar",
+        ),
         renderRowActionMenuItems: ({ row }) => (
             <MenuTableActions
                 row={row}

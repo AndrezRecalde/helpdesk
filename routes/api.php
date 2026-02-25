@@ -81,25 +81,39 @@ Route::post('/consulta-tramite', [RutaController::class, 'getConsultaTramite']);
 /* USUARIOS */
 Route::post('/usuarios', [UserController::class, 'getUsuarios'])->middleware('auth:sanctum');
 
-/* RUTAS: GERENTE */
+/* TIPO DE SEXO */
+Route::get('/sexo', [SexoController::class, 'getTipoSexo']);
 
-Route::group(['prefix' => 'gerencia', 'middleware' => ['auth:sanctum', 'role:TIC_GERENTE']], function () {
+/*EMPRESAS */
+Route::get('/empresas', [EmpresaController::class, 'getEmpresas']);
+
+/* CARGOS */
+Route::get('/cargos', [CargoController::class, 'getCargos']);
+
+/* TIPOS USUARIOS */
+Route::get('/tipos-usuarios', [TipoUsuarioController::class, 'getTipoUsuarios']);
+
+/* TIPOS CONTRATO */
+Route::get('/tipos-contratos', [TipoContratoController::class, 'getTiposContratos']);
+
+
+/* RUTAS: GERENTE */
+Route::group(['prefix' => 'gerencia', 'middleware' => ['auth:sanctum', 'role:GERENTE']], function () {
 
     /* APLICACION */
     Route::put('/app/imagenes/update/{id}', [AppController::class, 'update']);
 
     /* USUARIOS */
-    Route::get('/admin/usuarios', [UserAdminController::class, 'getUsuariosAdmin']);
     Route::get('/users-with-roles-permissions', [UserAdminController::class, 'getUsersWithRolesOrPermissions']);
     Route::post('/store/usuario', [UserAdminController::class, 'store']);
-    Route::put('/update/usuario/{cdgo_usrio}', [UserAdminController::class, 'update']);
     Route::put('/update/usuario/activo/{cdgo_usrio}', [UserAdminController::class, 'updateActivoUser']);
-    Route::post('/verified/usuario', [UserAdminController::class, 'verifiedUser']);
     Route::put('/usuario/reset-password/{cdgo_usrio}', [UserAdminController::class, 'resetPasword']);
-    Route::post('/admin/show-user', [UserAdminController::class, 'findUser']);
     Route::put('/update/codigo-biometrico/{cdgo_usrio}', [UserAdminController::class, 'setCodigoBiometrico']);
     Route::post('/user/{cdgo_usrio}/assign-roles-permissions', [UserAdminController::class, 'assignRolesPermissions']);
 
+
+    /* CAMBIO DE DIRECTOR */
+    Route::put('/update/director/departamento/{cdgo_dprtmnto}', [DireccionAdminController::class, 'updateDirectores']);
 
     /* ÁREAS TIC */
     Route::get('/areas-tic', [AreaTicController::class, 'getAreasTic']);
@@ -110,7 +124,7 @@ Route::group(['prefix' => 'gerencia', 'middleware' => ['auth:sanctum', 'role:TIC
     Route::delete('/areas-tic/destroy/{id}', [AreaTicController::class, 'destroy']);
 
     /* TECNICOS */
-    Route::post('/admin/tecnicos', [TecnicoController::class, 'getTecnicosAdmin']);
+    Route::get('/admin/tecnicos', [TecnicoController::class, 'getTecnicosAdmin']);
     Route::put('/update/tecnico/{cdgo_usrio}', [TecnicoController::class, 'updateTecnico']);
     Route::get('/estadisticas/tecnicos', [TecnicoController::class, 'getEstadisticasTecnicos']);
 
@@ -121,7 +135,7 @@ Route::group(['prefix' => 'gerencia', 'middleware' => ['auth:sanctum', 'role:TIC
     Route::put('/tecnico-area/update/{id}', [TecnicoController::class, 'updateAsignacion']);
     Route::delete('/tecnico-area/remover/{id}', [TecnicoController::class, 'removerArea']);
 
-    /* ESTADÍSTICAS DE ASIGNACIÓN */
+    /* ESTADÍSTICAS DE AREAS DE TIC */
     Route::get('/asignacion/estadisticas-area/{area_id}', [AsignacionController::class, 'getEstadisticasArea']);
     Route::post('/asignacion/verificar-capacidad', [AsignacionController::class, 'verificarCapacidad']);
     Route::get('/asignacion/resumen-areas', [AsignacionController::class, 'getResumenAreas']);
@@ -129,36 +143,16 @@ Route::group(['prefix' => 'gerencia', 'middleware' => ['auth:sanctum', 'role:TIC
     /* NOTIFICACIONES TELEGRAM (ADMIN) */
     Route::post('/telegram/notificar-soporte/{soporte_id}', [TelegramController::class, 'notificarSoporteAsignado']);
 
-    /* DEPARTAMENTOS Y DIRECCION */
-    Route::post('/departamentos', [DireccionAdminController::class, 'getDepartamentos']);
-    Route::put('/update/director/departamento/{cdgo_dprtmnto}', [DireccionAdminController::class, 'updateDirectores']);
-
-    /*EMPRESAS */
-    Route::get('/empresas', [EmpresaController::class, 'getEmpresas']);
-
-    /* CARGOS */
-    Route::get('/cargos', [CargoController::class, 'getCargos']);
-
-    /* TIPO DE SEXO */
-    Route::get('/sexo', [SexoController::class, 'getTipoSexo']);
-
-    /* TIPOS USUARIOS */
-    Route::get('/tipos-usuarios', [TipoUsuarioController::class, 'getTipoUsuarios']);
-
-    /* TIPOS CONTRATO */
-    Route::get('/tipos-contratos', [TipoContratoController::class, 'getTiposContratos']);
-
     /* SOPORTES */
-    Route::post('/soporte', [SoporteAdminController::class, 'getSoporteForNumero']);
+    Route::post('/crear-soporte', [SoporteController::class, 'createSoporte']);
     Route::put('/asignar-soporte/{id_sop}', [SoporteAdminController::class, 'asignarSoporte']);
-    Route::post('/soportes-anulados', [SoporteAdminController::class, 'getSoporteAnulados']);
     Route::post('/crear-solicitud', [SoporteAdminController::class, 'crearSolicitudAdmin']);
     Route::put('/actualizar-soporte/{id_sop}', [SoporteAdminController::class, 'updateSoporte']);
     Route::post('/indicador-soporte', [SoporteAdminController::class, 'getIndicadoresSoportes']);
-    Route::post('/reporte-indicador-pdf', [SoporteAdminController::class, 'exportPDFIndicadores']); //TODO
+    Route::post('/reporte-indicador-pdf', [SoporteAdminController::class, 'exportPDFIndicadores']);
     Route::get('/soportes-sin-calificar', [SoporteAdminController::class, 'getSoportesSinCalificacion']);
     Route::post('/calificacion', [SoporteAdminController::class, 'setCalificacionSoportes']);
-    Route::get('/consulta-soportes', [SoporteController::class, 'buscarSoporteLite']);
+    Route::get('/consulta-soportes', [SoporteController::class, 'buscarSoporteLite']); //Utilizado para el formulario de Dar de Baja Equipo
     //Route::post('/soporte-acta', [SoporteAdminController::class, 'exportActaBajaEquipo']);
 
 
@@ -249,28 +243,42 @@ Route::group(['prefix' => 'gerencia', 'middleware' => ['auth:sanctum', 'role:TIC
     Route::post('/inventario/solicitud-consumible/historial', [SolicitudConsumibleController::class, 'historialPorConsumible']);
 
     /* ROLES Y PERMISOS */
-    Route::apiResource('roles', RoleController::class);
-    Route::apiResource('permissions', PermissionController::class);
+    Route::apiResource('roles', RoleController::class)->middleware('permission:tic.roles.gestionar');
+    Route::apiResource('permissions', PermissionController::class)->middleware('permission:tic.roles.gestionar');
 
 });
 
+
 /* RUTAS: GERENTE O TECNICO */
-Route::group(['prefix' => 'general', 'middleware' => ['auth:sanctum', 'role:TIC_GERENTE|TIC_TECNICO']], function () {
+Route::group(['prefix' => 'general', 'middleware' => ['auth:sanctum', 'role:TIC|GERENTE']], function () {
+
+    /* ADMINISTRADOR DE USUARIOS */
+    Route::get('/obtener-usuarios', [UserAdminController::class, 'getUsuariosAdmin'])
+        ->middleware('role_or_permission:tic.usuarios.gestionar');
+    Route::post('/admin/show-user', [UserAdminController::class, 'findUser'])
+        ->middleware('role_or_permission:tic.usuarios.gestionar');
+    Route::put('/update/usuario/{cdgo_usrio}', [UserAdminController::class, 'update'])
+        ->middleware('role_or_permission:tic.usuarios.gestionar');
+    Route::get('/verified/usuario', [UserAdminController::class, 'verifiedUser'])
+        ->middleware('role_or_permission:tic.usuarios.gestionar');
 
 
+    /* DEPARTAMENTOS PARA EL FORMULARIO DE USUARIOS */
+    Route::post('/departamentos', [DireccionAdminController::class, 'getDepartamentos'])
+        ->middleware('role_or_permission:tic.catalogos.ver');
 
-    /* TECNICOS */
-    Route::post('/tecnicos', [TecnicoController::class, 'getTecnicos']);
-    Route::post("/info-soportes", [TecnicoController::class, 'getInfoTecnicosSoportes']);
+    /* TECNICOS - PARA VER LA TABLA DE TECNICOS CON SU INFORMACIÓN*/
+    Route::get('/tecnicos', [TecnicoController::class, 'getTecnicos'])
+        ->middleware('role_or_permission:tic.catalogos.ver');
+    Route::post("/info-soportes", [TecnicoController::class, 'getInfoTecnicosSoportes'])
+        ->middleware('role_or_permission:tic.catalogos.ver');
 
-    /* DIRECCIONES */
 
     /* SOPORTES */
-    Route::post('/soportes-actuales', [SoporteController::class, 'getSoportesActuales']);
+    Route::get('/soportes-actuales', [SoporteController::class, 'getSoportesActuales']);
     Route::post('/buscar-soportes', [SoporteController::class, 'searchSoportes']);
-    Route::post('/crear-soporte', [SoporteController::class, 'createSoporte']);
     Route::put('/diagnosticar-soporte/{id_sop}', [SoporteController::class, 'diagnosticarSoporte']);
-    Route::post('/reporte-actividades', [SoporteController::class, 'getActividadesSoportes']);
+    Route::get('/reporte-actividades', [SoporteController::class, 'getActividadesSoportes']);
     Route::post('/reporte-soporte-pdf', [SoporteController::class, 'exportPDFCardSoporte']);
     Route::post('/reporte-actividades-pdf', [SoporteController::class, 'exportActividadesSoportes']);
 
@@ -380,45 +388,62 @@ Route::group(['prefix' => 'usuario', 'middleware' => ['auth:sanctum']], function
 });
 
 
-
-/* RUTAS NOM_ASISTENCIA */
-Route::group(['prefix' => 'tthh/asistencia', 'middleware' => ['auth:sanctum', 'role:TIC_GERENTE|NOM_ASISTENCIA|NOM_VACACIONES']], function () {
+/* RUTAS TTHH — ASISTENCIA Y VACACIONES */
+Route::group(['prefix' => 'tthh/asistencia', 'middleware' => ['auth:sanctum']], function () {
 
     /* USUARIOS - FECHA INGRESO */
-    Route::put('/update/fecha-ingreso/{cdgo_usrio}', [UserAdminController::class, 'updateFechaIngreso']);
+    Route::put('/update/fecha-ingreso/{cdgo_usrio}', [UserAdminController::class, 'updateFechaIngreso'])
+        ->middleware('role_or_permission:tic.dashboard.ver|tthh.asistencia.gestionar');
 
-    /* PERMISOS */
+    /* PERMISOS LABORALES */
     // Route::post('/buscar-permiso', [PermisosAdminController::class, 'searchPermiso']);
-    Route::put('/actualizar-permiso/{idper_permisos}', [PermisosAdminController::class, 'updateEstadoPermiso']);
+    Route::put('/actualizar-permiso/{idper_permisos}', [PermisosAdminController::class, 'updateEstadoPermiso'])
+        ->middleware('role_or_permission:tic.dashboard.ver|tthh.asistencia.gestionar');
 
-    Route::post('/consolidado-permisos', [PermisosAdminController::class, 'getConsolidadoPermisos']);
-    Route::post('/export/consolidado-permisos', [PermisosAdminController::class, 'getExportConsolidadoPermisos']);
-    Route::post('/export/consolidado-permisos-excel', [PermisosAdminController::class, 'getExportConsolidadoPermisosExcel']);
-
+    Route::post('/consolidado-permisos', [PermisosAdminController::class, 'getConsolidadoPermisos'])
+        ->middleware('role_or_permission:tic.dashboard.ver|tthh.asistencia.gestionar');
+    Route::post('/export/consolidado-permisos', [PermisosAdminController::class, 'getExportConsolidadoPermisos'])
+        ->middleware('role_or_permission:tic.dashboard.ver|tthh.asistencia.gestionar');
+    Route::post('/export/consolidado-permisos-excel', [PermisosAdminController::class, 'getExportConsolidadoPermisosExcel'])
+        ->middleware('role_or_permission:tic.dashboard.ver|tthh.asistencia.gestionar');
 
     /* ESTADOS DE PERMISOS: APROBADO, ANULADO */
-    Route::get('/estados-permisos', [PermisosAdminController::class, 'getAprobadoAnulado']);
+    Route::get('/estados-permisos', [PermisosAdminController::class, 'getAprobadoAnulado'])
+        ->middleware('role_or_permission:tic.dashboard.ver|tthh.asistencia.gestionar');
 
     /* GESTIONAR - VACACIONES */
-    Route::put('/gestionar-vacaciones/{id}', [NomVacacionesController::class, 'gestionarVacaciones']);
+    Route::put('/gestionar-vacaciones/{id}', [NomVacacionesController::class, 'gestionarVacaciones'])
+        ->middleware('role_or_permission:tic.dashboard.ver|tthh.vacaciones.gestionar');
+
+    Route::put('/anular-solicitud-vacacion/{id}', [NomVacacionesController::class, 'anularSolicitudVacacion'])
+        ->middleware('role_or_permission:tic.dashboard.ver|tthh.vacaciones.gestionar');
 
     /* PERIODOS VACACIONES */
-    Route::post('/consulta-periodos', [NomPeriodoVacacionesController::class, 'getConsultarPeriodos']);
-    Route::post('/store/periodo', [NomPeriodoVacacionesController::class, 'store']);
-    Route::post('/calcular-dias', [NomPeriodoVacacionesController::class, 'calcularDias']);
-    Route::put('/update/periodo/{id}', [NomPeriodoVacacionesController::class, 'updatePeriodo']);
-    Route::delete('/delete/periodo/{id}', [NomPeriodoVacacionesController::class, 'destroy']);
+    Route::post('/consulta-periodos', [NomPeriodoVacacionesController::class, 'getConsultarPeriodos'])
+        ->middleware('role_or_permission:tic.dashboard.ver|tthh.vacaciones.gestionar');
+    Route::post('/store/periodo', [NomPeriodoVacacionesController::class, 'store'])
+        ->middleware('role_or_permission:tic.dashboard.ver|tthh.vacaciones.gestionar');
+    Route::post('/calcular-dias', [NomPeriodoVacacionesController::class, 'calcularDias'])
+        ->middleware('role_or_permission:tic.dashboard.ver|tthh.vacaciones.gestionar');
+    Route::put('/update/periodo/{id}', [NomPeriodoVacacionesController::class, 'updatePeriodo'])
+        ->middleware('role_or_permission:tic.dashboard.ver|tthh.vacaciones.gestionar');
+    Route::delete('/delete/periodo/{id}', [NomPeriodoVacacionesController::class, 'destroy'])
+        ->middleware('role_or_permission:tic.dashboard.ver|tthh.vacaciones.gestionar');
 
     /* DESCUENTOS VACACIONES */
-    Route::post('/descuentos', [NomVacacionesDescuentoController::class, 'getNomVacacionesDescuentos']);
-    Route::post('/store/descuento', [NomVacacionesDescuentoController::class, 'store']);
-    Route::put('/update/descuento/{id}', [NomVacacionesDescuentoController::class, 'update']);
-    Route::delete('/delete/descuento/{id}', [NomVacacionesDescuentoController::class, 'destroy']);
+    Route::post('/descuentos', [NomVacacionesDescuentoController::class, 'getNomVacacionesDescuentos'])
+        ->middleware('role_or_permission:tic.dashboard.ver|tthh.vacaciones.gestionar');
+    Route::post('/store/descuento', [NomVacacionesDescuentoController::class, 'store'])
+        ->middleware('role_or_permission:tic.dashboard.ver|tthh.vacaciones.gestionar');
+    Route::put('/update/descuento/{id}', [NomVacacionesDescuentoController::class, 'update'])
+        ->middleware('role_or_permission:tic.dashboard.ver|tthh.vacaciones.gestionar');
+    Route::delete('/delete/descuento/{id}', [NomVacacionesDescuentoController::class, 'destroy'])
+        ->middleware('role_or_permission:tic.dashboard.ver|tthh.vacaciones.gestionar');
 });
 
 
-
-Route::group(['prefix' => 'tthh/gerencia', 'middleware' => ['auth:sanctum', 'role:NOM_DENUNCIAS']], function () {
+/* RUTAS TTHH — DENUNCIAS */
+Route::group(['prefix' => 'tthh/gerencia', 'middleware' => ['auth:sanctum', 'role_or_permission:tthh.denuncias.gestionar']], function () {
 
     /* DENUNCIAS - ADMIN */
     Route::post('/denuncias', [DenunciaAdminController::class, 'index']);

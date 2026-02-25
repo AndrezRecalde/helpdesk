@@ -21,6 +21,7 @@ import { isNotEmpty, useForm } from "@mantine/form";
 import { IconDeviceImacUp, IconMessageUp } from "@tabler/icons-react";
 import Swal from "sweetalert2";
 import dayjs from "dayjs";
+import { Roles } from "../../helpers/dictionary";
 
 const SoportesPage = () => {
     useTitlePage("Gestión De Soportes Técnicos - Helpdesk");
@@ -168,7 +169,7 @@ const SoportesPage = () => {
                         Tienes {soportes.length ?? 0} soportes
                     </TextSection>
                 </div>
-                {usuario.role_id === 1 ? (
+                {usuario.roles?.includes(Roles.GERENTE) ? (
                     <BtnAddActions actions={menuActions}>
                         Crear nuevo
                     </BtnAddActions>

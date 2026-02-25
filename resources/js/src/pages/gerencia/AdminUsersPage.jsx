@@ -19,8 +19,10 @@ import {
 } from "../../hooks";
 import { IconPencilPlus } from "@tabler/icons-react";
 import Swal from "sweetalert2";
+import { Roles } from "../../helpers/dictionary";
 
 const AdminUsersPage = () => {
+    const usuario = JSON.parse(localStorage.getItem("service_user"));
     useTitlePage("Administrar Usuarios - Helpdesk");
     const { errores, message } = useUsersStore();
     const { modalActionUser } = useUiUser();
@@ -77,17 +79,19 @@ const AdminUsersPage = () => {
         <Container size="xl">
             <Group justify="space-between">
                 <TitlePage order={2}>Administrar usuarios</TitlePage>
-                <BtnSection
-                    heigh={45}
-                    handleAction={handleOpenModal}
-                    IconSection={IconPencilPlus}
-                >
-                    Agregar usuario
-                </BtnSection>
+                {usuario.roles?.includes(Roles.GERENTE) ? (
+                    <BtnSection
+                        heigh={45}
+                        handleAction={handleOpenModal}
+                        IconSection={IconPencilPlus}
+                    >
+                        Agregar usuario
+                    </BtnSection>
+                ) : null}
             </Group>
             <Divider my="md" />
             <FilterFormUsers />
-            <UsersTable />
+            <UsersTable usuario={usuario} />
             <ModalUser />
         </Container>
     );

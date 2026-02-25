@@ -152,7 +152,7 @@ export const SolicitudesTable = ({ menu, isLoading }) => {
                     row={row}
                     actions={[
                         {
-                            icon: IconStethoscope,
+                            icon: IconTextPlus,
                             label: "Diagnosticar",
                             onClick: handleDiagnosticar,
                         },

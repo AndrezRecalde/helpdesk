@@ -3,315 +3,343 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>GTIC - Indicadores</title>
+    <title>GTIC — Reporte de Indicadores</title>
     <style>
         @page {
             size: 21cm 29.7cm;
-            margin: 15mm;
+            margin: 0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
         body {
-            font-family: 'Arial', 'Helvetica', sans-serif;
-            color: #1a1a1a;
-            line-height: 1.6;
-            font-size: 10pt;
-            margin: 0;
-            padding: 0;
+            font-family: Arial, sans-serif;
+            font-size: 9.5pt;
+            color: #111111;
+            line-height: 1.5;
+            background-image: url({{ public_path('/assets/images/FondoArchivo.png') }});
+            background-repeat: no-repeat;
+            background-size: cover;
         }
 
-        /* HEADER STYLES */
-        .document-header {
-            width: 100%;
-            border: 2px solid #000000;
-            border-collapse: collapse;
-            //margin-bottom: 10px;
-            background-color: #ffffff;
+        .page-wrapper {
+            padding: 10mm 10mm 10mm 10mm;
         }
 
-        .document-header td {
-            padding: 12px;
-            vertical-align: middle;
-            border: none;
-        }
-
-        .logo-cell {
-            width: 20%;
+        /* ─── ENCABEZADO ─────────────────────────────── */
+        .header {
             text-align: center;
-            border-right: 1px solid #cccccc;
+            margin-bottom: 14px;
+            padding-bottom: 8px;
         }
 
-        .logo-img {
-            max-width: 100px;
+        .header img {
+            max-width: 210px;
             height: auto;
-        }
-
-        .header-info-cell {
-            width: 80%;
-            padding-left: 15px;
-        }
-
-        .header-title {
-            font-size: 10pt;
-            font-weight: 600;
-            color: #333333;
             margin-bottom: 5px;
+        }
+
+        .institution-name {
+            font-size: 10pt;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+            color: #222;
+        }
+
+        .institution-sub {
+            font-size: 8.5pt;
+            color: #444;
+            margin-top: 1px;
+        }
+
+        .doc-title {
+            font-size: 11pt;
+            font-weight: bold;
+            text-transform: uppercase;
+            color: #111;
+            letter-spacing: 0.5px;
+            margin-top: 4px;
+        }
+
+        /* ─── DATOS DEL DOCUMENTO ────────────────────── */
+        .doc-meta {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 10px;
+            font-size: 8.5pt;
+        }
+
+        .doc-meta td {
+            padding: 2px 0;
+            border: none;
+            vertical-align: top;
+        }
+
+        .meta-label {
+            width: 70px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .meta-sep {
+            width: 8px;
+            font-weight: bold;
+        }
+
+        /* ─── SEPARADOR ──────────────────────────────── */
+        .divider {
+            border: none;
+            border-top: 1px solid #bbb;
+            margin: 6px 0 10px;
+        }
+
+        /* ─── SECCIÓN TITLE ──────────────────────────── */
+        .section-title {
+            background: #555555;
+            color: #ffffff;
+            padding: 5px 10px;
+            font-size: 9pt;
+            font-weight: bold;
+            margin: 12px 0 6px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-        }
-
-        .header-subtitle {
-            font-size: 12pt;
-            font-weight: 700;
-            color: #000000;
-            margin: 5px 0;
-            line-height: 1.2;
-        }
-
-        .header-period {
-            font-size: 8pt;
-            color: #666666;
-            margin-top: 5px;
-            font-weight: 500;
-        }
-
-        .header-period strong {
-            color: #1a1a1a;
-        }
-
-        /* SECTION STYLES */
-        .section {
-            margin-bottom: 10px;
-            //page-break-inside: avoid;
-        }
-
-        .section-title {
-            background: linear-gradient(135deg, #333333 0%, #1a1a1a 100%);
-            color: #ffffff;
-            padding: 12px 18px;
-            font-size: 11pt;
-            font-weight: 700;
-            margin-bottom: 15px;
-            border-radius: 5px;
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         .subsection-title {
-            background-color: #e8e8e8;
-            color: #1a1a1a;
-            padding: 10px 15px;
-            font-size: 10pt;
-            font-weight: 700;
-            margin: 20px 0 12px 0;
-            border-left: 4px solid #333333;
-            border-radius: 3px;
+            background-color: #dddddd;
+            color: #111111;
+            padding: 4px 10px;
+            font-size: 8.5pt;
+            font-weight: bold;
+            margin: 8px 0 4px;
+            border-left: 3px solid #555555;
         }
 
-        /* TABLE STYLES */
+        /* ─── METRIC BOX ─────────────────────────────── */
+        .metric-box {
+            background: #eeeeee;
+            border-left: 4px solid #555555;
+            padding: 8px 12px;
+            margin: 6px 0;
+            font-size: 9pt;
+        }
+
+        .metric-value {
+            font-weight: bold;
+            font-size: 12pt;
+            color: #111;
+        }
+
+        .metric-label {
+            color: #444;
+        }
+
+        /* ─── TABLAS DE DATOS ────────────────────────── */
         table.data-table {
             width: 100%;
             border-collapse: collapse;
-            margin-bottom: 20px;
-            border: 1px solid #cccccc;
-            border-radius: 6px;
-            overflow: hidden;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+            margin-bottom: 8px;
+            font-size: 8pt;
+            table-layout: fixed;
         }
 
-        table.data-table thead {
-            background-color: #e0e0e0;
+        table.data-table thead tr {
+            background: #888888;
+            color: #ffffff;
         }
 
         table.data-table th {
-            color: #000000;
-            padding: 12px 10px;
+            padding: 5px 6px;
             text-align: center;
-            font-size: 9pt;
-            font-weight: 700;
-            border: 1px solid #cccccc;
+            font-size: 7.5pt;
+            font-weight: bold;
+            border: 1px solid #777;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.3px;
         }
 
         table.data-table th:first-child {
             text-align: left;
-            padding-left: 15px;
         }
 
         table.data-table td {
-            padding: 10px;
-            border-bottom: 1px solid #e0e0e0;
-            font-size: 9pt;
+            padding: 4px 6px;
+            border: 1px solid #aaaaaa;
+            font-size: 8pt;
             vertical-align: middle;
         }
 
         table.data-table td:first-child {
-            font-weight: 500;
-            color: #1a1a1a;
-            padding-left: 15px;
+            text-align: left;
         }
 
         table.data-table td:not(:first-child) {
             text-align: center;
-            color: #4a4a4a;
         }
 
         table.data-table tbody tr:nth-child(odd) {
-            background-color: #f9f9f9;
+            background-color: #f5f5f5;
         }
 
         table.data-table tbody tr:nth-child(even) {
             background-color: #ffffff;
         }
 
-        table.data-table tbody tr:hover {
-            background-color: #f0f0f0;
-        }
-
         table.data-table tbody tr:last-child td {
-            border-bottom: none;
-        }
-
-        /* METRIC BOX */
-        .metric-box {
-            background: linear-gradient(135deg, #f0f0f0 0%, #e8e8e8 100%);
-            border-left: 5px solid #000000;
-            padding: 15px 20px;
-            margin: 15px 0;
-            font-size: 10pt;
-            border-radius: 5px;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
-        }
-
-        .metric-box .metric-value {
-            font-weight: 700;
-            color: #000000;
-            font-size: 13pt;
-        }
-
-        .metric-box .metric-label {
-            color: #4a4a4a;
-            font-weight: 400;
-        }
-
-        /* SIGNATURE SECTION */
-        .signature-table {
-            width: 100%;
-            margin-top: 40px;
-            border-collapse: collapse;
-            border-top: 2px solid #000000;
-            padding-top: 20px;
-        }
-
-        .signature-table td {
-            width: 50%;
-            padding: 20px 30px;
-            text-align: center;
-            vertical-align: top;
-        }
-
-        .signature-label {
-            font-size: 9pt;
-            font-weight: 600;
-            color: #333333;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 10px;
-        }
-
-        .signature-space {
-            height: 60px;
-            border-bottom: 2px solid #1a1a1a;
-            margin: 15px 20px;
-        }
-
-        .signature-name {
-            font-weight: 700;
-            color: #000000;
-            font-size: 10pt;
-            margin-top: 10px;
-        }
-
-        .signature-position {
-            color: #666666;
-            font-size: 9pt;
-            font-weight: 400;
-            margin-top: 5px;
-        }
-
-        /* UTILITY CLASSES */
-        .font-bold {
-            font-weight: 700;
+            border-bottom: 2px solid #888;
         }
 
         .percentage-value {
-            font-weight: 600;
-            color: #000000;
+            font-weight: bold;
+            color: #111;
+        }
+
+        .font-bold {
+            font-weight: bold;
+        }
+
+        /* ─── RESUMEN BAR ────────────────────────────── */
+        .summary-bar {
+            width: 100%;
+            background: #888888;
+            color: #fff;
+            padding: 3px 8px;
+            margin-bottom: 6px;
+            font-size: 7.5pt;
+        }
+
+        /* ─── GRÁFICOS ───────────────────────────────── */
+        .chart-container {
+            text-align: center;
+            margin: 10px 0;
+        }
+
+        .chart-container img {
+            max-width: 100%;
+            height: auto;
+            border: 1px solid #cccccc;
+        }
+
+        /* ─── FIRMAS ─────────────────────────────────── */
+        .firmas-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 36px;
+        }
+
+        .firmas-table td {
+            width: 50%;
+            vertical-align: top;
+            text-align: center;
+            border: none;
+            padding: 0 10px;
+        }
+
+        .sig-line {
+            border-top: 1px solid #000;
+            margin: 0 auto 4px;
+            width: 180px;
+        }
+
+        .sig-name {
+            font-size: 9pt;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .sig-cargo {
+            font-size: 8pt;
+            color: #333;
+            text-transform: uppercase;
         }
     </style>
 </head>
 
 <body>
-    <!-- HEADER -->
-    <table class="document-header">
-        <tr>
-            <td class="logo-cell">
-                <img class="logo-img" alt="Logo GTIC" src="{{ public_path('/assets/images/LogoCompleto.png') }}">
-            </td>
-            <td class="header-info-cell">
-                <div class="header-title">{{ Str::upper($direccion) }}</div>
-                <div class="header-subtitle">{{ Str::upper($titulo) }}</div>
-                <div class="header-period"><strong>Período:</strong> {{ $fecha_inicio }} al {{ $fecha_fin }}</div>
-            </td>
-        </tr>
-    </table>
 
-    <!-- A. EFICIENCIA -->
-    <div class="section">
+    @php
+        $logoPath = public_path('/assets/images/LogoTransparente.png');
+        $logoBase64 = 'data:image/png;base64,' . base64_encode(file_get_contents($logoPath));
+        $diasHabiles = $sumaDiasHabiles[0]->dias_habiles ?? 0;
+        $promCalif = $promedioCalificacion[0]->promedio ?? 0;
+        $casosFinalizados = $desempenoForEstados[3]->total_estados ?? 0;
+        $cumplimientoMeta = $diasHabiles > 0 ? round(($casosFinalizados / 30 / $diasHabiles) * 100, 2) : 0;
+    @endphp
+
+    <div class="page-wrapper">
+
+        {{-- ══ ENCABEZADO ══ --}}
+        <div class="header">
+            <img src="{{ $logoBase64 }}" alt="Logo Institución" />
+            <div class="institution-name">Gobierno Autónomo Descentralizado Provincial de Esmeraldas</div>
+            <div class="institution-sub">Gestión de Tecnologías de la Información y Comunicación</div>
+            <div class="doc-title">Reporte General de Indicadores</div>
+        </div>
+
+        {{-- ══ META ══ --}}
+        <table class="doc-meta">
+            <tr>
+                <td class="meta-label">Período</td>
+                <td class="meta-sep">:</td>
+                <td>{{ Str::upper($periodo) }}</td>
+            </tr>
+            <tr>
+                <td class="meta-label">Generado</td>
+                <td class="meta-sep">:</td>
+                <td>{{ Str::upper('Esmeraldas, ' . $current_fecha) }}</td>
+            </tr>
+            <tr>
+                <td class="meta-label">Responsable</td>
+                <td class="meta-sep">:</td>
+                <td><strong>{{ Str::upper($usuarioGenerador->generador) }}</strong>
+                    — <em>{{ $usuarioGenerador->cargo_generador }}</em></td>
+            </tr>
+        </table>
+
+        <hr class="divider">
+
+        {{-- ══ A. EFICIENCIA ══ --}}
         <div class="section-title">A. Eficiencia de Desempeño de Actividades</div>
-        
+
         <div class="metric-box">
             <span class="metric-value">{{ $sumaDesempenoForEstados }}</span>
             <span class="metric-label"> casos totales registrados en el período analizado</span>
         </div>
 
+        <div class="summary-bar">Distribución por estado de casos</div>
         <table class="data-table">
             <thead>
                 <tr>
-                    <th style="width: 50%;">Detalle de los Casos</th>
-                    <th style="width: 25%;">Total de Casos</th>
-                    <th style="width: 25%;">Porcentaje</th>
+                    <th style="width:55%;">Detalle de los Casos</th>
+                    <th style="width:22%;">Total</th>
+                    <th style="width:23%;">Porcentaje</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>Casos {{ $desempenoForEstados[3]->estado }}</td>
-                    <td>{{ $desempenoForEstados[3]->total_estados }} / {{ $sumaDesempenoForEstados }}</td>
-                    <td class="percentage-value">{{ round(($desempenoForEstados[3]->total_estados / $sumaDesempenoForEstados) * 100, 2) }}%</td>
-                </tr>
-                <tr>
-                    <td>Casos Sin Cerrar</td>
-                    <td>{{ $desempenoForEstados[2]->total_estados }} / {{ $sumaDesempenoForEstados }}</td>
-                    <td class="percentage-value">{{ round(($desempenoForEstados[2]->total_estados / $sumaDesempenoForEstados) * 100, 2) }}%</td>
-                </tr>
-                <tr>
-                    <td>Casos {{ $desempenoForEstados[1]->estado }}</td>
-                    <td>{{ $desempenoForEstados[1]->total_estados }} / {{ $sumaDesempenoForEstados }}</td>
-                    <td class="percentage-value">{{ round(($desempenoForEstados[1]->total_estados / $sumaDesempenoForEstados) * 100, 2) }}%</td>
-                </tr>
-                <tr>
-                    <td>Casos {{ $desempenoForEstados[4]->estado }}</td>
-                    <td>{{ $desempenoForEstados[4]->total_estados }} / {{ $sumaDesempenoForEstados }}</td>
-                    <td class="percentage-value">{{ round(($desempenoForEstados[4]->total_estados / $sumaDesempenoForEstados) * 100, 2) }}%</td>
-                </tr>
-                <tr>
-                    <td>Casos {{ $desempenoForEstados[0]->estado }}</td>
-                    <td>{{ $desempenoForEstados[0]->total_estados }} / {{ $sumaDesempenoForEstados }}</td>
-                    <td class="percentage-value">{{ round(($desempenoForEstados[0]->total_estados / $sumaDesempenoForEstados) * 100, 2) }}%</td>
-                </tr>
+                @foreach ([3, 2, 1, 4, 0] as $i)
+                    @if (isset($desempenoForEstados[$i]))
+                        <tr>
+                            <td>
+                                @if ($i === 2)
+                                    Casos Sin Cerrar
+                                @else
+                                    Casos {{ $desempenoForEstados[$i]->estado }}
+                                @endif
+                            </td>
+                            <td>{{ $desempenoForEstados[$i]->total_estados }} / {{ $sumaDesempenoForEstados }}</td>
+                            <td class="percentage-value">
+                                {{ $sumaDesempenoForEstados > 0
+                                    ? round(($desempenoForEstados[$i]->total_estados / $sumaDesempenoForEstados) * 100, 2)
+                                    : 0 }}%
+                            </td>
+                        </tr>
+                    @endif
+                @endforeach
             </tbody>
         </table>
 
@@ -327,14 +355,14 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($desempenoForAreas as $desemparea)
-                <tr>
-                    <td>{{ $desemparea->area_tic }}</td>
-                    <td>{{ $desemparea->total_asignados }}</td>
-                    <td>{{ $desemparea->total_atendidos }}</td>
-                    <td>{{ $desemparea->total_finalizados }}</td>
-                    <td>{{ $desemparea->total_anuladas }}</td>
-                </tr>
+                @foreach ($desempenoForAreas as $da)
+                    <tr>
+                        <td>{{ $da->area_tic }}</td>
+                        <td>{{ $da->total_asignados }}</td>
+                        <td>{{ $da->total_atendidos }}</td>
+                        <td>{{ $da->total_finalizados }}</td>
+                        <td>{{ $da->total_anuladas }}</td>
+                    </tr>
                 @endforeach
             </tbody>
         </table>
@@ -343,7 +371,7 @@
         <table class="data-table">
             <thead>
                 <tr>
-                    <th>Nombre del Técnico</th>
+                    <th>Técnico</th>
                     <th>Sin Resolver</th>
                     <th>Sin Cerrar</th>
                     <th>Finalizados</th>
@@ -351,21 +379,19 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($desempenoForTecnicos as $desemptecnico)
-                <tr>
-                    <td>{{ $desemptecnico->tecnico }}</td>
-                    <td>{{ $desemptecnico->total_asignados }}</td>
-                    <td>{{ $desemptecnico->total_atendidos }}</td>
-                    <td>{{ $desemptecnico->total_finalizados }}</td>
-                    <td>{{ $desemptecnico->total_anulados }}</td>
-                </tr>
+                @foreach ($desempenoForTecnicos as $dt)
+                    <tr>
+                        <td>{{ $dt->tecnico }}</td>
+                        <td>{{ $dt->total_asignados }}</td>
+                        <td>{{ $dt->total_atendidos }}</td>
+                        <td>{{ $dt->total_finalizados }}</td>
+                        <td>{{ $dt->total_anulados }}</td>
+                    </tr>
                 @endforeach
             </tbody>
         </table>
-    </div>
 
-    <!-- B. EFECTIVIDAD -->
-    <div class="section">
+        {{-- ══ B. EFECTIVIDAD ══ --}}
         <div class="section-title">B. Calidad de la Efectividad en la Atención</div>
 
         <div class="subsection-title">Efectividad por Áreas</div>
@@ -378,12 +404,12 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($efectividadForAreas as $efectividadarea)
-                <tr>
-                    <td>{{ $efectividadarea->area_tic }}</td>
-                    <td>{{ $efectividadarea->total_asistencia }}</td>
-                    <td class="percentage-value">{{ $efectividadarea->total_promedio }}</td>
-                </tr>
+                @foreach ($efectividadForAreas as $ea)
+                    <tr>
+                        <td>{{ $ea->area_tic }}</td>
+                        <td>{{ $ea->total_asistencia }}</td>
+                        <td class="percentage-value">{{ $ea->total_promedio }}</td>
+                    </tr>
                 @endforeach
             </tbody>
         </table>
@@ -392,38 +418,36 @@
         <table class="data-table">
             <thead>
                 <tr>
-                    <th>Nombre del Técnico</th>
+                    <th>Técnico</th>
                     <th>Total Asistencia</th>
                     <th>Promedio</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($efectividadForTecnicos as $efectividadtenico)
-                <tr>
-                    <td>{{ $efectividadtenico->tecnico }}</td>
-                    <td>{{ $efectividadtenico->total_asistencia }}</td>
-                    <td class="percentage-value">{{ $efectividadtenico->total_promedio }}</td>
-                </tr>
+                @foreach ($efectividadForTecnicos as $et)
+                    <tr>
+                        <td>{{ $et->tecnico }}</td>
+                        <td>{{ $et->total_asistencia }}</td>
+                        <td class="percentage-value">{{ $et->total_promedio }}</td>
+                    </tr>
                 @endforeach
             </tbody>
         </table>
-    </div>
 
-    <!-- C. EFICACIA -->
-    <div class="section">
+        {{-- ══ C. EFICACIA ══ --}}
         <div class="section-title">C. Eficacia en el Cumplimiento de Metas</div>
 
         <div class="metric-box">
             <span class="metric-label">Cumplimiento de Meta: </span>
-            <span class="metric-value">{{ round(($desempenoForEstados[3]->total_estados / 30 / $sumaDiasHabiles[0]->dias_habiles) * 100, 2) }}%</span>
-            <span class="metric-label"> (Meta: 30 casos por día en {{ $sumaDiasHabiles[0]->dias_habiles }} días hábiles)</span>
+            <span class="metric-value">{{ $cumplimientoMeta }}%</span>
+            <span class="metric-label"> (Meta: 30 casos/día · {{ $diasHabiles }} días hábiles)</span>
         </div>
 
         <table class="data-table">
             <thead>
                 <tr>
-                    <th style="width: 60%;">Indicador</th>
-                    <th style="width: 40%;">Valor</th>
+                    <th style="width:65%;">Indicador</th>
+                    <th style="width:35%;">Valor</th>
                 </tr>
             </thead>
             <tbody>
@@ -432,54 +456,61 @@
                     <td class="font-bold">30 casos</td>
                 </tr>
                 <tr>
-                    <td>Casos Finalizados</td>
-                    <td class="font-bold">{{ $desempenoForEstados[3]->total_estados }}</td>
+                    <td>Casos Finalizados en el Período</td>
+                    <td class="font-bold">{{ $casosFinalizados }}</td>
                 </tr>
                 <tr>
-                    <td>Período Evaluado</td>
-                    <td class="font-bold">{{ $sumaDiasHabiles[0]->dias_habiles }} días</td>
+                    <td>Días Hábiles Evaluados</td>
+                    <td class="font-bold">{{ $diasHabiles }} días</td>
                 </tr>
                 <tr>
-                    <td>Satisfacción de Usuarios</td>
-                    <td class="font-bold percentage-value">{{ $promedioCalificacion[0]->promedio }} / 5.0</td>
+                    <td>Satisfacción de Usuarios (calificación promedio)</td>
+                    <td class="font-bold percentage-value">{{ $promCalif }} / 5.0</td>
                 </tr>
             </tbody>
         </table>
-    </div>
 
-    <!-- FIRMAS -->
-    <table class="signature-table">
-        <tr>
-            <td>
-                <div class="signature-label">Generado por</div>
-                <div class="signature-space"></div>
-                <div class="signature-name">{{ $usuarioGenerador->generador }}</div>
-                <div class="signature-position">{{ $usuarioGenerador->cargo_generador }}</div>
-            </td>
-            <td>
-                <div class="signature-label">Aprobado por</div>
-                <div class="signature-space"></div>
-                <div class="signature-name">{{ $usuarioGenerador->director }}</div>
-                <div class="signature-position">{{ $usuarioGenerador->cargo_director }}</div>
-            </td>
-        </tr>
-    </table>
+        {{-- ══ FIRMAS ══ --}}
+        <table class="firmas-table">
+            <tr>
+                <td>
+                    <div style="height: 42px;"></div>
+                    <div class="sig-line"></div>
+                    <div class="sig-name">{{ $usuarioGenerador->generador }}</div>
+                    <div class="sig-cargo">{{ $usuarioGenerador->cargo_generador }}</div>
+                </td>
+                <td>
+                    <div style="height: 42px;"></div>
+                    <div class="sig-line"></div>
+                    <div class="sig-name">{{ $usuarioGenerador->director }}</div>
+                    <div class="sig-cargo">{{ $usuarioGenerador->cargo_director }}</div>
+                </td>
+            </tr>
+        </table>
 
-    {{-- GRÁFICOS DE DESEMPEÑO --}}
-    @if(isset($chartTecnicosImage) && $chartTecnicosImage)
-    <div style="page-break-before: always;"></div>
-    <div class="section-title">GRÁFICO: DESEMPEÑO POR TÉCNICOS</div>
-    <div style="text-align: center; margin: 20px 0;">
-        <img src="{{ $chartTecnicosImage }}" style="max-width: 100%; height: auto; border: 1px solid #e0e0e0; border-radius: 4px;" alt="Gráfico de Desempeño por Técnicos">
-    </div>
+    </div>{{-- /page-wrapper --}}
+
+    {{-- ══ GRÁFICOS (páginas separadas) ══ --}}
+    @if (!empty($chartTecnicosImage))
+        <div style="page-break-before: always;">
+            <div class="page-wrapper">
+                <div class="section-title">Gráfico: Desempeño por Técnicos</div>
+                <div class="chart-container">
+                    <img src="{{ $chartTecnicosImage }}" alt="Gráfico Técnicos">
+                </div>
+            </div>
+        </div>
     @endif
 
-    @if(isset($chartAreasImage) && $chartAreasImage)
-    <div style="page-break-before: always;"></div>
-    <div class="section-title">GRÁFICO: DESEMPEÑO POR ÁREAS TÉCNICAS</div>
-    <div style="text-align: center; margin: 20px 0;">
-        <img src="{{ $chartAreasImage }}" style="max-width: 100%; height: auto; border: 1px solid #e0e0e0; border-radius: 4px;" alt="Gráfico de Desempeño por Áreas">
-    </div>
+    @if (!empty($chartAreasImage))
+        <div style="page-break-before: always;">
+            <div class="page-wrapper">
+                <div class="section-title">Gráfico: Desempeño por Áreas Técnicas</div>
+                <div class="chart-container">
+                    <img src="{{ $chartAreasImage }}" alt="Gráfico Áreas">
+                </div>
+            </div>
+        </div>
     @endif
 
 </body>

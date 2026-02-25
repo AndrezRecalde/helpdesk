@@ -28,7 +28,7 @@ const PeriodoVacacionalesPage = () => {
     const { startLoadUsersGeneral, clearUsers } = useUsersStore();
 
     useEffect(() => {
-        if (usuario.role === Roles.NOM_VACACIONES) {
+        if (usuario.permissions?.includes("tthh.vacaciones.gestionar")) {
             startLoadPeriodos({});
             startLoadUsersGeneral({});
         } else {
@@ -74,7 +74,7 @@ const PeriodoVacacionalesPage = () => {
         <Container size="xl">
             <Group justify="space-between">
                 <TitlePage order={1}>Periodos Vacaciones</TitlePage>
-                {usuario.role === Roles.NOM_VACACIONES && (
+                {usuario.permissions?.includes("tthh.vacaciones.gestionar") && (
                     <BtnSection
                         IconSection={IconCubePlus}
                         handleAction={handleCrearPeriodo}

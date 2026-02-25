@@ -3,7 +3,6 @@ import { useForm } from "@mantine/form";
 import { YearPickerInput } from "@mantine/dates";
 import { BtnSubmit, TextSection } from "../../../../components";
 import { IconSearch } from "@tabler/icons-react";
-import { Roles } from "../../../../helpers/dictionary";
 import classes from "../../../../assets/styles/modules/layout/input/LabelsInputs.module.css";
 
 export const FilterDescuentoVacacionesForm = ({ startLoadDescuentos }) => {
@@ -25,7 +24,7 @@ export const FilterDescuentoVacacionesForm = ({ startLoadDescuentos }) => {
         e.preventDefault();
         const { switch_role } = form.values;
         const { anio } = form.getTransformedValues();
-        console.log(switch_role);
+        //console.log(switch_role);
         if (switch_role) {
             startLoadDescuentos({
                 usuario_id: null,
@@ -57,7 +56,9 @@ export const FilterDescuentoVacacionesForm = ({ startLoadDescuentos }) => {
             >
                 <Stack>
                     <Group justify="flex-end">
-                        {usuario.role === Roles.NOM_VACACIONES && (
+                        {usuario.permissions.includes(
+                            "tthh.vacaciones.gestionar",
+                        ) && (
                             <Group justify="flex-end">
                                 <Switch
                                     size="xl"

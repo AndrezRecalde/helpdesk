@@ -2,19 +2,14 @@ import { useEffect } from "react";
 import { Box, Fieldset, Select, SimpleGrid, TextInput } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { BtnSubmit, TextSection } from "../../../../components";
-import {
-    useDireccionStore,
-    useStorageField,
-    useUsersStore,
-} from "../../../../hooks";
+import { useDireccionStore, useUsersStore } from "../../../../hooks";
 import { IconSearch } from "@tabler/icons-react";
-import classes from '../../../../assets/styles/modules/layout/input/LabelsInputs.module.css'
+import classes from "../../../../assets/styles/modules/layout/input/LabelsInputs.module.css";
 
 export const FilterFormUsers = () => {
     const { startLoadUsers, clearUsers } = useUsersStore();
     const { startLoadDirecciones, direcciones, clearDirecciones } =
         useDireccionStore();
-    const { setStorageUserFields } = useStorageField();
 
     const form = useForm({
         initialValues: {
@@ -39,7 +34,6 @@ export const FilterFormUsers = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        setStorageUserFields(form.getTransformedValues());
         startLoadUsers(form.getTransformedValues());
         //console.log(form.getTransformedValues());
     };
@@ -48,7 +42,11 @@ export const FilterFormUsers = () => {
         <Fieldset
             mt={20}
             mb={20}
-            legend={<TextSection tt="" fw={500} fz={16}>Filtrar usuarios</TextSection>}
+            legend={
+                <TextSection tt="" fw={500} fz={16}>
+                    Filtrar usuarios
+                </TextSection>
+            }
         >
             <Box
                 component="form"
@@ -82,9 +80,7 @@ export const FilterFormUsers = () => {
                         {...form.getInputProps("lgin")}
                     />
                 </SimpleGrid>
-                <BtnSubmit IconSection={IconSearch}>
-                    Buscar
-                </BtnSubmit>
+                <BtnSubmit IconSection={IconSearch}>Buscar</BtnSubmit>
             </Box>
         </Fieldset>
     );

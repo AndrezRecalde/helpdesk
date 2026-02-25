@@ -12,6 +12,7 @@ import {
     onSetActivateUser,
     onSetInfoSoportes,
     onSetPagination,
+    onSetUltimosFiltros,
     onSetUserVerified,
     onUpdateUsers,
 } from "../../store/user/usersSlice";
@@ -31,6 +32,7 @@ export const useUsersStore = () => {
         message,
         errores,
         paginacion,
+        ultimosFiltros,
     } = useSelector((state) => state.users);
 
     const dispatch = useDispatch();
@@ -50,6 +52,8 @@ export const useUsersStore = () => {
             //console.log(error);
             dispatch(onLoading(false));
             ExceptionMessageError(error);
+        } finally {
+            dispatch(onLoading(false));
         }
     };
 
@@ -69,31 +73,42 @@ export const useUsersStore = () => {
             //console.log(error);
             dispatch(onLoading(false));
             ExceptionMessageError(error);
+        } finally {
+            dispatch(onLoading(false));
         }
     };
 
-    /* GERENCIA */
     const startLoadUsers = async ({
         cdgo_direccion = null,
         nmbre_usrio = "",
         lgin = "",
-        pagina = 1,
+        pagina_actual = 1,
         por_pagina = 10,
     }) => {
         try {
             dispatch(onLoading(true));
-            const { data } = await helpdeskApi.get("/gerencia/admin/usuarios", {
-                params: {
-                    cdgo_direccion,
-                    nmbre_usrio,
-                    lgin,
-                    pagina,
-                    por_pagina,
+            const { data } = await helpdeskApi.get(
+                "/general/obtener-usuarios",
+                {
+                    params: {
+                        cdgo_direccion,
+                        nmbre_usrio,
+                        lgin,
+                        pagina_actual,
+                        por_pagina,
+                    },
                 },
-            });
+            );
             const { usuarios, paginacion } = data;
             dispatch(onLoadUsers(usuarios));
             dispatch(onSetPagination(paginacion));
+            dispatch(
+                onSetUltimosFiltros({
+                    cdgo_direccion,
+                    nmbre_usrio,
+                    lgin,
+                }),
+            );
         } catch (error) {
             //console.log(error);
             ExceptionMessageError(error);
@@ -153,13 +168,12 @@ export const useUsersStore = () => {
 
     const verifiedUser = async ({ lgin }) => {
         try {
-            const { data } = await helpdeskApi.post(
-                "/gerencia/verified/usuario",
-                { lgin },
+            const { data } = await helpdeskApi.get(
+                "/general/verified/usuario",
+                { params: { lgin } },
             );
             if (data.status === "success") {
-                const { usuario } = data;
-                dispatch(onSetUserVerified(usuario));
+                dispatch(onSetUserVerified(data.existe));
             } else {
                 dispatch(onSetUserVerified(null));
             }
@@ -172,7 +186,7 @@ export const useUsersStore = () => {
     const startFindUserResponsable = async (cdgo_usrio) => {
         try {
             const { data } = await helpdeskApi.post(
-                "/gerencia/admin/show-user",
+                "/general/admin/show-user",
                 { cdgo_usrio },
             );
             const { usuario } = data;
@@ -201,18 +215,22 @@ export const useUsersStore = () => {
         }
     };
 
-    const startAddUser = async (user, storageFields = null) => {
+    const startAddUser = async (user) => {
         try {
             if (user.cdgo_usrio) {
                 const { data } = await helpdeskApi.put(
-                    `/gerencia/update/usuario/${user.cdgo_usrio}`,
+                    `/general/update/usuario/${user.cdgo_usrio}`,
                     user,
                 );
                 dispatch(onLoadMessage(data));
                 setTimeout(() => {
                     dispatch(onLoadMessage(undefined));
                 }, 40);
-                if (storageFields) startLoadUsers(storageFields);
+                startLoadUsers({
+                    ...ultimosFiltros,
+                    por_pagina: paginacion.por_pagina,
+                    pagina_actual: paginacion.pagina_actual,
+                });
                 return;
             }
 
@@ -224,18 +242,18 @@ export const useUsersStore = () => {
             setTimeout(() => {
                 dispatch(onLoadMessage(undefined));
             }, 40);
-            if (storageFields) startLoadUsers(storageFields);
+            startLoadUsers({
+                ...ultimosFiltros,
+                por_pagina: paginacion.por_pagina,
+                pagina_actual: paginacion.pagina_actual,
+            });
         } catch (error) {
             //console.log(error);
             ExceptionMessageError(error);
         }
     };
 
-    const startAddCodigoBiometrico = async (
-        cdgo_usrio,
-        asi_id_reloj,
-        storageFields = null,
-    ) => {
+    const startAddCodigoBiometrico = async (cdgo_usrio, asi_id_reloj) => {
         try {
             const { data } = await helpdeskApi.put(
                 `/gerencia/update/codigo-biometrico/${cdgo_usrio}`,
@@ -245,7 +263,11 @@ export const useUsersStore = () => {
             setTimeout(() => {
                 dispatch(onLoadMessage(undefined));
             }, 40);
-            if (storageFields) startLoadUsers(storageFields);
+            startLoadUsers({
+                ...ultimosFiltros,
+                por_pagina: paginacion.por_pagina,
+                pagina_actual: paginacion.pagina_actual,
+            });
         } catch (error) {
             ExceptionMessageError(error);
         }
@@ -303,7 +325,7 @@ export const useUsersStore = () => {
     };
 
     const startLoadUsersWithRolesOrPermissions = async ({
-        pagina = 1,
+        pagina_actual = 1,
         por_pagina = 10,
         search = "",
     } = {}) => {
@@ -313,7 +335,7 @@ export const useUsersStore = () => {
                 "/gerencia/users-with-roles-permissions",
                 {
                     params: {
-                        pagina,
+                        pagina_actual,
                         por_pagina,
                         search,
                     },
@@ -384,6 +406,7 @@ export const useUsersStore = () => {
         errores,
         message,
         paginacion,
+        ultimosFiltros,
 
         startAddUser,
         startLoadUsersGeneral,

@@ -29,7 +29,7 @@ export const useDescuentoStore = () => {
         usuario_id = null,
         anio,
         por_pagina = 15,
-        pagina = 1,
+        pagina_actual = 1,
     }) => {
         try {
             dispatch(onLoading(true));
@@ -39,7 +39,7 @@ export const useDescuentoStore = () => {
                     usuario_id,
                     anio,
                     por_pagina,
-                    pagina,
+                    pagina_actual,
                 },
             );
             const { descuentos, paginacion } = data;

@@ -22,38 +22,13 @@ export const useSoporteStore = () => {
 
     const dispatch = useDispatch();
 
-    /* GERENTE O TECNICO */
-    const startLoadSoportesActuales = async (usuario) => {
+    /* GERENTE O TECNICO — el backend filtra por Auth::user() automáticamente */
+    const startLoadSoportesActuales = async () => {
         try {
-            //dispatch(onLoading());
-            if (usuario.role_id === 2) {
-                const { data } = await helpdeskApi.post(
-                    "/general/soportes-actuales",
-                    { id_usu_tecnico_asig: usuario.cdgo_usrio }
-                );
-                return data;
-            }
-            const { data } = await helpdeskApi.post(
+            const { data } = await helpdeskApi.get(
                 "/general/soportes-actuales",
-                { id_usu_tecnico_asig: null }
             );
             return data;
-
-            //const { soportes } = data;
-            //dispatch(onLoadSoportes(soportes));
-        } catch (error) {
-            //console.log(error);
-            ExceptionMessageError(error);
-        }
-    };
-
-    const startLoadSoporte = async ({ numero_sop }) => {
-        try {
-            const { data } = await helpdeskApi.post("/gerencia/soporte", {
-                numero_sop,
-            });
-            const { soporte } = data;
-            dispatch(onSetActivateSoporte(soporte));
         } catch (error) {
             ExceptionMessageError(error);
         }
@@ -65,13 +40,13 @@ export const useSoporteStore = () => {
             //dispatch(onLoading());
             const { data } = await helpdeskApi.put(
                 `/gerencia/asignar-soporte/${soporte.id_sop}`,
-                soporte
+                soporte,
             );
             dispatch(onLoadMessage(data));
             setTimeout(() => {
                 dispatch(onLoadMessage(undefined));
             }, 40);
-            startLoadSoportesActuales(role_id);
+            startLoadSoportesActuales();
         } catch (error) {
             //console.log(error);
             ExceptionMessageError(error);
@@ -84,7 +59,7 @@ export const useSoporteStore = () => {
             const response = await helpdeskApi.post(
                 "/gerencia/soporte-acta",
                 soporte,
-                { responseType: "blob" }
+                { responseType: "blob" },
             );
             const pdfBlob = new Blob([response.data], {
                 type: "application/pdf",
@@ -99,26 +74,10 @@ export const useSoporteStore = () => {
 
             document.body.removeChild(tempLink); */
             window.URL.revokeObjectURL(url);
+        } catch (error) {
+            ExceptionMessageError(error);
+        } finally {
             dispatch(onLoadPDF(false));
-        } catch (error) {
-            ExceptionMessageError(error);
-        }
-    };
-
-    /* GERENTE  */
-    const startLoadSoportesAnulados = async (fecha_inicio, fecha_fin) => {
-        try {
-            dispatch(onLoading(true));
-            const { data } = await helpdeskApi.post(
-                "/gerencia/soportes-anulados",
-                { fecha_inicio, fecha_fin }
-            );
-            const { soportes } = data;
-            //console.log(soportes)
-            dispatch(onLoadSoportes(soportes));
-        } catch (error) {
-            //console.log(error);
-            ExceptionMessageError(error);
         }
     };
 
@@ -129,7 +88,7 @@ export const useSoporteStore = () => {
                 `/usuario/anular-soporte/${soporte.id_sop}`,
                 {
                     obs_anulado: soporte.obs_anulado,
-                }
+                },
             );
             dispatch(onLoadMessage(data));
             setTimeout(() => {
@@ -145,10 +104,10 @@ export const useSoporteStore = () => {
     /* GERENTE */
     const startCreateSolicitudAdmin = async (solicitud) => {
         try {
-            dispatch(onLoading());
+            dispatch(onLoading(true));
             const { data } = await helpdeskApi.post(
                 "/gerencia/crear-solicitud",
-                solicitud
+                solicitud,
             );
             dispatch(onLoadMessage(data));
             setTimeout(() => {
@@ -157,6 +116,8 @@ export const useSoporteStore = () => {
         } catch (error) {
             //console.log(error);
             ExceptionMessageError(error);
+        } finally {
+            dispatch(onLoading(false));
         }
     };
 
@@ -167,7 +128,7 @@ export const useSoporteStore = () => {
             if (soporte.id_sop) {
                 const { data } = await helpdeskApi.put(
                     `/gerencia/actualizar-soporte/${soporte.id_sop}`,
-                    soporte
+                    soporte,
                 );
                 dispatch(onLoadMessage(data));
                 dispatch(onUpdateSoporte(soporte));
@@ -180,8 +141,8 @@ export const useSoporteStore = () => {
 
             /* GENERAL */
             const { data } = await helpdeskApi.post(
-                "/general/crear-soporte",
-                soporte
+                "/gerencia/crear-soporte",
+                soporte,
             );
             dispatch(onLoadMessage(data));
             setTimeout(() => {
@@ -216,7 +177,7 @@ export const useSoporteStore = () => {
                     numero_sop,
                     id_usu_tecnico_asig,
                     id_estado,
-                }
+                },
             );
             const { soportes } = data;
             dispatch(onLoadSoportes(soportes));
@@ -224,19 +185,25 @@ export const useSoporteStore = () => {
             //console.log(error);
             dispatch(onClearSoportes());
             ExceptionMessageError(error);
+        } finally {
+            dispatch(onLoading(false));
         }
     };
 
-    const startLoadSoportesLite = async() => {
+    const startLoadSoportesLite = async () => {
         try {
             dispatch(onLoading(true));
-            const { data } = await helpdeskApi.get("/gerencia/consulta-soportes");
+            const { data } = await helpdeskApi.get(
+                "/gerencia/consulta-soportes",
+            );
             const { soportes } = data;
             dispatch(onLoadSoportes(soportes));
         } catch (error) {
             ExceptionMessageError(error);
+        } finally {
+            dispatch(onLoading(false));
         }
-    }
+    };
 
     /* const startSearchSoporteForId = async ({ numero_sop, id_usu_tecnico_asig }) => {
         try {
@@ -255,7 +222,7 @@ export const useSoporteStore = () => {
             dispatch(onLoading(true));
             const { data } = await helpdeskApi.post(
                 "/usuario/enviar-solicitud",
-                solicitud
+                solicitud,
             );
             dispatch(onLoadMessage(data));
             setTimeout(() => {
@@ -264,6 +231,8 @@ export const useSoporteStore = () => {
         } catch (error) {
             //console.log(error);
             ExceptionMessageError(error);
+        } finally {
+            dispatch(onLoading(false));
         }
     };
 
@@ -273,7 +242,7 @@ export const useSoporteStore = () => {
             //dispatch(onLoading());
             const { data } = await helpdeskApi.post(
                 "/usuario/soportes-atendidos",
-                { id_usu_recibe }
+                { id_usu_recibe },
             );
             return data;
             /* const { soportes } = data; */
@@ -287,7 +256,7 @@ export const useSoporteStore = () => {
         try {
             const { data } = await helpdeskApi.put(
                 `/usuario/cierre-soporte/${soporte.id_sop}`,
-                values
+                values,
             );
             dispatch(onCalificarSoporte(soporte));
             dispatch(onLoadMessage(data));
@@ -303,12 +272,12 @@ export const useSoporteStore = () => {
     const startDiagnosticarSoporte = async (
         soporte,
         option,
-        storageFields = {}
+        storageFields = {},
     ) => {
         try {
             const { data } = await helpdeskApi.put(
                 `/general/diagnosticar-soporte/${soporte.id_sop}`,
-                soporte
+                soporte,
             );
             dispatch(onLoadMessage(data));
             setTimeout(() => {
@@ -327,19 +296,27 @@ export const useSoporteStore = () => {
     const startLoadActividadesSoporte = async (
         fecha_inicio,
         fecha_fin,
-        cdgo_usrio
+        cdgo_usrio,
     ) => {
         try {
             dispatch(onLoading(true));
-            const { data } = await helpdeskApi.post(
+            const { data } = await helpdeskApi.get(
                 "/general/reporte-actividades",
-                { fecha_inicio, fecha_fin, cdgo_usrio }
+                {
+                    params: {
+                        fecha_inicio,
+                        fecha_fin,
+                        cdgo_usrio,
+                    },
+                },
             );
             const { soportes } = data;
             dispatch(onLoadSoportes(soportes));
         } catch (error) {
             //console.log(error);
             ExceptionMessageError(error);
+        } finally {
+            dispatch(onLoading(false));
         }
     };
 
@@ -353,7 +330,7 @@ export const useSoporteStore = () => {
                 {
                     id_sop,
                 },
-                { responseType: "blob" }
+                { responseType: "blob" },
             );
 
             const pdfBlob = new Blob([response.data], {
@@ -368,17 +345,18 @@ export const useSoporteStore = () => {
 
             document.body.removeChild(tempLink); */
             window.URL.revokeObjectURL(url);
-            dispatch(onLoadPDF(false));
         } catch (error) {
             //console.log(error);
             ExceptionMessageError(error);
+        } finally {
+            dispatch(onLoadPDF(false));
         }
     };
 
     const startExportActividadesSoportes = async (
         fecha_inicio,
         fecha_fin,
-        cdgo_usrio
+        cdgo_usrio,
     ) => {
         try {
             dispatch(onLoadPDF(true));
@@ -389,7 +367,7 @@ export const useSoporteStore = () => {
                     fecha_fin,
                     cdgo_usrio,
                 },
-                { responseType: "blob" }
+                { responseType: "blob" },
             );
             const pdfBlob = new Blob([response.data], {
                 type: "application/pdf",
@@ -403,10 +381,11 @@ export const useSoporteStore = () => {
 
             document.body.removeChild(tempLink); */
             window.URL.revokeObjectURL(url);
-            dispatch(onLoadPDF(false));
         } catch (error) {
             //console.log(error);
             ExceptionMessageError(error);
+        } finally {
+            dispatch(onLoadPDF(false));
         }
     };
 
@@ -416,7 +395,7 @@ export const useSoporteStore = () => {
             dispatch(onLoading(true));
             const { data } = await helpdeskApi.post(
                 "/usuario/soportes-actuales",
-                { cdgo_usrio }
+                { cdgo_usrio },
             );
             const { soportes } = data;
             dispatch(onLoadSoportes(soportes));
@@ -424,6 +403,8 @@ export const useSoporteStore = () => {
         } catch (error) {
             //console.log(error);
             ExceptionMessageError(error);
+        } finally {
+            dispatch(onLoading(false));
         }
     };
 
@@ -432,13 +413,15 @@ export const useSoporteStore = () => {
             dispatch(onLoading(true));
             const { data } = await helpdeskApi.post(
                 "/usuario/soportes-anuales",
-                { cdgo_usrio }
+                { cdgo_usrio },
             );
             const { soportes } = data;
             dispatch(onLoadSoportes(soportes));
         } catch (error) {
             //console.log(error);
             ExceptionMessageError(error);
+        } finally {
+            dispatch(onLoading(false));
         }
     };
 
@@ -446,13 +429,15 @@ export const useSoporteStore = () => {
         try {
             dispatch(onLoading(true));
             const { data } = await helpdeskApi.get(
-                "/gerencia/soportes-sin-calificar"
+                "/gerencia/soportes-sin-calificar",
             );
             const { soportes } = data;
             dispatch(onLoadSoportes(soportes));
         } catch (error) {
             //console.log(error);
             ExceptionMessageError(error);
+        } finally {
+            dispatch(onLoading(false));
         }
     };
 
@@ -489,10 +474,8 @@ export const useSoporteStore = () => {
         errores,
 
         startLoadSoportesActuales,
-        startLoadSoporte,
         startAsignarSoporte,
         startExportActaPDF,
-        startLoadSoportesAnulados,
         startAnularSoporte,
         startCreateSolicitudAdmin,
         startCreateSoporte,

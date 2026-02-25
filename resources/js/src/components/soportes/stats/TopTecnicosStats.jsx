@@ -11,6 +11,7 @@ import {
 } from "@mantine/core";
 import { IconTrophyFilled } from "@tabler/icons-react";
 import { useTecnicoStore } from "../../../hooks";
+import { Roles } from "../../../helpers/dictionary";
 
 export const TopTecnicosStats = () => {
     const usuario = JSON.parse(localStorage.getItem("service_user"));
@@ -18,8 +19,7 @@ export const TopTecnicosStats = () => {
         useTecnicoStore();
     const [openedPopover, setOpenedPopover] = useState(null);
 
-    // Solo mostrar si es TIC_GERENTE (role_id = 1)
-    if (usuario.role_id !== 1) {
+    if (!usuario.roles?.includes(Roles.GERENTE)) {
         return null;
     }
 

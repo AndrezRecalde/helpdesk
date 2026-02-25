@@ -58,27 +58,27 @@ export const ModalUser = () => {
         validate: {
             usu_ci: hasLength(
                 { min: 10, max: 10 },
-                "Por favor ingrese la cédula 10 dígitos"
+                "Por favor ingrese la cédula 10 dígitos",
             ),
             titulo: hasLength(
                 { min: 2, max: 5 },
-                "Por favor ingrese titulo del usuario"
+                "Por favor ingrese titulo del usuario",
             ),
             /*  nmbre_usrio: isNotEmpty(
                 "Por favor ingrese los nombres del usuario"
             ), */
             usu_ape_pat: isNotEmpty(
-                "Por favor ingrese los nombres del usuario"
+                "Por favor ingrese los nombres del usuario",
             ),
             usu_ape_mat: isNotEmpty(
-                "Por favor ingrese los nombres del usuario"
+                "Por favor ingrese los nombres del usuario",
             ),
             usu_nombres: isNotEmpty(
-                "Por favor ingrese los nombres del usuario"
+                "Por favor ingrese los nombres del usuario",
             ),
             //email: isEmail("Dígite un email valido"),
             sexo: isNotEmpty("Por favor seleccione una opción"),
-            lgin: isNotEmpty("Por favor ingrese el usuario login"),
+            //lgin: isNotEmpty("Por favor ingrese el usuario login"),
             actvo: isNotEmpty("Por favor seleccione el estado"),
 
             usu_id_empresa: isNotEmpty("Por favor seleccione una opción"),
@@ -87,7 +87,7 @@ export const ModalUser = () => {
             crgo_id: isNotEmpty("Por favor seleccione una opción"),
             id_tipo_usuario: isNotEmpty("Por favor seleccione una opción"),
             usu_ult_tipo_contrato: isNotEmpty(
-                "Por favor seleccione una opción"
+                "Por favor seleccione una opción",
             ),
             finaliza_contrato: isNotEmpty("Por favor seleccione una opción"),
             tecnico: isNotEmpty("Por favor seleccione una opción"),
@@ -101,8 +101,14 @@ export const ModalUser = () => {
             sexo: Number(values.sexo) || null,
             //actvo: Number(values.actvo) || null,
             usu_id_empresa: Number(values.usu_id_empresa) || null,
-            cdgo_direccion: values.cdgo_direccion === "" ? null : Number(values.cdgo_direccion),
-            cdgo_dprtmnto: values.cdgo_dprtmnto === "" ? null : Number(values.cdgo_dprtmnto),
+            cdgo_direccion:
+                values.cdgo_direccion === ""
+                    ? null
+                    : Number(values.cdgo_direccion),
+            cdgo_dprtmnto:
+                values.cdgo_dprtmnto === ""
+                    ? null
+                    : Number(values.cdgo_dprtmnto),
             crgo_id: Number(values.crgo_id) || null,
             id_tipo_usuario: Number(values.id_tipo_usuario) || null,
             usu_ult_tipo_contrato: Number(values.usu_ult_tipo_contrato) || null,
@@ -116,7 +122,11 @@ export const ModalUser = () => {
             interno: Number(values.interno),
             usu_estado: Number(values.usu_estado) || null,
             usu_ing: Number(values.usu_ing) || null,
-            cdgo_lrgo: obtenerIniciales(values.usu_ape_pat, values.usu_ape_mat, values.usu_nombres)
+            cdgo_lrgo: obtenerIniciales(
+                values.usu_ape_pat,
+                values.usu_ape_mat,
+                values.usu_nombres,
+            ),
             /* nombre_formateado: formatName(values.nmbre_usrio),
             usu_alias: formatName(values.nmbre_usrio), */
         }),
@@ -137,9 +147,9 @@ export const ModalUser = () => {
     function obtenerIniciales(apellido_paterno, apellido_materno, nombres) {
         // Obtiene las iniciales de cada nombre en el string 'nombres'
         const inicialesNombres = nombres
-            .split(' ')                    // Divide los nombres
-            .map(nombre => nombre[0].toUpperCase())  // Toma la primera letra de cada nombre y la convierte en mayúscula
-            .join('');                     // Une las iniciales de los nombres
+            .split(" ") // Divide los nombres
+            .map((nombre) => nombre[0].toUpperCase()) // Toma la primera letra de cada nombre y la convierte en mayúscula
+            .join(""); // Une las iniciales de los nombres
 
         // Combina las iniciales del apellido paterno, apellido materno y nombres
         return `${inicialesNombres}${apellido_paterno[0].toUpperCase()}${apellido_materno[0].toUpperCase()}`;

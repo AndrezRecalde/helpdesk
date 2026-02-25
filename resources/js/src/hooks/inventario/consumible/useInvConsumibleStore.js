@@ -9,6 +9,8 @@ import {
     onLoading,
     onLoadingHistorial,
     onLoadInvConsumibles,
+    onLoadPaginacion,
+    onSetUltimosFiltros,
     onLoadInvHistorial,
     onLoadMessage,
     onSetActivateInvConsumible,
@@ -18,9 +20,11 @@ import helpdeskApi from "../../../api/helpdeskApi";
 export const useInvConsumibleStore = () => {
     const {
         isLoading,
+        isLoadingHistorial,
         isExport,
         consumibles,
-        historial,
+        paginacion,
+        ultimosFiltros,
         activateConsumible,
         message,
         errores,
@@ -30,20 +34,32 @@ export const useInvConsumibleStore = () => {
 
     const dispatch = useDispatch();
 
-    const startLoadInvConsumibles = async ({ categoria_id = null }) => {
+    const startLoadInvConsumibles = async ({
+        categoria_id,
+        pagina_actual = 1,
+        por_pagina = 15,
+    }) => {
         try {
             dispatch(onLoading(true));
+            dispatch(onSetUltimosFiltros({ categoria_id }));
             const { data } = await helpdeskApi.post(
                 "/gerencia/inventario/consumibles",
                 {
                     categoria_id,
+                    pagina_actual,
+                    por_pagina,
                 },
             );
-            const { consumibles } = data;
+            const { consumibles, paginacion } = data;
             dispatch(onLoadInvConsumibles(consumibles));
+            if (paginacion) {
+                dispatch(onLoadPaginacion(paginacion));
+            }
         } catch (error) {
             //console.log(error);
             ExceptionMessageError(error);
+        } finally {
+            dispatch(onLoading(false));
         }
     };
 
@@ -71,7 +87,7 @@ export const useInvConsumibleStore = () => {
                     `/gerencia/inventario/update/consumible/${consumible.id}`,
                     consumible,
                 );
-                startLoadInvConsumibles({});
+                startLoadInvConsumibles(ultimosFiltros);
                 dispatch(onLoadMessage(data));
                 setTimeout(() => {
                     dispatch(onLoadMessage(undefined));
@@ -82,7 +98,7 @@ export const useInvConsumibleStore = () => {
                 "/gerencia/inventario/store/consumible",
                 consumible,
             );
-            startLoadInvConsumibles({});
+            startLoadInvConsumibles(ultimosFiltros);
             dispatch(onLoadMessage(data));
             setTimeout(() => {
                 dispatch(onLoadMessage(undefined));
@@ -99,6 +115,7 @@ export const useInvConsumibleStore = () => {
                 `/gerencia/inventario/consumible/destroy/${consumible.id}`,
             );
             dispatch(onDeleteInvConsumible());
+            startLoadInvConsumibles(ultimosFiltros);
             dispatch(onLoadMessage(data));
             setTimeout(() => {
                 dispatch(onLoadMessage(undefined));
@@ -115,7 +132,7 @@ export const useInvConsumibleStore = () => {
                 `/gerencia/inventario/consumible/incrementar/${consumible.id}`,
                 consumible,
             );
-            startLoadInvConsumibles({});
+            startLoadInvConsumibles(ultimosFiltros);
             dispatch(onLoadMessage(data));
             setTimeout(() => {
                 dispatch(onLoadMessage(undefined));
@@ -161,9 +178,11 @@ export const useInvConsumibleStore = () => {
 
     return {
         isLoading,
+        isLoadingHistorial,
         isExport,
         consumibles,
-        historial,
+        paginacion,
+        ultimosFiltros,
         activateConsumible,
         message,
         errores,

@@ -2,7 +2,8 @@
 
 namespace App\Enums;
 
-enum MsgStatus:string {
+enum MsgStatus: string
+{
     case Created = 'Creado con éxito';
     case Updated = 'Actualizado con éxito';
     case Deleted = 'Eliminado con éxito';
@@ -54,11 +55,12 @@ enum MsgStatus:string {
     case PermisoNotFound = 'No se encontraron permisos';
     case FichaIncidentePermiso = 'SOLICITUD DE CREACION DE PERMISO';
     case FichaSolucionPermiso = 'SE REALIZO LA CREACION DEL PERMISO SOLICITADO';
-    case PermisoObservacionAnulado  = 'SE ANULA PERMISO A PETICION DEL USUARIO DESDE LA RECEPCION DE TTHH';
+    case PermisoObservacionAnulado = 'SE ANULA PERMISO A PETICION DEL USUARIO DESDE LA RECEPCIÓN DE TTHH';
 
     /* Periodos : Vacaciones */
     case InfoPeriodos = 'Todos los periodos ya existían para este usuario.';
     case PeriodosCreated = 'Periodos creados correctamente.';
     case FichaIncidenciaVacacion = 'SOLICITUD DE CREACION DE FICHA VACACIONAL';
     case FichaSolucionVacacion = 'SE REALIZO LA CREACION DE LA FICHA VACACIONAL CON ÉXITO';
+    case FichaAnuladaVacacion = 'SE ANULA LA FICHA VACACIONAL DESDE LA RECEPCIÓN DE TTHH';
 }

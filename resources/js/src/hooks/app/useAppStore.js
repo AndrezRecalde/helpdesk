@@ -27,6 +27,8 @@ export const useAppStore = () => {
         } catch (error) {
             //console.log(error);
             ExceptionMessageError(error);
+        } finally {
+            dispatch(onLoading(false));
         }
     };
 
@@ -34,7 +36,7 @@ export const useAppStore = () => {
         try {
             const { data } = await helpdeskApi.put(
                 `/gerencia/app/imagenes/update/${application.id}`,
-                application
+                application,
             );
             dispatch(onLoadMessage(data));
             setTimeout(() => {
@@ -51,7 +53,7 @@ export const useAppStore = () => {
 
     const startClearImagenes = () => {
         dispatch(onClearImagenes());
-    }
+    };
 
     return {
         isLoading,

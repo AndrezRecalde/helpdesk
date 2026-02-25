@@ -297,7 +297,6 @@ const helpdeskGerenciaRoutes = generateRoutes(
         { path: "cerrar-soportes", Component: SoporteCalificacionPage },
         { path: "indicadores-soportes", Component: IndicadorReportPage },
         { path: "dashboard", Component: DashGerenciaPage },
-        { path: "usuarios", Component: AdminUsersPage },
         { path: "direcciones", Component: AdminDireccionesPage },
         { path: "tecnicos", Component: AdminTecnicosPage },
         { path: "areas-tic", Component: AdminAreasPage },
@@ -314,17 +313,18 @@ const helpdeskGerenciaRoutes = generateRoutes(
             Component: SolicitudesConsumiblesPage,
         },
     ],
-    [Roles.TIC_GERENTE],
+    [Roles.GERENTE],
 );
 
 const helpdeskTecnicoRoutes = generateRoutes(
     "helpdesk",
     [
+        { path: "usuarios", Component: AdminUsersPage },
         { path: "solicitudes-actuales", Component: SolicitudesActualesPage },
         { path: "soportes", Component: SoportesPage },
         { path: "reporte-soportes", Component: ReporteSoportes },
     ],
-    [Roles.TIC_GERENTE, Roles.TIC_TECNICO],
+    [Roles.GERENTE, Roles.TIC],
 );
 
 const permisosAdminRoutes = generateRoutes(
@@ -334,7 +334,7 @@ const permisosAdminRoutes = generateRoutes(
         { path: "consolidado-permisos", Component: ConsolidadoPermisosPage },
         { path: "autorizar-permisos", Component: AutorizarPermisosPage },
     ],
-    [Roles.TIC_GERENTE, Roles.NOM_ASISTENCIA],
+    [Roles.GERENTE, Roles.TTHH],
 );
 
 const peerRoutes = generateRoutes(
@@ -376,7 +376,7 @@ const peerRoutes = generateRoutes(
 const denunciasAdminRoutes = generateRoutes(
     "denuncias/gerencia",
     [{ path: "gestionar-denuncias", Component: DenunciasAdminPage }],
-    [Roles.NOM_DENUNCIAS],
+    [Roles.TTHH],
 );
 
 export const routes = {

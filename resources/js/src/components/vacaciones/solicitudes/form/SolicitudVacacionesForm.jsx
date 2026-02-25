@@ -15,29 +15,29 @@ export const SolicitudVacacionesForm = () => {
     const { startSolicitarVacaciones } = useVacacionesStore();
     const form = useForm({
         initialValues: {
-            cdgo_usrio: null,
+            cdgo_usrio: "",
             fecha_solicitud: new Date(),
             fecha_inicio: new Date(),
-            fecha_fin: null,
-            fecha_retorno: null,
+            fecha_fin: "",
+            fecha_retorno: "",
             dias_solicitados: 0,
             motivo_id: "2",
-            reemplazo_id: null,
-            direccion_id: null,
+            reemplazo_id: "",
+            direccion_id: "",
             tiene_jefe: false,
             tiene_director: false,
-            jefe_id: null,
-            director_id: null,
+            jefe_id: "",
+            director_id: "",
         },
 
         validate: {
             cdgo_usrio: isNotEmpty(
-                "Por favor seleccione el usuario solicitante"
+                "Por favor seleccione el usuario solicitante",
             ),
             fecha_inicio: isNotEmpty("Por favor seleccione la fecha inicio"),
             fecha_fin: isNotEmpty("Por favor seleccione la fecha final"),
             fecha_retorno: isNotEmpty(
-                "Por favor seleccione la fecha de retorno"
+                "Por favor seleccione la fecha de retorno",
             ),
             motivo_id: (value) =>
                 value.length > 0 ? null : "Seleccione al menos un motivo",
@@ -59,7 +59,8 @@ export const SolicitudVacacionesForm = () => {
                 : null,
             motivo_id: Number(values.motivo_id) || null, // Convertir a número
             reemplazo_id: Number(values.reemplazo_id) || null,
-            direccion_id: Number(values.direccion_id) || null,
+            direccion_id:
+                values.direccion_id === "" ? null : Number(values.direccion_id),
             jefe_id: Number(values.jefe_id) || null,
             director_id: Number(values.director_id) || null,
         }),
@@ -76,9 +77,9 @@ export const SolicitudVacacionesForm = () => {
             cancelButtonColor: "#F8285A",
             confirmButtonText: "Si, Confirmar",
             cancelButtonText: "No, cancelarlo",
-        }).then((result) => {
+        }).then(async (result) => {
             if (result.isConfirmed) {
-                startSolicitarVacaciones(form.getTransformedValues());
+                await startSolicitarVacaciones(form.getTransformedValues());
                 form.reset();
                 //console.log(message.idper_permisos)
             }

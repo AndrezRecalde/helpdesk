@@ -21,8 +21,14 @@ use Illuminate\Support\Facades\Log;
 
 class SoporteController extends Controller
 {
-    function getSoportesActuales(Request $request): JsonResponse
+    function getSoportesActuales(): JsonResponse
     {
+        $authUser = Auth::user();
+
+        // GERENTE: ve todos los soportes (sin filtro de técnico)
+        // TIC:     ve solo los soportes asignados a sí mismo
+        $tecnicoId = $authUser->hasRole('GERENTE') ? null : $authUser->cdgo_usrio;
+
         $soportes = Soporte::from('sop_soporte as ss')
             ->selectRaw('ss.id_sop, ss.anio, ss.numero_sop, ss.numero_escrito,
                             ss.id_direccion, d.nmbre_dprtmnto as direccion,
@@ -40,7 +46,7 @@ class SoporteController extends Controller
             ->leftJoin('usrios_sstma as us', 'us.cdgo_usrio', 'ss.id_usu_tecnico_asig')
             ->where('ss.fecha_ini', "LIKE", "%" . Carbon::now()->format('Y-m-d') . "%")
             ->where('ss.id_estado', '<>', 2)
-            ->tecnico($request->id_usu_tecnico_asig)
+            ->tecnico($tecnicoId)
             ->orderBy('ss.numero_sop', 'DESC')
             ->get();
 

@@ -41,9 +41,9 @@ const PermisosPage = () => {
     // Verificar si el usuario puede editar
     const canEdit = useMemo(
         () =>
-            usuario.role === Roles.TIC_GERENTE ||
-            usuario.role === Roles.NOM_ASISTENCIA,
-        [usuario.role],
+            usuario.roles?.includes(Roles.GERENTE) ||
+            usuario.permissions?.includes("tthh.permisos.gestionar"),
+        [usuario.roles, usuario.permissions],
     );
 
     const form = useForm({

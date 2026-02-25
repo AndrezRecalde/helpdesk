@@ -1,7 +1,6 @@
 import { Container, Divider, Group } from "@mantine/core";
 import {
     InvConsumibleModal,
-    ConsumibleStockModal,
     InvConsumibleTable,
     TitlePage,
     BtnSection,
@@ -97,7 +96,6 @@ const InvConsumiblePage = () => {
             <InvConsumibleTable />
 
             <InvConsumibleModal />
-            <ConsumibleStockModal />
         </Container>
     );
 };

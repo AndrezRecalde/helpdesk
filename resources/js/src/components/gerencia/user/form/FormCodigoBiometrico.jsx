@@ -1,14 +1,14 @@
 import { useEffect } from "react";
 import { Box, Divider, Stack, Table, TextInput } from "@mantine/core";
-import { useStorageField, useUiUser, useUsersStore } from "../../../../hooks";
+import { useUiUser, useUsersStore } from "../../../../hooks";
 import { AlertSection, BtnSubmit } from "../../../../components";
 import { IconAlertCircle } from "@tabler/icons-react";
 import classes from "../../../../assets/styles/modules/layout/input/LabelsInputs.module.css";
 
 export const FormCodigoBiometrico = ({ form }) => {
-    const { activateUser, setActivateUser, startAddCodigoBiometrico } = useUsersStore();
+    const { activateUser, setActivateUser, startAddCodigoBiometrico } =
+        useUsersStore();
     const { modalActionCodigoBiometrico } = useUiUser();
-    const { storageUserFields } = useStorageField();
 
     useEffect(() => {
         if (activateUser !== null) {
@@ -24,7 +24,6 @@ export const FormCodigoBiometrico = ({ form }) => {
         startAddCodigoBiometrico(
             activateUser.cdgo_usrio,
             form.values.asi_id_reloj,
-            storageUserFields
         );
         setActivateUser(null);
         form.reset();

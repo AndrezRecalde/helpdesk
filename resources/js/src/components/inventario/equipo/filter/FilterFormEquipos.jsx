@@ -8,7 +8,6 @@ import {
     useInvCategoriaStore,
     useInvEquipoStore,
     useInvEstadoStore,
-    useStorageField,
     useUsersStore,
 } from "../../../../hooks";
 import classes from "../../../../assets/styles/modules/layout/input/LabelsInputs.module.css";
@@ -22,7 +21,6 @@ export const FilterFormEquipos = () => {
         useInvCategoriaStore();
     const { startLoadInvEstados, invEstados, startClearInvEstados } =
         useInvEstadoStore();
-    const { setStorageFields } = useStorageField();
 
     const [resultados, setResultados] = useState([]);
 
@@ -126,9 +124,8 @@ export const FilterFormEquipos = () => {
         e.preventDefault();
         //console.log(form.getTransformedValues());
         const values = { ...form.getTransformedValues() };
-        console.log(values);
+        //console.log(values);
         startLoadInvEquipos(values);
-        setStorageFields(values);
         //form.reset();
     };
 

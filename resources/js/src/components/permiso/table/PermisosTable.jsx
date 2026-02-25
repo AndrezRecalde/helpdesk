@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useMantineReactTable } from "mantine-react-table";
 import { MRT_Localization_ES } from "mantine-react-table/locales/es/index.cjs";
 import {
@@ -14,9 +14,57 @@ import { IconBan, IconPrinter } from "@tabler/icons-react";
 dayjs.extend(duration); */
 
 export const PermisosTable = () => {
-    const { isLoading, permisos, startExportPermiso, setActivatePermiso } =
-        usePermisoStore();
+    const {
+        isLoading,
+        permisos,
+        paginacion,
+        startLoadPermisos,
+        startExportPermiso,
+        setActivatePermiso,
+    } = usePermisoStore();
     const { modalActionAnularPermiso } = useUiPermiso();
+
+    const [paginationServer, setPaginationServer] = useState({
+        pageIndex: 0,
+        pageSize: 15,
+    });
+
+    // Sincronizar el estado del paginador con la respuesta del backend
+    useEffect(() => {
+        if (paginacion) {
+            setPaginationServer((prev) => {
+                const newPageIndex = Number(paginacion.pagina_actual || 1) - 1;
+                const newPageSize = Number(paginacion.por_pagina || 15);
+
+                if (
+                    prev.pageIndex !== newPageIndex ||
+                    prev.pageSize !== newPageSize
+                ) {
+                    return { pageIndex: newPageIndex, pageSize: newPageSize };
+                }
+                return prev;
+            });
+        }
+    }, [paginacion]);
+
+    // Cargar datos cuando cambia la paginación (solo si hay filtros aplicados)
+    useEffect(() => {
+        // Evitar petición duplicada si el estado de paginación coincide con el de Redux
+        const isSyncedWithRedux =
+            paginacion &&
+            paginationServer.pageIndex + 1 ===
+                Number(paginacion.pagina_actual || 1) &&
+            paginationServer.pageSize === Number(paginacion.por_pagina || 15);
+
+        // Solo cargar si hay filtros válidos aplicados (anio no es null)
+        if (!isSyncedWithRedux) {
+            startLoadPermisos({
+                anio: new Date(),
+                por_pagina: paginationServer.pageSize,
+                pagina_actual: paginationServer.pageIndex + 1,
+            });
+        }
+    }, [paginationServer.pageIndex, paginationServer.pageSize]);
     const columns = useMemo(
         () => [
             {
@@ -105,7 +153,14 @@ export const PermisosTable = () => {
     const table = useMantineReactTable({
         columns,
         data: permisos, //must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
-        state: { showProgressBars: isLoading },
+        state: {
+            showProgressBars: isLoading,
+            pagination: paginationServer,
+        },
+        manualPagination: true,
+        onPaginationChange: setPaginationServer,
+        rowCount: paginacion?.total,
+        pageCount: paginacion?.ultima_pagina,
         enableFacetedValues: true,
         enableRowActions: true,
         localization: MRT_Localization_ES,
@@ -120,14 +175,15 @@ export const PermisosTable = () => {
                         disabled:
                             row.original.id_estado === 8 ||
                             row.original.id_estado === 7 ||
-                            row.original.id_estado === 6,
+                            row.original.id_estado === 6 ||
+                            row.original.id_estado === 2,
                     },
                     {
                         icon: IconPrinter,
                         label: "Imprimir",
                         onClick: handleExport,
                         disabled:
-                            row.original.id_estado === 8 ||
+                            //row.original.id_estado === 8 ||
                             row.original.id_estado === 7 ||
                             row.original.id_estado === 6,
                     },

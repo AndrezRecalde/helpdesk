@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-// use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -21,6 +21,15 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        /**
+         * Super-admin: El rol GERENTE bypasea TODOS los permission checks.
+         * Retornar null (en lugar de false) permite que los demás usuarios
+         * sean evaluados normalmente por sus propios permisos.
+         *
+         * @see https://spatie.be/docs/laravel-permission/v6/basic-usage/super-admin
+         */
+        Gate::before(function ($user, $ability) {
+            return $user->hasRole('GERENTE') ? true : null;
+        });
     }
 }

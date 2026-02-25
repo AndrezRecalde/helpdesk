@@ -6,6 +6,22 @@ export const permisoSlice = createSlice({
         isLoading: false,
         isExport: false,
         permisos: [],
+        paginacion: {
+            total: 0,
+            por_pagina: 0,
+            pagina_actual: 0,
+            ultima_pagina: 0,
+            desde: 0,
+            hasta: 0,
+        },
+        ultimosFiltros: {
+            anio: new Date(),
+            fecha_inicio: null,
+            fecha_fin: null,
+            id_direccion_pide: null,
+            id_usu_pide: null,
+            idper_permisos: null,
+        },
         activatePermiso: null,
         activateStatsUsuarioPermiso: null,
         message: undefined,
@@ -20,6 +36,12 @@ export const permisoSlice = createSlice({
         },
         onLoadPermisos: (state, { payload }) => {
             state.permisos = payload;
+        },
+        onLoadPaginacion: (state, { payload }) => {
+            state.paginacion = payload;
+        },
+        onSetUltimosFiltros: (state, { payload }) => {
+            state.ultimosFiltros = payload;
         },
         onSetActivatePermiso: (state, { payload }) => {
             state.activatePermiso = payload;
@@ -41,6 +63,22 @@ export const permisoSlice = createSlice({
             state.isLoading = false;
             state.isExport = false;
             state.permisos = [];
+            state.paginacion = {
+                total: 0,
+                por_pagina: 0,
+                pagina_actual: 0,
+                ultima_pagina: 0,
+                desde: 0,
+                hasta: 0,
+            };
+            state.ultimosFiltros = {
+                anio: new Date(),
+                fecha_inicio: null,
+                fecha_fin: null,
+                id_direccion_pide: null,
+                id_usu_pide: null,
+                idper_permisos: null,
+            };
             state.activatePermiso = null;
             state.activateStatsUsuarioPermiso = null;
             state.message = undefined;
@@ -60,6 +98,8 @@ export const {
     onLoading,
     onExport,
     onLoadPermisos,
+    onLoadPaginacion,
+    onSetUltimosFiltros,
     onSetActivatePermiso,
     onSetActivateStatsUsuarioPermiso,
     onAnularPermiso,

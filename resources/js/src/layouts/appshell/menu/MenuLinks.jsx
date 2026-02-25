@@ -10,9 +10,14 @@ import { Link } from "react-router-dom";
 
 export const MenuList = ({ usuario, menuData }) => {
     return Object.entries(menuData).map(([category, items]) => {
-        // Filtramos los items permitidos según el role del usuario
-        const allowedItems = items.filter((item) =>
-            item.roles.includes(usuario.role)
+        // Ítem visible si el usuario tiene alguno de los roles requeridos
+        // O alguno de los permisos requeridos (lógica OR entre ambos arrays)
+        const userRoles = usuario.roles ?? [];
+        const userPerms = usuario.permissions ?? [];
+        const allowedItems = items.filter(
+            (item) =>
+                item.roles.some((r) => userRoles.includes(r)) ||
+                (item.permissions ?? []).some((p) => userPerms.includes(p)),
         );
 
         // Si no hay items permitidos, no renderizamos nada para esta categoría
@@ -24,9 +29,7 @@ export const MenuList = ({ usuario, menuData }) => {
                 {allowedItems.map((item) => (
                     <Menu.Item
                         key={item.title}
-                        leftSection={
-                            <item.icon size={18} />
-                        }
+                        leftSection={<item.icon size={18} />}
                         component={Link}
                         to={item.link}
                     >

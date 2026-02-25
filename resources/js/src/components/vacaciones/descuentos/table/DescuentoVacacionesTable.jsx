@@ -19,15 +19,40 @@ export const DescuentoVacacionesTable = () => {
         pageSize: 15,
     });
 
+    // Sincronizar el estado del paginador con la respuesta del backend
+    useEffect(() => {
+        if (paginacion) {
+            setPagination((prev) => {
+                const newPageIndex = Number(paginacion.pagina_actual || 1) - 1;
+                const newPageSize = Number(paginacion.por_pagina || 15);
+
+                if (
+                    prev.pageIndex !== newPageIndex ||
+                    prev.pageSize !== newPageSize
+                ) {
+                    return { pageIndex: newPageIndex, pageSize: newPageSize };
+                }
+                return prev;
+            });
+        }
+    }, [paginacion]);
+
     // Cargar datos cuando cambia la paginación (solo si hay filtros aplicados)
     useEffect(() => {
+        // Evitar petición duplicada si el estado de paginación coincide con el de Redux
+        const isSyncedWithRedux =
+            paginacion &&
+            pagination.pageIndex + 1 ===
+                Number(paginacion.pagina_actual || 1) &&
+            pagination.pageSize === Number(paginacion.por_pagina || 15);
+
         // Solo cargar si hay filtros válidos aplicados (anio no es null)
-        if (ultimosFiltros.anio !== null) {
+        if (!isSyncedWithRedux && ultimosFiltros?.anio !== null) {
             startLoadDescuentos({
                 usuario_id: usuario.cdgo_usrio,
                 anio: ultimosFiltros.anio,
                 por_pagina: pagination.pageSize,
-                pagina: pagination.pageIndex + 1, // Mantine usa índice 0, Laravel usa página 1
+                pagina_actual: pagination.pageIndex + 1, // Mantine usa índice 0, Laravel usa página 1
             });
         }
     }, [pagination.pageIndex, pagination.pageSize]);
@@ -86,8 +111,8 @@ export const DescuentoVacacionesTable = () => {
         },
         localization: MRT_Localization_ES,
         manualPagination: true,
-        rowCount: paginacion.total,
-        pageCount: paginacion.ultima_pagina,
+        rowCount: paginacion?.total,
+        pageCount: paginacion?.ultima_pagina,
         onPaginationChange: setPagination,
         enableFacetedValues: false,
         enableColumnDragging: false,

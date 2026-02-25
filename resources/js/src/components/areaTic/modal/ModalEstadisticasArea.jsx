@@ -11,7 +11,7 @@ import {
 } from "@mantine/core";
 import { useUiAreaTic, useAreaTicStore } from "../../../hooks";
 import { useTecnicoAreaStore } from "../../../hooks/tecnicoArea/useTecnicoAreaStore";
-import { IconAlertCircle, IconChartBar } from "@tabler/icons-react";
+import { IconAlertCircle } from "@tabler/icons-react";
 
 export const ModalEstadisticasArea = () => {
     const { modalEstadisticasArea, modalCloseEstadisticasArea } =

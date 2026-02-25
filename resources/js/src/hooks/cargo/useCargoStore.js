@@ -1,6 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useErrorException } from "../../hooks";
-import { onClearCargos, onLoadCargos, onLoadErrores, onLoading } from "../../store/cargo/cargoSlice";
+import {
+    onClearCargos,
+    onLoadCargos,
+    onLoadErrores,
+    onLoading,
+} from "../../store/cargo/cargoSlice";
 import helpdeskApi from "../../api/helpdeskApi";
 
 export const useCargoStore = () => {
@@ -11,18 +16,18 @@ export const useCargoStore = () => {
     const startLoadCargos = async () => {
         try {
             dispatch(onLoading());
-            const { data } = await helpdeskApi.get("/gerencia/cargos");
+            const { data } = await helpdeskApi.get("/cargos");
             const { cargos } = data;
             dispatch(onLoadCargos(cargos));
         } catch (error) {
             //console.log(error);
             ExceptionMessageError(error);
         }
-    }
+    };
 
     const clearCargos = () => {
         dispatch(onClearCargos());
-    }
+    };
 
     return {
         isLoading,
@@ -30,6 +35,6 @@ export const useCargoStore = () => {
         errores,
 
         startLoadCargos,
-        clearCargos
+        clearCargos,
     };
 };

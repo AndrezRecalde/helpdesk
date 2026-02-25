@@ -12,9 +12,8 @@ import {
 import helpdeskApi from "../../api/helpdeskApi";
 
 export const useDirectorStore = () => {
-    const { isLoading, directores, activateDirector, message, errores } = useSelector(
-        (state) => state.director
-    );
+    const { isLoading, directores, activateDirector, message, errores } =
+        useSelector((state) => state.director);
     const { ExceptionMessageError } = useErrorException(onLoadErrores);
     const dispatch = useDispatch();
 
@@ -37,9 +36,10 @@ export const useDirectorStore = () => {
         try {
             dispatch(onLoading());
             const { data } = await helpdeskApi.put(
-                `/gerencia/update/director/departamento/${director.cdgo_dprtmnto}`, director
+                `/gerencia/update/director/departamento/${director.cdgo_dprtmnto}`,
+                director,
             );
-            const { directores } = data
+            const { directores } = data;
             dispatch(onUpdateDirector(directores));
             dispatch(onLoadMessage(data));
             setTimeout(() => {

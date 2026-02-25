@@ -10,16 +10,16 @@ import helpdeskApi from "../../api/helpdeskApi";
 
 export const useDepartamentoStore = () => {
     const { isLoading, departamentos, errores } = useSelector(
-        (state) => state.departamento
+        (state) => state.departamento,
     );
     const { ExceptionMessageError } = useErrorException(onLoadErrores);
     const dispatch = useDispatch();
 
-    /* Gerencia */
+    /* Gerencia - Se usa para el formulario de Usuarios en el area de trabajo */
     const startLoadDepartamentos = async (id_direccion) => {
         try {
             dispatch(onLoading());
-            const { data } = await helpdeskApi.post("/gerencia/departamentos", {
+            const { data } = await helpdeskApi.post("/general/departamentos", {
                 id_direccion,
             });
             const { departamentos } = data;

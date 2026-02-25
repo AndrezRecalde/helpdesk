@@ -35,17 +35,26 @@ class InvConsumibleController extends Controller
         ], 200);
     } */
 
-    //getInvConsumibles con Eloquent
     public function getInvConsumibles(Request $request): JsonResponse
     {
+        $por_pagina = $request->input('por_pagina', 15);
+        $pagina_actual = $request->input('pagina_actual', 1);
         $consumibles = InvConsumible::with('categoria')
             ->byCategoriaId($request->categoria_id)
             ->latest('id')
-            ->get();
+            ->paginate($por_pagina, ['*'], 'pagina_actual', $pagina_actual);
 
         return response()->json([
             'status' => MsgStatus::Success,
-            'consumibles' => $consumibles
+            'consumibles' => $consumibles->items(),
+            'paginacion' => [
+                'total' => $consumibles->total(),
+                'por_pagina' => $consumibles->perPage(),
+                'pagina_actual' => $consumibles->currentPage(),
+                'ultima_pagina' => $consumibles->lastPage(),
+                'desde' => $consumibles->firstItem(),
+                'hasta' => $consumibles->lastItem(),
+            ]
         ], 200);
     }
 

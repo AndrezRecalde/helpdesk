@@ -7,6 +7,17 @@ export const invConsumibleSlice = createSlice({
         isLoadingHistorial: false,
         isExport: false,
         consumibles: [],
+        paginacion: {
+            total: 0,
+            por_pagina: 0,
+            pagina_actual: 0,
+            ultima_pagina: 0,
+            desde: 0,
+            hasta: 0,
+        },
+        ultimosFiltros: {
+            categoria_id: null,
+        },
         historial: [],
         activateConsumible: null,
         message: undefined,
@@ -26,6 +37,12 @@ export const invConsumibleSlice = createSlice({
             state.consumibles = payload;
             state.isLoading = false;
             state.errores = undefined;
+        },
+        onLoadPaginacion: (state, { payload }) => {
+            state.paginacion = payload;
+        },
+        onSetUltimosFiltros: (state, { payload }) => {
+            state.ultimosFiltros = payload;
         },
         onLoadInvHistorial: (state, { payload }) => {
             state.historial = payload;
@@ -49,7 +66,8 @@ export const invConsumibleSlice = createSlice({
         onDeleteInvConsumible: (state) => {
             if (state.activateConsumible) {
                 state.consumibles = state.consumibles.filter(
-                    (consumible) => consumible.id === state.activateConsumible.id
+                    (consumible) =>
+                        consumible.id === state.activateConsumible.id,
                 );
             }
             state.activateConsumible = null;
@@ -62,6 +80,17 @@ export const invConsumibleSlice = createSlice({
         },
         onClearInvConsumibles: (state) => {
             state.consumibles = [];
+            state.paginacion = {
+                total: 0,
+                por_pagina: 0,
+                pagina_actual: 0,
+                ultima_pagina: 0,
+                desde: 0,
+                hasta: 0,
+            };
+            state.ultimosFiltros = {
+                categoria_id: null,
+            };
             state.historial = [];
             state.activateConsumible = null;
             state.isLoading = false;
@@ -87,6 +116,8 @@ export const {
     onLoadingHistorial,
     onExport,
     onLoadInvConsumibles,
+    onLoadPaginacion,
+    onSetUltimosFiltros,
     onLoadInvHistorial,
     onAddInvConsumible,
     onUpdateInvConsumible,

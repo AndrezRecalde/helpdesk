@@ -23,8 +23,8 @@ export const JefesVacacionesField = ({ form, classes }) => {
 
     useEffect(() => {
         if (
-            usuario.role !== Roles.TIC_GERENTE &&
-            usuario.role !== Roles.NOM_VACACIONES
+            !usuario.roles?.includes(Roles.GERENTE) &&
+            !usuario.permissions?.includes("tthh.vacaciones.gestionar")
         ) {
             form.setValues({
                 direccion_id: usuario.cdgo_dprtmnto.toString(),

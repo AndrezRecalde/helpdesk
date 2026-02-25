@@ -19,6 +19,7 @@ import {
 } from "../../../../hooks";
 import classes from "../../../../assets/styles/modules/layout/input/LabelsInputs.module.css";
 import dayjs from "dayjs";
+import { Roles } from "../../../../helpers/dictionary";
 
 export const FilterFormSoportes = ({ form }) => {
     const usuario = JSON.parse(localStorage.getItem("service_user"));
@@ -97,13 +98,14 @@ export const FilterFormSoportes = ({ form }) => {
                             placeholder="Seleccione el año"
                             {...form.getInputProps("anio")}
                         />
-                        <Switch
-                            size="xl"
-                            onLabel="G"
-                            offLabel="T"
-                            disabled={usuario?.role_id == 2 ? true : false}
-                            {...form.getInputProps("switch_role")}
-                        />
+                        {usuario.roles?.includes(Roles.GERENTE) ? (
+                            <Switch
+                                size="xl"
+                                onLabel="G"
+                                offLabel="T"
+                                {...form.getInputProps("switch_role")}
+                            />
+                        ) : null}
                     </Group>
                 </Group>
 

@@ -5,7 +5,8 @@ import { isNotEmpty, useForm } from "@mantine/form";
 import { useUiVacaciones, useVacacionesStore } from "../../../../hooks";
 
 export const SolAnulacionVacacionModal = () => {
-    const { isOpenModalSolAnulacion, modalActionSolAnulacion } = useUiVacaciones();
+    const { isOpenModalSolAnulacion, modalActionSolAnulacion } =
+        useUiVacaciones();
     const { activateVacacion, setActivateVacacion } = useVacacionesStore();
 
     const form = useForm({
@@ -15,17 +16,14 @@ export const SolAnulacionVacacionModal = () => {
         },
         validate: {
             observaciones_anulado: isNotEmpty(
-                "Por favor señale el motivo de su anulación"
+                "Por favor señale el motivo de su anulación",
             ),
         },
     });
 
     useEffect(() => {
         if (activateVacacion !== null) {
-            form.setFieldValue(
-                "id",
-                activateVacacion?.id
-            );
+            form.setFieldValue("id", activateVacacion?.id);
         }
     }, [activateVacacion]);
 
@@ -39,6 +37,7 @@ export const SolAnulacionVacacionModal = () => {
 
     return (
         <Modal
+            size="lg"
             opened={isOpenModalSolAnulacion}
             onClose={handleCloseModal}
             title="Anular Solicitud de Vacación"
@@ -47,7 +46,9 @@ export const SolAnulacionVacacionModal = () => {
                 blur: 3,
             }}
         >
-            <TextSection tt="" fs="italic">Codigo de solicitud: {activateVacacion?.codigo_vacacion}</TextSection>
+            <TextSection tt="" fs="italic" fw={600} fz={16}>
+                Codigo de solicitud: {activateVacacion?.codigo_vacacion}
+            </TextSection>
             <Divider my="md" />
             <SolAnulacionForm form={form} />
         </Modal>

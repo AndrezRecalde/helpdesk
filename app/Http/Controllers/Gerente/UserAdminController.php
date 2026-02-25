@@ -19,7 +19,7 @@ class UserAdminController extends Controller
     function getUsuariosAdmin(Request $request): JsonResponse
     {
         $por_pagina = $request->por_pagina ?? 10;
-        $pagina = $request->pagina ?? 1;
+        $pagina_actual = $request->pagina_actual ?? 1;
         $usuarios = User::from('usrios_sstma as us')
             ->selectRaw('us.cdgo_usrio, us.usu_ci,
                         us.asi_id_reloj, us.titulo, us.nmbre_usrio,
@@ -42,7 +42,7 @@ class UserAdminController extends Controller
             ->direccion($request->cdgo_direccion)
             ->nombres($request->nmbre_usrio)
             ->usuario($request->lgin)
-            ->paginate($por_pagina, ['*'], 'pagina', $pagina);
+            ->paginate($por_pagina, ['*'], 'pagina_actual', $pagina_actual);
 
         if (sizeof($usuarios) >= 1) {
             return response()->json([
@@ -218,18 +218,16 @@ class UserAdminController extends Controller
 
     public function verifiedUser(Request $request): JsonResponse
     {
-        $usuario = User::from('usrios_sstma as us')
-            ->selectRaw('us.cdgo_usrio')
+        $existe = User::from('usrios_sstma as us')
             ->usuario($request->lgin)
             ->cedula($request->usu_ci)
             ->email($request->email)
-            ->first();
+            ->exists();
 
-        if ($usuario) {
-            return response()->json(['status' => MsgStatus::Success, 'usuario' => $usuario], 200);
-        } else {
-            return response()->json(['status' => MsgStatus::Error, 'msg' => MsgStatus::UserNotFound], 200);
-        }
+        return response()->json([
+            'status' => MsgStatus::Success,
+            'existe' => $existe
+        ], 200);
     }
 
     /* Agregar identificador de Reloj Biometrico */
@@ -257,8 +255,8 @@ class UserAdminController extends Controller
     {
         try {
             // Obtener parámetros de paginación
-            $perPage = $request->input('por_pagina', 15);
-            $page = $request->input('pagina', 1);
+            $por_pagina = $request->input('por_pagina', 15);
+            $pagina_actual = $request->input('pagina_actual', 1);
 
             // Consulta principal con paginación
             $periodosPaginated = User::query()
@@ -291,7 +289,7 @@ class UserAdminController extends Controller
                 ->whereHas('periodoVacacionales')
                 ->byCodigoUsuario($request->cdgo_usrio)
                 ->orderBy('usrios_sstma.nmbre_usrio', 'asc')
-                ->paginate($perPage, ['*'], 'page', $page);
+                ->paginate($por_pagina, ['*'], 'pagina_actual', $pagina_actual);
 
             // Obtener solo los IDs de los usuarios en la página actual (optimización)
             $userIds = $periodosPaginated->pluck('cdgo_usrio')->toArray();

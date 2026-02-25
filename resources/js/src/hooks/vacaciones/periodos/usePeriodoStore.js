@@ -29,14 +29,14 @@ export const usePeriodoStore = () => {
     //Carga los periodos disponibles para el usuario logueado, y todos para el usuario nom vacaciones
     const startLoadPeriodos = async ({
         cdgo_usrio = null,
-        pagina = 1,
+        pagina_actual = 1,
         por_pagina = 15,
     }) => {
         try {
             dispatch(onLoading(true));
             const { data } = await helpdeskApi.post(
                 "/usuario/periodos-vacacionales",
-                { cdgo_usrio, pagina, por_pagina },
+                { cdgo_usrio, pagina_actual, por_pagina },
             );
             const { periodos, paginacion } = data;
             dispatch(onLoadingPeriodos(periodos));

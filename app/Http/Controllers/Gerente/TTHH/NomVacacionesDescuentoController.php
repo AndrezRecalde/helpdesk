@@ -18,8 +18,8 @@ class NomVacacionesDescuentoController extends Controller
     {
         try {
             // Obtener parámetros de paginación
-            $perPage = $request->input('por_pagina', 15);
-            $page = $request->input('pagina', 1);
+            $por_pagina = $request->input('por_pagina', 15);
+            $pagina_actual = $request->input('pagina_actual', 1);
 
             // Consulta principal con paginación
             $descuentosPaginated = NomVacacionesDescuento::from('nom_vacaciones_descuentos as nvd')
@@ -40,7 +40,7 @@ class NomVacacionesDescuentoController extends Controller
                 ->when($request->anio, fn($q) => $q->where('npv.anio', $request->anio))
                 ->orderBy('nvd.id', 'desc')
                 ->orderBy('npv.anio', 'desc')
-                ->paginate($perPage, ['*'], 'page', $page);
+                ->paginate($por_pagina, ['*'], 'pagina_actual', $pagina_actual);
 
             return response()->json([
                 'status' => MsgStatus::Success,

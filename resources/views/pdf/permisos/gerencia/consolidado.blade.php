@@ -110,7 +110,7 @@
                         $seconds = (int) $timeParts[2];
 
                         $totalMinutes = $hours * 60 + $minutes + $seconds / 60; // Total en minutos
-                        $totalDays = $totalMinutes / (24 * 60); // Total en días (asumiendo 24h) - adjust if needed for 8h workday
+                        $totalDays = $totalMinutes / (8 * 60); // Total en días (asumiendo 8h) - adjust if needed for 8h workday
                     @endphp
                     <tr>
                         <td style="text-align: left">{{ $permiso->direccion_string }}</td>

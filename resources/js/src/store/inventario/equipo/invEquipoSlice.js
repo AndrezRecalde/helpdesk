@@ -6,6 +6,18 @@ export const invEquipoSlice = createSlice({
         isLoading: false,
         isExport: false,
         invEquipos: [],
+        paginacion: {
+            total: 0,
+            por_pagina: 0,
+            pagina_actual: 0,
+            ultima_pagina: 0,
+            desde: 0,
+            hasta: 0,
+        },
+        ultimosFiltros: {
+            campo: "codigo",
+            valor: "",
+        },
         invEquiposBajas: [],
         activateInvEquipo: null,
         message: undefined,
@@ -21,6 +33,12 @@ export const invEquipoSlice = createSlice({
         onLoadInvEquipos: (state, { payload }) => {
             state.invEquipos = payload;
             state.isLoading = false;
+        },
+        onLoadPaginacion: (state, { payload }) => {
+            state.paginacion = payload;
+        },
+        onSetUltimosFiltros: (state, { payload }) => {
+            state.ultimosFiltros = payload;
         },
         onLoadInvEquiposBaja: (state, { payload }) => {
             state.invEquiposBajas = payload;
@@ -43,7 +61,7 @@ export const invEquipoSlice = createSlice({
         onDeleteInvEquipo: (state) => {
             if (state.activateInvEquipo) {
                 state.invEquipos = state.invEquipos.filter(
-                    (equipo) => equipo.id === state.activateInvEquipo.id
+                    (equipo) => equipo.id === state.activateInvEquipo.id,
                 );
             }
             state.activateInvEquipo = null;
@@ -54,7 +72,7 @@ export const invEquipoSlice = createSlice({
                 const userIdToRemove = payload; // El id del usuario a remover viene en el payload
                 state.activateInvEquipo.usuarios =
                     state.activateInvEquipo.usuarios.filter(
-                        (pivot) => pivot.id !== userIdToRemove
+                        (pivot) => pivot.id !== userIdToRemove,
                     );
             }
         },
@@ -63,7 +81,7 @@ export const invEquipoSlice = createSlice({
                 const documentoIdToRemove = payload;
                 state.activateInvEquipo.documentos =
                     state.activateInvEquipo.documentos.filter(
-                        (pivot) => pivot.id !== documentoIdToRemove
+                        (pivot) => pivot.id !== documentoIdToRemove,
                     );
             }
         },
@@ -74,6 +92,18 @@ export const invEquipoSlice = createSlice({
         },
         onClearInvEquipos: (state) => {
             state.invEquipos = [];
+            state.paginacion = {
+                total: 0,
+                por_pagina: 0,
+                pagina_actual: 0,
+                ultima_pagina: 0,
+                desde: 0,
+                hasta: 0,
+            };
+            state.ultimosFiltros = {
+                campo: "codigo",
+                valor: "",
+            };
             state.invEquiposBajas = [];
             state.activateInvEquipo = null;
             state.isLoading = false;
@@ -93,6 +123,8 @@ export const {
     onLoading,
     onExport,
     onLoadInvEquipos,
+    onLoadPaginacion,
+    onSetUltimosFiltros,
     onLoadInvEquiposBaja,
     onAddInvEquipo,
     onUpdateInvEquipo,

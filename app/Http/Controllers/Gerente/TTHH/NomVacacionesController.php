@@ -227,8 +227,8 @@ class NomVacacionesController extends Controller
     {
         try {
             // Obtener parámetros de paginación
-            $perPage = $request->input('por_pagina', 15);
-            $page = $request->input('pagina', 1);
+            $por_pagina = $request->input('por_pagina', 15);
+            $pagina_actual = $request->input('pagina_actual', 1);
 
             // Consulta principal con paginación
             $solicitudesPaginated = NomVacacion::from('nom_vacaciones as nv')
@@ -264,7 +264,7 @@ class NomVacacionesController extends Controller
                 ->byCodigo($request->codigo)
                 ->byAnio($request->anio)
                 ->latest('nv.created_at')
-                ->paginate($perPage, ['*'], 'page', $page);
+                ->paginate($por_pagina, ['*'], 'pagina_actual', $pagina_actual);
 
             return response()->json([
                 'status' => MsgStatus::Success,
@@ -292,6 +292,23 @@ class NomVacacionesController extends Controller
             $vacacion->save();
 
             return response()->json(['status' => MsgStatus::Success, 'msg' => 'Solicitud de anulación enviada'], 200);
+        } catch (\Throwable $th) {
+            return response()->json(['status' => MsgStatus::Error, 'msg' => $th->getMessage()], 500);
+        }
+    }
+
+    function anularSolicitudVacacion(Request $request, int $id): JsonResponse
+    {
+        try {
+            $vacacion = NomVacacion::findOrFail($id);
+            if (!$vacacion->observaciones_anulado) {
+                $vacacion->observaciones_anulado = MsgStatus::FichaAnuladaVacacion;
+            }
+            $vacacion->estado_id = 6; // Estado ANULADO
+            $vacacion->fecha_anulado = now();
+            $vacacion->save();
+
+            return response()->json(['status' => MsgStatus::Success, 'msg' => 'Solicitud anulada'], 200);
         } catch (\Throwable $th) {
             return response()->json(['status' => MsgStatus::Error, 'msg' => $th->getMessage()], 500);
         }

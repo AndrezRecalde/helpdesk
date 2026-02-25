@@ -1,6 +1,13 @@
 import { Navigate, useLocation } from "react-router-dom";
 import { ErrorAccessDenied } from "../../pages";
 
+/**
+ * PrivateRoutes — guarda de acceso basado en roles.
+ *
+ * Soporta el nuevo sistema multi-rol donde `user.roles` es un array.
+ * `requiredRole` puede ser un array de roles permitidos.
+ * Acceso concedido si el usuario tiene AL MENOS UNO de los roles requeridos.
+ */
 export const PrivateRoutes = ({
     redirectPath = "/auth/login",
     children,
@@ -10,23 +17,24 @@ export const PrivateRoutes = ({
     const token = localStorage.getItem("auth_token");
     const user = JSON.parse(localStorage.getItem("service_user"));
 
-    // Verificar si el usuario está autenticado
+    // 1. Verificar autenticación
     if (!token) {
         return <Navigate to={redirectPath} state={{ from: location }} />;
     }
 
-    // Verificar si el usuario tiene el rol requerido
-    const userHasRequiredRole = requiredRole
-        ? Array.isArray(requiredRole)
-            ? requiredRole.includes(user?.role) // Si requiredRole es un array, verifica si el rol del usuario está incluido
-            : requiredRole === user?.role // Si requiredRole es un string, compara directamente
-        : true; // Si no se especifica requiredRole, se permite el acceso
+    // 2. Si no se especifica rol requerido, acceso libre (solo autenticación)
+    if (!requiredRole) return children;
 
-    // Si el usuario no tiene el rol requerido, mostrar el componente de acceso denegado
-    if (!userHasRequiredRole) {
+    // 3. Verificar que el usuario tenga al menos uno de los roles requeridos
+    const userRoles = user?.roles ?? [];
+    const rolesArray = Array.isArray(requiredRole)
+        ? requiredRole
+        : [requiredRole];
+    const hasAccess = rolesArray.some((r) => userRoles.includes(r));
+
+    if (!hasAccess) {
         return <ErrorAccessDenied />;
     }
 
-    // Si el usuario está autenticado y tiene el rol requerido, renderizar los children
     return children;
 };

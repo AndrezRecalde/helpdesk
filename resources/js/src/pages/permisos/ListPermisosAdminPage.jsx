@@ -11,7 +11,6 @@ import {
 import {
     useDireccionStore,
     usePermisoStore,
-    useStorageField,
     useTitlePage,
     useUsersStore,
 } from "../../hooks";
@@ -21,7 +20,7 @@ import dayjs from "dayjs";
 import Swal from "sweetalert2";
 
 const ListPermisosAdminPage = () => {
-    useTitlePage("Gestionar Permisos - Intranet");
+    useTitlePage("Lista de permisos - Intranet");
     const { startLoadDirecciones, clearDirecciones } = useDireccionStore();
     const { startLoadUsersExtrict, clearUsers } = useUsersStore();
     const {
@@ -33,7 +32,6 @@ const ListPermisosAdminPage = () => {
         errores,
         isExport,
     } = usePermisoStore();
-    const { setStoragePermisoFields } = useStorageField();
     const navigate = useNavigate();
     const form = useForm({
         initialValues: {
@@ -126,7 +124,7 @@ const ListPermisosAdminPage = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         //console.log(form.getTransformedValues());
-        setStoragePermisoFields(form.getTransformedValues());
+        //setStoragePermisoFields(form.getTransformedValues());
         startLoadPermisos(form.getTransformedValues());
     };
 

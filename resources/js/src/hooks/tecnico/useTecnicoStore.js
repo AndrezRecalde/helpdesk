@@ -31,8 +31,10 @@ export const useTecnicoStore = () => {
 
     const startLoadTecnicos = async (cdgo_usrio = null) => {
         try {
-            const { data } = await helpdeskApi.post("/general/tecnicos", {
-                cdgo_usrio,
+            const { data } = await helpdeskApi.get("/general/tecnicos", {
+                params: {
+                    cdgo_usrio,
+                },
             });
             const { tecnicos } = data;
             dispatch(onLoadTecnicos(tecnicos));
@@ -47,12 +49,11 @@ export const useTecnicoStore = () => {
     ) => {
         try {
             dispatch(onLoading(true));
-            const { data } = await helpdeskApi.post(
-                "/gerencia/admin/tecnicos",
-                {
+            const { data } = await helpdeskApi.get("/gerencia/admin/tecnicos", {
+                params: {
                     current_year,
                 },
-            );
+            });
             const { tecnicos } = data;
             dispatch(onLoadTecnicos(tecnicos));
         } catch (error) {

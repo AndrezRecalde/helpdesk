@@ -16,23 +16,22 @@ export const FormInfoUser = ({ form }) => {
 
     const [emailInput, setEmailInput] = useState(email || "");
 
-    const loadVerifiedUser = async (lgin) => {
-        await verifiedUser({ lgin });
-    };
-
     useEffect(() => {
-        if (!isModalEditUser && lgin !== "" && lgin.length > 4) {
-            setTimeout(() => {
-                loadVerifiedUser(lgin);
-            }, 2000);
-            return;
+        if (!isModalEditUser && lgin && lgin.length > 4) {
+            const delayDebounceFn = setTimeout(() => {
+                verifiedUser({ lgin });
+            }, 600);
+
+            return () => clearTimeout(delayDebounceFn);
+        } else if (!isModalEditUser) {
+            form.clearFieldError("lgin");
         }
-    }, [usu_ci, lgin, isModalEditUser]);
+    }, [lgin, isModalEditUser]);
 
     useEffect(() => {
-        if (userVerified !== null) {
-            form.setFieldError("lgin", "Usuario ya existe");
-        } else {
+        if (userVerified === true) {
+            form.setFieldError("lgin", "El usuario ya existe");
+        } else if (userVerified === false) {
             form.clearFieldError("lgin");
         }
     }, [userVerified]);
@@ -121,7 +120,7 @@ export const FormInfoUser = ({ form }) => {
                     error={form.errors.email}
                 />
                 <TextInput
-                    required
+                    //required
                     label="Usuario login"
                     placeholder="Digite el usuario"
                     {...form.getInputProps("lgin")}

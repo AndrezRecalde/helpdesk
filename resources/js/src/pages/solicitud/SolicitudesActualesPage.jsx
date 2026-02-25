@@ -32,7 +32,7 @@ const SolicitudesActualesPage = () => {
     const fecha_actual = new Date();
 
     const { data, error, isLoading } = useSWR(
-        usuario,
+        "soportes-actuales",
         startLoadSoportesActuales,
         { refreshInterval: 6000 },
     );
@@ -99,7 +99,7 @@ const SolicitudesActualesPage = () => {
         <Container size="xl">
             <Group justify="space-between">
                 <TitlePage order={2}>Solicitudes Actuales</TitlePage>
-                {usuario.role_id === 1 ? (
+                {usuario.roles?.includes("GERENTE") ? (
                     <BtnSection
                         handleAction={handleOpenModal}
                         IconSection={IconBrandTelegram}
@@ -123,7 +123,7 @@ const SolicitudesActualesPage = () => {
 
             <Divider my="md" />
             <SolicitudesTable
-                menu={usuario.role_id === 1 ? 1 : 2}
+                menu={usuario.roles?.includes("GERENTE") ? 1 : 2}
                 isLoading={isLoading}
             />
 

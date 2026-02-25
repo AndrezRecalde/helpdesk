@@ -3,7 +3,6 @@ import { MenuTableActions, TableContent } from "../../../../components";
 import { useMantineReactTable } from "mantine-react-table";
 import { MRT_Localization_ES } from "mantine-react-table/locales/es/index.cjs";
 import { useUiVacaciones, useVacacionesStore } from "../../../../hooks";
-import { Roles } from "../../../../helpers/dictionary";
 import dayjs from "dayjs";
 import Swal from "sweetalert2";
 import {
@@ -22,6 +21,7 @@ export const SolicitudesVacacionesTable = ({ usuario }) => {
         setActivateVacacion,
         startExportFichaVacaciones,
         startLoadSolicitudesVacaciones,
+        startAnularSolicitudVacacion,
     } = useVacacionesStore();
     const { modalActionSolAnulacion, modalActionGestionarVacacion } =
         useUiVacaciones();
@@ -31,14 +31,39 @@ export const SolicitudesVacacionesTable = ({ usuario }) => {
         pageSize: 15,
     });
 
+    // Sincronizar el estado del paginador con la respuesta del backend
+    useEffect(() => {
+        if (paginacion) {
+            setPagination((prev) => {
+                const newPageIndex = Number(paginacion.pagina_actual || 1) - 1;
+                const newPageSize = Number(paginacion.por_pagina || 15);
+
+                if (
+                    prev.pageIndex !== newPageIndex ||
+                    prev.pageSize !== newPageSize
+                ) {
+                    return { pageIndex: newPageIndex, pageSize: newPageSize };
+                }
+                return prev;
+            });
+        }
+    }, [paginacion]);
+
     // Cargar datos cuando cambia la paginación (solo si hay filtros aplicados)
     useEffect(() => {
+        // Evitar petición duplicada si el estado de paginación coincide con el de Redux
+        const isSyncedWithRedux =
+            paginacion &&
+            pagination.pageIndex + 1 ===
+                Number(paginacion.pagina_actual || 1) &&
+            pagination.pageSize === Number(paginacion.por_pagina || 15);
+
         // Solo cargar si hay filtros válidos aplicados (anio no es null)
-        if (ultimosFiltros.anio !== null) {
+        if (ultimosFiltros.anio !== null && !isSyncedWithRedux) {
             startLoadSolicitudesVacaciones({
                 ...ultimosFiltros,
                 por_pagina: pagination.pageSize,
-                pagina: pagination.pageIndex + 1, // Mantine usa índice 0, Laravel usa página 1
+                pagina_actual: pagination.pageIndex + 1, // Mantine usa índice 0, Laravel usa página 1
             });
         }
     }, [pagination.pageIndex, pagination.pageSize]);
@@ -95,14 +120,25 @@ export const SolicitudesVacacionesTable = ({ usuario }) => {
                 confirmButtonColor: "#106ee8",
                 cancelButtonColor: "#d33",
                 confirmButtonText: "Si, anular solicitud!",
-            }).then((result) => {
+            }).then(async (result) => {
                 if (result.isConfirmed) {
-                    Swal.fire({
-                        title: "Deleted!",
-                        text: "Your file has been deleted.",
-                        icon: "success",
-                        confirmButtonColor: "#106ee8",
-                    });
+                    const { status } =
+                        await startAnularSolicitudVacacion(selected);
+                    if (status) {
+                        Swal.fire({
+                            title: "¡Anulada!",
+                            text: `La solicitud ${selected.codigo_vacacion} fue anulada correctamente.`,
+                            icon: "success",
+                            confirmButtonColor: "#106ee8",
+                        });
+                    } else {
+                        Swal.fire({
+                            title: "Error",
+                            text: "No se pudo anular la solicitud. Intente nuevamente.",
+                            icon: "error",
+                            confirmButtonColor: "#106ee8",
+                        });
+                    }
                 }
             });
         },
@@ -160,9 +196,12 @@ export const SolicitudesVacacionesTable = ({ usuario }) => {
         enableRowActions: true,
         localization: MRT_Localization_ES,
         renderRowActionMenuItems: ({ row }) => {
-            const isAdministrator = usuario.role === Roles.NOM_VACACIONES;
+            const isAdministrator = usuario.permissions?.includes(
+                "tthh.vacaciones.gestionar",
+            );
             const estado = row.original.estado;
-            const canAutorizar = estado === "NUEVO";
+            const canAutorizar =
+                estado === "NUEVO" || estado === "EN PROCESO DE ANULACION";
             const canAnular =
                 estado === "NUEVO" || estado === "EN PROCESO DE ANULACION";
             const canImprimir =
@@ -176,21 +215,21 @@ export const SolicitudesVacacionesTable = ({ usuario }) => {
                     actions={[
                         {
                             icon: IconChecks,
-                            label: "Autorizar Vacacion",
+                            label: "Autorizar Vacación",
                             onClick: handleAutorizar,
                             disabled: !canAutorizar,
                             visible: isAdministrator,
                         },
                         {
                             icon: IconBan,
-                            label: "Anular Vacacion",
+                            label: "Anular Vacación",
                             onClick: handleAnular,
                             disabled: !canAnular,
                             visible: isAdministrator,
                         },
                         {
                             icon: IconNotesOff,
-                            label: "Solicitud de Anulacion",
+                            label: "Solicitud de Anulación",
                             onClick: handleSolicitarAnulacion,
                             disabled: !canAutorizar,
                             visible: !isAdministrator,

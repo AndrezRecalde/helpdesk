@@ -33,8 +33,11 @@ class PermisosAdminController extends Controller
         }
     }
 
+    //TODO: PAGINACION URGENTE
     public function getPermisosAdmin(Request $request): JsonResponse
     {
+        $por_pagina = $request->por_pagina ?? 15;
+        $pagina_actual = $request->pagina_actual ?? 1;
         $permisos = Permiso::query()
             ->selectRaw('per_permisos.idper_permisos,
                     per_permisos.id_usu_pide,
@@ -65,8 +68,9 @@ class PermisosAdminController extends Controller
             ->estado($request->id_estado)
             ->anio($request->anio)
             ->betweenFechas($request->fecha_inicio, $request->fecha_fin)
-            ->orderByDesc('per_permisos.per_fecha_salida')
-            ->get();
+            //->orderByDesc('per_permisos.per_fecha_salida')
+            ->orderByDesc('per_permisos.idper_permisos')
+            ->paginate($por_pagina, ['*'], 'pagina_actual', $pagina_actual);
 
         if ($permisos->isEmpty()) {
             return response()->json([
@@ -77,7 +81,15 @@ class PermisosAdminController extends Controller
 
         return response()->json([
             'status' => MsgStatus::Success,
-            'permisos' => $permisos
+            'permisos' => $permisos->items(),
+            'paginacion' => [
+                'total' => $permisos->total(),
+                'por_pagina' => $permisos->perPage(),
+                'pagina_actual' => $permisos->currentPage(),
+                'ultima_pagina' => $permisos->lastPage(),
+                'desde' => $permisos->firstItem(),
+                'hasta' => $permisos->lastItem(),
+            ]
         ], 200);
     }
 
@@ -227,6 +239,14 @@ class PermisosAdminController extends Controller
             $permiso->id_estado = $request->id_estado; //Para anular o autorizar el permiso
             if ($request->id_estado == 6) {
                 $permiso->fecha_anulado = Carbon::now();
+                $permiso->per_autoriza_tthh = 0;
+            } else if ($request->id_estado == 2) {
+                $permiso->per_fecha_autoriza = Carbon::now();
+                $permiso->per_fecha_autoriza_tthh = Carbon::now();
+                $permiso->per_autoriza_tthh = 1;
+                if ($permiso->per_observacion_anulado) {
+                    $permiso->per_observacion_anulado = null;
+                }
             }
             $permiso->id_usu_recepcionista = auth()->user()->cdgo_usrio;
             $permiso->save();

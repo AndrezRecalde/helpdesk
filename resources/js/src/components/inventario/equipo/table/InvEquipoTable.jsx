@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { Table } from "@mantine/core";
 import { useMantineReactTable } from "mantine-react-table";
 import { MRT_Localization_ES } from "mantine-react-table/locales/es/index.cjs";
@@ -33,7 +33,10 @@ export const InvEquipoTable = () => {
     const {
         isLoading,
         invEquipos,
+        paginacion,
+        ultimosFiltros,
         activateInvEquipo,
+        startLoadInvEquipos,
         startShowInvEquipo,
         setActivateInvEquipo,
         startAsignarCustodio,
@@ -47,6 +50,49 @@ export const InvEquipoTable = () => {
     } = useInvUiEquipo();
     const { modalActionCustodio } = useUiInvCustodio();
     const { storageFields } = useStorageField();
+
+    const [pagination, setPagination] = useState({
+        pageIndex: 0,
+        pageSize: 15,
+    });
+
+    // Sincronizar el estado del paginador con la respuesta del backend
+    useEffect(() => {
+        if (paginacion) {
+            setPagination((prev) => {
+                const newPageIndex = Number(paginacion.pagina_actual || 1) - 1;
+                const newPageSize = Number(paginacion.por_pagina || 15);
+
+                if (
+                    prev.pageIndex !== newPageIndex ||
+                    prev.pageSize !== newPageSize
+                ) {
+                    return { pageIndex: newPageIndex, pageSize: newPageSize };
+                }
+                return prev;
+            });
+        }
+    }, [paginacion]);
+
+    // Cargar datos cuando cambia la paginación
+    useEffect(() => {
+        // Evitar petición duplicada si el estado de paginación coincide con el de Redux
+        const isSyncedWithRedux =
+            paginacion &&
+            pagination.pageIndex + 1 ===
+                Number(paginacion.pagina_actual || 1) &&
+            pagination.pageSize === Number(paginacion.por_pagina || 15);
+
+        // Solo cargar si no está sincronizado
+        if (!isSyncedWithRedux && ultimosFiltros) {
+            startLoadInvEquipos({
+                campo: ultimosFiltros.campo,
+                valor: ultimosFiltros.valor,
+                por_pagina: pagination.pageSize,
+                pagina_actual: pagination.pageIndex + 1, // Mantine usa índice 0, Laravel usa página 1
+            });
+        }
+    }, [pagination.pageIndex, pagination.pageSize]);
 
     const columns = useMemo(
         () => [
@@ -165,7 +211,14 @@ export const InvEquipoTable = () => {
     const table = useMantineReactTable({
         columns,
         data: invEquipos, //must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
-        state: { showProgressBars: isLoading },
+        state: {
+            showProgressBars: isLoading,
+            pagination,
+        },
+        manualPagination: true,
+        rowCount: paginacion?.total,
+        pageCount: paginacion?.ultima_pagina,
+        onPaginationChange: setPagination,
         enableFacetedValues: true,
         enableRowActions: true,
         localization: MRT_Localization_ES,

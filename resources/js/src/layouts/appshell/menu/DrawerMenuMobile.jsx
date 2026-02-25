@@ -41,8 +41,8 @@ export const DrawerMenuMobile = ({ usuario, classes }) => {
                 />
                 <Divider my="sm" />
 
-                {usuario.role === Roles.TIC_GERENTE ||
-                usuario.role === Roles.TIC_TECNICO ? (
+                {usuario.roles?.includes(Roles.GERENTE) ||
+                usuario.roles?.includes(Roles.TIC) ? (
                     <MenuSection
                         title="Gestión de TIC"
                         usuario={usuario}
@@ -54,7 +54,7 @@ export const DrawerMenuMobile = ({ usuario, classes }) => {
                     />
                 ) : null}
 
-                {usuario.role === Roles.TIC_GERENTE ? (
+                {usuario.roles?.includes(Roles.GERENTE) ? (
                     <MenuSection
                         title="Gestión General"
                         usuario={usuario}
@@ -66,8 +66,8 @@ export const DrawerMenuMobile = ({ usuario, classes }) => {
                     />
                 ) : null}
 
-                {usuario.role === Roles.TIC_GERENTE ||
-                usuario.role === Roles.NOM_ASISTENCIA ? (
+                {usuario.roles?.includes(Roles.GERENTE) ||
+                usuario.roles?.includes(Roles.TTHH) ? (
                     <MenuSection
                         title="Permisos Admin"
                         usuario={usuario}

@@ -1,8 +1,12 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useErrorException } from "../../hooks";
-import { onClearSexo, onLoadErrores, onLoadSexo, onLoading } from "../../store/sexo/sexoSlice";
+import {
+    onClearSexo,
+    onLoadErrores,
+    onLoadSexo,
+    onLoading,
+} from "../../store/sexo/sexoSlice";
 import helpdeskApi from "../../api/helpdeskApi";
-
 
 export const useSexoStore = () => {
     const { isLoading, sexo, errores } = useSelector((state) => state.sexo);
@@ -12,18 +16,18 @@ export const useSexoStore = () => {
     const startLoadTipoSexo = async () => {
         try {
             dispatch(onLoading());
-            const { data } = await helpdeskApi.get("/gerencia/sexo");
+            const { data } = await helpdeskApi.get("/sexo");
             const { tipo_sexo } = data;
             dispatch(onLoadSexo(tipo_sexo));
         } catch (error) {
             //console.log(error);
             ExceptionMessageError(error);
         }
-    }
+    };
 
     const clearTipoSexo = () => {
         dispatch(onClearSexo());
-    }
+    };
 
     return {
         isLoading,
@@ -31,6 +35,6 @@ export const useSexoStore = () => {
         errores,
 
         startLoadTipoSexo,
-        clearTipoSexo
+        clearTipoSexo,
     };
 };

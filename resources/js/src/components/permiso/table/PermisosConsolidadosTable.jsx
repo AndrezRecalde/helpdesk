@@ -20,7 +20,7 @@ export const PermisosConsolidadosTable = () => {
         if (!time) return 0; // Asegurar un valor predeterminado en caso de que `time` sea nulo o indefinido
         const [hours, minutes, seconds] = time.split(":").map(Number); // Separar y convertir cada parte a número
         const totalHours = hours + minutes / 60 + seconds / 3600; // Convertir todo a horas
-        const days = totalHours / 24; // Dividir horas entre 24 para obtener los días
+        const days = totalHours / 8; // Dividir horas entre 8 para obtener los días
         return parseFloat(days.toFixed(2));
     }
 
@@ -39,26 +39,25 @@ export const PermisosConsolidadosTable = () => {
             {
                 accessorKey: "total_permisos",
                 header: "T. Permisos",
-                size: 80
+                size: 80,
             },
             {
-                accessorFn: (row) =>
-                    timeToMinutes(row.suma_tiempo),
+                accessorFn: (row) => timeToMinutes(row.suma_tiempo),
                 header: "T. Minutos",
-                size: 80
+                size: 80,
             },
             {
                 accessorKey: "suma_tiempo",
                 header: "T. Total",
-                size: 80
+                size: 80,
             },
             {
                 accessorFn: (row) => timeToDays(row.suma_tiempo), //access nested data with dot notation
                 header: "T. Días",
-                size: 80
+                size: 80,
             },
         ],
-        [permisos]
+        [permisos],
     );
 
     const table = useMantineReactTable({
@@ -71,17 +70,6 @@ export const PermisosConsolidadosTable = () => {
         mantineTableProps: {
             withColumnBorders: true,
             withTableBorder: true,
-            sx: {
-                "thead > tr": {
-                    backgroundColor: "inherit",
-                },
-                "thead > tr > th": {
-                    backgroundColor: "inherit",
-                },
-                "tbody > tr > td": {
-                    backgroundColor: "inherit",
-                },
-            },
         },
     });
 

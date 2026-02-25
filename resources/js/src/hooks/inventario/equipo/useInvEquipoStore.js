@@ -12,6 +12,8 @@ import {
     onRemoveDocumentoFromEquipo,
     onRemoveUserFromEquipo,
     onSetActivateInvEquipo,
+    onLoadPaginacion,
+    onSetUltimosFiltros,
 } from "../../../store/inventario/equipo/invEquipoSlice";
 import helpdeskApi from "../../../api/helpdeskApi";
 
@@ -20,6 +22,8 @@ export const useInvEquipoStore = () => {
         isLoading,
         isExport,
         invEquipos,
+        paginacion,
+        ultimosFiltros,
         invEquiposBajas,
         activateInvEquipo,
         message,
@@ -44,21 +48,39 @@ export const useInvEquipoStore = () => {
         }
     };
 
-    const startLoadInvEquipos = async ({ campo, valor = null }) => {
+    const startLoadInvEquipos = async ({
+        campo = "codigo",
+        valor = "",
+        pagina_actual = 1,
+        por_pagina = 15,
+    } = {}) => {
         try {
             dispatch(onLoading(true));
+            dispatch(
+                onSetUltimosFiltros({
+                    campo,
+                    valor,
+                }),
+            );
             const { data } = await helpdeskApi.post(
                 "/gerencia/inventario/equipos",
                 {
                     campo,
                     valor,
+                    pagina_actual,
+                    por_pagina,
                 },
             );
-            const { equipos } = data;
+            const { equipos, paginacion } = data;
             dispatch(onLoadInvEquipos(equipos));
+            if (paginacion) {
+                dispatch(onLoadPaginacion(paginacion));
+            }
         } catch (error) {
             //console.log(error);
             ExceptionMessageError(error);
+        } finally {
+            dispatch(onLoading(false));
         }
     };
 
@@ -96,7 +118,11 @@ export const useInvEquipoStore = () => {
                 }, 40);
 
                 if (storageFields && Object.keys(storageFields).length > 0) {
-                    startLoadInvEquipos(storageFields);
+                    startLoadInvEquipos({
+                        ...ultimosFiltros,
+                        pagina_actual: paginacion?.pagina_actual || 1,
+                        por_pagina: paginacion?.por_pagina || 15,
+                    });
                 }
                 return;
             }
@@ -110,7 +136,11 @@ export const useInvEquipoStore = () => {
             }, 40);
 
             if (storageFields && Object.keys(storageFields).length > 0) {
-                startLoadInvEquipos(storageFields);
+                startLoadInvEquipos({
+                    ...ultimosFiltros,
+                    pagina_actual: paginacion?.pagina_actual || 1,
+                    por_pagina: paginacion?.por_pagina || 15,
+                });
             }
         } catch (error) {
             ExceptionMessageError(error);
@@ -144,6 +174,11 @@ export const useInvEquipoStore = () => {
             setTimeout(() => {
                 dispatch(onLoadMessage(undefined));
             }, 40);
+            startLoadInvEquipos({
+                ...ultimosFiltros,
+                pagina_actual: paginacion?.pagina_actual || 1,
+                por_pagina: paginacion?.por_pagina || 15,
+            });
         } catch (error) {
             //console.log(error);
             ExceptionMessageError(error);
@@ -240,7 +275,11 @@ export const useInvEquipoStore = () => {
             setTimeout(() => {
                 dispatch(onLoadMessage(undefined));
             }, 40);
-            startLoadInvEquipos(storageFields);
+            startLoadInvEquipos({
+                ...ultimosFiltros,
+                pagina_actual: paginacion?.pagina_actual || 1,
+                por_pagina: paginacion?.por_pagina || 15,
+            });
         } catch (error) {
             //console.log(error);
             ExceptionMessageError(error);
@@ -257,7 +296,11 @@ export const useInvEquipoStore = () => {
             setTimeout(() => {
                 dispatch(onLoadMessage(undefined));
             }, 40);
-            startLoadInvEquipos(storageFields);
+            startLoadInvEquipos({
+                ...ultimosFiltros,
+                pagina_actual: paginacion?.pagina_actual || 1,
+                por_pagina: paginacion?.por_pagina || 15,
+            });
         } catch (error) {
             //console.log(error);
             ExceptionMessageError(error);
@@ -340,6 +383,8 @@ export const useInvEquipoStore = () => {
         isLoading,
         isExport,
         invEquipos,
+        paginacion,
+        ultimosFiltros,
         invEquiposBajas,
         activateInvEquipo,
         message,

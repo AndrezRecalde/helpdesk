@@ -91,12 +91,12 @@ class User extends Authenticatable
 
     public function isGerenteTic(): bool
     {
-        return $this->hasRole('TIC_GERENTE');
+        return $this->hasRole('GERENTE');
     }
 
     public function isTecnicoTic(): bool
     {
-        return $this->hasRole('TIC_TECNICO');
+        return $this->hasRole('TIC');
     }
 
     //Permisos
@@ -120,7 +120,8 @@ class User extends Authenticatable
     function equipos(): BelongsToMany
     {
         return $this->belongsToMany(InvEquipo::class, 'usuario_equipo', 'usuario_id', 'equipo_id')
-            ->withPivot('direccion_id', 'concepto_id');;
+            ->withPivot('direccion_id', 'concepto_id');
+        ;
     }
 
     function denuncias(): HasMany

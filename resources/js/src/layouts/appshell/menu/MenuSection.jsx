@@ -40,11 +40,21 @@ export const MenuSection = ({
             <Collapse in={isOpen}>
                 {Object.entries(menuData).map(([category, items]) => (
                     <div key={category} style={{ paddingLeft: 10 }}>
-                        <TextSection fw={700} color="dimmed" style={{ letterSpacing: "1px" }}>
+                        <TextSection
+                            fw={700}
+                            color="dimmed"
+                            style={{ letterSpacing: "1px" }}
+                        >
                             {category}
                         </TextSection>
                         {items.map((item) => {
-                            const isAllowed = item.roles.includes(usuario.role);
+                            const userRoles = usuario.roles ?? [];
+                            const userPerms = usuario.permissions ?? [];
+                            const isAllowed =
+                                item.roles.some((r) => userRoles.includes(r)) ||
+                                (item.permissions ?? []).some((p) =>
+                                    userPerms.includes(p),
+                                );
 
                             if (!isAllowed) return null; // Oculta el item si el rol no tiene permiso
 
@@ -65,9 +75,7 @@ export const MenuSection = ({
                                             variant="default"
                                             radius="md"
                                         >
-                                            <item.icon
-                                                size={18}
-                                            />
+                                            <item.icon size={18} />
                                         </ThemeIcon>
                                         <TextSection>{item.title}</TextSection>
                                     </Group>

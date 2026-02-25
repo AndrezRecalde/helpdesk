@@ -13,7 +13,7 @@ import {
 
 export const FormTrabajoUser = ({ form }) => {
     const { finaliza_contrato, cdgo_direccion } = form.values;
-    const { activateResponsable } = useUsersStore();
+    const { activateUser, activateResponsable } = useUsersStore();
     const { empresas } = useEmpresaStore();
     const { direcciones } = useDireccionStore();
     const { cargos } = useCargoStore();
@@ -194,7 +194,7 @@ export const FormTrabajoUser = ({ form }) => {
                 required
                 searchable
                 clearable
-                label="Creado por"
+                label={activateUser?.usu_ing ? "Actualizado por" : "Creado por"}
                 {...form.getInputProps("usu_ing")}
                 data={activateResponsable.map((user) => {
                     return {

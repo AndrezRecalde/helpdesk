@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { MenuTableActions, TableContent } from "../../../../components";
 import { usePeriodoStore, useUiUser, useUsersStore } from "../../../../hooks";
 import { useMantineReactTable } from "mantine-react-table";
@@ -14,6 +14,48 @@ export const PeriodosTable = () => {
     const { startLoadPeriodos } = usePeriodoStore();
     const { setActivateUser } = useUsersStore();
     const { modalActionUser } = useUiUser();
+
+    const [paginationServer, setPaginationServer] = useState({
+        pageIndex: 0,
+        pageSize: 15,
+    });
+
+    // Sincronizar el estado del paginador con la respuesta del backend
+    useEffect(() => {
+        if (paginacion) {
+            setPaginationServer((prev) => {
+                const newPageIndex = Number(paginacion.pagina_actual || 1) - 1;
+                const newPageSize = Number(paginacion.por_pagina || 15);
+
+                if (
+                    prev.pageIndex !== newPageIndex ||
+                    prev.pageSize !== newPageSize
+                ) {
+                    return { pageIndex: newPageIndex, pageSize: newPageSize };
+                }
+                return prev;
+            });
+        }
+    }, [paginacion]);
+
+    // Cargar datos cuando cambia la paginación (solo si hay filtros aplicados)
+    useEffect(() => {
+        // Evitar petición duplicada si el estado de paginación coincide con el de Redux
+        const isSyncedWithRedux =
+            paginacion &&
+            paginationServer.pageIndex + 1 ===
+                Number(paginacion.pagina_actual || 1) &&
+            paginationServer.pageSize === Number(paginacion.por_pagina || 15);
+
+        if (!isSyncedWithRedux) {
+            startLoadPeriodos({
+                cdgo_usrio: null,
+                por_pagina: paginationServer.pageSize,
+                pagina_actual: paginationServer.pageIndex + 1,
+            });
+        }
+    }, [paginationServer.pageIndex, paginationServer.pageSize]);
+
     const columns = useMemo(
         () => [
             {
@@ -23,9 +65,11 @@ export const PeriodosTable = () => {
                         .toString()
                         .toUpperCase(),
                 filterVariant: "autocomplete",
+                size: 230,
+                wrap: true,
             },
             {
-                header: "Cedula",
+                header: "Cédula",
                 accessorFn: (row) =>
                     (row?.usu_ci || "NO CONTIENE CEDULA")
                         .toString()
@@ -50,13 +94,14 @@ export const PeriodosTable = () => {
                 size: 80,
             },
             {
-                header: "Regímen Contrato",
+                header: "Regímen",
                 accessorFn: (row) =>
                     (row?.nombre_regimen || "NO CONTIENE INFORMACION")
                         .toString()
                         .toUpperCase(),
                 size: 80,
                 filterVariant: "autocomplete",
+                wrap: true,
             },
             {
                 header: "Fecha Ingreso",
@@ -84,32 +129,18 @@ export const PeriodosTable = () => {
         data: periodos, //must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
         state: {
             showProgressBars: isLoading,
-            pagination: {
-                pageIndex: paginacion.pagina_actual - 1,
-                pageSize: paginacion.por_pagina,
-            },
+            pagination: paginationServer,
         },
         manualPagination: true,
-        rowCount: paginacion.total,
-        onPaginationChange: (updater) => {
-            const newPagination =
-                typeof updater === "function"
-                    ? updater({
-                          pageIndex: paginacion.pagina_actual - 1,
-                          pageSize: paginacion.por_pagina,
-                      })
-                    : updater;
-
-            startLoadPeriodos({
-                cdgo_usrio: null,
-                pagina: newPagination.pageIndex + 1,
-                por_pagina: newPagination.pageSize,
-            });
-        },
+        rowCount: paginacion?.total,
+        pageCount: paginacion?.ultima_pagina,
+        onPaginationChange: setPaginationServer,
         enableFacetedValues: false,
         enableColumnDragging: false,
         enableDensityToggle: false,
-        enableRowActions: usuario.role === Roles.NOM_VACACIONES ? true : false,
+        enableRowActions: usuario.permissions?.includes(
+            "tthh.vacaciones.gestionar",
+        ),
         renderRowActionMenuItems: ({ row }) => (
             <MenuTableActions
                 row={row}

@@ -12,7 +12,6 @@ import {
     IconEyeSearch,
     IconList,
 } from "@tabler/icons-react";
-import { Roles } from "../../helpers/dictionary";
 import { useDescuentoStore, useTitlePage } from "../../hooks";
 import { useNavigate } from "react-router-dom";
 
@@ -66,7 +65,7 @@ const DescuentoVacacionesPage = () => {
         <Container size="xl">
             <Group justify="space-between">
                 <TitlePage order={1}>Descuentos Vacaciones</TitlePage>
-                {usuario.role === Roles.NOM_VACACIONES ? (
+                {usuario.permissions?.includes("tthh.vacaciones.gestionar") ? (
                     <BtnAddActions actions={menuActions}>
                         Acciones
                     </BtnAddActions>

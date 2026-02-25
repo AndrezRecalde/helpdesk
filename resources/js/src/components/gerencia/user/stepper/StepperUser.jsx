@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Button, Group, Stepper, Text, Title } from "@mantine/core";
-import { FormInfoUser, FormTipoUser, FormTrabajoUser } from "../../../../components";
-import { useStorageField, useUiUser, useUsersStore } from "../../../../hooks";
+import { FormInfoUser, FormTrabajoUser } from "../../../../components";
+import { useUiUser, useUsersStore } from "../../../../hooks";
 import { IconSend } from "@tabler/icons-react";
 import dayjs from "dayjs";
 
@@ -10,7 +10,6 @@ export const StepperUser = ({ form }) => {
     const { activateUser, setClearActivateUser } = useUsersStore();
     const { modalActionUser } = useUiUser();
     const { startAddUser } = useUsersStore();
-    const { storageUserFields } = useStorageField();
     const usuario = JSON.parse(localStorage.getItem("service_user"));
 
     useEffect(() => {
@@ -24,7 +23,8 @@ export const StepperUser = ({ form }) => {
                 cdgo_direccion: activateUser.cdgo_direccion?.toString() || null,
                 cdgo_dprtmnto: activateUser.cdgo_dprtmnto?.toString() || null,
                 crgo_id: activateUser.crgo_id?.toString() || null,
-                id_tipo_usuario: activateUser.id_tipo_usuario?.toString() || null,
+                id_tipo_usuario:
+                    activateUser.id_tipo_usuario?.toString() || null,
                 usu_ult_tipo_contrato:
                     activateUser.usu_ult_tipo_contrato?.toString() || null,
                 finaliza_contrato:
@@ -62,13 +62,13 @@ export const StepperUser = ({ form }) => {
                     errors.hasOwnProperty("usu_nombres") ||
                     //errors.hasOwnProperty("email") ||
                     errors.hasOwnProperty("sexo") ||
-                    errors.hasOwnProperty("lgin") ||
+                    //errors.hasOwnProperty("lgin") ||
                     errors.hasOwnProperty("actvo")
                 ) {
                     setActive((current) => current * 1);
                 } else {
                     setActive((current) =>
-                        current < 2 ? current + 1 : current
+                        current < 2 ? current + 1 : current,
                     );
                     form.clearErrors();
                 }
@@ -87,13 +87,13 @@ export const StepperUser = ({ form }) => {
                     setActive((current) => current * 1);
                 } else {
                     setActive((current) =>
-                        current < 2 ? current + 1 : current
+                        current < 2 ? current + 1 : current,
                     );
                     form.clearErrors();
                 }
                 break;
 
-/*             case 2:
+            /*             case 2:
                 if (
                     errors.hasOwnProperty("tecnico") ||
                     errors.hasOwnProperty("secretaria_tic") ||
@@ -116,14 +116,14 @@ export const StepperUser = ({ form }) => {
         /* } */
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         /* if (errores) {
             //console.log(form.getTransformedValues());
             startAddUser(form.getTransformedValues());
         } */
         //console.log(form.getTransformedValues());
-        startAddUser(form.getTransformedValues(), storageUserFields);
+        await startAddUser(form.getTransformedValues());
         setClearActivateUser();
         form.reset();
         modalActionUser(false);

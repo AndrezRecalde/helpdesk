@@ -53,7 +53,7 @@ export const useVacacionesStore = () => {
         fecha_inicio = null,
         fecha_fin = null,
         por_pagina = 15,
-        pagina = 1,
+        pagina_actual = 1,
     }) => {
         try {
             dispatch(onLoading(true));
@@ -67,7 +67,7 @@ export const useVacacionesStore = () => {
                     fecha_inicio,
                     fecha_fin,
                     por_pagina,
-                    pagina,
+                    pagina_actual,
                 },
             );
             const { solicitudes, paginacion } = data;
@@ -121,14 +121,6 @@ export const useVacacionesStore = () => {
                 type: "application/pdf",
             });
             const url = window.open(URL.createObjectURL(pdfBlob));
-            //console.log(url);
-            /* const tempLink = document.createElement("a");
-            tempLink.href = url;
-            tempLink.setAttribute("download", "permiso.pdf");
-            document.body.appendChild(tempLink);
-            tempLink.click();
-
-            document.body.removeChild(tempLink); */
             window.URL.revokeObjectURL(url);
             //dispatch(onLoadMessage(data));
             dispatch(onExport(false));
@@ -161,16 +153,18 @@ export const useVacacionesStore = () => {
         }
     };
 
-    const startSolicitarAnulacionVacaciones = async (
-        solicitud,
-        storageFields = null,
-    ) => {
+    const startSolicitarAnulacionVacaciones = async (solicitud) => {
         try {
+            dispatch(onLoading(true));
             const { data } = await helpdeskApi.put(
                 `/usuario/solicitar-anulacion-vacaciones/${solicitud.id}`,
                 solicitud,
             );
-            startLoadSolicitudesVacaciones(storageFields);
+            startLoadSolicitudesVacaciones({
+                ...ultimosFiltros,
+                por_pagina: paginacion.por_pagina,
+                pagina_actual: paginacion.pagina_actual,
+            });
             dispatch(onLoadMessage(data));
             setTimeout(() => {
                 dispatch(onLoadMessage(undefined));
@@ -178,6 +172,36 @@ export const useVacacionesStore = () => {
         } catch (error) {
             //console.log(error);
             ExceptionMessageError(error);
+        } finally {
+            dispatch(onLoading(false));
+        }
+    };
+
+    const startAnularSolicitudVacacion = async (solicitud) => {
+        try {
+            dispatch(onLoading(true));
+            await helpdeskApi.put(
+                `/tthh/asistencia/anular-solicitud-vacacion/${solicitud.id}`,
+                solicitud,
+            );
+            startLoadSolicitudesVacaciones({
+                ...ultimosFiltros,
+                por_pagina: paginacion.por_pagina,
+                pagina_actual: paginacion.pagina_actual,
+            });
+            /* dispatch(onLoadMessage(data));
+            setTimeout(() => {
+                dispatch(onLoadMessage(undefined));
+            }, 40); */
+            return {
+                status: true,
+            };
+        } catch (error) {
+            console.log(error);
+            ExceptionMessageError(error);
+            return false;
+        } finally {
+            dispatch(onLoading(false));
         }
     };
 
@@ -207,6 +231,7 @@ export const useVacacionesStore = () => {
         startExportFichaVacaciones,
         startGestionarVacaciones,
         startSolicitarAnulacionVacaciones,
+        startAnularSolicitudVacacion,
         setActivateVacacion,
         startClearVacaciones,
     };
