@@ -17,7 +17,7 @@ class Permiso extends Model
 
     protected $casts = [
         "per_fecha_salida" => "datetime",
-        "per_fecha_llegada"  => 'datetime'
+        "per_fecha_llegada" => 'datetime'
     ];
 
     protected $fillable = [
@@ -43,7 +43,11 @@ class Permiso extends Model
     public function scopeDireccion($query, $id_direccion_pide)
     {
         return $query->when($id_direccion_pide !== null, function ($q) use ($id_direccion_pide) {
-            return $q->where('id_direccion_pide', $id_direccion_pide);
+            if (is_numeric($id_direccion_pide)) {
+                return $q->where('per_permisos.id_direccion_pide', $id_direccion_pide);
+            } else {
+                return $q->where('d.nmbre_dprtmnto', 'LIKE', '%' . $id_direccion_pide . '%');
+            }
         });
     }
 
@@ -53,7 +57,11 @@ class Permiso extends Model
     public function scopeUsuario($query, $id_usu_pide)
     {
         return $query->when($id_usu_pide, function ($q) use ($id_usu_pide) {
-            return $q->where('id_usu_pide', $id_usu_pide);
+            if (is_numeric($id_usu_pide)) {
+                return $q->where('per_permisos.id_usu_pide', $id_usu_pide);
+            } else {
+                return $q->where('us.nmbre_usrio', 'LIKE', '%' . $id_usu_pide . '%');
+            }
         });
     }
 
@@ -72,8 +80,26 @@ class Permiso extends Model
      */
     public function scopeEstado($query, $id_estado)
     {
-        return $query->when($id_estado, function ($q) use ($id_estado) {
-            return $q->where('id_estado', $id_estado);
+        return $query->when($id_estado !== null, function ($q) use ($id_estado) {
+            if (is_numeric($id_estado)) {
+                return $q->where('per_permisos.id_estado', $id_estado);
+            } else {
+                return $q->where('pep.per_est_nombre', 'LIKE', '%' . $id_estado . '%');
+            }
+        });
+    }
+
+    /**
+     * Scope para filtrar por motivo
+     */
+    public function scopeMotivo($query, $id_tipo_motivo)
+    {
+        return $query->when($id_tipo_motivo !== null, function ($q) use ($id_tipo_motivo) {
+            if (is_numeric($id_tipo_motivo)) {
+                return $q->where('per_permisos.id_tipo_motivo', $id_tipo_motivo);
+            } else {
+                return $q->where('ptp.tip_per_nombre', 'LIKE', '%' . $id_tipo_motivo . '%');
+            }
         });
     }
 

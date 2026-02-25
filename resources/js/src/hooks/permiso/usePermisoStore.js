@@ -10,7 +10,6 @@ import {
     onLoading,
     onSetActivatePermiso,
     onSetActivateStatsUsuarioPermiso,
-    onLoadPaginacion,
     onSetUltimosFiltros,
 } from "../../store/permiso/permisoSlice";
 import helpdeskApi from "../../api/helpdeskApi";
@@ -19,7 +18,6 @@ export const usePermisoStore = () => {
     const {
         isLoading,
         permisos,
-        paginacion,
         ultimosFiltros,
         activatePermiso,
         activateStatsUsuarioPermiso,
@@ -89,8 +87,7 @@ export const usePermisoStore = () => {
         id_usu_pide = null,
         idper_permisos = null,
         id_estado = null,
-        pagina_actual = 1,
-        por_pagina = 15,
+        id_tipo_motivo = null,
     }) => {
         try {
             dispatch(onLoading(true));
@@ -102,6 +99,8 @@ export const usePermisoStore = () => {
                     id_direccion_pide,
                     id_usu_pide,
                     idper_permisos,
+                    id_estado,
+                    id_tipo_motivo,
                 }),
             );
             const { data } = await helpdeskApi.post("/usuario/permisos", {
@@ -112,14 +111,10 @@ export const usePermisoStore = () => {
                 id_usu_pide,
                 idper_permisos,
                 id_estado,
-                pagina_actual,
-                por_pagina,
+                id_tipo_motivo,
             });
-            const { permisos, paginacion } = data;
+            const { permisos } = data;
             dispatch(onLoadPermisos(permisos));
-            if (paginacion) {
-                dispatch(onLoadPaginacion(paginacion));
-            }
             //dispatch(onLoading(false));
         } catch (error) {
             //console.log(error);
@@ -142,8 +137,6 @@ export const usePermisoStore = () => {
             //dispatch(onAnularPermiso(permiso));
             startLoadPermisos({
                 ...ultimosFiltros,
-                pagina_actual: paginacion?.pagina_actual || 1,
-                por_pagina: paginacion?.por_pagina || 15,
             });
             dispatch(onLoadMessage(data));
             setTimeout(() => {
@@ -256,8 +249,6 @@ export const usePermisoStore = () => {
             //dispatch(onAnularPermiso(permiso));
             startLoadPermisos({
                 ...ultimosFiltros,
-                pagina_actual: paginacion?.pagina_actual || 1,
-                por_pagina: paginacion?.por_pagina || 15,
             });
             dispatch(onLoadMessage(data));
             setTimeout(() => {
@@ -289,7 +280,6 @@ export const usePermisoStore = () => {
         isLoading,
         isExport,
         permisos,
-        paginacion,
         ultimosFiltros,
         activatePermiso,
         activateStatsUsuarioPermiso,

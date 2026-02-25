@@ -11,7 +11,6 @@ import {
     onSetActivateResponsable,
     onSetActivateUser,
     onSetInfoSoportes,
-    onSetPagination,
     onSetUltimosFiltros,
     onSetUserVerified,
     onUpdateUsers,
@@ -31,7 +30,6 @@ export const useUsersStore = () => {
         infoSoportes,
         message,
         errores,
-        paginacion,
         ultimosFiltros,
     } = useSelector((state) => state.users);
 
@@ -82,8 +80,6 @@ export const useUsersStore = () => {
         cdgo_direccion = null,
         nmbre_usrio = "",
         lgin = "",
-        pagina_actual = 1,
-        por_pagina = 10,
     }) => {
         try {
             dispatch(onLoading(true));
@@ -94,14 +90,11 @@ export const useUsersStore = () => {
                         cdgo_direccion,
                         nmbre_usrio,
                         lgin,
-                        pagina_actual,
-                        por_pagina,
                     },
                 },
             );
-            const { usuarios, paginacion } = data;
+            const { usuarios } = data;
             dispatch(onLoadUsers(usuarios));
-            dispatch(onSetPagination(paginacion));
             dispatch(
                 onSetUltimosFiltros({
                     cdgo_direccion,
@@ -228,8 +221,6 @@ export const useUsersStore = () => {
                 }, 40);
                 startLoadUsers({
                     ...ultimosFiltros,
-                    por_pagina: paginacion.por_pagina,
-                    pagina_actual: paginacion.pagina_actual,
                 });
                 return;
             }
@@ -244,8 +235,6 @@ export const useUsersStore = () => {
             }, 40);
             startLoadUsers({
                 ...ultimosFiltros,
-                por_pagina: paginacion.por_pagina,
-                pagina_actual: paginacion.pagina_actual,
             });
         } catch (error) {
             //console.log(error);
@@ -265,8 +254,6 @@ export const useUsersStore = () => {
             }, 40);
             startLoadUsers({
                 ...ultimosFiltros,
-                por_pagina: paginacion.por_pagina,
-                pagina_actual: paginacion.pagina_actual,
             });
         } catch (error) {
             ExceptionMessageError(error);
@@ -341,9 +328,8 @@ export const useUsersStore = () => {
                     },
                 },
             );
-            const { usuarios, paginacion } = data;
+            const { usuarios } = data;
             dispatch(onLoadUsersRolesPermissions(usuarios));
-            dispatch(onSetPagination(paginacion));
         } catch (error) {
             ExceptionMessageError(error);
         } finally {
@@ -405,7 +391,6 @@ export const useUsersStore = () => {
         validate,
         errores,
         message,
-        paginacion,
         ultimosFiltros,
 
         startAddUser,

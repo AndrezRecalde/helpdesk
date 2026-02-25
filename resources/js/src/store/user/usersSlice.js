@@ -13,14 +13,6 @@ const initialState = {
     validate: undefined,
     message: undefined,
     errores: undefined,
-    paginacion: {
-        total: 0,
-        por_pagina: 15,
-        pagina_actual: 1,
-        ultima_pagina: 1,
-        desde: 0,
-        hasta: 0,
-    },
     ultimosFiltros: {
         cdgo_direccion: "",
         nmbre_usrio: "",
@@ -76,16 +68,6 @@ export const usersSlice = createSlice({
             state.infoSoportes = payload;
             state.isLoading = false;
         },
-        onSetPagination: (state, { payload }) => {
-            state.paginacion = {
-                total: payload.total || 0,
-                por_pagina: payload.por_pagina || 15,
-                pagina_actual: payload.pagina_actual || 1,
-                ultima_pagina: payload.ultima_pagina || 1,
-                desde: payload.desde || 0,
-                hasta: payload.hasta || 0,
-            };
-        },
         onSetUltimosFiltros: (state, { payload }) => {
             state.ultimosFiltros = payload;
         },
@@ -130,7 +112,6 @@ export const {
     onSetStorageFields,
     onSetUserVerified,
     onSetInfoSoportes,
-    onSetPagination,
     onSetUltimosFiltros,
     onClearUsers,
     onValidate,

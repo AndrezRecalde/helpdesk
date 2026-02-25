@@ -17,107 +17,90 @@ export const PermisosTable = () => {
     const {
         isLoading,
         permisos,
-        paginacion,
+        ultimosFiltros,
         startLoadPermisos,
         startExportPermiso,
         setActivatePermiso,
     } = usePermisoStore();
     const { modalActionAnularPermiso } = useUiPermiso();
-
-    const [paginationServer, setPaginationServer] = useState({
+    const [pagination, setPagination] = useState({
         pageIndex: 0,
-        pageSize: 15,
+        pageSize: 10,
     });
 
-    // Sincronizar el estado del paginador con la respuesta del backend
-    useEffect(() => {
-        if (paginacion) {
-            setPaginationServer((prev) => {
-                const newPageIndex = Number(paginacion.pagina_actual || 1) - 1;
-                const newPageSize = Number(paginacion.por_pagina || 15);
-
-                if (
-                    prev.pageIndex !== newPageIndex ||
-                    prev.pageSize !== newPageSize
-                ) {
-                    return { pageIndex: newPageIndex, pageSize: newPageSize };
-                }
-                return prev;
-            });
-        }
-    }, [paginacion]);
-
-    // Cargar datos cuando cambia la paginación (solo si hay filtros aplicados)
-    useEffect(() => {
-        // Evitar petición duplicada si el estado de paginación coincide con el de Redux
-        const isSyncedWithRedux =
-            paginacion &&
-            paginationServer.pageIndex + 1 ===
-                Number(paginacion.pagina_actual || 1) &&
-            paginationServer.pageSize === Number(paginacion.por_pagina || 15);
-
-        // Solo cargar si hay filtros válidos aplicados (anio no es null)
-        if (!isSyncedWithRedux) {
-            startLoadPermisos({
-                anio: new Date(),
-                por_pagina: paginationServer.pageSize,
-                pagina_actual: paginationServer.pageIndex + 1,
-            });
-        }
-    }, [paginationServer.pageIndex, paginationServer.pageSize]);
     const columns = useMemo(
         () => [
             {
                 accessorKey: "estado", //access nested data with dot notation
                 header: "Estado",
+                filterVariant: "autocomplete",
                 size: 80,
+                enableColumnFilter: !ultimosFiltros?.id_estado, // Ocultar si hay filtro global
             },
             {
                 accessorKey: "idper_permisos", //access nested data with dot notation
                 header: "Código",
                 size: 80,
+                // Aplicar un pequeño delay o requerir Enter para no saturar al escribir números
+                mantineFilterTextInputProps: {
+                    placeholder: "Ej. 421",
+                },
+                filterVariant: "text",
+                enableColumnFilter: !ultimosFiltros?.idper_permisos,
             },
             {
                 accessorKey: "usuario_pide", //access nested data with dot notation
                 header: "Solicitante",
                 filterVariant: "autocomplete",
+                enableColumnFilter: !ultimosFiltros?.id_usu_pide,
             },
             {
                 accessorKey: "direccion_pide", //access nested data with dot notation
                 header: "Departamento solicitante",
                 filterVariant: "autocomplete",
                 size: 200,
+                enableColumnFilter: !ultimosFiltros?.id_direccion_pide,
             },
             {
+                id: "per_fecha_salida",
                 accessorFn: (row) =>
                     dayjs(row.per_fecha_salida).format("YYYY-MM-DD"),
                 header: "Fecha",
+                filterVariant: "date-range",
                 size: 80,
+                enableColumnFilter: !(
+                    ultimosFiltros?.fecha_inicio || ultimosFiltros?.fecha_fin
+                ),
             },
             {
                 accessorFn: (row) =>
                     dayjs(row.per_fecha_salida).format("HH:mm:ss"),
                 header: "Hora de salida",
+                enableColumnFilter: false,
             },
             {
                 accessorFn: (row) =>
                     dayjs(row.per_fecha_llegada).format("HH:mm:ss"),
                 header: "Hora de llegada",
+                enableColumnFilter: false,
             },
             {
                 accessorKey: "motivo", //access nested data with dot notation
                 header: "Motivo",
                 filterVariant: "autocomplete",
                 size: 80,
+                enableColumnFilter: !ultimosFiltros?.id_tipo_motivo,
             },
             {
                 accessorKey: "tiempo_total", //access nested data with dot notation
                 header: "T. total",
                 size: 80,
+                enableColumnFilter: false,
             },
             {
                 accessorKey: "per_observaciones",
                 header: "Observaciones",
+                enableColumnFilter: false,
                 Cell: ({ cell }) => {
                     const value = cell.getValue();
 
@@ -137,7 +120,7 @@ export const PermisosTable = () => {
                 },
             },
         ],
-        [permisos],
+        [permisos, ultimosFiltros],
     );
 
     const handleExport = useCallback((selected) => {
@@ -155,12 +138,10 @@ export const PermisosTable = () => {
         data: permisos, //must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
         state: {
             showProgressBars: isLoading,
-            pagination: paginationServer,
+            pagination,
         },
-        manualPagination: true,
-        onPaginationChange: setPaginationServer,
-        rowCount: paginacion?.total,
-        pageCount: paginacion?.ultima_pagina,
+        onPaginationChange: setPagination,
+        autoResetPageIndex: false,
         enableFacetedValues: true,
         enableRowActions: true,
         localization: MRT_Localization_ES,

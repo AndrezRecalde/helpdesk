@@ -18,8 +18,6 @@ class UserAdminController extends Controller
 {
     function getUsuariosAdmin(Request $request): JsonResponse
     {
-        $por_pagina = $request->por_pagina ?? 10;
-        $pagina_actual = $request->pagina_actual ?? 1;
         $usuarios = User::from('usrios_sstma as us')
             ->selectRaw('us.cdgo_usrio, us.usu_ci,
                         us.asi_id_reloj, us.titulo, us.nmbre_usrio,
@@ -42,20 +40,12 @@ class UserAdminController extends Controller
             ->direccion($request->cdgo_direccion)
             ->nombres($request->nmbre_usrio)
             ->usuario($request->lgin)
-            ->paginate($por_pagina, ['*'], 'pagina_actual', $pagina_actual);
+            ->get();
 
         if (sizeof($usuarios) >= 1) {
             return response()->json([
                 'status' => MsgStatus::Success,
-                'usuarios' => $usuarios->items(),
-                'paginacion' => [
-                    'total' => $usuarios->total(),
-                    'por_pagina' => $usuarios->perPage(),
-                    'pagina_actual' => $usuarios->currentPage(),
-                    'ultima_pagina' => $usuarios->lastPage(),
-                    'desde' => $usuarios->firstItem(),
-                    'hasta' => $usuarios->lastItem(),
-                ]
+                'usuarios' => $usuarios,
             ], 200);
         } else {
             return response()->json(

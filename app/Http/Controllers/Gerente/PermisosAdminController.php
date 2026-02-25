@@ -36,8 +36,6 @@ class PermisosAdminController extends Controller
     //TODO: PAGINACION URGENTE
     public function getPermisosAdmin(Request $request): JsonResponse
     {
-        $por_pagina = $request->por_pagina ?? 15;
-        $pagina_actual = $request->pagina_actual ?? 1;
         $permisos = Permiso::query()
             ->selectRaw('per_permisos.idper_permisos,
                     per_permisos.id_usu_pide,
@@ -66,11 +64,12 @@ class PermisosAdminController extends Controller
             ->usuario($request->id_usu_pide)
             ->codigo($request->idper_permisos)
             ->estado($request->id_estado)
+            ->motivo($request->id_tipo_motivo)
             ->anio($request->anio)
             ->betweenFechas($request->fecha_inicio, $request->fecha_fin)
             //->orderByDesc('per_permisos.per_fecha_salida')
             ->orderByDesc('per_permisos.idper_permisos')
-            ->paginate($por_pagina, ['*'], 'pagina_actual', $pagina_actual);
+            ->get();
 
         if ($permisos->isEmpty()) {
             return response()->json([
@@ -81,15 +80,7 @@ class PermisosAdminController extends Controller
 
         return response()->json([
             'status' => MsgStatus::Success,
-            'permisos' => $permisos->items(),
-            'paginacion' => [
-                'total' => $permisos->total(),
-                'por_pagina' => $permisos->perPage(),
-                'pagina_actual' => $permisos->currentPage(),
-                'ultima_pagina' => $permisos->lastPage(),
-                'desde' => $permisos->firstItem(),
-                'hasta' => $permisos->lastItem(),
-            ]
+            'permisos' => $permisos
         ], 200);
     }
 

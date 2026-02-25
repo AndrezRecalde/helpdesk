@@ -6,14 +6,6 @@ export const permisoSlice = createSlice({
         isLoading: false,
         isExport: false,
         permisos: [],
-        paginacion: {
-            total: 0,
-            por_pagina: 0,
-            pagina_actual: 0,
-            ultima_pagina: 0,
-            desde: 0,
-            hasta: 0,
-        },
         ultimosFiltros: {
             anio: new Date(),
             fecha_inicio: null,
@@ -21,6 +13,8 @@ export const permisoSlice = createSlice({
             id_direccion_pide: null,
             id_usu_pide: null,
             idper_permisos: null,
+            id_estado: null,
+            id_tipo_motivo: null,
         },
         activatePermiso: null,
         activateStatsUsuarioPermiso: null,
@@ -36,9 +30,6 @@ export const permisoSlice = createSlice({
         },
         onLoadPermisos: (state, { payload }) => {
             state.permisos = payload;
-        },
-        onLoadPaginacion: (state, { payload }) => {
-            state.paginacion = payload;
         },
         onSetUltimosFiltros: (state, { payload }) => {
             state.ultimosFiltros = payload;
@@ -63,14 +54,6 @@ export const permisoSlice = createSlice({
             state.isLoading = false;
             state.isExport = false;
             state.permisos = [];
-            state.paginacion = {
-                total: 0,
-                por_pagina: 0,
-                pagina_actual: 0,
-                ultima_pagina: 0,
-                desde: 0,
-                hasta: 0,
-            };
             state.ultimosFiltros = {
                 anio: new Date(),
                 fecha_inicio: null,
@@ -78,6 +61,8 @@ export const permisoSlice = createSlice({
                 id_direccion_pide: null,
                 id_usu_pide: null,
                 idper_permisos: null,
+                id_estado: null,
+                id_tipo_motivo: null,
             };
             state.activatePermiso = null;
             state.activateStatsUsuarioPermiso = null;
@@ -98,7 +83,6 @@ export const {
     onLoading,
     onExport,
     onLoadPermisos,
-    onLoadPaginacion,
     onSetUltimosFiltros,
     onSetActivatePermiso,
     onSetActivateStatsUsuarioPermiso,

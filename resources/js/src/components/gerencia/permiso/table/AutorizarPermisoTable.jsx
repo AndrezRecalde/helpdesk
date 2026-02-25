@@ -15,53 +15,14 @@ export const AutorizarPermisoTable = () => {
     const {
         isLoading,
         permisos,
-        paginacion,
+        ultimosFiltros,
         startLoadPermisos,
         startUpdateEstadoPermiso,
     } = usePermisoStore();
-
-    const [paginationServer, setPaginationServer] = useState({
+    const [pagination, setPagination] = useState({
         pageIndex: 0,
-        pageSize: 15,
+        pageSize: 10,
     });
-
-    // Sincronizar el estado del paginador con la respuesta del backend
-    useEffect(() => {
-        if (paginacion) {
-            setPaginationServer((prev) => {
-                const newPageIndex = Number(paginacion.pagina_actual || 1) - 1;
-                const newPageSize = Number(paginacion.por_pagina || 15);
-
-                if (
-                    prev.pageIndex !== newPageIndex ||
-                    prev.pageSize !== newPageSize
-                ) {
-                    return { pageIndex: newPageIndex, pageSize: newPageSize };
-                }
-                return prev;
-            });
-        }
-    }, [paginacion]);
-
-    // Cargar datos cuando cambia la paginación (solo si hay filtros aplicados)
-    useEffect(() => {
-        // Evitar petición duplicada si el estado de paginación coincide con el de Redux
-        const isSyncedWithRedux =
-            paginacion &&
-            paginationServer.pageIndex + 1 ===
-                Number(paginacion.pagina_actual || 1) &&
-            paginationServer.pageSize === Number(paginacion.por_pagina || 15);
-
-        // Solo cargar si hay filtros válidos aplicados (anio no es null)
-        if (!isSyncedWithRedux) {
-            startLoadPermisos({
-                anio: new Date(),
-                por_pagina: paginationServer.pageSize,
-                pagina_actual: paginationServer.pageIndex + 1,
-            });
-        }
-    }, [paginationServer.pageIndex, paginationServer.pageSize]);
-
     const columns = useMemo(
         () => [
             {
@@ -69,16 +30,25 @@ export const AutorizarPermisoTable = () => {
                 header: "Estado",
                 filterVariant: "autocomplete",
                 size: 80,
+                enableColumnFilter: !ultimosFiltros?.id_estado, // Ocultar si hay filtro global
             },
             {
                 accessorKey: "idper_permisos", //access nested data with dot notation
                 header: "Código",
                 size: 80,
+                // Aplicar un pequeño delay o requerir Enter para no saturar al escribir números
+                mantineFilterTextInputProps: {
+                    placeholder: "Ej. 123",
+                },
+                filterVariant: "text",
+                enableColumnFilter: !ultimosFiltros?.idper_permisos,
             },
             {
+                id: "usuario_pide",
                 accessorFn: (row) => row.usuario_pide?.toUpperCase(),
                 header: "Usuario solicitante",
                 filterVariant: "autocomplete",
+                enableColumnFilter: !ultimosFiltros?.id_usu_pide,
             },
             {
                 accessorFn: (row) =>
@@ -99,7 +69,7 @@ export const AutorizarPermisoTable = () => {
                 size: 80,
             },
         ],
-        [permisos],
+        [permisos, ultimosFiltros],
     );
 
     const handleAnularPermiso = useCallback(
@@ -155,12 +125,10 @@ export const AutorizarPermisoTable = () => {
         data: permisos, //must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
         state: {
             showProgressBars: isLoading,
-            pagination: paginationServer,
+            pagination,
         },
-        manualPagination: true,
-        onPaginationChange: setPaginationServer,
-        rowCount: paginacion?.total,
-        pageCount: paginacion?.ultima_pagina,
+        onPaginationChange: setPagination,
+        autoResetPageIndex: false,
         enableFacetedValues: true,
         enableRowActions: true,
         localization: MRT_Localization_ES,
