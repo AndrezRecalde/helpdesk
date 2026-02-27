@@ -37,24 +37,14 @@ class InvConsumibleController extends Controller
 
     public function getInvConsumibles(Request $request): JsonResponse
     {
-        $por_pagina = $request->input('por_pagina', 15);
-        $pagina_actual = $request->input('pagina_actual', 1);
         $consumibles = InvConsumible::with('categoria')
             ->byCategoriaId($request->categoria_id)
             ->latest('id')
-            ->paginate($por_pagina, ['*'], 'pagina_actual', $pagina_actual);
+            ->get();
 
         return response()->json([
             'status' => MsgStatus::Success,
-            'consumibles' => $consumibles->items(),
-            'paginacion' => [
-                'total' => $consumibles->total(),
-                'por_pagina' => $consumibles->perPage(),
-                'pagina_actual' => $consumibles->currentPage(),
-                'ultima_pagina' => $consumibles->lastPage(),
-                'desde' => $consumibles->firstItem(),
-                'hasta' => $consumibles->lastItem(),
-            ]
+            'consumibles' => $consumibles,
         ], 200);
     }
 

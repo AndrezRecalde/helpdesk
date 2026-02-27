@@ -60,8 +60,6 @@ class InvEquipoController extends Controller
     {
         $campo = $request->input('campo', 'codigo'); // Campo por defecto
         $valor = $request->input('valor', '');
-        $por_pagina = $request->input('por_pagina', 15);
-        $pagina_actual = $request->input('pagina_actual', 1);
 
         // Mapear los nombres de campo con sus relaciones
         $mapaCampos = [
@@ -109,20 +107,11 @@ class InvEquipoController extends Controller
             }
         }
 
-        $equipos = $query->orderBy('inve.id', 'DESC')
-            ->paginate($por_pagina, ['*'], 'pagina_actual', $pagina_actual);
+        $equipos = $query->orderBy('inve.id', 'DESC')->get();
 
         return response()->json([
             'status' => MsgStatus::Success,
-            'equipos' => $equipos->items(),
-            'paginacion' => [
-                'total' => $equipos->total(),
-                'por_pagina' => $equipos->perPage(),
-                'pagina_actual' => $equipos->currentPage(),
-                'ultima_pagina' => $equipos->lastPage(),
-                'desde' => $equipos->firstItem(),
-                'hasta' => $equipos->lastItem(),
-            ]
+            'equipos' => $equipos
         ], 200);
     }
 

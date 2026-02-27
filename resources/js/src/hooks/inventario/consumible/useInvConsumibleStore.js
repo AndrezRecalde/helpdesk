@@ -9,9 +9,7 @@ import {
     onLoading,
     onLoadingHistorial,
     onLoadInvConsumibles,
-    onLoadPaginacion,
     onSetUltimosFiltros,
-    onLoadInvHistorial,
     onLoadMessage,
     onSetActivateInvConsumible,
 } from "../../../store/consumible/invConsumibleSlice";
@@ -23,7 +21,6 @@ export const useInvConsumibleStore = () => {
         isLoadingHistorial,
         isExport,
         consumibles,
-        paginacion,
         ultimosFiltros,
         activateConsumible,
         message,
@@ -34,11 +31,7 @@ export const useInvConsumibleStore = () => {
 
     const dispatch = useDispatch();
 
-    const startLoadInvConsumibles = async ({
-        categoria_id,
-        pagina_actual = 1,
-        por_pagina = 15,
-    }) => {
+    const startLoadInvConsumibles = async ({ categoria_id }) => {
         try {
             dispatch(onLoading(true));
             dispatch(onSetUltimosFiltros({ categoria_id }));
@@ -46,15 +39,10 @@ export const useInvConsumibleStore = () => {
                 "/gerencia/inventario/consumibles",
                 {
                     categoria_id,
-                    pagina_actual,
-                    por_pagina,
                 },
             );
-            const { consumibles, paginacion } = data;
+            const { consumibles } = data;
             dispatch(onLoadInvConsumibles(consumibles));
-            if (paginacion) {
-                dispatch(onLoadPaginacion(paginacion));
-            }
         } catch (error) {
             //console.log(error);
             ExceptionMessageError(error);
@@ -181,7 +169,6 @@ export const useInvConsumibleStore = () => {
         isLoadingHistorial,
         isExport,
         consumibles,
-        paginacion,
         ultimosFiltros,
         activateConsumible,
         message,

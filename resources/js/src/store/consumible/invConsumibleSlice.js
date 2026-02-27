@@ -7,14 +7,6 @@ export const invConsumibleSlice = createSlice({
         isLoadingHistorial: false,
         isExport: false,
         consumibles: [],
-        paginacion: {
-            total: 0,
-            por_pagina: 0,
-            pagina_actual: 0,
-            ultima_pagina: 0,
-            desde: 0,
-            hasta: 0,
-        },
         ultimosFiltros: {
             categoria_id: null,
         },
@@ -37,9 +29,6 @@ export const invConsumibleSlice = createSlice({
             state.consumibles = payload;
             state.isLoading = false;
             state.errores = undefined;
-        },
-        onLoadPaginacion: (state, { payload }) => {
-            state.paginacion = payload;
         },
         onSetUltimosFiltros: (state, { payload }) => {
             state.ultimosFiltros = payload;
@@ -80,14 +69,6 @@ export const invConsumibleSlice = createSlice({
         },
         onClearInvConsumibles: (state) => {
             state.consumibles = [];
-            state.paginacion = {
-                total: 0,
-                por_pagina: 0,
-                pagina_actual: 0,
-                ultima_pagina: 0,
-                desde: 0,
-                hasta: 0,
-            };
             state.ultimosFiltros = {
                 categoria_id: null,
             };
@@ -116,7 +97,6 @@ export const {
     onLoadingHistorial,
     onExport,
     onLoadInvConsumibles,
-    onLoadPaginacion,
     onSetUltimosFiltros,
     onLoadInvHistorial,
     onAddInvConsumible,

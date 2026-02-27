@@ -8,7 +8,6 @@ import {
     onClearPeriodos,
     onSetActivatePeriodo,
     onSetTableCalculoDias,
-    onSetPaginacion,
 } from "../../../store/vacaciones/periodo/periodoSlice";
 import helpdeskApi from "../../../api/helpdeskApi";
 
@@ -21,7 +20,6 @@ export const usePeriodoStore = () => {
         tableCalculoDias,
         message,
         errores,
-        paginacion,
     } = useSelector((state) => state.periodoVacacional);
     const dispatch = useDispatch();
     const { ExceptionMessageError } = useErrorException(onLoadErrores);
@@ -29,18 +27,17 @@ export const usePeriodoStore = () => {
     //Carga los periodos disponibles para el usuario logueado, y todos para el usuario nom vacaciones
     const startLoadPeriodos = async ({
         cdgo_usrio = null,
-        pagina_actual = 1,
-        por_pagina = 15,
+        cdgo_direccion = null,
+        nmbre_usrio = null,
     }) => {
         try {
             dispatch(onLoading(true));
             const { data } = await helpdeskApi.post(
                 "/usuario/periodos-vacacionales",
-                { cdgo_usrio, pagina_actual, por_pagina },
+                { cdgo_usrio, cdgo_direccion, nmbre_usrio },
             );
-            const { periodos, paginacion } = data;
+            const { periodos } = data;
             dispatch(onLoadingPeriodos(periodos));
-            dispatch(onSetPaginacion(paginacion));
         } catch (error) {
             //console.log(error);
             dispatch(onLoading(false));
@@ -148,7 +145,6 @@ export const usePeriodoStore = () => {
         tableCalculoDias,
         message,
         errores,
-        paginacion,
 
         startLoadPeriodos,
         startLoadPeriodosByUser,

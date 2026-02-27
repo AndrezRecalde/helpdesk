@@ -48,11 +48,13 @@ export const DescuentoVacacionalForm = ({ form }) => {
                     <Table.Tbody>
                         <Table.Tr>
                             <Table.Td>
-                                {activatePeriodo?.nmbre_usrio.toUpperCase()}
+                                {activatePeriodo?.nmbre_usrio?.toUpperCase()}
                             </Table.Td>
                             <Table.Td>{activatePeriodo?.anio}</Table.Td>
                             <Table.Td>
-                                {activatePeriodo?.disponibilidad_vacaciones.toFixed(2)}
+                                {activatePeriodo?.disponibilidad_vacaciones?.toFixed(
+                                    2,
+                                )}
                             </Table.Td>
                         </Table.Tr>
                     </Table.Tbody>

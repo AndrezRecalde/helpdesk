@@ -17,9 +17,6 @@ class NomVacacionesDescuentoController extends Controller
     function getNomVacacionesDescuentos(Request $request): JsonResponse
     {
         try {
-            // Obtener parámetros de paginación
-            $por_pagina = $request->input('por_pagina', 15);
-            $pagina_actual = $request->input('pagina_actual', 1);
 
             // Consulta principal con paginación
             $descuentosPaginated = NomVacacionesDescuento::from('nom_vacaciones_descuentos as nvd')
@@ -38,21 +35,12 @@ class NomVacacionesDescuentoController extends Controller
                 )
                 ->when($request->usuario_id, fn($q) => $q->where('nvd.usuario_id', $request->usuario_id))
                 ->when($request->anio, fn($q) => $q->where('npv.anio', $request->anio))
-                ->orderBy('nvd.id', 'desc')
                 ->orderBy('npv.anio', 'desc')
-                ->paginate($por_pagina, ['*'], 'pagina_actual', $pagina_actual);
+                ->get();
 
             return response()->json([
                 'status' => MsgStatus::Success,
-                'descuentos' => $descuentosPaginated->items(),
-                'paginacion' => [
-                    'total' => $descuentosPaginated->total(),
-                    'por_pagina' => $descuentosPaginated->perPage(),
-                    'pagina_actual' => $descuentosPaginated->currentPage(),
-                    'ultima_pagina' => $descuentosPaginated->lastPage(),
-                    'desde' => $descuentosPaginated->firstItem(),
-                    'hasta' => $descuentosPaginated->lastItem(),
-                ]
+                'descuentos' => $descuentosPaginated,
             ], 200);
         } catch (\Throwable $th) {
             return response()->json(['status' => MsgStatus::Error, 'msg' => $th->getMessage()], 500);

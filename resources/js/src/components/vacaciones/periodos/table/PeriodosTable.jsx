@@ -1,60 +1,17 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useMemo } from "react";
 import { MenuTableActions, TableContent } from "../../../../components";
 import { usePeriodoStore, useUiUser, useUsersStore } from "../../../../hooks";
 import { useMantineReactTable } from "mantine-react-table";
 import { MRT_Localization_ES } from "mantine-react-table/locales/es/index.cjs";
 import { PeriodoInfoTable } from "./PeriodoInfoTable";
 import dayjs from "dayjs";
-import { Roles } from "../../../../helpers/dictionary";
 import { IconEditCircle } from "@tabler/icons-react";
 
 export const PeriodosTable = () => {
     const usuario = JSON.parse(localStorage.getItem("service_user"));
-    const { isLoading, periodos, paginacion } = usePeriodoStore();
-    const { startLoadPeriodos } = usePeriodoStore();
+    const { isLoading, periodos } = usePeriodoStore();
     const { setActivateUser } = useUsersStore();
     const { modalActionUser } = useUiUser();
-
-    const [paginationServer, setPaginationServer] = useState({
-        pageIndex: 0,
-        pageSize: 15,
-    });
-
-    // Sincronizar el estado del paginador con la respuesta del backend
-    useEffect(() => {
-        if (paginacion) {
-            setPaginationServer((prev) => {
-                const newPageIndex = Number(paginacion.pagina_actual || 1) - 1;
-                const newPageSize = Number(paginacion.por_pagina || 15);
-
-                if (
-                    prev.pageIndex !== newPageIndex ||
-                    prev.pageSize !== newPageSize
-                ) {
-                    return { pageIndex: newPageIndex, pageSize: newPageSize };
-                }
-                return prev;
-            });
-        }
-    }, [paginacion]);
-
-    // Cargar datos cuando cambia la paginación (solo si hay filtros aplicados)
-    useEffect(() => {
-        // Evitar petición duplicada si el estado de paginación coincide con el de Redux
-        const isSyncedWithRedux =
-            paginacion &&
-            paginationServer.pageIndex + 1 ===
-                Number(paginacion.pagina_actual || 1) &&
-            paginationServer.pageSize === Number(paginacion.por_pagina || 15);
-
-        if (!isSyncedWithRedux) {
-            startLoadPeriodos({
-                cdgo_usrio: null,
-                por_pagina: paginationServer.pageSize,
-                pagina_actual: paginationServer.pageIndex + 1,
-            });
-        }
-    }, [paginationServer.pageIndex, paginationServer.pageSize]);
 
     const columns = useMemo(
         () => [
@@ -129,12 +86,8 @@ export const PeriodosTable = () => {
         data: periodos, //must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
         state: {
             showProgressBars: isLoading,
-            pagination: paginationServer,
         },
-        manualPagination: true,
-        rowCount: paginacion?.total,
-        pageCount: paginacion?.ultima_pagina,
-        onPaginationChange: setPaginationServer,
+        autoResetPageIndex: false,
         enableFacetedValues: false,
         enableColumnDragging: false,
         enableDensityToggle: false,
@@ -160,17 +113,6 @@ export const PeriodosTable = () => {
         mantineTableProps: {
             withColumnBorders: true,
             withTableBorder: true,
-            sx: {
-                "thead > tr": {
-                    backgroundColor: "inherit",
-                },
-                "thead > tr > th": {
-                    backgroundColor: "inherit",
-                },
-                "tbody > tr > td": {
-                    backgroundColor: "inherit",
-                },
-            },
         },
     });
 

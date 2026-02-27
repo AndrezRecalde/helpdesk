@@ -10,14 +10,6 @@ export const periodoSlice = createSlice({
         tableCalculoDias: [],
         message: undefined,
         errores: undefined,
-        paginacion: {
-            total: 0,
-            por_pagina: 15,
-            pagina_actual: 1,
-            ultima_pagina: 1,
-            desde: 0,
-            hasta: 0,
-        },
     },
     reducers: {
         onLoading: (state, { payload }) => {
@@ -49,9 +41,6 @@ export const periodoSlice = createSlice({
             state.errores = payload;
             state.isLoading = false;
         },
-        onSetPaginacion: (state, { payload }) => {
-            state.paginacion = payload;
-        },
     },
 });
 
@@ -64,5 +53,4 @@ export const {
     onClearPeriodos,
     onLoadMessage,
     onLoadErrores,
-    onSetPaginacion,
 } = periodoSlice.actions;

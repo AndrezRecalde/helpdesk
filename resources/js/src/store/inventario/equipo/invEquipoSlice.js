@@ -6,14 +6,6 @@ export const invEquipoSlice = createSlice({
         isLoading: false,
         isExport: false,
         invEquipos: [],
-        paginacion: {
-            total: 0,
-            por_pagina: 0,
-            pagina_actual: 0,
-            ultima_pagina: 0,
-            desde: 0,
-            hasta: 0,
-        },
         ultimosFiltros: {
             campo: "codigo",
             valor: "",
@@ -33,9 +25,6 @@ export const invEquipoSlice = createSlice({
         onLoadInvEquipos: (state, { payload }) => {
             state.invEquipos = payload;
             state.isLoading = false;
-        },
-        onLoadPaginacion: (state, { payload }) => {
-            state.paginacion = payload;
         },
         onSetUltimosFiltros: (state, { payload }) => {
             state.ultimosFiltros = payload;
@@ -92,14 +81,6 @@ export const invEquipoSlice = createSlice({
         },
         onClearInvEquipos: (state) => {
             state.invEquipos = [];
-            state.paginacion = {
-                total: 0,
-                por_pagina: 0,
-                pagina_actual: 0,
-                ultima_pagina: 0,
-                desde: 0,
-                hasta: 0,
-            };
             state.ultimosFiltros = {
                 campo: "codigo",
                 valor: "",
@@ -123,7 +104,6 @@ export const {
     onLoading,
     onExport,
     onLoadInvEquipos,
-    onLoadPaginacion,
     onSetUltimosFiltros,
     onLoadInvEquiposBaja,
     onAddInvEquipo,

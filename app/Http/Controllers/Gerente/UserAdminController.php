@@ -244,12 +244,8 @@ class UserAdminController extends Controller
     public function getConsultarPeriodos(Request $request): JsonResponse
     {
         try {
-            // Obtener parámetros de paginación
-            $por_pagina = $request->input('por_pagina', 15);
-            $pagina_actual = $request->input('pagina_actual', 1);
-
-            // Consulta principal con paginación
-            $periodosPaginated = User::query()
+            // Consulta principal sin paginación
+            $periodos = User::query()
                 ->selectRaw('usrios_sstma.cdgo_usrio, usrios_sstma.nmbre_usrio, usrios_sstma.nombre_formateado,
                          usrios_sstma.usu_ci, usrios_sstma.email, usrios_sstma.usu_fi_institucion as fecha_ingreso,
                          usrios_sstma.cdgo_direccion, d.nmbre_dprtmnto as departamento,
@@ -262,6 +258,7 @@ class UserAdminController extends Controller
                         $query->select(
                             'nom_periodo_vacacionales.id',
                             'nom_periodo_vacacionales.cdgo_usrio',
+                            'usrios_sstma.nmbre_usrio',
                             'nom_periodo_vacacionales.anio',
                             'nom_periodo_vacacionales.dias_total',
                             'nom_periodo_vacacionales.dias_tomados',
@@ -269,6 +266,7 @@ class UserAdminController extends Controller
                             'nom_periodo_vacacionales.activo',
                             'nom_periodo_vacacionales.observacion'
                         )
+                            ->join('usrios_sstma', 'usrios_sstma.cdgo_usrio', '=', 'nom_periodo_vacacionales.cdgo_usrio')
                             ->orderBy('anio', 'DESC');
                     }
                 ])
@@ -278,13 +276,19 @@ class UserAdminController extends Controller
                 ->join('nom_regimen_laboral as rgl', 'rgl.id', 'ntc.regimen_laboral_id')
                 ->whereHas('periodoVacacionales')
                 ->byCodigoUsuario($request->cdgo_usrio)
+                ->when($request->cdgo_direccion, function ($query) use ($request) {
+                    return $query->where('usrios_sstma.cdgo_direccion', $request->cdgo_direccion);
+                })
+                ->when($request->nmbre_usrio, function ($query) use ($request) {
+                    return $query->where('usrios_sstma.nmbre_usrio', 'like', '%' . $request->nmbre_usrio . '%');
+                })
                 ->orderBy('usrios_sstma.nmbre_usrio', 'asc')
-                ->paginate($por_pagina, ['*'], 'pagina_actual', $pagina_actual);
+                ->get();
 
-            // Obtener solo los IDs de los usuarios en la página actual (optimización)
-            $userIds = $periodosPaginated->pluck('cdgo_usrio')->toArray();
+            // Obtener solo los IDs de los usuarios (optimización)
+            $userIds = $periodos->pluck('cdgo_usrio')->toArray();
 
-            // Consultar permisos válidos SOLO para usuarios en la página actual
+            // Consultar permisos válidos SOLO para usuarios de la consulta actual
             $permisosAgrupados = DB::table('per_permisos as p')
                 ->join('usrios_sstma as u', 'u.cdgo_usrio', '=', 'p.id_usu_pide')
                 ->join('nom_periodo_vacacionales as pv', function ($join) {
@@ -293,7 +297,7 @@ class UserAdminController extends Controller
                 })
                 ->where('p.id_tipo_motivo', 1)
                 ->whereNotIn('p.id_estado', [3, 6, 7])
-                ->whereIn('u.cdgo_usrio', $userIds) // OPTIMIZACIÓN: solo usuarios de la página actual
+                ->whereIn('u.cdgo_usrio', $userIds) // OPTIMIZACIÓN: solo usuarios de la consulta actual
                 ->selectRaw('
                 u.cdgo_usrio,
                 pv.anio,
@@ -314,7 +318,7 @@ class UserAdminController extends Controller
             }
 
             // Insertar los permisos en los periodos vacacionales de cada usuario
-            foreach ($periodosPaginated->items() as $periodo) {
+            foreach ($periodos as $periodo) {
                 foreach ($periodo->periodoVacacionales as $periodoVac) {
                     $anio = $periodoVac->anio;
                     if (isset($mapaPermisos[$periodoVac->cdgo_usrio][$anio])) {
@@ -331,15 +335,7 @@ class UserAdminController extends Controller
 
             return response()->json([
                 'status' => MsgStatus::Success,
-                'periodos' => $periodosPaginated->items(),
-                'paginacion' => [
-                    'total' => $periodosPaginated->total(),
-                    'por_pagina' => $periodosPaginated->perPage(),
-                    'pagina_actual' => $periodosPaginated->currentPage(),
-                    'ultima_pagina' => $periodosPaginated->lastPage(),
-                    'desde' => $periodosPaginated->firstItem(),
-                    'hasta' => $periodosPaginated->lastItem(),
-                ]
+                'periodos' => $periodos,
             ]);
         } catch (\Throwable $th) {
             return response()->json([

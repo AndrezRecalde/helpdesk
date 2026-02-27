@@ -14,10 +14,10 @@ import {
     useUsersStore,
 } from "../../hooks";
 import { PeriodosTable } from "../../components/vacaciones/periodos/table/PeriodosTable";
+import { FilterPeriodosVacacionales } from "../../components/vacaciones/periodos/filter/FilterPeriodosVacacionales";
 import { FechaIngresoModal } from "../../components/gerencia/user/modal/FechaIngresoModal";
 import { IconCubePlus } from "@tabler/icons-react";
 import Swal from "sweetalert2";
-import { Roles } from "../../helpers/dictionary";
 
 const PeriodoVacacionalesPage = () => {
     useTitlePage("Periodos Vacaciones - Intranet");
@@ -84,6 +84,9 @@ const PeriodoVacacionalesPage = () => {
                 )}
             </Group>
             <Divider my="md" />
+            {usuario.permissions?.includes("tthh.vacaciones.gestionar") && (
+                <FilterPeriodosVacacionales />
+            )}
             <PeriodosTable />
 
             <PeriodoCreateModal />

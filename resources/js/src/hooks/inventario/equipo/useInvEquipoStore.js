@@ -12,7 +12,6 @@ import {
     onRemoveDocumentoFromEquipo,
     onRemoveUserFromEquipo,
     onSetActivateInvEquipo,
-    onLoadPaginacion,
     onSetUltimosFiltros,
 } from "../../../store/inventario/equipo/invEquipoSlice";
 import helpdeskApi from "../../../api/helpdeskApi";
@@ -22,7 +21,6 @@ export const useInvEquipoStore = () => {
         isLoading,
         isExport,
         invEquipos,
-        paginacion,
         ultimosFiltros,
         invEquiposBajas,
         activateInvEquipo,
@@ -51,8 +49,6 @@ export const useInvEquipoStore = () => {
     const startLoadInvEquipos = async ({
         campo = "codigo",
         valor = "",
-        pagina_actual = 1,
-        por_pagina = 15,
     } = {}) => {
         try {
             dispatch(onLoading(true));
@@ -67,15 +63,10 @@ export const useInvEquipoStore = () => {
                 {
                     campo,
                     valor,
-                    pagina_actual,
-                    por_pagina,
                 },
             );
-            const { equipos, paginacion } = data;
+            const { equipos } = data;
             dispatch(onLoadInvEquipos(equipos));
-            if (paginacion) {
-                dispatch(onLoadPaginacion(paginacion));
-            }
         } catch (error) {
             //console.log(error);
             ExceptionMessageError(error);
@@ -120,8 +111,6 @@ export const useInvEquipoStore = () => {
                 if (storageFields && Object.keys(storageFields).length > 0) {
                     startLoadInvEquipos({
                         ...ultimosFiltros,
-                        pagina_actual: paginacion?.pagina_actual || 1,
-                        por_pagina: paginacion?.por_pagina || 15,
                     });
                 }
                 return;
@@ -138,8 +127,6 @@ export const useInvEquipoStore = () => {
             if (storageFields && Object.keys(storageFields).length > 0) {
                 startLoadInvEquipos({
                     ...ultimosFiltros,
-                    pagina_actual: paginacion?.pagina_actual || 1,
-                    por_pagina: paginacion?.por_pagina || 15,
                 });
             }
         } catch (error) {
@@ -176,8 +163,6 @@ export const useInvEquipoStore = () => {
             }, 40);
             startLoadInvEquipos({
                 ...ultimosFiltros,
-                pagina_actual: paginacion?.pagina_actual || 1,
-                por_pagina: paginacion?.por_pagina || 15,
             });
         } catch (error) {
             //console.log(error);
@@ -277,8 +262,6 @@ export const useInvEquipoStore = () => {
             }, 40);
             startLoadInvEquipos({
                 ...ultimosFiltros,
-                pagina_actual: paginacion?.pagina_actual || 1,
-                por_pagina: paginacion?.por_pagina || 15,
             });
         } catch (error) {
             //console.log(error);
@@ -298,8 +281,6 @@ export const useInvEquipoStore = () => {
             }, 40);
             startLoadInvEquipos({
                 ...ultimosFiltros,
-                pagina_actual: paginacion?.pagina_actual || 1,
-                por_pagina: paginacion?.por_pagina || 15,
             });
         } catch (error) {
             //console.log(error);
@@ -383,7 +364,6 @@ export const useInvEquipoStore = () => {
         isLoading,
         isExport,
         invEquipos,
-        paginacion,
         ultimosFiltros,
         invEquiposBajas,
         activateInvEquipo,
