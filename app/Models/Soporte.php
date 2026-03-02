@@ -41,13 +41,18 @@ class Soporte extends Model
     ];
 
     protected $casts = [
-        "fecha_ini"  => "datetime",
-        "fecha_fin"  => 'datetime'
+        "fecha_ini" => "datetime",
+        "fecha_fin" => 'datetime'
     ];
 
     public static function create(array $attributes = [])
     {
-        $attributes['id_usuario_crea'] = auth()->id();
+        // Solo asignar id_usuario_crea desde auth si no fue proporcionado explícitamente.
+        // El Bot de Telegram no tiene sesión de usuario autenticado, por eso pasa
+        // id_usuario_crea directamente en $attributes.
+        if (!isset($attributes['id_usuario_crea'])) {
+            $attributes['id_usuario_crea'] = auth()->id();
+        }
 
         $soporte = static::query()->create($attributes);
 
