@@ -9,7 +9,7 @@ return new class extends Migration {
     {
         Schema::table('departamento_consumible', function (Blueprint $table) {
             // Agregar director_tic (nullable para datos existentes)
-            $table->unsignedInteger('director_tic')->nullable()->after('director_area');
+            $table->integer('director_tic')->nullable()->after('director_area');
 
             // Agregar fecha_solicitud (nullable para datos existentes)
             $table->date('fecha_solicitud')->nullable()->after('director_tic');

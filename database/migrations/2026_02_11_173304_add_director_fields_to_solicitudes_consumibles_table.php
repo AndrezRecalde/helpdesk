@@ -9,10 +9,10 @@ return new class extends Migration {
     {
         Schema::table('solicitudes_consumibles', function (Blueprint $table) {
             // Agregar director_area
-            $table->unsignedInteger('director_area')->after('usuario_autoriza');
+            $table->integer('director_area')->after('usuario_autoriza');
 
             // Agregar director_tic
-            $table->unsignedInteger('director_tic')->after('director_area');
+            $table->integer('director_tic')->after('director_area');
 
             // Agregar fecha_solicitud
             $table->date('fecha_solicitud')->after('director_tic');
@@ -33,8 +33,8 @@ return new class extends Migration {
     {
         // Restaurar campos en departamento_consumible
         Schema::table('departamento_consumible', function (Blueprint $table) {
-            $table->unsignedInteger('director_area')->nullable()->after('equipo_id');
-            $table->unsignedInteger('director_tic')->nullable()->after('director_area');
+            $table->integer('director_area')->nullable()->after('equipo_id');
+            $table->integer('director_tic')->nullable()->after('director_area');
             $table->date('fecha')->nullable()->after('director_tic');
             $table->foreign('director_tic')->references('cdgo_usrio')->on('usrios_sstma')->onDelete('cascade');
         });
