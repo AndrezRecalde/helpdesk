@@ -45,7 +45,6 @@ export const FilterFormSoportes = ({ form }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
         if (switch_role) {
             const { id_usu_tecnico_asig, ...values } =
                 form.getTransformedValues();
@@ -150,7 +149,7 @@ export const FilterFormSoportes = ({ form }) => {
                         disabled={!fecha_inicio}
                     />
                 </SimpleGrid>
-                <SimpleGrid cols={{ base: 1, sm: 1, md: 2, lg: 2 }} mt={10}>
+                <SimpleGrid cols={{ base: 1, sm: 1, md: 3, lg: 3 }} mt={10}>
                     <Select
                         clearable
                         searchable
@@ -170,6 +169,12 @@ export const FilterFormSoportes = ({ form }) => {
                         classNames={classes}
                         {...form.getInputProps("numero_sop")}
                         placeholder="Filtrar por soporte"
+                    />
+                    <TextInput
+                        label="Código de equipo"
+                        classNames={classes}
+                        {...form.getInputProps("codigo_equipo")}
+                        placeholder="Filtrar por código de equipo"
                     />
                 </SimpleGrid>
                 <BtnSubmit IconSection={IconSearch} loading={isLoading}>

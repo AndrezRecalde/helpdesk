@@ -94,8 +94,8 @@ export const useActividadStore = () => {
                 { responseType: "blob" },
             );
 
-            const blob = new Blob([data], { type: "application/pdf" });
-            const url = URL.createObjectURL(blob);
+            const pdfBlob = new Blob([data], { type: "application/pdf" });
+            /* const url = URL.createObjectURL(blob);
 
             // Fecha y hora del sistema en formato YYYY-MM-DD_HH-mm
             const now = new Date();
@@ -113,9 +113,11 @@ export const useActividadStore = () => {
             link.click();
 
             link.remove();
-            URL.revokeObjectURL(url);
+            URL.revokeObjectURL(url); */
+            const url = window.open(URL.createObjectURL(pdfBlob));
+            window.URL.revokeObjectURL(url);
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         } finally {
             dispatch(onLoadPDF(false));

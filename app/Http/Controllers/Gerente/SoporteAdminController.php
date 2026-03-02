@@ -140,6 +140,7 @@ class SoporteAdminController extends Controller
 
             // Si se asigna técnico
             if (!empty($request->id_usu_tecnico_asig)) {
+                $soporte->id_usu_tecnico = $request->id_usu_tecnico_asig;
                 $soporte->id_estado = 5;
                 $soporte->fecha_asig = now();
                 $soporte->save();

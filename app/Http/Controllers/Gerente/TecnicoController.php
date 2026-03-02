@@ -83,6 +83,13 @@ class TecnicoController extends Controller
                 ->tecnico($request->cdgo_usrio)
                 ->whereIn('mh.role_id', [1, 2])
                 ->where('us.actvo', 1)
+                ->groupBy(
+                    'us.cdgo_usrio',
+                    'us.nmbre_usrio',
+                    'd.nmbre_dprtmnto',
+                    'r.id',
+                    'r.name'
+                )
                 ->get();
 
             // Cargar áreas para cada técnico

@@ -42,6 +42,7 @@ const SoportesPage = () => {
             id_direccion: null,
             numero_sop: "",
             id_estado: [],
+            codigo_equipo: "",
             switch_role: false,
             id_usu_tecnico_asig: usuario.cdgo_usrio,
         },

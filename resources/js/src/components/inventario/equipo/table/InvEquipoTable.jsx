@@ -73,6 +73,7 @@ export const InvEquipoTable = () => {
                     (row?.direccion || "SIN DIRECCION")
                         .toString()
                         .toUpperCase(),
+                size: 200,
                 filterVariant: "autocomplete",
             },
             {

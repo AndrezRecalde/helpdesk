@@ -11,8 +11,9 @@ import {
 import { DateTimePicker } from "@mantine/dates";
 import { BtnSubmit } from "../../../components";
 import {
+    useAreaTicStore,
     useDireccionStore,
-    useEquipoStore,
+    //useEquipoStore,
     useEstadoStore,
     useInvEquipoStore,
     useSoporteStore,
@@ -32,6 +33,7 @@ export const FormCreateSoporte = ({ form }) => {
         activo_informatico,
         id_tipo_soporte,
         fecha_fin,
+        id_usu_tecnico_asig,
     } = form.values;
     const { estados } = useEstadoStore();
     const { users } = useUsersStore();
@@ -39,6 +41,7 @@ export const FormCreateSoporte = ({ form }) => {
     const { direcciones } = useDireccionStore();
     const { tiposSolicitudes } = useTipoSolicitudStore();
     const { invEquipos } = useInvEquipoStore();
+    const { areas, startLoadAreas } = useAreaTicStore();
     const { startCreateSoporte, activateSoporte } = useSoporteStore();
     const { modalActionCreateSoporte } = useUiSoporte();
     const { storageFields = {} } = useStorageField();
@@ -49,16 +52,56 @@ export const FormCreateSoporte = ({ form }) => {
             "id_estado",
             activateSoporte?.id_estado
                 ? activateSoporte.id_estado.toString()
-                : id_estado
+                : id_estado,
         );
         form.setFieldValue("solucion", activateSoporte?.solucion);
         form.setFieldValue(
             "fecha_fin",
             activateSoporte?.fecha_fin
                 ? new Date(activateSoporte.fecha_fin)
-                : fecha_fin
+                : fecha_fin,
         );
     };
+
+    // Cargar áreas TIC activas
+    useEffect(() => {
+        startLoadAreas(true); // true = cargar todas las áreas
+    }, []);
+
+    // Auto-seleccionar área principal del técnico
+    useEffect(() => {
+        // Solo autocompletar si estamos creando uno nuevo y cambia el técnico asignado
+        if (
+            !activateSoporte &&
+            id_usu_tecnico_asig !== null &&
+            tecnicos.length > 0
+        ) {
+            const tecnicoSeleccionado = tecnicos.find(
+                (tecnico) => tecnico.cdgo_usrio == id_usu_tecnico_asig,
+            );
+
+            if (
+                tecnicoSeleccionado?.areas &&
+                tecnicoSeleccionado.areas.length > 0
+            ) {
+                // Buscar área principal
+                const areaPrincipal = tecnicoSeleccionado.areas.find(
+                    (area) => area.principal === true || area.principal === 1,
+                );
+
+                // Si tiene área principal, seleccionarla; sino, seleccionar la primera
+                const areaASeleccionar =
+                    areaPrincipal || tecnicoSeleccionado.areas[0];
+
+                if (areaASeleccionar) {
+                    form.setFieldValue(
+                        "id_area_tic",
+                        areaASeleccionar.id_areas_tic.toString(),
+                    );
+                }
+            }
+        }
+    }, [id_usu_tecnico_asig, tecnicos, activateSoporte]);
 
     useEffect(() => {
         const tipoSoporte = Number(id_tipo_soporte);
@@ -69,7 +112,7 @@ export const FormCreateSoporte = ({ form }) => {
                 "id_equipo",
                 activateSoporte?.id_equipo
                     ? activateSoporte.id_equipo.toString()
-                    : null
+                    : null,
             );
         } else if ([2, 3].includes(tipoSoporte)) {
             form.setFieldValue("activo_informatico", false);
@@ -93,7 +136,7 @@ export const FormCreateSoporte = ({ form }) => {
                 "id_equipo",
                 activateSoporte?.id_equipo
                     ? activateSoporte.id_equipo.toString()
-                    : null
+                    : null,
             );
         } else {
             setFormValues(form, activateSoporte);
@@ -209,14 +252,12 @@ export const FormCreateSoporte = ({ form }) => {
                         label="Área del soporte"
                         placeholder="Seleccione el área"
                         {...form.getInputProps("id_area_tic")}
-                        data={[
-                            { value: "1", label: "SISTEMAS Y APLICACIONES" },
-                            {
-                                value: "2",
-                                label: "INFRAESTRUCTURA TECNOLÓGICA",
-                            },
-                            { value: "5", label: "SOPORTE TÉCNICO" },
-                        ]}
+                        data={areas
+                            .filter((area) => area.activo)
+                            .map((area) => ({
+                                value: area.id_areas_tic.toString(),
+                                label: area.nombre,
+                            }))}
                     />
 
                     <Select

@@ -87,16 +87,18 @@ export const FormDiagnosticar = ({ form, option }) => {
         e.preventDefault();
         //console.log(form.getTransformedValues());
         if (option === 2) {
-            startDiagnosticarSoporte(
+            console.log(form.getTransformedValues());
+            /* startDiagnosticarSoporte(
                 form.getTransformedValues(),
                 option,
                 storageFields,
-            );
+            ); */
             form.reset();
             modalActionDiagnosticar(0);
             return;
         }
-        startDiagnosticarSoporte(form.getTransformedValues(), option);
+        console.log(form.getTransformedValues());
+        //startDiagnosticarSoporte(form.getTransformedValues(), option);
         form.reset();
         modalActionDiagnosticar(0);
     };

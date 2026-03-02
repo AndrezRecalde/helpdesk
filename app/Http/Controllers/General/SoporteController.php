@@ -145,6 +145,7 @@ class SoporteController extends Controller
         $soportes = $query
             ->direccion($request->id_direccion)
             ->numero($request->numero_sop)
+            ->equipo($request->codigo_equipo, $usarNuevaTabla)
             ->tecnico($request->id_usu_tecnico_asig)
             ->estado($request->id_estado)
             ->orderBy('ss.numero_sop', 'DESC')
@@ -182,6 +183,9 @@ class SoporteController extends Controller
     {
         try {
             $data = $request->validated();
+
+            // Confirmando Tecnico
+            $data['id_usu_tecnico'] = $data['id_usu_tecnico_asig'];
 
             // Calificación por estado
             $data['id_calificacion'] = ($data['id_estado'] == 4) ? 5 : 3;

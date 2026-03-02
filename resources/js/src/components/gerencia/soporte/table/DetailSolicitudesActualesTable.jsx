@@ -77,6 +77,18 @@ export const DetailSolicitudesActualesTable = ({ row }) => {
                             : null}{" "}
                     </Table.Td>
                 </Table.Tr>
+                {row.original.sop_equipo_serie && (
+                    <Table.Tr>
+                        <Table.Th w={350}>
+                            <TextSection fw={700} tt="">
+                                Código de equipo
+                            </TextSection>
+                        </Table.Th>
+                        <Table.Td w={350}>
+                            {row.original.sop_equipo_codigo}
+                        </Table.Td>
+                    </Table.Tr>
+                )}
             </Table.Tbody>
         </Table>
     );

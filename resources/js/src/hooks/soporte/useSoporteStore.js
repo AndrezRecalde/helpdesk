@@ -164,6 +164,7 @@ export const useSoporteStore = () => {
         numero_sop,
         id_usu_tecnico_asig,
         id_estado,
+        codigo_equipo,
     }) => {
         try {
             dispatch(onLoading(true));
@@ -177,6 +178,7 @@ export const useSoporteStore = () => {
                     numero_sop,
                     id_usu_tecnico_asig,
                     id_estado,
+                    codigo_equipo,
                 },
             );
             const { soportes } = data;

@@ -73,6 +73,7 @@ export const SoportesTable = () => {
                         .toString()
                         .toUpperCase(), //normal accessorKey
                 header: "Departamento del solicitante",
+                size: 200,
                 filterVariant: "autocomplete",
             },
             {
@@ -260,17 +261,6 @@ export const SoportesTable = () => {
         mantineTableProps: {
             withColumnBorders: true,
             withTableBorder: true,
-            sx: {
-                "thead > tr": {
-                    backgroundColor: "inherit",
-                },
-                "thead > tr > th": {
-                    backgroundColor: "inherit",
-                },
-                "tbody > tr > td": {
-                    backgroundColor: "inherit",
-                },
-            },
         },
     });
 

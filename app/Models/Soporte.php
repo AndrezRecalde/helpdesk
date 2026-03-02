@@ -124,4 +124,19 @@ class Soporte extends Model
             return $query->where('ss.id_area_tic', $id_area_tic);
         }
     }
+
+    // Que filtre por codigo nuevo y codigo antiguo
+    public function scopeEquipo($query, $codigo_equipo, $usarNuevaTabla = true)
+    {
+        if ($codigo_equipo) {
+            return $query->where(function ($q) use ($codigo_equipo, $usarNuevaTabla) {
+                if ($usarNuevaTabla) {
+                    $q->where('ie.codigo_nuevo', 'LIKE', "%" . $codigo_equipo . "%")
+                        ->orWhere('ie.codigo_antiguo', 'LIKE', "%" . $codigo_equipo . "%");
+                } else {
+                    $q->where('seq.sop_equipo_codigo', 'LIKE', "%" . $codigo_equipo . "%");
+                }
+            });
+        }
+    }
 }
