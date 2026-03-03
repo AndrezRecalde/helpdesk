@@ -31,7 +31,7 @@ class ConsolidadoPermisosExport implements FromCollection, WithHeadings, WithSty
             $seconds = (int) $timeParts[2];
 
             $totalMinutes = $hours * 60 + $minutes + $seconds / 60; // Total en minutos
-            $totalDays = $totalMinutes / (24 * 60); // Total en días (asumiendo 8h laborales)
+            $totalDays = $totalMinutes / (8 * 60); // Total en días (asumiendo 8h laborales)
 
             return [
                 'usuario' => $permiso->usuario_string,
