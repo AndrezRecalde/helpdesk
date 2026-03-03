@@ -299,6 +299,14 @@ export const FormDiagnosticar = ({ form, option }) => {
                                 label="Licencias Originales Instaladas"
                                 description="Marque si instaló licencias oficiales asociadas al equipo"
                                 {...form.getInputProps("licencias_instaladas")}
+                                onChange={(val) => {
+                                    form.setFieldValue(
+                                        "licencias_instaladas",
+                                        val.length > 1
+                                            ? [val[val.length - 1]]
+                                            : val,
+                                    );
+                                }}
                             >
                                 <Group mt="xs">
                                     {activeLicenses.map((licencia) => (
