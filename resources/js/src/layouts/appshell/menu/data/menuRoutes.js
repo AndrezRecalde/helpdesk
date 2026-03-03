@@ -60,14 +60,7 @@ export const NavMenuTics = {
             roles: [Roles.GERENTE],
             permissions: ["tic.soportes.ver"], // TIC técnico
         },
-        {
-            icon: IconFileDescription,
-            title: "Reporte de Soporte",
-            path: "reporte-soportes",
-            link: "/helpdesk/reporte-soportes",
-            roles: [Roles.GERENTE],
-            permissions: ["tic.soportes.reportes"], // TIC técnico
-        },
+
         {
             icon: IconDeviceDesktopCheck,
             title: "Cerrar Soportes",
@@ -78,9 +71,9 @@ export const NavMenuTics = {
         },
         {
             icon: IconCertificate,
-            title: "Indicadores de Soporte",
-            path: "indicadores-soportes",
-            link: "/helpdesk/gerencia/indicadores-soportes",
+            title: "Contratos TIC",
+            path: "contratos",
+            link: "/helpdesk/gerencia/contratos",
             roles: [Roles.GERENTE],
             permissions: [],
         },
@@ -89,6 +82,33 @@ export const NavMenuTics = {
             title: "Dashboard",
             path: "dashboard",
             link: "/helpdesk/gerencia/dashboard",
+            roles: [Roles.GERENTE],
+            permissions: [],
+        },
+    ],
+
+    Reportes: [
+        {
+            icon: IconFileDescription,
+            title: "Reporte de Soporte",
+            path: "reporte-soportes",
+            link: "/helpdesk/reporte-soportes",
+            roles: [Roles.GERENTE],
+            permissions: ["tic.soportes.reportes"], // TIC técnico
+        },
+        {
+            icon: IconFileDescription,
+            title: "Reporte de Indicadores",
+            path: "indicadores-soportes",
+            link: "/helpdesk/gerencia/indicadores-soportes",
+            roles: [Roles.GERENTE],
+            permissions: [],
+        },
+        {
+            icon: IconFileDescription,
+            title: "Reporte de Contratos",
+            path: "reporte-contratos",
+            link: "/helpdesk/gerencia/reporte-contratos",
             roles: [Roles.GERENTE],
             permissions: [],
         },

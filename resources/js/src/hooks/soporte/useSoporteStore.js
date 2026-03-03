@@ -443,6 +443,18 @@ export const useSoporteStore = () => {
         }
     };
 
+    const startLoadActiveLicenses = async () => {
+        try {
+            const { data } = await helpdeskApi.get(
+                "/general/soportes-licencias-activas",
+            );
+            return data.licencias || [];
+        } catch (error) {
+            ExceptionMessageError(error);
+            return [];
+        }
+    };
+
     const startUpdateCalificacion = async (id_soportes) => {
         try {
             const { data } = await helpdeskApi.post("/gerencia/calificacion", {
@@ -495,6 +507,7 @@ export const useSoporteStore = () => {
         startLoadSoportesAnualesUsuarios,
         startLoadSoportesSinCalificar,
         startUpdateCalificacion,
+        startLoadActiveLicenses,
         clearSoportes,
         setActivateSoporte,
     };

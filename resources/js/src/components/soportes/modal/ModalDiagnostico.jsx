@@ -29,17 +29,22 @@ export const ModalDiagnostico = ({ option }) => {
             id_estado_equipo: null,
 
             activo_informatico: false,
+            licencias_instaladas: [],
         },
         validate: {
             id_area_tic: isNotEmpty("Por favor ingrese el área"),
             id_tipo_soporte: isNotEmpty("Por favor ingrese el tipo"),
-            solucion: hasLength(
-                { min: 10, max: 600 },
-                "La solución debe tener entre 10 y 600 caracteres",
-            ),
+            solucion: (value, values) => {
+                if (values.licencias_instaladas.length > 0) return null; // Si hay licencias, la solución se autocompleta
+                if (value.length < 10 || value.length > 600)
+                    return "La solución debe tener entre 10 y 600 caracteres";
+                return null;
+            },
             id_equipo: (value, values) =>
-                values.activo_informatico === true && value === null
-                    ? "En soporte a hardware es obligatorio el código del activo"
+                (values.activo_informatico === true ||
+                    values.licencias_instaladas.length > 0) &&
+                value === null
+                    ? "El código del activo es obligatorio"
                     : null,
             id_estado_equipo: (value, values) => {
                 // Validar solo para tipos de soporte: 1, 4, 5, 6
@@ -64,6 +69,7 @@ export const ModalDiagnostico = ({ option }) => {
             id_tipo_soporte: Number(values.id_tipo_soporte) || null,
             id_equipo: Number(values.id_equipo) || null,
             id_estado_equipo: Number(values.id_estado_equipo) || null,
+            licencias_instaladas: values.licencias_instaladas || [],
         }),
     });
 

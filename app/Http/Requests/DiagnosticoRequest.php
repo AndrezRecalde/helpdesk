@@ -29,7 +29,9 @@ class DiagnosticoRequest extends FormRequest
             'solucion' => 'required',
             'id_equipo' => '',
             'id_estado_equipo' => 'nullable|integer|exists:inv_estados,id',
-            'fecha_fin' => 'required'
+            'fecha_fin' => 'required',
+            'licencias_instaladas' => 'nullable|array',
+            'licencias_instaladas.*' => 'integer|exists:sop_licencias,id_licencia',
         ];
     }
 

@@ -11,6 +11,7 @@ use App\Models\Departamento;
 use App\Models\InvEquipo;
 use App\Models\Soporte;
 //use App\Models\User;
+use App\Models\SoporteLicenciaEquipo;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
@@ -21,7 +22,7 @@ use Illuminate\Support\Facades\Log;
 
 class SoporteController extends Controller
 {
-    function getSoportesActuales(): JsonResponse
+    function getSoportesActuales(Request $request): JsonResponse
     {
         $authUser = Auth::user();
 
@@ -37,16 +38,19 @@ class SoporteController extends Controller
                             ss.id_tipo_soporte, sts.nombre as tipo_soporte,
                             ss.id_estado, se.nombre as estado, se.color,
                             ss.id_usu_tecnico_asig, us.nmbre_usrio as tecnico_asignado,
-                            ss.incidente, ss.solucion')
+                            ss.incidente, ss.solucion, ss.id_equipo')
             ->join('dprtmntos as d', 'd.cdgo_dprtmnto', 'ss.id_direccion')
             ->join('usrios_sstma as u', 'u.cdgo_usrio', 'ss.id_usu_recibe')
             ->leftJoin('sop_areas_tic as sat', 'sat.id_areas_tic', 'ss.id_area_tic')
             ->leftJoin('sop_tipo_soporte as sts', 'sts.id_tipo_soporte', 'ss.id_tipo_soporte')
             ->join('sop_estado as se', 'se.id_estado_caso', 'ss.id_estado')
             ->leftJoin('usrios_sstma as us', 'us.cdgo_usrio', 'ss.id_usu_tecnico_asig')
+            ->leftJoin('inv_equipos as ie', 'ie.id', 'ss.id_equipo')
+            ->addSelect('ie.codigo_nuevo as sop_equipo_codigo', 'ie.numero_serie as sop_equipo_serie')
             ->where('ss.fecha_ini', "LIKE", "%" . Carbon::now()->format('Y-m-d') . "%")
             ->where('ss.id_estado', '<>', 2)
             ->tecnico($tecnicoId)
+            ->equipo($request->codigo_equipo ?? null, true)
             ->orderBy('ss.numero_sop', 'DESC')
             ->get();
 
@@ -253,6 +257,18 @@ class SoporteController extends Controller
                     }
                 }
 
+                // Guardar licencias instaladas
+                if ($request->filled('licencias_instaladas') && is_array($request->licencias_instaladas) && $request->filled('id_equipo')) {
+                    foreach ($request->licencias_instaladas as $id_licencia) {
+                        SoporteLicenciaEquipo::create([
+                            'id_soporte' => $soporte->id_sop,
+                            'id_equipo' => $request->id_equipo,
+                            'id_licencia' => $id_licencia,
+                            'fecha_instalacion' => now()
+                        ]);
+                    }
+                }
+
                 return response()->json([
                     'status' => MsgStatus::Success,
                     'msg' => MsgStatus::SoporteDiagnosed
@@ -439,5 +455,34 @@ class SoporteController extends Controller
             ->get();
 
         return response()->json(['status' => MsgStatus::Success, 'soportes' => $soportes], 200);
+    }
+
+    public function getActiveLicenses(): JsonResponse
+    {
+        try {
+            // Find the active contract
+            $activeContract = \App\Models\SoporteContrato::where('activo', true)
+                ->with('licencias')
+                ->first();
+
+            if (!$activeContract) {
+                return response()->json([
+                    'status' => MsgStatus::Success,
+                    'licencias' => []
+                ], 200);
+            }
+
+            return response()->json([
+                'status' => MsgStatus::Success,
+                'licencias' => $activeContract->licencias
+            ], 200);
+
+        } catch (\Throwable $th) {
+            Log::error('Error fetching active licenses: ' . $th->getMessage());
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Ocurrió un error al obtener las licencias activas.'
+            ], 500);
+        }
     }
 }

@@ -69,6 +69,8 @@ import { useEstadoStore } from "./estado/useEstadoStore";
 /* Soportes */
 import { useSoporteStore } from "./soporte/useSoporteStore";
 import { useUiSoporte } from "./soporte/useUiSoporte";
+import { useContratoStore } from "./soporte/useContratoStore";
+import { useUiContrato } from "./soporte/useUiContrato";
 
 /* Indicadores */
 import { useIndicadorStore } from "./indicador/useIndicadorStore";
@@ -182,6 +184,8 @@ export {
     useEstadoStore,
     useSoporteStore,
     useUiSoporte,
+    useContratoStore,
+    useUiContrato,
     useIndicadorStore,
     useUiIndicador,
     useDashGerenciaStore,

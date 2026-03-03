@@ -8,6 +8,7 @@ import {
     Box,
     Stack,
     Table,
+    Group,
 } from "@mantine/core";
 import { DateTimePicker } from "@mantine/dates";
 import { BtnSubmit, TextSection } from "../../../components";
@@ -24,23 +25,26 @@ import classess from "../../../assets/styles/modules/layout/input/LabelsInputs.m
 import dayjs from "dayjs";
 
 export const FormDiagnosticar = ({ form, option }) => {
-    const { activo_informatico, id_tipo_soporte } = form.values;
+    const { activo_informatico, id_tipo_soporte, licencias_instaladas } =
+        form.values;
     const [checkEstado, setCheckEstado] = useState(false);
+    const [activeLicenses, setActiveLicenses] = useState([]);
+
     const { startLoadEquiposAgrupados, startClearInvEquipos, invEquipos } =
         useInvEquipoStore();
     const { startLoadInvEstados, startClearInvEstados, invEstados } =
         useInvEstadoStore();
     const { modalActionDiagnosticar } = useUiSoporte();
-    const { activateSoporte, startDiagnosticarSoporte } = useSoporteStore();
+    const {
+        activateSoporte,
+        startDiagnosticarSoporte,
+        startLoadActiveLicenses,
+    } = useSoporteStore();
     const { storageFields } = useStorageField();
 
     useEffect(() => {
         if (activateSoporte !== null) {
             form.setFieldValue("id_sop", activateSoporte?.id_sop);
-            form.setFieldValue(
-                "id_area_tic",
-                activateSoporte?.id_area_tic.toString() ?? null,
-            );
             form.setFieldValue(
                 "id_area_tic",
                 activateSoporte?.id_area_tic.toString() ?? null,
@@ -54,6 +58,15 @@ export const FormDiagnosticar = ({ form, option }) => {
     }, [activateSoporte]);
 
     useEffect(() => {
+        // Cargar licencias activas al montar componente
+        const loadLicenses = async () => {
+            const licenses = await startLoadActiveLicenses();
+            setActiveLicenses(licenses);
+        };
+        loadLicenses();
+    }, []);
+
+    useEffect(() => {
         if (
             id_tipo_soporte == 1 ||
             id_tipo_soporte == 4 ||
@@ -62,11 +75,50 @@ export const FormDiagnosticar = ({ form, option }) => {
         ) {
             form.setFieldValue("activo_informatico", true);
             setCheckEstado(true);
+            form.setFieldValue("licencias_instaladas", []); // resetear licencias si cambia de tipo
+        } else if (id_tipo_soporte == 2) {
+            // Soporte en Software
+            form.setFieldValue("activo_informatico", false);
+            setCheckEstado(true);
         } else {
             form.setFieldValue("activo_informatico", false);
             setCheckEstado(true);
+            form.setFieldValue("licencias_instaladas", []); // resetear licencias si cambia de tipo
         }
     }, [id_tipo_soporte]);
+
+    useEffect(() => {
+        if (licencias_instaladas && licencias_instaladas.length > 0) {
+            // Activar el activo informático obligatoriamente si hay licencias
+            form.setFieldValue("activo_informatico", true);
+
+            // Auto-completar la solución
+            const licenseNames = licencias_instaladas
+                .map((id) => {
+                    const lic = activeLicenses.find(
+                        (l) => l.id_licencia === parseInt(id),
+                    );
+                    return lic ? lic.nombre : "";
+                })
+                .filter(Boolean)
+                .join(", ");
+
+            form.setFieldValue(
+                "solucion",
+                `Se ha instalado la licencia correspondiente: ${licenseNames}`,
+            );
+        } else if (id_tipo_soporte == 2) {
+            // Si desmarcó todas y es soporte en software, desactivar activo y limpiar solucion
+            form.setFieldValue("activo_informatico", false);
+            if (
+                form.values.solucion.includes(
+                    "Se ha instalado la licencia correspondiente:",
+                )
+            ) {
+                form.setFieldValue("solucion", "");
+            }
+        }
+    }, [licencias_instaladas, activeLicenses]);
 
     useEffect(() => {
         if (activo_informatico) {
@@ -87,18 +139,18 @@ export const FormDiagnosticar = ({ form, option }) => {
         e.preventDefault();
         //console.log(form.getTransformedValues());
         if (option === 2) {
-            console.log(form.getTransformedValues());
-            /* startDiagnosticarSoporte(
+            //console.log(form.getTransformedValues());
+            startDiagnosticarSoporte(
                 form.getTransformedValues(),
                 option,
                 storageFields,
-            ); */
+            );
             form.reset();
             modalActionDiagnosticar(0);
             return;
         }
-        console.log(form.getTransformedValues());
-        //startDiagnosticarSoporte(form.getTransformedValues(), option);
+        //console.log(form.getTransformedValues());
+        startDiagnosticarSoporte(form.getTransformedValues(), option);
         form.reset();
         modalActionDiagnosticar(0);
     };
@@ -242,6 +294,24 @@ export const FormDiagnosticar = ({ form, option }) => {
                                 classNames={classess}
                             />
                         </SimpleGrid>
+                        {id_tipo_soporte == 2 && activeLicenses.length > 0 && (
+                            <Checkbox.Group
+                                label="Licencias Originales Instaladas"
+                                description="Marque si instaló licencias oficiales asociadas al equipo"
+                                {...form.getInputProps("licencias_instaladas")}
+                            >
+                                <Group mt="xs">
+                                    {activeLicenses.map((licencia) => (
+                                        <Checkbox
+                                            key={licencia.id_licencia}
+                                            value={licencia.id_licencia.toString()}
+                                            label={licencia.nombre}
+                                            color="teal.4"
+                                        />
+                                    ))}
+                                </Group>
+                            </Checkbox.Group>
+                        )}
                         <Textarea
                             withAsterisk
                             label="Solución"
@@ -249,6 +319,10 @@ export const FormDiagnosticar = ({ form, option }) => {
                             autosize
                             minRows={3}
                             maxRows={3}
+                            disabled={
+                                licencias_instaladas &&
+                                licencias_instaladas.length > 0
+                            }
                             {...form.getInputProps("solucion")}
                         />
                         <Checkbox

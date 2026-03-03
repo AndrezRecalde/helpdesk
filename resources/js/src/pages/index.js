@@ -8,6 +8,7 @@ import ChangePwdPage from "./user/ChangePwdPage";
 import AdminUsersPage from "./gerencia/AdminUsersPage";
 import AdminDireccionesPage from "./gerencia/AdminDireccionesPage";
 import AdminTecnicosPage from "./gerencia/AdminTecnicosPage";
+import ContratosAdminPage from "./admin/contratos/ContratosAdminPage";
 
 /* Solicitudes */
 import SolicitudPage from "./solicitud/SolicitudPage";
@@ -76,6 +77,7 @@ export {
     AdminUsersPage,
     AdminDireccionesPage,
     AdminTecnicosPage,
+    ContratosAdminPage,
     SolicitudPage,
     SolicitudesActualesPage,
     SolicitudVacacionesPage,

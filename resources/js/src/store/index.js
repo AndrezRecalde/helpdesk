@@ -64,6 +64,8 @@ import { estadoSlice } from "./estado/estadoSlice";
 /* Soportes */
 import { soporteSlice } from "./soporte/soporteSlice";
 import { uiSoporteSlice } from "./soporte/uiSoporteSlice";
+import { contratoSlice } from "./soporte/contratoSlice";
+import { uiContratoSlice } from "./soporte/uiContratoSlice";
 
 /* Indicadores */
 import { indicadorSlice } from "./indicador/indicadorSlice";
@@ -215,6 +217,8 @@ export {
     /* Soportes */
     soporteSlice,
     uiSoporteSlice,
+    contratoSlice,
+    uiContratoSlice,
 
     /* Indicadores */
     indicadorSlice,

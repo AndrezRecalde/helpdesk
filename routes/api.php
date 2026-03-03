@@ -10,9 +10,8 @@ use App\Http\Controllers\General\EquipoController;
 use App\Http\Controllers\General\EstadoSoporteController;
 use App\Http\Controllers\General\MarcacionController;
 use App\Http\Controllers\General\Ruta\RutaController;
-//use App\Http\Controllers\General\PisoController;
 use App\Http\Controllers\General\SoporteController;
-//use App\Http\Controllers\General\STipoEquipoController;
+use App\Http\Controllers\General\LicenciaController;
 use App\Http\Controllers\General\UserController;
 use App\Http\Controllers\General\TelegramController;
 use App\Http\Controllers\Gerente\AppController;
@@ -153,9 +152,16 @@ Route::group(['prefix' => 'gerencia', 'middleware' => ['auth:sanctum', 'role:GER
     Route::get('/soportes-sin-calificar', [SoporteAdminController::class, 'getSoportesSinCalificacion']);
     Route::post('/calificacion', [SoporteAdminController::class, 'setCalificacionSoportes']);
     Route::get('/consulta-soportes', [SoporteController::class, 'buscarSoporteLite']); //Utilizado para el formulario de Dar de Baja Equipo
-    //Route::post('/soporte-acta', [SoporteAdminController::class, 'exportActaBajaEquipo']);
 
-
+    /* CONTRATOS Y LICENCIAS DE SOPORTE */
+    Route::get('/contratos', [LicenciaController::class, 'getContracts']);
+    Route::post('/contratos', [LicenciaController::class, 'createContract']);
+    Route::put('/contratos/{id}', [LicenciaController::class, 'updateContract']);
+    Route::delete('/contratos/{id}', [LicenciaController::class, 'deleteContract']);
+    Route::put('/contratos/{id}/activar', [LicenciaController::class, 'activateContract']);
+    Route::post('/licencias/instalaciones', [LicenciaController::class, 'getInstalaciones']);
+    Route::post('/licencias/export-pdf', [LicenciaController::class, 'exportPDF']);
+    Route::post('/licencias/export-excel', [LicenciaController::class, 'exportExcel']);
     /*DASHBOARD */
     Route::get('/dashboard', [DashGerenteController::class, 'getDashboardGerencia']);
     Route::get('/desempeno-tecnicos-anual', [DashGerenteController::class, 'getDesempenoForTecnicosAnual']);
@@ -281,6 +287,7 @@ Route::group(['prefix' => 'general', 'middleware' => ['auth:sanctum', 'role:TIC|
     Route::get('/reporte-actividades', [SoporteController::class, 'getActividadesSoportes']);
     Route::post('/reporte-soporte-pdf', [SoporteController::class, 'exportPDFCardSoporte']);
     Route::post('/reporte-actividades-pdf', [SoporteController::class, 'exportActividadesSoportes']);
+    Route::get('/soportes-licencias-activas', [SoporteController::class, 'getActiveLicenses']);
 
 
     /* TIPOS DE SOLICITUDES DE SOPORTE */

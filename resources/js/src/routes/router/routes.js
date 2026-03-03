@@ -49,6 +49,18 @@ const AdminTecnicosPage = lazy(
             /* webpackChunkName: "AdminTecnicosPage" */ "../../pages/gerencia/AdminTecnicosPage"
         ),
 );
+const ContratosAdminPage = lazy(
+    () =>
+        import(
+            /* webpackChunkName: "ContratosAdminPage" */ "../../pages/admin/contratos/ContratosAdminPage"
+        ),
+);
+const ReporteLicenciasPage = lazy(
+    () =>
+        import(
+            /* webpackChunkName: "ReporteLicenciasPage" */ "../../pages/gerencia/ReporteLicenciasPage"
+        ),
+);
 const AdminAreasPage = lazy(
     () =>
         import(
@@ -299,6 +311,8 @@ const helpdeskGerenciaRoutes = generateRoutes(
         { path: "dashboard", Component: DashGerenciaPage },
         { path: "direcciones", Component: AdminDireccionesPage },
         { path: "tecnicos", Component: AdminTecnicosPage },
+        { path: "contratos", Component: ContratosAdminPage },
+        { path: "reporte-contratos", Component: ReporteLicenciasPage },
         { path: "areas-tic", Component: AdminAreasPage },
         { path: "dashboard-areas", Component: DashboardAreasPage },
         { path: "roles-permisos", Component: RolesPermissionsPage },
