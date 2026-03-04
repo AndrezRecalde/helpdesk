@@ -42,7 +42,7 @@ const PermisosPage = () => {
     const canEdit = useMemo(
         () =>
             usuario.roles?.includes(Roles.GERENTE) ||
-            usuario.permissions?.includes("tthh.permisos.gestionar"),
+            usuario.permissions?.includes("tthh.asistencia.gestionar"),
         [usuario.roles, usuario.permissions],
     );
 
