@@ -22,7 +22,9 @@ export const useInvEstadoStore = () => {
     const startLoadInvEstados = async () => {
         try {
             dispatch(onLoading(true));
-            const { data } = await helpdeskApi.get("/gerencia/inventario/estados");
+            const { data } = await helpdeskApi.get(
+                "/general/inventario/estados",
+            );
             const { estados } = data;
             dispatch(onLoadInvEstados(estados));
         } catch (error) {
@@ -36,7 +38,7 @@ export const useInvEstadoStore = () => {
             if (estado.id) {
                 const { data } = await helpdeskApi.put(
                     `/gerencia/inventario/estado/update/${estado.id}`,
-                    estado
+                    estado,
                 );
                 startLoadInvEstados();
                 dispatch(onLoadMessage(data));
@@ -47,7 +49,7 @@ export const useInvEstadoStore = () => {
             }
             const { data } = await helpdeskApi.post(
                 "/gerencia/inventario/estado/store",
-                estado
+                estado,
             );
             startLoadInvEstados();
             dispatch(onLoadMessage(data));
@@ -63,7 +65,7 @@ export const useInvEstadoStore = () => {
     const startDeleteInvEstado = async (estado) => {
         try {
             const { data } = await helpdeskApi.delete(
-                `/gerencia/inventario/estado/destroy/${estado.id}`
+                `/gerencia/inventario/estado/destroy/${estado.id}`,
             );
             dispatch(onDeleteInvEstado());
             dispatch(onLoadMessage(data));
@@ -78,11 +80,11 @@ export const useInvEstadoStore = () => {
 
     const setActivateInvEstado = (estado) => {
         dispatch(onSetActivateInvEstado(estado));
-    }
+    };
 
     const startClearInvEstados = () => {
         dispatch(onClearInvEstados());
-    }
+    };
 
     return {
         isLoading,
@@ -95,6 +97,6 @@ export const useInvEstadoStore = () => {
         startAddInvEstado,
         startDeleteInvEstado,
         setActivateInvEstado,
-        startClearInvEstados
+        startClearInvEstados,
     };
 };

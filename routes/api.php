@@ -182,7 +182,6 @@ Route::group(['prefix' => 'gerencia', 'middleware' => ['auth:sanctum', 'role:GER
     Route::delete('/inventario/categoria/destroy/{id}', [InvCategoriaController::class, 'update']);
 
     /* ESTADOS */
-    Route::get('/inventario/estados', [InvEstadoController::class, 'getEstadosInv']);
     Route::post('/inventario/estado/store', [InvEstadoController::class, 'store']);
     Route::put('/inventario/estado/update/{id}', [InvEstadoController::class, 'update']);
     Route::delete('/inventario/estado/destroy/{id}', [InvEstadoController::class, 'destroy']);
@@ -302,6 +301,9 @@ Route::group(['prefix' => 'general', 'middleware' => ['auth:sanctum', 'role:TIC|
 
     /* EQUIPOS */
     Route::get("/equipos", [EquipoController::class, 'getEquiposInformaticos']);
+
+    /* ESTADOS DE EQUIPOS */
+    Route::get('/inventario/estados', [InvEstadoController::class, 'getEstadosInv']);
 
     /* EQUIPOS NUEVA TABLA */
     Route::get('/inventario/tipos-equipos', [InvEquipoController::class, 'getEquipos']);
