@@ -373,13 +373,13 @@ export const menuProfile = [
         icon: IconFingerprint,
         color: "#067ebf",
     },
-    //{
-    // label: "Reportar abuso",
-    // path: "reportar-abuso",
-    // link: "/intranet/reportar-abuso",
-    // icon: IconMessageReport,
-    // color: "#ac0505",
-    //},
+    {
+        label: "Reportar abuso",
+        path: "reportar-abuso",
+        link: "/intranet/reportar-abuso",
+        icon: IconMessageReport,
+        color: "#ac0505",
+    },
     {
         label: "Cerrar sesión",
         path: "cerrar-sesion",
