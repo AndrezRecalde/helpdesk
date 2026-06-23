@@ -51,7 +51,7 @@ export const ModalCrearDenuncia = () => {
             cedula: "",
             tipo_denuncia: "",
             descripcion: "",
-            mostrar_informacion: false,
+            mostrar_informacion: true,
         },
         validate: {
             cedula: (value) => {
@@ -158,8 +158,6 @@ export const ModalCrearDenuncia = () => {
                         variant="light"
                     >
                         Tu denuncia será tratada con total confidencialidad.
-                        Puedes elegir si deseas mostrar tu identidad a los
-                        administradores.
                     </Alert>
 
                     <TextInput
@@ -191,10 +189,11 @@ export const ModalCrearDenuncia = () => {
 
                     <Switch
                         label="Mostrar mi información a los administradores"
-                        description="Si desactivas esta opción, tu identidad permanecerá anónima"
+                        description="Acepta proporcionar su informacion"
                         {...form.getInputProps("mostrar_informacion", {
                             type: "checkbox",
                         })}
+                        disabled={true}
                         thumbIcon={
                             form.values.mostrar_informacion ? (
                                 <IconEye size={12} />
