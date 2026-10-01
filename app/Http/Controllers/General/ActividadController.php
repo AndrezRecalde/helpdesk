@@ -54,13 +54,14 @@ class ActividadController extends Controller
 
             // Agregar la entrada en la tabla 'soporte' si el rol del usuario es 1 o 2
             if ($role && ($role->id == 1 || $role->id == 2)) {
+                $idJefe = Departamento::where('cdgo_dprtmnto', 22)->value('id_jefe');
                 Soporte::create([
                     'id_tipo_solicitud' => 7,
                     'fecha_ini' => $actividad->fecha_actividad,
                     'fecha_fin' => $actividad->fecha_actividad,
                     'fecha_asig' => $actividad->fecha_actividad,
                     'id_direccion' => 22,
-                    'id_usu_recibe' => 701,
+                    'id_usu_recibe' => $idJefe,
                     'id_tipo_soporte' => '3',
                     'incidente' => 'SOLICITUD INTERNA DEL ÁREA DE TIC',
                     'solucion' => Str::upper($actividad->actividad),
@@ -125,7 +126,7 @@ class ActividadController extends Controller
                         'fecha_fin' => $actividad->fecha_actividad,
                         'fecha_asig' => $actividad->fecha_actividad,
                         'id_direccion' => 22,
-                        'id_usu_recibe' => 247,
+                        'id_usu_recibe' => $idJefe,
                         'id_tipo_soporte' => '3',
                         'incidente' => 'SOLICITUD INTERNA DEL ÁREA DE TIC',
                         'solucion' => Str::upper($actividad->actividad),
