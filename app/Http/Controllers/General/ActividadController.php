@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ActividadRequest;
 use App\Models\Actividad;
 use App\Models\Soporte;
+use App\Models\Departamento;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
@@ -117,13 +118,14 @@ class ActividadController extends Controller
                     ]);
                 } else {
                     // Crear un nuevo registro en soporte si no existe
+                    $idJefe = Departamento::where('cdgo_dprtmnto', 22)->value('id_jefe');
                     Soporte::create([
                         'id_tipo_solicitud' => 7,
                         'fecha_ini' => $actividad->fecha_actividad,
                         'fecha_fin' => $actividad->fecha_actividad,
                         'fecha_asig' => $actividad->fecha_actividad,
                         'id_direccion' => 22,
-                        'id_usu_recibe' => 701,
+                        'id_usu_recibe' => $idJefe,
                         'id_tipo_soporte' => '3',
                         'incidente' => 'SOLICITUD INTERNA DEL ÁREA DE TIC',
                         'solucion' => Str::upper($actividad->actividad),
