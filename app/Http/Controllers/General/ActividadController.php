@@ -125,7 +125,7 @@ class ActividadController extends Controller
                         'fecha_fin' => $actividad->fecha_actividad,
                         'fecha_asig' => $actividad->fecha_actividad,
                         'id_direccion' => 22,
-                        'id_usu_recibe' => $idJefe,
+                        'id_usu_recibe' => 247,
                         'id_tipo_soporte' => '3',
                         'incidente' => 'SOLICITUD INTERNA DEL ÁREA DE TIC',
                         'solucion' => Str::upper($actividad->actividad),
